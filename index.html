@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Julien Simon – Chief Evangelist @ Arcee AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #1e40af;
+      --primary-dark: #1e3a8a;
+      --primary-light: #3b82f6;
+      --secondary-color: #64748b;
+      --accent-color: #f59e0b;
+      --success-color: #10b981;
+      --danger-color: #ef4444;
+      --background: #ffffff;
+      --surface: #f8fafc;
+      --surface-dark: #f1f5f9;
+      --border: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+      --gradient-surface: linear-gradient(135deg, var(--surface) 0%, var(--background) 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.7;
+      color: var(--text-primary);
+      background: var(--background);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header Styles */
+    header {
+      text-align: center;
+      padding: 5rem 0 4rem;
+      background: var(--gradient-surface);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.02) 0%, rgba(59, 130, 246, 0.02) 100%);
+      pointer-events: none;
+    }
+
+    .profile-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 2.5rem;
+      border: 6px solid var(--background);
+      box-shadow: var(--shadow-xl);
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .profile-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.025em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .title {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      background: var(--gradient-primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn i {
+      font-size: 1rem;
+    }
+
+    /* Main Content */
+    main {
+      padding: 4rem 0;
+    }
+
+    section {
+      margin-bottom: 5rem;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+      letter-spacing: -0.025em;
+      position: relative;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -0.5rem;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+    }
+
+    h3 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.025em;
+    }
+
+    h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 1.125rem;
+      line-height: 1.8;
+    }
+
+    ul {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.875rem;
+      padding-left: 1.75rem;
+      position: relative;
+      color: var(--text-secondary);
+      font-size: 1.0625rem;
+    }
+
+    li::before {
+      content: "▸";
+      color: var(--primary-color);
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    /* Experience Section */
+    .experience-item {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: 16px;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .experience-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-primary);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+
+    .experience-item:hover::before {
+      transform: scaleY(1);
+    }
+
+    .experience-item:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--primary-light);
+    }
+
+    .experience-title {
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+    }
+
+    .experience-company {
+      color: var(--primary-color);
+      font-weight: 600;
+      font-size: 1.125rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .experience-date {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid var(--border);
+      margin: 4rem 0 3rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      background: var(--surface);
+      border-radius: 12px 12px 0 0;
+      padding: 0 1rem;
+    }
+
+    .tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab {
+      padding: 1.25rem 2rem;
+      background: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      position: relative;
+    }
+
+    .tab:hover {
+      color: var(--primary-color);
+      background: var(--surface-dark);
+    }
+
+    .tab.active {
+      color: var(--primary-color);
+      border-bottom-color: var(--primary-color);
+      background: var(--surface-dark);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    /* Stats */
+    .stats {
+      display: flex;
+      gap: 1.5rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--background);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .stat:hover {
+      border-color: var(--primary-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat i {
+      color: var(--primary-color);
+      font-size: 1.125rem;
+    }
+
+    /* Video Grid */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+      margin: 2.5rem 0;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      background: var(--surface);
+      transition: all 0.3s ease;
+    }
+
+    .video-container:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-info {
+      background: var(--background);
+      padding: 1.75rem;
+      border-radius: 0 0 16px 16px;
+      margin-top: -16px;
+      border: 1px solid var(--border);
+      border-top: none;
+    }
+
+    .video-info h4 {
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+
+    .video-info p {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-bottom: 0;
+    }
+
+    /* Links */
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    /* Book Section */
+    .book-card {
+      display: flex;
+      gap: 2.5rem;
+      align-items: flex-start;
+    }
+
+    .book-image {
+      width: 180px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    .book-image:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .book-content {
+      flex: 1;
+    }
+
+    .book-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* Awards Section */
+    .award-details {
+      color: var(--primary-color);
+      font-size: 1.125rem;
+      margin-bottom: 1.25rem;
+      font-weight: 600;
+    }
+
+    /* Contact Section */
+    .contact-info {
+      background: var(--surface);
+      padding: 2.5rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-info::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 4rem 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+
+      h1 {
+        font-size: 2.75rem;
+      }
+
+      .title {
+        font-size: 1.25rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+
+      .book-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .book-image {
+        width: 160px;
+        margin: 0 auto;
+      }
+
+      .stats {
+        justify-content: center;
+      }
+
+      .social-links {
+        gap: 0.75rem;
+      }
+
+      .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.8125rem;
+      }
+
+      .card {
+        padding: 2rem;
+      }
+
+      .video-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2.25rem;
+      }
+
+      .profile-image {
+        width: 160px;
+        height: 160px;
+      }
+
+      .tab {
+        padding: 1rem 1.25rem;
+        font-size: 0.875rem;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabs = document.querySelectorAll('.tab');
+      const contents = document.querySelectorAll('.tab-content');
+      
+      tabs.forEach((tab, i) => {
+        tab.addEventListener('click', function() {
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+          tab.classList.add('active');
+          contents[i].classList.add('active');
+        });
+      });
+      
+      // Activate first tab by default
+      if (tabs.length) tabs[0].classList.add('active');
+      if (contents.length) contents[0].classList.add('active');
+    });
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <img src="julien.jpg" alt="Julien Simon" class="profile-image" />
+    <h1>Julien Simon</h1>
+    <p class="title">Chief Evangelist @ Arcee AI</p>
+    <p class="subtitle">Leading the AI revolution through Small Language Models, empowering enterprises with cost-effective, privacy-first AI solutions that deliver superior performance at scale.</p>
+    <div class="social-links">
+      <a class="btn" href="https://github.com/juliensimon" target="_blank"><i class="fab fa-github"></i>GitHub</a>
+      <a class="btn" href="https://huggingface.co/juliensimon" target="_blank"><i class="fas fa-robot"></i>Hugging Face</a>
+      <a class="btn" href="https://linkedin.com/in/juliensimon" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a>
+      <a class="btn" href="https://julsimon.medium.com/" target="_blank"><i class="fab fa-medium"></i>Medium</a>
+      <a class="btn" href="https://julsimon.substack.com/" target="_blank"><i class="fas fa-envelope-open-text"></i>Substack</a>
+      <a class="btn" href="https://x.com/julsimon" target="_blank"><i class="fab fa-x-twitter"></i>Twitter (X)</a>
+      <a class="btn" href="https://youtube.com/juliensimonfr" target="_blank"><i class="fab fa-youtube"></i>YouTube</a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section id="about">
+    <h2>About</h2>
+    <p>
+      Julien Simon is a leading figure in the AI and cloud computing landscape, renowned for his ability to demystify complex technologies and make them accessible to developers and enterprises alike. With over 30 years of experience, including leadership roles at Viadeo, Aldebaran, Criteo, and Pixmania, he has a deep understanding of scaling infrastructure and fostering innovation. His tenure at Amazon Web Services as a Principal Technical Evangelist for AI & ML further solidified his reputation, where he delivered hundreds of talks globally.
+    </p>
+    <p>
+      Currently serving as the Chief Evangelist at Arcee.ai, Julien is at the forefront of advocating for Small Language Models (SLMs) as a practical and efficient alternative to large-scale models. He emphasizes the advantages of running SLMs, highlighting their cost-effectiveness and suitability for various applications. His approach challenges the prevailing notion that larger models are inherently better, proposing instead that smaller, specialized models can deliver superior performance in many real-world scenarios.
+    </p>
+    <p>
+      Julien's philosophy centers on empowering organizations to take control of their AI solutions. He advocates for open-source tools and frameworks that enable enterprises to develop, fine-tune, and deploy models tailored to their specific needs. This approach not only enhances privacy and compliance but also fosters innovation and reduces reliance on proprietary systems.
+    </p>
+    <p>
+      Through his work, Julien continues to inspire and lead the AI community, demonstrating that with the right tools and mindset, organizations can harness the power of AI to drive meaningful change and achieve their objectives.
+    </p>
+  </section>
+
+
+
+  <div class="tabs">
+    <button class="tab">Experience</button>
+    <button class="tab">Speaking</button>
+    <button class="tab">Media</button>
+    <button class="tab">Blog Posts</button>
+    <button class="tab">YouTube</button>
+    <button class="tab">Books</button>
+  </div>
+
+  <div class="tab-content">
+    <section id="experience-tab">
+      <h2>Experience</h2>
+      <div class="experience-item">
+        <div class="experience-title">Chief Evangelist</div>
+        <div class="experience-company">Arcee AI</div>
+        <div class="experience-date">2024 – Present</div>
+      </div>
+      <div class="experience-item">
+        <div class="experience-title">Chief Evangelist</div>
+        <div class="experience-company">Hugging Face</div>
+        <div class="experience-date">2021 – 2024</div>
+      </div>
+      <div class="experience-item">
+        <div class="experience-title">Global Technical Evangelist, AI & ML</div>
+        <div class="experience-company">AWS</div>
+        <div class="experience-date">2015 – 2021</div>
+      </div>
+      <div class="experience-item">
+        <div class="experience-title">CTO / VP Engineering</div>
+        <div class="experience-company">Various Startups</div>
+        <div class="experience-date">2008 – 2015</div>
+      </div>
+
+      <section id="awards">
+        <h2>Awards</h2>
+        <p>In my career, I have been fortunate to receive recognition for my contributions to the fields of technology and artificial intelligence, which underscore my impact and influence in these domains.</p>
+        
+        <div class="card">
+          <h3>#1 AI Evangelist Globally</h3>
+          <div class="award-details">
+            <strong>AI Magazine</strong> • 2021
+          </div>
+          <p>Ranked as the #1 AI Evangelist globally by AI Magazine, a distinction that placed me alongside AI luminaries such as Andrew Ng. This recognition was a testament to my dedication to advancing the field of artificial intelligence and machine learning. As AWS's Global AI & Machine Learning Evangelist, I consistently demonstrated a passion for sharing knowledge, creating educational content, and fostering collaboration with industry leaders.</p>
+          <p>My work has inspired countless professionals and organizations to adopt AI technologies, and my influence extends through my widely followed YouTube channel, blog, and keynote speeches. This accolade underscores my thought leadership and my ability to bridge the gap between complex AI concepts and practical business applications.</p>
+          <a href="https://aimagazine.com/magazine/april-2021" target="_blank" class="btn"><i class="fas fa-trophy"></i>View AI Magazine Article</a>
+        </div>
+
+        <div class="card">
+          <h3>Prix de l'Innovation</h3>
+          <div class="award-details">
+            <strong>Trophées CIO</strong> • France • 2013
+          </div>
+          <p>Honored with the Prix de l'Innovation at the Trophées CIO in France. This award recognized my leadership and innovation at Criteo, where I served as Vice President of Engineering. During my tenure, I played a pivotal role in driving the company's technological advancements, including the development of cutting-edge tools for advertising technology and the management of exponential growth through scalable infrastructure.</p>
+          <p>This award highlighted my ability to lead high-performing teams, innovate in a rapidly evolving industry, and deliver solutions that had a significant impact on the company's global success.</p>
+        </div>
+
+        <p>These awards reflect my commitment to innovation, my expertise in AI and machine learning, and my ability to drive meaningful change in the tech industry. They are a testament to my contributions to the field and my ongoing efforts to shape the future of technology.</p>
+      </section>
+    </section>
+  </div>
+
+  <div class="tab-content">
+    <section id="speaking">
+      <h2>Speaking</h2>
+      <div class="card">
+        <h3>Conference Presentations & Keynotes</h3>
+        <p>Julien Simon is a sought-after speaker at major AI and machine learning conferences worldwide. With over 30 years of tech experience and deep expertise in AI/ML, cloud computing, and emerging technologies, Julien delivers engaging keynotes, technical workshops, and thought leadership presentations.</p>
+        <a href="speaking.html" target="_blank" class="btn"><i class="fas fa-microphone"></i>View All Speaking Engagements</a>
+      </div>
+      
+      <h3>Recent Highlights</h3>
+      <ul>
+        <li><strong>Machine Learning Week US</strong> - Keynote: "How Transformers Reinvent Machine Learning – for Both Generative AI and Predictive AI" (June 2024)</li>
+        <li><strong>AI Summit London</strong> - Workshop: "Building Cost-Efficient Enterprise AI Solutions with Small Language Models" (May 2024)</li>
+        <li><strong>QCon San Francisco</strong> - Keynote: "Democratizing AI: Making Machine Learning Accessible to Every Developer" (November 2023)</li>
+        <li><strong>AWS re:Invent</strong> - Workshop: "Building Production-Ready ML Pipelines with AWS SageMaker" (November 2022)</li>
+      </ul>
+      
+      <h3>Speaking Topics</h3>
+      <ul>
+        <li><strong>AI/ML</strong> - Machine learning, deep learning, and artificial intelligence</li>
+        <li><strong>Small Language Models</strong> - Cost-efficient enterprise AI solutions</li>
+        <li><strong>Cloud Computing</strong> - AWS, Azure, and cloud-native ML</li>
+        <li><strong>Enterprise AI</strong> - Production deployment and scaling</li>
+        <li><strong>Emerging Technologies</strong> - Latest developments in AI and ML</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="tab-content">
+    <section id="media">
+      <h2>Media</h2>
+      <p>Featured in podcasts, interviews, press coverage, and media appearances.</p>
+      
+      <h3>Press / PR</h3>
+      <ul>
+        <li><a href="https://edtechmagazine.com/k12/article/2025/03/small-language-models-slm-perfcon" target="_blank">Small Language Models for Education</a> - EdTech Magazine (March 2025)</li>
+        <li><a href="https://youtu.be/YdPKPzgtQ00" target="_blank">Cisco Live Interview</a> - YouTube (June 2025)</li>
+        <li><strong>CNN Business</strong> - Led software teams for Pepper, the emotional robot, showcasing early contributions to AI innovation (2014)</li>
+        <li><strong>BBC Radio 5</strong> - Provided expert commentary on the future of AI and its transformative potential across industries (2019)</li>
+        <li><strong>Ars Technica</strong> - Shared insights on machine learning projects and future improvements (2021)</li>
+        <li><strong>VentureBeat</strong> - Discussed generative AI challenges and strategies in data centers (2023)</li>
+        <li><strong>The New Stack</strong> - Highlighted Hugging Face's growth and its role in the AI ecosystem (2023)</li>
+        <li><strong>IEEE Spectrum</strong> - Demonstrated Intel's Q8Chat, showcasing CPUs in AI inference (2023)</li>
+        <li><strong>BFM Business (Tech & Co)</strong> - Three interviews discussing Hugging Face's impact on the AI landscape, partnerships with Google, and future of generative AI technologies (2023-2024)</li>
+        <li><strong>Franceinfo</strong> - Featured in discussion on Hugging Face's role as a leading French startup in the AI sector (2024)</li>
+        <li><strong>Le Monde</strong> - Highlighted for innovative approaches to AI and contributions to the tech industry (2023)</li>
+      </ul>
+
+      <h3>Podcasts</h3>
+      <ul>
+        <li><a href="https://jungs.ai/podcast/episode-1-julien-simon" target="_blank">Jungs AI Podcast with Ngwako Ralepelle</a> - Episode 1 (February 2025)</li>
+        <li><a href="https://art19.com/shows/aws-re-think/episodes/42ba7cac-b3b3-42a4-a809-39e71138d880" target="_blank">AWS re:Think Podcast</a> - Episode (April 2025)</li>
+        <li><a href="https://www.youtube.com/watch?v=Eog_ErwKB5k" target="_blank">AI Space</a> - YouTube (April 2025)</li>
+        <li><a href="https://newsroom.arm.com/podcasts/small-language-models-cpu-inference" target="_blank">ARM Newsroom Podcast</a> - Small Language Models & CPU Inference (April 2025)</li>
+        <li><a href="https://www.youtube.com/watch?v=0vkw5TaTYPo" target="_blank">AWS UAE</a> - YouTube (May 2025)</li>
+        <li><a href="https://www.youtube.com/watch?v=GBXu34sCTRM" target="_blank">Youth Day AI Group</a> - YouTube (June 2025)</li>
+        <li><a href="https://podcasts.apple.com/us/podcast/newminds-ai-ki-podcast/id1741382643" target="_blank">New Minds AI Podcast</a> - Apple Podcasts (June 2025)</li>
+      </ul>
+
+      <h3>TV Interviews</h3>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=JyP55Aw3w5Q" target="_blank">TV Interview 1</a> - YouTube</li>
+        <li><a href="https://www.youtube.com/watch?v=fADF2Wb56Os" target="_blank">TV Interview 2</a> - YouTube</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="tab-content">
+    <section id="writing">
+      <h2>Blog Posts</h2>
+      <p>Technical articles and tutorials covering AI, machine learning, and emerging technologies.</p>
+      
+      <h3>Arcee AI (2024-)</h3>
+      <p>Technical articles and tutorials from my current role as Chief Evangelist at Arcee AI, focusing on small language models and enterprise AI solutions.</p>
+      <h4>Selected Highlights</h4>
+      <ul>
+        <li><a href="https://www.arcee.ai/blog/announcing-the-arcee-foundation-model-family" target="_blank">Announcing the Arcee Foundation Model Family</a> (Jun 2025)</li>
+        <li><a href="https://www.arcee.ai/blog/arcee-conductor-wins-llm-application-of-the-year-at-2025-ai-breakthrough-awards" target="_blank">Arcee Conductor Wins LLM Application of the Year at 2025 AI Breakthrough Awards</a> (Jun 2025)</li>
+        <li><a href="https://www.arcee.ai/blog/building-an-ai-retail-assistant-at-the-edge-with-small-language-models-and-intel-xeon-cpus" target="_blank">Building an AI Retail Assistant at the Edge with Small Language Models and Intel Xeon CPUs</a> (Jun 2025)</li>
+        <li><a href="https://www.arcee.ai/blog/breaking-down-model-vocabulary-barriers-with-tokenizer-transplantation" target="_blank">Breaking Down Model Vocabulary Barriers with Tokenizer Transplantation</a> (Jun 2025)</li>
+        <li><a href="https://www.arcee.ai/blog/releasing-five-new-open-weights-models" target="_blank">Releasing Five New Open-Weights Models</a> (Jun 2025)</li>
+        <li><a href="https://www.arcee.ai/blog/arcee-conductor-and-zerve-bringing-model-routing-to-ai-and-data-science-workflows" target="_blank">Arcee Conductor and Zerve: Bringing Model Routing to AI and Data Science Workflows</a> (Jun 2025)</li>
+        <li><a href="https://www.arcee.ai/blog/the-case-for-small-language-model-inference-on-arm-cpus" target="_blank">The Case for Small Language Model Inference on ARM CPUs</a> (Apr 2025)</li>
+        <li><a href="https://www.arcee.ai/blog/arcee-ai-small-language-models-on-together-ai-and-openrouter" target="_blank">Arcee AI Small Language Models on Together AI and OpenRouter</a> (May 2025)</li>
+        <li><a href="https://www.arcee.ai/blog/enriching-inventory-data-with-arcee-conductor" target="_blank">Enriching Inventory Data with Arcee Conductor</a> (May 2025)</li>
+      </ul>
+
+      <h3>Hugging Face (2021-2024)</h3>
+      <p>Technical articles and tutorials from my time as Chief Evangelist at Hugging Face.</p>
+      <p><strong>Complete collection:</strong> <a href="huggingface-blog-posts.html" target="_blank">View all 23 Hugging Face blog posts (2021-2024)</a></p>
+      <h4>Selected Highlights</h4>
+      <ul>
+        <li><a href="https://huggingface.co/juliensimon/articles/the-age-of-machine-learning-as-code-has-arrived" target="_blank">The Age of Machine Learning As Code Has Arrived</a> (Oct 2021)</li>
+        <li><a href="https://huggingface.co/juliensimon/articles/large-language-models-a-new-moores-law" target="_blank">Large Language Models: A New Moore's Law?</a> (Oct 2021)</li>
+        <li><a href="https://huggingface.co/juliensimon/articles/getting-started-with-hugging-face-inference-endpoints" target="_blank">Getting started with Hugging Face Inference Endpoints</a> (Oct 2022)</li>
+        <li><a href="https://huggingface.co/juliensimon/articles/accelerating-hugging-face-transformers-with-aws-inferentia2" target="_blank">Accelerating Hugging Face Transformers with AWS Inferentia2</a> (Apr 2023)</li>
+        <li><a href="https://huggingface.co/juliensimon/articles/smaller-is-better-q8-chat-an-efficient-generative-ai-experience-on-xeon" target="_blank">Smaller is better: Q8-Chat, an efficient generative AI experience on Xeon</a> (May 2023)</li>
+        <li><a href="https://huggingface.co/juliensimon/articles/safecoder-vs-closed-source-code-assistants" target="_blank">SafeCoder vs. Closed-source Code Assistants</a> (Sep 2023)</li>
+        <li><a href="https://huggingface.co/juliensimon/articles/a-chatbot-on-your-laptop-phi-2-on-intel-meteor-lake" target="_blank">A Chatbot on your Laptop: Phi-2 on Intel Meteor Lake</a> (Mar 2024)</li>
+        <li><a href="https://aws.amazon.com/blogs/apn/getting-started-with-generative-ai-using-hugging-face-platform-on-aws/" target="_blank">Getting Started with Generative AI Using Hugging Face Platform on AWS</a> (Mar 2024)</li>
+        <li><a href="https://aws.amazon.com/blogs/machine-learning/generative-ai-roadshow-in-north-america-with-aws-and-hugging-face/" target="_blank">Generative AI Roadshow in North America with AWS and Hugging Face</a> (Apr 2024)</li>
+      </ul>
+
+      <h3>Amazon Web Services (2015-2021)</h3>
+      <p>Blog posts and technical content from my time as Global Technical Evangelist for AI & ML at AWS.</p>
+      <p><strong>Complete collection:</strong> <a href="aws-blog-posts.html" target="_blank">View all 60+ AWS blog posts (2018-2021)</a></p>
+      <h4>Selected Highlights</h4>
+      <ul>
+        <li><a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-studio-the-first-fully-integrated-development-environment-for-machine-learning/" target="_blank">Amazon SageMaker Studio: The First Fully Integrated Development Environment For Machine Learning</a> (Dec 2019)</li>
+        <li><a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-autopilot-automatically-create-high-quality-machine-learning-models-with-full-control-and-visibility/" target="_blank">Amazon SageMaker Autopilot – Automatically Create High-Quality Machine Learning Models</a> (Dec 2019)</li>
+        <li><a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-experiments-organize-track-and-compare-your-machine-learning-trainings/" target="_blank">Amazon SageMaker Experiments – Organize, Track And Compare Your Machine Learning Trainings</a> (Dec 2019)</li>
+        <li><a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-debugger-debug-your-machine-learning-models/" target="_blank">Amazon SageMaker Debugger – Debug Your Machine Learning Models</a> (Dec 2019)</li>
+        <li><a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-clarify-detects-bias-and-increases-the-transparency-of-machine-learning-models/" target="_blank">Amazon SageMaker Clarify Detects Bias and Increases the Transparency of Machine Learning Models</a> (Dec 2020)</li>
+        <li><a href="https://aws.amazon.com/blogs/aws/new-store-discover-and-share-machine-learning-features-with-amazon-sagemaker-feature-store/" target="_blank">Amazon SageMaker Feature Store – Store, Discover, and Share Machine Learning Features</a> (Dec 2020)</li>
+        <li><a href="https://aws.amazon.com/blogs/aws/aws-and-hugging-face-collaborate-to-simplify-and-accelerate-adoption-of-natural-language-processing-models/" target="_blank">AWS and Hugging Face collaborate to simplify and accelerate adoption of Natural Language Processing models</a> (Mar 2021)</li>
+      </ul>
+
+      <h3>Medium (2015-2021)</h3>
+      <p>Technical articles and tutorials from my early career and time at AWS, covering machine learning, AWS services, and deep learning frameworks.</p>
+      <p><strong>Complete collection:</strong> <a href="medium-blog-posts.html" target="_blank">View all 25+ Medium blog posts (2015-2021)</a></p>
+      <h4>Selected Highlights</h4>
+      <ul>
+        <li><a href="https://julsimon.medium.com/test-drive-amazon-machine-learning-redshift" target="_blank">Test drive: Amazon Machine Learning + Redshift</a> (Apr 2015)</li>
+        <li><a href="https://julsimon.medium.com/a-hands-on-look-at-the-amazon-rekognition-api" target="_blank">A hands-on look at the Amazon Rekognition API</a> (Nov 2016)</li>
+        <li><a href="https://julsimon.medium.com/gluon-building-blocks-for-your-deep-learning-universe" target="_blank">Gluon: building blocks for your Deep Learning universe</a> (Feb 2018)</li>
+        <li><a href="https://julsimon.medium.com/mastering-the-mystical-art-of-model-deployment" target="_blank">Mastering the mystical art of model deployment</a> (Jul 2018)</li>
+        <li><a href="https://julsimon.medium.com/a-map-for-machine-learning-on-aws" target="_blank">A map for Machine Learning on AWS</a> (Dec 2018)</li>
+        <li><a href="https://julsimon.medium.com/a-first-look-at-aws-inferentia" target="_blank">A first look at AWS Inferentia</a> (Dec 2019)</li>
+        <li><a href="https://julsimon.medium.com/working-with-hugging-face-models-on-amazon-sagemaker" target="_blank">Working with Hugging Face models on Amazon SageMaker</a> (Mar 2021)</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="tab-content">
+    <section id="youtube">
+      <h2>YouTube Channel</h2>
+      <div class="card">
+        <h3>@juliensimonfr</h3>
+        <div class="stats">
+          <div class="stat">
+            <i class="fas fa-users"></i>
+            <span>400K+ subscribers</span>
+          </div>
+          <div class="stat">
+            <i class="fas fa-play-circle"></i>
+            <span>400+ videos</span>
+          </div>
+        </div>
+        <p><strong>One of the largest channels for AI & Machine Learning technical content</strong></p>
+        <p>Comprehensive tutorials, deep dives, and practical demonstrations covering the latest in artificial intelligence, machine learning, and emerging technologies. From foundational concepts to advanced implementations, each video provides hands-on, actionable insights for developers and data scientists.</p>
+        <a href="https://www.youtube.com/@juliensimonfr" target="_blank" class="btn"><i class="fab fa-youtube"></i>Visit YouTube Channel</a>
+      </div>
+
+      <h3>Popular Videos</h3>
+      <div class="video-grid">
+        <div>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/Zdu5UyA46io" title="Popular Video 1" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h4>Popular Video 1</h4>
+            <p>One of your most popular videos showcasing AI and machine learning content.</p>
+          </div>
+        </div>
+        
+        <div>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/_hNRG3E4Ny4" title="Popular Video 2" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h4>Popular Video 2</h4>
+            <p>Another highly viewed video from your channel covering technical AI topics.</p>
+          </div>
+        </div>
+        
+        <div>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/cf8z3Q8PFQQ" title="Popular Video 3" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h4>Popular Video 3</h4>
+            <p>Third popular video demonstrating practical machine learning applications.</p>
+          </div>
+        </div>
+        
+        <div>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/hMs8VNRy5Ys" title="Popular Video 4" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h4>Popular Video 4</h4>
+            <p>Fourth popular video showcasing advanced AI and machine learning techniques.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Content Categories</h3>
+      <ul>
+        <li><strong>AI Tutorials</strong> - Step-by-step guides on implementing AI solutions</li>
+        <li><strong>Machine Learning Deep Dives</strong> - In-depth exploration of ML concepts and techniques</li>
+        <li><strong>Cloud Computing</strong> - AWS, Azure, and other cloud platforms for AI/ML</li>
+        <li><strong>Emerging Technologies</strong> - Latest developments in AI, LLMs, and ML frameworks</li>
+        <li><strong>Practical Demonstrations</strong> - Real-world applications and use cases</li>
+        <li><strong>Code Reviews</strong> - Analysis and optimization of AI/ML code</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="tab-content">
+    <section id="books">
+      <h2>Books</h2>
+      <div class="card">
+        <div class="book-card">
+          <img src="https://m.media-amazon.com/images/I/61nbUcX6nCL._SY385_.jpg" alt="Learn Amazon SageMaker Book Cover" class="book-image" />
+          <div class="book-content">
+            <h3>Learn Amazon SageMaker</h3>
+            <p><strong>Author:</strong> Julien Simon (Single author)</p>
+            <p><strong>Description:</strong> The first book ever published on Amazon SageMaker, AWS' flagship machine learning service. This comprehensive guide covers everything developers and data scientists need to know about building, training, and deploying machine learning models on AWS.</p>
+            <p><strong>Publication:</strong> First edition (August 2020), Second edition (September 2021)</p>
+            <p><strong>Pages:</strong> 490</p>
+            <div class="book-actions">
+              <a href="https://www.amazon.com/Learn-Amazon-SageMaker-developers-scientists/dp/180020891X" target="_blank" class="btn"><i class="fab fa-amazon"></i>Buy on Amazon</a>
+              <a href="https://github.com/PacktPublishing/Learn-Amazon-SageMaker" target="_blank" class="btn"><i class="fab fa-github"></i>GitHub Repository</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="contact-info">
+      <p>For consulting, speaking engagements, or AI partnerships:</p>
+      <p><strong>Email:</strong> <a href="mailto:julien@arcee.ai">julien@arcee.ai</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 Julien Simon</p>
+  </div>
+</footer>
+
+</body>
+</html>
