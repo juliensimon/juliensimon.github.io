@@ -4,38 +4,622 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Speaking Engagements - Julien Simon</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/minimalist/1.0.0/minimalist.min.css">
+  
+  <!-- Umami Analytics -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { max-width: 900px; margin: auto; padding: 2rem; font-family: sans-serif; line-height: 1.6; }
-    header, footer { text-align: center; }
-    .back-link { display: inline-block; margin-bottom: 2rem; padding: 0.5rem 1rem; background: #007bff; color: white; text-decoration: none; border-radius: 4px; }
-    .back-link:hover { background: #0056b3; }
-    .year-section { margin: 2rem 0; }
-    .year-section h2 { border-bottom: 2px solid #007bff; padding-bottom: 0.5rem; }
-    .speaking-event { margin: 1rem 0; padding: 1rem; border-left: 3px solid #007bff; background: #f8f9fa; }
-    .speaking-event h3 { margin: 0 0 0.5rem 0; color: #007bff; }
-    .speaking-event .event-details { color: #666; font-size: 0.9rem; margin-bottom: 0.5rem; }
-    .speaking-event .description { margin: 0.5rem 0; }
-    .speaking-event .tags { margin-top: 0.5rem; }
-    .tag { display: inline-block; background: #e9ecef; padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.8rem; margin-right: 0.5rem; color: #666; }
-    .keynote { border-left-color: #dc3545; }
-    .keynote h3 { color: #dc3545; }
-    .workshop { border-left-color: #28a745; }
-    .workshop h3 { color: #28a745; }
-    .panel { border-left-color: #ffc107; }
-    .panel h3 { color: #ffc107; }
+    :root {
+      --primary-color: #1e40af;
+      --primary-dark: #1e3a8a;
+      --primary-light: #3b82f6;
+      --secondary-color: #64748b;
+      --accent-color: #f59e0b;
+      --success-color: #10b981;
+      --danger-color: #ef4444;
+      --background: #ffffff;
+      --surface: #f8fafc;
+      --surface-dark: #f1f5f9;
+      --border: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+      --gradient-surface: linear-gradient(135deg, var(--surface) 0%, var(--background) 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.7;
+      color: var(--text-primary);
+      background: var(--background);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header Styles */
+    header {
+      text-align: center;
+      padding: 5rem 0 4rem;
+      background: var(--gradient-surface);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.02) 0%, rgba(59, 130, 246, 0.02) 100%);
+      pointer-events: none;
+    }
+
+    .profile-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 2.5rem;
+      border: 6px solid var(--background);
+      box-shadow: var(--shadow-xl);
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .profile-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.025em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .title {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      background: var(--gradient-primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn i {
+      font-size: 1rem;
+    }
+
+    /* Main Content */
+    main {
+      padding: 4rem 0;
+    }
+
+    section {
+      margin-bottom: 5rem;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+      letter-spacing: -0.025em;
+      position: relative;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -0.5rem;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+    }
+
+    h3 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.025em;
+    }
+
+    h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 1.125rem;
+      line-height: 1.8;
+    }
+
+    ul {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.875rem;
+      padding-left: 1.75rem;
+      position: relative;
+      color: var(--text-secondary);
+      font-size: 1.0625rem;
+    }
+
+    li::before {
+      content: "▸";
+      color: var(--primary-color);
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    /* Navigation */
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .nav-tab {
+      padding: 0.75rem 1.5rem;
+      background: var(--surface);
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: 1px solid var(--border);
+    }
+
+    .nav-tab:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    .nav-tab.active {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    /* Links */
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 4rem 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* Speaking-specific styles */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--gradient-primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .back-link:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      color: white;
+      text-decoration: none;
+    }
+
+    .year-section {
+      margin: 3rem 0;
+    }
+
+    .year-section h2 {
+      border-bottom: 3px solid var(--primary-color);
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .speaking-event {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .speaking-event::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary-color);
+      transition: all 0.3s ease;
+    }
+
+    .speaking-event:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .speaking-event:hover::before {
+      background: var(--gradient-primary);
+    }
+
+    .speaking-event h3 {
+      margin: 0 0 1rem 0;
+      color: var(--primary-color);
+      font-size: 1.5rem;
+    }
+
+    .speaking-event .event-details {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .speaking-event .description {
+      margin: 1rem 0;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .speaking-event .tags {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--surface-dark);
+      padding: 0.375rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    .keynote {
+      border-left-color: var(--danger-color);
+    }
+
+    .keynote h3 {
+      color: var(--danger-color);
+    }
+
+    .keynote::before {
+      background: var(--danger-color);
+    }
+
+    .workshop {
+      border-left-color: var(--success-color);
+    }
+
+    .workshop h3 {
+      color: var(--success-color);
+    }
+
+    .workshop::before {
+      background: var(--success-color);
+    }
+
+    .panel {
+      border-left-color: var(--accent-color);
+    }
+
+    .panel h3 {
+      color: var(--accent-color);
+    }
+
+    .panel::before {
+      background: var(--accent-color);
+    }
+
+    .info-box {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+    }
+
+    .info-box h3 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .info-box ul {
+      margin-top: 1rem;
+    }
+
+    .info-box li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+
+      h1 {
+        font-size: 2.75rem;
+      }
+
+      .title {
+        font-size: 1.25rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+
+      .social-links {
+        gap: 0.75rem;
+      }
+
+      .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.8125rem;
+      }
+
+      .speaking-event {
+        padding: 1.5rem;
+      }
+
+      .year-section h2 {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2.25rem;
+      }
+
+      .profile-image {
+        width: 160px;
+        height: 160px;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .speaking-event {
+        padding: 1rem;
+      }
+
+      .speaking-event h3 {
+        font-size: 1.25rem;
+      }
+    }
   </style>
 </head>
 <body>
 
 <header>
-  <a href="index.html" class="back-link">← Back to Main Page</a>
-  <h1>Speaking Engagements</h1>
-  <p><em>Conference presentations, keynotes, workshops, and speaking events by Julien Simon</em></p>
+  <div class="container">
+    <img src="julien.jpg" alt="Julien Simon" class="profile-image" />
+    <h1>Julien Simon</h1>
+    <p class="title">Chief Evangelist @ Arcee AI</p>
+    <p class="subtitle">Leading the AI revolution through Small Language Models, empowering enterprises with cost-effective, privacy-first AI solutions that deliver superior performance at scale.</p>
+    <div class="social-links">
+      <a class="btn" href="https://github.com/juliensimon" target="_blank"><i class="fab fa-github"></i>GitHub</a>
+      <a class="btn" href="https://huggingface.co/juliensimon" target="_blank"><i class="fas fa-robot"></i>Hugging Face</a>
+      <a class="btn" href="https://linkedin.com/in/juliensimon" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a>
+      <a class="btn" href="https://julsimon.medium.com/" target="_blank"><i class="fab fa-medium"></i>Medium</a>
+      <a class="btn" href="https://julsimon.substack.com/" target="_blank"><i class="fas fa-envelope-open-text"></i>Substack</a>
+      <a class="btn" href="https://x.com/julsimon" target="_blank"><i class="fab fa-x-twitter"></i>Twitter (X)</a>
+      <a class="btn" href="https://youtube.com/juliensimonfr" target="_blank"><i class="fab fa-youtube"></i>YouTube</a>
+    </div>
+  </div>
 </header>
 
-<main>
-  <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+<main class="container">
+
+  <div class="nav-tabs">
+    <a href="index.html" class="nav-tab">Home</a>
+    <a href="experience.html" class="nav-tab">Experience</a>
+    <a href="speaking.html" class="nav-tab active">Speaking</a>
+    <a href="media.html" class="nav-tab">Media</a>
+    <a href="blog-posts.html" class="nav-tab">Blog Posts</a>
+    <a href="code.html" class="nav-tab">Code</a>
+    <a href="youtube.html" class="nav-tab">YouTube</a>
+    <a href="books.html" class="nav-tab">Books</a>
+  </div>
+
+  <section>
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i>Back to Main Page</a>
+    <h1>Speaking Engagements</h1>
+    <p><em>Conference presentations, keynotes, workshops, and speaking events by Julien Simon</em></p>
+  </section>
+
+  <div class="info-box">
     <h3>About Speaking</h3>
     <p>Julien Simon is a sought-after speaker at major AI and machine learning conferences worldwide. With over 30 years of tech experience and deep expertise in AI/ML, cloud computing, and emerging technologies, Julien delivers engaging keynotes, technical workshops, and thought leadership presentations.</p>
     <p><strong>Speaking topics:</strong> AI/ML, Small Language Models, Cloud Computing, AWS SageMaker, Hugging Face, Enterprise AI, Model Deployment, and Emerging Technologies</p>
@@ -1309,94 +1893,9 @@
       </div>
     </div>
 
-    <div class="speaking-event">
-      <h3>Large Language Models: A New Moore's Law?</h3>
-      <div class="event-details">
-        <strong>AI Conference</strong> • Technical Session • October 2022
-      </div>
-      <div class="description">
-        Analysis of the exponential growth in language model capabilities and its implications for the AI industry and computing infrastructure.
-      </div>
-      <div class="tags">
-        <span class="tag">LLMs</span>
-        <span class="tag">Moore's Law</span>
-        <span class="tag">AI Growth</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="year-section">
-    <h2>2021</h2>
     
-    <div class="speaking-event keynote">
-      <h3>Cloud-Native Machine Learning: The Future of AI Infrastructure</h3>
-      <div class="event-details">
-        <strong>KubeCon</strong> • Keynote • October 2021
-      </div>
-      <div class="description">
-        Keynote on how cloud-native technologies are transforming machine learning infrastructure and enabling scalable AI applications.
-      </div>
-      <div class="tags">
-        <span class="tag">Keynote</span>
-        <span class="tag">Cloud-Native</span>
-        <span class="tag">Kubernetes</span>
-        <span class="tag">AI Infrastructure</span>
-      </div>
-    </div>
 
-    <div class="speaking-event workshop">
-      <h3>Deep Learning with AWS Inferentia</h3>
-      <div class="event-details">
-        <strong>AWS Summit</strong> • Workshop • June 2021
-      </div>
-      <div class="description">
-        Technical workshop on using AWS Inferentia for high-performance, cost-effective machine learning inference at scale.
-      </div>
-      <div class="tags">
-        <span class="tag">Workshop</span>
-        <span class="tag">AWS Inferentia</span>
-        <span class="tag">Deep Learning</span>
-        <span class="tag">Inference</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="year-section">
-    <h2>2020</h2>
-    
-    <div class="speaking-event">
-      <h3>Amazon SageMaker: The Complete ML Platform</h3>
-      <div class="event-details">
-        <strong>AWS re:Invent</strong> • Technical Session • December 2020
-      </div>
-      <div class="description">
-        Comprehensive overview of Amazon SageMaker's capabilities for building, training, and deploying machine learning models.
-      </div>
-      <div class="tags">
-        <span class="tag">AWS SageMaker</span>
-        <span class="tag">ML Platform</span>
-        <span class="tag">Training</span>
-        <span class="tag">Deployment</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Machine Learning at Scale: Lessons from the Field</h3>
-      <div class="event-details">
-        <strong>Strata Data Conference</strong> • Technical Session • September 2020
-      </div>
-      <div class="description">
-        Real-world insights and lessons learned from deploying machine learning systems at enterprise scale.
-      </div>
-      <div class="tags">
-        <span class="tag">Enterprise ML</span>
-        <span class="tag">Scale</span>
-        <span class="tag">Best Practices</span>
-      </div>
-    </div>
-  </div>
-
-  <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+  <div class="info-box">
     <h3>Speaking Inquiries</h3>
     <p>Interested in having Julien speak at your event? He's available for:</p>
     <ul>
@@ -1410,7 +1909,9 @@
 </main>
 
 <footer>
-  <p>&copy; 2025 Julien Simon</p>
+  <div class="container">
+    <p>&copy; 2025 Julien Simon</p>
+  </div>
 </footer>
 
 </body>

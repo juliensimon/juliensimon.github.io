@@ -4,30 +4,291 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AWS Blog Posts - Julien Simon</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/minimalist/1.0.0/minimalist.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { max-width: 900px; margin: auto; padding: 2rem; font-family: sans-serif; line-height: 1.6; }
-    header, footer { text-align: center; }
-    .back-link { display: inline-block; margin-bottom: 2rem; padding: 0.5rem 1rem; background: #007bff; color: white; text-decoration: none; border-radius: 4px; }
-    .back-link:hover { background: #0056b3; }
-    .year-section { margin: 2rem 0; }
-    .year-section h2 { border-bottom: 2px solid #007bff; padding-bottom: 0.5rem; }
-    .blog-post { margin: 1rem 0; padding: 1rem; border-left: 3px solid #007bff; background: #f8f9fa; }
-    .blog-post a { color: #007bff; text-decoration: none; font-weight: bold; }
-    .blog-post a:hover { text-decoration: underline; }
-    .blog-post .date { color: #666; font-size: 0.9rem; }
+    :root {
+      --primary-color: #1e40af;
+      --primary-dark: #1e3a8a;
+      --primary-light: #3b82f6;
+      --secondary-color: #64748b;
+      --accent-color: #f59e0b;
+      --success-color: #10b981;
+      --danger-color: #ef4444;
+      --background: #ffffff;
+      --surface: #f8fafc;
+      --surface-dark: #f1f5f9;
+      --border: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+      --gradient-surface: linear-gradient(135deg, var(--surface) 0%, var(--background) 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.7;
+      color: var(--text-primary);
+      background: var(--background);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header Styles */
+    header {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      background: var(--gradient-surface);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.02) 0%, rgba(59, 130, 246, 0.02) 100%);
+      pointer-events: none;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--gradient-primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      z-index: 1;
+    }
+
+    .back-link:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.025em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Main Content */
+    main {
+      padding: 3rem 0;
+    }
+
+    .about-section {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: 16px;
+      margin-bottom: 3rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .about-section h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      letter-spacing: -0.025em;
+    }
+
+    .about-section p {
+      color: var(--text-secondary);
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .about-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .year-section {
+      margin: 3rem 0;
+    }
+
+    .year-section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.025em;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+
+    .year-section h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+    }
+
+    .blog-post {
+      background: var(--surface);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-post::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-primary);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+
+    .blog-post:hover::before {
+      transform: scaleY(1);
+    }
+
+    .blog-post:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--primary-light);
+    }
+
+    .blog-post a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.125rem;
+      line-height: 1.5;
+      transition: color 0.3s ease;
+    }
+
+    .blog-post a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    .blog-post .date {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-top: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .year-section h2 {
+        font-size: 1.75rem;
+      }
+
+      .blog-post {
+        padding: 1.25rem;
+      }
+
+      .blog-post a {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .about-section {
+        padding: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
 
 <header>
-  <a href="index.html" class="back-link">← Back to Main Page</a>
-  <h1>AWS Blog Posts</h1>
-  <p><em>Complete list of blog posts by Julien Simon during his time at Amazon Web Services (2015-2021)</em></p>
+  <div class="container">
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i>Back to Main Page</a>
+    <h1>AWS Blog Posts</h1>
+    <p class="subtitle">Complete list of blog posts by Julien Simon during his time at Amazon Web Services (2015-2021)</p>
+  </div>
 </header>
 
-<main>
-  <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+<main class="container">
+  <div class="about-section">
     <h3>About This Collection</h3>
     <p>During my time as Global Technical Evangelist for AI & ML at AWS (2018-2024), I authored over 60 technical blog posts covering Amazon SageMaker, machine learning services, and AI innovations. These posts span from foundational tutorials to advanced features and product launches.</p>
     <p><strong>Total posts:</strong> 60+ | <strong>Years covered:</strong> 2018-2021 | <strong>Primary focus:</strong> Amazon SageMaker, AI/ML services, and cloud computing</p>
@@ -322,7 +583,9 @@
 </main>
 
 <footer>
-  <p>&copy; 2025 Julien Simon</p>
+  <div class="container">
+    <p>&copy; 2025 Julien Simon</p>
+  </div>
 </footer>
 
 </body>
