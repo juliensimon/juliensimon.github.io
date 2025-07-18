@@ -8,274 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary-color: #1e40af;
-      --primary-dark: #1e3a8a;
-      --primary-light: #3b82f6;
-      --secondary-color: #64748b;
-      --accent-color: #f59e0b;
-      --success-color: #10b981;
-      --danger-color: #ef4444;
-      --background: #ffffff;
-      --surface: #f8fafc;
-      --surface-dark: #f1f5f9;
-      --border: #e2e8f0;
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-      --text-muted: #64748b;
-      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-      --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-      --gradient-surface: linear-gradient(135deg, var(--surface) 0%, var(--background) 100%);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.7;
-      color: var(--text-primary);
-      background: var(--background);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    /* Header Styles */
-    header {
-      text-align: center;
-      padding: 3rem 0 2rem;
-      background: var(--gradient-surface);
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(30, 64, 175, 0.02) 0%, rgba(59, 130, 246, 0.02) 100%);
-      pointer-events: none;
-    }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      padding: 0.75rem 1.5rem;
-      background: var(--gradient-primary);
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 0.875rem;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-sm);
-      position: relative;
-      z-index: 1;
-    }
-
-    .back-link:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.025em;
-      position: relative;
-      z-index: 1;
-    }
-
-    .subtitle {
-      font-size: 1.125rem;
-      color: var(--text-secondary);
-      font-weight: 400;
-      margin-bottom: 1rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Main Content */
-    main {
-      padding: 3rem 0;
-    }
-
-    .about-section {
-      background: var(--surface);
-      padding: 2rem;
-      border-radius: 16px;
-      margin-bottom: 3rem;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .about-section h3 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-      letter-spacing: -0.025em;
-    }
-
-    .about-section p {
-      color: var(--text-secondary);
-      font-size: 1.0625rem;
-      line-height: 1.7;
-      margin-bottom: 1rem;
-    }
-
-    .about-section p:last-child {
-      margin-bottom: 0;
-    }
-
-    .year-section {
-      margin: 3rem 0;
-    }
-
-    .year-section h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.025em;
-      position: relative;
-      padding-bottom: 0.75rem;
-    }
-
-    .year-section h2::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 60px;
-      height: 4px;
-      background: var(--gradient-primary);
-      border-radius: 2px;
-    }
-
-    .blog-post {
-      background: var(--surface);
-      padding: 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .blog-post::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--gradient-primary);
-      transform: scaleY(0);
-      transition: transform 0.3s ease;
-    }
-
-    .blog-post:hover::before {
-      transform: scaleY(1);
-    }
-
-    .blog-post:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-      border-color: var(--primary-light);
-    }
-
-    .blog-post a {
-      color: var(--primary-color);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.125rem;
-      line-height: 1.5;
-      transition: color 0.3s ease;
-    }
-
-    .blog-post a:hover {
-      color: var(--primary-dark);
-      text-decoration: underline;
-    }
-
-    .blog-post .date {
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-top: 0.5rem;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 3rem 0;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      color: var(--text-secondary);
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .container {
-        padding: 0 1.5rem;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      .year-section h2 {
-        font-size: 1.75rem;
-      }
-
-      .blog-post {
-        padding: 1.25rem;
-      }
-
-      .blog-post a {
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.75rem;
-      }
-
-      .container {
-        padding: 0 1rem;
-      }
-
-      .about-section {
-        padding: 1.5rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
+  
 </head>
 <body>
 
@@ -296,15 +30,15 @@
   <div class="year-section">
     <h2>2024</h2>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/accelerating-protein-language-model-protst-on-intel-gaudi-2" target="_blank">Accelerating Protein Language Model ProtST on Intel Gaudi 2</a>
+      <a href="https://huggingface.co/juliensimon/articles/accelerating-protein-language-model-protst-on-intel-gaudi-2" target="_blank" rel="noopener noreferrer">Accelerating Protein Language Model ProtST on Intel Gaudi 2</a>
       <div class="date">July 3, 2024</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/building-cost-efficient-enterprise-rag-applications-with-intel-gaudi-2-and-intel-xeon" target="_blank">Building Cost-Efficient Enterprise RAG applications with Intel Gaudi 2 and Intel Xeon</a>
+      <a href="https://huggingface.co/juliensimon/articles/building-cost-efficient-enterprise-rag-applications-with-intel-gaudi-2-and-intel-xeon" target="_blank" rel="noopener noreferrer">Building Cost-Efficient Enterprise RAG applications with Intel Gaudi 2 and Intel Xeon</a>
       <div class="date">May 9, 2024</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/a-chatbot-on-your-laptop-phi-2-on-intel-meteor-lake" target="_blank">A Chatbot on your Laptop: Phi-2 on Intel Meteor Lake</a>
+      <a href="https://huggingface.co/juliensimon/articles/a-chatbot-on-your-laptop-phi-2-on-intel-meteor-lake" target="_blank" rel="noopener noreferrer">A Chatbot on your Laptop: Phi-2 on Intel Meteor Lake</a>
       <div class="date">March 20, 2024</div>
     </div>
   </div>
@@ -312,47 +46,47 @@
   <div class="year-section">
     <h2>2023</h2>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/safecoder-vs-closed-source-code-assistants" target="_blank">SafeCoder vs. Closed-source Code Assistants</a>
+      <a href="https://huggingface.co/juliensimon/articles/safecoder-vs-closed-source-code-assistants" target="_blank" rel="noopener noreferrer">SafeCoder vs. Closed-source Code Assistants</a>
       <div class="date">September 11, 2023</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/fine-tuning-stable-diffusion-models-on-intel-cpus" target="_blank">Fine-tuning Stable Diffusion models on Intel CPUs</a>
+      <a href="https://huggingface.co/juliensimon/articles/fine-tuning-stable-diffusion-models-on-intel-cpus" target="_blank" rel="noopener noreferrer">Fine-tuning Stable Diffusion models on Intel CPUs</a>
       <div class="date">July 14, 2023</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/hugging-face-and-amd-partner-on-accelerating-state-of-the-art-models-for-cpu-and-gpu-platforms" target="_blank">Hugging Face and AMD partner on accelerating state-of-the-art models for CPU and GPU platforms</a>
+      <a href="https://huggingface.co/juliensimon/articles/hugging-face-and-amd-partner-on-accelerating-state-of-the-art-models-for-cpu-and-gpu-platforms" target="_blank" rel="noopener noreferrer">Hugging Face and AMD partner on accelerating state-of-the-art models for CPU and GPU platforms</a>
       <div class="date">June 13, 2023</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/hugging-face-and-ibm-partner-on-watsonx-ai-the-next-generation-enterprise-studio-for-ai-builders" target="_blank">Hugging Face and IBM partner on watsonx.ai, the next-generation enterprise studio for AI builders</a>
+      <a href="https://huggingface.co/juliensimon/articles/hugging-face-and-ibm-partner-on-watsonx-ai-the-next-generation-enterprise-studio-for-ai-builders" target="_blank" rel="noopener noreferrer">Hugging Face and IBM partner on watsonx.ai, the next-generation enterprise studio for AI builders</a>
       <div class="date">May 23, 2023</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/smaller-is-better-q8-chat-an-efficient-generative-ai-experience-on-xeon" target="_blank">Smaller is better: Q8-Chat, an efficient generative AI experience on Xeon</a>
+      <a href="https://huggingface.co/juliensimon/articles/smaller-is-better-q8-chat-an-efficient-generative-ai-experience-on-xeon" target="_blank" rel="noopener noreferrer">Smaller is better: Q8-Chat, an efficient generative AI experience on Xeon</a>
       <div class="date">May 16, 2023</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/accelerating-hugging-face-transformers-with-aws-inferentia2" target="_blank">Accelerating Hugging Face Transformers with AWS Inferentia2</a>
+      <a href="https://huggingface.co/juliensimon/articles/accelerating-hugging-face-transformers-with-aws-inferentia2" target="_blank" rel="noopener noreferrer">Accelerating Hugging Face Transformers with AWS Inferentia2</a>
       <div class="date">April 17, 2023</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/accelerating-stable-diffusion-inference-on-intel-cpus" target="_blank">Accelerating Stable Diffusion Inference on Intel CPUs</a>
+      <a href="https://huggingface.co/juliensimon/articles/accelerating-stable-diffusion-inference-on-intel-cpus" target="_blank" rel="noopener noreferrer">Accelerating Stable Diffusion Inference on Intel CPUs</a>
       <div class="date">March 28, 2023</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/how-hugging-face-accelerated-development-of-witty-works-writing-assistant" target="_blank">How Hugging Face Accelerated Development of Witty Works Writing Assistant</a>
+      <a href="https://huggingface.co/juliensimon/articles/how-hugging-face-accelerated-development-of-witty-works-writing-assistant" target="_blank" rel="noopener noreferrer">How Hugging Face Accelerated Development of Witty Works Writing Assistant</a>
       <div class="date">March 1, 2023</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/hugging-face-and-aws-partner-to-make-ai-more-accessible" target="_blank">Hugging Face and AWS partner to make AI more accessible</a>
+      <a href="https://huggingface.co/juliensimon/articles/hugging-face-and-aws-partner-to-make-ai-more-accessible" target="_blank" rel="noopener noreferrer">Hugging Face and AWS partner to make AI more accessible</a>
       <div class="date">February 21, 2023</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/accelerating-pytorch-transformers-with-intel-sapphire-rapids-part-2" target="_blank">Accelerating PyTorch Transformers with Intel Sapphire Rapids, part 2</a>
+      <a href="https://huggingface.co/juliensimon/articles/accelerating-pytorch-transformers-with-intel-sapphire-rapids-part-2" target="_blank" rel="noopener noreferrer">Accelerating PyTorch Transformers with Intel Sapphire Rapids, part 2</a>
       <div class="date">February 6, 2023</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/accelerating-pytorch-transformers-with-intel-sapphire-rapids-part-1" target="_blank">Accelerating PyTorch Transformers with Intel Sapphire Rapids, part 1</a>
+      <a href="https://huggingface.co/juliensimon/articles/accelerating-pytorch-transformers-with-intel-sapphire-rapids-part-1" target="_blank" rel="noopener noreferrer">Accelerating PyTorch Transformers with Intel Sapphire Rapids, part 1</a>
       <div class="date">January 2, 2023</div>
     </div>
   </div>
@@ -360,27 +94,27 @@
   <div class="year-section">
     <h2>2022</h2>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/an-overview-of-inference-solutions-on-hugging-face" target="_blank">An Overview of Inference Solutions on Hugging Face</a>
+      <a href="https://huggingface.co/juliensimon/articles/an-overview-of-inference-solutions-on-hugging-face" target="_blank" rel="noopener noreferrer">An Overview of Inference Solutions on Hugging Face</a>
       <div class="date">November 21, 2022</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/accelerate-your-models-with-optimum-intel-and-openvino" target="_blank">Accelerate your models with 🤗 Optimum Intel and OpenVINO</a>
+      <a href="https://huggingface.co/juliensimon/articles/accelerate-your-models-with-optimum-intel-and-openvino" target="_blank" rel="noopener noreferrer">Accelerate your models with 🤗 Optimum Intel and OpenVINO</a>
       <div class="date">November 2, 2022</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/getting-started-with-hugging-face-inference-endpoints" target="_blank">Getting started with Hugging Face Inference Endpoints</a>
+      <a href="https://huggingface.co/juliensimon/articles/getting-started-with-hugging-face-inference-endpoints" target="_blank" rel="noopener noreferrer">Getting started with Hugging Face Inference Endpoints</a>
       <div class="date">October 14, 2022</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/deep-dive-vision-transformers-on-hugging-face-optimum-graphcore" target="_blank">Deep Dive: Vision Transformers On Hugging Face Optimum Graphcore</a>
+      <a href="https://huggingface.co/juliensimon/articles/deep-dive-vision-transformers-on-hugging-face-optimum-graphcore" target="_blank" rel="noopener noreferrer">Deep Dive: Vision Transformers On Hugging Face Optimum Graphcore</a>
       <div class="date">August 18, 2022</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/intel-and-hugging-face-partner-to-democratize-machine-learning-hardware-acceleration" target="_blank">Intel and Hugging Face Partner to Democratize Machine Learning Hardware Acceleration</a>
+      <a href="https://huggingface.co/juliensimon/articles/intel-and-hugging-face-partner-to-democratize-machine-learning-hardware-acceleration" target="_blank" rel="noopener noreferrer">Intel and Hugging Face Partner to Democratize Machine Learning Hardware Acceleration</a>
       <div class="date">June 15, 2022</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/getting-started-with-transformers-on-habana-gaudi" target="_blank">Getting Started with Transformers on Habana Gaudi</a>
+      <a href="https://huggingface.co/juliensimon/articles/getting-started-with-transformers-on-habana-gaudi" target="_blank" rel="noopener noreferrer">Getting Started with Transformers on Habana Gaudi</a>
       <div class="date">April 26, 2022</div>
     </div>
   </div>
@@ -388,19 +122,19 @@
   <div class="year-section">
     <h2>2021</h2>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/getting-started-with-hugging-face-transformers-for-ipus-with-optimum" target="_blank">Getting Started with Hugging Face Transformers for IPUs with Optimum</a>
+      <a href="https://huggingface.co/juliensimon/articles/getting-started-with-hugging-face-transformers-for-ipus-with-optimum" target="_blank" rel="noopener noreferrer">Getting Started with Hugging Face Transformers for IPUs with Optimum</a>
       <div class="date">November 30, 2021</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/accelerating-pytorch-distributed-fine-tuning-with-intel-technologies" target="_blank">Accelerating PyTorch distributed fine-tuning with Intel technologies</a>
+      <a href="https://huggingface.co/juliensimon/articles/accelerating-pytorch-distributed-fine-tuning-with-intel-technologies" target="_blank" rel="noopener noreferrer">Accelerating PyTorch distributed fine-tuning with Intel technologies</a>
       <div class="date">November 19, 2021</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/large-language-models-a-new-moores-law" target="_blank">Large Language Models: A New Moore's Law?</a>
+      <a href="https://huggingface.co/juliensimon/articles/large-language-models-a-new-moores-law" target="_blank" rel="noopener noreferrer">Large Language Models: A New Moore's Law?</a>
       <div class="date">October 26, 2021</div>
     </div>
     <div class="blog-post">
-      <a href="https://huggingface.co/juliensimon/articles/the-age-of-machine-learning-as-code-has-arrived" target="_blank">The Age of Machine Learning As Code Has Arrived</a>
+      <a href="https://huggingface.co/juliensimon/articles/the-age-of-machine-learning-as-code-has-arrived" target="_blank" rel="noopener noreferrer">The Age of Machine Learning As Code Has Arrived</a>
       <div class="date">October 20, 2021</div>
     </div>
   </div>
@@ -411,6 +145,10 @@
     <p>&copy; 2025 Julien Simon</p>
   </div>
 </footer>
+
+
+<!-- Scripts -->
+<script src="js/main.js"></script>
 
 </body>
 </html> 

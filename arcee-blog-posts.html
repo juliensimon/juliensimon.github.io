@@ -8,274 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary-color: #1e40af;
-      --primary-dark: #1e3a8a;
-      --primary-light: #3b82f6;
-      --secondary-color: #64748b;
-      --accent-color: #f59e0b;
-      --success-color: #10b981;
-      --danger-color: #ef4444;
-      --background: #ffffff;
-      --surface: #f8fafc;
-      --surface-dark: #f1f5f9;
-      --border: #e2e8f0;
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-      --text-muted: #64748b;
-      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-      --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-      --gradient-surface: linear-gradient(135deg, var(--surface) 0%, var(--background) 100%);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.7;
-      color: var(--text-primary);
-      background: var(--background);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    /* Header Styles */
-    header {
-      text-align: center;
-      padding: 3rem 0 2rem;
-      background: var(--gradient-surface);
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(30, 64, 175, 0.02) 0%, rgba(59, 130, 246, 0.02) 100%);
-      pointer-events: none;
-    }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      padding: 0.75rem 1.5rem;
-      background: var(--gradient-primary);
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 0.875rem;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-sm);
-      position: relative;
-      z-index: 1;
-    }
-
-    .back-link:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.025em;
-      position: relative;
-      z-index: 1;
-    }
-
-    .subtitle {
-      font-size: 1.125rem;
-      color: var(--text-secondary);
-      font-weight: 400;
-      margin-bottom: 1rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Main Content */
-    main {
-      padding: 3rem 0;
-    }
-
-    .about-section {
-      background: var(--surface);
-      padding: 2rem;
-      border-radius: 16px;
-      margin-bottom: 3rem;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .about-section h3 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-      letter-spacing: -0.025em;
-    }
-
-    .about-section p {
-      color: var(--text-secondary);
-      font-size: 1.0625rem;
-      line-height: 1.7;
-      margin-bottom: 1rem;
-    }
-
-    .about-section p:last-child {
-      margin-bottom: 0;
-    }
-
-    .year-section {
-      margin: 3rem 0;
-    }
-
-    .year-section h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.025em;
-      position: relative;
-      padding-bottom: 0.75rem;
-    }
-
-    .year-section h2::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 60px;
-      height: 4px;
-      background: var(--gradient-primary);
-      border-radius: 2px;
-    }
-
-    .blog-post {
-      background: var(--surface);
-      padding: 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .blog-post::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--gradient-primary);
-      transform: scaleY(0);
-      transition: transform 0.3s ease;
-    }
-
-    .blog-post:hover::before {
-      transform: scaleY(1);
-    }
-
-    .blog-post:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-      border-color: var(--primary-light);
-    }
-
-    .blog-post a {
-      color: var(--primary-color);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.125rem;
-      line-height: 1.5;
-      transition: color 0.3s ease;
-    }
-
-    .blog-post a:hover {
-      color: var(--primary-dark);
-      text-decoration: underline;
-    }
-
-    .blog-post .date {
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-top: 0.5rem;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 3rem 0;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      color: var(--text-secondary);
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .container {
-        padding: 0 1.5rem;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      .year-section h2 {
-        font-size: 1.75rem;
-      }
-
-      .blog-post {
-        padding: 1.25rem;
-      }
-
-      .blog-post a {
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.75rem;
-      }
-
-      .container {
-        padding: 0 1rem;
-      }
-
-      .about-section {
-        padding: 1.5rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
+  
 </head>
 <body>
 
@@ -297,47 +31,47 @@
   <div class="year-section">
     <h2>2025</h2>
     <div class="blog-post">
-      <a href="https://www.arcee.ai/blog/arcee-ai-small-language-models-excel-across-yupp-ai-leaderboards" target="_blank">Small And Mighty: Arcee AI Language Models Excel Across Yupp.ai Leaderboards</a>
+      <a href="https://www.arcee.ai/blog/arcee-ai-small-language-models-excel-across-yupp-ai-leaderboards" target="_blank" rel="noopener noreferrer">Small And Mighty: Arcee AI Language Models Excel Across Yupp.ai Leaderboards</a>
       <div class="date">July 2025</div>
     </div>
     <div class="blog-post">
-      <a href="https://www.arcee.ai/blog/is-running-language-models-on-cpu-really-viable" target="_blank">Is Running Language Models on CPU Really Viable?</a>
+      <a href="https://www.arcee.ai/blog/is-running-language-models-on-cpu-really-viable" target="_blank" rel="noopener noreferrer">Is Running Language Models on CPU Really Viable?</a>
       <div class="date">July 2025</div>
     </div>
     <div class="blog-post">
-      <a href="https://www.arcee.ai/blog/announcing-the-arcee-foundation-model-family" target="_blank">Announcing the Arcee Foundation Model Family</a>
+      <a href="https://www.arcee.ai/blog/announcing-the-arcee-foundation-model-family" target="_blank" rel="noopener noreferrer">Announcing the Arcee Foundation Model Family</a>
       <div class="date">June 2025</div>
     </div>
     <div class="blog-post">
-      <a href="https://www.arcee.ai/blog/arcee-conductor-wins-llm-application-of-the-year-at-2025-ai-breakthrough-awards" target="_blank">Arcee Conductor Wins LLM Application of the Year at 2025 AI Breakthrough Awards</a>
+      <a href="https://www.arcee.ai/blog/arcee-conductor-wins-llm-application-of-the-year-at-2025-ai-breakthrough-awards" target="_blank" rel="noopener noreferrer">Arcee Conductor Wins LLM Application of the Year at 2025 AI Breakthrough Awards</a>
       <div class="date">June 2025</div>
     </div>
     <div class="blog-post">
-      <a href="https://www.arcee.ai/blog/building-an-ai-retail-assistant-at-the-edge-with-small-language-models-and-intel-xeon-cpus" target="_blank">Building an AI Retail Assistant at the Edge with Small Language Models and Intel Xeon CPUs</a>
+      <a href="https://www.arcee.ai/blog/building-an-ai-retail-assistant-at-the-edge-with-small-language-models-and-intel-xeon-cpus" target="_blank" rel="noopener noreferrer">Building an AI Retail Assistant at the Edge with Small Language Models and Intel Xeon CPUs</a>
       <div class="date">June 2025</div>
     </div>
     <div class="blog-post">
-      <a href="https://www.arcee.ai/blog/breaking-down-model-vocabulary-barriers-with-tokenizer-transplantation" target="_blank">Breaking Down Model Vocabulary Barriers with Tokenizer Transplantation</a>
+      <a href="https://www.arcee.ai/blog/breaking-down-model-vocabulary-barriers-with-tokenizer-transplantation" target="_blank" rel="noopener noreferrer">Breaking Down Model Vocabulary Barriers with Tokenizer Transplantation</a>
       <div class="date">June 2025</div>
     </div>
     <div class="blog-post">
-      <a href="https://www.arcee.ai/blog/releasing-five-new-open-weights-models" target="_blank">Releasing Five New Open-Weights Models</a>
+      <a href="https://www.arcee.ai/blog/releasing-five-new-open-weights-models" target="_blank" rel="noopener noreferrer">Releasing Five New Open-Weights Models</a>
       <div class="date">June 2025</div>
     </div>
     <div class="blog-post">
-      <a href="https://www.arcee.ai/blog/arcee-conductor-and-zerve-bringing-model-routing-to-ai-and-data-science-workflows" target="_blank">Arcee Conductor and Zerve: Bringing Model Routing to AI and Data Science Workflows</a>
+      <a href="https://www.arcee.ai/blog/arcee-conductor-and-zerve-bringing-model-routing-to-ai-and-data-science-workflows" target="_blank" rel="noopener noreferrer">Arcee Conductor and Zerve: Bringing Model Routing to AI and Data Science Workflows</a>
       <div class="date">June 2025</div>
     </div>
     <div class="blog-post">
-      <a href="https://www.arcee.ai/blog/arcee-ai-small-language-models-on-together-ai-and-openrouter" target="_blank">Arcee AI Small Language Models on Together AI and OpenRouter</a>
+      <a href="https://www.arcee.ai/blog/arcee-ai-small-language-models-on-together-ai-and-openrouter" target="_blank" rel="noopener noreferrer">Arcee AI Small Language Models on Together AI and OpenRouter</a>
       <div class="date">May 2025</div>
     </div>
     <div class="blog-post">
-      <a href="https://www.arcee.ai/blog/enriching-inventory-data-with-arcee-conductor" target="_blank">Enriching Inventory Data with Arcee Conductor</a>
+      <a href="https://www.arcee.ai/blog/enriching-inventory-data-with-arcee-conductor" target="_blank" rel="noopener noreferrer">Enriching Inventory Data with Arcee Conductor</a>
       <div class="date">May 2025</div>
     </div>
     <div class="blog-post">
-      <a href="https://www.arcee.ai/blog/the-case-for-small-language-model-inference-on-arm-cpus" target="_blank">The Case for Small Language Model Inference on ARM CPUs</a>
+      <a href="https://www.arcee.ai/blog/the-case-for-small-language-model-inference-on-arm-cpus" target="_blank" rel="noopener noreferrer">The Case for Small Language Model Inference on ARM CPUs</a>
       <div class="date">April 2025</div>
     </div>
   </div>
@@ -348,6 +82,10 @@
     <p>&copy; 2025 Julien Simon</p>
   </div>
 </footer>
+
+
+<!-- Scripts -->
+<script src="js/main.js"></script>
 
 </body>
 </html> 

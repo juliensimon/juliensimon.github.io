@@ -8,306 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary-color: #1e40af;
-      --primary-dark: #1e3a8a;
-      --primary-light: #3b82f6;
-      --secondary-color: #64748b;
-      --accent-color: #f59e0b;
-      --success-color: #10b981;
-      --danger-color: #ef4444;
-      --background: #ffffff;
-      --surface: #f8fafc;
-      --surface-dark: #f1f5f9;
-      --border: #e2e8f0;
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-      --text-muted: #64748b;
-      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-      --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-      --gradient-surface: linear-gradient(135deg, var(--surface) 0%, var(--background) 100%);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.7;
-      color: var(--text-primary);
-      background: var(--background);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    /* Header Styles */
-    header {
-      text-align: center;
-      padding: 3rem 0 2rem;
-      background: var(--gradient-surface);
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(30, 64, 175, 0.02) 0%, rgba(59, 130, 246, 0.02) 100%);
-      pointer-events: none;
-    }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      padding: 0.75rem 1.5rem;
-      background: var(--gradient-primary);
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 0.875rem;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-sm);
-      position: relative;
-      z-index: 1;
-    }
-
-    .back-link:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.025em;
-      position: relative;
-      z-index: 1;
-    }
-
-    .subtitle {
-      font-size: 1.125rem;
-      color: var(--text-secondary);
-      font-weight: 400;
-      margin-bottom: 1rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Main Content */
-    main {
-      padding: 3rem 0;
-    }
-
-    .about-section {
-      background: var(--surface);
-      padding: 2rem;
-      border-radius: 16px;
-      margin-bottom: 3rem;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .about-section h3 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-      letter-spacing: -0.025em;
-    }
-
-    .about-section p {
-      color: var(--text-secondary);
-      font-size: 1.0625rem;
-      line-height: 1.7;
-      margin-bottom: 1rem;
-    }
-
-    .about-section p:last-child {
-      margin-bottom: 0;
-    }
-
-    .year-section {
-      margin: 3rem 0;
-    }
-
-    .year-section h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.025em;
-      position: relative;
-      padding-bottom: 0.75rem;
-    }
-
-    .year-section h2::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 60px;
-      height: 4px;
-      background: var(--gradient-primary);
-      border-radius: 2px;
-    }
-
-    .blog-post {
-      background: var(--surface);
-      padding: 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .blog-post::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--gradient-primary);
-      transform: scaleY(0);
-      transition: transform 0.3s ease;
-    }
-
-    .blog-post:hover::before {
-      transform: scaleY(1);
-    }
-
-    .blog-post:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-      border-color: var(--primary-light);
-    }
-
-    .blog-post a {
-      color: var(--primary-color);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.125rem;
-      line-height: 1.5;
-      transition: color 0.3s ease;
-    }
-
-    .blog-post a:hover {
-      color: var(--primary-dark);
-      text-decoration: underline;
-    }
-
-    .blog-post .date {
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-top: 0.5rem;
-    }
-
-    .blog-post h4 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.025em;
-    }
-
-    .series-post {
-      margin: 0.5rem 0;
-      padding: 1rem;
-      border-left: 3px solid var(--success-color);
-      background: var(--surface);
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .series-post:hover {
-      background: var(--surface-dark);
-      transform: translateX(4px);
-    }
-
-    .series-post a {
-      color: var(--success-color);
-      font-weight: 600;
-    }
-
-    .series-post a:hover {
-      color: var(--success-color);
-      text-decoration: underline;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 3rem 0;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      color: var(--text-secondary);
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .container {
-        padding: 0 1.5rem;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      .year-section h2 {
-        font-size: 1.75rem;
-      }
-
-      .blog-post {
-        padding: 1.25rem;
-      }
-
-      .blog-post a {
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.75rem;
-      }
-
-      .container {
-        padding: 0 1rem;
-      }
-
-      .about-section {
-        padding: 1.5rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
+  
 </head>
 <body>
 
@@ -329,7 +31,7 @@
   <div class="year-section">
     <h2>2021</h2>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/working-with-hugging-face-models-on-amazon-sagemaker" target="_blank">Working with Hugging Face models on Amazon SageMaker</a>
+      <a href="https://julsimon.medium.com/working-with-hugging-face-models-on-amazon-sagemaker" target="_blank" rel="noopener noreferrer">Working with Hugging Face models on Amazon SageMaker</a>
       <div class="date">March 25, 2021</div>
     </div>
   </div>
@@ -337,7 +39,7 @@
   <div class="year-section">
     <h2>2020</h2>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/deploying-machine-learning-models-with-mlflow-and-amazon-sagemaker" target="_blank">Deploying Machine Learning Models with mlflow and Amazon SageMaker</a>
+      <a href="https://julsimon.medium.com/deploying-machine-learning-models-with-mlflow-and-amazon-sagemaker" target="_blank" rel="noopener noreferrer">Deploying Machine Learning Models with mlflow and Amazon SageMaker</a>
       <div class="date">February 14, 2020</div>
     </div>
   </div>
@@ -345,11 +47,11 @@
   <div class="year-section">
     <h2>2019</h2>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/a-primer-on-graph-neural-networks-with-amazon-neptune-and-the-deep-graph-library" target="_blank">A primer on Graph Neural Networks with Amazon Neptune and the Deep Graph Library</a>
+      <a href="https://julsimon.medium.com/a-primer-on-graph-neural-networks-with-amazon-neptune-and-the-deep-graph-library" target="_blank" rel="noopener noreferrer">A primer on Graph Neural Networks with Amazon Neptune and the Deep Graph Library</a>
       <div class="date">December 22, 2019</div>
     </div>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/a-first-look-at-aws-inferentia" target="_blank">A first look at AWS Inferentia</a>
+      <a href="https://julsimon.medium.com/a-first-look-at-aws-inferentia" target="_blank" rel="noopener noreferrer">A first look at AWS Inferentia</a>
       <div class="date">December 14, 2019</div>
     </div>
   </div>
@@ -357,38 +59,38 @@
   <div class="year-section">
     <h2>2018</h2>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/a-map-for-machine-learning-on-aws" target="_blank">A map for Machine Learning on AWS</a>
+      <a href="https://julsimon.medium.com/a-map-for-machine-learning-on-aws" target="_blank" rel="noopener noreferrer">A map for Machine Learning on AWS</a>
       <div class="date">December 14, 2018</div>
     </div>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/mastering-the-mystical-art-of-model-deployment" target="_blank">Mastering the mystical art of model deployment</a>
+      <a href="https://julsimon.medium.com/mastering-the-mystical-art-of-model-deployment" target="_blank" rel="noopener noreferrer">Mastering the mystical art of model deployment</a>
       <div class="date">July 28, 2018</div>
     </div>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/gluon-cv-add-image-classification-detection-and-segmentation-to-your-application-in-minutes" target="_blank">Gluon CV: add image classification, detection and segmentation to your application in minutes</a>
+      <a href="https://julsimon.medium.com/gluon-cv-add-image-classification-detection-and-segmentation-to-your-application-in-minutes" target="_blank" rel="noopener noreferrer">Gluon CV: add image classification, detection and segmentation to your application in minutes</a>
       <div class="date">June 1, 2018</div>
     </div>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/retraining-sagemaker-models-with-chalice-and-serverless" target="_blank">Retraining SageMaker models with Chalice and Serverless</a>
+      <a href="https://julsimon.medium.com/retraining-sagemaker-models-with-chalice-and-serverless" target="_blank" rel="noopener noreferrer">Retraining SageMaker models with Chalice and Serverless</a>
       <div class="date">May 14, 2018</div>
     </div>
     <div class="blog-post">
       <h4>Tumbling down the Stochastic Gradient Descent rabbit hole (2-part series)</h4>
       <div class="series-post">
-        <a href="https://julsimon.medium.com/tagged/stochastic-gradient-descent" target="_blank">View SGD series →</a>
+        <a href="https://julsimon.medium.com/tagged/stochastic-gradient-descent" target="_blank" rel="noopener noreferrer">View SGD series →</a>
         <div class="date">March 2018</div>
       </div>
     </div>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/gluon-building-blocks-for-your-deep-learning-universe" target="_blank">Gluon: building blocks for your Deep Learning universe</a>
+      <a href="https://julsimon.medium.com/gluon-building-blocks-for-your-deep-learning-universe" target="_blank" rel="noopener noreferrer">Gluon: building blocks for your Deep Learning universe</a>
       <div class="date">February 5, 2018</div>
     </div>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/predicting-world-temperature-with-time-series-and-deepar-on-amazon-sagemaker" target="_blank">Predicting world temperature with time series and DeepAR on Amazon SageMaker</a>
+      <a href="https://julsimon.medium.com/predicting-world-temperature-with-time-series-and-deepar-on-amazon-sagemaker" target="_blank" rel="noopener noreferrer">Predicting world temperature with time series and DeepAR on Amazon SageMaker</a>
       <div class="date">February 1, 2018</div>
     </div>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/image-classification-on-amazon-sagemaker" target="_blank">Image classification on Amazon SageMaker</a>
+      <a href="https://julsimon.medium.com/image-classification-on-amazon-sagemaker" target="_blank" rel="noopener noreferrer">Image classification on Amazon SageMaker</a>
       <div class="date">January 16, 2018</div>
     </div>
   </div>
@@ -396,32 +98,32 @@
   <div class="year-section">
     <h2>2017</h2>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/building-fpga-applications-on-aws-and-yes-for-deep-learning-too" target="_blank">Building FPGA applications on AWS — and yes, for Deep Learning too</a>
+      <a href="https://julsimon.medium.com/building-fpga-applications-on-aws-and-yes-for-deep-learning-too" target="_blank" rel="noopener noreferrer">Building FPGA applications on AWS — and yes, for Deep Learning too</a>
       <div class="date">October 10, 2017</div>
     </div>
     <div class="blog-post">
       <h4>Johnny Pi, I am your father (7-part series on AI robotics with Raspberry Pi)</h4>
       <div class="series-post">
-        <a href="https://julsimon.medium.com/johnny-pi-i-am-your-father-part-1" target="_blank">Start the series →</a>
+        <a href="https://julsimon.medium.com/johnny-pi-i-am-your-father-part-1" target="_blank" rel="noopener noreferrer">Start the series →</a>
         <div class="date">October 2017</div>
       </div>
     </div>
     <div class="blog-post">
       <h4>Training MXNet (5-part series)</h4>
       <div class="series-post">
-        <a href="https://julsimon.medium.com/tagged/mxnet-training" target="_blank">View training series →</a>
+        <a href="https://julsimon.medium.com/tagged/mxnet-training" target="_blank" rel="noopener noreferrer">View training series →</a>
         <div class="date">April 2017</div>
       </div>
     </div>
     <div class="blog-post">
       <h4>An introduction to the MXNet API (6-part series)</h4>
       <div class="series-post">
-        <a href="https://julsimon.medium.com/tagged/mxnet" target="_blank">View API series →</a>
+        <a href="https://julsimon.medium.com/tagged/mxnet" target="_blank" rel="noopener noreferrer">View API series →</a>
         <div class="date">April 2017</div>
       </div>
     </div>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/exploring-the-gdelt-data-set-with-amazon-athena" target="_blank">Exploring the GDELT data set with Amazon Athena</a>
+      <a href="https://julsimon.medium.com/exploring-the-gdelt-data-set-with-amazon-athena" target="_blank" rel="noopener noreferrer">Exploring the GDELT data set with Amazon Athena</a>
       <div class="date">March 3, 2017</div>
     </div>
   </div>
@@ -429,7 +131,7 @@
   <div class="year-section">
     <h2>2016</h2>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/a-hands-on-look-at-the-amazon-rekognition-api" target="_blank">A hands-on look at the Amazon Rekognition API</a>
+      <a href="https://julsimon.medium.com/a-hands-on-look-at-the-amazon-rekognition-api" target="_blank" rel="noopener noreferrer">A hands-on look at the Amazon Rekognition API</a>
       <div class="date">November 30, 2016</div>
     </div>
   </div>
@@ -437,7 +139,7 @@
   <div class="year-section">
     <h2>2015</h2>
     <div class="blog-post">
-      <a href="https://julsimon.medium.com/test-drive-amazon-machine-learning-redshift" target="_blank">Test drive: Amazon Machine Learning + Redshift</a>
+      <a href="https://julsimon.medium.com/test-drive-amazon-machine-learning-redshift" target="_blank" rel="noopener noreferrer">Test drive: Amazon Machine Learning + Redshift</a>
       <div class="date">April 14, 2015</div>
     </div>
   </div>
@@ -448,6 +150,10 @@
     <p>&copy; 2025 Julien Simon</p>
   </div>
 </footer>
+
+
+<!-- Scripts -->
+<script src="js/main.js"></script>
 
 </body>
 </html> 

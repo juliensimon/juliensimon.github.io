@@ -11,455 +11,26 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary-color: #1e40af;
-      --primary-dark: #1e3a8a;
-      --primary-light: #3b82f6;
-      --secondary-color: #64748b;
-      --accent-color: #f59e0b;
-      --success-color: #10b981;
-      --danger-color: #ef4444;
-      --background: #ffffff;
-      --surface: #f8fafc;
-      --surface-dark: #f1f5f9;
-      --border: #e2e8f0;
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-      --text-muted: #64748b;
-      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-      --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-      --gradient-surface: linear-gradient(135deg, var(--surface) 0%, var(--background) 100%);
-    }
+  <link rel="stylesheet" href="css/styles.css">
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.7;
-      color: var(--text-primary);
-      background: var(--background);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    /* Header Styles */
-    header {
-      text-align: center;
-      padding: 5rem 0 4rem;
-      background: var(--gradient-surface);
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(30, 64, 175, 0.02) 0%, rgba(59, 130, 246, 0.02) 100%);
-      pointer-events: none;
-    }
-
-    .profile-image {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin: 0 auto 2.5rem;
-      border: 6px solid var(--background);
-      box-shadow: var(--shadow-xl);
-      transition: all 0.4s ease;
-      position: relative;
-      z-index: 1;
-    }
-
-    .profile-image:hover {
-      transform: scale(1.05);
-      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-    }
-
-    h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.025em;
-      position: relative;
-      z-index: 1;
-    }
-
-    .title {
-      font-size: 1.5rem;
-      color: var(--primary-color);
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .subtitle {
-      font-size: 1.125rem;
-      color: var(--text-secondary);
-      font-weight: 400;
-      margin-bottom: 2.5rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.6;
-      position: relative;
-      z-index: 1;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.875rem 1.75rem;
-      background: var(--gradient-primary);
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 0.875rem;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-sm);
-      border: none;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .btn:hover::before {
-      left: 100%;
-    }
-
-    .btn:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .btn i {
-      font-size: 1rem;
-    }
-
-    /* Navigation */
-    .nav-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin: 2rem 0;
-      flex-wrap: wrap;
-    }
-
-    .nav-tab {
-      padding: 0.75rem 1.5rem;
-      background: var(--surface);
-      color: var(--text-secondary);
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      border: 1px solid var(--border);
-    }
-
-    .nav-tab:hover {
-      background: var(--primary-color);
-      color: white;
-      transform: translateY(-1px);
-    }
-
-    .nav-tab.active {
-      background: var(--primary-color);
-      color: white;
-    }
-
-    /* Main Content */
-    main {
-      padding: 4rem 0;
-    }
-
-    section {
-      margin-bottom: 5rem;
-    }
-
-    h2 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 2rem;
-      letter-spacing: -0.025em;
-      position: relative;
-    }
-
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -0.5rem;
-      left: 0;
-      width: 60px;
-      height: 4px;
-      background: var(--gradient-primary);
-      border-radius: 2px;
-    }
-
-    h3 {
-      font-size: 1.75rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 1.25rem;
-      letter-spacing: -0.025em;
-    }
-
-    h4 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-    }
-
-    p {
-      margin-bottom: 1.5rem;
-      color: var(--text-secondary);
-      font-size: 1.125rem;
-      line-height: 1.8;
-    }
-
-    ul {
-      list-style: none;
-      margin-bottom: 1.5rem;
-    }
-
-    li {
-      margin-bottom: 0.875rem;
-      padding-left: 1.75rem;
-      position: relative;
-      color: var(--text-secondary);
-      font-size: 1.0625rem;
-    }
-
-    li::before {
-      content: "▸";
-      color: var(--primary-color);
-      font-weight: bold;
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-
-    /* Experience Section */
-    .experience-item {
-      background: var(--surface);
-      padding: 2rem;
-      border-radius: 16px;
-      margin-bottom: 1.5rem;
-      border: 1px solid var(--border);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .experience-item::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--gradient-primary);
-      transform: scaleY(0);
-      transition: transform 0.3s ease;
-    }
-
-    .experience-item:hover::before {
-      transform: scaleY(1);
-    }
-
-    .experience-item:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-      border-color: var(--primary-light);
-    }
-
-    .experience-title {
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-      font-size: 1.25rem;
-    }
-
-    .experience-company {
-      color: var(--primary-color);
-      font-weight: 600;
-      font-size: 1.125rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .experience-date {
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      font-weight: 500;
-    }
-
-    /* Cards */
-    .card {
-      background: var(--surface);
-      border-radius: 20px;
-      padding: 2.5rem;
-      margin-bottom: 2.5rem;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--gradient-primary);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    .card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .card:hover {
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-4px);
-    }
-
-    /* Links */
-    a {
-      color: var(--primary-color);
-      text-decoration: none;
-      transition: all 0.3s ease;
-      font-weight: 500;
-    }
-
-    a:hover {
-      color: var(--primary-dark);
-      text-decoration: underline;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container {
-        padding: 0 1.5rem;
-      }
-
-      h1 {
-        font-size: 2.75rem;
-      }
-
-      .title {
-        font-size: 1.25rem;
-      }
-
-      .subtitle {
-        font-size: 1rem;
-      }
-
-      .nav-tabs {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .nav-tab {
-        width: 100%;
-        max-width: 300px;
-        text-align: center;
-      }
-
-      .social-links {
-        gap: 0.75rem;
-      }
-
-      .btn {
-        padding: 0.75rem 1.5rem;
-        font-size: 0.8125rem;
-      }
-
-      .card {
-        padding: 2rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 2.25rem;
-      }
-
-      .profile-image {
-        width: 160px;
-        height: 160px;
-      }
-
-      .container {
-        padding: 0 1rem;
-      }
-    }
-  </style>
 </head>
 <body>
 
 <header>
   <div class="container">
-    <img src="julien.jpg" alt="Julien Simon" class="profile-image" />
+    <img src="assets/julien.jpg" alt="Julien Simon" class="profile-image" />
     <h1>Julien Simon</h1>
     <p class="title">Chief Evangelist @ Arcee AI</p>
     <p class="subtitle">Leading the AI revolution through Small Language Models, empowering enterprises with cost-effective, privacy-first AI solutions that deliver superior performance at scale.</p>
     <div class="social-links">
-      <a class="btn" href="https://github.com/juliensimon" target="_blank"><i class="fab fa-github"></i>GitHub</a>
-      <a class="btn" href="https://huggingface.co/juliensimon" target="_blank"><i class="fas fa-robot"></i>Hugging Face</a>
-      <a class="btn" href="https://linkedin.com/in/juliensimon" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a>
-      <a class="btn" href="https://julsimon.medium.com/" target="_blank"><i class="fab fa-medium"></i>Medium</a>
-      <a class="btn" href="https://julsimon.substack.com/" target="_blank"><i class="fas fa-envelope-open-text"></i>Substack</a>
-      <a class="btn" href="https://x.com/julsimon" target="_blank"><i class="fab fa-x-twitter"></i>Twitter (X)</a>
-      <a class="btn" href="https://youtube.com/juliensimonfr" target="_blank"><i class="fab fa-youtube"></i>YouTube</a>
+      <a class="btn" href="https://github.com/juliensimon" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>GitHub</a>
+      <a class="btn" href="https://huggingface.co/juliensimon" target="_blank" rel="noopener noreferrer"><i class="fas fa-robot"></i>Hugging Face</a>
+      <a class="btn" href="https://linkedin.com/in/juliensimon" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i>LinkedIn</a>
+      <a class="btn" href="https://julsimon.medium.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-medium"></i>Medium</a>
+      <a class="btn" href="https://julsimon.substack.com/" target="_blank" rel="noopener noreferrer"><i class="fas fa-envelope-open-text"></i>Substack</a>
+      <a class="btn" href="https://x.com/julsimon" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i>Twitter (X)</a>
+      <a class="btn" href="https://youtube.com/juliensimonfr" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i>YouTube</a>
     </div>
   </div>
 </header>
@@ -480,31 +51,31 @@
     <h2>Experience</h2>
     <div class="experience-item">
       <div class="experience-title">Vice President & Chief Evangelist</div>
-      <div class="experience-company"><a href="https://www.arcee.ai" target="_blank">Arcee AI</a></div>
+      <div class="experience-company"><a href="https://www.arcee.ai" target="_blank" rel="noopener noreferrer">Arcee AI</a></div>
       <div class="experience-date">2024 – Present</div>
       <p>Act as the first customer and provide in-depth feedback to the R&D team to enhance product usability. Create and publish deep technical content including code demos, blog posts, and YouTube videos (400k subscribers). Regularly speak at international conferences and institutions (World Bank). Bring technical expertise on cloud and open-source AI, benchmark and deploy models across hardware platforms (CPU, GPU, AI accelerators), and lead model integration on partner platforms. Recognized as an Arm Ambassador for expertise in inference on Arm platforms.</p>
     </div>
     <div class="experience-item">
       <div class="experience-title">Chief Evangelist</div>
-      <div class="experience-company"><a href="https://huggingface.co" target="_blank">Hugging Face</a></div>
+      <div class="experience-company"><a href="https://huggingface.co" target="_blank" rel="noopener noreferrer">Hugging Face</a></div>
       <div class="experience-date">2021 – 2024</div>
       <p>As a field CTO, worked with Fortune 500 technical teams and decision-makers to help them adopt and deploy solutions on private infrastructure (VPC and on-prem). Acted as tech lead on several projects, most notably with JPMorgan. Initiated strategic partnerships with AWS, Azure, Google, Intel, AMD, etc. Led 250+ AWS customer meetings generating an immediate commercial pipeline in excess of $35 million. Created deep technical AI/ML content with focus on optimizing transformer inference across hardware platforms. Regularly spoke at international conferences and engaged with TV, radio, and press.</p>
     </div>
     <div class="experience-item">
       <div class="experience-title">Global Evangelist, Machine Learning and AI</div>
-      <div class="experience-company"><a href="https://aws.amazon.com" target="_blank">Amazon Web Services</a></div>
+      <div class="experience-company"><a href="https://aws.amazon.com" target="_blank" rel="noopener noreferrer">Amazon Web Services</a></div>
       <div class="experience-date">2015 – 2021</div>
       <p>Helped AWS customers worldwide understand and adopt the AWS AI/ML service portfolio. Built a wealth of deep technical content (blogs, videos, demos) and authored the first book on Amazon SageMaker. Gave 500+ talks in nearly 40+ countries and took part in hundreds of 1:1 sessions with AWS customers from technical teams to C-level at Fortune 500 companies. Worked directly with AWS service teams to incorporate customer feedback and improve services before launch. Promoted to Amazon level 8 (Director level for individual contributors) and named #1 AI Evangelist by AI Magazine in 2021.</p>
     </div>
     <div class="experience-item">
       <div class="experience-title">Technology Leadership Roles</div>
-      <div class="experience-company"><a href="https://www.linkedin.com/company/viadeo" target="_blank">Viadeo</a>, <a href="https://www.criteo.com" target="_blank">Criteo</a>, <a href="https://www.linkedin.com/company/pixmania" target="_blank">Pixmania</a>, <a href="https://www.linkedin.com/company/digiplug" target="_blank">Digiplug</a>, <a href="https://www.idemia.com" target="_blank">Oberthur Technologies</a>, <a href="https://www.softbankrobotics.com" target="_blank">Aldebaran Robotics</a></div>
+      <div class="experience-company"><a href="https://www.linkedin.com/company/viadeo" target="_blank" rel="noopener noreferrer">Viadeo</a>, <a href="https://www.criteo.com" target="_blank" rel="noopener noreferrer">Criteo</a>, <a href="https://www.linkedin.com/company/pixmania" target="_blank" rel="noopener noreferrer">Pixmania</a>, <a href="https://www.linkedin.com/company/digiplug" target="_blank" rel="noopener noreferrer">Digiplug</a>, <a href="https://www.idemia.com" target="_blank" rel="noopener noreferrer">Oberthur Technologies</a>, <a href="https://www.softbankrobotics.com" target="_blank" rel="noopener noreferrer">Aldebaran Robotics</a></div>
       <div class="experience-date">2003 – 2016</div>
       <p>CTO and VP Engineering roles across high-scale technology startups and established companies. Led software, infrastructure, and big data teams (60-150 engineers) for platforms serving millions of users. Key achievements include: Viadeo (10M-member social network, AWS migration), Criteo (AdTech SaaS for 3,000+ retailers, 20B daily requests, 6PB Hadoop cluster), Pixmania (€2B e-commerce platform), Digiplug (SaaS for major music companies), Oberthur Technologies (smart card development for Vodafone Group, Cingular, managing 70 engineers across France, China, and Philippines), and Aldebaran Robotics (managed 130 engineers, launched world-famous Pepper robot in Tokyo, featured on CNN). Managed multi-million euro budgets, implemented agile methodologies, and delivered high-availability solutions (>99.9% uptime). Technical environment: Java, C#, C++, Python, Node.js, big data (Hadoop, Spark, HBase), databases (MySQL, Oracle, MongoDB), cloud platforms (AWS), machine learning applications, smartcard microcontrollers, embedded systems, robotics, AI (speech and vision), cryptography.</p>
     </div>
     <div class="experience-item">
       <div class="experience-title"> Systems & Embedded Software Engineer</div>
-      <div class="experience-company"><a href="https://www.bosch.com" target="_blank">Bosch Telecom</a>, <a href="https://www.oracle.com/sun" target="_blank">Sun Microsystems</a>, <a href="https://www.slb.com" target="_blank">Schlumberger Sema</a>, <a href="https://www.isep.fr" target="_blank">ISEP</a></div>
+      <div class="experience-company"><a href="https://www.bosch.com" target="_blank" rel="noopener noreferrer">Bosch Telecom</a>, <a href="https://www.oracle.com/sun" target="_blank" rel="noopener noreferrer">Sun Microsystems</a>, <a href="https://www.slb.com" target="_blank" rel="noopener noreferrer">Schlumberger Sema</a>, <a href="https://www.isep.fr" target="_blank" rel="noopener noreferrer">ISEP</a></div>
       <div class="experience-date">1994 – 2003</div>
       <p>Software engineering roles in research and development, embedded systems, and operating systems. Embedded software engineering on telecom platforms for major technology companies, and research contributions to distributed operating systems based on Mach microkernel at Paris 6 University. Published international papers (IEEE, IASTED, PDPTA) and taught Computer Science classes. Technical environment: Embedded systems (68k, PowerPC), C, C++, Java, JavaCard, ChorusOS, Linux, Solaris, distributed operating systems.</p>
     </div>
@@ -537,7 +108,7 @@
         </div>
         <p>Ranked as the #1 AI Evangelist globally by AI Magazine, a distinction that placed me alongside AI luminaries such as Andrew Ng. This recognition was a testament to my dedication to advancing the field of artificial intelligence and machine learning. As AWS's Global AI & Machine Learning Evangelist, I consistently demonstrated a passion for sharing knowledge, creating educational content, and fostering collaboration with industry leaders.</p>
         <p>My work has inspired countless professionals and organizations to adopt AI technologies, and my influence extends through my widely followed YouTube channel, blog, and keynote speeches. This accolade underscores my thought leadership and my ability to bridge the gap between complex AI concepts and practical business applications.</p>
-        <a href="https://aimagazine.com/magazine/april-2021" target="_blank" class="btn"><i class="fas fa-trophy"></i>View AI Magazine Article</a>
+        <a href="https://aimagazine.com/magazine/april-2021" target="_blank" rel="noopener noreferrer" class="btn"><i class="fas fa-trophy"></i>View AI Magazine Article</a>
       </div>
 
       <div class="card">
@@ -557,6 +128,9 @@
     <p>&copy; 2025 Julien Simon</p>
   </div>
 </footer>
+
+<!-- Scripts -->
+<script src="js/main.js"></script>
 
 </body>
 </html> 
