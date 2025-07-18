@@ -26,14 +26,69 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://juliensimon.github.io">
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <!-- Preload critical images -->
+  <link rel="preload" as="image" href="assets/julien.jpg" type="image/jpeg">
   
-</head>
+  <!-- Preload critical CSS -->
+  <link rel="preload" href="css/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="css/styles.css"></noscript>
+  
+  <!-- Preload critical fonts -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"></noscript>
+  
+
+  <!-- Enhanced Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+  <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "youtube",
+    "description": "Page from Julien Simon's personal website",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "jobTitle": "Chief Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Arcee AI"
+      }
+    }
+  }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  </style>
+  <style>
+    /* Performance optimizations */
+    * { contain: layout style; }
+    .container { contain: layout; }
+    .btn { will-change: transform; }
+    .profile-image { will-change: transform; }
+  </style>
+  <style>
+    /* Font optimization */
+    @font-face {
+      font-family: 'Inter';
+      font-display: swap;
+    }
+    * { font-display: swap; }
+  </style></head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
 <header>
   <div class="container">
-    <img src="assets/julien.jpg" alt="Julien Simon" class="profile-image" />
+    <img src="assets/julien.jpg" loading="eager" width="200" height="200" decoding="async" fetchpriority="high" alt="Julien Simon" class="profile-image" />
     <h1>Julien Simon</h1>
     <p class="title">Chief Evangelist @ Arcee AI</p>
     <p class="subtitle">Leading the AI revolution through Small Language Models, empowering enterprises with cost-effective, privacy-first AI solutions that deliver superior performance at scale.</p>
@@ -49,7 +104,7 @@
   </div>
 </header>
 
-<nav class="nav-tabs">
+<nav class="nav-tabs" role="navigation" aria-label="Main navigation">
   <a href="index.html" class="nav-tab">Home</a>
   <a href="experience.html" class="nav-tab">Experience</a>
   <a href="speaking.html" class="nav-tab">Speaking</a>
@@ -58,6 +113,7 @@
   <a href="code.html" class="nav-tab">Code</a>
   <a href="youtube.html" class="nav-tab active">YouTube</a>
   <a href="books.html" class="nav-tab">Books</a>
+  <a href="computers.html" class="nav-tab">Computers, UNIX, and Me</a>
 </nav>
 
 <main class="container" id="main-content">
