@@ -4,7 +4,32 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initSmoothScrolling();
   initAnalytics();
+  initPerformanceMonitoring();
 });
+
+// Performance monitoring
+function initPerformanceMonitoring() {
+  // Monitor Core Web Vitals
+  if ('PerformanceObserver' in window) {
+    try {
+      const observer = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (entry.entryType === 'largest-contentful-paint') {
+            if (typeof umami !== 'undefined') {
+              umami.track('web_vital', {
+                metric: 'LCP',
+                value: Math.round(entry.startTime)
+              });
+            }
+          }
+        }
+      });
+      observer.observe({ entryTypes: ['largest-contentful-paint'] });
+    } catch (e) {
+      console.warn('Performance monitoring not supported');
+    }
+  }
+}
 
 // Navigation functionality
 function initNavigation() {
@@ -81,15 +106,32 @@ function debounce(func, wait) {
 function initLazyLoading() {
   const images = document.querySelectorAll('img[data-src]');
   
+  if (images.length === 0) return;
+  
   const imageObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const img = entry.target;
-        img.src = img.dataset.src;
-        img.removeAttribute('data-src');
+        const src = img.dataset.src;
+        
+        if (src) {
+          img.src = src;
+          img.onload = () => {
+            img.removeAttribute('data-src');
+            img.classList.add('loaded');
+          };
+          img.onerror = () => {
+            console.warn('Failed to load image:', src);
+            img.removeAttribute('data-src');
+          };
+        }
+        
         observer.unobserve(img);
       }
     });
+  }, {
+    rootMargin: '50px 0px',
+    threshold: 0.01
   });
   
   images.forEach(img => imageObserver.observe(img));
