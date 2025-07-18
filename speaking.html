@@ -582,7 +582,7 @@
       background: #f39c12;
     }
 
-    .legend-dot.south-africa {
+    .legend-dot.africa {
       background: #9b59b6;
     }
 
@@ -2056,7 +2056,7 @@ const cities = {
         { name: "Chennai", lat: 13.0827, lng: 80.2707, country: "India", region: "Tamil Nadu" },
         { name: "Bangalore", lat: 12.9716, lng: 77.5946, country: "India", region: "Karnataka" }
     ],
-    "south-africa": [
+    "africa": [
         { name: "Cape Town", lat: -33.9249, lng: 18.4241, country: "South Africa", region: "Western Cape" },
         { name: "Johannesburg", lat: -26.2041, lng: 28.0473, country: "South Africa", region: "Gauteng" },
         { name: "Mauritius", lat: -20.3484, lng: 57.5522, country: "Mauritius", region: "Port Louis" }
@@ -2122,70 +2122,42 @@ let markers = [];
 function initMap() {
     // Create the map
     map = new google.maps.Map(document.getElementById('map'), {
+        mapId: 'DEMO_MAP_ID', // Required for Advanced Markers
         zoom: 2,
-        center: { lat: 20, lng: 0 },
-        styles: [
-            {
-                featureType: 'water',
-                elementType: 'geometry',
-                stylers: [{ color: '#e8f4f8' }]
-            },
-            {
-                featureType: 'landscape',
-                elementType: 'geometry',
-                stylers: [{ color: '#f5f5f5' }]
-            },
-            {
-                featureType: 'administrative',
-                elementType: 'geometry.stroke',
-                stylers: [{ color: '#b8d4da' }, { lightness: 10 }]
-            },
-            {
-                featureType: 'road',
-                elementType: 'geometry',
-                stylers: [{ color: '#ffffff' }]
-            },
-            {
-                featureType: 'poi',
-                elementType: 'geometry',
-                stylers: [{ color: '#f5f5f5' }]
-            }
-        ]
+        center: { lat: 20, lng: 0 }
+        // Styles are controlled by the mapId when using Advanced Markers
     });
 
     // Add markers for all cities
     addMarkers();
 }
 
-// Create custom marker icon
-function createCustomMarker(region) {
-    const colors = {
-        'americas': '#e74c3c',
-        'asia-pacific': '#f39c12',
-        'south-africa': '#9b59b6',
-        'emea': '#27ae60'
-    };
 
-    return {
-        path: google.maps.SymbolPath.CIRCLE,
-        fillColor: colors[region],
-        fillOpacity: 1,
-        strokeColor: '#ffffff',
-        strokeWeight: 3,
-        scale: 8
-    };
-}
 
 // Add markers to the map
 function addMarkers() {
     Object.keys(cities).forEach(region => {
         cities[region].forEach(city => {
-            const marker = new google.maps.Marker({
+            // Create custom marker element
+            const markerElement = document.createElement('div');
+            markerElement.className = 'custom-marker';
+            markerElement.style.cssText = `
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background: ${getRegionColor(region)};
+                border: 3px solid white;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+                cursor: pointer;
+                transition: all 0.3s ease;
+            `;
+
+            // Create the advanced marker
+            const marker = new google.maps.marker.AdvancedMarkerElement({
                 position: { lat: city.lat, lng: city.lng },
                 map: map,
                 title: `${city.name}, ${city.country}`,
-                icon: createCustomMarker(region),
-                animation: google.maps.Animation.DROP
+                content: markerElement
             });
 
             // Create info window content
@@ -2202,28 +2174,41 @@ function addMarkers() {
             // Add click event to marker
             marker.addListener('click', () => {
                 infoWindow.open(map, marker);
-                // Add bounce animation
-                marker.setAnimation(google.maps.Animation.BOUNCE);
+                // Add bounce animation effect
+                markerElement.style.transform = 'scale(1.2)';
                 setTimeout(() => {
-                    marker.setAnimation(null);
-                }, 750);
+                    markerElement.style.transform = 'scale(1)';
+                }, 300);
             });
 
             // Add hover effects
             marker.addListener('mouseover', () => {
-                marker.setScale(10);
+                markerElement.style.transform = 'scale(1.2)';
+                markerElement.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.4)';
             });
 
             marker.addListener('mouseout', () => {
-                marker.setScale(8);
+                markerElement.style.transform = 'scale(1)';
+                markerElement.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.3)';
             });
 
             markers.push(marker);
         });
     });
 }
+
+// Helper function to get region color
+function getRegionColor(region) {
+    const colors = {
+        'americas': '#e74c3c',
+        'asia-pacific': '#f39c12',
+        'africa': '#9b59b6',
+        'emea': '#27ae60'
+    };
+    return colors[region] || '#999999';
+}
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXlkGo_pkuBlLoXP-j28ddlWTeNGxyL-o&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXlkGo_pkuBlLoXP-j28ddlWTeNGxyL-o&callback=initMap&loading=async&libraries=marker"></script>
 
 </body>
 </html> 
