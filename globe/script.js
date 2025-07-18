@@ -25,7 +25,7 @@ const cities = {
         { name: "Chennai", lat: 13.0827, lng: 80.2707, country: "India", region: "Tamil Nadu" },
         { name: "Bangalore", lat: 12.9716, lng: 77.5946, country: "India", region: "Karnataka" }
     ],
-    "south-africa": [
+    "africa": [
         { name: "Cape Town", lat: -33.9249, lng: 18.4241, country: "South Africa", region: "Western Cape" },
         { name: "Johannesburg", lat: -26.2041, lng: 28.0473, country: "South Africa", region: "Gauteng" },
         { name: "Mauritius", lat: -20.3484, lng: 57.5522, country: "Mauritius", region: "Port Louis" }
