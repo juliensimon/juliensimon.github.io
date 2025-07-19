@@ -1,4 +1,4 @@
-// Modern JavaScript with performance optimizations
+// Optimized JavaScript for maximum performance
 'use strict';
 
 // Performance monitoring with modern APIs
@@ -10,215 +10,237 @@ class PerformanceMonitor {
   }
 
   initObservers() {
-    // Core Web Vitals monitoring
+    // Observe LCP
     if ('PerformanceObserver' in window) {
       try {
-        // LCP monitoring
         const lcpObserver = new PerformanceObserver((list) => {
           const entries = list.getEntries();
           const lastEntry = entries[entries.length - 1];
-          this.metrics.lcp = Math.round(lastEntry.startTime);
-          this.trackMetric('LCP', this.metrics.lcp);
+          this.metrics.lcp = lastEntry.startTime;
+          this.reportMetric('LCP', lastEntry.startTime);
         });
         lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+      } catch (e) {
+        console.warn('LCP observer failed:', e);
+      }
 
-        // FID monitoring
+      // Observe FID
+      try {
         const fidObserver = new PerformanceObserver((list) => {
           const entries = list.getEntries();
-          entries.forEach(entry => {
-            this.metrics.fid = Math.round(entry.processingStart - entry.startTime);
-            this.trackMetric('FID', this.metrics.fid);
+          entries.forEach((entry) => {
+            this.metrics.fid = entry.processingStart - entry.startTime;
+            this.reportMetric('FID', this.metrics.fid);
           });
         });
         fidObserver.observe({ entryTypes: ['first-input'] });
+      } catch (e) {
+        console.warn('FID observer failed:', e);
+      }
 
-        // CLS monitoring
+      // Observe CLS
+      try {
+        let clsValue = 0;
         const clsObserver = new PerformanceObserver((list) => {
-          let clsValue = 0;
-          const entries = list.getEntries();
-          entries.forEach(entry => {
+          for (const entry of list.getEntries()) {
             if (!entry.hadRecentInput) {
               clsValue += entry.value;
             }
-          });
-          this.metrics.cls = Math.round(clsValue * 1000) / 1000;
-          this.trackMetric('CLS', this.metrics.cls);
+          }
+          this.metrics.cls = clsValue;
+          this.reportMetric('CLS', clsValue);
         });
         clsObserver.observe({ entryTypes: ['layout-shift'] });
-
-        // INP monitoring
-        const inpObserver = new PerformanceObserver((list) => {
-          const entries = list.getEntries();
-          entries.forEach(entry => {
-            if (entry.interactionId) {
-              this.metrics.inp = Math.round(entry.processingStart - entry.startTime);
-              this.trackMetric('INP', this.metrics.inp);
-            }
-          });
-        });
-        inpObserver.observe({ entryTypes: ['interaction'] });
-
       } catch (e) {
-        console.warn('Performance monitoring not supported:', e);
+        console.warn('CLS observer failed:', e);
       }
     }
   }
 
   initWebVitals() {
-    // Track page load performance
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const navigation = performance.getEntriesByType('navigation')[0];
-        if (navigation) {
-          this.trackMetric('DOMContentLoaded', Math.round(navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart));
-          this.trackMetric('LoadComplete', Math.round(navigation.loadEventEnd - navigation.loadEventStart));
-          this.trackMetric('TotalLoadTime', Math.round(navigation.loadEventEnd - navigation.fetchStart));
-        }
-      }, 0);
-    });
+    // Report FCP
+    if ('PerformanceObserver' in window) {
+      try {
+        const fcpObserver = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          const firstEntry = entries[0];
+          this.metrics.fcp = firstEntry.startTime;
+          this.reportMetric('FCP', firstEntry.startTime);
+        });
+        fcpObserver.observe({ entryTypes: ['first-contentful-paint'] });
+      } catch (e) {
+        console.warn('FCP observer failed:', e);
+      }
+    }
   }
 
-  trackMetric(name, value) {
-    if (typeof umami !== 'undefined') {
-      umami.track('web_vital', {
+  reportMetric(name, value) {
+    if (window.umami) {
+      window.umami.track('web-vital', {
         metric: name,
-        value: value,
-        page: window.location.pathname,
-        timestamp: Date.now()
+        value: Math.round(value),
+        rating: this.getRating(name, value)
       });
     }
-    
-    // Send to console in development
-    if (window.location.hostname === 'localhost') {
-      console.log(`📊 ${name}: ${value}`);
-    }
+  }
 
-    // Store in localStorage for debugging
-    try {
-      const stored = JSON.parse(localStorage.getItem('performance_metrics') || '{}');
-      stored[name] = value;
-      localStorage.setItem('performance_metrics', JSON.stringify(stored));
-    } catch (e) {
-      // Ignore localStorage errors
-    }
+  getRating(metric, value) {
+    const thresholds = {
+      FCP: { good: 1800, poor: 3000 },
+      LCP: { good: 2500, poor: 4000 },
+      FID: { good: 100, poor: 300 },
+      CLS: { good: 0.1, poor: 0.25 }
+    };
+
+    const threshold = thresholds[metric];
+    if (!threshold) return 'unknown';
+
+    if (value <= threshold.good) return 'good';
+    if (value <= threshold.poor) return 'needs-improvement';
+    return 'poor';
   }
 }
 
-// Enhanced image lazy loading with Intersection Observer
+// Lazy loading implementation
 class LazyLoader {
   constructor() {
-    this.images = document.querySelectorAll('img[loading="lazy"]');
+    this.images = [];
+    this.observer = null;
     this.init();
   }
 
   init() {
-    if (!('IntersectionObserver' in window) || this.images.length === 0) return;
-
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.loadImage(entry.target);
-          observer.unobserve(entry.target);
+    if ('IntersectionObserver' in window) {
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              this.loadImage(entry.target);
+              this.observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          rootMargin: '50px 0px',
+          threshold: 0.01
         }
-      });
-    }, {
-      rootMargin: '50px 0px',
-      threshold: 0.01
-    });
+      );
 
-    this.images.forEach(img => imageObserver.observe(img));
+      // Observe all images with data-src
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        this.observer.observe(img);
+      });
+    } else {
+      // Fallback for older browsers
+      this.loadAllImages();
+    }
   }
 
   loadImage(img) {
-    const src = img.dataset.src || img.src;
-    if (!src) return;
-
-    // Create a new image to preload
-    const tempImg = new Image();
-    tempImg.onload = () => {
+    const src = img.dataset.src;
+    if (src) {
       img.src = src;
-      img.classList.add('loaded');
       img.removeAttribute('data-src');
-      // Track successful image load
-      if (typeof umami !== 'undefined') {
-        umami.track('image_loaded', {
-          src: src,
-          page: window.location.pathname
-        });
-      }
-    };
-    tempImg.onerror = () => {
-      console.warn('Failed to load image:', src);
-      img.classList.add('error');
-      // Track failed image load
-      if (typeof umami !== 'undefined') {
-        umami.track('image_error', {
-          src: src,
-          page: window.location.pathname
-        });
-      }
-    };
-    tempImg.src = src;
+      img.classList.add('loaded');
+    }
+  }
+
+  loadAllImages() {
+    document.querySelectorAll('img[data-src]').forEach(img => {
+      this.loadImage(img);
+    });
   }
 }
 
-// Modern navigation with smooth scrolling
+// Navigation enhancement
 class Navigation {
   constructor() {
     this.init();
   }
 
   init() {
-    this.highlightCurrentPage();
-    this.initSmoothScrolling();
-    this.initAnalytics();
-    this.initKeyboardNavigation();
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Active navigation highlighting
+    this.highlightActiveNav();
+    window.addEventListener('scroll', this.debounce(this.highlightActiveNav.bind(this), 100));
   }
 
-  highlightCurrentPage() {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const navTabs = document.querySelectorAll('.nav-tab');
+  highlightActiveNav() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav a[href^="#"]');
     
-    navTabs.forEach(tab => {
-      const href = tab.getAttribute('href');
-      if (href === currentPage) {
-        tab.classList.add('active');
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (window.pageYOffset >= sectionTop - 200) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
       }
     });
   }
 
-  initSmoothScrolling() {
-    const links = document.querySelectorAll('a[href^="#"]');
-    
-    links.forEach(link => {
-      link.addEventListener('click', (e) => {
+  debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+}
+
+// Accessibility enhancements
+class Accessibility {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    // Skip link functionality
+    const skipLink = document.querySelector('.skip-link');
+    if (skipLink) {
+      skipLink.addEventListener('click', (e) => {
         e.preventDefault();
-        const targetId = link.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
-        
-        if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-          
-          // Update URL without page jump
-          history.pushState(null, null, `#${targetId}`);
-          
-          // Track internal link clicks
-          if (typeof umami !== 'undefined') {
-            umami.track('internal_link_click', {
-              target: targetId,
-              page: window.location.pathname
-            });
-          }
+        const target = document.querySelector(skipLink.getAttribute('href'));
+        if (target) {
+          target.focus();
+          target.scrollIntoView();
         }
       });
-    });
+    }
+
+    // Keyboard navigation
+    this.initKeyboardNavigation();
+    
+    // Focus management
+    this.initFocusManagement();
   }
 
   initKeyboardNavigation() {
-    // Add keyboard navigation for accessibility
+    // Add keyboard navigation for interactive elements
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Tab') {
         document.body.classList.add('keyboard-navigation');
@@ -230,95 +252,85 @@ class Navigation {
     });
   }
 
-  initAnalytics() {
-    // Track page views
-    if (typeof umami !== 'undefined') {
-      umami.track('page_view', {
-        page: window.location.pathname,
-        title: document.title,
-        referrer: document.referrer,
-        userAgent: navigator.userAgent,
-        viewport: `${window.innerWidth}x${window.innerHeight}`
-      });
-    }
-    
-    // Track external link clicks with better data
-    const externalLinks = document.querySelectorAll('a[href^="http"]');
-    externalLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (typeof umami !== 'undefined') {
-          umami.track('external_link_click', {
-            url: link.href,
-            text: link.textContent.trim(),
-            page: window.location.pathname,
-            target: link.target || '_self'
-          });
-        }
-      });
-    });
+  initFocusManagement() {
+    // Trap focus in modals (if any)
+    const modals = document.querySelectorAll('[role="dialog"]');
+    modals.forEach(modal => {
+      const focusableElements = modal.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      
+      if (focusableElements.length > 0) {
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
 
-    // Track form interactions
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-      form.addEventListener('submit', () => {
-        if (typeof umami !== 'undefined') {
-          umami.track('form_submit', {
-            form: form.id || form.className,
-            page: window.location.pathname
-          });
-        }
-      });
+        modal.addEventListener('keydown', (e) => {
+          if (e.key === 'Tab') {
+            if (e.shiftKey) {
+              if (document.activeElement === firstElement) {
+                e.preventDefault();
+                lastElement.focus();
+              }
+            } else {
+              if (document.activeElement === lastElement) {
+                e.preventDefault();
+                firstElement.focus();
+              }
+            }
+          }
+        });
+      }
     });
   }
 }
 
-// Error handling and monitoring
-class ErrorMonitor {
+// Error tracking
+class ErrorTracker {
   constructor() {
     this.init();
   }
 
   init() {
     window.addEventListener('error', (e) => {
-      this.trackError('JavaScript Error', e.error || e.message, e.filename, e.lineno);
+      this.trackError('JavaScript Error', e.message, e.filename, e.lineno);
     });
 
     window.addEventListener('unhandledrejection', (e) => {
-      this.trackError('Unhandled Promise Rejection', e.reason, '', 0);
+      this.trackError('Unhandled Promise Rejection', e.reason);
     });
   }
 
-  trackError(type, message, filename, lineno) {
-    if (typeof umami !== 'undefined') {
-      umami.track('error', {
-        type: type,
-        message: message,
-        filename: filename,
-        lineno: lineno,
-        page: window.location.pathname,
-        userAgent: navigator.userAgent
+  trackError(type, message, filename = '', lineno = '') {
+    if (window.umami) {
+      window.umami.track('error', {
+        type,
+        message: message.toString().substring(0, 100),
+        filename,
+        lineno,
+        url: window.location.href,
+        userAgent: navigator.userAgent.substring(0, 100)
       });
     }
-
-    console.error(`🚨 ${type}:`, message, filename, lineno);
   }
 }
 
-// Utility functions with modern ES6+ features
-const utils = {
-  debounce(func, wait) {
+// Utility functions
+class Utils {
+  static debounce(func, wait, immediate) {
     let timeout;
     return function executedFunction(...args) {
       const later = () => {
-        clearTimeout(timeout);
-        func(...args);
+        timeout = null;
+        if (!immediate) func(...args);
       };
+      const callNow = immediate && !timeout;
       clearTimeout(timeout);
       timeout = setTimeout(later, wait);
+      if (callNow) func(...args);
     };
-  },
+  }
 
-  throttle(func, limit) {
+  static throttle(func, limit) {
     let inThrottle;
     return function() {
       const args = arguments;
@@ -329,96 +341,92 @@ const utils = {
         setTimeout(() => inThrottle = false, limit);
       }
     };
-  },
+  }
 
-  // Modern fetch wrapper with error handling
-  async fetchWithTimeout(url, options = {}) {
-    const { timeout = 5000, ...fetchOptions } = options;
-    
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeout);
-    
+  static isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+}
+
+// Main application class
+class App {
+  constructor() {
+    this.performanceMonitor = null;
+    this.lazyLoader = null;
+    this.navigation = null;
+    this.accessibility = null;
+    this.errorTracker = null;
+    this.init();
+  }
+
+  init() {
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this.setup());
+    } else {
+      this.setup();
+    }
+  }
+
+  setup() {
     try {
-      const response = await fetch(url, {
-        ...fetchOptions,
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-      return response;
+      // Initialize performance monitoring
+      this.performanceMonitor = new PerformanceMonitor();
+
+      // Initialize lazy loading
+      this.lazyLoader = new LazyLoader();
+
+      // Initialize navigation
+      this.navigation = new Navigation();
+
+      // Initialize accessibility
+      this.accessibility = new Accessibility();
+
+      // Initialize error tracking
+      this.errorTracker = new ErrorTracker();
+
+      // Add loading animation
+      this.addLoadingAnimation();
+
+      // Initialize service worker
+      this.initServiceWorker();
+
+      console.log('App initialized successfully');
     } catch (error) {
-      clearTimeout(timeoutId);
-      throw error;
+      console.error('App initialization failed:', error);
+      this.errorTracker?.trackError('App Initialization', error.message);
     }
-  },
-
-  // Copy to clipboard utility
-  async copyToClipboard(text) {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch (err) {
-      // Fallback for older browsers
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      return true;
-    }
-  },
-
-  // Get device type
-  getDeviceType() {
-    const ua = navigator.userAgent;
-    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-      return 'tablet';
-    }
-    if (/mobile|android|iphone|ipod|blackberry|opera mini|iemobile/i.test(ua)) {
-      return 'mobile';
-    }
-    return 'desktop';
-  }
-};
-
-// Initialize everything when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  // Initialize performance monitoring
-  window.performanceMonitor = new PerformanceMonitor();
-  
-  // Initialize lazy loading
-  window.lazyLoader = new LazyLoader();
-  
-  // Initialize navigation
-  window.navigation = new Navigation();
-  
-  // Initialize error monitoring
-  window.errorMonitor = new ErrorMonitor();
-  
-  // Add utility functions to window for debugging
-  if (window.location.hostname === 'localhost') {
-    window.utils = utils;
   }
 
-  // Track page load completion
-  if (typeof umami !== 'undefined') {
-    umami.track('page_loaded', {
-      page: window.location.pathname,
-      loadTime: performance.now(),
-      deviceType: utils.getDeviceType()
+  addLoadingAnimation() {
+    // Remove loading class after page load
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.loading').forEach(el => {
+        el.classList.remove('loading');
+      });
     });
   }
-});
 
-// Service Worker registration for PWA capabilities
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('SW registered: ', registration);
-      })
-      .catch(registrationError => {
-        console.log('SW registration failed: ', registrationError);
-      });
-  });
-} 
+  async initServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      try {
+        const registration = await navigator.serviceWorker.register('/sw.js');
+        console.log('Service Worker registered:', registration);
+      } catch (error) {
+        console.warn('Service Worker registration failed:', error);
+      }
+    }
+  }
+}
+
+// Initialize app when script loads
+const app = new App();
+
+// Export for potential external use
+window.App = app; 
