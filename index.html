@@ -46,8 +46,43 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/styles.min.css?v=20250118">
+  <style>
+    /* Critical CSS - Inlined for performance */
+    :root {
+      --primary-color: #1e40af;
+      --primary-dark: #1e3a8a;
+      --accent-color: #3b82f6;
+      --accent-hover: #2563eb;
+      --text-primary: #1f2937;
+      --text-secondary: #6b7280;
+      --background: #ffffff;
+      --background-alt: #f9fafb;
+      --border-color: #e5e7eb;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: var(--text-primary); background: var(--background); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+    header { text-align: center; padding: 2rem 0; background: var(--background-alt); }
+    .profile-image { width: 200px; height: 200px; border-radius: 50%; margin-bottom: 1rem; border: 4px solid var(--primary-color); }
+    h1 { font-size: 2.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.5rem; }
+    .title { font-size: 1.25rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 1rem; }
+    .subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto 2rem; }
+    .social-links { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 2rem; }
+    .social-links .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--gradient-primary); color: white; text-decoration: none; border-radius: 0.25rem; transition: all 0.2s ease; font-size: 0.9rem; font-weight: 600; }
+    .social-links .btn:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+    .social-links .btn .emoji { font-size: 1.1rem; font-weight: bold; display: inline-block; transition: transform 0.2s ease; }
+    .social-links .btn:hover .emoji { transform: scale(1.1); }
+    .nav-tabs { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem 0; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; flex-wrap: wrap; }
+    .nav-tab { padding: 0.5rem 1rem; text-decoration: none; color: var(--text-secondary); border-radius: 0.25rem; transition: all 0.2s; font-weight: 500; }
+    .nav-tab:hover, .nav-tab.active { background: var(--primary-color); color: white; }
+    main { min-height: 60vh; }
+    h2 { font-size: 2rem; font-weight: 600; color: var(--primary-color); margin-bottom: 1.5rem; }
+    .skip-link { position: absolute; top: -40px; left: 6px; background: var(--primary-color); color: white; padding: 8px; text-decoration: none; border-radius: 4px; z-index: 1000; }
+    .skip-link:focus { top: 6px; }
+    @media (max-width: 768px) { .container { padding: 0 0.5rem; } h1 { font-size: 2rem; } .nav-tabs { flex-direction: column; align-items: center; } .social-links { flex-direction: column; align-items: center; } }
+  </style>
+  <link rel="stylesheet" href="css/styles.min.css?v=20250118" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="css/styles.min.css?v=20250118"></noscript>
   
   <!-- Preload critical images -->
   <link rel="preload" as="image" href="assets/julien.webp" type="image/webp">
@@ -551,13 +586,13 @@
     <p class="title">Chief Evangelist @ Arcee AI</p>
     <p class="subtitle">Leading the AI revolution through Small Language Models, empowering enterprises with cost-effective, privacy-first AI solutions that deliver superior performance at scale.</p>
     <div class="social-links">
-      <a class="btn" href="https://github.com/juliensimon" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>GitHub</a>
-      <a class="btn" href="https://huggingface.co/juliensimon" target="_blank" rel="noopener noreferrer"><i class="fas fa-robot"></i>Hugging Face</a>
-      <a class="btn" href="https://linkedin.com/in/juliensimon" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i>LinkedIn</a>
-      <a class="btn" href="https://julsimon.medium.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-medium"></i>Medium</a>
-      <a class="btn" href="https://julsimon.substack.com/" target="_blank" rel="noopener noreferrer"><i class="fas fa-envelope-open-text"></i>Substack</a>
-      <a class="btn" href="https://x.com/julsimon" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i>Twitter (X)</a>
-      <a class="btn" href="https://youtube.com/juliensimonfr" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i>YouTube</a>
+      <a class="btn" href="https://github.com/juliensimon" target="_blank" rel="noopener noreferrer"><span class="emoji">🐙</span>GitHub</a>
+      <a class="btn" href="https://huggingface.co/juliensimon" target="_blank" rel="noopener noreferrer"><span class="emoji">🤖</span>Hugging Face</a>
+      <a class="btn" href="https://linkedin.com/in/juliensimon" target="_blank" rel="noopener noreferrer"><span class="emoji">💼</span>LinkedIn</a>
+      <a class="btn" href="https://julsimon.medium.com/" target="_blank" rel="noopener noreferrer"><span class="emoji">📝</span>Medium</a>
+      <a class="btn" href="https://julsimon.substack.com/" target="_blank" rel="noopener noreferrer"><span class="emoji">📧</span>Substack</a>
+      <a class="btn" href="https://x.com/julsimon" target="_blank" rel="noopener noreferrer"><span class="emoji">🐦</span>Twitter (X)</a>
+      <a class="btn" href="https://youtube.com/juliensimonfr" target="_blank" rel="noopener noreferrer"><span class="emoji">📺</span>YouTube</a>
     </div>
   </div>
 </header>
@@ -601,7 +636,7 @@
       <div class="grid-card">
         <div>
           <h3><i class="fas fa-brain"></i> AI & Machine Learning</h3>
-          <p>Specializing in Small Language Models, transformers, and practical AI deployment. Over 30 years of experience in developing and scaling AI solutions for enterprise applications.</p>
+          <p>Specializing in Small Language Models, transformers, and practical AI deployment. Over 10 years of experience in developing and scaling AI solutions for enterprise applications.</p>
         </div>
         <div class="card-footer">
           <a href="experience.html">View AI Experience <i class="fas fa-arrow-right"></i></a>
