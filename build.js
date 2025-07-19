@@ -131,7 +131,7 @@ Professional website of Julien Simon, Chief Evangelist at Arcee AI.
 ## Features
 
 - 🎨 Modern, responsive design
-- 🌙 Dark/Light mode support
+
 - 📱 Mobile-first approach
 - ⚡ Fast loading with optimized assets
 - 🔍 SEO optimized
