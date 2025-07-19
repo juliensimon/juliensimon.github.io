@@ -59,7 +59,10 @@ class PerformanceMonitor {
         inpObserver.observe({ entryTypes: ['interaction'] });
 
       } catch (e) {
-        console.warn('Performance monitoring not supported:', e);
+        // Performance monitoring not supported
+        if (window.location.hostname === 'localhost') {
+          console.warn('Performance monitoring not supported:', e);
+        }
       }
     }
   }
@@ -148,7 +151,9 @@ class LazyLoader {
       }
     };
     tempImg.onerror = () => {
-      console.warn('Failed to load image:', src);
+      if (window.location.hostname === 'localhost') {
+        console.warn('Failed to load image:', src);
+      }
       img.classList.add('error');
       // Track failed image load
       if (typeof umami !== 'undefined') {
@@ -300,7 +305,9 @@ class ErrorMonitor {
       });
     }
 
-    console.error(`🚨 ${type}:`, message, filename, lineno);
+    if (window.location.hostname === 'localhost') {
+      console.error(`🚨 ${type}:`, message, filename, lineno);
+    }
   }
 }
 
@@ -415,10 +422,14 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
       .then(registration => {
-        console.log('SW registered: ', registration);
+        if (window.location.hostname === 'localhost') {
+          console.log('SW registered: ', registration);
+        }
       })
       .catch(registrationError => {
-        console.log('SW registration failed: ', registrationError);
+        if (window.location.hostname === 'localhost') {
+          console.log('SW registration failed: ', registrationError);
+        }
       });
   });
 } 

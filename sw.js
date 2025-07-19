@@ -10,7 +10,7 @@ const STATIC_ASSETS = [
   '/index.html',
   '/css/styles.css',
   '/js/main.js',
-  '/assets/julien.jpg',
+  '/assets/julien.webp',
   '/assets/favicon.ico',
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
@@ -21,15 +21,13 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(STATIC_CACHE)
       .then(cache => {
-        console.log('Caching static assets');
         return cache.addAll(STATIC_ASSETS);
       })
       .then(() => {
-        console.log('Static assets cached successfully');
         return self.skipWaiting();
       })
       .catch(error => {
-        console.error('Failed to cache static assets:', error);
+        // Silent fail in production
       })
   );
 });
@@ -42,14 +40,12 @@ self.addEventListener('activate', event => {
         return Promise.all(
           cacheNames.map(cacheName => {
             if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE && cacheName !== IMAGE_CACHE) {
-              console.log('Deleting old cache:', cacheName);
               return caches.delete(cacheName);
             }
           })
         );
       })
       .then(() => {
-        console.log('Service Worker activated');
         return self.clients.claim();
       })
   );
@@ -143,7 +139,7 @@ self.addEventListener('sync', event => {
 self.addEventListener('push', event => {
   const options = {
     body: event.data ? event.data.text() : 'New update available!',
-    icon: '/assets/julien.jpg',
+    icon: '/assets/julien.webp',
     badge: '/assets/favicon.ico',
     vibrate: [100, 50, 100],
     data: {
@@ -196,7 +192,6 @@ self.addEventListener('notificationclick', event => {
 async function doBackgroundSync() {
   try {
     // Perform any background sync tasks here
-    console.log('Background sync completed');
     
     // Send sync completion notification
     const clients = await self.clients.matchAll();
@@ -207,8 +202,6 @@ async function doBackgroundSync() {
       });
     });
   } catch (error) {
-    console.error('Background sync failed:', error);
-    
     // Send sync error notification
     const clients = await self.clients.matchAll();
     clients.forEach(client => {
@@ -291,27 +284,6 @@ async function updateContent() {
       }
     }
   } catch (error) {
-    console.error('Content update check failed:', error);
+    // Silent fail in production
   }
-} 
-// Performance optimizations
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open('v1').then(cache => {
-      return cache.addAll([
-        '/',
-        '/css/styles.css',
-        '/js/main.js',
-        '/assets/julien.jpg'
-      ]);
-    })
-  );
-});
-
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
-  );
-});
+}
