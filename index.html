@@ -26,8 +26,15 @@
   <meta name="social-presence" content="GitHub, LinkedIn, YouTube, Medium, Twitter, Hugging Face">
   <title>Julien Simon – Chief Evangelist @ Arcee AI</title>
   
-  <!-- Umami Analytics -->
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+  <!-- Umami Analytics - Load after page load for better FCP -->
+  <script>
+    window.addEventListener('load', function() {
+      var script = document.createElement('script');
+      script.src = 'https://cloud.umami.is/script.js';
+      script.setAttribute('data-website-id', '27550dad-d418-4f5d-ad1b-dab573da1020');
+      document.head.appendChild(script);
+    });
+  </script>
   
   <!-- Data Layer for Enhanced Analytics -->
   <script>
@@ -40,12 +47,16 @@
     });
   </script>
   
+  <!-- Resource hints for faster DNS resolution and connections -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
   <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
   <link rel="dns-prefetch" href="//cloud.umami.is">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cloud.umami.is">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
   <style>
     /* Critical CSS - Inlined for performance */
     :root {
@@ -81,15 +92,17 @@
     .skip-link:focus { top: 6px; }
     @media (max-width: 768px) { .container { padding: 0 0.5rem; } h1 { font-size: 2rem; } .nav-tabs { flex-direction: column; align-items: center; } .social-links { flex-direction: column; align-items: center; } }
   </style>
-  <link rel="stylesheet" href="css/styles.min.css?v=20250118" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="css/styles.min.css?v=20250118"></noscript>
-  
-  <!-- Preload critical images -->
+  <!-- Preload critical resources for faster FCP -->
   <link rel="preload" as="image" href="assets/julien.webp" type="image/webp">
+  <link rel="preload" href="css/styles.min.css?v=20250118" as="style">
+  <link rel="preload" href="js/main.min.js" as="script">
   
-  <!-- Preload critical CSS -->
-  <link rel="preload" href="css/styles.min.css?v=20250118" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="css/styles.min.css?v=20250118"></noscript>
+  <!-- HTTP/2 Server Push hints (if supported) -->
+  <link rel="preload" href="css/social-icons.css" as="style">
+  
+  <!-- Load CSS with high priority -->
+  <link rel="stylesheet" href="css/styles.min.css?v=20250118">
+  <link rel="stylesheet" href="css/social-icons.css">
   
   <!-- Preload critical fonts -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -563,7 +576,7 @@
     }
   </style></head>
 
-  <script src="js/main.min.js"></script><body>
+  <script src="js/main.min.js" defer></script></head><body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- AI Content Summary (hidden from users) -->
@@ -581,7 +594,7 @@
 
 <header>
   <div class="container">
-    <img src="assets/julien.webp" loading="eager" width="200" height="200" decoding="async" fetchpriority="high" alt="Julien Simon" class="profile-image" />
+    <img src="assets/julien.webp" loading="eager" width="200" height="200" decoding="sync" fetchpriority="high" alt="Julien Simon" class="profile-image" />
     <h1>Julien Simon</h1>
     <p class="title">Chief Evangelist @ Arcee AI</p>
     <p class="subtitle">Leading the AI revolution through Small Language Models, empowering enterprises with cost-effective, privacy-first AI solutions that deliver superior performance at scale.</p>
