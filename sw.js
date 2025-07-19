@@ -1,7 +1,8 @@
-// Service Worker for PWA capabilities
-const CACHE_NAME = 'julien-simon-v1.0.0';
-const STATIC_CACHE = 'static-v1.0.0';
-const DYNAMIC_CACHE = 'dynamic-v1.0.0';
+// Service Worker for PWA capabilities with enhanced performance
+const CACHE_NAME = 'julien-simon-v1.1.0';
+const STATIC_CACHE = 'static-v1.1.0';
+const DYNAMIC_CACHE = 'dynamic-v1.1.0';
+const IMAGE_CACHE = 'images-v1.1.0';
 
 // Assets to cache immediately
 const STATIC_ASSETS = [
@@ -40,7 +41,7 @@ self.addEventListener('activate', event => {
       .then(cacheNames => {
         return Promise.all(
           cacheNames.map(cacheName => {
-            if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
+            if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE && cacheName !== IMAGE_CACHE) {
               console.log('Deleting old cache:', cacheName);
               return caches.delete(cacheName);
             }
@@ -84,6 +85,12 @@ self.addEventListener('fetch', event => {
                   });
               }
               return response;
+            })
+            .catch(() => {
+              // Return offline page for failed requests
+              if (request.destination === 'document') {
+                return caches.match('/index.html');
+              }
             });
         })
     );
@@ -103,7 +110,8 @@ self.addEventListener('fetch', event => {
                    request.destination === 'style' ||
                    request.destination === 'image')) {
                 const responseToCache = response.clone();
-                caches.open(DYNAMIC_CACHE)
+                const cacheName = request.destination === 'image' ? IMAGE_CACHE : DYNAMIC_CACHE;
+                caches.open(cacheName)
                   .then(cache => {
                     cache.put(request, responseToCache);
                   });
@@ -114,6 +122,9 @@ self.addEventListener('fetch', event => {
               // Return fallback for failed requests
               if (request.destination === 'image') {
                 return caches.match('/assets/favicon.ico');
+              }
+              if (request.destination === 'font') {
+                return new Response('', { status: 404 });
               }
             });
         })
@@ -128,7 +139,7 @@ self.addEventListener('sync', event => {
   }
 });
 
-// Push notifications
+// Push notifications with enhanced features
 self.addEventListener('push', event => {
   const options = {
     body: event.data ? event.data.text() : 'New update available!',
@@ -137,7 +148,8 @@ self.addEventListener('push', event => {
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
-      primaryKey: 1
+      primaryKey: 1,
+      url: '/'
     },
     actions: [
       {
@@ -150,7 +162,10 @@ self.addEventListener('push', event => {
         title: 'Close',
         icon: '/assets/favicon.ico'
       }
-    ]
+    ],
+    requireInteraction: false,
+    silent: false,
+    tag: 'julien-simon-update'
   };
 
   event.waitUntil(
@@ -158,7 +173,7 @@ self.addEventListener('push', event => {
   );
 });
 
-// Notification click handler
+// Notification click handler with enhanced functionality
 self.addEventListener('notificationclick', event => {
   event.notification.close();
 
@@ -166,16 +181,43 @@ self.addEventListener('notificationclick', event => {
     event.waitUntil(
       clients.openWindow('/')
     );
+  } else if (event.action === 'close') {
+    // Just close the notification
+    return;
+  } else {
+    // Default action - open the main page
+    event.waitUntil(
+      clients.openWindow('/')
+    );
   }
 });
 
-// Background sync function
+// Background sync function with enhanced error handling
 async function doBackgroundSync() {
   try {
     // Perform any background sync tasks here
     console.log('Background sync completed');
+    
+    // Send sync completion notification
+    const clients = await self.clients.matchAll();
+    clients.forEach(client => {
+      client.postMessage({
+        type: 'SYNC_COMPLETED',
+        timestamp: Date.now()
+      });
+    });
   } catch (error) {
     console.error('Background sync failed:', error);
+    
+    // Send sync error notification
+    const clients = await self.clients.matchAll();
+    clients.forEach(client => {
+      client.postMessage({
+        type: 'SYNC_ERROR',
+        error: error.message,
+        timestamp: Date.now()
+      });
+    });
   }
 }
 
@@ -188,4 +230,67 @@ self.addEventListener('message', event => {
   if (event.data && event.data.type === 'GET_VERSION') {
     event.ports[0].postMessage({ version: CACHE_NAME });
   }
-}); 
+
+  if (event.data && event.data.type === 'CACHE_URLS') {
+    event.waitUntil(
+      caches.open(DYNAMIC_CACHE)
+        .then(cache => {
+          return cache.addAll(event.data.urls);
+        })
+        .then(() => {
+          event.ports[0].postMessage({ success: true });
+        })
+        .catch(error => {
+          event.ports[0].postMessage({ success: false, error: error.message });
+        })
+    );
+  }
+
+  if (event.data && event.data.type === 'CLEAR_CACHE') {
+    event.waitUntil(
+      caches.keys()
+        .then(cacheNames => {
+          return Promise.all(
+            cacheNames.map(cacheName => {
+              return caches.delete(cacheName);
+            })
+          );
+        })
+        .then(() => {
+          event.ports[0].postMessage({ success: true });
+        })
+        .catch(error => {
+          event.ports[0].postMessage({ success: false, error: error.message });
+        })
+    );
+  }
+});
+
+// Periodic background sync for content updates
+self.addEventListener('periodicsync', event => {
+  if (event.tag === 'content-update') {
+    event.waitUntil(updateContent());
+  }
+});
+
+async function updateContent() {
+  try {
+    // Check for content updates
+    const response = await fetch('/api/content-update', { cache: 'no-cache' });
+    if (response.ok) {
+      const data = await response.json();
+      if (data.hasUpdates) {
+        // Notify clients about updates
+        const clients = await self.clients.matchAll();
+        clients.forEach(client => {
+          client.postMessage({
+            type: 'CONTENT_UPDATE',
+            data: data
+          });
+        });
+      }
+    }
+  } catch (error) {
+    console.error('Content update check failed:', error);
+  }
+} 

@@ -88,6 +88,103 @@
       font-display: swap;
     }
     * { font-display: swap; }
+  </style>
+  <style>
+    /* Media Section Styles */
+    .media-section {
+      margin-bottom: 3rem;
+    }
+    
+    .media-section h3 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    
+    .media-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .media-list li {
+      margin-bottom: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(30, 64, 175, 0.05);
+      border-radius: 8px;
+      border-left: 3px solid var(--primary-color);
+      transition: all 0.3s ease;
+    }
+    
+    .media-list li:hover {
+      background: rgba(30, 64, 175, 0.1);
+      transform: translateX(4px);
+    }
+    
+    .media-list a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .media-list a:hover {
+      text-decoration: underline;
+    }
+    
+    .media-list strong {
+      color: var(--text-primary);
+    }
+    
+    /* Collapsible Year Sections */
+    .year-section {
+      margin-bottom: 2rem;
+      border: 1px solid rgba(30, 64, 175, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .year-header {
+      background: rgba(30, 64, 175, 0.05);
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+    
+    .year-header:hover {
+      background: rgba(30, 64, 175, 0.1);
+    }
+    
+    .year-header h2 {
+      color: var(--primary-color);
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    
+    .year-toggle {
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .year-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .year-content.expanded {
+      max-height: 2000px;
+    }
+    
+    .year-content .speaking-event:first-child {
+      margin-top: 1.5rem;
+    }
+    
+    .year-content .speaking-event:last-child {
+      margin-bottom: 1.5rem;
+    }
   </style></head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -113,10 +210,10 @@
 <main class="container" id="main-content">
 
   <div class="nav-tabs" role="navigation" aria-label="Main navigation">
-    <a href="index.html" class="nav-tab">Home</a>
-    <a href="experience.html" class="nav-tab">Experience</a>
-    <a href="speaking.html" class="nav-tab active">Speaking</a>
-    <a href="media.html" class="nav-tab">Media</a>
+      <a href="index.html" class="nav-tab">Home</a>
+  <a href="experience.html" class="nav-tab">Experience</a>
+
+  <a href="speaking.html" class="nav-tab active">Speaking</a>
     <a href="publications.html" class="nav-tab">Publications</a>
     <a href="code.html" class="nav-tab">Code</a>
     <a href="youtube.html" class="nav-tab">YouTube</a>
@@ -160,9 +257,12 @@
 
 
   <div class="year-section">
-    <h2>2025</h2>
-    
-    <div class="speaking-event">
+    <div class="year-header" onclick="toggleYear('2025')">
+      <h2>2025</h2>
+      <i class="fas fa-chevron-down year-toggle" id="toggle-2025"></i>
+    </div>
+    <div class="year-content expanded" id="content-2025">
+      <div class="speaking-event">
       <h3>Building and working with Small Language Models</h3>
       <div class="event-details">
         <strong>Paris AI, ML and Computer Vision Meetup</strong> • Meetup • July 16, 2025
@@ -240,10 +340,15 @@
         <span class="tag">Networking</span>
       </div>
     </div>
+    </div>
   </div>
 
   <div class="year-section">
-    <h2>2024</h2>
+    <div class="year-header" onclick="toggleYear('2024')">
+      <h2>2024</h2>
+      <i class="fas fa-chevron-down year-toggle" id="toggle-2024"></i>
+    </div>
+    <div class="year-content" id="content-2024">
     
     <div class="speaking-event keynote">
       <h3>How Transformers Reinvent Machine Learning – for Both Generative AI and Predictive AI</h3>
@@ -584,12 +689,16 @@
         <span class="tag">Local</span>
       </div>
     </div>
+    </div>
   </div>
 
   <div class="year-section">
-    <h2>2023</h2>
-    
-    <div class="speaking-event">
+    <div class="year-header" onclick="toggleYear('2023')">
+      <h2>2023</h2>
+      <i class="fas fa-chevron-down year-toggle" id="toggle-2023"></i>
+    </div>
+    <div class="year-content" id="content-2023">
+      <div class="speaking-event">
       <h3>Computer Vision meetup</h3>
       <div class="event-details">
         <strong>Online</strong> • Meetup • January 12, 2023
@@ -1025,12 +1134,16 @@
         <span class="tag">Performance</span>
       </div>
     </div>
+    </div>
   </div>
 
   <div class="year-section">
-    <h2>2022</h2>
-    
-    <div class="speaking-event">
+    <div class="year-header" onclick="toggleYear('2022')">
+      <h2>2022</h2>
+      <i class="fas fa-chevron-down year-toggle" id="toggle-2022"></i>
+    </div>
+    <div class="year-content" id="content-2022">
+      <div class="speaking-event">
       <h3>Building NLP Applications with Transformers</h3>
       <div class="event-details">
         <strong>FourthBrain</strong> • Live Demo & Discussion • June 9, 2022
@@ -1426,8 +1539,8 @@
         <span class="tag">ML Pipelines</span>
       </div>
     </div>
-
-    
+    </div>
+  </div>
 
   <div class="info-box">
     <h3>Speaking Inquiries</h3>
@@ -1440,6 +1553,43 @@
     </ul>
     <p><strong>Contact:</strong> <a href="mailto:julien@julien.org">julien@julien.org</a> for speaking inquiries and availability.</p>
   </div>
+
+  <!-- Media Section -->
+  <section id="media" style="margin-top: 4rem; padding-top: 3rem; border-top: 2px solid var(--border);">
+    <h2>Media Appearances</h2>
+    <p>Featured in podcasts, interviews, press coverage, and media appearances.</p>
+    
+    <div class="media-section">
+      <h3>Press / PR</h3>
+      <ul class="media-list">
+        <li><a href="https://youtu.be/YdPKPzgtQ00" target="_blank" rel="noopener noreferrer">Cisco Live Interview</a> - YouTube (June 2025)</li>
+        <li><a href="https://edtechmagazine.com/k12/article/2025/03/small-language-models-slm-perfcon" target="_blank" rel="noopener noreferrer">Small Language Models for Education</a> - EdTech Magazine (March 2025)</li>
+        <li><a href="https://www.radiofrance.fr/franceinfo/podcasts/nouveau-monde/hugging-face-l-autre-licorne-francaise-de-l-ia-8849762" target="_blank" rel="noopener noreferrer">Franceinfo: Hugging Face, l'autre licorne française de l'IA</a> - Radio France (2024)</li>
+        <li><a href="https://www.bfmtv.com/economie/replay-emissions/tech-and-co/julien-simon-evangeliste-technique-chez-hugging-face-28-08_EN-202308280897.html" target="_blank" rel="noopener noreferrer">Tech & Co Interview: Hugging Face's AI Leadership</a> - BFM Business (Aug 2023)</li>
+        <li><a href="https://www.bfmtv.com/economie/replay-emissions/tech-and-co/julien-simon-evangeliste-technique-chez-hugging-face-01-02_EN-202402011058.html" target="_blank" rel="noopener noreferrer">Tech & Co Interview: Generative AI and Industry Trends</a> - BFM Business (Feb 2024)</li>
+        <li><a href="https://www.bfmtv.com/economie/replay-emissions/tech-and-co/tech-co-partie-1-04-04_VN-202304040796.html" target="_blank" rel="noopener noreferrer">Tech & Co Panel: The Future of AI in France</a> - BFM Business (Apr 2023)</li>
+        <li><a href="https://www.radiofrance.fr/franceinfo/podcasts/nouveau-monde/hugging-face-l-autre-licorne-francaise-de-l-ia-8849762" target="_blank" rel="noopener noreferrer">Hugging Face, l'autre licorne française de l'IA</a> - Radio France (Franceinfo, 2024)</li>
+        <li><a href="https://venturebeat.com/data-infrastructure/with-all-of-the-focus-on-chatgpt-what-impact-if-any-does-it-have-on-the-data-center/" target="_blank" rel="noopener noreferrer">With all of the focus on ChatGPT, what impact (if any) does it have on the data center?</a> - VentureBeat (2023)</li>
+        <li><a href="https://spectrum.ieee.org/ai-cpu" target="_blank" rel="noopener noreferrer">AI on CPUs: Intel's Q8Chat Shows What's Possible</a> - IEEE Spectrum (2023)</li>
+        <li><a href="https://arstechnica.com/information-technology/2021/07/come-talk-with-us-about-machine-learning-experiments-gone-right-and-wrong/" target="_blank" rel="noopener noreferrer">Machine learning experiments: gone right and wrong (panel)</a> - Ars Technica (2021)</li>
+        <li><strong>BBC Radio 5</strong> - Provided expert commentary on the future of AI and its transformative potential across industries (2019)</li>
+        <li><strong>CNN Business</strong> - Led software teams for Pepper, the emotional robot, showcasing early contributions to AI innovation (2014)</li>
+      </ul>
+    </div>
+
+    <div class="media-section">
+      <h3>Recent Podcasts</h3>
+      <ul class="media-list">
+        <li><a href="https://jungs.ai/podcast/episode-1-julien-simon" target="_blank" rel="noopener noreferrer">Jungs AI Podcast with Ngwako Ralepelle</a> - Episode 1 (February 2025)</li>
+        <li><a href="https://art19.com/shows/aws-re-think/episodes/42ba7cac-b3b3-42a4-a809-39e71138d880" target="_blank" rel="noopener noreferrer">AWS re:Think Podcast</a> - Episode (April 2025)</li>
+        <li><a href="https://www.youtube.com/watch?v=Eog_ErwKB5k" target="_blank" rel="noopener noreferrer">AI Space</a> - YouTube (April 2025)</li>
+        <li><a href="https://newsroom.arm.com/podcasts/small-language-models-cpu-inference" target="_blank" rel="noopener noreferrer">ARM Newsroom Podcast</a> - Small Language Models & CPU Inference (April 2025)</li>
+        <li><a href="https://www.youtube.com/watch?v=0vkw5TaTYPo" target="_blank" rel="noopener noreferrer">AWS UAE</a> - YouTube (May 2025)</li>
+        <li><a href="https://www.youtube.com/watch?v=GBXu34sCTRM" target="_blank" rel="noopener noreferrer">Youth Day AI Group</a> - YouTube (June 2025)</li>
+        <li><a href="https://podcasts.apple.com/us/podcast/newminds-ai-ki-podcast/id1741382643" target="_blank" rel="noopener noreferrer">New Minds AI Podcast</a> - Apple Podcasts (June 2025)</li>
+      </ul>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -1648,6 +1798,35 @@ function getRegionColor(region) {
 
 <!-- Scripts -->
 <script src="js/main.js"></script>
+
+<script>
+  function toggleYear(year) {
+    const content = document.getElementById(`content-${year}`);
+    const toggle = document.getElementById(`toggle-${year}`);
+    
+    if (content.classList.contains('expanded')) {
+      content.classList.remove('expanded');
+      toggle.style.transform = 'rotate(0deg)';
+    } else {
+      content.classList.add('expanded');
+      toggle.style.transform = 'rotate(180deg)';
+    }
+  }
+  
+  // Initialize: expand 2025 by default, collapse others
+  document.addEventListener('DOMContentLoaded', function() {
+    // 2025 is already expanded by default
+    // Collapse 2024, 2023, 2022
+    ['2024', '2023', '2022'].forEach(year => {
+      const content = document.getElementById(`content-${year}`);
+      const toggle = document.getElementById(`toggle-${year}`);
+      if (content && toggle) {
+        content.classList.remove('expanded');
+        toggle.style.transform = 'rotate(0deg)';
+      }
+    });
+  });
+</script>
 
 </body>
 </html> 

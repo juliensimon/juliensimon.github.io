@@ -83,6 +83,8 @@ html {
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   font-display: swap;
+  /* Performance optimizations */
+  contain: layout style;
 }
 
 body {
@@ -96,6 +98,8 @@ body {
   font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
   overflow-x: hidden;
   contain: layout style;
+  /* Performance optimizations */
+  will-change: scroll-position;
 }
 
 /* Container with modern responsive design */
@@ -141,10 +145,13 @@ header::before {
   will-change: transform;
   aspect-ratio: 1;
   contain: layout style;
+  /* Performance optimizations */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .profile-image:hover {
-  transform: scale(1.05);
+  transform: scale(1.05) translateZ(0);
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
 }
 
@@ -198,6 +205,8 @@ h1 {
   padding: var(--space-2) 0;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
+  /* Performance optimizations */
+  will-change: scroll-position;
 }
 
 .social-links::-webkit-scrollbar {
@@ -973,6 +982,7 @@ a:focus {
   border-radius: 4px;
 }
 
+/* Accessibility improvements */
 .skip-link {
   position: absolute;
   top: -40px;
@@ -983,20 +993,30 @@ a:focus {
   text-decoration: none;
   border-radius: 4px;
   z-index: 1000;
-  transition: top 0.3s;
+  transition: top 0.3s ease;
 }
 
 .skip-link:focus {
   top: 6px;
 }
 
-/* Enhanced focus for interactive elements */
-.speaking-event:focus-within,
-.blog-card:focus-within,
-.card:focus-within {
+/* Keyboard navigation styles */
+.keyboard-navigation *:focus {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
-  border-radius: 8px;
+}
+
+/* Focus styles for interactive elements */
+.btn:focus,
+.nav-tab:focus,
+.speaking-event:focus-within,
+.card:focus-within,
+.computer-item:focus-within,
+.book-item:focus-within,
+.repo-card:focus-within {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
 }
 
 /* Responsive Design */
@@ -1536,5 +1556,129 @@ a:focus {
   .video-grid {
     grid-template-columns: 1fr;
     gap: var(--space-4);
+  }
+} 
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --primary-color: #000080;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --border: #000000;
+  }
+  
+  .btn {
+    border: 2px solid var(--primary-color);
+  }
+  
+  .card,
+  .speaking-event,
+  .computer-item,
+  .book-item,
+  .repo-card {
+    border: 2px solid var(--border);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .profile-image:hover {
+    transform: none;
+  }
+  
+  .btn:hover {
+    transform: none;
+  }
+  
+  .card:hover,
+  .speaking-event:hover,
+  .computer-item:hover,
+  .book-item:hover,
+  .repo-card:hover {
+    transform: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --surface: #1e293b;
+    --surface-dark: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border: #334155;
+  }
+  
+  .profile-image {
+    border-color: var(--surface);
+  }
+  
+  .card,
+  .speaking-event,
+  .computer-item,
+  .book-item,
+  .repo-card {
+    background: var(--surface);
+    border-color: var(--border);
+  }
+  
+  .card:hover,
+  .speaking-event:hover,
+  .computer-item:hover,
+  .book-item:hover,
+  .repo-card:hover {
+    background: var(--surface-dark);
+  }
+}
+
+/* Print styles */
+@media print {
+  .nav-tabs,
+  .social-links,
+  .back-link,
+  .skip-link {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .card,
+  .speaking-event,
+  .computer-item,
+  .book-item,
+  .repo-card {
+    break-inside: avoid;
+    border: 1px solid #ccc !important;
+    background: white !important;
+  }
+  
+  h1, h2, h3, h4 {
+    break-after: avoid;
+  }
+  
+  a {
+    color: black !important;
+    text-decoration: underline !important;
+  }
+  
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
   }
 } 
