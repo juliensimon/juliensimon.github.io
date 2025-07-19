@@ -353,10 +353,78 @@
     }
     * { font-display: swap; }
     
-    /* New section styles */
+    /* 2x2 Grid Layout Styles */
+    .grid-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .grid-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid var(--primary-color);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .grid-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .grid-card h3 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .grid-card h3 i {
+      margin-right: 0.75rem;
+      color: var(--primary-color);
+      font-size: 1.4rem;
+    }
+    
+    .grid-card p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0;
+      flex-grow: 1;
+    }
+    
+    .grid-card .card-footer {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    
+    .grid-card .card-footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+    }
+    
+    .grid-card .card-footer a:hover {
+      text-decoration: underline;
+    }
+    
+    .grid-card .card-footer i {
+      margin-left: 0.5rem;
+    }
+    
+    /* Methodology Grid (existing) */
     .methodology-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 2rem;
       margin: 2rem 0;
     }
@@ -392,9 +460,10 @@
       margin: 0;
     }
     
+    /* Philosophy Grid (existing) */
     .philosophy-content {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 2rem;
       margin: 2rem 0;
     }
@@ -418,9 +487,42 @@
       margin: 0;
     }
     
+    /* Related Links Grid */
+    .related-links {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .related-links .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1.5rem;
+      background: var(--primary-color);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    
+    .related-links .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .related-links .btn i {
+      margin-right: 0.5rem;
+    }
+    
     @media (max-width: 768px) {
+      .grid-2x2,
       .methodology-grid,
-      .philosophy-content {
+      .philosophy-content,
+      .related-links {
         grid-template-columns: 1fr;
       }
     }
@@ -493,6 +595,51 @@
     </div>
   </section>
 
+  <section id="expertise-overview">
+    <h2>Expertise & Focus Areas</h2>
+    <div class="grid-2x2">
+      <div class="grid-card">
+        <div>
+          <h3><i class="fas fa-brain"></i> AI & Machine Learning</h3>
+          <p>Specializing in Small Language Models, transformers, and practical AI deployment. Over 30 years of experience in developing and scaling AI solutions for enterprise applications.</p>
+        </div>
+        <div class="card-footer">
+          <a href="experience.html">View AI Experience <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      
+      <div class="grid-card">
+        <div>
+          <h3><i class="fas fa-cloud"></i> Cloud Computing</h3>
+          <p>Deep expertise in AWS services, particularly SageMaker, and cloud-native AI deployment. Former Principal Evangelist at AWS with hundreds of global presentations.</p>
+        </div>
+        <div class="card-footer">
+          <a href="code.html">View Code Examples <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      
+      <div class="grid-card">
+        <div>
+          <h3><i class="fas fa-microphone"></i> Technical Evangelism</h3>
+          <p>Over 500 speaking engagements in 90+ cities across 38 countries. Expert at making complex technologies accessible through keynotes, workshops, and technical sessions.</p>
+        </div>
+        <div class="card-footer">
+          <a href="speaking.html">View Speaking Engagements <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      
+      <div class="grid-card">
+        <div>
+          <h3><i class="fas fa-graduation-cap"></i> Knowledge Sharing</h3>
+          <p>YouTube channel with 400k+ subscribers, extensive blog posts, technical articles, and books. Committed to democratizing AI knowledge and empowering developers.</p>
+        </div>
+        <div class="card-footer">
+          <a href="youtube.html">Visit YouTube Channel <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="research-methodology">
     <h2>Research & Problem-Solving Approach</h2>
     <div class="methodology-grid">
@@ -555,8 +702,6 @@
     <h2>Explore More</h2>
     <div class="related-links">
       <a href="experience.html" class="btn"><i class="fas fa-briefcase"></i>View Experience</a>
-      <a href="research.html" class="btn"><i class="fas fa-microscope"></i>Research Background</a>
-
       <a href="speaking.html" class="btn"><i class="fas fa-microphone"></i>Speaking Engagements</a>
       <a href="publications.html" class="btn"><i class="fas fa-blog"></i>Publications</a>
       <a href="youtube.html" class="btn"><i class="fab fa-youtube"></i>YouTube Channel</a>
