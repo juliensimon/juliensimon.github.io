@@ -62,10 +62,10 @@ function generateHTMLFiles() {
       template: 'templates/media.html'
     },
     {
-      name: 'blog-posts.html',
-      title: 'Blog Posts',
-      description: 'Blog posts and articles written by Julien Simon',
-      template: 'templates/blog-posts.html'
+      name: 'publications.html',
+      title: 'Publications',
+      description: 'Publications and blog posts by Julien Simon',
+      template: 'templates/publications.html'
     },
     {
       name: 'code.html',
@@ -149,7 +149,7 @@ juliensimon.github.io/
 ├── experience.html # Experience page
 ├── speaking.html   # Speaking engagements
 ├── media.html      # Media appearances
-├── blog-posts.html # Blog posts
+├── publications.html # Publications
 ├── code.html       # Code samples
 ├── youtube.html    # YouTube content
 ├── books.html      # Books and publications
