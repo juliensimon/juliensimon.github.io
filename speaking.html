@@ -186,6 +186,140 @@
     .year-content .speaking-event:last-child {
       margin-bottom: 1.5rem;
     }
+    
+    /* Historical Years Grid Styles */
+    .historical-years {
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 2px solid var(--border);
+    }
+    
+    .historical-years h2 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+    
+    .historical-years p {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+    
+    .years-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .year-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: white;
+      border: 2px solid rgba(30, 64, 175, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .year-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(30, 64, 175, 0.15);
+    }
+    
+    .year-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), #6366f1);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .year-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .year-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+    
+    .year-stats {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .stat {
+      background: rgba(30, 64, 175, 0.1);
+      color: var(--primary-color);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .year-highlights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .highlight {
+      background: rgba(99, 102, 241, 0.1);
+      color: #6366f1;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .year-arrow {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      transition: transform 0.3s ease;
+    }
+    
+    .year-card:hover .year-arrow {
+      transform: translateX(4px);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .years-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .year-card {
+        padding: 1.25rem;
+      }
+      
+      .year-number {
+        font-size: 2rem;
+      }
+      
+      .year-stats {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
   </style></head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -232,7 +366,6 @@
 
   <!-- Global Speaking Map -->
   <section>
-
     <div class="map-container">
       <div id="map"></div>
       <div class="legend">
@@ -256,7 +389,7 @@
     </div>
   </section>
 
-
+  <!-- Current Year (2025) - Keep as is -->
   <div class="year-section">
     <div class="year-header" onclick="toggleYear('2025')">
       <h2>2025</h2>
@@ -344,1204 +477,74 @@
     </div>
   </div>
 
-  <div class="year-section">
-    <div class="year-header" onclick="toggleYear('2024')">
-      <h2>2024</h2>
-      <span class="year-toggle" id="toggle-2024">▼</span>
-    </div>
-    <div class="year-content" id="content-2024">
+  <!-- Historical Years Grid (2016-2024) -->
+  <section class="historical-years">
+    <h2>Previous Years</h2>
+    <p>Browse speaking engagements from previous years. Each year contains dozens of events across multiple countries and conferences.</p>
     
-    <div class="speaking-event keynote">
-      <h3>How Transformers Reinvent Machine Learning – for Both Generative AI and Predictive AI</h3>
-      <div class="event-details">
-        <strong>Machine Learning Week US</strong> • Keynote • June 6–7, 2024
-      </div>
-      <div class="description">
-        A comprehensive exploration of how transformer architecture has revolutionized both generative AI and traditional predictive machine learning, with practical insights for enterprise applications.
-      </div>
-      <div class="tags">
-        <span class="tag">Keynote</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">Generative AI</span>
-        <span class="tag">Predictive AI</span>
-      </div>
-    </div>
-
-    <div class="speaking-event workshop">
-      <h3>Building Cost-Efficient Enterprise AI Solutions with Small Language Models</h3>
-      <div class="event-details">
-        <strong>AI Summit London</strong> • Workshop • May 2024
-      </div>
-      <div class="description">
-        Hands-on workshop on designing and deploying cost-efficient enterprise AI solutions using Small Language Models (SLMs), with a focus on practical strategies for scalability and privacy.
-      </div>
-      <div class="tags">
-        <span class="tag">Workshop</span>
-        <span class="tag">AI Summit London</span>
-        <span class="tag">Small Language Models</span>
-        <span class="tag">Enterprise AI</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Deploy accelerator-agnostic inference pipelines to Amazon EKS</h3>
-      <div class="event-details">
-        <strong>Amazon Web Services Summit, Tel Aviv, Israel</strong> • Technical Session • June 26, 2024
-      </div>
-      <div class="description">
-        Technical session on deploying accelerator-agnostic inference pipelines using Amazon EKS for scalable AI applications.
-      </div>
-      <div class="tags">
-        <span class="tag">AWS</span>
-        <span class="tag">EKS</span>
-        <span class="tag">Inference</span>
-        <span class="tag">Kubernetes</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Hugging Face and the Future of the Open Source AI Ecosystem</h3>
-      <div class="event-details">
-        <strong>DataCamp Radar AI</strong> • Online Session • June 27, 2024
-      </div>
-      <div class="description">
-        Discussion on the future of open source AI ecosystem and Hugging Face's role in democratizing AI.
-      </div>
-      <div class="tags">
-        <span class="tag">Online</span>
-        <span class="tag">Open Source</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">AI Ecosystem</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AWS Generative AI Deep Dive Day</h3>
-      <div class="event-details">
-        <strong>London, UK</strong> • Workshop • July 2, 2024
-      </div>
-      <div class="description">
-        Deep dive workshop on AWS generative AI services and implementation strategies.
-      </div>
-      <div class="tags">
-        <span class="tag">Workshop</span>
-        <span class="tag">AWS</span>
-        <span class="tag">Generative AI</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>ODSC Europe</h3>
-      <div class="event-details">
-        <strong>London, UK</strong> • Conference • September 5–6, 2024
-      </div>
-      <div class="description">
-        Presentation at Open Data Science Conference Europe on data science and AI topics.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Data Science</span>
-        <span class="tag">ODSC</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>ODSC West</h3>
-      <div class="event-details">
-        <strong>Burlingame, USA</strong> • Conference • October 29–31, 2024
-      </div>
-      <div class="description">
-        Presentation at Open Data Science Conference West on machine learning and AI developments.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Data Science</span>
-        <span class="tag">ODSC</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AI Dev TLV</h3>
-      <div class="event-details">
-        <strong>Tel Aviv, Israel</strong> • Conference • December 17, 2024
-      </div>
-      <div class="description">
-        Presentation at AI Dev TLV conference on AI development and implementation.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">AI Development</span>
-        <span class="tag">Israel</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>ODSC AI Builders Summit</h3>
-      <div class="event-details">
-        <strong>Online</strong> • Conference • January 15–16, 2025
-      </div>
-      <div class="description">
-        Virtual participation in ODSC AI Builders Summit focusing on AI development and implementation.
-      </div>
-      <div class="tags">
-        <span class="tag">Online</span>
-        <span class="tag">AI Builders</span>
-        <span class="tag">ODSC</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>4th Irving Fisher Committee workshop on data science in central banking</h3>
-      <div class="event-details">
-        <strong>Rome, Italy</strong> • Workshop • February 19, 2025
-      </div>
-      <div class="description">
-        Workshop on data science applications in central banking and financial institutions.
-      </div>
-      <div class="tags">
-        <span class="tag">Workshop</span>
-        <span class="tag">Central Banking</span>
-        <span class="tag">Data Science</span>
-        <span class="tag">Finance</span>
-      </div>
-    </div>
-
-
-
-    <div class="speaking-event">
-      <h3>AWS EMEA Innovate Generative AI+Data conference</h3>
-      <div class="event-details">
-        <strong>Online</strong> • Conference • March 6, 2025
-      </div>
-      <div class="description">
-        Virtual conference presentation on AWS generative AI and data solutions for EMEA region.
-      </div>
-      <div class="tags">
-        <span class="tag">Online</span>
-        <span class="tag">AWS</span>
-        <span class="tag">Generative AI</span>
-        <span class="tag">EMEA</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AWS AI and Data Conference</h3>
-      <div class="event-details">
-        <strong>Kilkenny, Ireland</strong> • Conference • March 13, 2025
-      </div>
-      <div class="description">
-        Conference presentation on AWS AI and data services for the Irish market.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">AWS</span>
-        <span class="tag">AI</span>
-        <span class="tag">Data</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>CloudFest</h3>
-      <div class="event-details">
-        <strong>Europa-Park, Germany</strong> • Conference • March 19, 2025
-      </div>
-      <div class="description">
-        Participation in CloudFest conference discussing cloud computing and AI technologies.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Cloud Computing</span>
-        <span class="tag">AI</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AWS Summit, Paris</h3>
-      <div class="event-details">
-        <strong>Paris, France</strong> • Conference • April 9, 2025
-      </div>
-      <div class="description">
-        Presentation at AWS Summit Paris on cloud computing and AI solutions.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">AWS</span>
-        <span class="tag">Cloud</span>
-        <span class="tag">AI</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>ODSC East</h3>
-      <div class="event-details">
-        <strong>Boston, USA</strong> • Conference • April 23–25, 2024
-      </div>
-      <div class="description">
-        Presentation at Open Data Science Conference East on data science and machine learning.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Data Science</span>
-        <span class="tag">ODSC</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Generative AI Summit</h3>
-      <div class="event-details">
-        <strong>San Jose, USA</strong> • Conference • April 16–17, 2024
-      </div>
-      <div class="description">
-        Summit presentation on generative AI technologies and applications.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Generative AI</span>
-        <span class="tag">AI Summit</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Dallas AI meetup</h3>
-      <div class="event-details">
-        <strong>Austin, USA</strong> • Meetup • May 28, 2024
-      </div>
-      <div class="description">
-        Local AI meetup presentation in Austin, Texas on artificial intelligence topics.
-      </div>
-      <div class="tags">
-        <span class="tag">Meetup</span>
-        <span class="tag">AI</span>
-        <span class="tag">Local</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AWS re:Invent re:Cap</h3>
-      <div class="event-details">
-        <strong>Dublin, Ireland</strong> • Conference • January 30, 2024
-      </div>
-      <div class="description">
-        Recap presentation of AWS re:Invent announcements and new features for the Irish market.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">AWS</span>
-        <span class="tag">re:Invent</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Epic AI Dev Summit</h3>
-      <div class="event-details">
-        <strong>Online</strong> • Conference • January 30, 2024
-      </div>
-      <div class="description">
-        Virtual summit presentation on AI development and implementation strategies.
-      </div>
-      <div class="tags">
-        <span class="tag">Online</span>
-        <span class="tag">AI Development</span>
-        <span class="tag">Summit</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>World AI Cannes Festival</h3>
-      <div class="event-details">
-        <strong>Cannes, France</strong> • Festival • February 8–9, 2024
-      </div>
-      <div class="description">
-        Festival presentation on artificial intelligence trends and developments.
-      </div>
-      <div class="tags">
-        <span class="tag">Festival</span>
-        <span class="tag">AI</span>
-        <span class="tag">Cannes</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>La Grosse Conf</h3>
-      <div class="event-details">
-        <strong>Paris, France</strong> • Conference • March 27, 2024
-      </div>
-      <div class="description">
-        Conference presentation on technology and AI topics in Paris.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Technology</span>
-        <span class="tag">AI</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Generative AI meetup</h3>
-      <div class="event-details">
-        <strong>Nantes, France</strong> • Meetup • March 27, 2024
-      </div>
-      <div class="description">
-        Local meetup presentation on generative AI technologies and applications.
-      </div>
-      <div class="tags">
-        <span class="tag">Meetup</span>
-        <span class="tag">Generative AI</span>
-        <span class="tag">Local</span>
-      </div>
-    </div>
-    </div>
-  </div>
-
-  <div class="year-section">
-    <div class="year-header" onclick="toggleYear('2023')">
-      <h2>2023</h2>
-      <span class="year-toggle" id="toggle-2023">▼</span>
-    </div>
-    <div class="year-content" id="content-2023">
-      <div class="speaking-event">
-      <h3>Computer Vision meetup</h3>
-      <div class="event-details">
-        <strong>Online</strong> • Meetup • January 12, 2023
-      </div>
-      <div class="description">
-        Online meetup presentation on computer vision technologies and applications.
-      </div>
-      <div class="tags">
-        <span class="tag">Online</span>
-        <span class="tag">Computer Vision</span>
-        <span class="tag">Meetup</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Optimize End-to-End Transformer Performance on the Latest Intel® Xeon® Processors</h3>
-      <div class="event-details">
-        <strong>Intel</strong> • Webinar • February 15, 2023
-      </div>
-      <div class="description">
-        Webinar on optimizing transformer model performance using Intel Xeon processors for AI workloads.
-      </div>
-      <div class="tags">
-        <span class="tag">Webinar</span>
-        <span class="tag">Intel</span>
-        <span class="tag">Xeon</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">Performance</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>How Witty Works leverages Hugging Face to scale inclusive language</h3>
-      <div class="event-details">
-        <strong>Witty Works</strong> • Webinar • February 16, 2023
-      </div>
-      <div class="description">
-        Webinar presentation on how Witty Works uses Hugging Face technologies to implement inclusive language solutions.
-      </div>
-      <div class="tags">
-        <span class="tag">Webinar</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">Inclusive Language</span>
-        <span class="tag">NLP</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>MLConf</h3>
-      <div class="event-details">
-        <strong>NYC, USA</strong> • Conference • March 30, 2023
-      </div>
-      <div class="description">
-        Conference presentation on machine learning topics and developments.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">MLConf</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AWS Summit Paris</h3>
-      <div class="event-details">
-        <strong>Paris, France</strong> • Conference • April 4, 2023
-      </div>
-      <div class="description">
-        Conference presentation on AWS services and cloud computing solutions.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">AWS</span>
-        <span class="tag">Cloud</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Data Centers, IA, Cloud, High Performance Computing: Environmental Impact and Measurement</h3>
-      <div class="event-details">
-        <strong>Ecole Polytechnique, Palaiseau, France</strong> • Conference • April 13, 2023
-      </div>
-      <div class="description">
-        Presentation on environmental impact of data centers, AI, cloud computing, and high-performance computing, including measurement and containment strategies.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Environmental Impact</span>
-        <span class="tag">Data Centers</span>
-        <span class="tag">HPC</span>
-        <span class="tag">Sustainability</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AWS Deep Dive Days</h3>
-      <div class="event-details">
-        <strong>London, UK</strong> • Workshop • April 18–19, 2023
-      </div>
-      <div class="description">
-        Deep dive workshop on AWS services and implementation strategies.
-      </div>
-      <div class="tags">
-        <span class="tag">Workshop</span>
-        <span class="tag">AWS</span>
-        <span class="tag">Deep Dive</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Applied AI for Business Professionals panel</h3>
-      <div class="event-details">
-        <strong>Singapore</strong> • Panel • May 3, 2023
-      </div>
-      <div class="description">
-        Panel discussion on applying AI solutions for business professionals and enterprise use cases.
-      </div>
-      <div class="tags">
-        <span class="tag">Panel</span>
-        <span class="tag">Business AI</span>
-        <span class="tag">Enterprise</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AWS Summit ASEAN</h3>
-      <div class="event-details">
-        <strong>Singapore</strong> • Conference • May 4, 2023
-      </div>
-      <div class="description">
-        Conference presentation on AWS services for the ASEAN region.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">AWS</span>
-        <span class="tag">ASEAN</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>ODSC East</h3>
-      <div class="event-details">
-        <strong>Boston, USA</strong> • Workshop • May 9, 2023
-      </div>
-      <div class="description">
-        Workshop presentation at Open Data Science Conference East on data science and machine learning.
-      </div>
-      <div class="tags">
-        <span class="tag">Workshop</span>
-        <span class="tag">Data Science</span>
-        <span class="tag">ODSC</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AWS Workshop</h3>
-      <div class="event-details">
-        <strong>San Francisco, USA</strong> • Workshop • May 11, 2023
-      </div>
-      <div class="description">
-        Hands-on workshop on AWS services and implementation.
-      </div>
-      <div class="tags">
-        <span class="tag">Workshop</span>
-        <span class="tag">AWS</span>
-        <span class="tag">Hands-on</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Generative AI Summit</h3>
-      <div class="event-details">
-        <strong>London, UK</strong> • Conference • May 16, 2023
-      </div>
-      <div class="description">
-        Summit presentation on generative AI technologies and applications.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Generative AI</span>
-        <span class="tag">AI Summit</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>ML Forum</h3>
-      <div class="event-details">
-        <strong>Budapest, Hungary</strong> • Conference & Workshop • June 5–6, 2023
-      </div>
-      <div class="description">
-        Conference session and workshop on machine learning topics and applications.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Workshop</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">ML Forum</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>The Future of Data-Centric AI 2023</h3>
-      <div class="event-details">
-        <strong>Online</strong> • Panel • June 7, 2023
-      </div>
-      <div class="description">
-        Online panel discussion on the future of data-centric AI approaches and methodologies.
-      </div>
-      <div class="tags">
-        <span class="tag">Online</span>
-        <span class="tag">Panel</span>
-        <span class="tag">Data-Centric AI</span>
-        <span class="tag">Future of AI</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AWS event on Generative AI</h3>
-      <div class="event-details">
-        <strong>Zürich, Switzerland</strong> • Conference • June 9, 2023
-      </div>
-      <div class="description">
-        Conference presentation on AWS generative AI services and applications.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">AWS</span>
-        <span class="tag">Generative AI</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>ODSC Europe</h3>
-      <div class="event-details">
-        <strong>Online</strong> • Workshop • June 14, 2023
-      </div>
-      <div class="description">
-        Online hands-on session at Open Data Science Conference Europe.
-      </div>
-      <div class="tags">
-        <span class="tag">Online</span>
-        <span class="tag">Workshop</span>
-        <span class="tag">Data Science</span>
-        <span class="tag">ODSC</span>
-      </div>
-    </div>
-
-    <div class="speaking-event keynote">
-      <h3>Vivatech</h3>
-      <div class="event-details">
-        <strong>Paris, France</strong> • Keynote • June 15, 2023
-      </div>
-      <div class="description">
-        Keynote presentation at Vivatech conference on technology and innovation.
-      </div>
-      <div class="tags">
-        <span class="tag">Keynote</span>
-        <span class="tag">Technology</span>
-        <span class="tag">Innovation</span>
-        <span class="tag">Vivatech</span>
-      </div>
-    </div>
-
-    <div class="speaking-event keynote">
-      <h3>IBM Watsonx Day</h3>
-      <div class="event-details">
-        <strong>Online</strong> • Keynote • June 21, 2023
-      </div>
-      <div class="description">
-        Keynote presentation on IBM Watsonx platform and AI capabilities.
-      </div>
-      <div class="tags">
-        <span class="tag">Keynote</span>
-        <span class="tag">Online</span>
-        <span class="tag">IBM</span>
-        <span class="tag">Watsonx</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>UNESCO Digital Week</h3>
-      <div class="event-details">
-        <strong>Paris, France</strong> • Conference • September 6, 2023
-      </div>
-      <div class="description">
-        Conference presentation at UNESCO Digital Week on digital technologies and their impact.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">UNESCO</span>
-        <span class="tag">Digital Week</span>
-        <span class="tag">Digital Technologies</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>MSG Inscom</h3>
-      <div class="event-details">
-        <strong>Munich, Germany</strong> • Conference • September 18, 2023
-      </div>
-      <div class="description">
-        Conference presentation on technology and business solutions.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Technology</span>
-        <span class="tag">Business</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AWS GenAI Partner Day DACH</h3>
-      <div class="event-details">
-        <strong>Zürich, Switzerland</strong> • Conference • September 25, 2023
-      </div>
-      <div class="description">
-        Partner day presentation on AWS generative AI solutions for the DACH region.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">AWS</span>
-        <span class="tag">Generative AI</span>
-        <span class="tag">DACH</span>
-        <span class="tag">Partners</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AWS Swiss Cloud Day</h3>
-      <div class="event-details">
-        <strong>Zürich, Switzerland</strong> • Conference • September 26, 2023
-      </div>
-      <div class="description">
-        Conference presentation on AWS cloud services for the Swiss market.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">AWS</span>
-        <span class="tag">Cloud</span>
-        <span class="tag">Switzerland</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>EMEA roadshow with AWS</h3>
-      <div class="event-details">
-        <strong>Multiple cities across EMEA</strong> • Roadshow • September-November 2023
-      </div>
-      <div class="description">
-        Comprehensive roadshow across EMEA region including Madrid, Barcelona, Paris, Munich, London, Milan, Amsterdam, Zurich, Stockholm, Warsaw, Tel Aviv, Dubai, Istanbul, Johannesburg, and Dublin.
-      </div>
-      <div class="tags">
-        <span class="tag">Roadshow</span>
-        <span class="tag">AWS</span>
-        <span class="tag">EMEA</span>
-        <span class="tag">Multiple Cities</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Generative AI Week</h3>
-      <div class="event-details">
-        <strong>Atlanta, USA</strong> • Conference • October 16–17, 2023
-      </div>
-      <div class="description">
-        Week-long conference focused on generative AI technologies and applications.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Generative AI</span>
-        <span class="tag">AI Week</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Computer Vision Summit</h3>
-      <div class="event-details">
-        <strong>Boston, USA</strong> • Conference • October 18, 2023
-      </div>
-      <div class="description">
-        Summit presentation on computer vision technologies and applications.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Computer Vision</span>
-        <span class="tag">AI Summit</span>
-      </div>
-    </div>
-
-    <div class="speaking-event keynote">
-      <h3>Democratizing AI: Making Machine Learning Accessible to Every Developer</h3>
-      <div class="event-details">
-        <strong>QCon San Francisco</strong> • Keynote • November 2023
-      </div>
-      <div class="description">
-        Keynote presentation on how modern tools and platforms are making AI and machine learning accessible to developers of all skill levels.
-      </div>
-      <div class="tags">
-        <span class="tag">Keynote</span>
-        <span class="tag">AI Democratization</span>
-        <span class="tag">Developer Tools</span>
-      </div>
-    </div>
-
-    <div class="speaking-event workshop">
-      <h3>Hugging Face Transformers: From Zero to Production</h3>
-      <div class="event-details">
-        <strong>PyData Global</strong> • Workshop • October 2023
-      </div>
-      <div class="description">
-        Comprehensive workshop covering the complete pipeline from model selection to production deployment using Hugging Face Transformers.
-      </div>
-      <div class="tags">
-        <span class="tag">Workshop</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">Production</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Accelerating AI with Hardware Optimization</h3>
-      <div class="event-details">
-        <strong>Intel AI Summit</strong> • Technical Session • September 2023
-      </div>
-      <div class="description">
-        Technical deep-dive into optimizing AI workloads using Intel technologies, including Xeon processors and specialized AI accelerators.
-      </div>
-      <div class="tags">
-        <span class="tag">Hardware</span>
-        <span class="tag">Intel</span>
-        <span class="tag">Optimization</span>
-        <span class="tag">Performance</span>
-      </div>
-    </div>
-    </div>
-  </div>
-
-  <div class="year-section">
-    <div class="year-header" onclick="toggleYear('2022')">
-      <h2>2022</h2>
-      <span class="year-toggle" id="toggle-2022">▼</span>
-    </div>
-    <div class="year-content" id="content-2022">
-      <div class="speaking-event">
-      <h3>Building NLP Applications with Transformers</h3>
-      <div class="event-details">
-        <strong>FourthBrain</strong> • Live Demo & Discussion • June 9, 2022
-      </div>
-      <div class="description">
-        Live demonstration and discussion on building natural language processing applications using transformer models.
-      </div>
-      <div class="tags">
-        <span class="tag">Live Demo</span>
-        <span class="tag">NLP</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">YouTube</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Building NLP Applications with Hugging Face</h3>
-      <div class="event-details">
-        <strong>AWS Twitter Spaces</strong> • Live Discussion • June 16, 2022
-      </div>
-      <div class="description">
-        Live discussion on Twitter Spaces with AWS about building NLP applications using Hugging Face technologies.
-      </div>
-      <div class="tags">
-        <span class="tag">Twitter Spaces</span>
-        <span class="tag">NLP</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">AWS</span>
-        <span class="tag">Recording</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Machine Learning 2.0 with Hugging Face</h3>
-      <div class="event-details">
-        <strong>PyData London 2022</strong> • Conference • June 18, 2022
-      </div>
-      <div class="description">
-        Conference presentation on the next generation of machine learning with Hugging Face technologies.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">PyData</span>
-        <span class="tag">YouTube</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Achieve Machine Learning Hyper-Productivity with Transformers and Hugging Face</h3>
-      <div class="event-details">
-        <strong>Databricks Data and AI Summit 2022</strong> • Conference • June 29, 2022
-      </div>
-      <div class="description">
-        Conference presentation on achieving hyper-productivity in machine learning using transformers and Hugging Face.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">Databricks</span>
-        <span class="tag">YouTube</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Getting Started with Transformers and MLOps</h3>
-      <div class="event-details">
-        <strong>DataRobot</strong> • Webinar • June 30, 2022
-      </div>
-      <div class="description">
-        Webinar on getting started with transformers and machine learning operations (MLOps).
-      </div>
-      <div class="tags">
-        <span class="tag">Webinar</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">MLOps</span>
-        <span class="tag">DataRobot</span>
-        <span class="tag">On-demand</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Analytics Vidhya Data Hour webinar</h3>
-      <div class="event-details">
-        <strong>Analytics Vidhya</strong> • Webinar • July 7, 2022
-      </div>
-      <div class="description">
-        Webinar presentation for Analytics Vidhya Data Hour on data science and analytics topics.
-      </div>
-      <div class="tags">
-        <span class="tag">Webinar</span>
-        <span class="tag">Data Science</span>
-        <span class="tag">Analytics</span>
-        <span class="tag">YouTube</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Audio Classification with Hugging Face</h3>
-      <div class="event-details">
-        <strong>Online</strong> • Workshop • July 7–9, 2022
-      </div>
-      <div class="description">
-        Workshop on audio classification using Hugging Face technologies and tools.
-      </div>
-      <div class="tags">
-        <span class="tag">Workshop</span>
-        <span class="tag">Audio Classification</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">YouTube</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Accelerate Transformer Model Training with Hugging Face and Habana Labs</h3>
-      <div class="event-details">
-        <strong>Habana</strong> • Webinar • July 26, 2022
-      </div>
-      <div class="description">
-        Webinar on accelerating transformer model training using Hugging Face and Habana Labs technologies.
-      </div>
-      <div class="tags">
-        <span class="tag">Webinar</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">Habana</span>
-        <span class="tag">Training</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Hyperproductive ML with Hugging Face</h3>
-      <div class="event-details">
-        <strong>The Future of Data-Centric AI</strong> • Conference • August 3–4, 2022
-      </div>
-      <div class="description">
-        Conference presentation on achieving hyper-productivity in machine learning with Hugging Face technologies.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">Data-Centric AI</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Machine Learning 2.0 with Hugging Face Transformers</h3>
-      <div class="event-details">
-        <strong>Southern Data Science, Atlanta, USA</strong> • Conference • September 7–9, 2022
-      </div>
-      <div class="description">
-        Conference session on the next generation of machine learning with Hugging Face Transformers.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">Transformers</span>
-      </div>
-    </div>
-
-    <div class="speaking-event workshop">
-      <h3>Achieve ML Hyper-productivity with Hugging Face Transformers</h3>
-      <div class="event-details">
-        <strong>Southern Data Science, Atlanta, USA</strong> • Full-day Workshop • September 7–9, 2022
-      </div>
-      <div class="description">
-        Full-day workshop on achieving hyper-productivity in machine learning with Hugging Face Transformers.
-      </div>
-      <div class="tags">
-        <span class="tag">Workshop</span>
-        <span class="tag">Full-day</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">Transformers</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>How Synapse Medicine leverages Hugging Face to improve medication safety</h3>
-      <div class="event-details">
-        <strong>Synapse Medicine</strong> • Webinar • September 20, 2022
-      </div>
-      <div class="description">
-        Webinar presentation on how Synapse Medicine uses Hugging Face technologies to improve medication safety.
-      </div>
-      <div class="tags">
-        <span class="tag">Webinar</span>
-        <span class="tag">Healthcare</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">Medication Safety</span>
-        <span class="tag">YouTube</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Machine Learning 2.0 with Hugging Face</h3>
-      <div class="event-details">
-        <strong>data2day, Karlsruhe, Germany</strong> • Conference • September 20, 2022
-      </div>
-      <div class="description">
-        Conference presentation on the next generation of machine learning with Hugging Face technologies.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">data2day</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Construisez vos applications NLP, Computer Vision et Speech avec les modèles Transformers</h3>
-      <div class="event-details">
-        <strong>Big Data AI Paris, France</strong> • Conference • September 26, 2022
-      </div>
-      <div class="description">
-        Conference presentation on building NLP, computer vision, and speech applications with transformer models.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">NLP</span>
-        <span class="tag">Computer Vision</span>
-        <span class="tag">Speech</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">French</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Accelerate Transformer Training and Inference with Hugging Face, Habana Gaudi Accelerators, and Intel Xeon Platform</h3>
-      <div class="event-details">
-        <strong>Intel Innovation, San Jose, USA</strong> • Conference • September 28, 2022
-      </div>
-      <div class="description">
-        Conference presentation on accelerating transformer training and inference using Hugging Face, Habana Gaudi accelerators, and Intel Xeon platform.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">Habana</span>
-        <span class="tag">Intel</span>
-        <span class="tag">Xeon</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>AI2Future</h3>
-      <div class="event-details">
-        <strong>Zagreb, Croatia</strong> • Conference • October 13, 2022
-      </div>
-      <div class="description">
-        Conference presentation on artificial intelligence and future technologies.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">AI</span>
-        <span class="tag">Future</span>
-        <span class="tag">Croatia</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Hyperproductive Machine Learning with Transformers and Hugging Face</h3>
-      <div class="event-details">
-        <strong>AI DevWorld, San Jose, USA</strong> • Conference • October 25–27, 2022
-      </div>
-      <div class="description">
-        Conference presentation on achieving hyper-productivity in machine learning with transformers and Hugging Face.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">AI DevWorld</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Hyperproductive NLP with Hugging Face Transformers</h3>
-      <div class="event-details">
-        <strong>ODSC West, San Francisco, USA</strong> • Conference • November 1, 2022
-      </div>
-      <div class="description">
-        Conference presentation on achieving hyper-productivity in natural language processing with Hugging Face Transformers.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">NLP</span>
-        <span class="tag">Hugging Face</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">ODSC</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>PyCon Sweden</h3>
-      <div class="event-details">
-        <strong>Stockholm, Sweden</strong> • Keynote & Workshop • November 3–4, 2022
-      </div>
-      <div class="description">
-        Keynote presentation and workshop at PyCon Sweden on Python and AI topics.
-      </div>
-      <div class="tags">
-        <span class="tag">Keynote</span>
-        <span class="tag">Workshop</span>
-        <span class="tag">Python</span>
-        <span class="tag">PyCon</span>
-        <span class="tag">Sweden</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Danish Data Science 2022</h3>
-      <div class="event-details">
-        <strong>Billund, Denmark</strong> • Conference • November 7–8, 2022
-      </div>
-      <div class="description">
-        Conference presentation at Danish Data Science 2022 on data science and AI topics.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Data Science</span>
-        <span class="tag">Denmark</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>Codiax</h3>
-      <div class="event-details">
-        <strong>Bucharest and Cluj-Napoca, Romania</strong> • Conference • November 10–11, 2022
-      </div>
-      <div class="description">
-        Conference presentations in Bucharest and Cluj-Napoca, Romania on technology and AI topics.
-      </div>
-      <div class="tags">
-        <span class="tag">Conference</span>
-        <span class="tag">Technology</span>
-        <span class="tag">AI</span>
-        <span class="tag">Romania</span>
-      </div>
-    </div>
-
-    <div class="speaking-event">
-      <h3>IONOS Tech UP webinar</h3>
-      <div class="event-details">
-        <strong>IONOS</strong> • Webinar • November 17, 2022
-      </div>
-      <div class="description">
-        Webinar presentation for IONOS Tech UP on technology and AI topics.
-      </div>
-      <div class="tags">
-        <span class="tag">Webinar</span>
-        <span class="tag">Technology</span>
-        <span class="tag">IONOS</span>
-      </div>
-    </div>
-
-    <div class="speaking-event keynote">
-      <h3>The Age of Machine Learning as Code</h3>
-      <div class="event-details">
-        <strong>MLOps World</strong> • Keynote • December 2022
-      </div>
-      <div class="description">
-        Keynote exploring how machine learning is evolving into a code-first discipline, with implications for development practices and tooling.
-      </div>
-      <div class="tags">
-        <span class="tag">Keynote</span>
-        <span class="tag">MLOps</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Development</span>
-      </div>
-    </div>
-
-    <div class="speaking-event workshop">
-      <h3>Building Production-Ready ML Pipelines with AWS SageMaker</h3>
-      <div class="event-details">
-        <strong>AWS re:Invent</strong> • Workshop • November 2022
-      </div>
-      <div class="description">
-        Hands-on workshop demonstrating how to build, train, and deploy machine learning models using Amazon SageMaker's comprehensive toolset.
-      </div>
-      <div class="tags">
-        <span class="tag">Workshop</span>
-        <span class="tag">AWS</span>
-        <span class="tag">SageMaker</span>
-        <span class="tag">ML Pipelines</span>
-      </div>
-    </div>
-    </div>
-  </div>
+        <div class="years-grid">
+      <a href="speaking-2024.html" class="year-card">
+        <div class="year-number">2024</div>
+        <div class="year-arrow">→</div>
+      </a>
+
+      <a href="speaking-2023.html" class="year-card">
+        <div class="year-number">2023</div>
+        <div class="year-arrow">→</div>
+      </a>
+
+      <a href="speaking-2022.html" class="year-card">
+        <div class="year-number">2022</div>
+        <div class="year-arrow">→</div>
+      </a>
+
+      <a href="speaking-2021.html" class="year-card">
+        <div class="year-number">2021</div>
+        <div class="year-arrow">→</div>
+      </a>
+
+      <a href="speaking-2020.html" class="year-card">
+        <div class="year-number">2020</div>
+        <div class="year-arrow">→</div>
+      </a>
+
+      <a href="speaking-2019.html" class="year-card">
+        <div class="year-number">2019</div>
+        <div class="year-arrow">→</div>
+      </a>
+
+      <a href="speaking-2018.html" class="year-card">
+        <div class="year-number">2018</div>
+        <div class="year-arrow">→</div>
+      </a>
+
+      <a href="speaking-2017.html" class="year-card">
+        <div class="year-number">2017</div>
+        <div class="year-arrow">→</div>
+      </a>
+
+      <a href="speaking-2016.html" class="year-card">
+        <div class="year-number">2016</div>
+        <div class="year-arrow">→</div>
+      </a>
+      </div>
+  </section>
+
+  <!-- Media & Analysts and Podcasts Section -->
+  <section>
+    <div class="media-podcasts-section">
+      <div class="media-box">
+        <h3>Media & Analysts</h3>
+        <p>Press interviews, analyst briefings, and media coverage.</p>
+        <a href="media-analysts.html" class="btn">View Media & Analysts</a>
+      </div>
+      <div class="podcasts-box">
+        <h3>Podcasts</h3>
+        <p>Podcast appearances and interviews.</p>
+        <a href="podcasts.html" class="btn">View Podcasts</a>
+      </div>
+    </div>
+  </section>
 
   <div class="info-box">
     <h3>Speaking Inquiries</h3>
@@ -1555,42 +558,7 @@
     <p><strong>Contact:</strong> <a href="mailto:julien@julien.org">julien@julien.org</a> for speaking inquiries and availability.</p>
   </div>
 
-  <!-- Media Section -->
-  <section id="media" style="margin-top: 4rem; padding-top: 3rem; border-top: 2px solid var(--border);">
-    <h2>Media Appearances</h2>
-    <p>Featured in podcasts, interviews, press coverage, and media appearances.</p>
-    
-    <div class="media-section">
-      <h3>Press / PR</h3>
-      <ul class="media-list">
-        <li><a href="https://youtu.be/YdPKPzgtQ00" target="_blank" rel="noopener noreferrer">Cisco Live Interview</a> - YouTube (June 2025)</li>
-        <li><a href="https://edtechmagazine.com/k12/article/2025/03/small-language-models-slm-perfcon" target="_blank" rel="noopener noreferrer">Small Language Models for Education</a> - EdTech Magazine (March 2025)</li>
-        <li><a href="https://www.radiofrance.fr/franceinfo/podcasts/nouveau-monde/hugging-face-l-autre-licorne-francaise-de-l-ia-8849762" target="_blank" rel="noopener noreferrer">Franceinfo: Hugging Face, l'autre licorne française de l'IA</a> - Radio France (2024)</li>
-        <li><a href="https://www.bfmtv.com/economie/replay-emissions/tech-and-co/julien-simon-evangeliste-technique-chez-hugging-face-28-08_EN-202308280897.html" target="_blank" rel="noopener noreferrer">Tech & Co Interview: Hugging Face's AI Leadership</a> - BFM Business (Aug 2023)</li>
-        <li><a href="https://www.bfmtv.com/economie/replay-emissions/tech-and-co/julien-simon-evangeliste-technique-chez-hugging-face-01-02_EN-202402011058.html" target="_blank" rel="noopener noreferrer">Tech & Co Interview: Generative AI and Industry Trends</a> - BFM Business (Feb 2024)</li>
-        <li><a href="https://www.bfmtv.com/economie/replay-emissions/tech-and-co/tech-co-partie-1-04-04_VN-202304040796.html" target="_blank" rel="noopener noreferrer">Tech & Co Panel: The Future of AI in France</a> - BFM Business (Apr 2023)</li>
-        <li><a href="https://www.radiofrance.fr/franceinfo/podcasts/nouveau-monde/hugging-face-l-autre-licorne-francaise-de-l-ia-8849762" target="_blank" rel="noopener noreferrer">Hugging Face, l'autre licorne française de l'IA</a> - Radio France (Franceinfo, 2024)</li>
-        <li><a href="https://venturebeat.com/data-infrastructure/with-all-of-the-focus-on-chatgpt-what-impact-if-any-does-it-have-on-the-data-center/" target="_blank" rel="noopener noreferrer">With all of the focus on ChatGPT, what impact (if any) does it have on the data center?</a> - VentureBeat (2023)</li>
-        <li><a href="https://spectrum.ieee.org/ai-cpu" target="_blank" rel="noopener noreferrer">AI on CPUs: Intel's Q8Chat Shows What's Possible</a> - IEEE Spectrum (2023)</li>
-        <li><a href="https://arstechnica.com/information-technology/2021/07/come-talk-with-us-about-machine-learning-experiments-gone-right-and-wrong/" target="_blank" rel="noopener noreferrer">Machine learning experiments: gone right and wrong (panel)</a> - Ars Technica (2021)</li>
-        <li><strong>BBC Radio 5</strong> - Provided expert commentary on the future of AI and its transformative potential across industries (2019)</li>
-        <li><strong>CNN Business</strong> - Led software teams for Pepper, the emotional robot, showcasing early contributions to AI innovation (2014)</li>
-      </ul>
-    </div>
 
-    <div class="media-section">
-      <h3>Recent Podcasts</h3>
-      <ul class="media-list">
-        <li><a href="https://jungs.ai/podcast/episode-1-julien-simon" target="_blank" rel="noopener noreferrer">Jungs AI Podcast with Ngwako Ralepelle</a> - Episode 1 (February 2025)</li>
-        <li><a href="https://art19.com/shows/aws-re-think/episodes/42ba7cac-b3b3-42a4-a809-39e71138d880" target="_blank" rel="noopener noreferrer">AWS re:Think Podcast</a> - Episode (April 2025)</li>
-        <li><a href="https://www.youtube.com/watch?v=Eog_ErwKB5k" target="_blank" rel="noopener noreferrer">AI Space</a> - YouTube (April 2025)</li>
-        <li><a href="https://newsroom.arm.com/podcasts/small-language-models-cpu-inference" target="_blank" rel="noopener noreferrer">ARM Newsroom Podcast</a> - Small Language Models & CPU Inference (April 2025)</li>
-        <li><a href="https://www.youtube.com/watch?v=0vkw5TaTYPo" target="_blank" rel="noopener noreferrer">AWS UAE</a> - YouTube (May 2025)</li>
-        <li><a href="https://www.youtube.com/watch?v=GBXu34sCTRM" target="_blank" rel="noopener noreferrer">Youth Day AI Group</a> - YouTube (June 2025)</li>
-        <li><a href="https://podcasts.apple.com/us/podcast/newminds-ai-ki-podcast/id1741382643" target="_blank" rel="noopener noreferrer">New Minds AI Podcast</a> - Apple Podcasts (June 2025)</li>
-      </ul>
-    </div>
-  </section>
 </main>
 
 <footer>
