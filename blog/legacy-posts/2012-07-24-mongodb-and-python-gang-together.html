@@ -255,68 +255,112 @@
         </header>
         
         <div class="legacy-post-content">
-          After a couple of recent posts on <a href="2013-07-25-from-one-cloud-to-the-next.html">MongoLab</a> and <a href="2012-07-24-mongodb-and-python-gang-together.html">Python</a>, I guess it was pretty obvious to mix both :) &nbsp;The only thing you need to add to your system is <a href="http://pypi.python.org/pypi/pymongo/">PyMongo</a>, the Python driver for MongoDB. If you're using Linux or MacOS, it should be as easy as:<br />
+          <p>After a couple of recent posts on <a href="2013-07-25-from-one-cloud-to-the-next.html">MongoLab</a> and <a href="2012-07-24-mongodb-and-python-gang-together.html">Python</a>, I guess it was pretty obvious to mix both :) &nbsp;The only thing you need to add to your system is <a href="http://pypi.python.org/pypi/pymongo/">PyMongo</a>, the Python driver for MongoDB. If you're using Linux or MacOS, it should be as easy as:</p>
+
+<p><code>
 <code>
-<code><span>
-$ <b>sudo easy_install pymongo&nbsp;</code><br />
-<code><span>Searching for pymongo&nbsp;<br />
-<code><span>Best match: pymongo 2.5.2&nbsp;<br />
-<code><span>Processing pymongo-2.5.2-py2.7-macosx-10.8-intel.egg&nbsp;<br />
-<code><span>Adding pymongo 2.5.2 to easy-install.pth file&nbsp;
-<br />
-<code><span>Using /Library/Python/2.7/site-packages/pymongo-2.5.2-py2.7-macosx-10.8-intel.egg&nbsp;<br />
-<code><span>Processing dependencies for pymongo&nbsp;<br />
-<code><span>Finished processing dependencies for pymongo&nbsp;<br />
-<br />
-Let's try some basic stuff first. You'll just need to use your own username, password, URI, database and collection :)<br />
-<br />
-<code><span># Python 2.7<br />
-<span>from pymongo import *</span><br />
-<code><span>&nbsp;<span>connection = MongoClient("mongodb://</span><span>USERNAME:PASSWORD</span><span>@ds051067.mongolab.com:51067/mongolab-test", 51067)</span><br />
-<span>db = connection["mongolab-test"]</span><br />
-<span><span>c = db["collection1"]<br />
-<span><span>posts = c.find()<br />
-<span><span>for post in posts:<br />
-<span>&nbsp; &nbsp; &nbsp; &nbsp; print (post)</span><br />
-<br />
-Output:<br />
-<span>{u'x': 1.0, u'_id': ObjectId('51e3ce08915082db3df32bf0')}</span><br />
-<span>{u'x': 2.0, u'_id': ObjectId('51e3ce08915082db3df32bf1')}</span><br />
-<span>{u'x': 3.0, u'_id': ObjectId('51e3ce08915082db3df32bf2')}</span><br />
-<span><i>output removed from brevity<br />
-<span>{u'x': 25.0, u'_id': ObjectId('51e3ce08915082db3df32c08')}</span><br />
-<code>
-OK, now let's go a little bit crazeee:<br />
-<br />
-<code><span># Python 2.7&nbsp;<br />
-<span>from pymongo import *</span><br />
-<span>connection = MongoClient("mongodb://USERNAME:PASSWORD@ds051067.mongolab.com:51067/mongolab-test", 51067)</span><br />
-<span>db = connection["mongolab-test"]</span><br />
-<span>c = db["collection1"]</span><br />
-<span>posts = c.find({"x":{"$gte":5,"$lte":10}}).sort([("x",DESCENDING)])</span><br />
-<span>print (c.count())</span><br />
-<span>for post in posts:</span><br />
-<span>&nbsp; &nbsp; &nbsp; &nbsp; print (post)</span><br />
-<span>&nbsp; &nbsp; &nbsp; &nbsp; c.insert({"y":post["x"]})</span><br />
-<span>print (c.count())</span><br />
-<div>
-<span></div>
-Output:<br />
-<code><span>25&nbsp;<br />
-<code><span>{u'x': 10.0, u'_id': ObjectId('51e3ce08915082db3df32bf9')}&nbsp;<br />
-<code><span>{u'x': 9.0, u'_id': ObjectId('51e3ce08915082db3df32bf8')}&nbsp;<br />
-<code><span>{u'x': 8.0, u'_id': ObjectId('51e3ce08915082db3df32bf7')}&nbsp;<br />
-<code><span>{u'x': 7.0, u'_id': ObjectId('51e3ce08915082db3df32bf6')}&nbsp;<br />
-<code><span>{u'x': 6.0, u'_id': ObjectId('51e3ce08915082db3df32bf5')}&nbsp;<br />
-<code><span>{u'x': 5.0, u'_id': ObjectId('51e3ce08915082db3df32bf4')}&nbsp;<br />
-<code><span>31
-<br />
-<code><span></code>
-<br />
-See how easy this is (again)? The Python syntax is pretty much identical to the MongoDB syntax and their dictionaries are a perfect match. No conversion needed (DALs and ORMs, rot in Hell!).<br />
-<br />
-Robert Burns, the famous 18th-century Scottish poet, once wrote: "Freedom an' whisky gang thegither!". With all due respect for such a wise man, please let me add: "So do MongoDB and Python, especially with a glass of 18-year old Glenlivet". Open Source (on the) rocks :D<br />
-<br />
+$ <b>sudo easy_install pymongo&nbsp;</code></p>
+
+<p><code>Searching for pymongo&nbsp;</p>
+
+<p><code>Best match: pymongo 2.5.2&nbsp;</p>
+
+<p><code>Processing pymongo-2.5.2-py2.7-macosx-10.8-intel.egg&nbsp;</p>
+
+<p><code>Adding pymongo 2.5.2 to easy-install.pth file&nbsp;</p>
+
+<p><code>Using /Library/Python/2.7/site-packages/pymongo-2.5.2-py2.7-macosx-10.8-intel.egg&nbsp;</p>
+
+<p><code>Processing dependencies for pymongo&nbsp;</p>
+
+<p><code>Finished processing dependencies for pymongo&nbsp;</p>
+
+<p>Let's try some basic stuff first. You'll just need to use your own username, password, URI, database and collection :)</p>
+
+<p><code># Python 2.7</p>
+
+<p><span>from pymongo import *</span></p>
+
+<p><code>&nbsp;<span>connection = MongoClient("mongodb://</span><span>USERNAME:PASSWORD</span><span>@ds051067.mongolab.com:51067/mongolab-test", 51067)</span></p>
+
+<p><span>db = connection["mongolab-test"]</span></p>
+
+<p><span>c = db["collection1"]</p>
+
+<p><span>posts = c.find()</p>
+
+<p><span>for post in posts:</p>
+
+<p><span>&nbsp; &nbsp; &nbsp; &nbsp; print (post)</span></p>
+
+<p>Output:</p>
+
+<p><span>{u'x': 1.0, u'_id': ObjectId('51e3ce08915082db3df32bf0')}</span></p>
+
+<p><span>{u'x': 2.0, u'_id': ObjectId('51e3ce08915082db3df32bf1')}</span></p>
+
+<p><span>{u'x': 3.0, u'_id': ObjectId('51e3ce08915082db3df32bf2')}</span></p>
+
+<p><span><i>output removed from brevity</p>
+
+<p><span>{u'x': 25.0, u'_id': ObjectId('51e3ce08915082db3df32c08')}</span></p>
+
+<p><code>
+OK, now let's go a little bit crazeee:</p>
+
+<p><code># Python 2.7&nbsp;</p>
+
+<p><span>from pymongo import *</span></p>
+
+<p><span>connection = MongoClient("mongodb://USERNAME:PASSWORD@ds051067.mongolab.com:51067/mongolab-test", 51067)</span></p>
+
+<p><span>db = connection["mongolab-test"]</span></p>
+
+<p><span>c = db["collection1"]</span></p>
+
+<p><span>posts = c.find({"x":{"$gte":5,"$lte":10}}).sort([("x",DESCENDING)])</span></p>
+
+<p><span>print (c.count())</span></p>
+
+<p><span>for post in posts:</span></p>
+
+<p><span>&nbsp; &nbsp; &nbsp; &nbsp; print (post)</span></p>
+
+<p><span>&nbsp; &nbsp; &nbsp; &nbsp; c.insert({"y":post["x"]})</span></p>
+
+<p><span>print (c.count())</span></p>
+
+<p><div>
+<span></p>
+        </div>
+Output:
+
+<code>25&nbsp;
+
+<code>{u'x': 10.0, u'_id': ObjectId('51e3ce08915082db3df32bf9')}&nbsp;
+
+<code>{u'x': 9.0, u'_id': ObjectId('51e3ce08915082db3df32bf8')}&nbsp;
+
+<code>{u'x': 8.0, u'_id': ObjectId('51e3ce08915082db3df32bf7')}&nbsp;
+
+<code>{u'x': 7.0, u'_id': ObjectId('51e3ce08915082db3df32bf6')}&nbsp;
+
+<code>{u'x': 6.0, u'_id': ObjectId('51e3ce08915082db3df32bf5')}&nbsp;
+
+<code>{u'x': 5.0, u'_id': ObjectId('51e3ce08915082db3df32bf4')}&nbsp;
+
+<code>31
+
+
+<code></code>
+
+
+See how easy this is (again)? The Python syntax is pretty much identical to the MongoDB syntax and their dictionaries are a perfect match. No conversion needed (DALs and ORMs, rot in Hell!).
+
+
+Robert Burns, the famous 18th-century Scottish poet, once wrote: "Freedom an' whisky gang thegither!". With all due respect for such a wise man, please let me add: "So do MongoDB and Python, especially with a glass of 18-year old Glenlivet". Open Source (on the) rocks :D
+
+
 That's it for today. Now write some code, will ya?
         </div>
       </article>

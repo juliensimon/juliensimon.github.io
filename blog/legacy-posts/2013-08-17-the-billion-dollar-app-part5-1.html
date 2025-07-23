@@ -255,15 +255,15 @@
         </header>
         
         <div class="legacy-post-content">
-          <a href="https://en.wikipedia.org/wiki/Leslie_Lamport">Leslie Lamport</a> once said (before many of you were even born): "<i>You know you have a distributed system when the crash of a computer you've never heard of stops you from getting any work done</i>". The Internet sure proved him right, as demonstrated again last night by Google and their global worldwide crash...<br />
-<br />
-However, when distributed systems work as intended, interesting things do happen. For instance, if one was so inclined, one could reimplement a server in a different language while preserving interfaces and things-would-still-work.<br />
-<br />
-And so, as I sipped my morning coffee, I became very much fucking inclined indeed to rewrite <a href="2013-08-17-the-billion-dollar-app-part5-1.html">yesterday's Node.js <i>zeromq</i> server</a>&nbsp;in C. Call it my stupid idea of the day... or just an interesting comparison of two pieces of code standing 40 years apart :) In the real world, one good reason to do this would be to improve performance of critical parts of your application: divide, rewrite, conquer!<br />
-<br />
-Here's the ANSI89-compliant code (also on <a href="https://github.com/juliensimon/NodeApp/blob/master/v5-server.c">Github</a>), the only deviance being the use of <i>snprintf</i>() which only made it into C99 :)<br />
-<br />
-<textarea cols="80" rows="41">#include <stdio.h>
+          <p><a href="https://en.wikipedia.org/wiki/Leslie_Lamport">Leslie Lamport</a> once said (before many of you were even born): "<i>You know you have a distributed system when the crash of a computer you've never heard of stops you from getting any work done</i>". The Internet sure proved him right, as demonstrated again last night by Google and their global worldwide crash...</p>
+
+<p>However, when distributed systems work as intended, interesting things do happen. For instance, if one was so inclined, one could reimplement a server in a different language while preserving interfaces and things-would-still-work.</p>
+
+<p>And so, as I sipped my morning coffee, I became very much fucking inclined indeed to rewrite <a href="2013-08-17-the-billion-dollar-app-part5-1.html">yesterday's Node.js <i>zeromq</i> server</a>&nbsp;in C. Call it my stupid idea of the day... or just an interesting comparison of two pieces of code standing 40 years apart :) In the real world, one good reason to do this would be to improve performance of critical parts of your application: divide, rewrite, conquer!</p>
+
+<p>Here's the ANSI89-compliant code (also on <a href="https://github.com/juliensimon/NodeApp/blob/master/v5-server.c">Github</a>), the only deviance being the use of <i>snprintf</i>() which only made it into C99 :)</p>
+
+<pre><code>#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <zmq.h>
@@ -297,29 +297,41 @@ int main(void)
     }
     return 0;
 }
-</textarea><br />
-<br />
-Easy to build (no Makefile, no Maven and its XML crap):<br />
-<span>ubuntu@ip-10-35-165-93:~$</span><span>&nbsp;<b>gcc</b> -ansi -pedantic -Wextra -Wall -o worker worker.c -lzmq</span><br />
-<span>worker.c: In function ‘main’:</span><br />
-<span>worker.c:29:2: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘size_t’ [-Wformat]</span><br />
-<span>worker.c:34:2: warning: implicit declaration of function ‘snprintf’ [-Wimplicit-function-declaration]</span><br />
-<span>
-Let's start this C worker and hit it with some requests coming from our Node.js app:<br />
-<span>ubuntu@ip-10-35-165-93:~$ ./<b>worker</b>&nbsp;</span><br />
-<span>Worker ready on tcp://*:3000</span><br />
-<span>received some stuff 15, size=2</span><br />
-<span>sent result 30</span><br />
-<span>received some stuff 8, size=1</span><br />
-<span>sent result 16</span><br />
-<span>
-Nice. In all fairness, <a href="2013-08-17-the-billion-dollar-app-part5-1.html">yesterday's Node.js code</a> is quite easier to read. I did add more error management clutter in the C program, but doing without it is not an option. Love them or hate them, modern languages will spit a stack trace out when they crash: most of the time, this is enough to start investigating. On the other hand, &nbsp;C will say : "<i>core dumped</i>" and leave you crying all the way home: so yes, you HAVE to write more C code to get roughly the same level of information. You can also see the immense power of&nbsp;<i>toString</i>() and dynamic typing, although the latter does introduces huge caveats.<br />
-<br />
-So, what did we learn? Breaking down your app not only allows you to scale it piece by piece: it also gives you the freedom to rewrite critical parts, whatever your motivation is. To me, this is true modularity, something that I've rarely seen in so-called modular architectures based on Java or C#. Having classes is nice, but <u>services</u> are what you really need.<br />
-<br />
-And yeah, for ultimate control and performance, C cannot be defeated. I'm quite scared to see it disappear from many curriculums. Kids, listen to the old man: you must learn C. You'll thank me later.<br />
-<br />
-End of sermon. Now go in peace and hack at the world!
+</code></pre>
+
+<p>Easy to build (no Makefile, no Maven and its XML crap):</p>
+
+<p><span>ubuntu@ip-10-35-165-93:~$</span><span>&nbsp;<b>gcc</b> -ansi -pedantic -Wextra -Wall -o worker worker.c -lzmq</span></p>
+
+<p><span>worker.c: In function ‘main’:</span></p>
+
+<p><span>worker.c:29:2: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘size_t’ [-Wformat]</span></p>
+
+<p><span>worker.c:34:2: warning: implicit declaration of function ‘snprintf’ [-Wimplicit-function-declaration]</span></p>
+
+<p><span>
+Let's start this C worker and hit it with some requests coming from our Node.js app:</p>
+
+<p><span>ubuntu@ip-10-35-165-93:~$ ./<b>worker</b>&nbsp;</span></p>
+
+<p><span>Worker ready on tcp://*:3000</span></p>
+
+<p><span>received some stuff 15, size=2</span></p>
+
+<p><span>sent result 30</span></p>
+
+<p><span>received some stuff 8, size=1</span></p>
+
+<p><span>sent result 16</span></p>
+
+<p><span>
+Nice. In all fairness, <a href="2013-08-17-the-billion-dollar-app-part5-1.html">yesterday's Node.js code</a> is quite easier to read. I did add more error management clutter in the C program, but doing without it is not an option. Love them or hate them, modern languages will spit a stack trace out when they crash: most of the time, this is enough to start investigating. On the other hand, &nbsp;C will say : "<i>core dumped</i>" and leave you crying all the way home: so yes, you HAVE to write more C code to get roughly the same level of information. You can also see the immense power of&nbsp;<i>toString</i>() and dynamic typing, although the latter does introduces huge caveats.</p>
+
+<p>So, what did we learn? Breaking down your app not only allows you to scale it piece by piece: it also gives you the freedom to rewrite critical parts, whatever your motivation is. To me, this is true modularity, something that I've rarely seen in so-called modular architectures based on Java or C#. Having classes is nice, but <u>services</u> are what you really need.</p>
+
+<p>And yeah, for ultimate control and performance, C cannot be defeated. I'm quite scared to see it disappear from many curriculums. Kids, listen to the old man: you must learn C. You'll thank me later.</p>
+
+<p>End of sermon. Now go in peace and hack at the world!</p>
         </div>
       </article>
     </main>

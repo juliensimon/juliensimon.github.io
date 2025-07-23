@@ -255,33 +255,39 @@
         </header>
         
         <div class="legacy-post-content">
-          As we all know, the preferred way to access AWS S3 is to use the&nbsp;<a href="http://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html">S3 API</a>. However, you should know that it's also possible to mount an S3 bucket and access it like a normal filesystem.<br />
-<br />
-As always with Open Source, you have a number of different options: the one I'll show you today is a user-land filesystem (aka FUSE) called&nbsp;<i><a href="https://code.google.com/p/s3fs/">s3fs</a>. </i>The project is quite active and provides actual support to its users :)<br />
-<br />
-This how-to assumes that you already have an AWS account with EC2 instances and S3 buckets. If not, go to the AWS website and <a href="http://docs.aws.amazon.com/gettingstarted/latest/awsgsg-intro/intro.html">get started</a>&nbsp;:)<br />
-<br />
-As usual, I'll be using a vanilla Ubuntu 12.04 instance, let's '<i>ssh</i>' into it and install what we need.<br />
-<br />
-First, let's grab the <i>s3fs</i> sources (at the time of writing, the latest version is 1.71):<br />
-<br />
-<span>$ <b>wget</b> http://s3fs.googlecode.com/files/s3fs-1.71.tar.gz</span><br />
-<span>
-Then, let's add all the development packages required to build it. I'm starting from a fresh instance, so this is really needed. If your VM is already populated with all these packages, you can skip this step.<br />
-<div>
-<span>$ sudo <b>apt-get</b> <b>update<br />
-<div>
+          <p>As we all know, the preferred way to access AWS S3 is to use the&nbsp;<a href="http://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html">S3 API</a>. However, you should know that it's also possible to mount an S3 bucket and access it like a normal filesystem.</p>
+
+<p>As always with Open Source, you have a number of different options: the one I'll show you today is a user-land filesystem (aka FUSE) called&nbsp;<i><a href="https://code.google.com/p/s3fs/">s3fs</a>. </i>The project is quite active and provides actual support to its users :)</p>
+
+<p>This how-to assumes that you already have an AWS account with EC2 instances and S3 buckets. If not, go to the AWS website and <a href="http://docs.aws.amazon.com/gettingstarted/latest/awsgsg-intro/intro.html">get started</a>&nbsp;:)</p>
+
+<p>As usual, I'll be using a vanilla Ubuntu 12.04 instance, let's '<i>ssh</i>' into it and install what we need.</p>
+
+<p>First, let's grab the <i>s3fs</i> sources (at the time of writing, the latest version is 1.71):</p>
+
+<p><span>$ <b>wget</b> http://s3fs.googlecode.com/files/s3fs-1.71.tar.gz</span></p>
+
+<p><span>
+Then, let's add all the development packages required to build it. I'm starting from a fresh instance, so this is really needed. If your VM is already populated with all these packages, you can skip this step.</p>
+
+<p><div>
+<span>$ sudo <b>apt-get</b> <b>update</p>
+
+<p><div>
 <span>$ sudo <b>apt-get</b> <b>install</b> make gcc g++ pkg-config libfuse-dev libcurl4-openssl-dev libxml2-dev
 <div>
 <span>
-Now, let's build <i>s3fs</i>:<br />
-<span></div>
+Now, let's build <i>s3fs</i>:</p>
+
+<p><span></p>
+        </div>
 <div>
 <span>$ <b>tar xvfz</b> s3fs-1.71.tar.gz
 <div>
 <span>$ <b>cd</b>&nbsp;s3fs-1.71
 <div>
-<span>$ <b>./configure<br />
+<span>$ <b>./configure
+
 <span>$<b> make</div>
 <div>
 <span>$ sudo <b>make install</div>
@@ -298,7 +304,8 @@ The next step creates a file storing the AWS keys (insert your own!) required by
 </div>
 <div>
 <span>
-The last step is to create a mount point with the right ownership, as well as a cache directory:<br />
+The last step is to create a mount point with the right ownership, as well as a cache directory:
+
 <span></div>
 </div>
 <div>
@@ -330,8 +337,10 @@ We are now ready to mount our bucket (again, use your own bucket name):</div>
 <div>
 s3fs on /mnt/s3 type fuse.s3fs (rw,nosuid,nodev,user=ubuntu)
 <div>
-<br />
-This worked. Let's copy a file and see what kind of performance we can get:<br />
+
+
+This worked. Let's copy a file and see what kind of performance we can get:
+
 <div>
 <div>
 <div>
@@ -346,9 +355,12 @@ This worked. Let's copy a file and see what kind of performance we can get:<br /
 </div>
 <div>
 <span>
-<span>About 10 Megabytes per second :-/ S3 is not famous for its speed and this is another proof. In this example, the EC2 instance and the S3 buckets are located in the same zone (eu-west). I'm not sure I want to find out what happens when they're not!</span><br />
-<span><br />
-All the more reason to check that the cache works, then:</span><br />
+<span>About 10 Megabytes per second :-/ S3 is not famous for its speed and this is another proof. In this example, the EC2 instance and the S3 buckets are located in the same zone (eu-west). I'm not sure I want to find out what happens when they're not!</span>
+
+<span>
+
+All the more reason to check that the cache works, then:</span>
+
 <span>
 <span>$ <b>ls</b>&nbsp;-l /home/ubuntu/cache/myBucket
 <div>
@@ -361,14 +373,17 @@ All the more reason to check that the cache works, then:</span><br />
 <div>
 <span>user0m0.000s
 <div>
-<span>sys0m0.020s</span><br />
+<span>sys0m0.020s</span>
+
 <span>
-<span>Yes, it does. Let's give it another shot:</span><br />
+<span>Yes, it does. Let's give it another shot:</span>
+
 <span>
 <div>
 <span>$ <b>rm</b>&nbsp;</span><span>/home/ubuntu/cache/myBucket/</span><span>6MegabyteFile
 <div>
-<span>$&nbsp;<b>time cp</b>&nbsp;-f /mnt/s3/</span><span>6MegabyteFile</span><span>&nbsp;.</span><br />
+<span>$&nbsp;<b>time cp</b>&nbsp;-f /mnt/s3/</span><span>6MegabyteFile</span><span>&nbsp;.</span>
+
 <span>real</span><span>0m0.787s
 <div>
 <div>
@@ -377,7 +392,8 @@ user0m0.000s</div>
 <div>
 sys0m0.012s</div>
 <div>
-<span>Argh, even slower! &nbsp;Now, let's&nbsp;</span><span>unmount the bucket like any other filesystem:</span><br />
+<span>Argh, even slower! &nbsp;Now, let's&nbsp;</span><span>unmount the bucket like any other filesystem:</span>
+
 <span></div>
 <div>
 $ sudo <b>umount</b> /mnt/s3/

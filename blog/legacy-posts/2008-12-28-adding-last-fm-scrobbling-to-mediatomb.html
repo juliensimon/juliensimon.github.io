@@ -255,7 +255,84 @@
         </header>
         
         <div class="legacy-post-content">
-          <a href="http://code.google.com/p/lastfmlib/">Lastfmlib</a> is C / C++ library allowing music applications to "scrobble" tracks on <a href="http://www.last.fm/">last.fm</a>.<br /><br />A patch has been recently released to integrate this library with <a href="http://mediatomb.cc/"><span>mediatomb, so let's get to work :)<br /><br />FYI, this is written using Ubuntu 8.04 and <span>mediatomb</span> 0.12 (SVN build 1997). I also assume you have a <span>mediatomb</span> source tree ready (if not, <a href="2008-12-22-compiling-mediatomb-ffmpegthumbnailer-all-libraries-ubuntu-ps3.html">here's how</a>).<br /><br /><span>1) Installing <span>lastfmlib<br /><br />First of all, we need to fetch the <span>log4cpp</span> library, which is used by lastfmlib to log its actions (very useful for troubleshooting!).<br /><code><br />ubuntu% <span>sudo apt-get install liblog4cpp5-dev<br /></code>Now, let's fetch the <span>lastfmlib</span> source (0.1.3 at the time of this writing) as well as the <span>mediatomb</span> patch:<br /><br /><code>ubuntu% <span>wget http://lastfmlib.googlecode.com/files/lastfmlib-0.1.3.tar.gz</span><br />ubuntu% <span>wget http://lastfmlib.googlecode.com/svn/trunk/mediatomb.patch</span><br />Building the library is very straightforward:<br /><code><br />ubuntu% <span>tar xvfz lastfmlib-0.1.3.tar.gz</span><br />ubuntu% <span>cd lastfmlib-0.1.3</span><br />ubuntu% <span>./configure --prefix=/usr/local --enable-logging</span><br />ubuntu% <span>make</span><br />ubuntu% <span>sudo make install</span><br />ubuntu% <span>sudo ldconfig</span><code>Done! Let's patch <span>mediatomb</span> now.<br /><br /><span>2) Patching &amp; building <span>mediatomb</span><br />In the <span>mediatomb</span> source directory, let's apply the patch:<span><br /><code>ubuntu% <span>patch -p0 All hunks should be successful. Now, run <span>configure</span> to take <span>lastfmlib</span> into account:<span><br /><code>ubuntu% <span>./configure --prefix=/usr/local</span><br /><span>output removed</span><br />checking lastfmlib/lastfmscrobbler.h usability... yes<br />checking lastfmlib/lastfmscrobbler.h presence... yes<br />checking for lastfmlib/lastfmscrobbler.h... yes<br /><span>output removed</span><br />CONFIGURATION SUMMARY ----<br /><span>output removed</span><br /><span>lastfm                : yes</span><br /><span>output removed</span><br />OK, the library has been properly detected. Now, let's (re)build <span>mediatomb</span>:<br /><code><br />ubuntu% <span>make clean</span><br />ubuntu% <span>make</span><br />ubuntu% <span>sudo make install</span><br /><span>3) Configuring <span>mediatomb<br /><br />In the <span>mediatomb</span> config file (<span>~/.mediatomb/config.xml</span>), we need to add this to the top-level <span></span> section:<br /><pre>&lt;lastfm enabled="yes"&gt;<br />&lt;username&gt;Your_LastFM_username&lt;/username&gt;<br />&lt;password&gt;Your_LastFM_password&lt;/password&gt;<br />&lt;/lastfm&gt;That's it :)<br /><br /><span>4) Testing!</span><br /><br />Now, let's start <span>mediatomb</span>, fire up the PS3 (or whatever device you're streaming to) and play some <span>mp3</span> tracks.<br /><br />In the <span>lastfmlib</span> log, you should see something similar to this:<br /><code><br />ubuntu% <span>tail -f /tmp/lastfmliblog.txt</span><br />1230460109 INFO  : Authentication successfull for user: <span>Your_LastFM_username</span><br />1230460109 INFO  : Authenticate thread finished<br />1230462337 INFO  : startedPlaying Tanker Mot Tind (Gryning)<br />1230462517 INFO  : startedPlaying Ved Steingard<br />1230462517 INFO  : sendInfo thread started<br />1230462517 INFO  : Track "Tanker Mot Tind (Gryning)" can be committed: conditions OK<br />1230462517 INFO  : Buffered tracks submitted<br />1230462517 INFO  : sendInfo thread finished<br />And now the <span>mediatomb</span> console output:<br /><code><br />2008-12-28 12:05:37    INFO: Artist: Borknagar<br />2008-12-28 12:05:37    INFO: Title: Tanker Mot Tind (Gryning)<br />2008-12-28 12:08:37    INFO: Artist: Borknagar<br />2008-12-28 12:08:37    INFO: Title: Ved Steingard<br />Of course, you can also log in on your <span>last.fm</span> account and see the tracks listed there. Pretty cool :)<br /><br />One (very minor) gripe: scrobbling doesn't seem to work for file formats which are not natively handled by the PS3, notably FLAC. Maybe metadata extraction works differently for these files, as they need to be transcoded on the fly? Or have I missed something ? Anyway, I contacted the author about this, I'll post more details when I get them.<br /><br />[Updated on 2009/01/02] Says Dirk Vanden Boer, the author of the library: "<span>I haven't tried playing files that need be transcoded yet, I'll take a look and see if a different code path is taken in case of transcoding</span>". I'll keep you posted.<br /><br />That's it for today :)
+          <p><a href="http://code.google.com/p/lastfmlib/">Lastfmlib</a> is C / C++ library allowing music applications to "scrobble" tracks on <a href="http://www.last.fm/">last.fm</a>.</p>
+
+<p>A patch has been recently released to integrate this library with <a href="http://mediatomb.cc/"><span>mediatomb, so let's get to work :)</p>
+
+<p>FYI, this is written using Ubuntu 8.04 and <span>mediatomb</span> 0.12 (SVN build 1997). I also assume you have a <span>mediatomb</span> source tree ready (if not, <a href="2008-12-22-compiling-mediatomb-ffmpegthumbnailer-all-libraries-ubuntu-ps3.html">here's how</a>).</p>
+
+<p><span>1) Installing <span>lastfmlib</p>
+
+<p>First of all, we need to fetch the <span>log4cpp</span> library, which is used by lastfmlib to log its actions (very useful for troubleshooting!).
+<code>
+ubuntu% <span>sudo apt-get install liblog4cpp5-dev
+</code>Now, let's fetch the <span>lastfmlib</span> source (0.1.3 at the time of this writing) as well as the <span>mediatomb</span> patch:</p>
+
+<p><code>ubuntu% <span>wget http://lastfmlib.googlecode.com/files/lastfmlib-0.1.3.tar.gz</span>
+ubuntu% <span>wget http://lastfmlib.googlecode.com/svn/trunk/mediatomb.patch</span>
+Building the library is very straightforward:
+<code>
+ubuntu% <span>tar xvfz lastfmlib-0.1.3.tar.gz</span>
+ubuntu% <span>cd lastfmlib-0.1.3</span>
+ubuntu% <span>./configure --prefix=/usr/local --enable-logging</span>
+ubuntu% <span>make</span>
+ubuntu% <span>sudo make install</span>
+ubuntu% <span>sudo ldconfig</span><code>Done! Let's patch <span>mediatomb</span> now.</p>
+
+<p><span>2) Patching &amp; building <span>mediatomb</span>
+In the <span>mediatomb</span> source directory, let's apply the patch:<span>
+<code>ubuntu% <span>patch -p0 All hunks should be successful. Now, run <span>configure</span> to take <span>lastfmlib</span> into account:<span>
+<code>ubuntu% <span>./configure --prefix=/usr/local</span>
+<span>output removed</span>
+checking lastfmlib/lastfmscrobbler.h usability... yes
+checking lastfmlib/lastfmscrobbler.h presence... yes
+checking for lastfmlib/lastfmscrobbler.h... yes
+<span>output removed</span>
+CONFIGURATION SUMMARY ----
+<span>output removed</span>
+<span>lastfm                : yes</span>
+<span>output removed</span>
+OK, the library has been properly detected. Now, let's (re)build <span>mediatomb</span>:
+<code>
+ubuntu% <span>make clean</span>
+ubuntu% <span>make</span>
+ubuntu% <span>sudo make install</span>
+<span>3) Configuring <span>mediatomb</p>
+
+<p>In the <span>mediatomb</span> config file (<span>~/.mediatomb/config.xml</span>), we need to add this to the top-level <span></span> section:
+<pre>&lt;lastfm enabled="yes"&gt;
+&lt;username&gt;Your_LastFM_username&lt;/username&gt;
+&lt;password&gt;Your_LastFM_password&lt;/password&gt;
+&lt;/lastfm&gt;That's it :)</p>
+
+<p><span>4) Testing!</span></p>
+
+<p>Now, let's start <span>mediatomb</span>, fire up the PS3 (or whatever device you're streaming to) and play some <span>mp3</span> tracks.</p>
+
+<p>In the <span>lastfmlib</span> log, you should see something similar to this:
+<code>
+ubuntu% <span>tail -f /tmp/lastfmliblog.txt</span>
+1230460109 INFO  : Authentication successfull for user: <span>Your_LastFM_username</span>
+1230460109 INFO  : Authenticate thread finished
+1230462337 INFO  : startedPlaying Tanker Mot Tind (Gryning)
+1230462517 INFO  : startedPlaying Ved Steingard
+1230462517 INFO  : sendInfo thread started
+1230462517 INFO  : Track "Tanker Mot Tind (Gryning)" can be committed: conditions OK
+1230462517 INFO  : Buffered tracks submitted
+1230462517 INFO  : sendInfo thread finished
+And now the <span>mediatomb</span> console output:
+<code>
+2008-12-28 12:05:37    INFO: Artist: Borknagar
+2008-12-28 12:05:37    INFO: Title: Tanker Mot Tind (Gryning)
+2008-12-28 12:08:37    INFO: Artist: Borknagar
+2008-12-28 12:08:37    INFO: Title: Ved Steingard
+Of course, you can also log in on your <span>last.fm</span> account and see the tracks listed there. Pretty cool :)</p>
+
+<p>One (very minor) gripe: scrobbling doesn't seem to work for file formats which are not natively handled by the PS3, notably FLAC. Maybe metadata extraction works differently for these files, as they need to be transcoded on the fly? Or have I missed something ? Anyway, I contacted the author about this, I'll post more details when I get them.</p>
+
+<p>[Updated on 2009/01/02] Says Dirk Vanden Boer, the author of the library: "<span>I haven't tried playing files that need be transcoded yet, I'll take a look and see if a different code path is taken in case of transcoding</span>". I'll keep you posted.</p>
+
+<p>That's it for today :)</p>
         </div>
       </article>
     </main>

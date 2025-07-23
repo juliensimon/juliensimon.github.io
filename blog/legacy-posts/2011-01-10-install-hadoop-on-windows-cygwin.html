@@ -136,45 +136,45 @@
         <div class="legacy-post-content">
           <p>Highly unnecessary... unless you're stuck with a Windows machine :-/</p>
 
-          <h2>1) Install Cygwin</h2>
-          
-          <p>This is as straightforward as it gets, but don't forget to add your favorite editor: <em>vim</em> is not included in the default install (!).</p>
-          
-          <p>The default directory is <em>c:\cygwin</em>, no reason to change it.</p>
+<h2>1) Install Cygwin</h2>
 
-          <h2>2) Install the Java Development Kit</h2>
-          
-          <p>You should avoid unnecessary spaces in the installation directory: <em>c:\jdk1.6</em> will do nicely.</p>
+<p>This is as straightforward as it gets, but don't forget to add your favorite editor: <em>vim</em> is not included in the default install (!).</p>
 
-          <h2>3) Install Hadoop</h2>
-          
-          <p>Download the latest release (0.21.0 at the time of writing) and extract it to <em>d:\work</em> (or something similar).</p>
+<p>The default directory is <em>c:\cygwin</em>, no reason to change it.</p>
 
-          <h2>4) Fix your environment variables</h2>
-          
-          <p>Start <em>cygwin</em> and append the following lines at the end of your <em>.bashrc</em> file:</p>
-          
-          <pre><code>$ export JAVA_HOME=/cygdrive/c/jdk1.6
+<h2>2) Install the Java Development Kit</h2>
+
+<p>You should avoid unnecessary spaces in the installation directory: <em>c:\jdk1.6</em> will do nicely.</p>
+
+<h2>3) Install Hadoop</h2>
+
+<p>Download the latest release (0.21.0 at the time of writing) and extract it to <em>d:\work</em> (or something similar).</p>
+
+<h2>4) Fix your environment variables</h2>
+
+<p>Start <em>cygwin</em> and append the following lines at the end of your <em>.bashrc</em> file:</p>
+
+<pre><code>$ export JAVA_HOME=/cygdrive/c/jdk1.6
 $ export HADOOP_INSTALL=/cygdrive/d/work/hadoop-0.21.0
 $ export PATH=$PATH:$HADOOP_INSTALL/bin</code></pre>
 
-          <h2>5) Fix the hadoop-config script</h2>
-          
-          <pre><code>$ vi $HADOOP_INSTALL/bin/hadoop-config.sh</code></pre>
-          
-          <p>Locate this section starting with "<em># cygwin path translation</em>" and add the following line:</p>
-          
-          <pre><code>CLASSPATH=`cygpath -wp "$CLASSPATH"`</code></pre>
-          
-          <p>Save and exit.</p>
+<h2>5) Fix the hadoop-config script</h2>
 
-          <h2>6) Test your installation</h2>
-          
-          <pre><code>$ hadoop version
+<pre><code>$ vi $HADOOP_INSTALL/bin/hadoop-config.sh</code></pre>
+
+<p>Locate this section starting with "<em># cygwin path translation</em>" and add the following line:</p>
+
+<pre><code>CLASSPATH=`cygpath -wp "$CLASSPATH"`</code></pre>
+
+<p>Save and exit.</p>
+
+<h2>6) Test your installation</h2>
+
+<pre><code>$ hadoop version
 Hadoop 0.21.0
 etc etc.</code></pre>
-          
-          <p>That's it. Happy hadoop'ing :)</p>
+
+<p>That's it. Happy hadoop'ing :)</p>
         </div>
       </article>
     </main>

@@ -255,24 +255,28 @@
         </header>
         
         <div class="legacy-post-content">
-          In a <a href="2013-08-03-the-billion-dollar-app-part3.html">previous post</a>, we added caching to our Node.js&nbsp;+ MongoDB web application, thanks to an EC2 instance running <i>memcached</i>.<br />
-<br />
-As you may know, AWS support its own brand of caching, aka ElastiCache: "<i>Amazon ElastiCache is protocol-compliant with Memcached, a widely adopted memory object caching system, so code, applications, and popular tools that you use today with existing Memcached environments will work seamlessly with the service</i>".<br />
-<br />
-Seamlessly? Hmmm. Alright, let's take a look :)<br />
-<br />
-First, let's use the AWS console to create an ElastiCache cluster. We'll start small, with 1 single micro node supporting a little over 200MB of cache. More than we need... and for free :)<br />
-<br />
-Wait a couple of minutes and the cluster will come online. Let's check that the single node is accessible from our EC2 instance (no need to mess with the security group, port 11211 is open by default):<br />
-<span>ubuntu@ip-10-48-249-35:~$ echo stats| <b>nc</b> memcache.9vficl.0001.euw1.cache.amazonaws.com 11211</span><br />
-<br />
-This looks like <i>memcached</i> stats alright. Ok, now let's change a single line in our app, to use ElastiCache instead of our homemade&nbsp;instance:<br />
-<br />
-<span>// MemcacheClient = new mc.Client("10.234.177.74");</span><br />
-<span>MemcacheClient = new mc.Client("memcache.9vficl.0001.euw1.cache.amazonaws.com");</span><br />
+          <p>In a <a href="2013-08-03-the-billion-dollar-app-part3.html">previous post</a>, we added caching to our Node.js&nbsp;+ MongoDB web application, thanks to an EC2 instance running <i>memcached</i>.</p>
+
+<p>As you may know, AWS support its own brand of caching, aka ElastiCache: "<i>Amazon ElastiCache is protocol-compliant with Memcached, a widely adopted memory object caching system, so code, applications, and popular tools that you use today with existing Memcached environments will work seamlessly with the service</i>".</p>
+
+<p>Seamlessly? Hmmm. Alright, let's take a look :)</p>
+
+<p>First, let's use the AWS console to create an ElastiCache cluster. We'll start small, with 1 single micro node supporting a little over 200MB of cache. More than we need... and for free :)</p>
+
+<p>Wait a couple of minutes and the cluster will come online. Let's check that the single node is accessible from our EC2 instance (no need to mess with the security group, port 11211 is open by default):</p>
+
+<p><span>ubuntu@ip-10-48-249-35:~$ echo stats| <b>nc</b> memcache.9vficl.0001.euw1.cache.amazonaws.com 11211</span></p>
+
+<p>This looks like <i>memcached</i> stats alright. Ok, now let's change a single line in our app, to use ElastiCache instead of our homemade&nbsp;instance:</p>
+
+<p><span>// MemcacheClient = new mc.Client("10.234.177.74");</span></p>
+
+<p><span>MemcacheClient = new mc.Client("memcache.9vficl.0001.euw1.cache.amazonaws.com");</span></p>
+
+<p><div>
 <div>
-<div>
-Now, let's run the app:</div>
+Now, let's run the app:</p>
+        </div>
 <div>
 <span>ubuntu@ip-10-48-249-35:~$ <b>node</b> www4.js&nbsp;
 <div>
@@ -301,14 +305,17 @@ Nice. Time for queries and console output!</div>
 <div>
 <span>Stored key=51e3ce08915082db3df32bfc, value=13
 </div>
-<br />
+
+
 <div>
 Let's replay the request quickly:</div>
 <div>
 <span>Request received, id=51e3ce08915082db3df32bfc
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bfc, value=13</span><br />
+<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bfc, value=13</span>
+
 <div>
-And once more after 60 seconds (the item TTL):<br />
+And once more after 60 seconds (the item TTL):
+
 <div>
 <span>Request received, id=51e3ce08915082db3df32bfc
 <div>
@@ -337,24 +344,34 @@ Let's stop the web app and look at the cache stats:</div>
 <span>STAT get_misses 2
 </div>
 <div>
-God knows that 'seamlessly' is one of the most overused words in the IT business, but I've got to admit, this is truly seamless :)<br />
-<br />
-As usual with AWS, you also get a bunch of graphs out of the box. That's a nice plus.<br />
-<br />
-<br />
-So that's the "cache" part of ElastiCache and it does what it's supposed to do. What about the 'elastic' part'?<br />
-<br />
-Adding more nodes to the cluster is literally one click away: "Add node" :) After a few minutes, the new node is added to cluster.<br />
-<br />
-Let's update our web app and relaunch it:<br />
-<span>// MemcacheClient = new mc.Client("10.234.177.74");</span><br />
-<span>MemcacheClient = new mc.Client(["memcache.9vficl.0001.euw1.cache.amazonaws.com",&nbsp;</span><span>"memcache.9vficl.0002.euw1.cache.amazonaws.com"]</span><span>);</span><br />
+God knows that 'seamlessly' is one of the most overused words in the IT business, but I've got to admit, this is truly seamless :)
+
+
+As usual with AWS, you also get a bunch of graphs out of the box. That's a nice plus.
+
+
+
+
+So that's the "cache" part of ElastiCache and it does what it's supposed to do. What about the 'elastic' part'?
+
+
+Adding more nodes to the cluster is literally one click away: "Add node" :) After a few minutes, the new node is added to cluster.
+
+
+Let's update our web app and relaunch it:
+
+<span>// MemcacheClient = new mc.Client("10.234.177.74");</span>
+
+<span>MemcacheClient = new mc.Client(["memcache.9vficl.0001.euw1.cache.amazonaws.com",&nbsp;</span><span>"memcache.9vficl.0002.euw1.cache.amazonaws.com"]</span><span>);</span>
+
 <span>
-ElastiCache has its own client, which allows the app to auto-discover new nodes without having to restart. Very nice, but the client is only available for Java (grumble) and PHP (bleh). Hopefully other languages are on the way.<br />
-<br />
-Now, how about we hit the 2-node cluster with a little more traffic? This ugly script will do the trick:<br />
-<br />
-<textarea cols="80" rows="12">#! /bin/sh
+ElastiCache has its own client, which allows the app to auto-discover new nodes without having to restart. Very nice, but the client is only available for Java (grumble) and PHP (bleh). Hopefully other languages are on the way.
+
+
+Now, how about we hit the 2-node cluster with a little more traffic? This ugly script will do the trick:
+
+
+<pre><code>#! /bin/sh
 while (true)
 do
         for i in {0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f}
@@ -364,40 +381,66 @@ do
         done
 sleep $1
 done
-</textarea>
-<br />
-<br />
-Let's run this in 2 or 3 local shells and wait for a little while. Coffee break :)<br />
-<br />
-Alright, what do the graphs say?<br />
-<br />
-<br />
-One last thing to conclude: going back to the web app console output, we can clearly see the parallel asynchronous nature of Node.js at work.<br />
-<br />
-<span>Stored key=51e3ce08915082db3df32bfd, value=14</span><br />
-<span>Stored key=51e3ce08915082db3df32bff, value=16</span><br />
-<span>Stored key=51e3ce08915082db3df32bfe, value=15</span><br />
-<span>Request received, id=51e3ce08915082db3df32bf0</span><br />
-<span>Request received, id=51e3ce08915082db3df32bf2</span><br />
-<span>Request received, id=51e3ce08915082db3df32bf1</span><br />
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bf0, value=1</span><br />
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bf2, value=3</span><br />
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bf1, value=2</span><br />
-<span>Request received, id=51e3ce08915082db3df32bfb</span><br />
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bfb, value=12</span><br />
-<span><b>Request received, id=51e3ce08915082db3df32bfd<br />
-<span>Request received, id=51e3ce08915082db3df32bfc</span><br />
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bfc, value=13</span><br />
-<span>Request received, id=51e3ce08915082db3df32bf4</span><br />
-<span>Request received, id=51e3ce08915082db3df32bf3</span><br />
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bf3, value=4</span><br />
-<span>Request received, id=51e3ce08915082db3df32bf5</span><br />
-<span><b>Cache hit, &nbsp;key=51e3ce08915082db3df32bfd, value=14<br />
-<br />
-The two lines I've highlighted above come from the processing of the same HTTP request. However, a lot of stuff happened in the middle because other requests. Did I create threads? No. Did I mess with 'worker pools' or similar atrocities? No. I just wrote my code and let the framework do the rest.<br />
-<br />
-That's it for today. Next time, we'll look at... ah, you'll see :)<br />
-<br />
+</code></pre>
+
+
+
+Let's run this in 2 or 3 local shells and wait for a little while. Coffee break :)
+
+
+Alright, what do the graphs say?
+
+
+
+
+One last thing to conclude: going back to the web app console output, we can clearly see the parallel asynchronous nature of Node.js at work.
+
+
+<span>Stored key=51e3ce08915082db3df32bfd, value=14</span>
+
+<span>Stored key=51e3ce08915082db3df32bff, value=16</span>
+
+<span>Stored key=51e3ce08915082db3df32bfe, value=15</span>
+
+<span>Request received, id=51e3ce08915082db3df32bf0</span>
+
+<span>Request received, id=51e3ce08915082db3df32bf2</span>
+
+<span>Request received, id=51e3ce08915082db3df32bf1</span>
+
+<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bf0, value=1</span>
+
+<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bf2, value=3</span>
+
+<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bf1, value=2</span>
+
+<span>Request received, id=51e3ce08915082db3df32bfb</span>
+
+<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bfb, value=12</span>
+
+<span><b>Request received, id=51e3ce08915082db3df32bfd
+
+<span>Request received, id=51e3ce08915082db3df32bfc</span>
+
+<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bfc, value=13</span>
+
+<span>Request received, id=51e3ce08915082db3df32bf4</span>
+
+<span>Request received, id=51e3ce08915082db3df32bf3</span>
+
+<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bf3, value=4</span>
+
+<span>Request received, id=51e3ce08915082db3df32bf5</span>
+
+<span><b>Cache hit, &nbsp;key=51e3ce08915082db3df32bfd, value=14
+
+
+The two lines I've highlighted above come from the processing of the same HTTP request. However, a lot of stuff happened in the middle because other requests. Did I create threads? No. Did I mess with 'worker pools' or similar atrocities? No. I just wrote my code and let the framework do the rest.
+
+
+That's it for today. Next time, we'll look at... ah, you'll see :)
+
+
 Happy hacking.
         </div>
       </article>

@@ -252,23 +252,23 @@
         <div class="legacy-post-content">
           <p><a href="http://www.virtualbox.org/">VirtualBox</a> has special software that can be installed inside Windows and Linux virtual machines to improve performance and make integration much more seamless. Among the features provided by these Guest Additions are mouse pointer integration and arbitrary screen solutions (e.g. by resizing the guest window).</p>
 
-          <p>For some reason, I have never installed them on my <a href="http://www.centos.org">CentOS</a> 5.2 image... and I suddenly feel compelled to :)</p>
+<p>For some reason, I have never installed them on my <a href="http://www.centos.org">CentOS</a> 5.2 image... and I suddenly feel compelled to :)</p>
 
-          <p>So, let's open VirtualBox, start the CentOS image and log in.</p>
+<p>So, let's open VirtualBox, start the CentOS image and log in.</p>
 
-          <p>Now, on the host system, you need to locate the ISO image which contains the guest additions software : on my Ubuntu box, it was installed as <code>/usr/share/virtualbox/VBoxGuestAdditions.iso</code>.</p>
+<p>Now, on the host system, you need to locate the ISO image which contains the guest additions software : on my Ubuntu box, it was installed as <code>/usr/share/virtualbox/VBoxGuestAdditions.iso</code>.</p>
 
-          <p>Now, in the VirtualBox menu bar, go to <em>Devices</em>, <em>Mount CD/DVD-ROM image</em>, <em>CD/DVD-ROM image...</em> Add VBoxGuestAdditions.iso to the list and select it.</p>
+<p>Now, in the VirtualBox menu bar, go to <em>Devices</em>, <em>Mount CD/DVD-ROM image</em>, <em>CD/DVD-ROM image...</em> Add VBoxGuestAdditions.iso to the list and select it.</p>
 
-          <p>If your guest image is running X, the image should be mounted automatically in /media and appear on your desktop.</p>
+<p>If your guest image is running X, the image should be mounted automatically in /media and appear on your desktop.</p>
 
-          <p>If X isn't running (that's my case), you need to mount the image. So, on the guest system (not on the host!):</p>
+<p>If X isn't running (that's my case), you need to mount the image. So, on the guest system (not on the host!):</p>
 
-          <pre><code>[julien@centos ~]$ sudo mount -o ro -t iso9660 /dev/cdrom /mnt/cdrom</code></pre>
+<pre><code>[julien@centos ~]$ sudo mount -o ro -t iso9660 /dev/cdrom /mnt/cdrom</code></pre>
 
-          <p>OK, now let's run the installation script:</p>
+<p>OK, now let's run the installation script:</p>
 
-          <pre><code>[julien@centos ~]$ sudo sh /mnt/cdrom/VBoxLinuxAdditions.run
+<pre><code>[julien@centos ~]$ sudo sh /mnt/cdrom/VBoxLinuxAdditions.run
 Verifying archive integrity... All good.
 Uncompressing VirtualBox 1.6.6 Guest Additions for Linux installation.............................................................................................................................................................................
 VirtualBox 1.6.6 Guest Additions installation
@@ -278,19 +278,19 @@ Please install the GNU compiler.
 Problems were found which would prevent the Guest Additions from installing.
 Please correct these problems and try again.</code></pre>
 
-          <p>Oops. Installing guest additions requires a build phase and this box is missing the appropriate tools, i.e. the kernel development kit and the GNU compiler.</p>
+<p>Oops. Installing guest additions requires a build phase and this box is missing the appropriate tools, i.e. the kernel development kit and the GNU compiler.</p>
 
-          <p>Let's add them, but first let's check the kernel version:</p>
+<p>Let's add them, but first let's check the kernel version:</p>
 
-          <pre><code>[julien@centos ~]$ uname -a
+<pre><code>[julien@centos ~]$ uname -a
 Linux centos 2.6.18-92.1.18.el5 #1 SMP Wed Nov 12 09:30:27 EST 2008 i686 i686 i386 GNU/Linux
 
-[julien@centos ~]$ uname -r
-2.6.18-92.1.18.el5</code></pre>
+<p>[julien@centos ~]$ uname -r
+2.6.18-92.1.18.el5</code></pre></p>
 
-          <p>Now, let's install the kernel development kit matching the kernel version:</p>
+<p>Now, let's install the kernel development kit matching the kernel version:</p>
 
-          <pre><code>[julien@centos ~]$ sudo yum install kernel-devel-`uname -r`
+<pre><code>[julien@centos ~]$ sudo yum install kernel-devel-`uname -r`
 Password:
 Loading "fastestmirror" plugin
 Loading mirror speeds from cached hostfile
@@ -305,21 +305,21 @@ Resolving Dependencies
 ---> Package kernel-devel.i686 0:2.6.18-92.1.18.el5 set to be installed
 --> Finished Dependency Resolution
 
-Dependencies Resolved
+<p>Dependencies Resolved</p>
 
-=============================================================================
+<p>=============================================================================
 Package                 Arch       Version          Repository        Size
 =============================================================================
 Installing:
-kernel-devel            i686       2.6.18-92.1.18.el5  updates           4.8 M
+kernel-devel            i686       2.6.18-92.1.18.el5  updates           4.8 M</p>
 
-Transaction Summary
+<p>Transaction Summary
 =============================================================================
 Install      1 Package(s)      
 Update       0 Package(s)      
-Remove       0 Package(s)      
+Remove       0 Package(s)</p>
 
-Total download size: 4.8 M
+<p>Total download size: 4.8 M
 Is this ok [y/N]:
 Downloading Packages:
 (1/1): kernel-devel-2.6.1 100% |=========================| 4.8 MB    00:15  
@@ -328,14 +328,14 @@ Running Transaction Test
 Finished Transaction Test
 Transaction Test Succeeded
 Running Transaction
-Installing: kernel-devel                 ######################### [1/1]
+Installing: kernel-devel                 ######################### [1/1]</p>
 
-Installed: kernel-devel.i686 0:2.6.18-92.1.18.el5
-Complete!</code></pre>
+<p>Installed: kernel-devel.i686 0:2.6.18-92.1.18.el5
+Complete!</code></pre></p>
 
-          <p>Good. Now, the GNU compiler:</p>
+<p>Good. Now, the GNU compiler:</p>
 
-          <pre><code>[julien@centos ~]$ sudo yum install gcc
+<pre><code>[julien@centos ~]$ sudo yum install gcc
 Loading "fastestmirror" plugin
 Loading mirror speeds from cached hostfile
 * base: centos.intergenia.de
@@ -360,9 +360,9 @@ Resolving Dependencies
 ---> Package kernel-headers.i386 0:2.6.18-92.1.22.el5 set to be updated
 --> Finished Dependency Resolution
 
-Dependencies Resolved
+<p>Dependencies Resolved</p>
 
-=============================================================================
+<p>=============================================================================
 Package                 Arch       Version          Repository        Size
 =============================================================================
 Installing:
@@ -370,15 +370,15 @@ gcc                     i386       4.1.2-42.el5     base              5.2 M
 Installing for dependencies:
 glibc-devel             i386       2.5-24.el5_2.2   updates           2.0 M
 glibc-headers           i386       2.5-24.el5_2.2   updates           611 k
-kernel-headers          i386       2.6.18-92.1.22.el5  updates           854 k
+kernel-headers          i386       2.6.18-92.1.22.el5  updates           854 k</p>
 
-Transaction Summary
+<p>Transaction Summary
 =============================================================================
 Install      4 Package(s)      
 Update       0 Package(s)      
-Remove       0 Package(s)      
+Remove       0 Package(s)</p>
 
-Total download size: 8.7 M
+<p>Total download size: 8.7 M
 Is this ok [y/N]: y
 Downloading Packages:
 (1/4): glibc-devel-2.5-24 100% |=========================| 2.0 MB    00:03  
@@ -393,15 +393,15 @@ Running Transaction
 Installing: kernel-headers               ######################### [1/4]
 Installing: glibc-headers                ######################### [2/4]
 Installing: glibc-devel                  ######################### [3/4]
-Installing: gcc                          ######################### [4/4]
+Installing: gcc                          ######################### [4/4]</p>
 
-Installed: gcc.i386 0:4.1.2-42.el5
+<p>Installed: gcc.i386 0:4.1.2-42.el5
 Dependency Installed: glibc-devel.i386 0:2.5-24.el5_2.2 glibc-headers.i386 0:2.5-24.el5_2.2 kernel-headers.i386 0:2.6.18-92.1.22.el5
-Complete!</code></pre>
+Complete!</code></pre></p>
 
-          <p>Good to go. Let's run that installation script again:</p>
+<p>Good to go. Let's run that installation script again:</p>
 
-          <pre><code>[julien@centos ~]$ sudo sh /mnt/cdrom/VBoxLinuxAdditions.run
+<pre><code>[julien@centos ~]$ sudo sh /mnt/cdrom/VBoxLinuxAdditions.run
 Verifying archive integrity... All good.
 Uncompressing VirtualBox 1.6.6 Guest Additions for Linux installation.............................................................................................................................................................................
 VirtualBox 1.6.6 Guest Additions installation
@@ -409,12 +409,12 @@ Building the VirtualBox Guest Additions kernel module...
 Building the shared folder support kernel module...
 Installing the VirtualBox Guest Additions...
 
-Successfully installed the VirtualBox Guest Additions.
-You must restart your guest system in order to complete the installation.
+<p>Successfully installed the VirtualBox Guest Additions.
+You must restart your guest system in order to complete the installation.</p>
 
-[julien@centos ~]$ reboot</code></pre>
+<p>[julien@centos ~]$ reboot</code></pre></p>
 
-          <p>Done! That wasn't so bad, was it?</p>
+<p>Done! That wasn't so bad, was it?</p>
         </div>
       </article>
     </main>

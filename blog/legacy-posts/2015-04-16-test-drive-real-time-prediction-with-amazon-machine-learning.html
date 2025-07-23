@@ -255,53 +255,56 @@
         </header>
         
         <div class="legacy-post-content">
-          As explained in my <a href="2015-04-14-test-drive-amazon-machine-learning-redshift.html" target="_blank">previous article</a>, Amazon ML supports both batch prediction and real-time prediction.<br />
-<br />
-I burned some rubber (and some cash!) on batch prediction, but there's still some gas in the tank and tires ain't totally dead yet, so let's do a few more laps and see how the real-time thing works :)<br />
-<br />
-Assuming you've already built and evaluated a model, one single operation is required to perform real-time prediction: create a real-time endpoint, i.e. a web service URL to send your requests to.<br />
-<br />
-Of course, we could to this in the AWS console, but why not use the CLI instead?&nbsp; A word of warning: at the time of writing, the CLI package available from the AWS website suffers from a nasty bug on prediction calls (see <a href="https://forums.aws.amazon.com/thread.jspa?messageID=615018">https://forums.aws.amazon.com/thread.jspa?messageID=615018</a>). You'll need to download and install the latest version from Github:<br />
-<br />
-While we're at it, let's take a quick look at the CLI for Amazon ML. Here's our model, built from 100,000 lines with the format described in my previous article:<br />
-<br />
-Let's also look at the evaluation for this model. The log file URL gives away the fact Amazon ML jobs are based on EMR... in case you had any doubts ;)<br />
-&nbsp;
-All right, everything looks good. Time to create a prediction endpoint for our model:<br />
-<br />
-Pretty simple. We can now see that our model is accessible at <i>https://realtime.machinelearning.us-east-1.amazonaws.com</i><br />
-<br />
-And now, the moment of truth: let's hit the endpoint with a record.<br />
-<br />
-Boom. We got a predicted value. This actually worked on the first call, I guess caffeine was stronger this morning ;)<br />
-<br />
-One last question for today: how fast is this baby? I tested two different setups :<br />
+          <p>As explained in my <a href="2015-04-14-test-drive-amazon-machine-learning-redshift.html" target="_blank">previous article</a>, Amazon ML supports both batch prediction and real-time prediction.</p>
+
+<p>I burned some rubber (and some cash!) on batch prediction, but there's still some gas in the tank and tires ain't totally dead yet, so let's do a few more laps and see how the real-time thing works :)</p>
+
+<p>Assuming you've already built and evaluated a model, one single operation is required to perform real-time prediction: create a real-time endpoint, i.e. a web service URL to send your requests to.</p>
+
+<p>Of course, we could to this in the AWS console, but why not use the CLI instead?&nbsp; A word of warning: at the time of writing, the CLI package available from the AWS website suffers from a nasty bug on prediction calls (see <a href="https://forums.aws.amazon.com/thread.jspa?messageID=615018">https://forums.aws.amazon.com/thread.jspa?messageID=615018</a>). You'll need to download and install the latest version from Github:</p>
+
+<p>While we're at it, let's take a quick look at the CLI for Amazon ML. Here's our model, built from 100,000 lines with the format described in my previous article:</p>
+
+<p>Let's also look at the evaluation for this model. The log file URL gives away the fact Amazon ML jobs are based on EMR... in case you had any doubts ;)</p>
+
+<p>&nbsp;
+All right, everything looks good. Time to create a prediction endpoint for our model:</p>
+
+<p>Pretty simple. We can now see that our model is accessible at <i>https://realtime.machinelearning.us-east-1.amazonaws.com</i></p>
+
+<p>And now, the moment of truth: let's hit the endpoint with a record.</p>
+
+<p>Boom. We got a predicted value. This actually worked on the first call, I guess caffeine was stronger this morning ;)</p>
+
+<p>One last question for today: how fast is this baby? I tested two different setups :</p>
+
 <ul>
 <li>Return trip between my office in Paris and the endpoint in <i>us-east-1 </i>: about 700 ms</li>
 <li>Return trip between an EC2 instance in <i>us-east-1</i> and the endpoint in <i>us-east-1 </i>: about 300 ms
-<br />
-(<i>and yes, I did run the tests multiple times. These numbers are average values</i>).<br />
-<br />
-Slower than expected. The <a href="https://aws.amazon.com/fr/machine-learning/faqs/" target="_blank">Amazon ML FAQ</a> says: <br />
-<br />
-<i><b>Q: How fast can the Amazon Machine Learning real-time API generate predictions?<br />
-<i>
+
+<p>(<i>and yes, I did run the tests multiple times. These numbers are average values</i>).</p>
+
+<p>Slower than expected. The <a href="https://aws.amazon.com/fr/machine-learning/faqs/" target="_blank">Amazon ML FAQ</a> says:</p>
+
+<p><i><b>Q: How fast can the Amazon Machine Learning real-time API generate predictions?</p>
+
+<p><i>
           Most real-time prediction requests return a response within
  100 MS, making them fast enough for interactive web, mobile, or desktop
  applications. The exact time it takes for the real-time API to generate
  a prediction varies depending on the size of the input data record, and
  the complexity of the data processing “recipe” associated with the ML
-model that is generating the predictions</i><br />
-<br />
-300 ms feels slow, especially since my model doesn't strike me as super-complicated. Maybe I'm jaded ;)<br />
-<br />
-Ok, enough bitching :) This product has only been out a week or so and it's already fuckin' AWESOME. It's hard to believe Amazon made ML this simple. If I can get this to work, anyone can.<br />
-<br />
-Given the right level of price, performance and scale (all will come quickly), I see this product&nbsp; crushing the competition... and not only other ML SaaS providers. Hardware &amp; software vendors should start sweating even more than they already do.<br />
-<br />
-C'mon, give this thing a try and tell me you're STILL eager to build Hadoop clusters and write Map-Reduce jobs. Seriously?<br />
-<br />
-Till next time, keep rockin'.
+model that is generating the predictions</i></p>
+
+<p>300 ms feels slow, especially since my model doesn't strike me as super-complicated. Maybe I'm jaded ;)</p>
+
+<p>Ok, enough bitching :) This product has only been out a week or so and it's already fuckin' AWESOME. It's hard to believe Amazon made ML this simple. If I can get this to work, anyone can.</p>
+
+<p>Given the right level of price, performance and scale (all will come quickly), I see this product&nbsp; crushing the competition... and not only other ML SaaS providers. Hardware &amp; software vendors should start sweating even more than they already do.</p>
+
+<p>C'mon, give this thing a try and tell me you're STILL eager to build Hadoop clusters and write Map-Reduce jobs. Seriously?</p>
+
+<p>Till next time, keep rockin'.</p>
         </div>
       </article>
     </main>

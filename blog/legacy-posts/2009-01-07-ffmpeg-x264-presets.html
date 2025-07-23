@@ -192,27 +192,27 @@
         <div class="legacy-post-content">
           <p>As discussed <a href="2008-12-27-quick-reference-on-audio-video-encoding-with-ffmpeg.html">earlier</a>, the FFmpeg command line can be quite daunting, especially when used to encode x264 video...</p>
 
-          <p>Wouldn't it be nice to store your favorite options in a configuration file once and for all? Yes it would and yes you can!</p>
+<p>Wouldn't it be nice to store your favorite options in a configuration file once and for all? Yes it would and yes you can!</p>
 
-          <h2>Finding the FFmpeg / x264 preset files</h2>
+<h2>Finding the FFmpeg / x264 preset files</h2>
 
-          <p>Just head for the FFmpeg source and look at the ffpresets directory:</p>
+<p>Just head for the FFmpeg source and look at the ffpresets directory:</p>
 
-          <pre><code>ubuntu% cd ffmpeg/ffpresets
+<pre><code>ubuntu% cd ffmpeg/ffpresets
 ubuntu% ls
 libx264-default.ffpreset        libx264-hq.ffpreset   libx264-normal.ffpreset
 libx264-fastfirstpass.ffpreset  libx264-max.ffpreset</code></pre>
 
-          <p>Nice. Let's copy these to your FFmpeg configuration directory:</p>
+<p>Nice. Let's copy these to your FFmpeg configuration directory:</p>
 
-          <pre><code>ubuntu% mkdir ~/.ffmpeg
+<pre><code>ubuntu% mkdir ~/.ffmpeg
 ubuntu% cp *.ffpreset ~/.ffmpeg</code></pre>
 
-          <h2>A (terrifying) look at a preset file</h2>
+<h2>A (terrifying) look at a preset file</h2>
 
-          <p>What do you find in a preset file? Well, a long list of FFmpeg flags related to H.264 encoding:</p>
+<p>What do you find in a preset file? Well, a long list of FFmpeg flags related to H.264 encoding:</p>
 
-          <pre><code>ubuntu% cat libx264-normal.ffpreset
+<pre><code>ubuntu% cat libx264-normal.ffpreset
 coder=1
 flags=+loop
 cmp=+chroma
@@ -235,71 +235,71 @@ directpred=3
 trellis=0
 flags2=+bpyramid+wpred+dct8x8+fastpskip</code></pre>
 
-          <p>Ouch! Welcome to the wonderful world of H.264 encoding ;)</p>
+<p>Ouch! Welcome to the wonderful world of H.264 encoding ;)</p>
 
-          <p>Keep in mind that these are FFmpeg flags (not x264 flags), so although they really are meant to configure the x264 encoding process, they differ from the actual flags that you would pass directly to the x264 encoder. To ease the pain of translating and understanding these flags, you will certainly need:</p>
+<p>Keep in mind that these are FFmpeg flags (not x264 flags), so although they really are meant to configure the x264 encoding process, they differ from the actual flags that you would pass directly to the x264 encoder. To ease the pain of translating and understanding these flags, you will certainly need:</p>
           <ul>
             <li>this <a href="http://ffmpeg.x264.googlepages.com/mapping">mapping guide</a> written by one of the FFmpeg developers,</li>
             <li>this <a href="http://mediacoder.sourceforge.net/wiki/index.php/X264_Options_Explained">detailed list</a> of x264 flags, and I guess <a href="http://en.wikibooks.org/wiki/MeGUI/x264_Settings">this guide</a> too,</li>
             <li>the doom9 <a href="http://forum.doom9.org/forumdisplay.php?f=77">forum</a> on H.264.</li>
           </ul>
 
-          <p>Don't worry, though. You really don't need to understand all these flags: the main reason for these preset files is obviously to define a number of typical x264 configurations which can be used out of the box.</p>
+<p>Don't worry, though. You really don't need to understand all these flags: the main reason for these preset files is obviously to define a number of typical x264 configurations which can be used out of the box.</p>
 
-          <h2>Using a preset file</h2>
+<h2>Using a preset file</h2>
 
-          <p>So how do you use a preset file? Just set the <code>-vpre</code> flag after the <code>-vcodec</code> flag (the flag order does matter):</p>
+<p>So how do you use a preset file? Just set the <code>-vpre</code> flag after the <code>-vcodec</code> flag (the flag order does matter):</p>
 
-          <pre><code>ubuntu% ffmpeg -i video.mpg -vcodec libx264 -vpre normal video.mp4</code></pre>
+<pre><code>ubuntu% ffmpeg -i video.mpg -vcodec libx264 -vpre normal video.mp4</code></pre>
 
-          <p>Alternatively, you can set it to the full path to the preset file (useful if you don't want to keep them in <code>~/.ffmpeg</code>)</p>
+<p>Alternatively, you can set it to the full path to the preset file (useful if you don't want to keep them in <code>~/.ffmpeg</code>)</p>
 
-          <pre><code>ubuntu% ffmpeg -i video.mpg -vcodec libx264 -vpre ~/myPresets/libx264-normal.ffpreset video.mp4</code></pre>
+<pre><code>ubuntu% ffmpeg -i video.mpg -vcodec libx264 -vpre ~/myPresets/libx264-normal.ffpreset video.mp4</code></pre>
 
-          <p>Easy, isn't it?</p>
+<p>Easy, isn't it?</p>
 
-          <p>Now let's look at the different preset files and run some tests. Here, I will encode a 3-minute MPEG video to H.264 using each of the available presets.</p>
+<p>Now let's look at the different preset files and run some tests. Here, I will encode a 3-minute MPEG video to H.264 using each of the available presets.</p>
 
-          <p>Audio encoding is disabled (<code>-an</code>) and we let FFmpeg decide how many threads to run (<code>-threads 0</code>).</p>
+<p>Audio encoding is disabled (<code>-an</code>) and we let FFmpeg decide how many threads to run (<code>-threads 0</code>).</p>
 
-          <h3>'Default quality' preset file</h3>
+<h3>'Default quality' preset file</h3>
 
-          <pre><code>ubuntu% ffmpeg -i video.mpg -f mp4 -vcodec libx264 -vpre default -an -threads 0 video.mp4</code></pre>
+<pre><code>ubuntu% ffmpeg -i video.mpg -f mp4 -vcodec libx264 -vpre default -an -threads 0 video.mp4</code></pre>
           <p>→ 39 seconds, 4.68 Mb</p>
 
-          <p>As the name implies, settings are default values and generate a video compliant with the <strong>Main</strong> H.264 profile. If you need to encode to the <strong>Baseline</strong> profile, you just need to change <code>coder=1</code> to <code>coder=0</code> in the preset file: this will disable <a href="http://en.wikipedia.org/wiki/CABAC">CABAC entropy coding</a>, which is only supported in the <strong>Main</strong> profile and upwards.</p>
+<p>As the name implies, settings are default values and generate a video compliant with the <strong>Main</strong> H.264 profile. If you need to encode to the <strong>Baseline</strong> profile, you just need to change <code>coder=1</code> to <code>coder=0</code> in the preset file: this will disable <a href="http://en.wikipedia.org/wiki/CABAC">CABAC entropy coding</a>, which is only supported in the <strong>Main</strong> profile and upwards.</p>
 
-          <h3>'Normal quality' preset file</h3>
+<h3>'Normal quality' preset file</h3>
           <pre><code>ubuntu% ffmpeg -i video.mpg -f mp4 -vcodec libx264 -vpre normal -an -threads 0 video.mp4</code></pre>
           <p>→ 43 seconds, 4.67 Mb</p>
 
-          <p>These settings bring a little bit more quality and generate a video compliant with the <strong>High</strong> H.264 profile. The key flags is <code>dct8x8</code>, which is only supported in the <strong>High</strong> profile and upwards: removing it will drop back to the <strong>Main</strong> profile.</p>
+<p>These settings bring a little bit more quality and generate a video compliant with the <strong>High</strong> H.264 profile. The key flags is <code>dct8x8</code>, which is only supported in the <strong>High</strong> profile and upwards: removing it will drop back to the <strong>Main</strong> profile.</p>
 
-          <p>I would recommend this preset for everyday use.</p>
+<p>I would recommend this preset for everyday use.</p>
 
-          <h3>'High quality' preset file</h3>
+<h3>'High quality' preset file</h3>
           <pre><code>ubuntu% ffmpeg -i video.mpg -f mp4 -vcodec libx264 -vpre hq -an -threads 0 video.mp4</code></pre>
           <p>→ 1 minute 26 seconds, 4.71 Mb</p>
 
-          <p>These settings bring even more quality, notably a more accurate motion estimation method (<code>umh</code>) and <a href="http://en.wikipedia.org/wiki/Trellis_quantization">trellis quantization</a>. The output video is compliant with the <strong>High</strong> H.264 profile.</p>
+<p>These settings bring even more quality, notably a more accurate motion estimation method (<code>umh</code>) and <a href="http://en.wikipedia.org/wiki/Trellis_quantization">trellis quantization</a>. The output video is compliant with the <strong>High</strong> H.264 profile.</p>
 
-          <p>Encoding time is 2x longer compared to the 'Normal quality' preset. Let your eyes decide if there's a notable improvement :)</p>
+<p>Encoding time is 2x longer compared to the 'Normal quality' preset. Let your eyes decide if there's a notable improvement :)</p>
 
-          <h3>'Maximum quality' preset file</h3>
+<h3>'Maximum quality' preset file</h3>
           <pre><code>ubuntu% ffmpeg -i video.mpg -f mp4 -vcodec libx264 -vpre max -an -threads 0 video.mp4</code></pre>
           <p>→ 15 minutes 4 seconds, 4.72 Mb</p>
 
-          <p>These settings bring a lot more quality, thanks to generous B-frames settings, a very efficient (but very slow) motion estimation method (<code>tesa</code>) and more <a href="http://en.wikipedia.org/wiki/Trellis_quantization">trellis quantization</a>. The output video is compliant with the <strong>High</strong> H.264 profile.</p>
+<p>These settings bring a lot more quality, thanks to generous B-frames settings, a very efficient (but very slow) motion estimation method (<code>tesa</code>) and more <a href="http://en.wikipedia.org/wiki/Trellis_quantization">trellis quantization</a>. The output video is compliant with the <strong>High</strong> H.264 profile.</p>
 
-          <p>Still, encoding time is 10x longer compared to the 'High quality' preset. Not sure it's really worth it...</p>
+<p>Still, encoding time is 10x longer compared to the 'High quality' preset. Not sure it's really worth it...</p>
 
-          <p>That's it for today. We barely scratched the surface and there's much more to be said on H.264, but hopefully this will get you started :)</p>
+<p>That's it for today. We barely scratched the surface and there's much more to be said on H.264, but hopefully this will get you started :)</p>
 
-          <h2>Updated Preset Files</h2>
+<h2>Updated Preset Files</h2>
 
-          <p><strong>Updated on 2009/01/19:</strong> a whole new bunch of lossless & iPod presets have surfaced!</p>
+<p><strong>Updated on 2009/01/19:</strong> a whole new bunch of lossless & iPod presets have surfaced!</p>
 
-          <pre><code>libx264-baseline.ffpreset
+<pre><code>libx264-baseline.ffpreset
 libx264-default.ffpreset
 libx264-fastfirstpass.ffpreset
 libx264-hq.ffpreset

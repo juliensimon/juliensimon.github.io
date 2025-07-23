@@ -255,30 +255,95 @@
         </header>
         
         <div class="legacy-post-content">
-          Today, I'd like to show you how to build a basic web app running on EC2 and connecting to a MongoDB instance running on MongoLab. <a href="2013-07-25-from-one-cloud-to-the-next.html">We used Python so far</a>, so why not use Node.js this time around: Javascript and JSON should work with MongoDB, huh?<br />
-<br />
-We'll start from the same Ubuntu VM running in EC2. Only a little bit of extra setup is required.<br />
-<br />
-First, make sure you open a port for your web app (say, 8080): in the AWS console, go to the "<i>Security group</i>" section and add a custom rule opening port 8080/TCP. Don't forget to click on "<i>Apply rules changes</i>" ;) No need to restart your VM, the change is effective immediately.<br />
-<br />
-Then, '<i>ssh</i>' into to your VM and install the packages required by Node.js: the environment itself plus its package manager:<br />
-<br />
-<span>ubuntu@ip-10-48-45-182:~$&nbsp;<b>sudo apt-get install nodejs npm<br />
-<br />
-Now, let's install the <a href="http://github.com/mongodb/node-mongodb-native">native MongoDB</a> driver used by Node.js:<br />
-<br />
-<span>ubuntu@ip-10-48-45-182:~$&nbsp;<b>npm install mongodb<br />
-<br />
-This generated errors on Ubuntu 12.04, but the package still got installed. YMMV.<br />
-<br />
-All right, now to the good stuff. Here's our web server in Node.js:<br />
+          <p>Today, I'd like to show you how to build a basic web app running on EC2 and connecting to a MongoDB instance running on MongoLab. <a href="2013-07-25-from-one-cloud-to-the-next.html">We used Python so far</a>, so why not use Node.js this time around: Javascript and JSON should work with MongoDB, huh?</p>
+
+<p>We'll start from the same Ubuntu VM running in EC2. Only a little bit of extra setup is required.</p>
+
+<p>First, make sure you open a port for your web app (say, 8080): in the AWS console, go to the "<i>Security group</i>" section and add a custom rule opening port 8080/TCP. Don't forget to click on "<i>Apply rules changes</i>" ;) No need to restart your VM, the change is effective immediately.</p>
+
+<p>Then, '<i>ssh</i>' into to your VM and install the packages required by Node.js: the environment itself plus its package manager:</p>
+
+<p><span>ubuntu@ip-10-48-45-182:~<div class="legacy-post-content">
+          Today, I'd like to show you how to build a basic web app running on EC2 and connecting to a MongoDB instance running on MongoLab. <a href="2013-07-25-from-one-cloud-to-the-next.html">We used Python so far</a>, so why not use Node.js this time around: Javascript and JSON should work with MongoDB, huh?
+
+
+We'll start from the same Ubuntu VM running in EC2. Only a little bit of extra setup is required.
+
+
+First, make sure you open a port for your web app (say, 8080): in the AWS console, go to the "<i>Security group</i>" section and add a custom rule opening port 8080/TCP. Don't forget to click on "<i>Apply rules changes</i>" ;) No need to restart your VM, the change is effective immediately.
+
+
+Then, '<i>ssh</i>' into to your VM and install the packages required by Node.js: the environment itself plus its package manager:
+
+
+<span>ubuntu@ip-10-48-45-182:~$&nbsp;<b>sudo apt-get install nodejs npm
+
+
+Now, let's install the <a href="http://github.com/mongodb/node-mongodb-native">native MongoDB</a> driver used by Node.js:
+
+
+<span>ubuntu@ip-10-48-45-182:~$&nbsp;<b>npm install mongodb
+
+
+This generated errors on Ubuntu 12.04, but the package still got installed. YMMV.
+
+
+All right, now to the good stuff. Here's our web server in Node.js:
+
 <ul>
 <li>connect to our MongoDB instance (once again, make sure you use your own URI, username and password). Then, select '<i>collection1</i>', containing 25 documents (<i>{"_id", "x"}</i>)</li>
 <li>create a web server running on port 8080 and wait for incoming requests: they will be served by the <i>onRequest</i> function, which issues a global <i>find()</i> on the collection and prints out all documents. <i>JSON.stringify()</i> is a life-saving browser function, it should hopefully work everywhere. If not, use Chrome ;)
 <div>
-Everything will run asynchronously, which is pretty much the point of Node.js, but this is out of scope for today. I strongly recommend the <a href="http://www.nodebeginner.org/">Node Beginner website</a> if you'd like to know more.</div>
-<br />
-<textarea cols="80" rows="32">// www.js
+Everything will run asynchronously, which is pretty much the point of Node.js, but this is out of scope for today. I strongly recommend the <a href="http://www.nodebeginner.org/">Node Beginner website</a> if you'd like to know more.</div>nbsp;<b>sudo apt-get install nodejs npm</p>
+
+<p>Now, let's install the <a href="http://github.com/mongodb/node-mongodb-native">native MongoDB</a> driver used by Node.js:</p>
+
+<p><span>ubuntu@ip-10-48-45-182:~<div class="legacy-post-content">
+          Today, I'd like to show you how to build a basic web app running on EC2 and connecting to a MongoDB instance running on MongoLab. <a href="2013-07-25-from-one-cloud-to-the-next.html">We used Python so far</a>, so why not use Node.js this time around: Javascript and JSON should work with MongoDB, huh?
+
+
+We'll start from the same Ubuntu VM running in EC2. Only a little bit of extra setup is required.
+
+
+First, make sure you open a port for your web app (say, 8080): in the AWS console, go to the "<i>Security group</i>" section and add a custom rule opening port 8080/TCP. Don't forget to click on "<i>Apply rules changes</i>" ;) No need to restart your VM, the change is effective immediately.
+
+
+Then, '<i>ssh</i>' into to your VM and install the packages required by Node.js: the environment itself plus its package manager:
+
+
+<span>ubuntu@ip-10-48-45-182:~$&nbsp;<b>sudo apt-get install nodejs npm
+
+
+Now, let's install the <a href="http://github.com/mongodb/node-mongodb-native">native MongoDB</a> driver used by Node.js:
+
+
+<span>ubuntu@ip-10-48-45-182:~$&nbsp;<b>npm install mongodb
+
+
+This generated errors on Ubuntu 12.04, but the package still got installed. YMMV.
+
+
+All right, now to the good stuff. Here's our web server in Node.js:
+
+<ul>
+<li>connect to our MongoDB instance (once again, make sure you use your own URI, username and password). Then, select '<i>collection1</i>', containing 25 documents (<i>{"_id", "x"}</i>)</li>
+<li>create a web server running on port 8080 and wait for incoming requests: they will be served by the <i>onRequest</i> function, which issues a global <i>find()</i> on the collection and prints out all documents. <i>JSON.stringify()</i> is a life-saving browser function, it should hopefully work everywhere. If not, use Chrome ;)
+<div>
+Everything will run asynchronously, which is pretty much the point of Node.js, but this is out of scope for today. I strongly recommend the <a href="http://www.nodebeginner.org/">Node Beginner website</a> if you'd like to know more.</div>nbsp;<b>npm install mongodb</p>
+
+<p>This generated errors on Ubuntu 12.04, but the package still got installed. YMMV.</p>
+
+<p>All right, now to the good stuff. Here's our web server in Node.js:</p>
+
+<ul>
+<li>connect to our MongoDB instance (once again, make sure you use your own URI, username and password). Then, select '<i>collection1</i>', containing 25 documents (<i>{"_id", "x"}</i>)</li>
+<li>create a web server running on port 8080 and wait for incoming requests: they will be served by the <i>onRequest</i> function, which issues a global <i>find()</i> on the collection and prints out all documents. <i>JSON.stringify()</i> is a life-saving browser function, it should hopefully work everywhere. If not, use Chrome ;)
+<div>
+Everything will run asynchronously, which is pretty much the point of Node.js, but this is out of scope for today. I strongly recommend the <a href="http://www.nodebeginner.org/">Node Beginner website</a> if you'd like to know more.
+        </div>
+
+
+<pre><code>// www.js
 var http = require("http");
 var MongoClient = require('mongodb').MongoClient;
 var c;
@@ -305,50 +370,83 @@ MongoClient.connect("mongodb://USER:PWD@ds051067.mongolab.com:51067/mongolab-tes
 });
 http.createServer(onRequest).listen(8080);
 console.log("Web server started");
-</textarea>
-<br />
+</code></pre>
+
+
 <div>
 <div>
-Pretty cool, yeah? Let's start this program on our VM:<br />
-<br />
-<span>ubuntu@ip-10-48-45-182:~$&nbsp;<b>node www.js<br />
-<span>Web server started</span><br />
-<span>Connected to database</span><br />
-<br />
-Our web server is now running. Yes, really. Now, let's connect to our instance from another machine. I'll use '<i>curl</i>' but your web browser will work too (feel free to actually try, my VM may be running):<br />
-<br />
-<span>$ <b>curl http://ec2-54-216-192-183.eu-west-1.compute.amazonaws.com:8080/<br />
-<textarea cols="50" rows="30"><HTML>
-{"_id":"51e3ce08915082db3df32bf0","x":1}<br />
-{"_id":"51e3ce08915082db3df32bf1","x":2}<br />
-{"_id":"51e3ce08915082db3df32bf2","x":3}<br />
-{"_id":"51e3ce08915082db3df32bf3","x":4}<br />
-{"_id":"51e3ce08915082db3df32bf4","x":5}<br />
-{"_id":"51e3ce08915082db3df32bf5","x":6}<br />
-{"_id":"51e3ce08915082db3df32bf6","x":7}<br />
-{"_id":"51e3ce08915082db3df32bf7","x":8}<br />
-{"_id":"51e3ce08915082db3df32bf8","x":9}<br />
-{"_id":"51e3ce08915082db3df32bf9","x":10}<br />
-{"_id":"51e3ce08915082db3df32bfa","x":11}<br />
-{"_id":"51e3ce08915082db3df32bfb","x":12}<br />
-{"_id":"51e3ce08915082db3df32bfc","x":13}<br />
-{"_id":"51e3ce08915082db3df32bfd","x":14}<br />
-{"_id":"51e3ce08915082db3df32bfe","x":15}<br />
-{"_id":"51e3ce08915082db3df32bff","x":16}<br />
-{"_id":"51e3ce08915082db3df32c00","x":17}<br />
-{"_id":"51e3ce08915082db3df32c01","x":18}<br />
-{"_id":"51e3ce08915082db3df32c02","x":19}<br />
-{"_id":"51e3ce08915082db3df32c03","x":20}<br />
-{"_id":"51e3ce08915082db3df32c04","x":21}<br />
-{"_id":"51e3ce08915082db3df32c05","x":22}<br />
-{"_id":"51e3ce08915082db3df32c06","x":23}<br />
-{"_id":"51e3ce08915082db3df32c07","x":24}<br />
+Pretty cool, yeah? Let's start this program on our VM:
+
+
+<span>ubuntu@ip-10-48-45-182:~$&nbsp;<b>node www.js
+
+<span>Web server started</span>
+
+<span>Connected to database</span>
+
+
+Our web server is now running. Yes, really. Now, let's connect to our instance from another machine. I'll use '<i>curl</i>' but your web browser will work too (feel free to actually try, my VM may be running):
+
+
+<span>$ <b>curl http://ec2-54-216-192-183.eu-west-1.compute.amazonaws.com:8080/
+
+<pre><code><HTML>
+{"_id":"51e3ce08915082db3df32bf0","x":1}
+
+{"_id":"51e3ce08915082db3df32bf1","x":2}
+
+{"_id":"51e3ce08915082db3df32bf2","x":3}
+
+{"_id":"51e3ce08915082db3df32bf3","x":4}
+
+{"_id":"51e3ce08915082db3df32bf4","x":5}
+
+{"_id":"51e3ce08915082db3df32bf5","x":6}
+
+{"_id":"51e3ce08915082db3df32bf6","x":7}
+
+{"_id":"51e3ce08915082db3df32bf7","x":8}
+
+{"_id":"51e3ce08915082db3df32bf8","x":9}
+
+{"_id":"51e3ce08915082db3df32bf9","x":10}
+
+{"_id":"51e3ce08915082db3df32bfa","x":11}
+
+{"_id":"51e3ce08915082db3df32bfb","x":12}
+
+{"_id":"51e3ce08915082db3df32bfc","x":13}
+
+{"_id":"51e3ce08915082db3df32bfd","x":14}
+
+{"_id":"51e3ce08915082db3df32bfe","x":15}
+
+{"_id":"51e3ce08915082db3df32bff","x":16}
+
+{"_id":"51e3ce08915082db3df32c00","x":17}
+
+{"_id":"51e3ce08915082db3df32c01","x":18}
+
+{"_id":"51e3ce08915082db3df32c02","x":19}
+
+{"_id":"51e3ce08915082db3df32c03","x":20}
+
+{"_id":"51e3ce08915082db3df32c04","x":21}
+
+{"_id":"51e3ce08915082db3df32c05","x":22}
+
+{"_id":"51e3ce08915082db3df32c06","x":23}
+
+{"_id":"51e3ce08915082db3df32c07","x":24}
+
 {"_id":"51e3ce08915082db3df32c08","x":25}
-</textarea>
+</code></pre>
 </div>
-<br />
-And this, ladies and gentlemen, is a super scalable, state of the hype, cloud-based web application. Anybody wants to buy it for a billion dollars? :D<br />
-<br />
+
+
+And this, ladies and gentlemen, is a super scalable, state of the hype, cloud-based web application. Anybody wants to buy it for a billion dollars? :D
+
+
 Until next time, read, learn and write some code!
         </div>
       </article>

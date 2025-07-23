@@ -192,131 +192,131 @@
         <div class="legacy-post-content">
           <p><em><strong>21/08/2013 - By popular demand (according to page view stats), I've decided to refresh this post for Ubuntu 12.04: <a href="2013-03-21-compiling-ffmpeg-x264-mp3-aac-xvid-amr-ubuntu-12-04.html">here is the updated HOWTO</a>. Enjoy :)</strong></em></p>
 
-          <p>FFmpeg is THE audio/video conversion tool. Unfortunately, the default build included in Ubuntu is usually quite outdated, as well as lacking support for many codecs.</p>
+<p>FFmpeg is THE audio/video conversion tool. Unfortunately, the default build included in Ubuntu is usually quite outdated, as well as lacking support for many codecs.</p>
 
-          <p>The purpose of this article is to show you how you can build a fresh, up to date version of FFmpeg supporting (almost) all codecs. This procedure was successfully performed on Ubuntu 8.04 and 8.10.</p>
+<p>The purpose of this article is to show you how you can build a fresh, up to date version of FFmpeg supporting (almost) all codecs. This procedure was successfully performed on Ubuntu 8.04 and 8.10.</p>
 
-          <h2>0) Prerequisites</h2>
+<h2>0) Prerequisites</h2>
 
-          <p>Before we start, let's check if subversion and git are installed. We'll need both to install some of the libraries required by FFmpeg:</p>
+<p>Before we start, let's check if subversion and git are installed. We'll need both to install some of the libraries required by FFmpeg:</p>
 
-          <pre><code>ubuntu% svn
+<pre><code>ubuntu% svn
 Type 'svn help' for usage.
 ubuntu% git
 usage: git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]</code></pre>
 
-          <p>OK, they're both present. If not, you need to install them with the following commands:</p>
+<p>OK, they're both present. If not, you need to install them with the following commands:</p>
 
-          <pre><code>ubuntu% sudo apt-get install subversion
+<pre><code>ubuntu% sudo apt-get install subversion
 ubuntu% sudo apt-get install git git-core</code></pre>
 
-          <p>Now would be a good time to decide where you're going to build all those sources. Just create a temporary directory anywhere you like (you'll need less than 150MB).</p>
+<p>Now would be a good time to decide where you're going to build all those sources. Just create a temporary directory anywhere you like (you'll need less than 150MB).</p>
 
-          <p><strong>[Updated on 2008/01/02]</strong> If you have an existing installation of FFmpeg, you may run into linking issues caused by conflicting library versions. My advice is to remove all existing copies of libav* (libavcodec and so on) which may be present in /usr/lib, either by uninstalling them with APT or by deleting the .a and .so files. Please read the comments below for additional information.</p>
+<p><strong>[Updated on 2008/01/02]</strong> If you have an existing installation of FFmpeg, you may run into linking issues caused by conflicting library versions. My advice is to remove all existing copies of libav* (libavcodec and so on) which may be present in /usr/lib, either by uninstalling them with APT or by deleting the .a and .so files. Please read the comments below for additional information.</p>
 
-          <h2>1) Fetching the FFmpeg sources</h2>
+<h2>1) Fetching the FFmpeg sources</h2>
 
-          <p>First of all, let's get the latest FFmpeg source snapshot from the Subversion server:</p>
+<p>First of all, let's get the latest FFmpeg source snapshot from the Subversion server:</p>
 
-          <pre><code>ubuntu% svn checkout svn://svn.ffmpeg.org/ffmpeg/trunk ffmpeg
+<pre><code>ubuntu% svn checkout svn://svn.ffmpeg.org/ffmpeg/trunk ffmpeg
 lots of output removed
 Checked out external at revision 28172.
 Checked out revision 16245.</code></pre>
 
-          <p>Of course, you could just go ahead with configure, make, make install and be done with it. Unfortunately (?), it's not that simple. Go ahead, run configure:</p>
+<p>Of course, you could just go ahead with configure, make, make install and be done with it. Unfortunately (?), it's not that simple. Go ahead, run configure:</p>
 
-          <pre><code>ubuntu% cd ffmpeg
+<pre><code>ubuntu% cd ffmpeg
 ubuntu% ./configure --prefix=/usr/local
 lots of output removed
 Creating config.mak and config.h...</code></pre>
 
-          <p>Take a closer look at the output, especially at the 'Enabled encoders' section. A number of major formats, like AAC, MP3, x.264 or XViD are missing. Can you live without these? Probably not...</p>
+<p>Take a closer look at the output, especially at the 'Enabled encoders' section. A number of major formats, like AAC, MP3, x.264 or XViD are missing. Can you live without these? Probably not...</p>
 
-          <p>Why, oh why are they missing? Take another look at the output of the configure command:</p>
+<p>Why, oh why are they missing? Take another look at the output of the configure command:</p>
 
-          <pre><code>libfaac enabled           no
+<pre><code>libfaac enabled           no
 libmp3lame enabled        no
 libx264 enabled           no
 libxvid enabled           no</code></pre>
 
-          <p>These encoders are missing because they're handled by external libraries which are not part of the FFmpeg source package. Chasing them all is a bit of a pain in the #$$ and hopefully this article will help!</p>
+<p>These encoders are missing because they're handled by external libraries which are not part of the FFmpeg source package. Chasing them all is a bit of a pain in the #$ and hopefully this article will help!</p>
 
-          <h2>2) Configuring FFmpeg... and failing</h2>
+<h2>2) Configuring FFmpeg... and failing</h2>
 
-          <p>Let's go wild and enable almost everything, including shared libraries (nice if you're running multiple copies of FFmpeg) and POSIX threads (additional parallelism can't hurt):</p>
+<p>Let's go wild and enable almost everything, including shared libraries (nice if you're running multiple copies of FFmpeg) and POSIX threads (additional parallelism can't hurt):</p>
 
-          <pre><code>ubuntu% ./configure --prefix=/usr/local --enable-gpl --enable-nonfree --enable-shared --enable-postproc --enable-avfilter --enable-avfilter-lavf --enable-pthreads --enable-x11grab --enable-bzlib --enable-libamr-nb --enable-libamr-wb --enable-libdc1394 --enable-libfaac --enable-libfaad --enable-libfaadbin --enable-libgsm --enable-libmp3lame --enable-libnut --enable-libschroedinger --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid --enable-zlib</code></pre>
+<pre><code>ubuntu% ./configure --prefix=/usr/local --enable-gpl --enable-nonfree --enable-shared --enable-postproc --enable-avfilter --enable-avfilter-lavf --enable-pthreads --enable-x11grab --enable-bzlib --enable-libamr-nb --enable-libamr-wb --enable-libdc1394 --enable-libfaac --enable-libfaad --enable-libfaadbin --enable-libgsm --enable-libmp3lame --enable-libnut --enable-libschroedinger --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid --enable-zlib</code></pre>
 
-          <p>It will inevitably lead to something like this:</p>
+<p>It will inevitably lead to something like this:</p>
 
-          <pre><code>FAAD test failed.
+<pre><code>FAAD test failed.
 If you think configure made a mistake, make sure you are using the latest
 version from SVN.  If the latest version fails, report the problem to the
 ffmpeg-user@mplayerhq.hu mailing list or IRC #ffmpeg on irc.freenode.net.
 Include the log file "config.err" produced by configure as this will help
 solving the problem.</code></pre>
 
-          <p>It's normal, we haven't installed the external libraries required for our FFmpeg build. Let's get to it!</p>
+<p>It's normal, we haven't installed the external libraries required for our FFmpeg build. Let's get to it!</p>
 
-          <h2>3) Installing libamr</h2>
+<h2>3) Installing libamr</h2>
 
-          <p>This library is needed for 3GPP speech codecs. For legal reasons, it is not part of the standard Ubuntu repository. You can find it in the <a href="http://medibuntu.org/">Medibuntu</a> repository. Of course, you need to let APT know about this new repository. These are the commands for Ubuntu 8.04 (more information on other versions <a href="https://help.ubuntu.com/community/Medibuntu">here</a>):</p>
+<p>This library is needed for 3GPP speech codecs. For legal reasons, it is not part of the standard Ubuntu repository. You can find it in the <a href="http://medibuntu.org/">Medibuntu</a> repository. Of course, you need to let APT know about this new repository. These are the commands for Ubuntu 8.04 (more information on other versions <a href="https://help.ubuntu.com/community/Medibuntu">here</a>):</p>
 
-          <pre><code>ubuntu% sudo wget http://www.medibuntu.org/sources.list.d/hardy.list --output-document=/etc/apt/sources.list.d/medibuntu.list
+<pre><code>ubuntu% sudo wget http://www.medibuntu.org/sources.list.d/hardy.list --output-document=/etc/apt/sources.list.d/medibuntu.list
 ubuntu% sudo apt-get update && sudo apt-get install medibuntu-keyring && sudo apt-get update</code></pre>
 
-          <p>Now you can install libamr:</p>
+<p>Now you can install libamr:</p>
 
-          <pre><code>ubuntu% sudo apt-get install libamrnb-dev libamrwb-dev</code></pre>
+<pre><code>ubuntu% sudo apt-get install libamrnb-dev libamrwb-dev</code></pre>
 
-          <h2>4) Installing libnut</h2>
+<h2>4) Installing libnut</h2>
 
-          <p><a href="http://wiki.multimedia.cx/index.php?title=NUT">NUT</a> is a container format under construction by <a href="http://wiki.multimedia.cx/index.php?title=MPlayer">MPlayer</a> and <a href="http://wiki.multimedia.cx/index.php?title=FFmpeg">FFmpeg</a> developers. Libnut needs to be built from source:</p>
+<p><a href="http://wiki.multimedia.cx/index.php?title=NUT">NUT</a> is a container format under construction by <a href="http://wiki.multimedia.cx/index.php?title=MPlayer">MPlayer</a> and <a href="http://wiki.multimedia.cx/index.php?title=FFmpeg">FFmpeg</a> developers. Libnut needs to be built from source:</p>
 
-          <pre><code>ubuntu% svn co svn://svn.mplayerhq.hu/nut/src/trunk/ nut
+<pre><code>ubuntu% svn co svn://svn.mplayerhq.hu/nut/src/trunk/ nut
 ubuntu% cd nut
 ubuntu% make
 ubuntu% sudo make install</code></pre>
 
-          <h2>5) Installing libx264</h2>
+<h2>5) Installing libx264</h2>
 
-          <p><a href="http://www.videolan.org/developers/x264.html">x264</a> is a free library for encoding H264/AVC video streams.</p>
+<p><a href="http://www.videolan.org/developers/x264.html">x264</a> is a free library for encoding H264/AVC video streams.</p>
 
-          <p>It can be fetched with APT using 'apt-get install libx264-dev' but let's make sure we have both the latest FFmpeg and the latest x264.</p>
+<p>It can be fetched with APT using 'apt-get install libx264-dev' but let's make sure we have both the latest FFmpeg and the latest x264.</p>
 
-          <p>Before we build the x264 source, we need to install:</p>
+<p>Before we build the x264 source, we need to install:</p>
           <ul>
             <li><strong>libgpac</strong>, required to support the mp4 container with the x264 codec,</li>
             <li>the <strong>yasm</strong> assembler, required to compile several assembly language routines present in the x264 code.</li>
           </ul>
 
-          <p>Installing libgpac is straightforward:</p>
+<p>Installing libgpac is straightforward:</p>
 
-          <pre><code>ubuntu% sudo apt-get install libgpac-dev</code></pre>
+<pre><code>ubuntu% sudo apt-get install libgpac-dev</code></pre>
 
-          <p>Now, let's take a look at yasm:</p>
+<p>Now, let's take a look at yasm:</p>
 
-          <pre><code>ubuntu% yasm --version
+<pre><code>ubuntu% yasm --version
 zsh: command not found: yasm</code></pre>
 
-          <p>It's not there. Let's get it using APT:</p>
+<p>It's not there. Let's get it using APT:</p>
 
-          <pre><code>ubuntu% sudo apt-get install yasm
+<pre><code>ubuntu% sudo apt-get install yasm
 ubuntu% yasm --version
 yasm 0.5.0.1591</code></pre>
 
-          <p>OK, now let fetch the x264 source and configure the build:</p>
+<p>OK, now let fetch the x264 source and configure the build:</p>
 
-          <pre><code>ubuntu% git clone git://git.videolan.org/x264.git
+<pre><code>ubuntu% git clone git://git.videolan.org/x264.git
 ubuntu% cd x264
 ubuntu% ./configure --prefix=/usr/local --enable-shared
 Found yasm 0.5.0.1591
 Minimum version is yasm-0.6.1
 If you really want to compile without asm, configure with --disable-asm.</code></pre>
 
-          <p>Hmmm.. Do we want to use generic C routines instead of optimized assembly? No. Let's build the latest <a href="http://www.tortall.net/projects/yasm/">yasm (0.7.2 at the time of this writing):</a></p>
+<p>Hmmm.. Do we want to use generic C routines instead of optimized assembly? No. Let's build the latest <a href="http://www.tortall.net/projects/yasm/">yasm (0.7.2 at the time of this writing):</a></p>
 
-          <pre><code>ubuntu% sudo apt-get remove yasm
+<pre><code>ubuntu% sudo apt-get remove yasm
 ubuntu% wget http://www.tortall.net/projects/yasm/releases/yasm-0.7.2.tar.gz
 ubuntu% tar xvfz yasm-0.7.2.tar.gz
 ubuntu% cd yasm-0.7.2
@@ -326,9 +326,9 @@ ubuntu% sudo make install
 ubuntu% yasm --version
 yasm 0.7.2.2153</code></pre>
 
-          <p>OK, now we can build x264:</p>
+<p>OK, now we can build x264:</p>
 
-          <pre><code>ubuntu% cd x264
+<pre><code>ubuntu% cd x264
 ubuntu% ./configure --prefix=/usr/local --enable-shared
 output removed
 Platform: X86
@@ -345,23 +345,23 @@ visualize: no
 ubuntu% make
 ubuntu% sudo make install</code></pre>
 
-          <h2>6) Installing libxvid</h2>
+<h2>6) Installing libxvid</h2>
 
-          <p>Before we install <a href="http://www.xvid.org/">libxvid</a>, we need to check that the nasm assembler is OK. It's required to build assembly code in libxvid and you do NOT want this code to be replaced with generic C code in case nasm is missing: I ran some Xvid encoding tests with and without assembly code and there's a 2.5x factor... So read on :)</p>
+<p>Before we install <a href="http://www.xvid.org/">libxvid</a>, we need to check that the nasm assembler is OK. It's required to build assembly code in libxvid and you do NOT want this code to be replaced with generic C code in case nasm is missing: I ran some Xvid encoding tests with and without assembly code and there's a 2.5x factor... So read on :)</p>
 
-          <p>You need at least nasm 2.0, so let's check the default version on Ubuntu 8.04 and Ubuntu 8.10:</p>
+<p>You need at least nasm 2.0, so let's check the default version on Ubuntu 8.04 and Ubuntu 8.10:</p>
 
-          <pre><code>ubuntu8.04% sudo apt-get install nasm
+<pre><code>ubuntu8.04% sudo apt-get install nasm
 ubuntu8.04% nasm -v
 NASM version 0.99.06-20071101 compiled on Sep 16 2008
 
-ubuntu8.10% sudo apt-get install nasm
+<p>ubuntu8.10% sudo apt-get install nasm
 ubuntu8.10% nasm -v
-NASM version 2.03.01 compiled on Jun 19 2008</code></pre>
+NASM version 2.03.01 compiled on Jun 19 2008</code></pre></p>
 
-          <p>So, if you have 8.10, you're good to go and you can skip the rest of this section. If you have 8.04, follow me:</p>
+<p>So, if you have 8.10, you're good to go and you can skip the rest of this section. If you have 8.04, follow me:</p>
 
-          <pre><code>ubuntu% sudo apt-get remove nasm
+<pre><code>ubuntu% sudo apt-get remove nasm
 ubuntu% wget http://www.nasm.us/pub/nasm/releasebuilds/2.05.01/nasm-2.05.01.tar.gz
 ubuntu% tar xvfz nasm-2.05.01.tar.gz
 ubuntu% cd nasm-2.05.01
@@ -371,9 +371,9 @@ ubuntu% sudo make install
 ubuntu% nasm -v
 NASM version 2.05.01 compiled on Dec 23 2008</code></pre>
 
-          <p>Now, let's fetch the xvid sources and build them:</p>
+<p>Now, let's fetch the xvid sources and build them:</p>
 
-          <pre><code>ubuntu% wget http://downloads.xvid.org/downloads/xvidcore-1.2.1.tar.gz
+<pre><code>ubuntu% wget http://downloads.xvid.org/downloads/xvidcore-1.2.1.tar.gz
 ubuntu% tar xvfz xvidcore-1.2.1.tar.gz
 ubuntu% cd xvidcore/build/generic
 ubuntu% ./configure --prefix=/usr/local
@@ -382,39 +382,39 @@ lots of output removed
 ---------------------------------------------------------------
 Xvid has been successfully built.
 
-* Binaries are currently located in the '=build' directory
+<p>* Binaries are currently located in the '=build' directory
 * To install them on your system, you can run '# make install'
 as root.
----------------------------------------------------------------</code></pre>
+---------------------------------------------------------------</code></pre></p>
 
-          <p>Let's install it:</p>
+<p>Let's install it:</p>
 
-          <pre><code>ubuntu% sudo make install</code></pre>
+<pre><code>ubuntu% sudo make install</code></pre>
 
-          <h2>7) Installing the remaining libraries</h2>
+<h2>7) Installing the remaining libraries</h2>
 
-          <p>Now let's install all the remaining libraries that FFmpeg needs:</p>
+<p>Now let's install all the remaining libraries that FFmpeg needs:</p>
 
-          <pre><code>ubuntu% sudo apt-get install libfaac-dev libfaad-dev libmp3lame-dev libschroedinger-dev libtheora-dev libvorbis-dev libgsm1-dev</code></pre>
+<pre><code>ubuntu% sudo apt-get install libfaac-dev libfaad-dev libmp3lame-dev libschroedinger-dev libtheora-dev libvorbis-dev libgsm1-dev</code></pre>
 
-          <h2>8) Building FFmpeg</h2>
+<h2>8) Building FFmpeg</h2>
 
-          <p>Now we can go back to our FFmpeg directory and try the configure command again:</p>
+<p>Now we can go back to our FFmpeg directory and try the configure command again:</p>
 
-          <pre><code>ubuntu% cd ffmpeg
+<pre><code>ubuntu% cd ffmpeg
 ubuntu% ./configure --prefix=/usr/local --enable-gpl --enable-nonfree --enable-shared --enable-postproc --enable-avfilter --enable-avfilter-lavf --enable-pthreads --enable-x11grab --enable-bzlib --enable-libamr-nb --enable-libamr-wb --enable-libdc1394 --enable-libfaac --enable-libfaad --enable-libfaadbin --enable-libgsm --enable-libmp3lame --enable-libnut --enable-libschroedinger --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid --enable-zlib</code></pre>
 
-          <p>This should now work without errors. Let's build FFmpeg:</p>
+<p>This should now work without errors. Let's build FFmpeg:</p>
 
-          <pre><code>ubuntu% make
+<pre><code>ubuntu% make
 lots of output removed
 ubuntu% sudo make install</code></pre>
 
-          <h2>9) Testing our build</h2>
+<h2>9) Testing our build</h2>
 
-          <p>Let's check that our FFmpeg build includes all the codecs we wanted:</p>
+<p>Let's check that our FFmpeg build includes all the codecs we wanted:</p>
 
-          <pre><code>ubuntu% ffmpeg -codecs | grep -E "(264|mp3|xvid|amr)"
+<pre><code>ubuntu% ffmpeg -codecs | grep -E "(264|mp3|xvid|amr)"
 ffmpeg version SVN-r16245, Copyright (c) 2000-2008 Fabrice Bellard, et al.
   configuration: --prefix=/usr/local --enable-gpl --enable-nonfree --enable-shared --enable-postproc --enable-avfilter --enable-avfilter-lavf --enable-pthreads --enable-x11grab --enable-bzlib --enable-libamr-nb --enable-libamr-wb --enable-libdc1394 --enable-libfaac --enable-libfaad --enable-libfaadbin --enable-libgsm --enable-libmp3lame --enable-libnut --enable-libschroedinger --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid --enable-zlib
   libavutil version: 49.12.0
@@ -431,11 +431,11 @@ ffmpeg version SVN-r16245, Copyright (c) 2000-2008 Fabrice Bellard, et al.
  D A D mpeg4               MPEG-4 part 2
  D A D xvid                Xvid</code></pre>
 
-          <p>Perfect! All our codecs are there. Let's run a quick test to make sure everything works:</p>
+<p>Perfect! All our codecs are there. Let's run a quick test to make sure everything works:</p>
 
-          <pre><code>ubuntu% ffmpeg -i input.avi -vcodec libx264 -acodec libmp3lame output.mp4</code></pre>
+<pre><code>ubuntu% ffmpeg -i input.avi -vcodec libx264 -acodec libmp3lame output.mp4</code></pre>
 
-          <p>We're done! Now you have a fully-featured FFmpeg build with support for all major codecs including H.264, MP3, XviD, and AMR.</p>
+<p>We're done! Now you have a fully-featured FFmpeg build with support for all major codecs including H.264, MP3, XviD, and AMR.</p>
         </div>
       </article>
     </main>

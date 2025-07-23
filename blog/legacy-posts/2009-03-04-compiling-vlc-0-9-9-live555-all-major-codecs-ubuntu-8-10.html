@@ -135,29 +135,29 @@
         
         <div class="legacy-post-content">
           <p>VLC 0.9.9 was released a few days ago, so here's an updated version of my <a href="2008-12-21-compiling-vlc-live555-all-major-codecs-on-ubuntu.html">popular tutorial</a> on how to build it from source on Ubuntu. As always, all comments welcome!</p>
-          
-          <p>First of all, you need to build the latest <code>ffmpeg</code> and <code>x264</code>: please refer to <a href="2008-20-12-compiling-ffmeg-x264-mp3-xvid-amr-on-ubuntu.html">this tutorial</a>, which is still up to date.</p>
-          
-          <p>Once you've done that, there are additional dependencies to take care of.</p>
 
-          <h2>1) Installing libmad</h2>
-          
-          <p>MAD is a high-quality MPEG audio decoder. At the time of this writing, the latest version is 0.15.1b. Let's get the source, build it and install it:</p>
-          
-          <pre><code>ubuntu% wget http://ovh.dl.sourceforge.net/sourceforge/mad/libmad-0.15.1b.tar.gz
+<p>First of all, you need to build the latest <code>ffmpeg</code> and <code>x264</code>: please refer to <a href="2008-20-12-compiling-ffmeg-x264-mp3-xvid-amr-on-ubuntu.html">this tutorial</a>, which is still up to date.</p>
+
+<p>Once you've done that, there are additional dependencies to take care of.</p>
+
+<h2>1) Installing libmad</h2>
+
+<p>MAD is a high-quality MPEG audio decoder. At the time of this writing, the latest version is 0.15.1b. Let's get the source, build it and install it:</p>
+
+<pre><code>ubuntu% wget http://ovh.dl.sourceforge.net/sourceforge/mad/libmad-0.15.1b.tar.gz
 ubuntu% tar xvfz libmad-0.15.1b.tar.gz
 ubuntu% cd libmad-0.15.1b
 ubuntu% ./configure --prefix=/usr/local
 ubuntu% make
 ubuntu% sudo make install</code></pre>
-          
-          <p><strong>[Updated on 2009/01/04]</strong> If you try to compile <em>libmad</em> with gcc 4.3, you will get the following error: <em>cc1: error: unrecognized command line option "-fforce-mem"</em>. To correct this, just remove the <em>-fforce-mem</em> flags from the CFLAGS list in the Makefile.</p>
 
-          <h2>2) Installing libdca</h2>
-          
-          <p><code>libdca</code> is a free library for DTS audio. At the time of this writing, the latest version is 0.0.5. Let's get the source, build it and install it:</p>
-          
-          <pre><code>ubuntu% wget http://download.videolan.org/pub/videolan/libdca/0.0.5/libdca-0.0.5.tar.bz2
+<p><strong>[Updated on 2009/01/04]</strong> If you try to compile <em>libmad</em> with gcc 4.3, you will get the following error: <em>cc1: error: unrecognized command line option "-fforce-mem"</em>. To correct this, just remove the <em>-fforce-mem</em> flags from the CFLAGS list in the Makefile.</p>
+
+<h2>2) Installing libdca</h2>
+
+<p><code>libdca</code> is a free library for DTS audio. At the time of this writing, the latest version is 0.0.5. Let's get the source, build it and install it:</p>
+
+<pre><code>ubuntu% wget http://download.videolan.org/pub/videolan/libdca/0.0.5/libdca-0.0.5.tar.bz2
 ubuntu% bzip2 -d libdca-0.0.5.tar.bz2
 ubuntu% tar xvf libdca-0.0.5.tar
 ubuntu% cd libdca-0.0.5
@@ -165,92 +165,92 @@ ubuntu% ./configure --prefix=/usr/local
 ubuntu% make
 ubuntu% sudo make install</code></pre>
 
-          <h2>3) Installing libmpeg2</h2>
-          
-          <p><code>libmpeg2</code> is a free library for MPEG streams. At the time of this writing, the latest version is 2.0.5.1. Let's get the source, build it and install it:</p>
-          
-          <pre><code>ubuntu% wget http://libmpeg2.sourceforge.net/files/libmpeg2-0.5.1.tar.gz
+<h2>3) Installing libmpeg2</h2>
+
+<p><code>libmpeg2</code> is a free library for MPEG streams. At the time of this writing, the latest version is 2.0.5.1. Let's get the source, build it and install it:</p>
+
+<pre><code>ubuntu% wget http://libmpeg2.sourceforge.net/files/libmpeg2-0.5.1.tar.gz
 ubuntu% tar xvfz libmpeg2-0.5.1.tar.gz
 ubuntu% cd libmpeg2-0.5.1
 ubuntu% ./configure --prefix=/usr/local
 ubuntu% make
 ubuntu% sudo make install</code></pre>
 
-          <h2>4) Installing TagLib</h2>
-          
-          <p><code>TagLib</code> is a library for reading and editing the meta-data of several popular audio formats (MP3, FLAC, etc). At the time of this writing, the latest version is 1.5. Let's get the source, build it and install it:</p>
-          
-          <pre><code>ubuntu% wget http://developer.kde.org/~wheeler/files/src/taglib-1.5.tar.gz
+<h2>4) Installing TagLib</h2>
+
+<p><code>TagLib</code> is a library for reading and editing the meta-data of several popular audio formats (MP3, FLAC, etc). At the time of this writing, the latest version is 1.5. Let's get the source, build it and install it:</p>
+
+<pre><code>ubuntu% wget http://developer.kde.org/~wheeler/files/src/taglib-1.5.tar.gz
 ubuntu% tar xvfz taglib-1.5.tar.gz
 ubuntu% ./configure --prefix=/usr/local
 ubuntu% make
 ubuntu% sudo make install</code></pre>
 
-          <h2>5) Installing live555</h2>
-          
-          <p><code>live555</code> is a set of libraries for multimedia streaming (RTP/RTCP, RTSP, SIP).</p>
-          
-          <pre><code>ubuntu% wget http://www.live555.com/liveMedia/public/live555-latest.tar.gz
+<h2>5) Installing live555</h2>
+
+<p><code>live555</code> is a set of libraries for multimedia streaming (RTP/RTCP, RTSP, SIP).</p>
+
+<pre><code>ubuntu% wget http://www.live555.com/liveMedia/public/live555-latest.tar.gz
 ubuntu% tar xvfz live555-latest.tar.gz
 ubuntu% cd live
 ubuntu% ./genMakefiles linux
 ubuntu% make</code></pre>
-          
-          <p>There is no installation procedure for <code>live555</code>. You have to copy the full directory somewhere safe, like /usr/lib.</p>
-          
-          <pre><code>ubuntu% sudo cp -r live /usr/lib</code></pre>
 
-          <h2>6) Installing everything else</h2>
-          
-          <p>Now, let's use APT to fetch all the remaining libraries needed by <code>VLC</code>, as well as the <code>Qt4</code> packages required by the GUI:</p>
-          
-          <pre><code>ubuntu% sudo apt-get install libavc1394-dev libraw1394-dev libdc1394-dev libdvdread-dev libdvdnav-dev libdvdcss2-dev libfaad-dev libtwolame-dev liba52-dev libvcdinfo-dev libiso9660-dev libcddb2-dev libflac-dev libschroedinger-dev liba52-dev libogg-dev libvorbis-dev liblua5.1-0-dev libgnomevfs2-dev libtag1-dev libqt4-dev</code></pre>
-          
-          <p>That should really be it...</p>
+<p>There is no installation procedure for <code>live555</code>. You have to copy the full directory somewhere safe, like /usr/lib.</p>
 
-          <h2>7) Fetching VLC</h2>
-          
-          <p>Stable sources can be downloaded as a tarball from the <a href="http://www.videolan.org/vlc/download-sources.html">VLC download page</a>. At the time of this writing, the latest version is <a href="http://download.videolan.org/pub/videolan/vlc/0.9.9/vlc-0.9.9.tar.bz2">VLC 0.9.9</a>. If you want to try development snapshots, be my guest but YMMV!</p>
-          
-          <pre><code>ubuntu% wget http://download.videolan.org/pub/videolan/vlc/0.9.9/vlc-0.9.9.tar.bz2
+<pre><code>ubuntu% sudo cp -r live /usr/lib</code></pre>
+
+<h2>6) Installing everything else</h2>
+
+<p>Now, let's use APT to fetch all the remaining libraries needed by <code>VLC</code>, as well as the <code>Qt4</code> packages required by the GUI:</p>
+
+<pre><code>ubuntu% sudo apt-get install libavc1394-dev libraw1394-dev libdc1394-dev libdvdread-dev libdvdnav-dev libdvdcss2-dev libfaad-dev libtwolame-dev liba52-dev libvcdinfo-dev libiso9660-dev libcddb2-dev libflac-dev libschroedinger-dev liba52-dev libogg-dev libvorbis-dev liblua5.1-0-dev libgnomevfs2-dev libtag1-dev libqt4-dev</code></pre>
+
+<p>That should really be it...</p>
+
+<h2>7) Fetching VLC</h2>
+
+<p>Stable sources can be downloaded as a tarball from the <a href="http://www.videolan.org/vlc/download-sources.html">VLC download page</a>. At the time of this writing, the latest version is <a href="http://download.videolan.org/pub/videolan/vlc/0.9.9/vlc-0.9.9.tar.bz2">VLC 0.9.9</a>. If you want to try development snapshots, be my guest but YMMV!</p>
+
+<pre><code>ubuntu% wget http://download.videolan.org/pub/videolan/vlc/0.9.9/vlc-0.9.9.tar.bz2
 ubuntu% bzip2 -d vlc-0.9.9.tar.bz2
 ubuntu% tar xvf vlc-0.9.9.tar</code></pre>
 
-          <h2>8) Adding x264 and live555 to the mix</h2>
-          
-          <p>For the sake of convenience, let's copy the directories into the <code>VLC</code> tree:</p>
-          
-          <pre><code>ubuntu% cd vlc-0.9.9
+<h2>8) Adding x264 and live555 to the mix</h2>
+
+<p>For the sake of convenience, let's copy the directories into the <code>VLC</code> tree:</p>
+
+<pre><code>ubuntu% cd vlc-0.9.9
 ubuntu% cp -r $YOUR_X264_BUILD_DIR extras
 ubuntu% cp -r $YOUR_LIVE555_BUILD_DIR extras
 ubuntu% ls extras
 analyser  buildsystem  contrib live  misc  package  x264</code></pre>
 
-          <h2>9) Building VLC</h2>
-          
-          <p>Let's go! Don't forget to check your <code>configure</code> output for possible errors.</p>
-          
-          <pre><code>ubuntu% ./configure --prefix=/usr/local --with-x264-tree=extras/x264 --with-live555-tree=extras/live --enable-release --enable-switcher --enable-shout --enable-dc1394 --enable-dv --enable-dvdread --enable-v4l --enable-pvr --enable-gnomevfs --enable-vcdx --enable-faad --enable-twolame --enable-real --enable-realrtsp --enable-flac --enable-tremor --enable-tarkin --enable-theora --enable-ogg --enable-vorbis --enable-a52 --enable-gnomevfs --enable-dca</code></pre>
-          
-          <p>Lots of output removed</p>
-          
-          <p>You can tune the compiler flags in vlc-config.</p>
-          <p>To build vlc and its plugins, type `./compile' or `make'.</p>
-          
-          <p>All right, let's run <code>make</code> and get some coffee while <code>VLC</code> is building:</p>
-          
-          <pre><code>ubuntu% make</code></pre>
-          
-          <p>lots of output removed</p>
-          
-          <pre><code>make[2]: Leaving directory `/home/julien/tmp/vlc-0.9.9'
-make[1]: Leaving directory `/home/julien/tmp/vlc-0.9.9.'</code></pre>
-          
-          <p>We're done! Let's check our new <code>VLC</code> before we install it.</p>
+<h2>9) Building VLC</h2>
 
-          <h2>10) Checking VLC</h2>
-          
-          <pre><code>ubuntu% ./vlc --version
+<p>Let's go! Don't forget to check your <code>configure</code> output for possible errors.</p>
+
+<pre><code>ubuntu% ./configure --prefix=/usr/local --with-x264-tree=extras/x264 --with-live555-tree=extras/live --enable-release --enable-switcher --enable-shout --enable-dc1394 --enable-dv --enable-dvdread --enable-v4l --enable-pvr --enable-gnomevfs --enable-vcdx --enable-faad --enable-twolame --enable-real --enable-realrtsp --enable-flac --enable-tremor --enable-tarkin --enable-theora --enable-ogg --enable-vorbis --enable-a52 --enable-gnomevfs --enable-dca</code></pre>
+
+<p>Lots of output removed</p>
+
+<p>You can tune the compiler flags in vlc-config.</p>
+          <p>To build vlc and its plugins, type `./compile' or `make'.</p>
+
+<p>All right, let's run <code>make</code> and get some coffee while <code>VLC</code> is building:</p>
+
+<pre><code>ubuntu% make</code></pre>
+
+<p>lots of output removed</p>
+
+<pre><code>make[2]: Leaving directory `/home/julien/tmp/vlc-0.9.9'
+make[1]: Leaving directory `/home/julien/tmp/vlc-0.9.9.'</code></pre>
+
+<p>We're done! Let's check our new <code>VLC</code> before we install it.</p>
+
+<h2>10) Checking VLC</h2>
+
+<pre><code>ubuntu% ./vlc --version
 VLC media player 0.9.9 Grishenko
 [00000001] main libvlc debug: VLC media player - version 0.9.9 Grishenko - (c) 1996-2009 the VideoLAN team
 [00000001] main libvlc debug: libvlc was configured with ./configure  '--prefix=/usr/local' '--with-x264-tree=extras/x264' '--with-live555-tree=extras/live' '--enable-release' '--enable-switcher' '--enable-shout' '--enable-dc1394' '--enable-dv' '--enable-dvdread' '--enable-v4l' '--enable-pvr' '--enable-vcdx' '--enable-faad' '--enable-twolame' '--enable-real' '--enable-realrtsp' '--enable-flac' '--enable-tremor' '--enable-tarkin' '--enable-theora' '--enable-ogg' '--enable-vorbis' '--enable-a52' '--enable-gnomevfs' '--enable-dca'
@@ -262,14 +262,14 @@ This program comes with NO WARRANTY, to the extent permitted by law.
 You may redistribute it under the terms of the GNU General Public License;
 see the file named COPYING for details.
 Written by the VideoLAN team; see the AUTHORS file.</code></pre>
-          
-          <p>Looks good. You can verify that your favorite codecs are supported with '<code>vlc --list</code>'.</p>
-          
-          <p>I now declare this a good build :) Let's install it:</p>
-          
-          <pre><code>ubuntu% sudo make install</code></pre>
-          
-          <p>We're done. Now you can enjoy all your media files with a single player!</p>
+
+<p>Looks good. You can verify that your favorite codecs are supported with '<code>vlc --list</code>'.</p>
+
+<p>I now declare this a good build :) Let's install it:</p>
+
+<pre><code>ubuntu% sudo make install</code></pre>
+
+<p>We're done. Now you can enjoy all your media files with a single player!</p>
         </div>
       </article>
     </main>

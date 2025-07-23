@@ -192,11 +192,11 @@
         <div class="legacy-post-content">
           <p>Today, I will cover a must-have tool for anyone who likes to play with audio/video transcoding: <a href="http://mediainfo.sourceforge.net/">MediaInfo</a>.</p>
 
-          <p>Indeed, MediaInfo will tell you everything you need to know about the format and properties of basically any type of picture, audio or video file.</p>
+<p>Indeed, MediaInfo will tell you everything you need to know about the format and properties of basically any type of picture, audio or video file.</p>
 
-          <p>For instance:</p>
+<p>For instance:</p>
 
-          <pre><code>ubuntu% mediainfo video.mpg
+<pre><code>ubuntu% mediainfo video.mpg
 General
 Complete name                    : video.mpg
 Format                           : MPEG-PS
@@ -204,7 +204,7 @@ File size                        : 41.8 MiB
 Duration                         : 2mn 59s
 Overall bit rate                 : 1 954 Kbps
 
-Video
+<p>Video
 ID                               : 224 (0xE0)
 Format                           : MPEG Video
 Format version                   : Version 1
@@ -218,9 +218,9 @@ Height                           : 288 pixels
 Display aspect ratio             : 4/3
 Frame rate                       : 25.000 fps
 Scan type                        : Progressive
-Bits/(Pixel*Frame)               : 0.629
+Bits/(Pixel*Frame)               : 0.629</p>
 
-Audio
+<p>Audio
 ID                               : 192 (0xC0)
 Format                           : MPEG Audio
 Format version                   : Version 1
@@ -231,17 +231,17 @@ Bit rate                         : 224 Kbps
 Channel(s)                       : 2 channels
 Sampling rate                    : 44.1 KHz
 Resolution                       : 16 bits
-Video delay                      : 280ms</code></pre>
+Video delay                      : 280ms</code></pre></p>
 
-          <p>And the <code>-f</code> flag (for <strong>full</strong>) will tell you even more! Now that you're convinced, let's install it :)</p>
+<p>And the <code>-f</code> flag (for <strong>full</strong>) will tell you even more! Now that you're convinced, let's install it :)</p>
 
-          <p>MediaInfo is available both as a command-line tool and as a graphical tool, so I'll show you both installations on Ubuntu 8.04.</p>
+<p>MediaInfo is available both as a command-line tool and as a graphical tool, so I'll show you both installations on Ubuntu 8.04.</p>
 
-          <h2>1) Installing the command-line version</h2>
+<h2>1) Installing the command-line version</h2>
 
-          <p>This is very straightforward:</p>
+<p>This is very straightforward:</p>
 
-          <pre><code>ubuntu% wget http://ovh.dl.sourceforge.net/sourceforge/mediainfo/MediaInfo_CLI_0.7.8_GNU_FromSource.tar.bz2
+<pre><code>ubuntu% wget http://ovh.dl.sourceforge.net/sourceforge/mediainfo/MediaInfo_CLI_0.7.8_GNU_FromSource.tar.bz2
 ubuntu% bzip2 -d MediaInfo_CLI_0.7.8.tar.bz2
 ubuntu% tar xvf MediaInfo_CLI_0.7.8_GNU_FromSource.tar
 ubuntu% cd MediaInfo_CLI_0.7.8_GNU_FromSource
@@ -249,28 +249,28 @@ ubuntu% sh CLI_Compile.sh
 ubuntu% cd MediaInfo/Project/GNU/CLI
 ubuntu% sudo make install</code></pre>
 
-          <p>Done :) You can now invoke the <code>mediainfo</code> command.</p>
+<p>Done :) You can now invoke the <code>mediainfo</code> command.</p>
 
-          <h2>2) Installing the graphical version</h2>
+<h2>2) Installing the graphical version</h2>
 
-          <p>The GUI of MediaInfo is based on <a href="http://www.wxwidgets.org">wxWindows</a>, a cross-platform toolkit for <a href="http://www.gtk.org">GTK</a> (the X Window toolkit), Windows and MacOS.</p>
+<p>The GUI of MediaInfo is based on <a href="http://www.wxwidgets.org">wxWindows</a>, a cross-platform toolkit for <a href="http://www.gtk.org">GTK</a> (the X Window toolkit), Windows and MacOS.</p>
 
-          <p>In our case, we will use <strong>GTK</strong>, so let's start with the installation of the <strong>GTK</strong> development library:</p>
+<p>In our case, we will use <strong>GTK</strong>, so let's start with the installation of the <strong>GTK</strong> development library:</p>
 
-          <pre><code>ubuntu% sudo apt-get install libgtk2.0-dev</code></pre>
+<pre><code>ubuntu% sudo apt-get install libgtk2.0-dev</code></pre>
 
-          <p>Then, let's install the <strong>wxWidgets</strong> library, used by the MediaInfo GUI. First, we need to update the list of APT repositories by adding the following line to <code>/etc/apt/sources.list</code>:</p>
+<p>Then, let's install the <strong>wxWidgets</strong> library, used by the MediaInfo GUI. First, we need to update the list of APT repositories by adding the following line to <code>/etc/apt/sources.list</code>:</p>
 
-          <pre><code>deb http://apt.wxwidgets.org/ hardy-wx main</code></pre>
+<pre><code>deb http://apt.wxwidgets.org/ hardy-wx main</code></pre>
 
-          <p>Now, let's update the package list and fetch the <strong>wxWidgets</strong> package:</p>
+<p>Now, let's update the package list and fetch the <strong>wxWidgets</strong> package:</p>
 
-          <pre><code>ubuntu% sudo apt-get update
+<pre><code>ubuntu% sudo apt-get update
 ubuntu% sudo apt-get install libwxgtk2.8-0</code></pre>
 
-          <p>Now we're ready to build the GUI version of MediaInfo:</p>
+<p>Now we're ready to build the GUI version of MediaInfo:</p>
 
-          <pre><code>ubuntu% wget http://ovh.dl.sourceforge.net/sourceforge/mediainfo/MediaInfo_GUI_0.7.8_GNU_FromSource.tar.bz2
+<pre><code>ubuntu% wget http://ovh.dl.sourceforge.net/sourceforge/mediainfo/MediaInfo_GUI_0.7.8_GNU_FromSource.tar.bz2
 ubuntu% bzip2 -d MediaInfo_GUI_0.7.8.tar.bz2
 ubuntu% tar xvf MediaInfo_GUI_0.7.8_GNU_FromSource.tar
 ubuntu% cd MediaInfo_GUI_0.7.8_GNU_FromSource
@@ -278,9 +278,9 @@ ubuntu% sh GUI_Compile.sh
 ubuntu% cd MediaInfo/Project/GNU/GUI
 ubuntu% sudo make install</code></pre>
 
-          <p>The GUI version of MediaInfo is now available using the <code>mediainfo-gui</code> command.</p>
+<p>The GUI version of MediaInfo is now available using the <code>mediainfo-gui</code> command.</p>
 
-          <p>That's it for the installation of MediaInfo. I'm sure you'll find this tool extremely useful and I'll definitely use it in future posts to illustrate audio & video formats.</p>
+<p>That's it for the installation of MediaInfo. I'm sure you'll find this tool extremely useful and I'll definitely use it in future posts to illustrate audio & video formats.</p>
         </div>
       </article>
     </main>

@@ -255,7 +255,107 @@
         </header>
         
         <div class="legacy-post-content">
-          In a <a href="2008-12-21-compiling-vlc-live555-all-major-codecs-on-ubuntu.html">previous article</a>, I showed you how to build <span>VLC</span> from source. Since this build included the <span>live555</span> streaming libraries, the resulting <span>VLC</span> is able to serve audio / video streams.<br /><br />Thus, in this article, I'm going to give you a quick overview on how to configure <span>VLC</span> as an on-demand <a href="http://en.wikipedia.org/wiki/Real_Time_Streaming_Protocol">RTSP</a> streaming server, with on-the-fly transcoding thrown in for good measure ;)<br /><br />First of all, we need a machine to run the <span>VLC</span> server on. Here, it will be 192.168.0.2, an Ubuntu 8.04 machine with <span>VLC </span>0.9.8a, <span>ffmpeg </span>SVN-r16245 (built from source) <span>and</span><span>x264 </span>0.65.1057 (built from source).<br /><br />Then, we need to copy some media files on the server. I'll use an MP3 file (<span>music.mp3</span>) and an MPEG2 video (<span>video.mpg</span>), both located in <span>/home/julien/media</span>.<br /><br />Now, let's write the <span>VLC</span> configuration file and save it as <span>vlc_vod_config</span>:<br /><code><br /># VLC media player VLM command batch<br /># http://www.videolan.org/vlc/<br /><br />new MyMusic vod enabled<br />setup MyMusic input "file:///home/julien/media/music.mp3"<br /><br />new MyVideo vod enabled<br />setup MyVideo input "file:///home/julien/media/video.mpg"<br /><br />new MyVideoMobile vod enabled<br />setup MyVideoMobile input "file:///home/julien/media/video.mpg" output "#transcode{venc=ffmpeg,vcodec=h264,vb=384,height=120,width=160,fps=20,aenc=ffmpeg,acodec=mp3,ab=64,channels=1}"<br />It's fairly self explanatory :) As you can see, we need to create an entry for each media we want to stream:<br /><ul><li>the media identifier (<span>MyMusic</span>, <span>MyVideo</span>) following the <span>new</span> keyword is important because it's going to be part of the URL used by the client to access the media.</li><li><span>vod</span> stands for Video on Demand (VLC can also do broadcast streams)</li><li><span>enabled</span>, well... you get the idea :)</li><li><span>setup...</span><span>input </span>links the identifier to the actual media file we want to stream</ul>The last stream, <span>MyVideoMobile</span>, is based on the same MPEG input file as the <span>MyVideo</span> stream. However, this file will be resized and transcoded on the fly into H264 video and MP3 audio. For example, this could be useful for mobile clients, which require a smaller resolution and a much lower bitrate than PC clients.<br /><br />Now let's open a terminal on the server and start <span>VLC</span>. We want it to run as an RTSP server on port 5554. We also want to use the <span>telnet</span> interface to configure it and the <span>telnet</span> password will be '<span>videolan</span>':<br /><code><br />ubuntu% <span>vlc -I telnet --telnet-password videolan --rtsp-host 0.0.0.0:5554</span><br /><span>output removed</span><br />[00000405] telnet interface: telnet interface started on interface 4212<br />That's it for the server. Now, let's configure it from a client using <span>telnet</span>:<br /><code><br />client% <span>telnet 192.168.0.2 4212</span><br />Trying 192.168.0.2...<br />Connected to 192.168.0.2.<br />Escape character is '^]'.<br />Password:<br />Welcome, Master<br />> <span>load /home/julien/media/vlc_vod_config</span><br />Using the <span>show</span> command, we can check the configuration of a stream:<br /><code><br />> <span>show MyMusic</span><br />show<br />MyMusic<br />    type : vod<br />    enabled : yes<br />    mux<br />    inputs<br />        1 : file:///home/julien/media/music.mp3<br />    output :<br />    options<br />    instances<br />This looks good. Let's start a <span>VLC</span> player on the client and connect to a stream:<br /><code><br />client% <span>/usr/bin/vlc rtsp://192.168.0.2:5554/MyMusic</span><br />VLC media player 0.8.6e Janus<br />This works :) Thanks to RSTP, you can pause or seek anywhere into the stream. Let's try the video stream now:<br /><code><br />client% <span>/usr/bin/vlc rtsp://192.168.0.2:5554/MyVideo</span><br />VLC media player 0.8.6e Janus<br />Same thing: pause, fast forward and rewind all work. In the <span>telnet</span> session, the <span>show</span> command will give you additional info on an active stream:<br /><code><br />> <span>show MyVideo</span><br />show<br />  MyVideo<br />      type : vod<br />      enabled : yes<br />      mux<br />      inputs<br />          1 : file:///home/julien/media/video.mpg<br />      output :<br />      options<br />      instances<br />          instance<br />              name : 1632621729<br />              state : playing<br />              position : 0.303068<br />              time : 55160000<br />              length : 180556733<br />              rate : 1000<br />              title : 0<br />              chapter : 0<br />              seekable : 1<br />              playlistindex : 1<br />Now, let's try the mobile video stream:<br /><code><br />client% <span>/usr/bin/vlc rtsp://192.168.0.2:5554/MyVideoMobile </span><br />VLC media player 0.8.6e Janus<br />[00000288] main decoder error: no suitable decoder module for fourcc `h264'.<br />VLC probably does not support this sound or video format.<br />[00000274] main playlist: stopping playback<br />Ah #%$£... Now you see why you HAVE to rebuild VLC from source! Let's try again with the latest VLC:<br /><code><br />ubuntu% <span>/usr/local/bin/vlc rtsp://192.168.0.2:5554/MyVideoMobile</span><br />VLC media player 0.9.8a Grishenko<br />Ah, now it works. So do pausing and seeking, even with transcoding.<br /><br />If you run <span>ps</span> or <span>top</span> on the server, you'll notice that an extra <span>VLC</span> process is running to handle transcoding. Also, in the VLC player, under the <span>Tools</span> / <span>Media Information</span> menu, you can look at the <span>Codec Details</span> and <span>Statistics</span> tabs to check that the stream is indeed H264 / MP3 with a low bitrate.<br /><br />Anyway, here's what it looks like (click the picture for a larger version):<br /><br />That's it for today. Have fun with streaming!
+          <p>In a <a href="2008-12-21-compiling-vlc-live555-all-major-codecs-on-ubuntu.html">previous article</a>, I showed you how to build <span>VLC</span> from source. Since this build included the <span>live555</span> streaming libraries, the resulting <span>VLC</span> is able to serve audio / video streams.</p>
+
+<p>Thus, in this article, I'm going to give you a quick overview on how to configure <span>VLC</span> as an on-demand <a href="http://en.wikipedia.org/wiki/Real_Time_Streaming_Protocol">RTSP</a> streaming server, with on-the-fly transcoding thrown in for good measure ;)</p>
+
+<p>First of all, we need a machine to run the <span>VLC</span> server on. Here, it will be 192.168.0.2, an Ubuntu 8.04 machine with <span>VLC </span>0.9.8a, <span>ffmpeg </span>SVN-r16245 (built from source) <span>and</span><span>x264 </span>0.65.1057 (built from source).</p>
+
+<p>Then, we need to copy some media files on the server. I'll use an MP3 file (<span>music.mp3</span>) and an MPEG2 video (<span>video.mpg</span>), both located in <span>/home/julien/media</span>.</p>
+
+<p>Now, let's write the <span>VLC</span> configuration file and save it as <span>vlc_vod_config</span>:
+<code>
+# VLC media player VLM command batch
+# http://www.videolan.org/vlc/</p>
+
+<p>new MyMusic vod enabled
+setup MyMusic input "file:///home/julien/media/music.mp3"</p>
+
+<p>new MyVideo vod enabled
+setup MyVideo input "file:///home/julien/media/video.mpg"</p>
+
+<p>new MyVideoMobile vod enabled
+setup MyVideoMobile input "file:///home/julien/media/video.mpg" output "#transcode{venc=ffmpeg,vcodec=h264,vb=384,height=120,width=160,fps=20,aenc=ffmpeg,acodec=mp3,ab=64,channels=1}"
+It's fairly self explanatory :) As you can see, we need to create an entry for each media we want to stream:
+<ul><li>the media identifier (<span>MyMusic</span>, <span>MyVideo</span>) following the <span>new</span> keyword is important because it's going to be part of the URL used by the client to access the media.</li><li><span>vod</span> stands for Video on Demand (VLC can also do broadcast streams)</li><li><span>enabled</span>, well... you get the idea :)</li><li><span>setup...</span><span>input </span>links the identifier to the actual media file we want to stream</ul>The last stream, <span>MyVideoMobile</span>, is based on the same MPEG input file as the <span>MyVideo</span> stream. However, this file will be resized and transcoded on the fly into H264 video and MP3 audio. For example, this could be useful for mobile clients, which require a smaller resolution and a much lower bitrate than PC clients.</p>
+
+<p>Now let's open a terminal on the server and start <span>VLC</span>. We want it to run as an RTSP server on port 5554. We also want to use the <span>telnet</span> interface to configure it and the <span>telnet</span> password will be '<span>videolan</span>':
+<code>
+ubuntu% <span>vlc -I telnet --telnet-password videolan --rtsp-host 0.0.0.0:5554</span>
+<span>output removed</span>
+[00000405] telnet interface: telnet interface started on interface 4212
+That's it for the server. Now, let's configure it from a client using <span>telnet</span>:
+<code>
+client% <span>telnet 192.168.0.2 4212</span>
+Trying 192.168.0.2...
+Connected to 192.168.0.2.
+Escape character is '^]'.
+Password:
+Welcome, Master
+> <span>load /home/julien/media/vlc_vod_config</span>
+Using the <span>show</span> command, we can check the configuration of a stream:
+<code>
+> <span>show MyMusic</span>
+show
+MyMusic
+    type : vod
+    enabled : yes
+    mux
+    inputs
+        1 : file:///home/julien/media/music.mp3
+    output :
+    options
+    instances
+This looks good. Let's start a <span>VLC</span> player on the client and connect to a stream:
+<code>
+client% <span>/usr/bin/vlc rtsp://192.168.0.2:5554/MyMusic</span>
+VLC media player 0.8.6e Janus
+This works :) Thanks to RSTP, you can pause or seek anywhere into the stream. Let's try the video stream now:
+<code>
+client% <span>/usr/bin/vlc rtsp://192.168.0.2:5554/MyVideo</span>
+VLC media player 0.8.6e Janus
+Same thing: pause, fast forward and rewind all work. In the <span>telnet</span> session, the <span>show</span> command will give you additional info on an active stream:
+<code>
+> <span>show MyVideo</span>
+show
+  MyVideo
+      type : vod
+      enabled : yes
+      mux
+      inputs
+          1 : file:///home/julien/media/video.mpg
+      output :
+      options
+      instances
+          instance
+              name : 1632621729
+              state : playing
+              position : 0.303068
+              time : 55160000
+              length : 180556733
+              rate : 1000
+              title : 0
+              chapter : 0
+              seekable : 1
+              playlistindex : 1
+Now, let's try the mobile video stream:
+<code>
+client% <span>/usr/bin/vlc rtsp://192.168.0.2:5554/MyVideoMobile </span>
+VLC media player 0.8.6e Janus
+[00000288] main decoder error: no suitable decoder module for fourcc `h264'.
+VLC probably does not support this sound or video format.
+[00000274] main playlist: stopping playback
+Ah #%$£... Now you see why you HAVE to rebuild VLC from source! Let's try again with the latest VLC:
+<code>
+ubuntu% <span>/usr/local/bin/vlc rtsp://192.168.0.2:5554/MyVideoMobile</span>
+VLC media player 0.9.8a Grishenko
+Ah, now it works. So do pausing and seeking, even with transcoding.</p>
+
+<p>If you run <span>ps</span> or <span>top</span> on the server, you'll notice that an extra <span>VLC</span> process is running to handle transcoding. Also, in the VLC player, under the <span>Tools</span> / <span>Media Information</span> menu, you can look at the <span>Codec Details</span> and <span>Statistics</span> tabs to check that the stream is indeed H264 / MP3 with a low bitrate.</p>
+
+<p>Anyway, here's what it looks like (click the picture for a larger version):</p>
+
+<p>That's it for today. Have fun with streaming!</p>
         </div>
       </article>
     </main>

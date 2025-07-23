@@ -135,12 +135,12 @@
         
         <div class="legacy-post-content">
           <p>DVDs have made multichannel audio popular, most notably <a href="http://en.wikipedia.org/wiki/DTS_%28sound_system%29">DTS</a> and Dolby Labs' <a href="http://en.wikipedia.org/wiki/Ac3">AC3</a>, and it looks like no one will settle down for good old stereo anymore :)</p>
-          
-          <p>The purpose of this article is to show you to handle multichannel audio streams, which may be found in DVDs and in multimedia files.</p>
-          
-          <p>For this, we'll use the following tools:</p>
-          
-          <ul>
+
+<p>The purpose of this article is to show you to handle multichannel audio streams, which may be found in DVDs and in multimedia files.</p>
+
+<p>For this, we'll use the following tools:</p>
+
+<ul>
             <li><code>ffmpeg</code>, the best general-purpose tool for audio transcoding. I showed you how to build it <a href="2008-20-12-compiling-ffmeg-x264-mp3-xvid-amr-on-ubuntu.html">in a previous article</a>.</li>
             <li><code>libdca</code> and its tools, a library specialized in decoding the DTS Coherent Acoustics (DCA) codec,</li>
             <li><code>aften</code>, an advanced AC3 encoder which improves on the one included in <code>ffmpeg</code>,</li>
@@ -148,29 +148,29 @@
             <li><code>mediainfo</code> : the best tool to learn everything there is know on the true nature of your media files. I also showed you how to build it <a href="2009-01-04-compiling-mediainfo-cli-gui-on-ubuntu.html">in a previous article</a>.</li>
           </ul>
 
-          <h2>1) Installing libdca</h2>
-          
-          <p>At the time of this writing, the latest version is 0.0.5. Let's get the source, build it and install it:</p>
-          
-          <pre><code>ubuntu% wget http://download.videolan.org/pub/videolan/libdca/0.0.5/libdca-0.0.5.tar.bz2
+<h2>1) Installing libdca</h2>
+
+<p>At the time of this writing, the latest version is 0.0.5. Let's get the source, build it and install it:</p>
+
+<pre><code>ubuntu% wget http://download.videolan.org/pub/videolan/libdca/0.0.5/libdca-0.0.5.tar.bz2
 ubuntu% bzip2 -d libdca-0.0.5.tar.bz2
 ubuntu% tar xvf libdca-0.0.5.tar
 ubuntu% cd libdca-0.0.5
 ubuntu% ./configure --prefix=/usr/local
 ubuntu% make
 ubuntu% sudo make install</code></pre>
-          
-          <p>This obviously installs the library itself, but also the <code>dcadec</code> tool which we'll use later on.</p>
 
-          <h2>2) Installing aften</h2>
-          
-          <p>In order to build <code>aften</code>, we need to install <code>cmake</code>:</p>
-          
-          <pre><code>ubuntu% sudo apt-get install cmake</code></pre>
-          
-          <p>Now, let's get the source, build it and install it. At the time of this writing, the latest version is 0.0.5.</p>
-          
-          <pre><code>ubuntu% svn co https://aften.svn.sourceforge.net/svnroot/aften aften
+<p>This obviously installs the library itself, but also the <code>dcadec</code> tool which we'll use later on.</p>
+
+<h2>2) Installing aften</h2>
+
+<p>In order to build <code>aften</code>, we need to install <code>cmake</code>:</p>
+
+<pre><code>ubuntu% sudo apt-get install cmake</code></pre>
+
+<p>Now, let's get the source, build it and install it. At the time of this writing, the latest version is 0.0.5.</p>
+
+<pre><code>ubuntu% svn co https://aften.svn.sourceforge.net/svnroot/aften aften
 ubuntu% cd aften
 ubuntu% mkdir default
 ubuntu% cd default
@@ -178,26 +178,26 @@ ubuntu% cmake .. -DCMAKE_INSTALL_PREFIX:STRING="/usr/local"
 ubuntu% make
 ubuntu% sudo make install</code></pre>
 
-          <h2>3) Installing audio_split and audio_combine</h2>
-          
-          <p>These tools require the <code>libsndfile</code> library:</p>
-          
-          <pre><code>ubuntu% sudo apt-get install libsndfile1-dev</code></pre>
-          
-          <p>Now, let's build the tools:</p>
-          
-          <pre><code>ubuntu% wget http://freshmeat.net/redir/audio_combine/72754/url_zip/audio_combine1.00.zip
+<h2>3) Installing audio_split and audio_combine</h2>
+
+<p>These tools require the <code>libsndfile</code> library:</p>
+
+<pre><code>ubuntu% sudo apt-get install libsndfile1-dev</code></pre>
+
+<p>Now, let's build the tools:</p>
+
+<pre><code>ubuntu% wget http://freshmeat.net/redir/audio_combine/72754/url_zip/audio_combine1.00.zip
 ubuntu% unzip audio_combine1.00.zip
 ubuntu% cd audio_combine
 ubuntu% make</code></pre>
-          
-          <p>There is no installation procedure, so just copy <code>audio_split</code> and <code>audio_combine</code> to <code>/usr/local/bin</code>.</p>
 
-          <h2>4) Example #1: (DTS --> AC3 5.1) & (DTS --> AC3 stereo) with ffmpeg</h2>
-          
-          <p>Let's look at the sample file:</p>
-          
-          <pre><code>ubuntu% mediainfo audio.dts
+<p>There is no installation procedure, so just copy <code>audio_split</code> and <code>audio_combine</code> to <code>/usr/local/bin</code>.</p>
+
+<h2>4) Example #1: (DTS --> AC3 5.1) & (DTS --> AC3 stereo) with ffmpeg</h2>
+
+<p>Let's look at the sample file:</p>
+
+<pre><code>ubuntu% mediainfo audio.dts
 General
 Complete name                    : audio.dts
 Format                           : DTS
@@ -206,7 +206,7 @@ File size                        : 9.04 MiB
 Duration                         : 49s 381ms
 Overall bit rate                 : 1 536 Kbps
 
-Audio
+<p>Audio
 Format                           : DTS
 Format/Info                      : Digital Theater Systems
 Bit rate mode                    : Constant
@@ -214,44 +214,44 @@ Bit rate                         : 1 536 Kbps
 Channel(s)                       : 6 channels
 Channel positions                : Front: L C R, Surround: L R, LFE
 Sampling rate                    : 48.0 KHz
-Resolution                       : 16 bits</code></pre>
-          
-          <p>As you can see, this is DTS 5.1 at 1,536Kbit/s. We can easily convert it to AC3 5.1 with <code>ffmpeg</code>:</p>
-          
-          <pre><code>ubuntu% ffmpeg -i audio.dts -acodec ac3 -ac 6 -ab 448k audio.ac3</code></pre>
-          
-          <p>448 KBit/s is the maximum authorized AC3 bitrate for DVDs. However, if you intend to play the file on the Playstation 3, you can go up to 640Kbit/s.</p>
-          
-          <p>We can also convert the DTS file to 2-channel AC3:</p>
-          
-          <pre><code>ubuntu% ffmpeg -i audio.dts -acodec ac3 -ac 2 -ab 448k audio.ac3</code></pre>
-          
-          <p>Any other number of channel leads to this error (e.g. 3 channels):</p>
-          
-          <pre><code>'Resampling with input channels greater than 2 unsupported.
-Can not resample 6 channels @ 48000 Hz to 3 channels @ 48000 Hz'</code></pre>
-          
-          <p>All in all, <code>ffmpeg</code> is a nice and easy solution if you want to preserve the same number of channels or if you want to downmix to stereo. Anything more complex requires other tools.</p>
+Resolution                       : 16 bits</code></pre></p>
 
-          <h2>5) Example #2: (DTS --> AC3 5.1) with dcadec and aften</h2>
-          
-          <p>Let's revisit the previous example but with different tools. We'll use <code>dcadec</code> to decode the DTS file and <code>aften</code> to encode it to AC3.</p>
-          
-          <p>In its simplest form, <code>dcadec</code> plays DTS files:</p>
-          
-          <pre><code>ubuntu% dcadec audio.dts</code></pre>
-          
-          <p>What we really want to do is to decode it to a WAV file:</p>
-          
-          <pre><code>ubuntu% dcadec -o wav6 audio.dts > audio.wav6</code></pre>
-          
-          <p>For the sake of completeness, you could also do this:</p>
-          
-          <pre><code>ubuntu% ffmpeg -i audio.dts audio.wav6</code></pre>
-          
-          <p>One way or the other, we've just created a 6-channel WAV file:</p>
-          
-          <pre><code>ubuntu% mediainfo audio.wav6
+<p>As you can see, this is DTS 5.1 at 1,536Kbit/s. We can easily convert it to AC3 5.1 with <code>ffmpeg</code>:</p>
+
+<pre><code>ubuntu% ffmpeg -i audio.dts -acodec ac3 -ac 6 -ab 448k audio.ac3</code></pre>
+
+<p>448 KBit/s is the maximum authorized AC3 bitrate for DVDs. However, if you intend to play the file on the Playstation 3, you can go up to 640Kbit/s.</p>
+
+<p>We can also convert the DTS file to 2-channel AC3:</p>
+
+<pre><code>ubuntu% ffmpeg -i audio.dts -acodec ac3 -ac 2 -ab 448k audio.ac3</code></pre>
+
+<p>Any other number of channel leads to this error (e.g. 3 channels):</p>
+
+<pre><code>'Resampling with input channels greater than 2 unsupported.
+Can not resample 6 channels @ 48000 Hz to 3 channels @ 48000 Hz'</code></pre>
+
+<p>All in all, <code>ffmpeg</code> is a nice and easy solution if you want to preserve the same number of channels or if you want to downmix to stereo. Anything more complex requires other tools.</p>
+
+<h2>5) Example #2: (DTS --> AC3 5.1) with dcadec and aften</h2>
+
+<p>Let's revisit the previous example but with different tools. We'll use <code>dcadec</code> to decode the DTS file and <code>aften</code> to encode it to AC3.</p>
+
+<p>In its simplest form, <code>dcadec</code> plays DTS files:</p>
+
+<pre><code>ubuntu% dcadec audio.dts</code></pre>
+
+<p>What we really want to do is to decode it to a WAV file:</p>
+
+<pre><code>ubuntu% dcadec -o wav6 audio.dts > audio.wav6</code></pre>
+
+<p>For the sake of completeness, you could also do this:</p>
+
+<pre><code>ubuntu% ffmpeg -i audio.dts audio.wav6</code></pre>
+
+<p>One way or the other, we've just created a 6-channel WAV file:</p>
+
+<pre><code>ubuntu% mediainfo audio.wav6
 General
 Complete name                    : audio.wav6
 Format                           : Wave
@@ -259,7 +259,7 @@ File size                        : 55.2 MiB
 Duration                         : 50s 240ms
 Overall bit rate                 : 9 216 Kbps
 
-Audio
+<p>Audio
 Format                           : FFFE
 Codec ID                         : FFFE
 Codec ID/Info                    : Extensible wave format
@@ -267,53 +267,53 @@ Codec ID/Hint                    : Extensible
 Bit rate                         : 9 216 Kbps
 Channel(s)                       : 6 channels
 Sampling rate                    : 48.0 KHz
-Resolution                       : 32 bits</code></pre>
-          
-          <p>Here's the file displayed by Audacity: 6 channels indeed!</p>
-          
-          <p>Now, let's encode this file as to 6-channel AC3 @ 640 Kbit/s with <code>aften</code>:</p>
-          
-          <pre><code>ubuntu% aften -b 640 audio.wav6 audio.ac3</code></pre>
-          
-          <p>That's it! In fact, you can do it in one step by piping the <code>dcadec</code> output into <code>aften</code>:</p>
-          
-          <pre><code>ubuntu% dcadec -o wav6 audio.dts - | aften -b 640 - audio.ac3</code></pre>
-          
-          <p>What's the point of doing this instead of using <code>ffmpeg</code>? Well, <code>dcadec</code> and especially <code>aften</code> have plenty of options which allow very fine control on the output file. Why don't you check for yourself with '<code>dcadec -h</code>' and '<code>aften -longhelp</code>' ? ;)</p>
+Resolution                       : 32 bits</code></pre></p>
 
-          <h2>6) Example #3: (DTS --> AC3 3.0) with dcadec and aften</h2>
-          
-          <p>In this example, we're going to encode the DTS file to AC3.0, i.e. we'll just use the left front, center front and right front channels.</p>
-          
-          <p>Why would you want to do that? Well, less channels allow a lower bitrate, so saving space is an obvious reason. Another one could be to keep the original bitrate and "spend" the savings to increase the quality of the front channels. We'll try both :)</p>
-          
-          <p>Anyway, the channel order for the sample file is front left, front right, front center, low frequency effect (LFE), surround left and surround right. Thus, we only need channel 1, 2 and 3 from that file.</p>
-          
-          <p>Let's decode the DTS file to WAV:</p>
-          
-          <pre><code>ubuntu% dcadec -o wav6 audio.dts > audio.wav6</code></pre>
-          
-          <p>Then, let's split the multichannel WAV file into individual mono WAV files:</p>
-          
-          <pre><code>ubuntu% audio_split audio.wav6 fl.wav fr.wav fc.wav lfe.wav sl.wav sr.wav</code></pre>
-          
-          <p>Now, we'll recombine the 3 channels we want to keep and encode them to AC3:</p>
-          
-          <pre><code>ubuntu% aften -acmod 3 -chconfig "3/0" -ch_fl fl.wav -ch_fc fc.wav -ch_fr fr.wav audio.ac3
+<p>Here's the file displayed by Audacity: 6 channels indeed!</p>
+
+<p>Now, let's encode this file as to 6-channel AC3 @ 640 Kbit/s with <code>aften</code>:</p>
+
+<pre><code>ubuntu% aften -b 640 audio.wav6 audio.ac3</code></pre>
+
+<p>That's it! In fact, you can do it in one step by piping the <code>dcadec</code> output into <code>aften</code>:</p>
+
+<pre><code>ubuntu% dcadec -o wav6 audio.dts - | aften -b 640 - audio.ac3</code></pre>
+
+<p>What's the point of doing this instead of using <code>ffmpeg</code>? Well, <code>dcadec</code> and especially <code>aften</code> have plenty of options which allow very fine control on the output file. Why don't you check for yourself with '<code>dcadec -h</code>' and '<code>aften -longhelp</code>' ? ;)</p>
+
+<h2>6) Example #3: (DTS --> AC3 3.0) with dcadec and aften</h2>
+
+<p>In this example, we're going to encode the DTS file to AC3.0, i.e. we'll just use the left front, center front and right front channels.</p>
+
+<p>Why would you want to do that? Well, less channels allow a lower bitrate, so saving space is an obvious reason. Another one could be to keep the original bitrate and "spend" the savings to increase the quality of the front channels. We'll try both :)</p>
+
+<p>Anyway, the channel order for the sample file is front left, front right, front center, low frequency effect (LFE), surround left and surround right. Thus, we only need channel 1, 2 and 3 from that file.</p>
+
+<p>Let's decode the DTS file to WAV:</p>
+
+<pre><code>ubuntu% dcadec -o wav6 audio.dts > audio.wav6</code></pre>
+
+<p>Then, let's split the multichannel WAV file into individual mono WAV files:</p>
+
+<pre><code>ubuntu% audio_split audio.wav6 fl.wav fr.wav fc.wav lfe.wav sl.wav sr.wav</code></pre>
+
+<p>Now, we'll recombine the 3 channels we want to keep and encode them to AC3:</p>
+
+<pre><code>ubuntu% aften -acmod 3 -chconfig "3/0" -ch_fl fl.wav -ch_fc fc.wav -ch_fr fr.wav audio.ac3
 progress: 100% | q: 264.5 | bw: 31.0 | bitrate: 256.0 kbps
 ubuntu% ls -l audio.ac3
 -rw-r--r-- 1 julien julien 1608704 2009-01-16 21:23 audio.ac3</code></pre>
-          
-          <p>Now, with the maximum AC3 bitrate:</p>
-          
-          <pre><code>ubuntu% aften -b 640 -acmod 3 -chconfig "3/0" -ch_fl fl.wav -ch_fc fc.wav -ch_fr fr.wav audio.ac3
+
+<p>Now, with the maximum AC3 bitrate:</p>
+
+<pre><code>ubuntu% aften -b 640 -acmod 3 -chconfig "3/0" -ch_fl fl.wav -ch_fc fc.wav -ch_fr fr.wav audio.ac3
 progress: 100% | q: 379.9 | bw: 60.0 | bitrate: 640.0 kbps
 ubuntu% ls -l audio.ac3
 -rw-r--r-- 1 julien julien 4021760 2009-01-16 21:25 audio.ac3</code></pre>
-          
-          <p>That's a much bigger file: let your ears decide if the second file sounds better than the first :)</p>
-          
-          <p>This is just a quick introduction to <code>aften</code>, which also offers many sound processing settings for you to play with. Have fun and as always, all comments welcome.</p>
+
+<p>That's a much bigger file: let your ears decide if the second file sounds better than the first :)</p>
+
+<p>This is just a quick introduction to <code>aften</code>, which also offers many sound processing settings for you to play with. Have fun and as always, all comments welcome.</p>
         </div>
       </article>
     </main>

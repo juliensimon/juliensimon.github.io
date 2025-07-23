@@ -255,34 +255,36 @@
         </header>
         
         <div class="legacy-post-content">
-          Following up on my two previous Amazon ML articles (<a href="2015-04-14-test-drive-amazon-machine-learning-redshift.html">batch prediction with Redshift</a> and <a href="2015-04-16-test-drive-real-time-prediction-with-amazon-machine-learning.html">real-time prediction with the AWS CLI</a>), here's a quickie on implementing real-time prediction with the AWS SDK for Java.<br />
-<br />
-At the time of writing, I'm using SDK version 1.9.31:<br />
+          <p>Following up on my two previous Amazon ML articles (<a href="2015-04-14-test-drive-amazon-machine-learning-redshift.html">batch prediction with Redshift</a> and <a href="2015-04-16-test-drive-real-time-prediction-with-amazon-machine-learning.html">real-time prediction with the AWS CLI</a>), here's a quickie on implementing real-time prediction with the AWS SDK for Java.</p>
+
+<p>At the time of writing, I'm using SDK version 1.9.31:</p>
+
 <ul>
 <li>sources on Github: <a href="https://github.com/aws/aws-sdk-java">https://github.com/aws/aws-sdk-java
 <li>Javadoc : <a href="https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/">https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/
 </ul>
-Here's the Maven dependency:<br />
-<br />
-The code (<a href="https://github.com/juliensimon/DataStuff/blob/master/src/org/julien/datastuff/MLSample.java">source</a> on Github) is pretty self-explanatory and totally similar to the CLI example in the previous article.<br />
+Here's the Maven dependency:
+
+<p>The code (<a href="https://github.com/juliensimon/DataStuff/blob/master/src/org/julien/datastuff/MLSample.java">source</a> on Github) is pretty self-explanatory and totally similar to the CLI example in the previous article.</p>
+
 <ul>
 <li>Get the list of models</li>
 <li>Pick one </li>
 <li>Build a prediction request : data record + endpoint</li>
 <li>Fire the request </li>
 <li>Get a result!
-<br />
- Here's the output:<br />
-<br />
-Nice and simple. What about performance? My previous article measured a CLI call (aka '<i>aws machinelearning predict</i>') within <i>us-east-1</i> at around 300ms, well above the 100ms mentioned in the FAQ.<br />
-<br />
-Believe or not, the Amazon product team got in touch (I'm not worthy, I'm not worthy... and thanks for reading!). They kindly pointed out that this measurement includes much more than the call to the web service and of course, they're right.<br />
-<br />
-Fortunately, the Java program above is finer-grained and allows us to measure only the actual API call. I packaged it, deployed it to a t2.micro EC2 instance running in <i>us-east-1</i> (same configuration as before) and...<br />
-<br />
-Average time is around 80ms, which is indeed under the 100ms limit mentioned in the FAQ. There you go :)<br />
-<br />
-I'm definitely looking forward to using this in production. Till next time, keep rockin'.
+
+<p>Here's the output:</p>
+
+<p>Nice and simple. What about performance? My previous article measured a CLI call (aka '<i>aws machinelearning predict</i>') within <i>us-east-1</i> at around 300ms, well above the 100ms mentioned in the FAQ.</p>
+
+<p>Believe or not, the Amazon product team got in touch (I'm not worthy, I'm not worthy... and thanks for reading!). They kindly pointed out that this measurement includes much more than the call to the web service and of course, they're right.</p>
+
+<p>Fortunately, the Java program above is finer-grained and allows us to measure only the actual API call. I packaged it, deployed it to a t2.micro EC2 instance running in <i>us-east-1</i> (same configuration as before) and...</p>
+
+<p>Average time is around 80ms, which is indeed under the 100ms limit mentioned in the FAQ. There you go :)</p>
+
+<p>I'm definitely looking forward to using this in production. Till next time, keep rockin'.</p>
         </div>
       </article>
     </main>

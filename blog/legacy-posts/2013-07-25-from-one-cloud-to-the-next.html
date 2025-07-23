@@ -255,26 +255,31 @@
         </header>
         
         <div class="legacy-post-content">
-          <a href="2013-07-25-from-one-cloud-to-the-next.html">As previously described</a>, MongoLab offers multiple cloud options for your instances: AWS, Azure, etc. What about <a href="2012-07-24-mongodb-and-python-gang-together.html">my now legendary Python program</a>? ;) Shouldn't I also run it in the cloud? Yeah, thought so.<br />
-<br />
-I've been using AWS for a while, mostly to store a ton of personal junk in S3 and Glacier, so the obvious choice is to launch an EC2 instance. I'm quite fond of micro-sized instances based on&nbsp;<span>ubuntu/images/ebs/ubuntu-precise-12.04-amd64-server-20130411.1</span> (ami-ce7b6fba): 1 core, 600 MB of RAM, 8 GB of disk... and free :) Perfect for experimentation!<br />
-<br />
-If you need to setup your own account, here's <a href="https://aws.amazon.com/">where to start</a>. It's a straightforward process, no need to cover it in detail. Just some quick advice:<br />
-<br />
+          <p><a href="2013-07-25-from-one-cloud-to-the-next.html">As previously described</a>, MongoLab offers multiple cloud options for your instances: AWS, Azure, etc. What about <a href="2012-07-24-mongodb-and-python-gang-together.html">my now legendary Python program</a>? ;) Shouldn't I also run it in the cloud? Yeah, thought so.</p>
+
+<p>I've been using AWS for a while, mostly to store a ton of personal junk in S3 and Glacier, so the obvious choice is to launch an EC2 instance. I'm quite fond of micro-sized instances based on&nbsp;<span>ubuntu/images/ebs/ubuntu-precise-12.04-amd64-server-20130411.1</span> (ami-ce7b6fba): 1 core, 600 MB of RAM, 8 GB of disk... and free :) Perfect for experimentation!</p>
+
+<p>If you need to setup your own account, here's <a href="https://aws.amazon.com/">where to start</a>. It's a straightforward process, no need to cover it in detail. Just some quick advice:</p>
+
 <ul>
 <li>Once you've created and downloaded the key pair associated to the instance, don't forget to chmod it to 400 (or '<i>ssh</i>' will complain that it's not safe, bla bla bla)</li>
 <li>DO NOT LOSE THE KEYPAIR FILE, you won't be able to download it again.&nbsp;</li>
 <li>When the instance is running, make sure you note its public name (e.g. <span>ec2-54-217-8-54.eu-west-1.compute.amazonaws.com</span>), that's the one you'll use from the outside world.</li>
 <li>The '<i>ssh</i>' port (22) is not open by default. "Security Groups" is where you need to look, just add a rule opening 22/TCP.
 <div>
-Now, let's connect to the instance with '<i>ssh</i>':<br />
-<span>$ <b>ssh -i keypair.pem ubuntu@ec2-54-217-8-54.eu-west-1.compute.amazonaws.com<br />
-<div>
-<span>ubuntu@ip-10-48-247-163:~$</span><br />
-<br />
-Congratulations, you're on AWS. Now, let's add some more software to this instance:</div>
-<span>ubuntu@ip-10-48-247-163:~$</span><span>&nbsp;<b>sudo apt-get update<br />
-<span>ubuntu@ip-10-48-247-163:~$</span><span>&nbsp;<b>sudo apt-get install mongodb-clients<br />
+Now, let's connect to the instance with '<i>ssh</i>':
+
+<p><span>$ <b>ssh -i keypair.pem ubuntu@ec2-54-217-8-54.eu-west-1.compute.amazonaws.com</p>
+
+<p><div>
+<span>ubuntu@ip-10-48-247-163:~$</span></p>
+
+<p>Congratulations, you're on AWS. Now, let's add some more software to this instance:</p>
+        </div>
+<span>ubuntu@ip-10-48-247-163:~$</span><span>&nbsp;<b>sudo apt-get update
+
+<span>ubuntu@ip-10-48-247-163:~$</span><span>&nbsp;<b>sudo apt-get install mongodb-clients
+
 <div>
 <div>
 Can't wait to connect to your db? All right, let's give it a try with the '<i>mongo</i>' client:</div>
@@ -300,29 +305,43 @@ Can't wait to connect to your db? All right, let's give it a try with the '<i>mo
 </div>
 <div>
 <div>
-This MongoDB instance is hosted by MongoLab in AWS, so we didn't travel too far. A nice mix of PaaS and IaaS, all based on the same infrastructure :)<br />
-<br />
+This MongoDB instance is hosted by MongoLab in AWS, so we didn't travel too far. A nice mix of PaaS and IaaS, all based on the same infrastructure :)
+
+
 Now let's add our Python tools:</div>
-<span>ubuntu@ip-10-48-247-163:~$</span><span>&nbsp;<b>sudo apt-get install build-essential python-dev<br />
+<span>ubuntu@ip-10-48-247-163:~$</span><span>&nbsp;<b>sudo apt-get install build-essential python-dev
+
 <div>
 <span>ubuntu@ip-10-48-247-163:~$</span><span>&nbsp;<b>sudo apt-get install python-pip</div>
-<span>ubuntu@ip-10-48-247-163:~$</span><span>&nbsp;<b>sudo pip install pymongo<br />
-<br />
-Let's copy our Python program to our EC2 instance:<br />
-<span>$ <b>scp -i keypair.pem mongo.py ubuntu@ec2-54-217-8-54.eu-west-1.compute.amazonaws.com:~<br />
-<span>mongo.py &nbsp;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
-<br />
-And now:<br />
-<span>ubuntu@ip-10-48-247-163:~$ <b>python mongo.py&nbsp;<br />
-<span>{u'x': 1.0, u'_id': ObjectId('51e3ce08915082db3df32bf0')}</span><br />
-<span>{u'x': 2.0, u'_id': ObjectId('51e3ce08915082db3df32bf1')}</span><br />
-<span>{u'x': 3.0, u'_id': ObjectId('51e3ce08915082db3df32bf2')}</span><br />
-<span><i>output removed from brevity<br />
-<span>{u'x': 25.0, u'_id': ObjectId('51e3ce08915082db3df32c08')}</span><br />
+<span>ubuntu@ip-10-48-247-163:~$</span><span>&nbsp;<b>sudo pip install pymongo
+
+
+Let's copy our Python program to our EC2 instance:
+
+<span>$ <b>scp -i keypair.pem mongo.py ubuntu@ec2-54-217-8-54.eu-west-1.compute.amazonaws.com:~
+
+<span>mongo.py &nbsp;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+
+
+And now:
+
+<span>ubuntu@ip-10-48-247-163:~$ <b>python mongo.py&nbsp;
+
+<span>{u'x': 1.0, u'_id': ObjectId('51e3ce08915082db3df32bf0')}</span>
+
+<span>{u'x': 2.0, u'_id': ObjectId('51e3ce08915082db3df32bf1')}</span>
+
+<span>{u'x': 3.0, u'_id': ObjectId('51e3ce08915082db3df32bf2')}</span>
+
+<span><i>output removed from brevity
+
+<span>{u'x': 25.0, u'_id': ObjectId('51e3ce08915082db3df32c08')}</span>
+
 <div>
 <span></div>
-What's the point of all this? Simply to quickly demonstrate:<br />
-<br />
+What's the point of all this? Simply to quickly demonstrate:
+
+
 <ol>
 <li>the insane amount of software technology available to anyone willing to read a few books or wikis</li>
 <li>how easy it is to get started and build fun stuff. You need nothing else on your own machine than '<i>ssh</i>'!</li>

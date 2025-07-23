@@ -257,25 +257,25 @@
         <div class="legacy-post-content">
           <p>Last week, AWS launched their flavor of "Machine Learning as a service", aka <a href="https://aws.amazon.com/fr/machine-learning/" target="_blank">Amazon Machine Learning</a>. It was not a moment too soon, given the number of existing cloud-based ML propositions. To name just a few: BigML, Qubole and yes, Azure Machine Learning (pretty impressive, I'm sorry to admit).</p>
 
-          <p>So, here it is finally. Let's take it for a ride.</p>
+<p>So, here it is finally. Let's take it for a ride.</p>
 
-          <p>First things first: some data is needed. Time to use a little Java program that I wrote to pump out test data simulating an e-commerce web log (see <em>Generator.java</em> in <a href="https://github.com/juliensimon/DataStuff">https://github.com/juliensimon/DataStuff</a>).</p>
+<p>First things first: some data is needed. Time to use a little Java program that I wrote to pump out test data simulating an e-commerce web log (see <em>Generator.java</em> in <a href="https://github.com/juliensimon/DataStuff">https://github.com/juliensimon/DataStuff</a>).</p>
 
-          <p>Here's the format, columns are pretty self-explanatory:</p>
+<p>Here's the format, columns are pretty self-explanatory:</p>
 
-          <p>Nothing fancy, but it should do the trick.</p>
+<p>Nothing fancy, but it should do the trick.</p>
 
-          <p>Next step: connect to my super fancy 1-node Redshift cluster and create an appropriate table for this data:</p>
+<p>Next step: connect to my super fancy 1-node Redshift cluster and create an appropriate table for this data:</p>
 
-          <p>Next, let's generate 10,000,000 lines, write them in a CSV file and upload it to my favorite S3 bucket located in <em>eu-west-1</em>. And now the AWS fun begins! Right now, Amazon ML is only available in <em>us-east-1</em>, which means that your Redshift cluster must be in the same region, as well as the S3 bucket used to output files (as I later found out). Bottom line: if everything is in <em>us-east-1</em> for now, your life will be easier ;)</p>
+<p>Next, let's generate 10,000,000 lines, write them in a CSV file and upload it to my favorite S3 bucket located in <em>eu-west-1</em>. And now the AWS fun begins! Right now, Amazon ML is only available in <em>us-east-1</em>, which means that your Redshift cluster must be in the same region, as well as the S3 bucket used to output files (as I later found out). Bottom line: if everything is in <em>us-east-1</em> for now, your life will be easier ;)</p>
 
-          <p>Lucky me, the only cross-region operation allowed in this scenario is copying data from S3 to Redshift, here's how:</p>
+<p>Lucky me, the only cross-region operation allowed in this scenario is copying data from S3 to Redshift, here's how:</p>
 
-          <p>For the record, this took just under a minute for 450MB. That's about 100MB per second sustained. Not bad :)</p>
+<p>For the record, this took just under a minute for 450MB. That's about 100MB per second sustained. Not bad :)</p>
 
-          <p>Let's take a quick look: <strong>SELECT * FROM mydata LIMIT 10;</strong></p>
+<p>Let's take a quick look: <strong>SELECT * FROM mydata LIMIT 10;</strong></p>
 
-          <p>Looks good. Time to fire up Amazon ML. The process is quite simple:</p>
+<p>Looks good. Time to fire up Amazon ML. The process is quite simple:</p>
           <ol>
             <li>Create a datasource, either from an S3 file of from Redshift</li>
             <li>Pick the column you want to predict the value for (in our case, we'll use '<em>basket</em>')</li>
@@ -283,47 +283,47 @@
             <li>If the model is good enough, use it to predict values for new data</li>
           </ol>
 
-          <p>Creating the datasource from Redshift is straightforward: cluster id, credentials, table name, SQL statement to build the test data.</p>
+<p>Creating the datasource from Redshift is straightforward: cluster id, credentials, table name, SQL statement to build the test data.</p>
 
-          <p>Once connected to Redshift, Amazon ML figures out the schema and data types:</p>
+<p>Once connected to Redshift, Amazon ML figures out the schema and data types:</p>
 
-          <p>Now, let's select our target column (the one we want to predict):</p>
+<p>Now, let's select our target column (the one we want to predict):</p>
 
-          <p>Next, we can customize the model. Since this is a numerical value, Amazon ML will use a numerical regression algorithm. If we had picked a boolean value, a different algorithm would have been used. Keep on eye on this in future releases, I'm sure AWS will add more algos and allow users to tweak them much more than today.</p>
+<p>Next, we can customize the model. Since this is a numerical value, Amazon ML will use a numerical regression algorithm. If we had picked a boolean value, a different algorithm would have been used. Keep on eye on this in future releases, I'm sure AWS will add more algos and allow users to tweak them much more than today.</p>
 
-          <p>As you can see, 70% of data is used to build the model, 30% to evaluate it.</p>
+<p>As you can see, 70% of data is used to build the model, 30% to evaluate it.</p>
 
-          <p>Next, Amazon ML ingests the data: In our case, this means 10 million lines, which takes a little while. You can see the different tasks: splitting the data, building the model, evaluating it.</p>
+<p>Next, Amazon ML ingests the data: In our case, this means 10 million lines, which takes a little while. You can see the different tasks: splitting the data, building the model, evaluating it.</p>
 
-          <p>A few coffees later, all tasks are completed. The longest one was by far building the ML model. The whole process lasted just under a hour (reminder: 10 columns, 10 millions lines).</p>
+<p>A few coffees later, all tasks are completed. The longest one was by far building the ML model. The whole process lasted just under a hour (reminder: 10 columns, 10 millions lines).</p>
 
-          <p>So, is this model any good? Amazon ML gives limited information for now, but here it is:</p>
+<p>So, is this model any good? Amazon ML gives limited information for now, but here it is:</p>
 
-          <p>That promising "<em>Explore the model performance</em>" button displays a distribution curve of residuals for the part of the data set used to evaluate the model. Nothing extraordinary.</p>
+<p>That promising "<em>Explore the model performance</em>" button displays a distribution curve of residuals for the part of the data set used to evaluate the model. Nothing extraordinary.</p>
 
-          <p>As a sidenote, I think it's pretty interesting to see that a model can be build from totally random data. What does this say about the Java random generator? I'm not sure.</p>
+<p>As a sidenote, I think it's pretty interesting to see that a model can be build from totally random data. What does this say about the Java random generator? I'm not sure.</p>
 
-          <p>Now, we're ready to predict! Amazon ML supports batch prediction and real-time prediction through an API. I'll use batch for now. Using a second data set of 10,000 lines missing the '<em>basket</em>' column, let's build a second data source (from S3 this time):</p>
+<p>Now, we're ready to predict! Amazon ML supports batch prediction and real-time prediction through an API. I'll use batch for now. Using a second data set of 10,000 lines missing the '<em>basket</em>' column, let's build a second data source (from S3 this time):</p>
 
-          <p>Two news tasks are created: ingest the data from S3 and predict. After a 3-4 minutes, prediction is complete:</p>
+<p>Two news tasks are created: ingest the data from S3 and predict. After a 3-4 minutes, prediction is complete:</p>
 
-          <p>A nice distribution curve of predicted values is also available.</p>
+<p>A nice distribution curve of predicted values is also available.</p>
 
-          <p>Actual predicted values are available in a gzip'ed text file in S3:</p>
+<p>Actual predicted values are available in a gzip'ed text file in S3:</p>
 
-          <p>Pretty cool... but one last question needs to be answered. How much does it cost? Well, I did push the envelope all afternoon and so...</p>
+<p>Pretty cool... but one last question needs to be answered. How much does it cost? Well, I did push the envelope all afternoon and so...</p>
 
-          <p>Over a thousand bucks. Ouch! Expensive fun indeed. I guess I'll expense that one :D</p>
+<p>Over a thousand bucks. Ouch! Expensive fun indeed. I guess I'll expense that one :D</p>
 
-          <p>One thousand predictions cost $0.1. So, the scenario I described (model building plus 10K predictions) only costs <u>a few dollars</u> (thanks Jamie <a href="https://twitter.com/ideasasylum">@ideasasylum</a> for pointing it out).</p>
+<p>One thousand predictions cost $0.1. So, the scenario I described (model building plus 10K predictions) only costs <u>a few dollars</u> (thanks Jamie <a href="https://twitter.com/ideasasylum">@ideasasylum</a> for pointing it out).</p>
 
-          <p>However, if you decide to use live prediction on a high-traffic website or if you want to go crazy on data-mining, costs will rise VERY quickly. Caveat emptor. AWS has an history of adapting prices pretty quickly, let's see what happens.</p>
+<p>However, if you decide to use live prediction on a high-traffic website or if you want to go crazy on data-mining, costs will rise VERY quickly. Caveat emptor. AWS has an history of adapting prices pretty quickly, let's see what happens.</p>
 
-          <p>Final words? Amazon ML delivers prediction at scale. Ease of use and documentation are what you'd expect from AWS. Features are pretty limited and the UI is still pretty rough but good things come to those who wait, I guess. Cost rises quickly, so make sure you set and track ROI targets on your ML scenarios. Easier said than done... and that's another story :)</p>
+<p>Final words? Amazon ML delivers prediction at scale. Ease of use and documentation are what you'd expect from AWS. Features are pretty limited and the UI is still pretty rough but good things come to those who wait, I guess. Cost rises quickly, so make sure you set and track ROI targets on your ML scenarios. Easier said than done... and that's another story :)</p>
 
-          <p>Till next time, keep crunchin'!</p>
+<p>Till next time, keep crunchin'!</p>
 
-          <p><em>(Update: want to learn about real-time prediction with Amazon ML? <a href="2015-04-16-test-drive-real-time-prediction-with-amazon-machine-learning.html">Read on!</a>)</em></p>
+<p><em>(Update: want to learn about real-time prediction with Amazon ML? <a href="2015-04-16-test-drive-real-time-prediction-with-amazon-machine-learning.html">Read on!</a>)</em></p>
         </div>
       </article>
     </main>

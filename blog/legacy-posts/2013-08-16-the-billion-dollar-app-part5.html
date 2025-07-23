@@ -255,22 +255,47 @@
         </header>
         
         <div class="legacy-post-content">
-          And you thought I was on holiday?<br />
-<br />
-Time to hack <a href="2013-08-16-the-billion-dollar-app-part5.html">our Node app</a> again and introduce another great piece of software called <i><a href="http://zeromq.org/">zeromq. On top of having one of the coolest logos, <i>zeromq</i> is a high-performance, low-latency messaging system that you simply cannot afford to ignore when you need to build highly scalable apps (IMHO). Other contenders would be <a href="http://www.rabbitmq.com/">RabbitMQ</a> (awesome and rock-solid, but not really lightweight) and <a href="https://github.com/bitly/nsq">NSQ</a> (written by the bit.ly folks).<br />
-<br />
-The basic idea will be to have our web app call a remote server through <i>zeromq</i>. The remote server will perform a super fancy calculation and return it back to the web app. I can feel that you're excited already, so let's get started :*)<br />
-<br />
-Both our <i>zeromq</i> machines (the client and the server) require a little bit of setup: on top of Node.js and npm (as described in previous posts), we need to install the <i>zeromq</i> library. Once again, the one available in the Ubuntu repo is way too old, so let's build a fresh version:<br />
-<br />
-<span>$ <b>wget</b>&nbsp;http://download.zeromq.org/zeromq-3.2.3.tar.gz</span><br />
+          <p>And you thought I was on holiday?</p>
+
+<p>Time to hack <a href="2013-08-16-the-billion-dollar-app-part5.html">our Node app</a> again and introduce another great piece of software called <i><a href="http://zeromq.org/">zeromq. On top of having one of the coolest logos, <i>zeromq</i> is a high-performance, low-latency messaging system that you simply cannot afford to ignore when you need to build highly scalable apps (IMHO). Other contenders would be <a href="http://www.rabbitmq.com/">RabbitMQ</a> (awesome and rock-solid, but not really lightweight) and <a href="https://github.com/bitly/nsq">NSQ</a> (written by the bit.ly folks).</p>
+
+<p>The basic idea will be to have our web app call a remote server through <i>zeromq</i>. The remote server will perform a super fancy calculation and return it back to the web app. I can feel that you're excited already, so let's get started :*)</p>
+
+<p>Both our <i>zeromq</i> machines (the client and the server) require a little bit of setup: on top of Node.js and npm (as described in previous posts), we need to install the <i>zeromq</i> library. Once again, the one available in the Ubuntu repo is way too old, so let's build a fresh version:</p>
+
+<p><span>$ <b>wget</b>&nbsp;http://download.zeromq.org/zeromq-3.2.3.tar.gz</span></p>
+
+<p><div>
+<span>$ <b>tar</b> xvfz zeromq-3.2.3.tar.gz
+<div>
+<span>$ <b>cd</b> zeromq-3.2.3
+<div>
+<span>$ ./<b>configure</p>
+
+<p><span><div class="legacy-post-content">
+          And you thought I was on holiday?
+
+
+Time to hack <a href="2013-08-16-the-billion-dollar-app-part5.html">our Node app</a> again and introduce another great piece of software called <i><a href="http://zeromq.org/">zeromq. On top of having one of the coolest logos, <i>zeromq</i> is a high-performance, low-latency messaging system that you simply cannot afford to ignore when you need to build highly scalable apps (IMHO). Other contenders would be <a href="http://www.rabbitmq.com/">RabbitMQ</a> (awesome and rock-solid, but not really lightweight) and <a href="https://github.com/bitly/nsq">NSQ</a> (written by the bit.ly folks).
+
+
+The basic idea will be to have our web app call a remote server through <i>zeromq</i>. The remote server will perform a super fancy calculation and return it back to the web app. I can feel that you're excited already, so let's get started :*)
+
+
+Both our <i>zeromq</i> machines (the client and the server) require a little bit of setup: on top of Node.js and npm (as described in previous posts), we need to install the <i>zeromq</i> library. Once again, the one available in the Ubuntu repo is way too old, so let's build a fresh version:
+
+
+<span>$ <b>wget</b>&nbsp;http://download.zeromq.org/zeromq-3.2.3.tar.gz</span>
+
 <div>
 <span>$ <b>tar</b> xvfz zeromq-3.2.3.tar.gz
 <div>
 <span>$ <b>cd</b> zeromq-3.2.3
 <div>
-<span>$ ./<b>configure<br />
-<span>$&nbsp;<b>make</div>
+<span>$ ./<b>configure
+
+<span>$&nbsp;<b>make</div>nbsp;<b>make</p>
+        </div>
 <div>
 <span>$ sudo <b>make</b> install
 <div>
@@ -278,7 +303,7 @@ Both our <i>zeromq</i> machines (the client and the server) require a little bit
 Now, let's add the <i>zeromq</i> bindings for Node.js, namely the <a href="https://github.com/JustinTulloss/zeromq.node"><i>zeromq.node</i> library</a> aka <i>zmq</i>:</div>
 <div>
 <div>
-<span><span>$ sudo <b>apt-ge</b>t install build-essential </span><i><span>(required by the zmq install)
+<span>$ sudo <b>apt-ge</b>t install build-essential </span><i><span>(required by the zmq install)
 <div>
 <span>$ <b>npm</b> install zmq
 <div>
@@ -286,10 +311,12 @@ Now, let's add the <i>zeromq</i> bindings for Node.js, namely the <a href="https
 Now we're ready to roll. Let's keep it simple and use a nice request-reply pattern: the web app will send a request to the remote server and get a response back. <i>Zeromq</i> supports many other patters, you'll find more info in the <a href="http://zguide.zeromq.org/page:all">official documentation</a>. Definitely worth a read, <i>zeromq</i> is a superb piece of software engineering art. Lightweight, simple, elegant... ah, love at first sight.</div>
 <div>
 <div>
-But I digress (that fine bottle of Leffe, probably). Let's look at our <i>zeromq</i> server first.<br />
-<br />
-BTW, since I guess it's time to stop mourning SCCS ;), I've created&nbsp;<a href="https://github.com/juliensimon">a proper Github account&nbsp;</a>where you'll find all pieces of code posted on this blog. Can't say I love Git dearly, but a little progress every now and then is okay, I guess.<br />
-<textarea cols="80" rows="13">var zmq = require('zmq')
+But I digress (that fine bottle of Leffe, probably). Let's look at our <i>zeromq</i> server first.
+
+
+BTW, since I guess it's time to stop mourning SCCS ;), I've created&nbsp;<a href="https://github.com/juliensimon">a proper Github account&nbsp;</a>where you'll find all pieces of code posted on this blog. Can't say I love Git dearly, but a little progress every now and then is okay, I guess.
+
+<pre><code>var zmq = require('zmq')
 var sock = zmq.socket('rep');
 sock.bind('tcp://0.0.0.0:3000');
 console.log('Worker connected to port 3000');
@@ -298,14 +325,17 @@ sock.on('message', function(msg){
         // Apply top-secret get-rich-quick formula
         sock.send(parseInt(msg.toString())*2);
 });
-</textarea>
-<br />
-<br />
-Nice and short, huh? Create a '<i>reply</i>' socket, listen on port 3000/TCP and send back twice was we got. And yes, everything in life is an '<i>int</i>', so there.<br />
-<br />
-Now, let's look at the corresponding part in the client, i.e. our web app:<br />
-<br />
-<textarea cols="80" rows="20">var zmq = require('zmq')
+</code></pre>
+
+
+
+Nice and short, huh? Create a '<i>reply</i>' socket, listen on port 3000/TCP and send back twice was we got. And yes, everything in life is an '<i>int</i>', so there.
+
+
+Now, let's look at the corresponding part in the client, i.e. our web app:
+
+
+<pre><code>var zmq = require('zmq')
 var sock = zmq.socket('req');
 // Connect to our fancy service through zeromq
 sock.connect('tcp://10.34.206.103:3000');
@@ -322,14 +352,17 @@ function callMyFancyService(input, response) {
                 response.end();
         });
 }
-</textarea>
-<br />
-<br />
-Just as simple. Create a 'request' socket, bind it to our remote server and, in a separate function, fire some data, read the answer and display it.<br />
-<br />
-Here's the full code:<br />
-<br />
-<textarea cols="80" rows="152">// Web stuff
+</code></pre>
+
+
+
+Just as simple. Create a 'request' socket, bind it to our remote server and, in a separate function, fire some data, read the answer and display it.
+
+
+Here's the full code:
+
+
+<pre><code>// Web stuff
 var http = require('http');
 var url = require('url');
 // Memcache
@@ -457,32 +490,53 @@ winston.info("Connected to zeromq server");
 // Start the web server on port 8080 and wait for incoming requests
 http.createServer(onRequest).listen(8080);
 winston.info("Web server started");
-</textarea>
-<br />
-<br />
-Logs (or it didn't happen, right?): display all entries and get one id twice<br />
-<br />
-<span>local0.info<134>: Aug 16 17:29:52 10.37.166.19 {"message":"*** NODE APP STARTED ***"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:29:52 10.37.166.19 {"message":"Connected to zeromq server"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:29:52 10.37.166.19 {"message":"Web server started"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:29:52 10.37.166.19 {"message":"Connected to memcache"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:29:52 10.37.166.19 {"message":"Connected to database"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:30:04 10.37.166.19 {"message":"Request received, id=0"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:30:04 10.37.166.19 {"message":"Finding all documents"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:30:12 10.37.166.19 {"message":"Request received, id=51e3ce08915082db3df32c08"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:30:12 10.37.166.19 {"message":"Cache miss, key 51e3ce08915082db3df32c08. Querying..."}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:30:12 10.37.166.19 {"message":"Item found: {\"_id\":\"51e3ce08915082db3df32c08\",\"x\":25}"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:30:12 10.37.166.19 {"message":"Zeromq request: 25"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:30:12 10.37.166.19 {"message":"Zeromq response: 50"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:30:12 10.37.166.19 {"message":"Stored key=51e3ce08915082db3df32c08, value=25"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:30:15 10.37.166.19 {"message":"Request received, id=51e3ce08915082db3df32c08"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:30:15 10.37.166.19 {"message":"Cache hit, &nbsp;key=51e3ce08915082db3df32c08, value=25"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:30:15 10.37.166.19 {"message":"Zeromq request: 25"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug 16 17:30:15 10.37.166.19 {"message":"Zeromq response: 50"}<!--134--><!--134--><!--134--></span><br />
+</code></pre>
+
+
+
+Logs (or it didn't happen, right?): display all entries and get one id twice
+
+
+<span>local0.info<134>: Aug 16 17:29:52 10.37.166.19 {"message":"*** NODE APP STARTED ***"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:29:52 10.37.166.19 {"message":"Connected to zeromq server"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:29:52 10.37.166.19 {"message":"Web server started"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:29:52 10.37.166.19 {"message":"Connected to memcache"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:29:52 10.37.166.19 {"message":"Connected to database"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:30:04 10.37.166.19 {"message":"Request received, id=0"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:30:04 10.37.166.19 {"message":"Finding all documents"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:30:12 10.37.166.19 {"message":"Request received, id=51e3ce08915082db3df32c08"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:30:12 10.37.166.19 {"message":"Cache miss, key 51e3ce08915082db3df32c08. Querying..."}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:30:12 10.37.166.19 {"message":"Item found: {\"_id\":\"51e3ce08915082db3df32c08\",\"x\":25}"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:30:12 10.37.166.19 {"message":"Zeromq request: 25"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:30:12 10.37.166.19 {"message":"Zeromq response: 50"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:30:12 10.37.166.19 {"message":"Stored key=51e3ce08915082db3df32c08, value=25"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:30:15 10.37.166.19 {"message":"Request received, id=51e3ce08915082db3df32c08"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:30:15 10.37.166.19 {"message":"Cache hit, &nbsp;key=51e3ce08915082db3df32c08, value=25"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:30:15 10.37.166.19 {"message":"Zeromq request: 25"}<!--134--><!--134--><!--134--></span>
+
+<span>local0.info<134>: Aug 16 17:30:15 10.37.166.19 {"message":"Zeromq response: 50"}<!--134--><!--134--><!--134--></span>
+
 <div>
-<br />
-Let's take a few steps back and look at what we built over the last posts:<br />
-<br />
+
+
+Let's take a few steps back and look at what we built over the last posts:
+
+
 <ul>
 <li>a simple Node.js web app...</li>
 <li>fetching data from an Elasticache cluster...</li>
