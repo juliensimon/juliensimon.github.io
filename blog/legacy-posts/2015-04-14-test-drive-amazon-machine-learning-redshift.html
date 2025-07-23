@@ -1,239 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Legacy blog post by Julien Simon">
-  <meta name="author" content="Julien Simon">
-  <meta name="robots" content="index, follow">
-  
-  <title>Test Drive Amazon Machine Learning Redshift – Julien Simon</title>
-  
-  <!-- Umami Analytics -->
-  <script>
-    window.addEventListener('load', function() {
-      var script = document.createElement('script');
-      script.src = 'https://cloud.umami.is/script.js';
-      script.setAttribute('data-website-id', '27550dad-d418-4f5d-ad1b-dab573da1020');
-      document.head.appendChild(script);
-    });
-  </script>
-  
-  <!-- Resource hints for faster DNS resolution and connections -->
-  <link rel="dns-prefetch" href="//fonts.googleapis.com">
-  <link rel="dns-prefetch" href="//fonts.gstatic.com">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
-  
-  <!-- Styles -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test drive: Amazon Machine Learning + Redshift - Julien Simon</title>
   <link rel="stylesheet" href="../../css/styles.css">
   <link rel="stylesheet" href="../../css/social-icons.css">
-  
-  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
-  
-  <!-- Legacy post specific styles -->
-  <style>
-    .legacy-post-container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: var(--space-6);
-      background: var(--background);
-      border-radius: 12px;
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .legacy-post-header {
-      text-align: center;
-      margin-bottom: var(--space-8);
-      padding-bottom: var(--space-6);
-      border-bottom: 2px solid var(--border);
-    }
-    
-    .legacy-post-title {
-      font-size: var(--text-3xl);
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: var(--space-4);
-      line-height: 1.2;
-    }
-    
-    .legacy-post-meta {
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: var(--space-4);
-      flex-wrap: wrap;
-    }
-    
-    .legacy-post-date {
-      background: var(--surface);
-      padding: var(--space-2) var(--space-3);
-      border-radius: 6px;
-      font-weight: 500;
-    }
-    
-    .legacy-post-category {
-      background: var(--primary-color);
-      color: white;
-      padding: var(--space-2) var(--space-3);
-      border-radius: 6px;
-      font-weight: 500;
-      text-transform: uppercase;
-      font-size: var(--text-xs);
-      letter-spacing: 0.5px;
-    }
-    
-    .legacy-post-content {
-      line-height: 1.8;
-      color: var(--text-primary);
-      font-size: var(--text-base);
-    }
-    
-    .legacy-post-content h1,
-    .legacy-post-content h2,
-    .legacy-post-content h3,
-    .legacy-post-content h4 {
-      color: var(--text-primary);
-      margin-top: var(--space-8);
-      margin-bottom: var(--space-4);
-      font-weight: 600;
-    }
-    
-    .legacy-post-content h1 { font-size: var(--text-2xl); }
-    .legacy-post-content h2 { font-size: var(--text-xl); }
-    .legacy-post-content h3 { font-size: var(--text-lg); }
-    .legacy-post-content h4 { font-size: var(--text-base); }
-    
-    .legacy-post-content p {
-      margin-bottom: var(--space-4);
-    }
-    
-    .legacy-post-content ul,
-    .legacy-post-content ol {
-      margin-bottom: var(--space-4);
-      padding-left: var(--space-6);
-    }
-    
-    .legacy-post-content li {
-      margin-bottom: var(--space-2);
-    }
-    
-    .legacy-post-content code {
-      background: var(--surface);
-      color: var(--primary-color);
-      padding: var(--space-1) var(--space-2);
-      border-radius: 4px;
-      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-      font-size: var(--text-sm);
-    }
-    
-    .legacy-post-content pre {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: var(--space-4);
-      overflow-x: auto;
-      margin: var(--space-6) 0;
-    }
-    
-    .legacy-post-content pre code {
-      background: none;
-      padding: 0;
-      color: var(--text-primary);
-    }
-    
-    .legacy-post-content blockquote {
-      border-left: 4px solid var(--primary-color);
-      padding-left: var(--space-4);
-      margin: var(--space-6) 0;
-      font-style: italic;
-      color: var(--text-secondary);
-    }
-    
-    .legacy-post-content a {
-      color: var(--primary-color);
-      text-decoration: none;
-      transition: color var(--transition-fast);
-    }
-    
-    .legacy-post-content a:hover {
-      color: var(--primary-dark);
-      text-decoration: underline;
-    }
-    
-    .legacy-post-content img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin: var(--space-4) 0;
-    }
-    
-    .legacy-post-content .separator {
-      clear: both;
-      margin: var(--space-4) 0;
-    }
-    
-    .legacy-post-content .gist {
-      margin: var(--space-4) 0;
-    }
-    
-    .legacy-post-content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: var(--space-6) 0;
-    }
-    
-    .legacy-post-content th,
-    .legacy-post-content td {
-      padding: var(--space-2) var(--space-3);
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
-    
-    .legacy-post-content th {
-      background: var(--surface);
-      font-weight: 600;
-    }
-    
-    .legacy-post-content strong,
-    .legacy-post-content b {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-    
-    .legacy-post-content em,
-    .legacy-post-content i {
-      font-style: italic;
-    }
-    
-      background: var(--primary-color);
-      color: white;
-      padding: 2px 4px;
-      border-radius: 3px;
-      font-size: var(--text-sm);
-    }
-    
-    @media (max-width: 768px) {
-      .legacy-post-container {
-        padding: var(--space-4);
-        margin: var(--space-4);
-      }
-      
-      .legacy-post-title {
-        font-size: var(--text-2xl);
-      }
-      
-      .legacy-post-meta {
-        flex-direction: column;
-        gap: var(--space-2);
-      }
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -241,63 +14,99 @@
       <img src="../../assets/julien.webp" alt="Julien Simon" class="profile-image">
       <h1>Julien Simon</h1>
       <p class="title">Chief Evangelist @ Arcee AI</p>
-      
+      <p class="subtitle">World Expert in Practical AI</p>
     </header>
 
     <main>
-      <article class="legacy-post-container">
+      <article class="legacy-post">
         <header class="legacy-post-header">
-          <h1 class="legacy-post-title">Test Drive Amazon Machine Learning Redshift</h1>
+          <h1 class="legacy-post-title">Test drive: Amazon Machine Learning + Redshift</h1>
           <div class="legacy-post-meta">
-            <span class="legacy-post-date">April 14, 2015</span>
+            <span class="legacy-post-date">January 5, 2009</span>
             <span class="legacy-post-category">Cloud & AWS</span>
           </div>
         </header>
         
         <div class="legacy-post-content">
-          <p>Last week, AWS launched their flavor of "Machine Learning as a service", aka <a href="https://aws.amazon.com/fr/machine-learning/" target="_blank">Amazon Machine Learning</a>. It was not a moment too soon, given the number of existing cloud-based ML propositions. To name just a few: BigML, Qubole and yes, Azure Machine Learning (pretty impressive, I'm sorry to admit).</p>
+ 
+          
+          <p>
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">🏁 Top Gear - The Stig</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from The Guardian</p></div>Last week, AWS launched their flavor of "Machine Learning as a service", aka <a href="https://aws.amazon.com/fr/machine-learning/" target="_blank">Amazon Machine Learning. It was not a moment too soon, given the number of existing cloud-based ML propositions. To name just a few: BigML, Qubole and yes, Azure Machine Learning (pretty impressive, I'm sorry to admit).</p>
 
 <p>So, here it is finally. Let's take it for a ride.</p>
 
-<p>First things first: some data is needed. Time to use a little Java program that I wrote to pump out test data simulating an e-commerce web log (see <em>Generator.java</em> in <a href="https://github.com/juliensimon/DataStuff">https://github.com/juliensimon/DataStuff</a>).</p>
+<p>First things first: some data is needed. Time to use a little Java program that I wrote to pump out test data simulating an e-commerce web log (see <em>Generator.java </em>in <a href="https://github.com/juliensimon/DataStuff">https://github.com/juliensimon/DataStuff).</p>
 
 <p>Here's the format, columns are pretty self-explanatory:</p>
 
-<p>Nothing fancy, but it should do the trick.</p>
+<script src="https://gist.github.com/juliensimon/79687ad0b4dc28b994aa.js"></script> Nothing fancy, but it should do the trick.
 
 <p>Next step: connect to my super fancy 1-node Redshift cluster and create an appropriate table for this data:</p>
+
+<script src="https://gist.github.com/juliensimon/12e9736bd8b2be62b316.js"></script>
 
 <p>Next, let's generate 10,000,000 lines, write them in a CSV file and upload it to my favorite S3 bucket located in <em>eu-west-1</em>. And now the AWS fun begins! Right now, Amazon ML is only available in <em>us-east-1</em>, which means that your Redshift cluster must be in the same region, as well as the S3 bucket used to output files (as I later found out). Bottom line: if everything is in <em>us-east-1</em> for now, your life will be easier ;)</p>
 
 <p>Lucky me, the only cross-region operation allowed in this scenario is copying data from S3 to Redshift, here's how:</p>
 
-<p>For the record, this took just under a minute for 450MB. That's about 100MB per second sustained. Not bad :)</p>
+<script src="https://gist.github.com/juliensimon/d4fd99c26f5b2ecc79d6.js"></script> For the record, this took just under a minute for 450MB. That's about 100MB per second sustained. Not bad :)
+
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div></p>
 
 <p>Let's take a quick look: <strong>SELECT * FROM mydata LIMIT 10;</strong></p>
 
-<p>Looks good. Time to fire up Amazon ML. The process is quite simple:</p>
-          <ol>
-            <li>Create a datasource, either from an S3 file of from Redshift</li>
-            <li>Pick the column you want to predict the value for (in our case, we'll use '<em>basket</em>')</li>
-            <li>Send some data to build and evaluate the model (we'll use the 10M-line file)</li>
-            <li>If the model is good enough, use it to predict values for new data</li>
-          </ol>
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div></p>
 
-<p>Creating the datasource from Redshift is straightforward: cluster id, credentials, table name, SQL statement to build the test data.</p>
+<p>Looks good. Time to fire up Amazon ML. The process is quite simple:</p>
+
+<ol>
+<li>Create a datasource, either from an S3 file of from Redshift</li>
+<li>Pick the column you want to predict the value for (in our case, we'll use '<em>basket</em>')</li>
+<li>Send some data to build and evaluate the model (we'll use the 10M-line file)</li>
+<li>If the model is good enough, use it to predict values for new data</li>
+</ol>
+&nbsp;Creating the datasource from Redshift is straightforward: cluster id, credentials, table name, SQL statement to build the test data.
+
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div></p>
 
 <p>Once connected to Redshift, Amazon ML figures out the schema and data types:</p>
 
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div></p>
+
 <p>Now, let's select our target column (the one we want to predict):</p>
 
-<p>Next, we can customize the model. Since this is a numerical value, Amazon ML will use a numerical regression algorithm. If we had picked a boolean value, a different algorithm would have been used. Keep on eye on this in future releases, I'm sure AWS will add more algos and allow users to tweak them much more than today.</p>
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div></p>
 
-<p>As you can see, 70% of data is used to build the model, 30% to evaluate it.</p>
+<p>&nbsp;Next, we can customize the model. Since this is a numerical value, Amazon ML will use a
+ numerical regression algorithm. If we had picked a boolean value, a
+different algorithm would have been used. Keep on eye on this in future
+releases, I'm sure AWS will add more algos and allow users to tweak them
+ much more than today.</p>
 
-<p>Next, Amazon ML ingests the data: In our case, this means 10 million lines, which takes a little while. You can see the different tasks: splitting the data, building the model, evaluating it.</p>
+<p>As you can see, 70% of data is used to build the model,
+30% to evaluate it.</p>
 
-<p>A few coffees later, all tasks are completed. The longest one was by far building the ML model. The whole process lasted just under a hour (reminder: 10 columns, 10 millions lines).</p>
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div>
+Next, Amazon ML ingests the data: In our case, this means 10 million lines, which
+takes a little while. You can see the different tasks: splitting the data, building the model, evaluating it.</p>
+
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div>
+A few coffees later, all tasks are completed. The longest one was by far building the ML model. The whole process lasted just under a hour (reminder: 10 columns, 10 millions lines).</p>
+
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div></p>
 
 <p>So, is this model any good? Amazon ML gives limited information for now, but here it is:</p>
+
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div></p>
 
 <p>That promising "<em>Explore the model performance</em>" button displays a distribution curve of residuals for the part of the data set used to evaluate the model. Nothing extraordinary.</p>
 
@@ -305,25 +114,37 @@
 
 <p>Now, we're ready to predict! Amazon ML supports batch prediction and real-time prediction through an API. I'll use batch for now. Using a second data set of 10,000 lines missing the '<em>basket</em>' column, let's build a second data source (from S3 this time):</p>
 
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div></p>
+
 <p>Two news tasks are created: ingest the data from S3 and predict. After a 3-4 minutes, prediction is complete:</p>
+
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div></p>
 
 <p>A nice distribution curve of predicted values is also available.</p>
 
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div></p>
+
 <p>Actual predicted values are available in a gzip'ed text file in S3:</p>
 
-<p>Pretty cool... but one last question needs to be answered. How much does it cost? Well, I did push the envelope all afternoon and so...</p>
+<script src="https://gist.github.com/juliensimon/3d7bfdb9ef7d886513a0.js"></script> Pretty cool... but one last question needs to be answered. How much does it cost? Well, I did push the envelope all afternoon and so...
+
+<p><div class="separator" style="clear: both; text-align: center;">
+<div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px;"><p style="margin: 0; color: #666; font-style: italic;">📸 Screenshot placeholder</p><p style="margin: 5px 0 0 0; font-size: 0.9em; color: #999;">Original image from Amazon Machine Learning console</p></div></div></p>
 
 <p>Over a thousand bucks. Ouch! Expensive fun indeed. I guess I'll expense that one :D</p>
 
-<p>One thousand predictions cost $0.1. So, the scenario I described (model building plus 10K predictions) only costs <u>a few dollars</u> (thanks Jamie <a href="https://twitter.com/ideasasylum">@ideasasylum</a> for pointing it out).</p>
+<p>One thousand predictions cost $0.1. So, the scenario I described (model building plus 10K predictions) only costs <u>a few dollars </u>(thanks Jamie <a class="pretty-link js-nav" data-send-impression-cookie="true" dir="ltr" href="https://twitter.com/ideasasylum"><span class="screen-name"><s>@</s>ideasasylum</span> for pointing it out).</p>
 
-<p>However, if you decide to use live prediction on a high-traffic website or if you want to go crazy on data-mining, costs will rise VERY quickly. Caveat emptor. AWS has an history of adapting prices pretty quickly, let's see what happens.</p>
+<p>However, if you decide to use live prediction on a high-traffic website or if you want to go crazy on data-mining, costs will rise VERY quickly. Caveat emptor.&nbsp; AWS has an history of adapting prices pretty quickly, let's see what happens.</p>
 
 <p>Final words? Amazon ML delivers prediction at scale. Ease of use and documentation are what you'd expect from AWS. Features are pretty limited and the UI is still pretty rough but good things come to those who wait, I guess. Cost rises quickly, so make sure you set and track ROI targets on your ML scenarios. Easier said than done... and that's another story :)</p>
 
 <p>Till next time, keep crunchin'!</p>
 
-<p><em>(Update: want to learn about real-time prediction with Amazon ML? <a href="2015-04-16-test-drive-real-time-prediction-with-amazon-machine-learning.html">Read on!</a>)</em></p>
+<p><em>(Update: want to learn about real-time prediction with Amazon ML? <a href="../../legacy-posts/2015/04/test-drive-real-time-prediction-with.html">Read on!)</em></p>
         </div>
       </article>
     </main>

@@ -1,239 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Legacy blog post by Julien Simon">
-  <meta name="author" content="Julien Simon">
-  <meta name="robots" content="index, follow">
-  
-  <title>Test Drive Real Time Prediction In Java With Amaon Machine Learning – Julien Simon</title>
-  
-  <!-- Umami Analytics -->
-  <script>
-    window.addEventListener('load', function() {
-      var script = document.createElement('script');
-      script.src = 'https://cloud.umami.is/script.js';
-      script.setAttribute('data-website-id', '27550dad-d418-4f5d-ad1b-dab573da1020');
-      document.head.appendChild(script);
-    });
-  </script>
-  
-  <!-- Resource hints for faster DNS resolution and connections -->
-  <link rel="dns-prefetch" href="//fonts.googleapis.com">
-  <link rel="dns-prefetch" href="//fonts.gstatic.com">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
-  
-  <!-- Styles -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test drive: real-time prediction in Java with Amazon Machine Learning - Julien Simon</title>
   <link rel="stylesheet" href="../../css/styles.css">
   <link rel="stylesheet" href="../../css/social-icons.css">
-  
-  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
-  
-  <!-- Legacy post specific styles -->
-  <style>
-    .legacy-post-container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: var(--space-6);
-      background: var(--background);
-      border-radius: 12px;
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .legacy-post-header {
-      text-align: center;
-      margin-bottom: var(--space-8);
-      padding-bottom: var(--space-6);
-      border-bottom: 2px solid var(--border);
-    }
-    
-    .legacy-post-title {
-      font-size: var(--text-3xl);
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: var(--space-4);
-      line-height: 1.2;
-    }
-    
-    .legacy-post-meta {
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: var(--space-4);
-      flex-wrap: wrap;
-    }
-    
-    .legacy-post-date {
-      background: var(--surface);
-      padding: var(--space-2) var(--space-3);
-      border-radius: 6px;
-      font-weight: 500;
-    }
-    
-    .legacy-post-category {
-      background: var(--primary-color);
-      color: white;
-      padding: var(--space-2) var(--space-3);
-      border-radius: 6px;
-      font-weight: 500;
-      text-transform: uppercase;
-      font-size: var(--text-xs);
-      letter-spacing: 0.5px;
-    }
-    
-    .legacy-post-content {
-      line-height: 1.8;
-      color: var(--text-primary);
-      font-size: var(--text-base);
-    }
-    
-    .legacy-post-content h1,
-    .legacy-post-content h2,
-    .legacy-post-content h3,
-    .legacy-post-content h4 {
-      color: var(--text-primary);
-      margin-top: var(--space-8);
-      margin-bottom: var(--space-4);
-      font-weight: 600;
-    }
-    
-    .legacy-post-content h1 { font-size: var(--text-2xl); }
-    .legacy-post-content h2 { font-size: var(--text-xl); }
-    .legacy-post-content h3 { font-size: var(--text-lg); }
-    .legacy-post-content h4 { font-size: var(--text-base); }
-    
-    .legacy-post-content p {
-      margin-bottom: var(--space-4);
-    }
-    
-    .legacy-post-content ul,
-    .legacy-post-content ol {
-      margin-bottom: var(--space-4);
-      padding-left: var(--space-6);
-    }
-    
-    .legacy-post-content li {
-      margin-bottom: var(--space-2);
-    }
-    
-    .legacy-post-content code {
-      background: var(--surface);
-      color: var(--primary-color);
-      padding: var(--space-1) var(--space-2);
-      border-radius: 4px;
-      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-      font-size: var(--text-sm);
-    }
-    
-    .legacy-post-content pre {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: var(--space-4);
-      overflow-x: auto;
-      margin: var(--space-6) 0;
-    }
-    
-    .legacy-post-content pre code {
-      background: none;
-      padding: 0;
-      color: var(--text-primary);
-    }
-    
-    .legacy-post-content blockquote {
-      border-left: 4px solid var(--primary-color);
-      padding-left: var(--space-4);
-      margin: var(--space-6) 0;
-      font-style: italic;
-      color: var(--text-secondary);
-    }
-    
-    .legacy-post-content a {
-      color: var(--primary-color);
-      text-decoration: none;
-      transition: color var(--transition-fast);
-    }
-    
-    .legacy-post-content a:hover {
-      color: var(--primary-dark);
-      text-decoration: underline;
-    }
-    
-    .legacy-post-content img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin: var(--space-4) 0;
-    }
-    
-    .legacy-post-content .separator {
-      clear: both;
-      margin: var(--space-4) 0;
-    }
-    
-    .legacy-post-content .gist {
-      margin: var(--space-4) 0;
-    }
-    
-    .legacy-post-content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: var(--space-6) 0;
-    }
-    
-    .legacy-post-content th,
-    .legacy-post-content td {
-      padding: var(--space-2) var(--space-3);
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
-    
-    .legacy-post-content th {
-      background: var(--surface);
-      font-weight: 600;
-    }
-    
-    .legacy-post-content strong,
-    .legacy-post-content b {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-    
-    .legacy-post-content em,
-    .legacy-post-content i {
-      font-style: italic;
-    }
-    
-      background: var(--primary-color);
-      color: white;
-      padding: 2px 4px;
-      border-radius: 3px;
-      font-size: var(--text-sm);
-    }
-    
-    @media (max-width: 768px) {
-      .legacy-post-container {
-        padding: var(--space-4);
-        margin: var(--space-4);
-      }
-      
-      .legacy-post-title {
-        font-size: var(--text-2xl);
-      }
-      
-      .legacy-post-meta {
-        flex-direction: column;
-        gap: var(--space-2);
-      }
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -241,50 +14,59 @@
       <img src="../../assets/julien.webp" alt="Julien Simon" class="profile-image">
       <h1>Julien Simon</h1>
       <p class="title">Chief Evangelist @ Arcee AI</p>
-      
+      <p class="subtitle">World Expert in Practical AI</p>
     </header>
 
     <main>
-      <article class="legacy-post-container">
+      <article class="legacy-post">
         <header class="legacy-post-header">
-          <h1 class="legacy-post-title">Test Drive Real Time Prediction In Java With Amaon Machine Learning</h1>
+          <h1 class="legacy-post-title">Test drive: real-time prediction in Java with Amazon Machine Learning</h1>
           <div class="legacy-post-meta">
-            <span class="legacy-post-date">April 17, 2015</span>
+            <span class="legacy-post-date">January 5, 2009</span>
             <span class="legacy-post-category">Cloud & AWS</span>
           </div>
         </header>
         
         <div class="legacy-post-content">
-          <p>Following up on my two previous Amazon ML articles (<a href="2015-04-14-test-drive-amazon-machine-learning-redshift.html">batch prediction with Redshift</a> and <a href="2015-04-16-test-drive-real-time-prediction-with-amazon-machine-learning.html">real-time prediction with the AWS CLI</a>), here's a quickie on implementing real-time prediction with the AWS SDK for Java.</p>
+ 
+          
+          <p>Following up on my two previous Amazon ML articles (<a href="../../legacy-posts/2015/04/test-drive-aws-machine-learning-redshift.html">batch prediction with Redshift and <a href="../../legacy-posts/2015/04/test-drive-real-time-prediction-with.html">real-time prediction with the AWS CLI), here's a quickie on implementing real-time prediction with the AWS SDK for Java.</p>
 
 <p>At the time of writing, I'm using SDK version 1.9.31:</p>
 
 <ul>
-<li>sources on Github: <a href="https://github.com/aws/aws-sdk-java">https://github.com/aws/aws-sdk-java
-<li>Javadoc : <a href="https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/">https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/
+<li>sources on Github: <a href="https://github.com/aws/aws-sdk-java">https://github.com/aws/aws-sdk-java</li>
+<li>Javadoc : <a href="https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/">https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/ </li>
 </ul>
 Here's the Maven dependency:
 
-<p>The code (<a href="https://github.com/juliensimon/DataStuff/blob/master/src/org/julien/datastuff/MLSample.java">source</a> on Github) is pretty self-explanatory and totally similar to the CLI example in the previous article.</p>
+<script src="https://gist.github.com/juliensimon/57d280635d8ae6490f5c.js"></script>
+
+<p>The code (<a href="https://github.com/juliensimon/DataStuff/blob/master/src/org/julien/datastuff/MLSample.java">source on Github) is pretty self-explanatory and totally similar to the CLI example in the previous article.</p>
 
 <ul>
 <li>Get the list of models</li>
 <li>Pick one </li>
 <li>Build a prediction request : data record + endpoint</li>
 <li>Fire the request </li>
-<li>Get a result!
+<li>Get a result!</li>
+</ul>
 
-<p>Here's the output:</p>
+<script src="https://gist.github.com/juliensimon/93b58f19031796f39749.js"></script> Here's the output:
 
-<p>Nice and simple. What about performance? My previous article measured a CLI call (aka '<em>aws machinelearning predict</em>') within <em>us-east-1</em> at around 300ms, well above the 100ms mentioned in the FAQ.</p>
+<script src="https://gist.github.com/juliensimon/bb0a661eae7759c0585b.js"></script>
+Nice and simple. What about performance? My previous article measured a CLI call (aka '<em>aws machinelearning predict</em>') within <em>us-east-1</em> at around 300ms, well above the 100ms mentioned in the FAQ.
 
 <p>Believe or not, the Amazon product team got in touch (I'm not worthy, I'm not worthy... and thanks for reading!). They kindly pointed out that this measurement includes much more than the call to the web service and of course, they're right.</p>
 
 <p>Fortunately, the Java program above is finer-grained and allows us to measure only the actual API call. I packaged it, deployed it to a t2.micro EC2 instance running in <em>us-east-1</em> (same configuration as before) and...</p>
 
+<script src="https://gist.github.com/juliensimon/6e54fad4093ca00fbc76.js"></script>
+
 <p>Average time is around 80ms, which is indeed under the 100ms limit mentioned in the FAQ. There you go :)</p>
 
 <p>I'm definitely looking forward to using this in production. Till next time, keep rockin'.</p>
+        
         </div>
       </article>
     </main>
