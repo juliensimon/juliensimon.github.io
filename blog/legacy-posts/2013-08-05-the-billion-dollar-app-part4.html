@@ -255,125 +255,103 @@
         </header>
         
         <div class="legacy-post-content">
-          To paraphrase the immortal Samuel Jackson in Pulp Fiction: "<i>Logs! The cornerstone of any nutritious application!</i>". And <a href="2013-08-05-the-billion-dollar-app-part4.html">my Node.js app</a> doesn't have any! As Mr Brando once said "<i>Ah, the horror, the horror!</i>". At the time, he probably didn't worry about log management, but the quote is definitely relevant for that too :D<br />
-<br />
-I'm an old fashioned guy, so the first thing that comes to my mind is : "<i>syslog</i>". We could certainly find fancier ways (yes, I'm looking at you, scala-*), but <i>syslog</i> will do for now.<br />
-<br />
-Once again, I'll use an Ubuntu 12.04 instance in EC2, which happens to have a running <i>rsyslogd</i> :) Let's take a look at the main config file, <i>/etc/rsyslogd.conf.</i><br />
-<br />
-We'll use UDP to ship our logs. However, because of this <a href="https://bugs.launchpad.net/ubuntu/+source/rsyslog/+bug/789174">unbelievable 2-year old bug</a>, we can't use port 514 (the default port for <i>syslog</i>): we'll use 5140 instead, don't forget to open 5140/UDP in the security group of the EC2 instance!<br />
-<br />
-<span># provides UDP syslog reception</span><br />
-<span>$ModLoad imudp</span><br />
-<span>$UDPServerRun 5140</span><br />
-<br />
-Let's now look at the default rules, located in&nbsp;<i>/etc/rsyslog.d/50-default.conf</i>. Let's keep it very simple and make sure we log everything. We'll also add a new template, because the default one misses some useful information, such as priority (duh!).<br />
-<br />
-<span>$template TraditionalFormatWithPRI,"%pri-text%: %timegenerated% %HOSTNAME% %syslogtag%%msg:::drop-last-lf%\n"</span><br />
-<span>*.* &nbsp; &nbsp;/var/log/messages;TraditionalFormatWithPRI</span><br />
-<br />
-I hear my sysadmin team booing the ugliness of this setup. Yeah, I love you too, bitchez :-P<br />
-<br />
-Anyway, this should be enough, now we just need to restart <i>rsyslogd</i>:<br />
-<span>ubuntu@ip-10-34-245-176:~$ sudo <b>service</b> rsyslog restart</span><br />
-<div>
-<div>
-<span>rsyslog stop/waiting
-<div>
-<span>rsyslog start/running, process 4639
-</div>
-<div>
-Now, let's move back to our Node.js instance and try to talk to our syslog server:<br />
-<span>ubuntu@ip-10-37-166-19:~$ <b>echo</b> "<14>Node sez: I see you"|<b>nc</b> -u -v -w0 10.34.245.176 5140<!--14--><!--14--><!--14--><!--14--><!--14--><!--14--></span><br />
-<div>
-<div>
-If you tail <span>/var/log/messages</span> on the syslog server, the last line should say:</div>
-<div>
-<div>
-<span>user.info<14>: Aug &nbsp;5 14:40:18 Node sez: I see you<!--14--><!--14--><!--14--><!--14--><!--14--><!--14-->
-</div>
-<div>
-<div>
-OK. Now that we have a running syslog server, how is the Node.js app going to send it data? The good news is that there's a large number of packages to do this. The bad news is, most of them don't seem to work very well...&nbsp;</div>
-<br />
-<a href="https://npmjs.org/package/ain2">Ain2</a> worked right out of the box. If you're only looking for a syslog module, I would recommend this one. However, I ended up picking&nbsp;<a href="https://github.com/flatiron/winston"><i>winston, an interesting logging framework supporting many different transports &nbsp;(file, http, several databases, etc) including syslog through the <a href="https://github.com/indexzero/winston-syslog"><i>winston-syslog module.<br />
-<br />
-In theory, at least. For the life of me, I couldn't get this thing to work, despite a lot of creative hacking and creative swearing too. Fortunately, <a href="https://github.com/sanpan/winston-syslogUdp"><i>winston-syslogUdp works: "<i>It was created when the authors experienced challenges with winston-syslog</i>". Yeah, tell me about it! Good job, guys.<br />
-<br />
-<i>winston</i> requires a newer version of Node.js than the one available in the Ubuntu repo, so let's take care of this upgrade first:<br />
-<span>ubuntu@ip-10-37-166-19:~$ sudo <b>add-apt-repository</b> ppa:chris-lea/node.js</span><br />
-<div>
-<div>
-<span>ubuntu@ip-10-37-166-19:~$ sudo <b>apt-get</b> update
-</div>
-<div>
-<div>
-<span>ubuntu@ip-10-37-166-19:~$ sudo <b>apt-cache</b> show nodejs|<b>grep</b> Version
-<div>
-<span>Version: 0.10.15-1chl1~precise1
-<div>
-<span>Version: 0.6.12~dfsg1-1ubuntu1
-</div>
-<div>
-<div>
-<span>ubuntu@ip-10-37-166-19:~$ sudo <b>apt-get</b> install nodejs=0.10.15-1chl1~precise1
-</div>
-<div>
-<div>
-<span>ubuntu@ip-10-37-166-19:~$ <b>node</b> -v
-<div>
-<span>v0.10.15
-</div>
-<div>
-<div>
-<div>
-Now, let's update the Node.js packages and install the winston packages:</div>
-<div>
-<span>ubuntu@ip-10-37-166-19:~$ <b>npm</b> update
-</div>
-<div>
-<div>
-<div>
-<span>ubuntu@ip-10-37-166-19:~$ <b>npm</b> install winston winston-syslogudp
-<div>
-<div>
-After some more hacking and swearing (but no drinking, I promise), I adapted my program to use <i>winston</i>, with the following setup:<br />
-<ul>
-<li>don't log to the console&nbsp;</li>
-<li>log to a local file</li>
-<li>log to a remote syslog server
-<div>
-Here how you do this, it's really simple:</div>
-<div>
-<span>// Don't log to console
-<div>
-<div>
-<span>winston.remove(winston.transports.Console);
-<div>
-<span>// Log to local file
-<div>
-<span>winston.add(winston.transports.File, { filename: 'log.txt' });
-<div>
-<span>// Log to remote syslog
-<div>
-<span>winston.add(winston.transports.Syslog, {"host":"10.34.245.176", "port":"5140", "localhost":"10.37.166.19"});
-<div>
-<div>
-This is quite self-explanatory, as you will see below. However, <i>winston</i> can also do some pretty advanced stuff, I encourage you to read the documentation and go log-crazy ;)<br />
-<br />
-While I was at it, I cleaned the code a little bit and also solved the MongoDB ObjectId validation issue like this. Not sure if it's the canonical way, but it works.<br />
-<span>// Check that the ObjectId is valid</span><br />
-<span>try {</span><br />
-<span>&nbsp; &nbsp; oid = new require('mongodb').ObjectID.createFromHexString(query.id);</span><br />
-<span>}</span><br />
-<span>catch (err) {</span><br />
-<span>&nbsp; &nbsp; winston.info("Invalid OID, err="+err);</span><br />
-<span>&nbsp; &nbsp; </span><span>response.end();</span><br />
-<span>&nbsp; &nbsp; return;</span><br />
-<span>}</span><br />
-<br />
-Here's the full code.<br />
-<textarea cols="80" rows="140">var http = require('http');
+          <p>To paraphrase the immortal Samuel Jackson in Pulp Fiction: "<em>Logs! The cornerstone of any nutritious application!</em>". And <a href="2013-08-05-the-billion-dollar-app-part4.html">my Node.js app</a> doesn't have any! As Mr Brando once said "<em>Ah, the horror, the horror!</em>". At the time, he probably didn't worry about log management, but the quote is definitely relevant for that too :D</p>
+
+          <p>I'm an old fashioned guy, so the first thing that comes to my mind is : "<em>syslog</em>". We could certainly find fancier ways (yes, I'm looking at you, scala-*), but <em>syslog</em> will do for now.</p>
+
+          <p>Once again, I'll use an Ubuntu 12.04 instance in EC2, which happens to have a running <em>rsyslogd</em> :) Let's take a look at the main config file, <em>/etc/rsyslogd.conf.</em></p>
+
+          <p>We'll use UDP to ship our logs. However, because of this <a href="https://bugs.launchpad.net/ubuntu/+source/rsyslog/+bug/789174">unbelievable 2-year old bug</a>, we can't use port 514 (the default port for <em>syslog</em>): we'll use 5140 instead, don't forget to open 5140/UDP in the security group of the EC2 instance!</p>
+
+          <pre><code># provides UDP syslog reception
+$ModLoad imudp
+$UDPServerRun 5140</code></pre>
+
+          <p>Let's now look at the default rules, located in <em>/etc/rsyslog.d/50-default.conf</em>. Let's keep it very simple and make sure we log everything. We'll also add a new template, because the default one misses some useful information, such as priority (duh!).</p>
+
+          <pre><code>$template TraditionalFormatWithPRI,"%pri-text%: %timegenerated% %HOSTNAME% %syslogtag%%msg:::drop-last-lf%\n"
+*.*    /var/log/messages;TraditionalFormatWithPRI</code></pre>
+
+          <p>I hear my sysadmin team booing the ugliness of this setup. Yeah, I love you too, bitchez :-P</p>
+
+          <p>Anyway, this should be enough, now we just need to restart <em>rsyslogd</em>:</p>
+
+          <pre><code>ubuntu@ip-10-34-245-176:~$ sudo <strong>service</strong> rsyslog restart
+
+rsyslog stop/waiting
+rsyslog start/running, process 4639</code></pre>
+
+          <p>Now, let's move back to our Node.js instance and try to talk to our syslog server:</p>
+
+          <pre><code>ubuntu@ip-10-37-166-19:~$ <strong>echo</strong> "<14>Node sez: I see you"|<strong>nc</strong> -u -v -w0 10.34.245.176 5140</code></pre>
+
+          <p>If you tail <code>/var/log/messages</code> on the syslog server, the last line should say:</p>
+
+          <pre><code>user.info<14>: Aug  5 14:40:18 Node sez: I see you</code></pre>
+
+          <p>OK. Now that we have a running syslog server, how is the Node.js app going to send it data? The good news is that there's a large number of packages to do this. The bad news is, most of them don't seem to work very well...</p>
+
+          <p><a href="https://npmjs.org/package/ain2">Ain2</a> worked right out of the box. If you're only looking for a syslog module, I would recommend this one. However, I ended up picking <a href="https://github.com/flatiron/winston"><em>winston</em></a>, an interesting logging framework supporting many different transports (file, http, several databases, etc) including syslog through the <a href="https://github.com/indexzero/winston-syslog"><em>winston-syslog</em></a> module.</p>
+
+          <p>In theory, at least. For the life of me, I couldn't get this thing to work, despite a lot of creative hacking and creative swearing too. Fortunately, <a href="https://github.com/sanpan/winston-syslogUdp"><em>winston-syslogUdp</em></a> works: "<em>It was created when the authors experienced challenges with winston-syslog</em>". Yeah, tell me about it! Good job, guys.</p>
+
+          <p><em>winston</em> requires a newer version of Node.js than the one available in the Ubuntu repo, so let's take care of this upgrade first:</p>
+
+          <pre><code>ubuntu@ip-10-37-166-19:~$ sudo <strong>add-apt-repository</strong> ppa:chris-lea/node.js
+
+ubuntu@ip-10-37-166-19:~$ sudo <strong>apt-get</strong> update
+
+ubuntu@ip-10-37-166-19:~$ sudo <strong>apt-cache</strong> show nodejs|<strong>grep</strong> Version
+Version: 0.10.15-1chl1~precise1
+Version: 0.6.12~dfsg1-1ubuntu1
+
+ubuntu@ip-10-37-166-19:~$ sudo <strong>apt-get</strong> install nodejs=0.10.15-1chl1~precise1
+
+ubuntu@ip-10-37-166-19:~$ <strong>node</strong> -v
+v0.10.15</code></pre>
+
+          <p>Now, let's update the Node.js packages and install the winston packages:</p>
+
+          <pre><code>ubuntu@ip-10-37-166-19:~$ <strong>npm</strong> update
+
+ubuntu@ip-10-37-166-19:~$ <strong>npm</strong> install winston winston-syslogudp</code></pre>
+
+          <p>After some more hacking and swearing (but no drinking, I promise), I adapted my program to use <em>winston</em>, with the following setup:</p>
+
+          <ul>
+            <li>don't log to the console</li>
+            <li>log to a local file</li>
+            <li>log to a remote syslog server</li>
+          </ul>
+
+          <p>Here how you do this, it's really simple:</p>
+
+          <pre><code>// Don't log to console
+winston.remove(winston.transports.Console);
+
+// Log to local file
+winston.add(winston.transports.File, { filename: 'log.txt' });
+
+// Log to remote syslog
+winston.add(winston.transports.Syslog, {"host":"10.34.245.176", "port":"5140", "localhost":"10.37.166.19"});</code></pre>
+
+          <p>This is quite self-explanatory, as you will see below. However, <em>winston</em> can also do some pretty advanced stuff, I encourage you to read the documentation and go log-crazy ;)</p>
+
+          <p>While I was at it, I cleaned the code a little bit and also solved the MongoDB ObjectId validation issue like this. Not sure if it's the canonical way, but it works.</p>
+
+          <pre><code>// Check that the ObjectId is valid
+try {
+    oid = new require('mongodb').ObjectID.createFromHexString(query.id);
+}
+catch (err) {
+    winston.info("Invalid OID, err="+err);
+    response.end();
+    return;
+}</code></pre>
+
+          <p>Here's the full code.</p>
+
+          <pre><code>var http = require('http');
 var url = require('url');
 var mc = require('mc');
 var winston = require('winston');
@@ -486,63 +464,63 @@ require('mongodb').MongoClient.connect("mongodb://USER:PASSWD@ds051067.mongolab.
 });
 // Start the web server on port 8080 and wait for incoming requests
 http.createServer(onRequest).listen(8080);
-winston.info("Web server started");
-</textarea>
-<br />
-<br />
-Let's run this, hit it with some requests and look at the logs :)<br />
-<br />
-<span>ubuntu@ip-10-37-166-19:~$ <b>node</b> www5.js &amp;</span><br />
-<span>ubuntu@ip-10-37-166-19:~$ <b>tail</b> -f log.txt&nbsp;</span><br />
-<span>{"level":"info","message":"*** NODE APP STARTED ***","timestamp":"2013-08-05T15:07:36.678Z"}</span><br />
-<span>{"level":"info","message":"Web server started","timestamp":"2013-08-05T15:07:36.823Z"}</span><br />
-<span>{"level":"info","message":"Connected to memcache","timestamp":"2013-08-05T15:07:36.850Z"}</span><br />
-<span>{"level":"info","message":"Connected to database","timestamp":"2013-08-05T15:07:36.876Z"}</span><br />
-<span>
-<span>ubuntu@ip-10-34-245-176:~$ <b>tail</b> -f /var/log/messages&nbsp;</span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:07:34 10.37.166.19 {"message":"*** NODE APP STARTED ***"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:07:34 10.37.166.19 {"message":"Web server started"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:07:34 10.37.166.19 {"message":"Connected to memcache"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:07:34 10.37.166.19 {"message":"Connected to database"}<!--134--><!--134--><!--134--></span><br />
-<br />
-GET&nbsp;http://ec2-54-247-53-161.eu-west-1.compute.amazonaws.com:8080/?id=0<br />
-<span>local0.info<134>: Aug &nbsp;5 15:11:51 10.37.166.19 {"message":"Request received, id=0"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:11:51 10.37.166.19 {"message":"Finding all documents"}<!--134--><!--134--><!--134--></span><br />
-<span>
-GET&nbsp;http://ec2-54-247-53-161.eu-west-1.compute.amazonaws.com:8080/?id=51e3ce08915082db3df32bf7<br />
-<span>local0.info<134>: Aug &nbsp;5 15:12:19 10.37.166.19 {"message":"Request received, id=51e3ce08915082db3df32bf7"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:12:19 10.37.166.19 {"message":"Cache miss, key 51e3ce08915082db3df32bf7. Querying..."}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:12:19 10.37.166.19 {"message":"Item found: {\"_id\":\"51e3ce08915082db3df32bf7\",\"x\":8}"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:12:19 10.37.166.19 {"message":"Stored key=51e3ce08915082db3df32bf7, value=8"}<!--134--><!--134--><!--134--></span><br />
-<div>
-The same one, right away:<br />
-<span>local0.info<134>: Aug &nbsp;5 15:12:21 10.37.166.19 {"message":"Request received, id=51e3ce08915082db3df32bf7"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:12:21 10.37.166.19 {"message":"Cache hit, &nbsp;key=51e3ce08915082db3df32bf7, value=8"}<!--134--><!--134--><!--134--></span><br />
-<br />
-The same one, more than 60 seconds later :)<br />
-<span>local0.info<134>: Aug &nbsp;5 15:14:15 10.37.166.19 {"message":"Request received, id=51e3ce08915082db3df32bf7"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:14:15 10.37.166.19 {"message":"Cache miss, key 51e3ce08915082db3df32bf7. Querying..."}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:14:15 10.37.166.19 {"message":"Item found: {\"_id\":\"51e3ce08915082db3df32bf7\",\"x\":8}"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:14:15 10.37.166.19 {"message":"Stored key=51e3ce08915082db3df32bf7, value=8"}<!--134--><!--134--><!--134--></span><br />
-<div>
-<div>
-Now, let's try a bogus ObjectID:</div>
-<div>
-GET http://ec2-54-247-53-161.eu-west-1.compute.amazonaws.com:8080/?id=666</div>
-<span>local0.info<134>: Aug &nbsp;5 15:17:22 10.37.166.19 {"message":"Request received, id=666"}<!--134--><!--134--><!--134--></span><br />
-<span>local0.info<134>: Aug &nbsp;5 15:17:22 10.37.166.19 {"message":"Invalid OID, err=Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters"}<!--134--><!--134--><!--134--></span><br />
-<div>
-<div>
-Woohoo! This doesn't crash the app anymore. By the way, if you use Chrome, you certainly see a lot of annoying lines saying:</div>
-<div>
-<div>
-<span>local0.info<134>: Aug &nbsp;5 15:14:15 10.37.166.19 {"message":"Request received, id=undefined"}<!--134--><!--134--><!--134-->
-</div>
-You can ignore them: this is just Chrome trying over and over and over again to get the favorite icon (favicon.ico)... This is a <a href="https://code.google.com/p/chromium/issues/detail?id=39402">known bug</a>.<br />
-<br />
-And so now, our web app haz logz and at&nbsp;131 lines of code (comments included), it's not bloated either.&nbsp;Pretty amazing.<br />
-<br />
-That's it for today. Keep hacking :)
+winston.info("Web server started");</code></pre>
+
+          <p>Let's run this, hit it with some requests and look at the logs :)</p>
+
+          <pre><code>ubuntu@ip-10-37-166-19:~$ <strong>node</strong> www5.js &amp;
+ubuntu@ip-10-37-166-19:~$ <strong>tail</strong> -f log.txt
+{"level":"info","message":"*** NODE APP STARTED ***","timestamp":"2013-08-05T15:07:36.678Z"}
+{"level":"info","message":"Web server started","timestamp":"2013-08-05T15:07:36.823Z"}
+{"level":"info","message":"Connected to memcache","timestamp":"2013-08-05T15:07:36.850Z"}
+{"level":"info","message":"Connected to database","timestamp":"2013-08-05T15:07:36.876Z"}</code></pre>
+
+          <pre><code>ubuntu@ip-10-34-245-176:~$ <strong>tail</strong> -f /var/log/messages
+local0.info<134>: Aug  5 15:07:34 10.37.166.19 {"message":"*** NODE APP STARTED ***"}
+local0.info<134>: Aug  5 15:07:34 10.37.166.19 {"message":"Web server started"}
+local0.info<134>: Aug  5 15:07:34 10.37.166.19 {"message":"Connected to memcache"}
+local0.info<134>: Aug  5 15:07:34 10.37.166.19 {"message":"Connected to database"}</code></pre>
+
+          <p><strong>GET</strong> http://ec2-54-247-53-161.eu-west-1.compute.amazonaws.com:8080/?id=0</p>
+
+          <pre><code>local0.info<134>: Aug  5 15:11:51 10.37.166.19 {"message":"Request received, id=0"}
+local0.info<134>: Aug  5 15:11:51 10.37.166.19 {"message":"Finding all documents"}</code></pre>
+
+          <p><strong>GET</strong> http://ec2-54-247-53-161.eu-west-1.compute.amazonaws.com:8080/?id=51e3ce08915082db3df32bf7</p>
+
+          <pre><code>local0.info<134>: Aug  5 15:12:19 10.37.166.19 {"message":"Request received, id=51e3ce08915082db3df32bf7"}
+local0.info<134>: Aug  5 15:12:19 10.37.166.19 {"message":"Cache miss, key 51e3ce08915082db3df32bf7. Querying..."}
+local0.info<134>: Aug  5 15:12:19 10.37.166.19 {"message":"Item found: {\"_id\":\"51e3ce08915082db3df32bf7\",\"x\":8}"}
+local0.info<134>: Aug  5 15:12:19 10.37.166.19 {"message":"Stored key=51e3ce08915082db3df32bf7, value=8"}</code></pre>
+
+          <p>The same one, right away:</p>
+
+          <pre><code>local0.info<134>: Aug  5 15:12:21 10.37.166.19 {"message":"Request received, id=51e3ce08915082db3df32bf7"}
+local0.info<134>: Aug  5 15:12:21 10.37.166.19 {"message":"Cache hit,  key=51e3ce08915082db3df32bf7, value=8"}</code></pre>
+
+          <p>The same one, more than 60 seconds later :)</p>
+
+          <pre><code>local0.info<134>: Aug  5 15:14:15 10.37.166.19 {"message":"Request received, id=51e3ce08915082db3df32bf7"}
+local0.info<134>: Aug  5 15:14:15 10.37.166.19 {"message":"Cache miss, key 51e3ce08915082db3df32bf7. Querying..."}
+local0.info<134>: Aug  5 15:14:15 10.37.166.19 {"message":"Item found: {\"_id\":\"51e3ce08915082db3df32bf7. Querying..."}
+local0.info<134>: Aug  5 15:14:15 10.37.166.19 {"message":"Stored key=51e3ce08915082db3df32bf7, value=8"}</code></pre>
+
+          <p>Now, let's try a bogus ObjectID:</p>
+
+          <p><strong>GET</strong> http://ec2-54-247-53-161.eu-west-1.compute.amazonaws.com:8080/?id=666</p>
+
+          <pre><code>local0.info<134>: Aug  5 15:17:22 10.37.166.19 {"message":"Request received, id=666"}
+local0.info<134>: Aug  5 15:17:22 10.37.166.19 {"message":"Invalid OID, err=Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters"}</code></pre>
+
+          <p>Woohoo! This doesn't crash the app anymore. By the way, if you use Chrome, you certainly see a lot of annoying lines saying:</p>
+
+          <pre><code>local0.info<134>: Aug  5 15:14:15 10.37.166.19 {"message":"Request received, id=undefined"}</code></pre>
+
+          <p>You can ignore them: this is just Chrome trying over and over and over again to get the favorite icon (favicon.ico)... This is a <a href="https://code.google.com/p/chromium/issues/detail?id=39402">known bug</a>.</p>
+
+          <p>And so now, our web app haz logz and at 131 lines of code (comments included), it's not bloated either. Pretty amazing.</p>
+
+          <p>That's it for today. Keep hacking :)</p>
         </div>
       </article>
     </main>
