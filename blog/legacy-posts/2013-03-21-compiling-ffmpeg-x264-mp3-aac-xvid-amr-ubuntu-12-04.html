@@ -255,118 +255,161 @@
         </header>
         
         <div class="legacy-post-content">
-          <i><span><b>By popular demand (according to page view stats), I've decided to refresh the Dec'2008 post (<a href="2008-20-12-compiling-ffmeg-x264-mp3-xvid-amr-on-ubuntu.html">"HOWTO: compiling ffmpeg + x264 + MP3 + Xvid + AMR on Ubuntu 8.x"</a>)&nbsp;for Ubuntu 12.04. Enjoy :)</i><br />
-<span>
-<span><span>ffmpeg&nbsp;</span><span>is THE audio/video conversion tool. Unfortunately, the default build included in Ubuntu is usually quite outdated, as well as lacking support for many codecs.</span><br /><br /><span>The purpose of this article is to show you how you can build a fresh, up to date version of&nbsp;</span><span>ffmpeg&nbsp;</span><span>supporting (almost) all major codecs. This procedure was successfully performed on a vanilla Ubuntu 12.04 system.<br />
-<br />
-<span><span>0) Prerequisites</span><br /><br />First, we need to enable the 'multiverse" repository in <i>/etc/apt/sources.list, </i>because that's where some of our external libraries live.&nbsp;All you have to do is </span><span>uncomment the line similar to:</span><br />
-<span>add deb http://eu-west-1.ec2.archive.ubuntu.com/ubuntu/ precise multiverse sudo apt-get update</span><br />
-<span>
-Don't forget to refresh the repos:<br />
-<span>$ sudo <b>apt-get</b>&nbsp;</span><span>update</span><br />
-<br />
-<span>Then</span><span>, we need to make sure that </span><span><span>git<span>&nbsp;and <i>svn</i> are installed. We'll need them to fetch source code.</span><br />
-<span>$ sudo <b>apt-get</b> install git subversion</span><br />
-<span>
-<span>Let's also add some mandatory build tools:</span><br />
-<span>$&nbsp;sudo <b>apt-get</b>&nbsp;install build-essential nasm pkg-config&nbsp;</span><br />
-<br />
-<span>Now would be a good time to decide where you're going to build all those sources. Just create a temporary directory anywhere you like (you'll need about 150MB).</span><br />
-<br />
-<span>The <i>x264</i> build requires a recent version of the <i>yasm</i> assembler. Let's take care of it:</span><br />
-<span>$ sudo <b>apt-get</b> remove yasm&nbsp;</span><br />
-<span>$ <b>wget</b> http://www.tortall.net/projects/yasm/releases/yasm-1.2.0.tar.gz&nbsp;</span><br />
-<span>$ <b>tar</b> xvfz yasm-1.2.0.tar.gz&nbsp;</span><br />
-<span>$ cd yasm-1.2.0&nbsp;</span><br />
-<span>$ ./<b>configure</b> --prefix=/usr/local&nbsp;</span><br />
-<span>$ <b>make</b>&nbsp;</span><br />
-<span>$ sudo <b>make</b> install&nbsp;</span><br />
-<span>$ <b>yasm</b> --version</span><br />
-<span>yasm 1.2.0 Compiled on Aug 21 2013.&nbsp;</span><br />
-<span><br /><span>Done!&nbsp;</span><span>One final note before we start building: if you have an existing installation of <i>ffmpeg</i>, you may run into linking issues caused by conflicting library versions. My advice is to remove all existing copies of <i>libav</i>* (<i>libavcodec</i> and so on) which may be present&nbsp;</span><span>in <i>/usr/lib</i>, either by uninstalling them with APT or by deleting the .a and .so files.<br />
-<span><span><span>1) Fetching the&nbsp;<span>ffmpeg</span>&nbsp;sources</span><br /><br /><span>First of all, let's get the latest&nbsp;</span><span>ffmpeg</span><span>&nbsp;source:</span><code></span><span>$ <b>git </b>clone git://source.ffmpeg.org/ffmpeg.git ffmpeg</span><br />
-<span>
-<span>Of course, you could just go ahead with&nbsp;</span><span>configure</span><span>,&nbsp;</span><span>make</span><span>,&nbsp;</span><span>make install</span><span>&nbsp;and be done with it. Unfortunately, it's not that simple. Go ahead, run&nbsp;</span><span>configure</span><span>:</span><br />
-<code><br /><span>$&nbsp;cd ffmpeg<br />$./<b>configure</b>&nbsp;<code><span>--prefix=/usr/local<code><span><br /><span>output removed</span><br />Creating config.mak and config.h...<br />
-<span>Take a closer look at the output, especially at the '</span><span>Enabled encoders</span><span>' section. A number of major formats, like AAC, MP3, x.264 or XViD are missing. Can you live without these? Probably not...</span><br />
-<br />
-<span>Why, oh why are they missing? Take another look at the output of the&nbsp;</span><span>configure</span><span>&nbsp;command:</span><br />
-<code><span>libfaac enabled no<br />libmp3lame enabled no<br />libx264 enabled no<br />libxvid enabled no<br />
-<span>These encoders are missing because they're handled by external libraries which are not part of the&nbsp;</span><span>ffmpeg</span><span>&nbsp;source package. Chasing them all is a bit of a pain in the #$$ and hopefully this article will help!</span><br />
-<br />
-<span><span><span>2) Configuring&nbsp;<span>ffmpeg</span>... and failing</span><br />
-<span>
-<span>Let's go wild and enable these additional encoders:&nbsp;</span>AAC, MP3, Theora, Vorbis, x264, xvid, AMR, GSM. Let's also build<span>&nbsp;shared libraries, which are useful if you're running multiple copies of&nbsp;</span><span>ffmpeg</span><span>:</span><br />
-<span>
-<span><span>$&nbsp;</span>./<b>configure</b> --prefix=/usr/local --enable-gpl --enable-version3 --enable-nonfree --enable-shared --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libfaac --enable-libgsm --enable-libmp3lame --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid&nbsp;</span><br />
-<br />
-<span>It will inevitably lead to something like:</span><br />
-<span><span>ERROR: libfaac not found<br />
-<div>
-<span>That's ok, we haven't installed the external libraries required by our&nbsp;</span><span>ffmpeg</span><span>&nbsp;build. Let's get to it!</span><br />
-<br />
-<span><b><span>3) Installing&nbsp;</span><span>AAC, MP3, Theora, Vorbis, AMR, GSM</span><br />
-<span><b><span>
-<span>These are readily available in the Ubuntu repository, let's add them:</span><br />
-<span><span>$ sudo <b>apt-get</b> install libfaac-dev libmp3lame-dev libtheora-dev libvorbis-dev libopencore-amrnb-dev libopencore-amrwb-dev libgsm1-dev zlib1g-dev libgpac1-dev<br />
-<br />
-<span>4) Installing&nbsp;</span><a href="http://www.videolan.org/developers/x264.html"><i>libx264<span></span><br />
-<br />
-<span>x264 is a free library for encoding H264/AVC video streams.&nbsp;</span><span>It can be installed with APT using '</span><span>apt-get install libx264-dev</span><span>' but let's make sure we have both the latest&nbsp;</span><span>ffmpeg</span><span>&nbsp;and the latest&nbsp;</span><span>x264</span><span>.</span><br />
-<br />
-<span>So, let's fetch the&nbsp;</span><span>x264</span><span>&nbsp;sources and build them:</span><br />
-<code><span>$&nbsp;<b>git</b> clone git://git.videolan.org/x264.git<br />$&nbsp;cd x264<code><span></code><code><span>$ ./<b>configure</b> --prefix=/usr/local --enable-shared<br />$&nbsp;<b>make</b><br />$&nbsp;sudo <b>make</b> install<br />
-<code><span></code>
-<span>5) Installing&nbsp;</span><a href="http://www.xvid.org/">libxvid</a><br />
-<span>
-<span>Let's fetch the&nbsp;</span><span>xvid</span><span>&nbsp;sources and build them:</span><br />
-<code><span><span>$ <b>wget</b> http://downloads.xvid.org/downloads/xvidcore-1.3.2.tar.gz&nbsp;</code><br />
-<code><span><span>$ <b>tar</b> xvfz xvidcore-1.3.2.tar.gz&nbsp;</code><br />
-<code><span><span>$ cd xvidcore-1.3.2/build/generic&nbsp;</code><br />
-<code><span><span>$ ./<b>configure</b> --prefix=/usr/local&nbsp;</code><br />
-<code><span><span>$ <b>make<br />
-<code><span><span>$ sudo <b>make</b> install</code><br />
-<code><span></code><span>6) Configuring&nbsp;<span>ffmpeg</span>... and succeeding!</span><br />
-<code><span>We should have everything we need now. Let's try that&nbsp;</span><span>configure</span><span>&nbsp;command again:</span><br />
-<code><span>$&nbsp;</span><span>./</span><b>configure</b><span>&nbsp;--prefix=/usr/local --enable-gpl --enable-version3 --enable-nonfree --enable-shared --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libfaac --enable-libgsm --enable-libmp3lame --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid<br />
-<code><span><span>output removed</code><br />
-<span>Creating config.mak, config.h, and doc/config.texi...</span><br />
-<div>
-<span>All right, let's build it. Time for coffee(s), this is a rather long build:</span><span><span>$ <b>make<br />
-<span><span>$ sudo <b>make</b> install<br />
-<span><span>$ sudo <b>ldconfig</b> -v<br />
-<span><span></span>
-<span><span>Cool, huh? Now, let's check this new <i>ffmpeg</i>:<br />
-<code><span>$&nbsp;<b>which</b> ffmpeg<br />/usr/local/bin/ffmpeg<br />
-<span>$ <b>ffmpeg</b> -encoders|<b>grep</b> -E "mp3|xvid|aac|gsm|amr|x264|theora|vorbis"</span><br />
-<span><span>ffmpeg version N-55691-gca7f637 Copyright (c) 2000-2013 the FFmpeg developers<br />
-<span><span>&nbsp; built on Aug 21 2013 15:44:17 with gcc 4.6 (Ubuntu/Linaro 4.6.3-1ubuntu5)<br />
-<span><span>&nbsp; configuration: --prefix=/usr/local --enable-gpl --enable-version3 --enable-nonfree --enable-shared --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libfaac --enable-libgsm --enable-libmp3lame --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid<br />
-<span><span>&nbsp; libavutil &nbsp; &nbsp; &nbsp;52. 42.100 / 52. 42.100<br />
-<span><span>&nbsp; libavcodec &nbsp; &nbsp; 55. 29.100 / 55. 29.100<br />
-<span><span>&nbsp; libavformat &nbsp; &nbsp;55. 14.100 / 55. 14.100<br />
-<span><span>&nbsp; libavdevice &nbsp; &nbsp;55. &nbsp;3.100 / 55. &nbsp;3.100<br />
-<span><span>&nbsp; libavfilter &nbsp; &nbsp; 3. 82.100 / &nbsp;3. 82.100<br />
-<span><span>&nbsp; libswscale &nbsp; &nbsp; &nbsp;2. &nbsp;5.100 / &nbsp;2. &nbsp;5.100<br />
-<span><span>&nbsp; libswresample &nbsp; 0. 17.103 / &nbsp;0. 17.103<br />
-<span><span>&nbsp; libpostproc &nbsp; &nbsp;52. &nbsp;3.100 / 52. &nbsp;3.100<br />
-<span><span>&nbsp;V..... libx264 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (codec h264)<br />
-<span><span>&nbsp;V..... libx264rgb &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 RGB (codec h264)<br />
-<span><span>&nbsp;V..... libxvid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;libxvidcore MPEG-4 part 2 (codec mpeg4)<br />
-<span><span>&nbsp;V..... libtheora &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;libtheora Theora (codec theora)<br />
-<span><span>&nbsp;A..X.. aac &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;AAC (Advanced Audio Coding)<br />
-<span><span>&nbsp;A..... libfaac &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;libfaac AAC (Advanced Audio Coding) (codec aac)<br />
-<span><span>&nbsp;A..... libopencore_amrnb &nbsp; &nbsp;OpenCORE AMR-NB (Adaptive Multi-Rate Narrow-Band) (codec amr_nb)<br />
-<span><span>&nbsp;A..... libgsm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; libgsm GSM (codec gsm)<br />
-<span><span>&nbsp;A..... libgsm_ms &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;libgsm GSM Microsoft variant (codec gsm_ms)<br />
-<span><span>&nbsp;A..... libmp3lame &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; libmp3lame MP3 (MPEG audio layer 3) (codec mp3)<br />
-<span><span>&nbsp;A..X.. vorbis &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Vorbis<br />
-<span><span>&nbsp;A..... libvorbis &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;libvorbis (codec vorbis)<br />
-<span><span></span>
-<span><span>Congratulations, your brand new <i>ffmpeg</i> can now encode AAC, MP3, Theora, Vorbis, x264, xvid, AMR and GSM :)<br />
-<br />
-<span>7) Cleaning up (optional)</span><code><span><span><span>If like me you keep building the latest version, you will eventually end up with a lot of&nbsp;<span><span>unnecessary<span><span>&nbsp;libraries in&nbsp;</span><span>/usr/local/lib.&nbsp;</span><span>There's nothing really wrong with old versions, but for the sake of clarity, you may want to remove the old shared libraries, i.e. the ones NOT linked as lib*.so.</span><br />
-<span><br /><span>That's it for today :)
+          <p><em><strong>By popular demand (according to page view stats), I've decided to refresh the Dec'2008 post (<a href="2008-20-12-compiling-ffmeg-x264-mp3-xvid-amr-on-ubuntu.html">"HOWTO: compiling ffmpeg + x264 + MP3 + Xvid + AMR on Ubuntu 8.x"</a>) for Ubuntu 12.04. Enjoy :)</em></p>
+
+          <p><strong>ffmpeg</strong> is THE audio/video conversion tool. Unfortunately, the default build included in Ubuntu is usually quite outdated, as well as lacking support for many codecs.</p>
+
+          <p>The purpose of this article is to show you how you can build a fresh, up to date version of <strong>ffmpeg</strong> supporting (almost) all major codecs. This procedure was successfully performed on a vanilla Ubuntu 12.04 system.</p>
+
+          <h3>0) Prerequisites</h3>
+
+          <p>First, we need to enable the 'multiverse" repository in <em>/etc/apt/sources.list</em>, because that's where some of our external libraries live. All you have to do is uncomment the line similar to:</p>
+
+          <pre><code>deb http://eu-west-1.ec2.archive.ubuntu.com/ubuntu/ precise multiverse</code></pre>
+
+          <p>Don't forget to refresh the repos:</p>
+
+          <pre><code>$ sudo <strong>apt-get</strong> update</code></pre>
+
+          <p>Then, we need to make sure that <strong>git</strong> and <em>svn</em> are installed. We'll need them to fetch source code.</p>
+
+          <pre><code>$ sudo <strong>apt-get</strong> install git subversion</code></pre>
+
+          <p>Let's also add some mandatory build tools:</p>
+
+          <pre><code>$ sudo <strong>apt-get</strong> install build-essential nasm pkg-config</code></pre>
+
+          <p>Now would be a good time to decide where you're going to build all those sources. Just create a temporary directory anywhere you like (you'll need about 150MB).</p>
+
+          <p>The <em>x264</em> build requires a recent version of the <em>yasm</em> assembler. Let's take care of it:</p>
+
+          <pre><code>$ sudo <strong>apt-get</strong> remove yasm
+$ <strong>wget</strong> http://www.tortall.net/projects/yasm/releases/yasm-1.2.0.tar.gz
+$ <strong>tar</strong> xvfz yasm-1.2.0.tar.gz
+$ cd yasm-1.2.0
+$ ./<strong>configure</strong> --prefix=/usr/local
+$ <strong>make</strong>
+$ sudo <strong>make</strong> install
+$ <strong>yasm</strong> --version
+yasm 1.2.0 Compiled on Aug 21 2013.</code></pre>
+
+          <p>Done! One final note before we start building: if you have an existing installation of <em>ffmpeg</em>, you may run into linking issues caused by conflicting library versions. My advice is to remove all existing copies of <em>libav*</em> (<em>libavcodec</em> and so on) which may be present in <em>/usr/lib</em>, either by uninstalling them with APT or by deleting the .a and .so files.</p>
+
+          <h3>1) Fetching the ffmpeg sources</h3>
+
+          <p>First of all, let's get the latest <strong>ffmpeg</strong> source:</p>
+
+          <pre><code>$ <strong>git</strong> clone git://source.ffmpeg.org/ffmpeg.git ffmpeg</code></pre>
+
+          <p>Of course, you could just go ahead with <code>configure</code>, <code>make</code>, <code>make install</code> and be done with it. Unfortunately, it's not that simple. Go ahead, run <code>configure</code>:</p>
+
+          <pre><code>$ cd ffmpeg
+$ ./<strong>configure</strong> --prefix=/usr/local
+output removed
+Creating config.mak and config.h...</code></pre>
+
+          <p>Take a closer look at the output, especially at the 'Enabled encoders' section. A number of major formats, like AAC, MP3, x.264 or XViD are missing. Can you live without these? Probably not...</p>
+
+          <p>Why, oh why are they missing? Take another look at the output of the <code>configure</code> command:</p>
+
+          <pre><code>libfaac enabled no
+libmp3lame enabled no
+libx264 enabled no
+libxvid enabled no</code></pre>
+
+          <p>These encoders are missing because they're handled by external libraries which are not part of the <strong>ffmpeg</strong> source package. Chasing them all is a bit of a pain in the #$$ and hopefully this article will help!</p>
+
+          <h3>2) Configuring ffmpeg... and failing</h3>
+
+          <p>Let's go wild and enable these additional encoders: AAC, MP3, Theora, Vorbis, x264, xvid, AMR, GSM. Let's also build shared libraries, which are useful if you're running multiple copies of <strong>ffmpeg</strong>:</p>
+
+          <pre><code>$ ./<strong>configure</strong> --prefix=/usr/local --enable-gpl --enable-version3 --enable-nonfree --enable-shared --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libfaac --enable-libgsm --enable-libmp3lame --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid</code></pre>
+
+          <p>It will inevitably lead to something like:</p>
+
+          <pre><code>ERROR: libfaac not found</code></pre>
+
+          <p>That's ok, we haven't installed the external libraries required by our <strong>ffmpeg</strong> build. Let's get to it!</p>
+
+          <h3>3) Installing AAC, MP3, Theora, Vorbis, AMR, GSM</h3>
+
+          <p>These are readily available in the Ubuntu repository, let's add them:</p>
+
+          <pre><code>$ sudo <strong>apt-get</strong> install libfaac-dev libmp3lame-dev libtheora-dev libvorbis-dev libopencore-amrnb-dev libopencore-amrwb-dev libgsm1-dev zlib1g-dev libgpac1-dev</code></pre>
+
+          <h3>4) Installing <a href="http://www.videolan.org/developers/x264.html"><em>libx264</em></a></h3>
+
+          <p>x264 is a free library for encoding H264/AVC video streams. It can be installed with APT using '<code>apt-get install libx264-dev</code>' but let's make sure we have both the latest <strong>ffmpeg</strong> and the latest <strong>x264</strong>.</p>
+
+          <p>So, let's fetch the <strong>x264</strong> sources and build them:</p>
+
+          <pre><code>$ <strong>git</strong> clone git://git.videolan.org/x264.git
+$ cd x264
+$ ./<strong>configure</strong> --prefix=/usr/local --enable-shared
+$ <strong>make</strong>
+$ sudo <strong>make</strong> install</code></pre>
+
+          <h3>5) Installing <a href="http://www.xvid.org/">libxvid</a></h3>
+
+          <p>Let's fetch the <strong>xvid</strong> sources and build them:</p>
+
+          <pre><code>$ <strong>wget</strong> http://downloads.xvid.org/downloads/xvidcore-1.3.2.tar.gz
+$ <strong>tar</strong> xvfz xvidcore-1.3.2.tar.gz
+$ cd xvidcore-1.3.2/build/generic
+$ ./<strong>configure</strong> --prefix=/usr/local
+$ <strong>make</strong>
+$ sudo <strong>make</strong> install</code></pre>
+
+          <h3>6) Configuring ffmpeg... and succeeding!</h3>
+
+          <p>We should have everything we need now. Let's try that <code>configure</code> command again:</p>
+
+          <pre><code>$ ./<strong>configure</strong> --prefix=/usr/local --enable-gpl --enable-version3 --enable-nonfree --enable-shared --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libfaac --enable-libgsm --enable-libmp3lame --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid
+output removed
+Creating config.mak, config.h, and doc/config.texi...</code></pre>
+
+          <p>All right, let's build it. Time for coffee(s), this is a rather long build:</p>
+
+          <pre><code>$ <strong>make</strong>
+$ sudo <strong>make</strong> install
+$ sudo <strong>ldconfig</strong> -v</code></pre>
+
+          <p>Cool, huh? Now, let's check this new <em>ffmpeg</em>:</p>
+
+          <pre><code>$ <strong>which</strong> ffmpeg
+/usr/local/bin/ffmpeg
+$ <strong>ffmpeg</strong> -encoders|<strong>grep</strong> -E "mp3|xvid|aac|gsm|amr|x264|theora|vorbis"
+ffmpeg version N-55691-gca7f637 Copyright (c) 2000-2013 the FFmpeg developers
+  built on Aug 21 2013 15:44:17 with gcc 4.6 (Ubuntu/Linaro 4.6.3-1ubuntu5)
+  configuration: --prefix=/usr/local --enable-gpl --enable-version3 --enable-nonfree --enable-shared --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libfaac --enable-libgsm --enable-libmp3lame --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid
+  libavutil      52. 42.100 / 52. 42.100
+  libavcodec     55. 29.100 / 55. 29.100
+  libavformat    55. 14.100 / 55. 14.100
+  libavdevice    55.  3.100 / 55.  3.100
+  libavfilter     3. 82.100 /  3. 82.100
+  libswscale      2.  5.100 /  2.  5.100
+  libswresample   0. 17.103 /  0. 17.103
+  libpostproc    52.  3.100 / 52.  3.100
+V..... libx264             libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (codec h264)
+V..... libx264rgb          libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 RGB (codec h264)
+V..... libxvid             libxvidcore MPEG-4 part 2 (codec mpeg4)
+V..... libtheora           libtheora Theora (codec theora)
+A..X.. aac                 AAC (Advanced Audio Coding)
+A..... libfaac             libfaac AAC (Advanced Audio Coding) (codec aac)
+A..... libopencore_amrnb   OpenCORE AMR-NB (Adaptive Multi-Rate Narrow-Band) (codec amr_nb)
+A..... libgsm              libgsm GSM (codec gsm)
+A..... libgsm_ms           libgsm GSM Microsoft variant (codec gsm_ms)
+A..... libmp3lame          libmp3lame MP3 (MPEG audio layer 3) (codec mp3)
+A..X.. vorbis              Vorbis
+A..... libvorbis           libvorbis (codec vorbis)</code></pre>
+
+          <p>Congratulations, your brand new <em>ffmpeg</em> can now encode AAC, MP3, Theora, Vorbis, x264, xvid, AMR and GSM :)</p>
+
+          <h3>7) Cleaning up (optional)</h3>
+
+          <p>If like me you keep building the latest version, you will eventually end up with a lot of unnecessary libraries in <code>/usr/local/lib</code>. There's nothing really wrong with old versions, but for the sake of clarity, you may want to remove the old shared libraries, i.e. the ones NOT linked as lib*.so.</p>
+
+          <p>That's it for today :)</p>
         </div>
       </article>
     </main>
