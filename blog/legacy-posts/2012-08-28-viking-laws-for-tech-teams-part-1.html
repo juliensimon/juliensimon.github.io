@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Legacy blog post by Julien Simon">
+  <meta name="author" content="Julien Simon">
+  <meta name="robots" content="index, follow">
+  
+  <title>Viking Laws For Tech Teams Part 1 – Julien Simon</title>
+  
+  <!-- Umami Analytics -->
+  <script>
+    window.addEventListener('load', function() {
+      var script = document.createElement('script');
+      script.src = 'https://cloud.umami.is/script.js';
+      script.setAttribute('data-website-id', '27550dad-d418-4f5d-ad1b-dab573da1020');
+      document.head.appendChild(script);
+    });
+  </script>
+  
+  <!-- Resource hints for faster DNS resolution and connections -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../css/styles.css">
+  <link rel="stylesheet" href="../../css/social-icons.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+  
+  <!-- Legacy post specific styles -->
+  <style>
+    .legacy-post-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--space-6);
+      background: var(--background);
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .legacy-post-header {
+      text-align: center;
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-6);
+      border-bottom: 2px solid var(--border);
+    }
+    
+    .legacy-post-title {
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: var(--space-4);
+      line-height: 1.2;
+    }
+    
+    .legacy-post-meta {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    
+    .legacy-post-date {
+      background: var(--surface);
+      padding: var(--space-2) var(--space-3);
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    
+    .legacy-post-category {
+      background: var(--primary-color);
+      color: white;
+      padding: var(--space-2) var(--space-3);
+      border-radius: 6px;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: var(--text-xs);
+      letter-spacing: 0.5px;
+    }
+    
+    .legacy-post-content {
+      line-height: 1.8;
+      color: var(--text-primary);
+      font-size: var(--text-base);
+    }
+    
+    .legacy-post-content h1,
+    .legacy-post-content h2,
+    .legacy-post-content h3,
+    .legacy-post-content h4 {
+      color: var(--text-primary);
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-4);
+      font-weight: 600;
+    }
+    
+    .legacy-post-content h1 { font-size: var(--text-2xl); }
+    .legacy-post-content h2 { font-size: var(--text-xl); }
+    .legacy-post-content h3 { font-size: var(--text-lg); }
+    .legacy-post-content h4 { font-size: var(--text-base); }
+    
+    .legacy-post-content p {
+      margin-bottom: var(--space-4);
+    }
+    
+    .legacy-post-content ul,
+    .legacy-post-content ol {
+      margin-bottom: var(--space-4);
+      padding-left: var(--space-6);
+    }
+    
+    .legacy-post-content li {
+      margin-bottom: var(--space-2);
+    }
+    
+    .legacy-post-content code {
+      background: var(--surface);
+      color: var(--primary-color);
+      padding: var(--space-1) var(--space-2);
+      border-radius: 4px;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: var(--text-sm);
+    }
+    
+    .legacy-post-content pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: var(--space-4);
+      overflow-x: auto;
+      margin: var(--space-6) 0;
+    }
+    
+    .legacy-post-content pre code {
+      background: none;
+      padding: 0;
+      color: var(--text-primary);
+    }
+    
+    .legacy-post-content blockquote {
+      border-left: 4px solid var(--primary-color);
+      padding-left: var(--space-4);
+      margin: var(--space-6) 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    
+    .legacy-post-content a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    
+    .legacy-post-content a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+    
+    .legacy-post-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content .separator {
+      clear: both;
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content .gist {
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-6) 0;
+    }
+    
+    .legacy-post-content th,
+    .legacy-post-content td {
+      padding: var(--space-2) var(--space-3);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .legacy-post-content th {
+      background: var(--surface);
+      font-weight: 600;
+    }
+    
+    .legacy-post-content strong,
+    .legacy-post-content b {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .legacy-post-content em,
+    .legacy-post-content i {
+      font-style: italic;
+    }
+    
+      background: var(--primary-color);
+      color: white;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: var(--text-sm);
+    }
+    
+    @media (max-width: 768px) {
+      .legacy-post-container {
+        padding: var(--space-4);
+        margin: var(--space-4);
+      }
+      
+      .legacy-post-title {
+        font-size: var(--text-2xl);
+      }
+      
+      .legacy-post-meta {
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="../../assets/julien.webp" alt="Julien Simon" class="profile-image">
+      <h1>Julien Simon</h1>
+      <p class="title">Chief Evangelist @ Arcee AI</p>
+      <p class="subtitle">World Expert in Practical AI</p>
+    </header>
+
+    <main>
+      <article class="legacy-post-container">
+        <header class="legacy-post-header">
+          <h1 class="legacy-post-title">Viking Laws For Tech Teams Part 1</h1>
+          <div class="legacy-post-meta">
+            <span class="legacy-post-date">August 28, 2012</span>
+            <span class="legacy-post-category">Cloud & AWS</span>
+          </div>
+        </header>
+        
+        <div class="legacy-post-content">
+          <div>
+Viking laws... An oxymoron to most people, I'm sure. That's not surprising given that the Men from the North have long been depicted as drunken primitive barbarians, only interested in pillaging and looting (what's wrong with that anyway?). After all, History is written by the victors, in this case Christian victors who probably had no fascination for paganism and polytheism. Most of what we really know about the Vikings comes from the famous Sagas, which were only written&nbsp;at the very end of their civilization (12th-14th centuries).</div>
+<div>
+<div>
+According to these Sagas, Vikings *were* civilized and organized. Actually, the oldest parliament in the world is the Icelandic parliament founded in 930AD in <a href="http://en.wikipedia.org/wiki/Thingvellir" target="_blank">Þingvellir</a>: a stunning location with cliffs and waterfalls, straight out of Wagner's Ring (do not miss it if you ever visit Iceland). Free men met there regularly to solve disputes and take decisions according to law, which was memorized and recited by the "law speaker". And for the next three hundred years, "one man, one vote" was the rule.</div>
+<div>
+<div>
+Some of these laws, or at least their underlying principles, have been documented around 1250 in the "<a href="http://en.wikipedia.org/wiki/Konungs_skuggsj%C3%A1" target="_blank"><i>King's Mirror", an ancient Norwegian text meant for the education of the King's son on commerce, military tactics, etc.&nbsp;A modern, business-oriented summary of these principles appeared some years ago in a book called "<i>The Viking's Guide to Good Business</i>" (ISBN-10: 997985622X). It's a nice, short read and you should be able to grab a copy for $0.99 :)<br />
+<br />
+Another set of Viking laws is floating around, although I can't seem to pinpoint their origin:</div>
+<div>
+<div>
+BE BRAVE AND AGGRESSIVE&nbsp;</div>
+<ul>
+<li><a href="http://juliensimon.blogspot.fr/2012/12/viking-laws-for-tech-teams-part-6-be.html">Be direct</a>&nbsp;</li>
+<li>Seize all opportunities&nbsp;</li>
+<li>Use varying methods of attack&nbsp;</li>
+<li>Be versatile and agile&nbsp;</li>
+<li><a href="http://juliensimon.blogspot.ie/2013/09/viking-laws-for-tech-teams-part-7.html">Attack one target at a time</a>&nbsp;</li>
+<li>Do not plan everything in detail&nbsp;
+<div>
+BE PREPARED&nbsp;</div>
+<ul>
+<li><a href="http://juliensimon.blogspot.fr/2012/09/viking-laws-for-tech-teams-part-4-keep.html">Keep your weapons in good condition</a>&nbsp;</li>
+<li><a href="http://juliensimon.blogspot.fr/2012/08/viking-laws-for-tech-teams-part-2-keep.html">Keep yourself in shape
+<li><a href="http://juliensimon.blogspot.fr/2012/08/viking-laws-for-tech-teams-part-3-find.html">Find good battle comrades</a>&nbsp;</li>
+<li><a href="http://juliensimon.blogspot.fr/2012/09/viking-laws-for-tech-teams-part-5-agree.html">Agree on important points</a>&nbsp;</li>
+<li>Choose one chief&nbsp;
+<div>
+BE A GOOD MERCHANT&nbsp;</div>
+<ul>
+<li>Find out what the market needs&nbsp;</li>
+<li>Do not make promises you cannot keep&nbsp;</li>
+<li>Do not demand&nbsp;over-payment&nbsp;</li>
+<li>Arrange things so that you can return&nbsp;
+<div>
+KEEP THE CAMP IN ORDER&nbsp;</div>
+<ul>
+<li>Keep things tidy and organised&nbsp;</li>
+<li>Arrange enjoyable activities which strengthen the group&nbsp;</li>
+<li>Make sure everybody does useful work&nbsp;</li>
+<li>Consult all members of the group for advice
+<span>
+<span>And so, in my next posts, I will indeed go medieval on you and discuss how this&nbsp;wisdom from the past may apply to today's agile, high-performing tech warriors. I might even use some real-life examples (PH34R!), although names&nbsp;will be changed to protect the stupid and incompetent.</span><br />
+<div>
+<div>
+Oh, I'm afraid none it of will be remotely PMP, Prince or ITIL compliant. It will be fun, then :)</div>
+<br />
+        </div>
+      </article>
+    </main>
+
+    <footer>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../experience.html">Experience</a>
+        <a href="../../publications.html">Publications</a>
+        <a href="../../code.html">Code</a>
+        <a href="../../books.html">Books</a>
+        <a href="../../youtube.html">YouTube</a>
+        <a href="../../computers.html">Computers</a>
+        <a href="../../legacy-posts.html">Legacy Posts</a>
+      </nav>
+    </footer>
+  </div>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>

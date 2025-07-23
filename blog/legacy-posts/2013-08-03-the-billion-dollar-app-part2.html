@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Legacy blog post by Julien Simon">
+  <meta name="author" content="Julien Simon">
+  <meta name="robots" content="index, follow">
+  
+  <title>The Billion Dollar App Part2 – Julien Simon</title>
+  
+  <!-- Umami Analytics -->
+  <script>
+    window.addEventListener('load', function() {
+      var script = document.createElement('script');
+      script.src = 'https://cloud.umami.is/script.js';
+      script.setAttribute('data-website-id', '27550dad-d418-4f5d-ad1b-dab573da1020');
+      document.head.appendChild(script);
+    });
+  </script>
+  
+  <!-- Resource hints for faster DNS resolution and connections -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../css/styles.css">
+  <link rel="stylesheet" href="../../css/social-icons.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+  
+  <!-- Legacy post specific styles -->
+  <style>
+    .legacy-post-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--space-6);
+      background: var(--background);
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .legacy-post-header {
+      text-align: center;
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-6);
+      border-bottom: 2px solid var(--border);
+    }
+    
+    .legacy-post-title {
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: var(--space-4);
+      line-height: 1.2;
+    }
+    
+    .legacy-post-meta {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    
+    .legacy-post-date {
+      background: var(--surface);
+      padding: var(--space-2) var(--space-3);
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    
+    .legacy-post-category {
+      background: var(--primary-color);
+      color: white;
+      padding: var(--space-2) var(--space-3);
+      border-radius: 6px;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: var(--text-xs);
+      letter-spacing: 0.5px;
+    }
+    
+    .legacy-post-content {
+      line-height: 1.8;
+      color: var(--text-primary);
+      font-size: var(--text-base);
+    }
+    
+    .legacy-post-content h1,
+    .legacy-post-content h2,
+    .legacy-post-content h3,
+    .legacy-post-content h4 {
+      color: var(--text-primary);
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-4);
+      font-weight: 600;
+    }
+    
+    .legacy-post-content h1 { font-size: var(--text-2xl); }
+    .legacy-post-content h2 { font-size: var(--text-xl); }
+    .legacy-post-content h3 { font-size: var(--text-lg); }
+    .legacy-post-content h4 { font-size: var(--text-base); }
+    
+    .legacy-post-content p {
+      margin-bottom: var(--space-4);
+    }
+    
+    .legacy-post-content ul,
+    .legacy-post-content ol {
+      margin-bottom: var(--space-4);
+      padding-left: var(--space-6);
+    }
+    
+    .legacy-post-content li {
+      margin-bottom: var(--space-2);
+    }
+    
+    .legacy-post-content code {
+      background: var(--surface);
+      color: var(--primary-color);
+      padding: var(--space-1) var(--space-2);
+      border-radius: 4px;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: var(--text-sm);
+    }
+    
+    .legacy-post-content pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: var(--space-4);
+      overflow-x: auto;
+      margin: var(--space-6) 0;
+    }
+    
+    .legacy-post-content pre code {
+      background: none;
+      padding: 0;
+      color: var(--text-primary);
+    }
+    
+    .legacy-post-content blockquote {
+      border-left: 4px solid var(--primary-color);
+      padding-left: var(--space-4);
+      margin: var(--space-6) 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    
+    .legacy-post-content a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    
+    .legacy-post-content a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+    
+    .legacy-post-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content .separator {
+      clear: both;
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content .gist {
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-6) 0;
+    }
+    
+    .legacy-post-content th,
+    .legacy-post-content td {
+      padding: var(--space-2) var(--space-3);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .legacy-post-content th {
+      background: var(--surface);
+      font-weight: 600;
+    }
+    
+    .legacy-post-content strong,
+    .legacy-post-content b {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .legacy-post-content em,
+    .legacy-post-content i {
+      font-style: italic;
+    }
+    
+      background: var(--primary-color);
+      color: white;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: var(--text-sm);
+    }
+    
+    @media (max-width: 768px) {
+      .legacy-post-container {
+        padding: var(--space-4);
+        margin: var(--space-4);
+      }
+      
+      .legacy-post-title {
+        font-size: var(--text-2xl);
+      }
+      
+      .legacy-post-meta {
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="../../assets/julien.webp" alt="Julien Simon" class="profile-image">
+      <h1>Julien Simon</h1>
+      <p class="title">Chief Evangelist @ Arcee AI</p>
+      <p class="subtitle">World Expert in Practical AI</p>
+    </header>
+
+    <main>
+      <article class="legacy-post-container">
+        <header class="legacy-post-header">
+          <h1 class="legacy-post-title">The Billion Dollar App Part2</h1>
+          <div class="legacy-post-meta">
+            <span class="legacy-post-date">August 3, 2013</span>
+            <span class="legacy-post-category">Cloud & AWS</span>
+          </div>
+        </header>
+        
+        <div class="legacy-post-content">
+          Let's elaborate on the <a href="http://juliensimon.blogspot.fr/2013/07/the-billion-dollar-app-nodejs-mongodb.html">Node.js&nbsp;+ MongoDB</a> app. I lied: it's not really worth $1 billion... yet. It surely will once we've added <i>memcached</i> to the mix ;)<br />
+<br />
+Once again, we'll use a couple of EC2 instances running Ubuntu 12.04: one for the Node.js web server and one for the <i>memcached</i> server. MongoDB will still be served from MongoLab.<br />
+<br />
+Start your instances and let's configure our <i>memcached</i> server first. Since it requires port 11211 to be open, we have to add a couple of rules for 11211/UDP and 11211/TCP in the security group attached to the instance.<br />
+<br />
+Then, let's install <i>memcached</i>:<br />
+<span>ubuntu@ip-10-234-177-74:~$ sudo </span><b>apt-get</b><span> install memcached</span><br />
+<div>
+<div>
+We also need to edit <span>/etc/memcached.conf</span> in order&nbsp;to set the '<i>-l</i>' parameter to the correct IP address (running&nbsp;<i>ifconfig eth0</i>&nbsp;will confirm the right one to use). In my case, it is 10.234.177.74.<br />
+<br />
+Then, we need to restart <i>memcached:
+<div>
+<div>
+<div>
+<span>ubuntu@ip-10-234-177-74:~$ sudo <b>service</b> memcached restart
+</div>
+<div>
+<div>
+<div>
+Now, let's go to the Node.js instance and check that we can access the <i>memcached</i> server:</div>
+<div>
+<div>
+ubuntu@ip-10-48-161-115:~$&nbsp;<b>echo</b>&nbsp;stats|<b>nc</b>&nbsp;10.234.177.74 11211</div>
+<br />
+If you see a lot of stats like I do, you're good to go. If not, double-check the steps above (rules, config file, restart).
+<div>
+<div>
+Now, let's install the <i>memcached</i> client for Node.js with <i>npm</i>, the Node.js package manager. There are several clients out there, <a href="http://overclocked.com/mc/">mc</a> looks pretty good and well-maintained :)</div>
+<div>
+<div>
+<div>
+<span>ubuntu@ip-10-48-161-115:~$&nbsp;</span><b>npm</b><span>&nbsp;</span><span>install mc
+</div>
+<div>
+<div>
+That's it. Now, let's write some code, yeah! Here's the idea:<br />
+<ul>
+<li><span>call the web server with a MongoDB ObjectId, e.g.&nbsp;<i>http://ec2-54-216-3-139.eu-west-1.compute.amazonaws.com:8080/?id=51e3ce08915082db3df32bf7</li>
+<li><span>query the <i>memcached</i> server
+<li><span>if we hit, job done!
+<li><span>if we miss, query the MongoDB server and update the cache
+<textarea cols="80" rows="100">var http = require('http');
+var url = require('url');
+var mc = require('mc');
+var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
+var collection;
+function onRequest(request, response) {
+        // No id parameter -->  do nothing
+        // id=0 --> list all documents
+        // id=SOME_OBJECT_ID --> show the 'x' value for this document
+        var query = url.parse(request.url,true).query;
+        console.log("Request received, id="+query.id);
+        response.writeHead(200, {"Content-Type": "text/html"});
+        response.write("<html>");
+        // XXX Missing check: query.id must be a proper ObjectId, i.e. 12-byte hex value
+        if (query.id == null) {
+                // No id parameter -->  do nothing
+                response.write("Nothing to do, bleh");
+                response.write("</HTML>");
+                response.end();
+        }
+        else if (query.id == "0") {
+                // id=0 --> list all documents
+                collection.find().toArray(function (err, items) {
+                        console.log ("Finding all documents");
+                        for (var i = 0; i < items.length; i++) {
+                                response.write(JSON.stringify(items[i])+"<br>");
+                        }
+                        response.write("</HTML>");
+                        response.end();
+                });
+        }
+        else {
+                // id=SOME_OBJECT_ID --> show the 'x' value for this document
+                // Check the cache first
+                MemcacheClient.get(query.id, function(err, result) {
+                if (!err) {
+                        // Key found, display value
+                        console.log("Cache hit,  key="+query.id+", value="+result[query.id]);
+                        response.write("x="+result[query.id]);
+                        response.write("</HTML>");
+                        response.end();
+                }
+                else {
+                        // Key not found, fetch value from DB
+                        console.log("Cache miss, key "+query.id+". Querying...");
+                        collection.findOne({"_id": new ObjectId(query.id)}, function (err, item) {
+                                if (item == null) {
+                                        response.write("Item does not exist, duh");
+                                }
+                                else {
+                                console.log("Item found: "+JSON.stringify(item));
+                                // Display value
+                                response.write(JSON.stringify(item));
+                                // Store value in cache with a 60 second TTL
+                                MemcacheClient.set(query.id, item.x, { flags: 0, exptime: 60}, function(err, status) {
+                                        if (!err) {
+                                                console.log("Stored key="+query.id+", value="+item.x);
+                                        }
+                                        else {
+                                                console.log("Couldn't store key="+query.id+", error="+err);
+                                        }
+                                });
+                                }
+                                response.write("</HTML>");
+                                response.end();
+                        });
+                }
+                });
+        }
+}
+// Connect to the memcached server with its private AWS IP address
+MemcacheClient = new mc.Client("10.234.177.74");
+MemcacheClient.connect(function() {
+        console.log("Connected to memcache");
+});
+// Connect to the MongoDB server hosted at MongoLab
+MongoClient.connect("mongodb://USER:PASSWD@ds051067.mongolab.com:51067/mongolab-test", function(err, db) {
+        if (!err) {
+                console.log("Connected to database");
+                collection = db.collection("collection1");
+        }
+        else {
+                console.log("Dude, where's my DB?");
+        }
+});
+// Start the web server on port 8080 and wait for incoming requests
+http.createServer(onRequest).listen(8080);
+console.log("Web server started");
+</textarea>
+<br />
+<div>
+<div>
+Alright, let's run this and hit it with some requests :<br />
+<span>Mac:~ julien$ </span><span>curl</span><span> http://ec2-54-216-3-139.eu-west-1.compute.amazonaws.com:8080/</span><span>?id=0</span><br />
+<span>{"_id":"51e3ce08915082db3df32bf0","x":1}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bf1","x":2}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bf2","x":3}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bf3","x":4}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bf4","x":5}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bf5","x":6}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bf6","x":7}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bf7","x":8}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bf8","x":9}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bf9","x":10}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bfa","x":11}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bfb","x":12}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bfc","x":13}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bfd","x":14}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bfe","x":15}</span><br />
+<span>{"_id":"51e3ce08915082db3df32bff","x":16}</span><br />
+<span>{"_id":"51e3ce08915082db3df32c00","x":17}</span><br />
+<span>{"_id":"51e3ce08915082db3df32c01","x":18}</span><br />
+<span>{"_id":"51e3ce08915082db3df32c02","x":19}</span><br />
+<span>{"_id":"51e3ce08915082db3df32c03","x":20}</span><br />
+<span>{"_id":"51e3ce08915082db3df32c04","x":21}</span><br />
+<span>{"_id":"51e3ce08915082db3df32c05","x":22}</span><br />
+<span>{"_id":"51e3ce08915082db3df32c06","x":23}</span><br />
+<span>{"_id":"51e3ce08915082db3df32c07","x":24}</span><br />
+<span>{"_id":"51e3ce08915082db3df32c08","x":25}</span><br />
+</div>
+<br />
+<span>Mac:~ julien$&nbsp;</span><span>curl</span><span>&nbsp;http://ec2-54-216-3-139.eu-west-1.compute.amazonaws.com:8080/</span><span>?id=</span><span>51e3ce08915082db3df32bfc</span><br />
+<span>{"_id":"51e3ce08915082db3df32bfc","x":13}</span><br />
+<br />
+Console output:<br />
+<span>Request received, id=51e3ce08915082db3df32bfc</span><br />
+<span>Cache miss, key 51e3ce08915082db3df32bfc. Querying...</span><br />
+<span>Item found: {"_id":"51e3ce08915082db3df32bfc","x":13}</span><br />
+<span>Stored key=51e3ce08915082db3df32bfc, value=13</span><br />
+<span>
+<i>Memcached</i> stats:<br />
+<div>
+<span>ubuntu@ip-10-234-177-74:~$ echo stats|nc 10.234.177.74 11211|grep [s,g]et
+<span>STAT cmd_get 1</span><br />
+<span>STAT cmd_set 1</span><br />
+<span>STAT get_hits 0</span><br />
+<span>STAT get_misses 1</span><br />
+<br />
+Let's try the same request again (within 60 seconds!):&nbsp;+1 get,&nbsp;+1 hit!<br />
+<span>Request received, id=51e3ce08915082db3df32bfc</span><br />
+<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bfc, value=13</span><br />
+<br />
+<span>STAT cmd_get 2</span><br />
+<span>STAT cmd_set 1</span><br />
+<span>STAT get_hits 1</span><br />
+<span>STAT get_misses 1</span><br />
+<br />
+<div>
+And 60 seconds later, the memcached item should have disappeared:&nbsp;+1 get, +1 miss,&nbsp;+1 set</div>
+<div>
+<div>
+<span>Cache miss, key 51e3ce08915082db3df32bfc. Querying...
+<div>
+<span>Item found: {"_id":"51e3ce08915082db3df32bfc","x":13}
+<div>
+<span>Stored key=51e3ce08915082db3df32bfc, value=13
+</div>
+<div>
+<div>
+<span>STAT cmd_get 3</span><br />
+<span>STAT cmd_set 2</span><br />
+<span>STAT get_hits 1</span><br />
+<span>STAT get_misses 2</span><br />
+<span>
+Pretty cool, huh? A basic Node.js&nbsp;+ <i>memcached</i>&nbsp;+ MongoDB app in less than 100 lines of code, comments and logging included.<br />
+<br />
+However, the really great stuff is what you DON'T see:<br />
+<ul>
+<li>Node.js automatically handles asynchronous requests and callbacks,</li>
+<li>Building a <i>memcached</i> cluster will hardly have any impact on the application code,&nbsp;</li>
+<li>Building a MongoDB cluster (replica sets, sharding) will be completely transparent.</li>
+<li>And of course, you can easily create your own pool of Node.js servers and load balance them.
+<div>
+That's A LOT of scalability for free as far as the application developer is concerned.</div>
+<div>
+<div>
+Food for thought... Something tells me this isn't the last post on these topics. I hope you're enjoying this as much as I am. Time for a drink, I'm exhausted. Cheers!
+        </div>
+      </article>
+    </main>
+
+    <footer>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../experience.html">Experience</a>
+        <a href="../../publications.html">Publications</a>
+        <a href="../../code.html">Code</a>
+        <a href="../../books.html">Books</a>
+        <a href="../../youtube.html">YouTube</a>
+        <a href="../../computers.html">Computers</a>
+        <a href="../../legacy-posts.html">Legacy Posts</a>
+      </nav>
+    </footer>
+  </div>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Legacy blog post by Julien Simon">
+  <meta name="author" content="Julien Simon">
+  <meta name="robots" content="index, follow">
+  
+  <title>Attach One Target At A Time – Julien Simon</title>
+  
+  <!-- Umami Analytics -->
+  <script>
+    window.addEventListener('load', function() {
+      var script = document.createElement('script');
+      script.src = 'https://cloud.umami.is/script.js';
+      script.setAttribute('data-website-id', '27550dad-d418-4f5d-ad1b-dab573da1020');
+      document.head.appendChild(script);
+    });
+  </script>
+  
+  <!-- Resource hints for faster DNS resolution and connections -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../css/styles.css">
+  <link rel="stylesheet" href="../../css/social-icons.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+  
+  <!-- Legacy post specific styles -->
+  <style>
+    .legacy-post-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--space-6);
+      background: var(--background);
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .legacy-post-header {
+      text-align: center;
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-6);
+      border-bottom: 2px solid var(--border);
+    }
+    
+    .legacy-post-title {
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: var(--space-4);
+      line-height: 1.2;
+    }
+    
+    .legacy-post-meta {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    
+    .legacy-post-date {
+      background: var(--surface);
+      padding: var(--space-2) var(--space-3);
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    
+    .legacy-post-category {
+      background: var(--primary-color);
+      color: white;
+      padding: var(--space-2) var(--space-3);
+      border-radius: 6px;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: var(--text-xs);
+      letter-spacing: 0.5px;
+    }
+    
+    .legacy-post-content {
+      line-height: 1.8;
+      color: var(--text-primary);
+      font-size: var(--text-base);
+    }
+    
+    .legacy-post-content h1,
+    .legacy-post-content h2,
+    .legacy-post-content h3,
+    .legacy-post-content h4 {
+      color: var(--text-primary);
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-4);
+      font-weight: 600;
+    }
+    
+    .legacy-post-content h1 { font-size: var(--text-2xl); }
+    .legacy-post-content h2 { font-size: var(--text-xl); }
+    .legacy-post-content h3 { font-size: var(--text-lg); }
+    .legacy-post-content h4 { font-size: var(--text-base); }
+    
+    .legacy-post-content p {
+      margin-bottom: var(--space-4);
+    }
+    
+    .legacy-post-content ul,
+    .legacy-post-content ol {
+      margin-bottom: var(--space-4);
+      padding-left: var(--space-6);
+    }
+    
+    .legacy-post-content li {
+      margin-bottom: var(--space-2);
+    }
+    
+    .legacy-post-content code {
+      background: var(--surface);
+      color: var(--primary-color);
+      padding: var(--space-1) var(--space-2);
+      border-radius: 4px;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: var(--text-sm);
+    }
+    
+    .legacy-post-content pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: var(--space-4);
+      overflow-x: auto;
+      margin: var(--space-6) 0;
+    }
+    
+    .legacy-post-content pre code {
+      background: none;
+      padding: 0;
+      color: var(--text-primary);
+    }
+    
+    .legacy-post-content blockquote {
+      border-left: 4px solid var(--primary-color);
+      padding-left: var(--space-4);
+      margin: var(--space-6) 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    
+    .legacy-post-content a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    
+    .legacy-post-content a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+    
+    .legacy-post-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content .separator {
+      clear: both;
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content .gist {
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-6) 0;
+    }
+    
+    .legacy-post-content th,
+    .legacy-post-content td {
+      padding: var(--space-2) var(--space-3);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .legacy-post-content th {
+      background: var(--surface);
+      font-weight: 600;
+    }
+    
+    .legacy-post-content strong,
+    .legacy-post-content b {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .legacy-post-content em,
+    .legacy-post-content i {
+      font-style: italic;
+    }
+    
+      background: var(--primary-color);
+      color: white;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: var(--text-sm);
+    }
+    
+    @media (max-width: 768px) {
+      .legacy-post-container {
+        padding: var(--space-4);
+        margin: var(--space-4);
+      }
+      
+      .legacy-post-title {
+        font-size: var(--text-2xl);
+      }
+      
+      .legacy-post-meta {
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="../../assets/julien.webp" alt="Julien Simon" class="profile-image">
+      <h1>Julien Simon</h1>
+      <p class="title">Chief Evangelist @ Arcee AI</p>
+      <p class="subtitle">World Expert in Practical AI</p>
+    </header>
+
+    <main>
+      <article class="legacy-post-container">
+        <header class="legacy-post-header">
+          <h1 class="legacy-post-title">Attach One Target At A Time</h1>
+          <div class="legacy-post-meta">
+            <span class="legacy-post-date">September 25, 2013</span>
+            <span class="legacy-post-category">Cloud & AWS</span>
+          </div>
+        </header>
+        
+        <div class="legacy-post-content">
+          <i>This post is part of the "<a href="http://juliensimon.blogspot.fr/2012/08/viking-laws-for-tech-teams-part-1.html">Viking laws for tech teams</a>" series.</i><br />
+<i>
+</a><br />
+<span>Lack of focus is the single biggest issue a team can face. It usually ranges from "<i>we don't really know what's expected of us</i>" to "<i>we have to work on 10 different things at a time</i>", although the most frequent occurrence is probably "<i>management changed our priorities... again</i>".</span><br />
+<span>
+<br />
+<div>
+This is especially bad when resources are scarce and ain't they always? And how can you keep your team motivated if all they're allowed to do is run in circles, chase one problem after the next and never truly deliver anything but half-baked features or quick and dirty fixes? It's all downhill from there, right? Less productivity, even less achievements, people starting to leave, etc.</div>
+<div>
+<div>
+"<i>How can my team be so busy and not deliver anything valuable?</i>". Well, that's a fair question and it requires a serious answer, so the first thing to do is to assess the situation. Chopping away at priorities will not fix anything until you understand why the team is underwater.&nbsp;</div>
+<div>
+<div>
+In a previous company, I asked every team (20 teams or so, about 130 people total) to describe their workload using three simple numbers:</div>
+<div>
+- "<i>Build</i>": % of time spent designing and building new features</div>
+<div>
+- "<i>Maintain</i>": % of time spent maintaining their applications (bug fixing, production support, etc)</div>
+<div>
+- "<i>Waste</i>": % of time spent on something totally unproductive (meetings, endless arguments over specs or the lack thereof, etc)</div>
+<div>
+<div>
+A large majority of teams came back with 30/40/30. Not a single one scored over 50% on "<i>Build</i>". Several ones scored 50% on "<i>Waste</i>"... Scary.</div>
+<div>
+<div>
+Another benefit of this simple assessment is that it may help teams realize how bogged down they are. Some people are convinced that they ARE doing the right thing, especially in startups: "<i>Come on! How could we be so busy and not deliver anything valuable?</i>". Well no, you aren't, you're just chasing your own tail and you've been doing it for so long that you can't realize it anymore.</div>
+<div>
+<div>
+As a manager, reducing waste is the #1 target you need to attack. Do nothing else until all your teams can spend at least 50% building stuff. Once you reach this milestone, you will have improved morale and productivity. And you will have enough oxygen to start looking at what the real priorities are.</div>
+<div>
+<div>
+In order to reduce waste, you have to understand exactly what it's made of. Dumpster diving is the only way. Sit down with the teams and let them explain. Everyone should speak, not only the project manager / team leader (sometimes, HE is the problem). My experience is that you'll end up hearing the same things in pretty much every team: too many meetings, too much time wasted on coding/re-coding/re-re-coding the same feature because requirements are fuzzy, poor code quality, no documentation, &nbsp;lack of proper tools, intrusive management or key stakeholders (wearing the "<i>business emergency</i>" disguise), too many or too few decisions, etc.</div>
+<div>
+<div>
+Some problems won't be easily fixed (code quality, etc). Cutting down on meetings can and must be done immediately (yes, I hate meetings). Same thing for decisions: you owe your team clarity and stability. Some calls may be above your pay grade, but there's a lot you can decide on your own, so do it, explain why and don't change your mind every other day: don't worry, Marketing will do it for ya ;)</div>
+<div>
+<div>
+Anything process-related can be improved in a matter of weeks. It's not rocket science: identify key business users, talk to them, explain Agile, start to practice it with them. Make sure that all technical requests are funneled to a limited number of well-identified people in your team, not to random individual developers. You should take the time to explain why this is a better way, but once you've done it, you also need to make sure that people follow the rule and yes, you need to raise your voice every single time someone doesn't.</div>
+<div>
+<div>
+Do this right and your "<i>Waste</i>" ratio will go down 10-20% very quickly. For a 5-people time working 5 days a week, that's roughly 3-4 additional man-days every week, and hopefully a slightly more pleasant and productive work environment for everyone.</div>
+<div>
+<div>
+Now that your teams can actually spend more time on building stuff, let's look at priorities. Chances are there's a long list of requests that Marketing-has-been-asking-for-two-years-but-R&amp;D-hasn't-delivered, which is probably very similar to the list of Stuff-that-R&amp;D-will-never-do-because-it's-all-stupid-shit-and-we-have-no-time-anyway. Fair enough. However, there's a big difference between a to-do list and a project portfolio and an even bigger difference between a project portfolio and a product vision.</div>
+<div>
+<div>
+Setting priorities starts with a product vision, factoring in functional requirements (aka "features") as well as non-functional requirements (aka "architecture, scalability, cost, etc"). Funny how the former is discussed <i>ad nauseam</i>&nbsp;(yeah, my parents made me study Latin for years) and the latter is usually swept under the proverbial rug.</div>
+<div>
+<div>
+Ah, I hear you saying that this vision thing is all beyond your control and that I'm not helping you at all here. Well, IS it really beyond your control? Have you discussed it with your fellow engineers/team leads? Have you tried raising your ideas to whoever is in charge? It's worth a shot. On top of that, what about your own scope? What is YOUR plan for the next year or so? How will you improve your APIs, your infrastructure, your agility? Don't expect these questions to be answered by anyone else but your own team.</div>
+<div>
+<div>
+As a more senior manager, you must build a vision and make sure your teams are aligned. A priority list without a vision is meaningless. Within this vision, making sure that non-functional requirements are properly addressed is of paramount importance. YOU build and run the platform, YOU know what needs to be done under the hood. &nbsp;And don't even bother about other parts of the company not being aligned, you can't do much about it anyway. Take care of your own and hope for the best.&nbsp;</div>
+<div>
+<div>
+Another important point: building the vision is crucial, but so is leaving the actual action plan to the team. Do not stand in their way, do not micromanage! Your role is to assign teams their own kill zone and let them roam the land. Trust me, your teams know best. If not, you have a hiring problem and <a href="http://juliensimon.blogspot.ie/2012/04/hiring-in-trenches.html">you need to fix it ASAP</a>.</div>
+<div>
+<div>
+So at this point, you've started to reduce waste and to build your vision. You can now shed a new light on The-Long-List. How valuable is each item? Is it a step towards your vision or not? If not, is there any real business value in building it? In building it right now or 2 months from now? Time to be very critical about this and challenge the business owners!&nbsp;</div>
+<div>
+<div>
+As you know, Scrum requires User Stories to be ranked by business value. Defining business value may be easy for customer-oriented features. "<i>Once this customer feed is connected to our platform, we expect to make x thousands of dollars every month, so let's launch this project ASAP</i>": ok, that probably makes sense and it's quite easy to benchmark anyway. Most of the time, it's not that obvious: what business value do these new back office pages bring? Increased productivity? More technical debt? You need to find out.</div>
+<div>
+<div>
+Architecture work is yet another story. You can't stick to "<i>if we don't do this, we're dead in 3 months</i>", especially if you need to prioritize against proper business features. Getting on top on the backlog will require some extra work to explain why this is really critical and why, yes Mr CxO, you may have to trade short term revenue for long-term scalability.</div>
+<div>
+<div>
+Building the list of priorities is a never-ending process (aka "backlog grooming"). Don't spend 6 months planning: just make sure you have enough work for the next 3-4 weeks and get going! The future is unknown and trying to figure out what needs to be done 6 months from now is totally useless.&nbsp;</div>
+<div>
+<div>
+And remember: for any given team, there can only be <u>one</u> priority #1. If you have 12 priorities for a sprint/quarter/release, then you have none. The only important question is: "<i>what is the highest-impact feature this team can deliver in the next 2 weeks?</i>".</div>
+<div>
+<div>
+The viking raid, hit-and-run strategy will show real results in little time. It will also build confidence and momentum: the best sign of success is people not talking about The-Long-List anymore and focusing on The-Next-Step instead.</div>
+<div>
+<div>
+Attack one target at a time with full force, CRUSH IT, move to the next one quickly, repeat. There is no other way.</div>
+<div>
+<div>
+That's it for today. Till next time, kick ass, my friends.</div>
+        </div>
+      </article>
+    </main>
+
+    <footer>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../experience.html">Experience</a>
+        <a href="../../publications.html">Publications</a>
+        <a href="../../code.html">Code</a>
+        <a href="../../books.html">Books</a>
+        <a href="../../youtube.html">YouTube</a>
+        <a href="../../computers.html">Computers</a>
+        <a href="../../legacy-posts.html">Legacy Posts</a>
+      </nav>
+    </footer>
+  </div>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>

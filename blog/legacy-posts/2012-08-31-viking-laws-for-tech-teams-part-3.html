@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Legacy blog post by Julien Simon">
+  <meta name="author" content="Julien Simon">
+  <meta name="robots" content="index, follow">
+  
+  <title>Viking Laws For Tech Teams Part 3 – Julien Simon</title>
+  
+  <!-- Umami Analytics -->
+  <script>
+    window.addEventListener('load', function() {
+      var script = document.createElement('script');
+      script.src = 'https://cloud.umami.is/script.js';
+      script.setAttribute('data-website-id', '27550dad-d418-4f5d-ad1b-dab573da1020');
+      document.head.appendChild(script);
+    });
+  </script>
+  
+  <!-- Resource hints for faster DNS resolution and connections -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../css/styles.css">
+  <link rel="stylesheet" href="../../css/social-icons.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+  
+  <!-- Legacy post specific styles -->
+  <style>
+    .legacy-post-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--space-6);
+      background: var(--background);
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .legacy-post-header {
+      text-align: center;
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-6);
+      border-bottom: 2px solid var(--border);
+    }
+    
+    .legacy-post-title {
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: var(--space-4);
+      line-height: 1.2;
+    }
+    
+    .legacy-post-meta {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    
+    .legacy-post-date {
+      background: var(--surface);
+      padding: var(--space-2) var(--space-3);
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    
+    .legacy-post-category {
+      background: var(--primary-color);
+      color: white;
+      padding: var(--space-2) var(--space-3);
+      border-radius: 6px;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: var(--text-xs);
+      letter-spacing: 0.5px;
+    }
+    
+    .legacy-post-content {
+      line-height: 1.8;
+      color: var(--text-primary);
+      font-size: var(--text-base);
+    }
+    
+    .legacy-post-content h1,
+    .legacy-post-content h2,
+    .legacy-post-content h3,
+    .legacy-post-content h4 {
+      color: var(--text-primary);
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-4);
+      font-weight: 600;
+    }
+    
+    .legacy-post-content h1 { font-size: var(--text-2xl); }
+    .legacy-post-content h2 { font-size: var(--text-xl); }
+    .legacy-post-content h3 { font-size: var(--text-lg); }
+    .legacy-post-content h4 { font-size: var(--text-base); }
+    
+    .legacy-post-content p {
+      margin-bottom: var(--space-4);
+    }
+    
+    .legacy-post-content ul,
+    .legacy-post-content ol {
+      margin-bottom: var(--space-4);
+      padding-left: var(--space-6);
+    }
+    
+    .legacy-post-content li {
+      margin-bottom: var(--space-2);
+    }
+    
+    .legacy-post-content code {
+      background: var(--surface);
+      color: var(--primary-color);
+      padding: var(--space-1) var(--space-2);
+      border-radius: 4px;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: var(--text-sm);
+    }
+    
+    .legacy-post-content pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: var(--space-4);
+      overflow-x: auto;
+      margin: var(--space-6) 0;
+    }
+    
+    .legacy-post-content pre code {
+      background: none;
+      padding: 0;
+      color: var(--text-primary);
+    }
+    
+    .legacy-post-content blockquote {
+      border-left: 4px solid var(--primary-color);
+      padding-left: var(--space-4);
+      margin: var(--space-6) 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    
+    .legacy-post-content a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    
+    .legacy-post-content a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+    
+    .legacy-post-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content .separator {
+      clear: both;
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content .gist {
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-6) 0;
+    }
+    
+    .legacy-post-content th,
+    .legacy-post-content td {
+      padding: var(--space-2) var(--space-3);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .legacy-post-content th {
+      background: var(--surface);
+      font-weight: 600;
+    }
+    
+    .legacy-post-content strong,
+    .legacy-post-content b {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .legacy-post-content em,
+    .legacy-post-content i {
+      font-style: italic;
+    }
+    
+      background: var(--primary-color);
+      color: white;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: var(--text-sm);
+    }
+    
+    @media (max-width: 768px) {
+      .legacy-post-container {
+        padding: var(--space-4);
+        margin: var(--space-4);
+      }
+      
+      .legacy-post-title {
+        font-size: var(--text-2xl);
+      }
+      
+      .legacy-post-meta {
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="../../assets/julien.webp" alt="Julien Simon" class="profile-image">
+      <h1>Julien Simon</h1>
+      <p class="title">Chief Evangelist @ Arcee AI</p>
+      <p class="subtitle">World Expert in Practical AI</p>
+    </header>
+
+    <main>
+      <article class="legacy-post-container">
+        <header class="legacy-post-header">
+          <h1 class="legacy-post-title">Viking Laws For Tech Teams Part 3</h1>
+          <div class="legacy-post-meta">
+            <span class="legacy-post-date">August 31, 2012</span>
+            <span class="legacy-post-category">Cloud & AWS</span>
+          </div>
+        </header>
+        
+        <div class="legacy-post-content">
+          <i>This post is part of the "<a href="http://juliensimon.blogspot.fr/2012/08/viking-laws-for-tech-teams-part-1.html">Viking laws for tech teams</a>" series.</i><br />
+<div>
+<div>
+<i></div>
+<div>
+It boils down to this: you need to join the right company.<br />
+<br />
+Many of you will disagree, I'm sure: "the daily job is more important", "there are good teams in bad companies", "yes, it's a shit company, but I'm still learning a lot of stuff", etc. All very valid points, but sooner or later, reality will catch up with you. And most of all, why settle for less? Maybe&nbsp;there are good teams in bad companies, but there's bound to be better teams in good companies :)<br />
+<br />
+What is the "right" company anyway? Everyone will have their own, personal criteria. Discussing mine in detail would be of no interest. However, having worked for (and in some cases, survived) a number of very different companies, I'm convinced that there are some mandatory questions that need to be answered before making career changes. And yes, I failed to do it on a couple of occasions, sometimes&nbsp;<strike>stupidly</strike> bravely ignoring some obvious red lights. Bad idea, lesson learned :)<br />
+<br />
+Researching a company that you'll join for many years sounds like a necessary precaution. However, the interview process is <u>not</u> the place to ask tricky (and possibly nasty) questions: if you think it will make you look clever, &nbsp;you're mistaken, it's actually quite likely to ruin your chances. You must do your own homework.&nbsp;&nbsp;Most people don't: <u>fresh meat for the grinder</u>.<br />
+<br />
+I realize that it may be difficult to know what rug to look under, especially if you have little work experience.&nbsp;Hopefully, my battle-tested checklist will help you out.<br />
+<ul>
+<li>Company</li>
+<ul>
+<li>How old is the company?</li>
+<li>Is the company the market leader? a challenger? a startup?</li>
+<li>Who is the competition? Smaller or bigger is not the point, maybe THEY are the right company you should join (true story).</li>
+<li>Does the company have any revenue (don't laugh)?&nbsp;If not, how long before cash runs out?</li>
+<li>Is it company profitable? What's the trend?</li>
+<li>If the company is public, read the latest annual report. You will learn A LOT, believe me. If you don't understand financials at all, find a friend who does and ask him/her to run through the numbers. If you do understand financials, would you buy this company's stock? No? Then why the hell would you join them? You are your most precious asset!</li>
+<li>Where are the headquarters and will you be working there? In other words, will you be close to the decision center or not?</li>
+<li>last but not least, is technology <u>really</u> the core business of the company? Or is it just a tool? The old IT vs R&amp;D debate...
+</ul>
+<ul>
+<li>Founders (unless you're interviewing with Boeing or General Electric...)</li>
+<ul>
+<li>Who are they?</li>
+<li>What's their background (technical or business)?&nbsp;</li>
+<li>What's their track record prior to starting the company?</li>
+<li>What's their reputation? Ask around, the world is VERY small and bad news spread faster than good ones.</li>
+<li>Are still involved in the company?</li>
+<li>Are they still driving the company (which is a different thing)?</li>
+<li>Did you meet them during the interview process?&nbsp;
+</ul>
+<ul>
+<li>Governance</li>
+<ul>
+<li>Who are the shareholders: individuals? Family? VC? another company?</li>
+<li>CEO/CMO/CFO/Managing Directors: background, track record, reputation, etc. You might not interact with them on a daily basis, but their strategy will either drive the company through the roof or into the ground. If the company is assigning weak profiles to critical positions, what does this tell you?</li>
+<li>Top technical job (CTO or equivalent): dig even deeper :) This guy would be your boss. Does he have street cred or is he just a MBA graduate with fancy Powerpoint skills?</li>
+<li>Hiring policy: how strict is it? Does anybody get in? Hopefully not (<a href="http://juliensimon.blogspot.fr/2012/04/hiring-in-trenches.html">as discussed in a previous post</a>).
+</ul>
+<div>
+I could go on, but this should get you started. Gathering all this information is actually pretty easy: corporate website, LinkedIn, financial &amp; industry websites, blogs and of course your own personal contacts. There's just no excuse for not doing it, except if you're not really motivated (which kind of solves the problem, doesn't it?).</div>
+<div>
+<div>
+Once that you have all information,&nbsp;assign your own weight to each item and&nbsp;take a long, hard look. How does this company compare to the other ones you've looked at? What are its strengths and weaknesses? How will they impact your job? If there's any red light, what's the <u>compelling</u> reason to ignore it?<br />
+<br />
+Most important of all,&nbsp;trust your instinct and don't try to rationalize: if it stinks, then it's probably shit. Pass and keep looking.</div>
+<div>
+<div>
+Still, there is no silver bullet. Maybe you'll miss something, maybe things will change dramatically in a few months, but running your own due diligence will help you decide on facts, not on hear-say or hype. And you might avoid an awful work experience.<br />
+<br />
+It's your life. Spend it well.</div>
+<div>
+<br />
+Please share your comments or anecdotes. See you next time.
+</div>
+        </div>
+      </article>
+    </main>
+
+    <footer>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../experience.html">Experience</a>
+        <a href="../../publications.html">Publications</a>
+        <a href="../../code.html">Code</a>
+        <a href="../../books.html">Books</a>
+        <a href="../../youtube.html">YouTube</a>
+        <a href="../../computers.html">Computers</a>
+        <a href="../../legacy-posts.html">Legacy Posts</a>
+      </nav>
+    </footer>
+  </div>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>

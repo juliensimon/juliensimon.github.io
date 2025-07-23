@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Legacy blog post by Julien Simon">
+  <meta name="author" content="Julien Simon">
+  <meta name="robots" content="index, follow">
+  
+  <title>Setting Up A Vod Server With Vlc – Julien Simon</title>
+  
+  <!-- Umami Analytics -->
+  <script>
+    window.addEventListener('load', function() {
+      var script = document.createElement('script');
+      script.src = 'https://cloud.umami.is/script.js';
+      script.setAttribute('data-website-id', '27550dad-d418-4f5d-ad1b-dab573da1020');
+      document.head.appendChild(script);
+    });
+  </script>
+  
+  <!-- Resource hints for faster DNS resolution and connections -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../css/styles.css">
+  <link rel="stylesheet" href="../../css/social-icons.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+  
+  <!-- Legacy post specific styles -->
+  <style>
+    .legacy-post-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--space-6);
+      background: var(--background);
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .legacy-post-header {
+      text-align: center;
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-6);
+      border-bottom: 2px solid var(--border);
+    }
+    
+    .legacy-post-title {
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: var(--space-4);
+      line-height: 1.2;
+    }
+    
+    .legacy-post-meta {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    
+    .legacy-post-date {
+      background: var(--surface);
+      padding: var(--space-2) var(--space-3);
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    
+    .legacy-post-category {
+      background: var(--primary-color);
+      color: white;
+      padding: var(--space-2) var(--space-3);
+      border-radius: 6px;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: var(--text-xs);
+      letter-spacing: 0.5px;
+    }
+    
+    .legacy-post-content {
+      line-height: 1.8;
+      color: var(--text-primary);
+      font-size: var(--text-base);
+    }
+    
+    .legacy-post-content h1,
+    .legacy-post-content h2,
+    .legacy-post-content h3,
+    .legacy-post-content h4 {
+      color: var(--text-primary);
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-4);
+      font-weight: 600;
+    }
+    
+    .legacy-post-content h1 { font-size: var(--text-2xl); }
+    .legacy-post-content h2 { font-size: var(--text-xl); }
+    .legacy-post-content h3 { font-size: var(--text-lg); }
+    .legacy-post-content h4 { font-size: var(--text-base); }
+    
+    .legacy-post-content p {
+      margin-bottom: var(--space-4);
+    }
+    
+    .legacy-post-content ul,
+    .legacy-post-content ol {
+      margin-bottom: var(--space-4);
+      padding-left: var(--space-6);
+    }
+    
+    .legacy-post-content li {
+      margin-bottom: var(--space-2);
+    }
+    
+    .legacy-post-content code {
+      background: var(--surface);
+      color: var(--primary-color);
+      padding: var(--space-1) var(--space-2);
+      border-radius: 4px;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: var(--text-sm);
+    }
+    
+    .legacy-post-content pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: var(--space-4);
+      overflow-x: auto;
+      margin: var(--space-6) 0;
+    }
+    
+    .legacy-post-content pre code {
+      background: none;
+      padding: 0;
+      color: var(--text-primary);
+    }
+    
+    .legacy-post-content blockquote {
+      border-left: 4px solid var(--primary-color);
+      padding-left: var(--space-4);
+      margin: var(--space-6) 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    
+    .legacy-post-content a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    
+    .legacy-post-content a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+    
+    .legacy-post-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content .separator {
+      clear: both;
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content .gist {
+      margin: var(--space-4) 0;
+    }
+    
+    .legacy-post-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-6) 0;
+    }
+    
+    .legacy-post-content th,
+    .legacy-post-content td {
+      padding: var(--space-2) var(--space-3);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .legacy-post-content th {
+      background: var(--surface);
+      font-weight: 600;
+    }
+    
+    .legacy-post-content strong,
+    .legacy-post-content b {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .legacy-post-content em,
+    .legacy-post-content i {
+      font-style: italic;
+    }
+    
+      background: var(--primary-color);
+      color: white;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: var(--text-sm);
+    }
+    
+    @media (max-width: 768px) {
+      .legacy-post-container {
+        padding: var(--space-4);
+        margin: var(--space-4);
+      }
+      
+      .legacy-post-title {
+        font-size: var(--text-2xl);
+      }
+      
+      .legacy-post-meta {
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="../../assets/julien.webp" alt="Julien Simon" class="profile-image">
+      <h1>Julien Simon</h1>
+      <p class="title">Chief Evangelist @ Arcee AI</p>
+      <p class="subtitle">World Expert in Practical AI</p>
+    </header>
+
+    <main>
+      <article class="legacy-post-container">
+        <header class="legacy-post-header">
+          <h1 class="legacy-post-title">Setting Up A Vod Server With Vlc</h1>
+          <div class="legacy-post-meta">
+            <span class="legacy-post-date">December 26, 2008</span>
+            <span class="legacy-post-category">Cloud & AWS</span>
+          </div>
+        </header>
+        
+        <div class="legacy-post-content">
+          In a <a href="http://juliensimon.blogspot.com/2008/12/howto-compiling-vlc-with-all-major.html">previous article</a>, I showed you how to build <span>VLC</span> from source. Since this build included the <span>live555</span> streaming libraries, the resulting <span>VLC</span> is able to serve audio / video streams.<br /><br />Thus, in this article, I'm going to give you a quick overview on how to configure <span>VLC</span> as an on-demand <a href="http://en.wikipedia.org/wiki/Real_Time_Streaming_Protocol">RTSP</a> streaming server, with on-the-fly transcoding thrown in for good measure ;)<br /><br />First of all, we need a machine to run the <span>VLC</span> server on. Here, it will be 192.168.0.2, an Ubuntu 8.04 machine with <span>VLC </span>0.9.8a, <span>ffmpeg </span>SVN-r16245 (built from source) <span>and</span><span>x264 </span>0.65.1057 (built from source).<br /><br />Then, we need to copy some media files on the server. I'll use an MP3 file (<span>music.mp3</span>) and an MPEG2 video (<span>video.mpg</span>), both located in <span>/home/julien/media</span>.<br /><br />Now, let's write the <span>VLC</span> configuration file and save it as <span>vlc_vod_config</span>:<br /><code><br /># VLC media player VLM command batch<br /># http://www.videolan.org/vlc/<br /><br />new MyMusic vod enabled<br />setup MyMusic input "file:///home/julien/media/music.mp3"<br /><br />new MyVideo vod enabled<br />setup MyVideo input "file:///home/julien/media/video.mpg"<br /><br />new MyVideoMobile vod enabled<br />setup MyVideoMobile input "file:///home/julien/media/video.mpg" output "#transcode{venc=ffmpeg,vcodec=h264,vb=384,height=120,width=160,fps=20,aenc=ffmpeg,acodec=mp3,ab=64,channels=1}"<br />It's fairly self explanatory :) As you can see, we need to create an entry for each media we want to stream:<br /><ul><li>the media identifier (<span>MyMusic</span>, <span>MyVideo</span>) following the <span>new</span> keyword is important because it's going to be part of the URL used by the client to access the media.</li><li><span>vod</span> stands for Video on Demand (VLC can also do broadcast streams)</li><li><span>enabled</span>, well... you get the idea :)</li><li><span>setup...</span><span>input </span>links the identifier to the actual media file we want to stream</ul>The last stream, <span>MyVideoMobile</span>, is based on the same MPEG input file as the <span>MyVideo</span> stream. However, this file will be resized and transcoded on the fly into H264 video and MP3 audio. For example, this could be useful for mobile clients, which require a smaller resolution and a much lower bitrate than PC clients.<br /><br />Now let's open a terminal on the server and start <span>VLC</span>. We want it to run as an RTSP server on port 5554. We also want to use the <span>telnet</span> interface to configure it and the <span>telnet</span> password will be '<span>videolan</span>':<br /><code><br />ubuntu% <span>vlc -I telnet --telnet-password videolan --rtsp-host 0.0.0.0:5554</span><br /><span>output removed</span><br />[00000405] telnet interface: telnet interface started on interface 4212<br />That's it for the server. Now, let's configure it from a client using <span>telnet</span>:<br /><code><br />client% <span>telnet 192.168.0.2 4212</span><br />Trying 192.168.0.2...<br />Connected to 192.168.0.2.<br />Escape character is '^]'.<br />Password:<br />Welcome, Master<br />> <span>load /home/julien/media/vlc_vod_config</span><br />Using the <span>show</span> command, we can check the configuration of a stream:<br /><code><br />> <span>show MyMusic</span><br />show<br />MyMusic<br />    type : vod<br />    enabled : yes<br />    mux<br />    inputs<br />        1 : file:///home/julien/media/music.mp3<br />    output :<br />    options<br />    instances<br />This looks good. Let's start a <span>VLC</span> player on the client and connect to a stream:<br /><code><br />client% <span>/usr/bin/vlc rtsp://192.168.0.2:5554/MyMusic</span><br />VLC media player 0.8.6e Janus<br />This works :) Thanks to RSTP, you can pause or seek anywhere into the stream. Let's try the video stream now:<br /><code><br />client% <span>/usr/bin/vlc rtsp://192.168.0.2:5554/MyVideo</span><br />VLC media player 0.8.6e Janus<br />Same thing: pause, fast forward and rewind all work. In the <span>telnet</span> session, the <span>show</span> command will give you additional info on an active stream:<br /><code><br />> <span>show MyVideo</span><br />show<br />  MyVideo<br />      type : vod<br />      enabled : yes<br />      mux<br />      inputs<br />          1 : file:///home/julien/media/video.mpg<br />      output :<br />      options<br />      instances<br />          instance<br />              name : 1632621729<br />              state : playing<br />              position : 0.303068<br />              time : 55160000<br />              length : 180556733<br />              rate : 1000<br />              title : 0<br />              chapter : 0<br />              seekable : 1<br />              playlistindex : 1<br />Now, let's try the mobile video stream:<br /><code><br />client% <span>/usr/bin/vlc rtsp://192.168.0.2:5554/MyVideoMobile </span><br />VLC media player 0.8.6e Janus<br />[00000288] main decoder error: no suitable decoder module for fourcc `h264'.<br />VLC probably does not support this sound or video format.<br />[00000274] main playlist: stopping playback<br />Ah #%$£... Now you see why you HAVE to rebuild VLC from source! Let's try again with the latest VLC:<br /><code><br />ubuntu% <span>/usr/local/bin/vlc rtsp://192.168.0.2:5554/MyVideoMobile</span><br />VLC media player 0.9.8a Grishenko<br />Ah, now it works. So do pausing and seeking, even with transcoding.<br /><br />If you run <span>ps</span> or <span>top</span> on the server, you'll notice that an extra <span>VLC</span> process is running to handle transcoding. Also, in the VLC player, under the <span>Tools</span> / <span>Media Information</span> menu, you can look at the <span>Codec Details</span> and <span>Statistics</span> tabs to check that the stream is indeed H264 / MP3 with a low bitrate.<br /><br />Anyway, here's what it looks like (click the picture for a larger version):<br /><br />That's it for today. Have fun with streaming!
+        </div>
+      </article>
+    </main>
+
+    <footer>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../experience.html">Experience</a>
+        <a href="../../publications.html">Publications</a>
+        <a href="../../code.html">Code</a>
+        <a href="../../books.html">Books</a>
+        <a href="../../youtube.html">YouTube</a>
+        <a href="../../computers.html">Computers</a>
+        <a href="../../legacy-posts.html">Legacy Posts</a>
+      </nav>
+    </footer>
+  </div>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Legacy blog posts by Julien Simon - Technical articles, tutorials, and insights from 2008-2015">
+  <meta name="keywords" content="Julien Simon, legacy blog posts, technical articles, tutorials, Linux, Ubuntu, VirtualBox, FFmpeg, AWS, MongoDB, Hadoop, real-time bidding, viking laws">
+  <meta name="author" content="Julien Simon">
+  <meta name="robots" content="index, follow">
+  
+  <title>Legacy Blog Posts – Julien Simon</title>
+  
+  <!-- Umami Analytics -->
+  <script>
+    window.addEventListener('load', function() {
+      var script = document.createElement('script');
+      script.src = 'https://cloud.umami.is/script.js';
+      script.setAttribute('data-website-id', '27550dad-d418-4f5d-ad1b-dab573da1020');
+      document.head.appendChild(script);
+    });
+  </script>
+  
+  <!-- Resource hints for faster DNS resolution and connections -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/social-icons.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  
+  <!-- Legacy posts index specific styles -->
+  <style>
+    .legacy-intro {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto var(--space-6);
+      padding: var(--space-4);
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    
+    .legacy-intro h2 {
+      color: var(--primary-color);
+      margin-bottom: var(--space-2);
+      font-size: var(--text-xl);
+    }
+    
+    .legacy-intro p {
+      color: var(--text-secondary);
+      font-size: var(--text-base);
+      line-height: 1.5;
+    }
+    
+    .legacy-list {
+      max-width: 800px;
+      margin: 0 auto var(--space-8);
+    }
+    
+    .legacy-item {
+      background: var(--background);
+      border-radius: 8px;
+      padding: var(--space-3);
+      margin-bottom: var(--space-2);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    
+    .legacy-item:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-color);
+    }
+    
+    .legacy-item-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+    
+    .legacy-item-title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+      line-height: 1.2;
+      flex: 1;
+    }
+    
+    .legacy-item-title a {
+      color: inherit;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    
+    .legacy-item-title a:hover {
+      color: var(--primary-color);
+    }
+    
+    .legacy-item-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex-shrink: 0;
+    }
+    
+    .legacy-item-date {
+      background: var(--primary-color);
+      color: white;
+      padding: var(--space-1) var(--space-2);
+      border-radius: 3px;
+      font-size: var(--text-xs);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .legacy-item-category {
+      background: var(--surface);
+      color: var(--text-secondary);
+      padding: var(--space-1) var(--space-2);
+      border-radius: 3px;
+      font-size: var(--text-xs);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .legacy-item-excerpt {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      line-height: 1.4;
+      margin-bottom: var(--space-2);
+    }
+    
+    .legacy-item-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: var(--text-xs);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      transition: color var(--transition-fast);
+    }
+    
+    .legacy-item-link:hover {
+      color: var(--primary-dark);
+    }
+    
+    .legacy-item-link::after {
+      content: "→";
+      font-weight: bold;
+      transition: transform var(--transition-fast);
+    }
+    
+    .legacy-item-link:hover::after {
+      transform: translateX(2px);
+    }
+    
+    .legacy-filters {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+      flex-wrap: wrap;
+    }
+    
+    .legacy-filter {
+      background: var(--surface);
+      color: var(--text-secondary);
+      padding: var(--space-1) var(--space-3);
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: var(--text-sm);
+      transition: all var(--transition-fast);
+      border: 1px solid transparent;
+    }
+    
+    .legacy-filter:hover,
+    .legacy-filter.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .legacy-stats {
+      text-align: center;
+      margin-bottom: var(--space-6);
+      padding: var(--space-4);
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    
+    .legacy-stats h3 {
+      color: var(--primary-color);
+      margin-bottom: var(--space-3);
+      font-size: var(--text-lg);
+    }
+    
+    .legacy-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: var(--space-3);
+    }
+    
+    .legacy-stat {
+      text-align: center;
+    }
+    
+    .legacy-stat-number {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+    }
+    
+    .legacy-stat-label {
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    @media (max-width: 768px) {
+      .legacy-item {
+        padding: var(--space-2);
+      }
+      
+      .legacy-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-1);
+      }
+      
+      .legacy-item-meta {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--space-1);
+      }
+      
+      .legacy-item-title {
+        font-size: var(--text-base);
+      }
+      
+      .legacy-filters {
+        gap: var(--space-1);
+      }
+      
+      .legacy-filter {
+        padding: var(--space-1) var(--space-2);
+        font-size: var(--text-xs);
+      }
+      
+      .legacy-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="assets/julien.webp" alt="Julien Simon" class="profile-image">
+      <h1>Julien Simon</h1>
+      <p class="title">Chief Evangelist @ Arcee AI</p>
+    </header>
+
+    <main>
+      <section class="legacy-intro">
+        <h2>Legacy Blog Posts</h2>
+        <p>A collection of technical articles, tutorials, and insights from 2008-2015. These posts cover topics ranging from Linux system administration and multimedia processing to cloud computing and team leadership.</p>
+      </section>
+
+      <section class="legacy-stats">
+        <h3>Archive Overview</h3>
+        <div class="legacy-stats-grid">
+          <div class="legacy-stat">
+            <span class="legacy-stat-number">42</span>
+            <span class="legacy-stat-label">Total Posts</span>
+          </div>
+          <div class="legacy-stat">
+            <span class="legacy-stat-number">8</span>
+            <span class="legacy-stat-label">Years</span>
+          </div>
+          <div class="legacy-stat">
+            <span class="legacy-stat-number">6</span>
+            <span class="legacy-stat-label">Categories</span>
+          </div>
+          <div class="legacy-stat">
+            <span class="legacy-stat-number">2008</span>
+            <span class="legacy-stat-label">First Post</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="legacy-filters">
+        <a href="#" class="legacy-filter active" data-category="all">All Posts</a>
+        <a href="#" class="legacy-filter" data-category="linux">Linux & Ubuntu</a>
+        <a href="#" class="legacy-filter" data-category="multimedia">Multimedia</a>
+        <a href="#" class="legacy-filter" data-category="cloud">Cloud & AWS</a>
+        <a href="#" class="legacy-filter" data-category="leadership">Leadership</a>
+        <a href="#" class="legacy-filter" data-category="tutorials">Tutorials</a>
+      </section>
+
+      <section class="legacy-list" id="legacy-posts-list">
+        <!-- Legacy posts will be populated by JavaScript -->
+      </section>
+    </main>
+
+    <footer>
+      <a href="index.html" class="back-link">← Back to Home</a>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Legacy posts data
+    const legacyPosts = [
+      {
+        id: '2008-12-18-installing-virtual-box-gues-additions-on-centos-5-2',
+        title: 'Installing VirtualBox Guest Additions on CentOS 5.2',
+        date: 'December 18, 2008',
+        category: 'linux',
+        excerpt: 'A step-by-step guide to installing VirtualBox Guest Additions on CentOS 5.2, including kernel development tools and GNU compiler setup.',
+        filename: '2008-12-18-installing-virtual-box-gues-additions-on-centos-5-2.html'
+      },
+      {
+        id: '2008-12-21-compiling-vlc-live555-all-major-codecs-on-ubuntu',
+        title: 'Compiling VLC with Live555 and All Major Codecs on Ubuntu',
+        date: 'December 21, 2008',
+        category: 'multimedia',
+        excerpt: 'Comprehensive guide to compiling VLC media player with Live555 streaming and support for all major audio/video codecs on Ubuntu.',
+        filename: '2008-12-21-compiling-vlc-live555-all-major-codecs-on-ubuntu.html'
+      },
+      {
+        id: '2008-12-22-compiling-mediatomb-ffmpegthumbnailer-all-libraries-ubuntu-ps3',
+        title: 'Compiling MediaTomb with FFmpegThumbnailer and All Libraries on Ubuntu for PS3',
+        date: 'December 22, 2008',
+        category: 'multimedia',
+        excerpt: 'Complete setup guide for MediaTomb UPnP server with FFmpegThumbnailer for PS3 media streaming on Ubuntu.',
+        filename: '2008-12-22-compiling-mediatomb-ffmpegthumbnailer-all-libraries-ubuntu-ps3.html'
+      },
+      {
+        id: '2008-12-24-mediatomb-0-12-on-ps3-video-thumbnails-youtube-apple-movie-trailers',
+        title: 'MediaTomb 0.12 on PS3: Video Thumbnails, YouTube, and Apple Movie Trailers',
+        date: 'December 24, 2008',
+        category: 'multimedia',
+        excerpt: 'Advanced MediaTomb configuration for PS3 including video thumbnail generation, YouTube integration, and Apple movie trailer support.',
+        filename: '2008-12-24-mediatomb-0-12-on-ps3-video-thumbnails-youtube-apple-movie-trailers.html'
+      },
+      {
+        id: '2008-12-26-setting-up-a-vod-server-with-vlc',
+        title: 'Setting Up a VOD Server with VLC',
+        date: 'December 26, 2008',
+        category: 'multimedia',
+        excerpt: 'How to create a Video on Demand (VOD) server using VLC media player for streaming video content.',
+        filename: '2008-12-26-setting-up-a-vod-server-with-vlc.html'
+      },
+      {
+        id: '2008-12-27-quick-reference-on-audio-video-encoding-with-ffmpeg',
+        title: 'Quick Reference on Audio/Video Encoding with FFmpeg',
+        date: 'December 27, 2008',
+        category: 'tutorials',
+        excerpt: 'Essential FFmpeg commands and parameters for audio and video encoding, conversion, and processing.',
+        filename: '2008-12-27-quick-reference-on-audio-video-encoding-with-ffmpeg.html'
+      },
+      {
+        id: '2008-12-28-adding-last-fm-scrobbling-to-mediatomb',
+        title: 'Adding Last.fm Scrobbling to MediaTomb',
+        date: 'December 28, 2008',
+        category: 'multimedia',
+        excerpt: 'Integration guide for adding Last.fm scrobbling functionality to MediaTomb UPnP server.',
+        filename: '2008-12-28-adding-last-fm-scrobbling-to-mediatomb.html'
+      },
+      {
+        id: '2008-20-12-compiling-ffmeg-x264-mp3-xvid-amr-on-ubuntu',
+        title: 'Compiling FFmpeg with x264, MP3, Xvid, and AMR on Ubuntu',
+        date: 'December 20, 2008',
+        category: 'multimedia',
+        excerpt: 'Complete compilation guide for FFmpeg with support for x264, MP3, Xvid, and AMR codecs on Ubuntu.',
+        filename: '2008-20-12-compiling-ffmeg-x264-mp3-xvid-amr-on-ubuntu.html'
+      },
+      {
+        id: '2009-01-04-compiling-mediainfo-cli-gui-on-ubuntu',
+        title: 'Compiling MediaInfo CLI and GUI on Ubuntu',
+        date: 'January 4, 2009',
+        category: 'multimedia',
+        excerpt: 'Step-by-step instructions for compiling MediaInfo command-line and graphical interface on Ubuntu.',
+        filename: '2009-01-04-compiling-mediainfo-cli-gui-on-ubuntu.html'
+      },
+      {
+        id: '2009-01-07-ffmpeg-x264-presets',
+        title: 'FFmpeg x264 Presets',
+        date: 'January 7, 2009',
+        category: 'tutorials',
+        excerpt: 'Overview and usage guide for x264 presets in FFmpeg for optimal video encoding quality and speed.',
+        filename: '2009-01-07-ffmpeg-x264-presets.html'
+      },
+      {
+        id: '2009-01-10-converting-mkv-files-to-play-on-the-ps3',
+        title: 'Converting MKV Files to Play on the PS3',
+        date: 'January 10, 2009',
+        category: 'multimedia',
+        excerpt: 'Guide to converting Matroska (MKV) video files to PS3-compatible formats using FFmpeg.',
+        filename: '2009-01-10-converting-mkv-files-to-play-on-the-ps3.html'
+      },
+      {
+        id: '2009-01-16-processing-multichannel-audio-dts-ac3-wav',
+        title: 'Processing Multichannel Audio: DTS, AC3, WAV',
+        date: 'January 16, 2009',
+        category: 'multimedia',
+        excerpt: 'Advanced audio processing techniques for multichannel audio formats including DTS, AC3, and WAV.',
+        filename: '2009-01-16-processing-multichannel-audio-dts-ac3-wav.html'
+      },
+      {
+        id: '2009-01-23-h264-youtube-video-in-mediatomb',
+        title: 'H.264 YouTube Video in MediaTomb',
+        date: 'January 23, 2009',
+        category: 'multimedia',
+        excerpt: 'Configuration guide for streaming H.264 encoded YouTube videos through MediaTomb UPnP server.',
+        filename: '2009-01-23-h264-youtube-video-in-mediatomb.html'
+      },
+      {
+        id: '2009-03-04-compiling-vlc-0-9-9-live555-all-major-codecs-ubuntu-8-10',
+        title: 'Compiling VLC 0.9.9 with Live555 and All Major Codecs on Ubuntu 8.10',
+        date: 'March 4, 2009',
+        category: 'multimedia',
+        excerpt: 'Updated compilation guide for VLC 0.9.9 with Live555 streaming support and comprehensive codec library on Ubuntu 8.10.',
+        filename: '2009-03-04-compiling-vlc-0-9-9-live555-all-major-codecs-ubuntu-8-10.html'
+      },
+      {
+        id: '2009-03-12-les-meilleures-excuses-des-equipes-IT',
+        title: 'Les Meilleures Excuses des Équipes IT',
+        date: 'March 12, 2009',
+        category: 'leadership',
+        excerpt: 'A humorous look at the most common excuses used by IT teams and how to address them effectively.',
+        filename: '2009-03-12-les-meilleures-excuses-des-equipes-IT.html'
+      },
+      {
+        id: '2011-01-10-install-hadoop-on-windows-cygwin',
+        title: 'Install Hadoop on Windows with Cygwin',
+        date: 'January 10, 2011',
+        category: 'tutorials',
+        excerpt: 'Step-by-step guide to installing and configuring Apache Hadoop on Windows using Cygwin environment.',
+        filename: '2011-01-10-install-hadoop-on-windows-cygwin.html'
+      },
+      {
+        id: '2012-04-02-hiring-in-the-trenches',
+        title: 'Hiring in the Trenches',
+        date: 'April 2, 2012',
+        category: 'leadership',
+        excerpt: 'Insights from hiring over 100 people in 5 years, focusing on the importance of intensity and drive in candidates.',
+        filename: '2012-04-02-hiring-in-the-trenches.html'
+      },
+      {
+        id: '2012-04-05-life-24-7-365',
+        title: 'Life 24/7/365',
+        date: 'April 5, 2012',
+        category: 'leadership',
+        excerpt: 'Reflections on the continuous nature of modern work life and the challenges of maintaining work-life balance.',
+        filename: '2012-04-05-life-24-7-365.html'
+      },
+      {
+        id: '2012-07-18-learning-about-data-centers',
+        title: 'Learning About Data Centers',
+        date: 'July 18, 2012',
+        category: 'cloud',
+        excerpt: 'Educational insights into data center operations, infrastructure, and the technology behind cloud computing.',
+        filename: '2012-07-18-learning-about-data-centers.html'
+      },
+      {
+        id: '2012-07-24-mongodb-and-python-gang-together',
+        title: 'MongoDB and Python Gang Together',
+        date: 'July 24, 2012',
+        category: 'tutorials',
+        excerpt: 'Practical guide to integrating MongoDB with Python applications, including setup, configuration, and best practices.',
+        filename: '2012-07-24-mongodb-and-python-gang-together.html'
+      },
+      {
+        id: '2012-07-27-under-the-hood-of-real-time-bidding',
+        title: 'Under the Hood of Real-Time Bidding',
+        date: 'July 27, 2012',
+        category: 'tutorials',
+        excerpt: 'Technical deep dive into real-time bidding (RTB) systems, architecture, and implementation details.',
+        filename: '2012-07-27-under-the-hood-of-real-time-bidding.html'
+      },
+      {
+        id: '2012-08-28-viking-laws-for-tech-teams-part-1',
+        title: 'Viking Laws for Tech Teams - Part 1',
+        date: 'August 28, 2012',
+        category: 'leadership',
+        excerpt: 'First part of a series applying Viking warrior principles to modern technology team leadership and management.',
+        filename: '2012-08-28-viking-laws-for-tech-teams-part-1.html'
+      },
+      {
+        id: '2012-08-30-viking-laws-for-tech-teams-part-2',
+        title: 'Viking Laws for Tech Teams - Part 2',
+        date: 'August 30, 2012',
+        category: 'leadership',
+        excerpt: 'Second installment of Viking leadership principles adapted for technology teams and project management.',
+        filename: '2012-08-30-viking-laws-for-tech-teams-part-2.html'
+      },
+      {
+        id: '2012-08-31-viking-laws-for-tech-teams-part-3',
+        title: 'Viking Laws for Tech Teams - Part 3',
+        date: 'August 31, 2012',
+        category: 'leadership',
+        excerpt: 'Third part of the Viking leadership series, focusing on team dynamics and strategic thinking in tech organizations.',
+        filename: '2012-08-31-viking-laws-for-tech-teams-part-3.html'
+      },
+      {
+        id: '2012-09-03-viking-laws-for-tech-teams-part-4',
+        title: 'Viking Laws for Tech Teams - Part 4',
+        date: 'September 3, 2012',
+        category: 'leadership',
+        excerpt: 'Fourth installment covering advanced Viking principles for building resilient and high-performing tech teams.',
+        filename: '2012-09-03-viking-laws-for-tech-teams-part-4.html'
+      },
+      {
+        id: '2012-09-05-viking-laws-for-tech-teams-part-5',
+        title: 'Viking Laws for Tech Teams - Part 5',
+        date: 'September 5, 2012',
+        category: 'leadership',
+        excerpt: 'Fifth part of the series, focusing on execution and delivery strategies inspired by Viking warfare tactics.',
+        filename: '2012-09-05-viking-laws-for-tech-teams-part-5.html'
+      },
+      {
+        id: '2012-12-27-viking-laws-for-tech-teams-part-6',
+        title: 'Viking Laws for Tech Teams - Part 6',
+        date: 'December 27, 2012',
+        category: 'leadership',
+        excerpt: 'Final installment of the Viking leadership series, covering legacy building and long-term team success.',
+        filename: '2012-12-27-viking-laws-for-tech-teams-part-6.html'
+      },
+      {
+        id: '2013-03-21-compiling-ffmpeg-x264-mp3-aac-xvid-amr-ubuntu-12-04',
+        title: 'Compiling FFmpeg with x264, MP3, AAC, Xvid, and AMR on Ubuntu 12.04',
+        date: 'March 21, 2013',
+        category: 'multimedia',
+        excerpt: 'Updated compilation guide for FFmpeg with comprehensive codec support on Ubuntu 12.04 LTS.',
+        filename: '2013-03-21-compiling-ffmpeg-x264-mp3-aac-xvid-amr-ubuntu-12-04.html'
+      },
+      {
+        id: '2013-07-22-the-one-dollar-fix',
+        title: 'The One Dollar Fix',
+        date: 'July 22, 2013',
+        category: 'leadership',
+        excerpt: 'A story about how a simple one-dollar solution can solve complex problems and the importance of simple thinking.',
+        filename: '2013-07-22-the-one-dollar-fix.html'
+      },
+      {
+        id: '2013-07-25-from-one-cloud-to-the-next',
+        title: 'From One Cloud to the Next',
+        date: 'July 25, 2013',
+        category: 'cloud',
+        excerpt: 'Reflections on cloud computing evolution and the transition between different cloud platforms and services.',
+        filename: '2013-07-25-from-one-cloud-to-the-next.html'
+      },
+      {
+        id: '2013-07-29-the-billion-dollar-app-part-1',
+        title: 'The Billion Dollar App - Part 1',
+        date: 'July 29, 2013',
+        category: 'leadership',
+        excerpt: 'First part of a series exploring what it takes to build a billion-dollar application and the strategic thinking behind it.',
+        filename: '2013-07-29-the-billion-dollar-app-part-1.html'
+      },
+      {
+        id: '2013-08-01-mount-s3-buckets-from-a-linux-ec2-instance',
+        title: 'Mount S3 Buckets from a Linux EC2 Instance',
+        date: 'August 1, 2013',
+        category: 'cloud',
+        excerpt: 'Technical guide to mounting Amazon S3 buckets as local filesystems on Linux EC2 instances.',
+        filename: '2013-08-01-mount-s3-buckets-from-a-linux-ec2-instance.html'
+      },
+      {
+        id: '2013-08-03-the-billion-dollar-app-part2',
+        title: 'The Billion Dollar App - Part 2',
+        date: 'August 3, 2013',
+        category: 'leadership',
+        excerpt: 'Second part of the billion-dollar app series, focusing on technical architecture and scalability considerations.',
+        filename: '2013-08-03-the-billion-dollar-app-part2.html'
+      },
+      {
+        id: '2013-08-03-the-billion-dollar-app-part3',
+        title: 'The Billion Dollar App - Part 3',
+        date: 'August 3, 2013',
+        category: 'leadership',
+        excerpt: 'Third installment covering user acquisition, market positioning, and growth strategies for billion-dollar applications.',
+        filename: '2013-08-03-the-billion-dollar-app-part3.html'
+      },
+      {
+        id: '2013-08-05-the-billion-dollar-app-part4',
+        title: 'The Billion Dollar App - Part 4',
+        date: 'August 5, 2013',
+        category: 'leadership',
+        excerpt: 'Fourth part focusing on monetization strategies, business models, and revenue optimization for successful apps.',
+        filename: '2013-08-05-the-billion-dollar-app-part4.html'
+      },
+      {
+        id: '2013-08-16-the-billion-dollar-app-part5',
+        title: 'The Billion Dollar App - Part 5',
+        date: 'August 16, 2013',
+        category: 'leadership',
+        excerpt: 'Fifth installment covering team building, company culture, and organizational structure for billion-dollar companies.',
+        filename: '2013-08-16-the-billion-dollar-app-part5.html'
+      },
+      {
+        id: '2013-08-17-the-billion-dollar-app-part5-1',
+        title: 'The Billion Dollar App - Part 5.1',
+        date: 'August 17, 2013',
+        category: 'leadership',
+        excerpt: 'Additional insights and lessons learned from the billion-dollar app journey, including common pitfalls and success factors.',
+        filename: '2013-08-17-the-billion-dollar-app-part5-1.html'
+      },
+      {
+        id: '2013-09-25-attach-one-target-at-a-time',
+        title: 'Attach One Target at a Time',
+        date: 'September 25, 2013',
+        category: 'leadership',
+        excerpt: 'Strategic advice on focusing on one objective at a time and the importance of prioritization in business and technology.',
+        filename: '2013-09-25-attach-one-target-at-a-time.html'
+      },
+      {
+        id: '2014-05-13-aldebaran-aws-summit',
+        title: 'Aldebaran AWS Summit',
+        date: 'May 13, 2014',
+        category: 'cloud',
+        excerpt: 'Coverage and insights from the Aldebaran AWS Summit, including key announcements and technical sessions.',
+        filename: '2014-05-13-aldebaran-aws-summit.html'
+      },
+      {
+        id: '2015-04-14-test-drive-amazon-machine-learning-redshift',
+        title: 'Test Drive Amazon Machine Learning with Redshift',
+        date: 'April 14, 2015',
+        category: 'cloud',
+        excerpt: 'Hands-on guide to using Amazon Machine Learning with Redshift data warehouse for predictive analytics.',
+        filename: '2015-04-14-test-drive-amazon-machine-learning-redshift.html'
+      },
+      {
+        id: '2015-04-16-test-drive-real-time-prediction-with-amazon-machine-learning',
+        title: 'Test Drive Real-Time Prediction with Amazon Machine Learning',
+        date: 'April 16, 2015',
+        category: 'cloud',
+        excerpt: 'Practical tutorial on implementing real-time prediction systems using Amazon Machine Learning services.',
+        filename: '2015-04-16-test-drive-real-time-prediction-with-amazon-machine-learning.html'
+      },
+      {
+        id: '2015-04-17-test-drive-real-time-prediction-in-java-with-amaon-machine-learning',
+        title: 'Test Drive Real-Time Prediction in Java with Amazon Machine Learning',
+        date: 'April 17, 2015',
+        category: 'cloud',
+        excerpt: 'Java implementation guide for real-time prediction systems using Amazon Machine Learning APIs.',
+        filename: '2015-04-17-test-drive-real-time-prediction-in-java-with-amaon-machine-learning.html'
+      }
+    ];
+
+    // Category mapping
+    const categoryLabels = {
+      'linux': 'Linux & Ubuntu',
+      'multimedia': 'Multimedia',
+      'cloud': 'Cloud & AWS',
+      'leadership': 'Leadership',
+      'tutorials': 'Tutorials'
+    };
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      renderPosts(legacyPosts);
+      setupFilters();
+    });
+
+    // Render posts
+    function renderPosts(posts) {
+      const list = document.getElementById('legacy-posts-list');
+      list.innerHTML = '';
+
+      // Sort posts by date in descending order (newest first)
+      const sortedPosts = posts.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateB - dateA;
+      });
+
+      sortedPosts.forEach(post => {
+        const item = document.createElement('article');
+        item.className = 'legacy-item';
+        item.innerHTML = `
+          <header class="legacy-item-header">
+            <h3 class="legacy-item-title">
+              <a href="blog/legacy-posts/${post.filename}">${post.title}</a>
+            </h3>
+            <div class="legacy-item-meta">
+              <span class="legacy-item-date">${post.date}</span>
+              <span class="legacy-item-category">${categoryLabels[post.category] || post.category}</span>
+            </div>
+          </header>
+          <p class="legacy-item-excerpt">${post.excerpt}</p>
+          <a href="blog/legacy-posts/${post.filename}" class="legacy-item-link">Read Post</a>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    // Setup filters
+    function setupFilters() {
+      const filters = document.querySelectorAll('.legacy-filter');
+      
+      filters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          // Update active filter
+          filters.forEach(f => f.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Filter posts
+          const category = this.dataset.category;
+          const filteredPosts = category === 'all' 
+            ? legacyPosts 
+            : legacyPosts.filter(post => post.category === category);
+          
+          renderPosts(filteredPosts);
+        });
+      });
+    }
+  </script>
+</body>
+</html> 
