@@ -257,61 +257,57 @@
         <div class="legacy-post-content">
           <p>And you thought I was on holiday?</p>
 
-<p>Time to hack <a href="2013-08-16-the-billion-dollar-app-part5.html">our Node app</a> again and introduce another great piece of software called <i><a href="http://zeromq.org/">zeromq. On top of having one of the coolest logos, <i>zeromq</i> is a high-performance, low-latency messaging system that you simply cannot afford to ignore when you need to build highly scalable apps (IMHO). Other contenders would be <a href="http://www.rabbitmq.com/">RabbitMQ</a> (awesome and rock-solid, but not really lightweight) and <a href="https://github.com/bitly/nsq">NSQ</a> (written by the bit.ly folks).</p>
+<p>Time to hack <a href="2013-08-16-the-billion-dollar-app-part5.html">our Node app</a> again and introduce another great piece of software called <em><a href="http://zeromq.org/">zeromq. On top of having one of the coolest logos, <em>zeromq</em> is a high-performance, low-latency messaging system that you simply cannot afford to ignore when you need to build highly scalable apps (IMHO). Other contenders would be <a href="http://www.rabbitmq.com/">RabbitMQ</a> (awesome and rock-solid, but not really lightweight) and <a href="https://github.com/bitly/nsq">NSQ</a> (written by the bit.ly folks).</p>
 
-<p>The basic idea will be to have our web app call a remote server through <i>zeromq</i>. The remote server will perform a super fancy calculation and return it back to the web app. I can feel that you're excited already, so let's get started :*)</p>
+<p>The basic idea will be to have our web app call a remote server through <em>zeromq</em>. The remote server will perform a super fancy calculation and return it back to the web app. I can feel that you're excited already, so let's get started :*)</p>
 
-<p>Both our <i>zeromq</i> machines (the client and the server) require a little bit of setup: on top of Node.js and npm (as described in previous posts), we need to install the <i>zeromq</i> library. Once again, the one available in the Ubuntu repo is way too old, so let's build a fresh version:</p>
+<p>Both our <em>zeromq</em> machines (the client and the server) require a little bit of setup: on top of Node.js and npm (as described in previous posts), we need to install the <em>zeromq</em> library. Once again, the one available in the Ubuntu repo is way too old, so let's build a fresh version:</p>
 
-<p><span>$ <b>wget</b>&nbsp;http://download.zeromq.org/zeromq-3.2.3.tar.gz</span></p>
+<p><span>$ <strong>wget</strong>&nbsp;http://download.zeromq.org/zeromq-3.2.3.tar.gz</span></p>
 
-<p><div>
-<span>$ <b>tar</b> xvfz zeromq-3.2.3.tar.gz
 <div>
-<span>$ <b>cd</b> zeromq-3.2.3
+<span>$ <strong>tar</strong> xvfz zeromq-3.2.3.tar.gz
 <div>
-<span>$ ./<b>configure</p>
+<span>$ <strong>cd</strong> zeromq-3.2.3
+<div>
+<span>$ ./<strong>configure</p>
 
 <p><span><div class="legacy-post-content">
           And you thought I was on holiday?
 
 
-Time to hack <a href="2013-08-16-the-billion-dollar-app-part5.html">our Node app</a> again and introduce another great piece of software called <i><a href="http://zeromq.org/">zeromq. On top of having one of the coolest logos, <i>zeromq</i> is a high-performance, low-latency messaging system that you simply cannot afford to ignore when you need to build highly scalable apps (IMHO). Other contenders would be <a href="http://www.rabbitmq.com/">RabbitMQ</a> (awesome and rock-solid, but not really lightweight) and <a href="https://github.com/bitly/nsq">NSQ</a> (written by the bit.ly folks).
+Time to hack <a href="2013-08-16-the-billion-dollar-app-part5.html">our Node app</a> again and introduce another great piece of software called <em><a href="http://zeromq.org/">zeromq. On top of having one of the coolest logos, <em>zeromq</em> is a high-performance, low-latency messaging system that you simply cannot afford to ignore when you need to build highly scalable apps (IMHO). Other contenders would be <a href="http://www.rabbitmq.com/">RabbitMQ</a> (awesome and rock-solid, but not really lightweight) and <a href="https://github.com/bitly/nsq">NSQ</a> (written by the bit.ly folks).
 
 
-The basic idea will be to have our web app call a remote server through <i>zeromq</i>. The remote server will perform a super fancy calculation and return it back to the web app. I can feel that you're excited already, so let's get started :*)
+The basic idea will be to have our web app call a remote server through <em>zeromq</em>. The remote server will perform a super fancy calculation and return it back to the web app. I can feel that you're excited already, so let's get started :*)
 
 
-Both our <i>zeromq</i> machines (the client and the server) require a little bit of setup: on top of Node.js and npm (as described in previous posts), we need to install the <i>zeromq</i> library. Once again, the one available in the Ubuntu repo is way too old, so let's build a fresh version:
+Both our <em>zeromq</em> machines (the client and the server) require a little bit of setup: on top of Node.js and npm (as described in previous posts), we need to install the <em>zeromq</em> library. Once again, the one available in the Ubuntu repo is way too old, so let's build a fresh version:
 
 
-<span>$ <b>wget</b>&nbsp;http://download.zeromq.org/zeromq-3.2.3.tar.gz</span>
+<span>$ <strong>wget</strong>&nbsp;http://download.zeromq.org/zeromq-3.2.3.tar.gz</span>
 
 <div>
-<span>$ <b>tar</b> xvfz zeromq-3.2.3.tar.gz
+<span>$ <strong>tar</strong> xvfz zeromq-3.2.3.tar.gz
 <div>
-<span>$ <b>cd</b> zeromq-3.2.3
+<span>$ <strong>cd</strong> zeromq-3.2.3
 <div>
-<span>$ ./<b>configure
+<span>$ ./<strong>configure
 
-<span>$&nbsp;<b>make</div>nbsp;<b>make</p>
+<span>$&nbsp;<strong>make</div>nbsp;<strong>make</p>
         </div>
 <div>
-<span>$ sudo <b>make</b> install
+<span>$ sudo <strong>make</strong> install
 <div>
+Now, let's add the <em>zeromq</em> bindings for Node.js, namely the <a href="https://github.com/JustinTulloss/zeromq.node"><em>zeromq.node</em> library</a> aka <em>zmq</em>:</div>
 <div>
-Now, let's add the <i>zeromq</i> bindings for Node.js, namely the <a href="https://github.com/JustinTulloss/zeromq.node"><i>zeromq.node</i> library</a> aka <i>zmq</i>:</div>
+<span>$ sudo <strong>apt-ge</strong>t install build-essential </span><em><span>(required by the zmq install)
 <div>
+<span>$ <strong>npm</strong> install zmq
 <div>
-<span>$ sudo <b>apt-ge</b>t install build-essential </span><i><span>(required by the zmq install)
+Now we're ready to roll. Let's keep it simple and use a nice request-reply pattern: the web app will send a request to the remote server and get a response back. <em>Zeromq</em> supports many other patters, you'll find more info in the <a href="http://zguide.zeromq.org/page:all">official documentation</a>. Definitely worth a read, <em>zeromq</em> is a superb piece of software engineering art. Lightweight, simple, elegant... ah, love at first sight.</div>
 <div>
-<span>$ <b>npm</b> install zmq
-<div>
-<div>
-Now we're ready to roll. Let's keep it simple and use a nice request-reply pattern: the web app will send a request to the remote server and get a response back. <i>Zeromq</i> supports many other patters, you'll find more info in the <a href="http://zguide.zeromq.org/page:all">official documentation</a>. Definitely worth a read, <i>zeromq</i> is a superb piece of software engineering art. Lightweight, simple, elegant... ah, love at first sight.</div>
-<div>
-<div>
-But I digress (that fine bottle of Leffe, probably). Let's look at our <i>zeromq</i> server first.
+But I digress (that fine bottle of Leffe, probably). Let's look at our <em>zeromq</em> server first.
 
 
 BTW, since I guess it's time to stop mourning SCCS ;), I've created&nbsp;<a href="https://github.com/juliensimon">a proper Github account&nbsp;</a>where you'll find all pieces of code posted on this blog. Can't say I love Git dearly, but a little progress every now and then is okay, I guess.
@@ -329,7 +325,7 @@ sock.on('message', function(msg){
 
 
 
-Nice and short, huh? Create a '<i>reply</i>' socket, listen on port 3000/TCP and send back twice was we got. And yes, everything in life is an '<i>int</i>', so there.
+Nice and short, huh? Create a '<em>reply</em>' socket, listen on port 3000/TCP and send back twice was we got. And yes, everything in life is an '<em>int</em>', so there.
 
 
 Now, let's look at the corresponding part in the client, i.e. our web app:
@@ -541,23 +537,16 @@ Let's take a few steps back and look at what we built over the last posts:
 <li>a simple Node.js web app...</li>
 <li>fetching data from an Elasticache cluster...</li>
 <li>fed by a MongoDB server...</li>
-<li>logging remotely to a <i>syslog</i> server...</li>
-<li>calling&nbsp;a remote server&nbsp;through <i>zeromq</i>...</li>
+<li>logging remotely to a <em>syslog</em> server...</li>
+<li>calling&nbsp;a remote server&nbsp;through <em>zeromq</em>...</li>
 <li>all of it open-source...</li>
 <li>all of it cloud-based...</li>
 <li>each part easily scalable, independently from the others.
+<p>And above everything, very little code: 159 lines (comments included), with the help of a few well-chosen libraries.&nbsp;</p>
+<pre><code>Makes me want to be a developer again. Food for thought ;)</code></pre>
+<pre><code>Till next time, my friends.</code></pre>
 <div>
-And above everything, very little code: 159 lines (comments included), with the help of a few well-chosen libraries.&nbsp;</div>
-<div>
-<div>
-Makes me want to be a developer again. Food for thought ;)</div>
-<div>
-<div>
-Till next time, my friends.</div>
-<div>
-<div>
-PS: In case you were wondering "<i>Zero the hero</i>" is a&nbsp;<a href="https://www.youtube.com/watch?v=tqEo-gg7mE8">Sabbath song</a>,&nbsp;although one could argue that the&nbsp;<a href="https://www.youtube.com/watch?v=Fl65Oatlo30">Cannibal Corpse cover</a>&nbsp;is actually quite better.</div>
-        </div>
+PS: In case you were wondering "<em>Zero the hero</em>" is a&nbsp;<a href="https://www.youtube.com/watch?v=tqEo-gg7mE8">Sabbath song</a>,&nbsp;although one could argue that the&nbsp;<a href="https://www.youtube.com/watch?v=Fl65Oatlo30">Cannibal Corpse cover</a>&nbsp;is actually quite better.</div>
       </article>
     </main>
 

@@ -257,92 +257,92 @@
         <div class="legacy-post-content">
           <p>Today I'd like to talk about <a href="http://www.mediatomb.cc/">mediatomb</a>, a media server with a nice web user interface allowing you to stream your digital media through your home network on a variety of 'Universal Plug and Play' (UPnP) compatible devices... such as the PS3 :)</p>
 
-<p>Of course, you could just go and install a packaged version of the last official release (0.11) with <span>apt-get</span>, but:
-<ol><li>0.11 was released in March'08, which means that you'll be missing the newest features</li><li>that's not fun :)</ol>So, let's get to work and take care of all dependencies needed to build <span>mediatomb</span> from source. This procedure was successfully performed on Ubuntu 8.04 and 8.10.</p>
+<p>Of course, you could just go and install a packaged version of the last official release (0.11) with apt-get, but:
+<ol><li>0.11 was released in March'08, which means that you'll be missing the newest features</li><li>that's not fun :)</ol>So, let's get to work and take care of all dependencies needed to build mediatomb from source. This procedure was successfully performed on Ubuntu 8.04 and 8.10.</p>
 
 <p><span>1) Installing <span><a href="http://code.google.com/p/ffmpegthumbnailer/">ffmpegthumbnailer</span></p>
 
-<p><span>ffmpegthumbnailer</span> is a small tool which uses <span>ffmpeg</span> to generate video thumbnails. These thumbnails will be displayed by <span>mediatomb</span> while you're browsing your video collection.</p>
+<p>ffmpegthumbnailer is a small tool which uses ffmpeg to generate video thumbnails. These thumbnails will be displayed by mediatomb while you're browsing your video collection.</p>
 
-<p><span>[Updated on 2008/01/02] This supposes that you have </span><a href="2008-20-12-compiling-ffmeg-x264-mp3-xvid-amr-on-ubuntu.html">built ffmpeg</a><span>. If not, you may be missing a number of libraries: please check the comments below for solutions.</span></p>
+<p>[Updated on 2008/01/02] This supposes that you have <a href="2008-20-12-compiling-ffmeg-x264-mp3-xvid-amr-on-ubuntu.html">built ffmpeg</a>. If not, you may be missing a number of libraries: please check the comments below for solutions.</p>
 
-<p>First, we need to install <span>libpng</span>:</p>
+<p>First, we need to install libpng:</p>
 
 <p><code>ubuntu% <span>sudo apt-get install <span>libpng12-dev</code></p>
 
-<p>Now, let's fetch the <span>ffmpegthumbnailer </span>source and build it:
+<p>Now, let's fetch the ffmpegthumbnailer source and build it:
 <code>
-ubuntu% <span>wget http://ffmpegthumbnailer.googlecode.com/files/ffmpegthumbnailer-1.3.0.tar.gz</span>
-ubuntu% <span>tar xvfz ffmpegthumbnailer-1.3.0.tar.gz</span>
-ubuntu% <span>cd ffmpegthumbnailer-1.3.0  </span>
-ubuntu% <span>./configure --prefix=/usr/local</span>
-ubuntu% <span>make</span>
+ubuntu% wget http://ffmpegthumbnailer.googlecode.com/files/ffmpegthumbnailer-1.3.0.tar.gz
+ubuntu% tar xvfz ffmpegthumbnailer-1.3.0.tar.gz
+ubuntu% cd ffmpegthumbnailer-1.3.0  
+ubuntu% ./configure --prefix=/usr/local
+ubuntu% make
 ubuntu% <span>sudo make install</code>
 OK, let's move on.</p>
 
-<p><span>2a) Installing </span><a href="http://www.blogger.com/%20http://www.mplayerhq.hu/design7/news.html">libdvdnav</a><span> and <span>libdvdread<span> from source</span></p>
+<p>2a) Installing <a href="http://www.blogger.com/%20http://www.mplayerhq.hu/design7/news.html">libdvdnav</a><span> and <span>libdvdread from source</p>
 
-<p>These two libraries are used to browse DVD file structures: <span>mediatomb</span> needs them to read and stream DVD ISO images.</p>
+<p>These two libraries are used to browse DVD file structures: mediatomb needs them to read and stream DVD ISO images.</p>
 
-<p>Since we're going to build the very latest <span>mediatomb</span> version, let's make sure we have up to date libs as well.</p>
+<p>Since we're going to build the very latest mediatomb version, let's make sure we have up to date libs as well.</p>
 
-<p>You do need to build and install <span>libdvdread</span> before <span>libdvdnav</span>, or the latter won't link.
+<p>You do need to build and install libdvdread before libdvdnav, or the latter won't link.
 <code>
-ubuntu% <span>wget ftp://ftp6.mplayerhq.hu/MPlayer/releases/dvdnav/libdvdread-4.1.3.tar.bz2</span>
-ubuntu% <span>bzip2 -d libdvdread-4.1.3.tar.bz2</span>
-ubuntu% <span>tar xvf libdvdread-4.1.3.tar</span>
-ubuntu% <span>./configure2 --prefix=/usr/local --enable-shared</span>
-ubuntu% <span>make</span>
-ubuntu% <span>sudo make install</span></p>
+ubuntu% wget ftp://ftp6.mplayerhq.hu/MPlayer/releases/dvdnav/libdvdread-4.1.3.tar.bz2
+ubuntu% bzip2 -d libdvdread-4.1.3.tar.bz2
+ubuntu% tar xvf libdvdread-4.1.3.tar
+ubuntu% ./configure2 --prefix=/usr/local --enable-shared
+ubuntu% make
+ubuntu% sudo make install</p>
 
-<p>ubuntu% <span>wget ftp://ftp6.mplayerhq.hu/MPlayer/releases/dvdnav/libdvdnav-4.1.3.tar.bz2</span>
-ubuntu% <span>bzip2 -d libdvdnav-4.1.3.tar.bz2</span>
-ubuntu% <span>tar xvf libdvdnav-4.1.3.tar</span>
-ubuntu% <span>./configure2 --prefix=/usr/local --enable-shared</span>
-ubuntu% <span>make</span>
+<p>ubuntu% wget ftp://ftp6.mplayerhq.hu/MPlayer/releases/dvdnav/libdvdnav-4.1.3.tar.bz2
+ubuntu% bzip2 -d libdvdnav-4.1.3.tar.bz2
+ubuntu% tar xvf libdvdnav-4.1.3.tar
+ubuntu% ./configure2 --prefix=/usr/local --enable-shared
+ubuntu% make
 ubuntu% <span>sudo make install
-</code><span>2b) Installing </span><a href="http://www.blogger.com/%20http://www.mplayerhq.hu/design7/news.html">libdvdnav</a><span> and <span>libdvdread<span> from APT</span></p>
+</code>2b) Installing <a href="http://www.blogger.com/%20http://www.mplayerhq.hu/design7/news.html">libdvdnav</a><span> and <span>libdvdread from APT</p>
 
-<p>Both are available as APT packages (<span>libdvdread-dev</span> and <span>libdvdnav-dev</span>), but they're not up to date on Ubuntu 8.04. Anyway, if you don't want to build them, here's how to install them quickly:</p>
+<p>Both are available as APT packages (libdvdread-dev and libdvdnav-dev), but they're not up to date on Ubuntu 8.04. Anyway, if you don't want to build them, here's how to install them quickly:</p>
 
-<p><code>ubuntu% <span>sudo apt-get install libdvdread-dev libdvdnav-dev</span>
-<span>3) Installing everything else</span></p>
+<p><code>ubuntu% sudo apt-get install libdvdread-dev libdvdnav-dev
+3) Installing everything else</p>
 
-<p><span>Sqlite3</span> is one of the two databases that mediatomb can use (the other is <span>mySQL</span>).
+<p>Sqlite3 is one of the two databases that mediatomb can use (the other is mySQL).
 <code>
-ubuntu% <span>sudo apt-get install libsqlite3-dev</span>
-<span>Libtag</span> is needed to read tags in MP3 files, FLAC files and so on:
+ubuntu% sudo apt-get install libsqlite3-dev
+Libtag is needed to read tags in MP3 files, FLAC files and so on:
 <code>
-ubuntu% <span>sudo apt-get install libtag1-dev</span>
-<span>Libexpat</span> is needed parse XML files:
+ubuntu% sudo apt-get install libtag1-dev
+Libexpat is needed parse XML files:
 <code>
 ubuntu% <span>sudo apt-get install libexpat1-dev
-</code><span>Libexif</span> is needed to read tags stored in some digital pictures.
+</code>Libexif is needed to read tags stored in some digital pictures.
 <code>
-ubuntu% <span>sudo apt-get install libexif-dev</span>
-<span>Libmp4v2</span> is needed to parse mp4 files.
+ubuntu% sudo apt-get install libexif-dev
+Libmp4v2 is needed to parse mp4 files.
 <code>
-ubuntu% <span>sudo apt-get install libmp4v2-dev</span>
-<span>Libmagic</span> helps to find the MIME type of a file based on the 'magic number' usually stored in the file header.
+ubuntu% sudo apt-get install libmp4v2-dev
+Libmagic helps to find the MIME type of a file based on the 'magic number' usually stored in the file header.
 <code>
-ubuntu% <span>sudo apt-get install libmagic-dev</span>
-<span>Libcurl</span> is used to fetch web content using HTTP requests. This is how <span>mediatomb</span> can fetch YouTube content and stream it.
+ubuntu% sudo apt-get install libmagic-dev
+Libcurl is used to fetch web content using HTTP requests. This is how mediatomb can fetch YouTube content and stream it.
 <code>
-ubuntu% <span>sudo apt-get install libcurl4-openssl-dev</span>
-Last, <span>libmozjs</span> is the JavaScript engine used by <span>mediatomb</span>.
+ubuntu% sudo apt-get install libcurl4-openssl-dev
+Last, libmozjs is the JavaScript engine used by mediatomb.
 <code>
-ubuntu% <span>sudo apt-get install libmozjs-dev</span>
+ubuntu% sudo apt-get install libmozjs-dev
 <span>4) Building <span>mediatomb</p>
 
 <p>Let's fetch the latest sources from the Subversion repository:
 <code>
-ubuntu% <span>svn co https://svn.mediatomb.cc/svnroot/mediatomb/trunk/mediatomb mediatomb</span>
-Now, let's generate the <span>configure</span> script and run it (you need <span>autoconf</span> and <span>automake</span> for this):
+ubuntu% svn co https://svn.mediatomb.cc/svnroot/mediatomb/trunk/mediatomb mediatomb
+Now, let's generate the configure script and run it (you need autoconf and automake for this):
 <code>
-ubuntu% <span>cd mediatomb</span>
-ubuntu% <span>autoreconf -i</span>
-ubuntu% <span>./configure --prefix=/usr/local</span>
-<span>lots of output removed</span>
+ubuntu% cd mediatomb
+ubuntu% autoreconf -i
+ubuntu% ./configure --prefix=/usr/local
+lots of output removed
 CONFIGURATION SUMMARY ----
 sqlite3               : yes
 mysql                 : missing
@@ -364,27 +364,27 @@ Apple Trailers        : yes
 SopCast               : disabled
 libextractor          : disabled
 db-autocreate         : yes
-As you can see, we have pretty much enabled everything (again, <span>sqlite3</span> is preferred over <span>mySQL</span>, and <span>taglib</span> over <span>id3lib</span>). Support for SopCast and Weborama isn't completely ready yet, so it's probably safer to leave them out.</p>
+As you can see, we have pretty much enabled everything (again, sqlite3 is preferred over mySQL, and taglib over id3lib). Support for SopCast and Weborama isn't completely ready yet, so it's probably safer to leave them out.</p>
 
-<p>All right, let's build <span>mediatomb</span>:
+<p>All right, let's build mediatomb:
 <code>
-ubuntu% <span>make</span>
-ubuntu% <span>sudo make install</span>
-ubuntu% <span>sudo ldconfig</span>
+ubuntu% make
+ubuntu% sudo make install
+ubuntu% sudo ldconfig
 And now...
 <code>
-ubuntu% <span>mediatomb</span>
+ubuntu% mediatomb
 MediaTomb UPnP Server version 0.12.0 - http://mediatomb.cc/
 ===============================================================================
 Copyright 2005-2008 Gena Batsyan, Sergey Bostandzhyan, Leonhard Wimmer.
 MediaTomb is free software, covered by the GNU General Public License version 2</p>
 
-<p>All right. Let's power up the PS3 and see if it can see the <span>mediatomb</span> server.</p>
+<p>All right. Let's power up the PS3 and see if it can see the mediatomb server.</p>
 
-<p>Yes it does. Now using the <span>mediatomb</span> GUI, in just a few clicks, I added some pictures and music to my library. They are almost immediately visible on the PS3:</p>
+<p>Yes it does. Now using the mediatomb GUI, in just a few clicks, I added some pictures and music to my library. They are almost immediately visible on the PS3:</p>
 
 <p></a>
-Not bad at all! That's it for the <span>mediatomb</span> installation. There's still plenty of configuration to do, but this will be the subject of another entry :)</p>
+Not bad at all! That's it for the mediatomb installation. There's still plenty of configuration to do, but this will be the subject of another entry :)</p>
         </div>
       </article>
     </main>

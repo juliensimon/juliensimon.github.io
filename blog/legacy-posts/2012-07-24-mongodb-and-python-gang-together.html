@@ -259,7 +259,7 @@
 
 <p><code>
 <code>
-$ <b>sudo easy_install pymongo&nbsp;</code></p>
+$ <strong>sudo easy_install pymongo&nbsp;</code></p>
 
 <p><code>Searching for pymongo&nbsp;</p>
 
@@ -279,11 +279,11 @@ $ <b>sudo easy_install pymongo&nbsp;</code></p>
 
 <p><code># Python 2.7</p>
 
-<p><span>from pymongo import *</span></p>
+<p>from pymongo import *</p>
 
-<p><code>&nbsp;<span>connection = MongoClient("mongodb://</span><span>USERNAME:PASSWORD</span><span>@ds051067.mongolab.com:51067/mongolab-test", 51067)</span></p>
+<p><code>&nbsp;connection = MongoClient("mongodb://USERNAME:PASSWORD@ds051067.mongolab.com:51067/mongolab-test", 51067)</p>
 
-<p><span>db = connection["mongolab-test"]</span></p>
+<p>db = connection["mongolab-test"]</p>
 
 <p><span>c = db["collection1"]</p>
 
@@ -291,46 +291,46 @@ $ <b>sudo easy_install pymongo&nbsp;</code></p>
 
 <p><span>for post in posts:</p>
 
-<p><span>&nbsp; &nbsp; &nbsp; &nbsp; print (post)</span></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; print (post)</p>
 
 <p>Output:</p>
 
-<p><span>{u'x': 1.0, u'_id': ObjectId('51e3ce08915082db3df32bf0')}</span></p>
+<p>{u'x': 1.0, u'_id': ObjectId('51e3ce08915082db3df32bf0')}</p>
 
-<p><span>{u'x': 2.0, u'_id': ObjectId('51e3ce08915082db3df32bf1')}</span></p>
+<p>{u'x': 2.0, u'_id': ObjectId('51e3ce08915082db3df32bf1')}</p>
 
-<p><span>{u'x': 3.0, u'_id': ObjectId('51e3ce08915082db3df32bf2')}</span></p>
+<p>{u'x': 3.0, u'_id': ObjectId('51e3ce08915082db3df32bf2')}</p>
 
-<p><span><i>output removed from brevity</p>
+<p><span><em>output removed from brevity</p>
 
-<p><span>{u'x': 25.0, u'_id': ObjectId('51e3ce08915082db3df32c08')}</span></p>
+<p>{u'x': 25.0, u'_id': ObjectId('51e3ce08915082db3df32c08')}</p>
 
 <p><code>
 OK, now let's go a little bit crazeee:</p>
 
 <p><code># Python 2.7&nbsp;</p>
 
-<p><span>from pymongo import *</span></p>
+<p>from pymongo import *</p>
 
-<p><span>connection = MongoClient("mongodb://USERNAME:PASSWORD@ds051067.mongolab.com:51067/mongolab-test", 51067)</span></p>
+<p>connection = MongoClient("mongodb://USERNAME:PASSWORD@ds051067.mongolab.com:51067/mongolab-test", 51067)</p>
 
-<p><span>db = connection["mongolab-test"]</span></p>
+<p>db = connection["mongolab-test"]</p>
 
-<p><span>c = db["collection1"]</span></p>
+<p>c = db["collection1"]</p>
 
-<p><span>posts = c.find({"x":{"$gte":5,"$lte":10}}).sort([("x",DESCENDING)])</span></p>
+<p>posts = c.find({"x":{"$gte":5,"$lte":10}}).sort([("x",DESCENDING)])</p>
 
-<p><span>print (c.count())</span></p>
+<p>print (c.count())</p>
 
-<p><span>for post in posts:</span></p>
+<p>for post in posts:</p>
 
-<p><span>&nbsp; &nbsp; &nbsp; &nbsp; print (post)</span></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; print (post)</p>
 
-<p><span>&nbsp; &nbsp; &nbsp; &nbsp; c.insert({"y":post["x"]})</span></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; c.insert({"y":post["x"]})</p>
 
-<p><span>print (c.count())</span></p>
+<p>print (c.count())</p>
 
-<p><div>
+<div>
 <span></p>
         </div>
 Output:

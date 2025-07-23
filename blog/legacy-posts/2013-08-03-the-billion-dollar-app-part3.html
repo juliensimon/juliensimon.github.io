@@ -255,9 +255,9 @@
         </header>
         
         <div class="legacy-post-content">
-          <p>In a <a href="2013-08-03-the-billion-dollar-app-part3.html">previous post</a>, we added caching to our Node.js&nbsp;+ MongoDB web application, thanks to an EC2 instance running <i>memcached</i>.</p>
+          <p>In a <a href="2013-08-03-the-billion-dollar-app-part3.html">previous post</a>, we added caching to our Node.js&nbsp;+ MongoDB web application, thanks to an EC2 instance running <em>memcached</em>.</p>
 
-<p>As you may know, AWS support its own brand of caching, aka ElastiCache: "<i>Amazon ElastiCache is protocol-compliant with Memcached, a widely adopted memory object caching system, so code, applications, and popular tools that you use today with existing Memcached environments will work seamlessly with the service</i>".</p>
+<p>As you may know, AWS support its own brand of caching, aka ElastiCache: "<em>Amazon ElastiCache is protocol-compliant with Memcached, a widely adopted memory object caching system, so code, applications, and popular tools that you use today with existing Memcached environments will work seamlessly with the service</em>".</p>
 
 <p>Seamlessly? Hmmm. Alright, let's take a look :)</p>
 
@@ -265,21 +265,18 @@
 
 <p>Wait a couple of minutes and the cluster will come online. Let's check that the single node is accessible from our EC2 instance (no need to mess with the security group, port 11211 is open by default):</p>
 
-<p><span>ubuntu@ip-10-48-249-35:~$ echo stats| <b>nc</b> memcache.9vficl.0001.euw1.cache.amazonaws.com 11211</span></p>
+<p><span>ubuntu@ip-10-48-249-35:~$ echo stats| <strong>nc</strong> memcache.9vficl.0001.euw1.cache.amazonaws.com 11211</span></p>
 
-<p>This looks like <i>memcached</i> stats alright. Ok, now let's change a single line in our app, to use ElastiCache instead of our homemade&nbsp;instance:</p>
+<p>This looks like <em>memcached</em> stats alright. Ok, now let's change a single line in our app, to use ElastiCache instead of our homemade&nbsp;instance:</p>
 
-<p><span>// MemcacheClient = new mc.Client("10.234.177.74");</span></p>
+<p>// MemcacheClient = new mc.Client("10.234.177.74");</p>
 
-<p><span>MemcacheClient = new mc.Client("memcache.9vficl.0001.euw1.cache.amazonaws.com");</span></p>
+<p>MemcacheClient = new mc.Client("memcache.9vficl.0001.euw1.cache.amazonaws.com");</p>
 
-<p><div>
-<div>
-Now, let's run the app:</p>
+<p>Now, let's run the app:</p>
         </div>
 <div>
-<span>ubuntu@ip-10-48-249-35:~$ <b>node</b> www4.js&nbsp;
-<div>
+<span>ubuntu@ip-10-48-249-35:~$ <strong>node</strong> www4.js&nbsp;
 <div>
 <span>Web server started
 <div>
@@ -287,15 +284,10 @@ Now, let's run the app:</p>
 <div>
 <span>Connected to database
 </div>
+<pre><code>Nice. Time for queries and console output!</code></pre>
 <div>
-<div>
-Nice. Time for queries and console output!</div>
-<div>
-<div>
-<span>Mac:~ julien$ <b>curl</b> http://ec2-54-216-3-139.eu-west-1.compute.amazonaws.com:8080/?id=51e3ce08915082db3df32bfc
+<span>Mac:~ julien$ <strong>curl</strong> http://ec2-54-216-3-139.eu-west-1.compute.amazonaws.com:8080/?id=51e3ce08915082db3df32bfc
 </div>
-<div>
-<div>
 <div>
 <span>Request received, id=51e3ce08915082db3df32bfc
 <div>
@@ -307,11 +299,10 @@ Nice. Time for queries and console output!</div>
 </div>
 
 
-<div>
-Let's replay the request quickly:</div>
+<p>Let's replay the request quickly:</p>
 <div>
 <span>Request received, id=51e3ce08915082db3df32bfc
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bfc, value=13</span>
+Cache hit, &nbsp;key=51e3ce08915082db3df32bfc, value=13
 
 <div>
 And once more after 60 seconds (the item TTL):
@@ -324,12 +315,9 @@ And once more after 60 seconds (the item TTL):
 <span>Item found: {"_id":"51e3ce08915082db3df32bfc","x":13}
 <div>
 <span>Stored key=51e3ce08915082db3df32bfc, value=13
+<p>Let's stop the web app and look at the cache stats:</p>
 <div>
-<div>
-<div>
-Let's stop the web app and look at the cache stats:</div>
-<div>
-<span>ubuntu@ip-10-48-249-35:~$ echo stats| <b>nc</b> memcache.9vficl.cfg.euw1.cache.amazonaws.com 11211|grep [g,s]et
+<span>ubuntu@ip-10-48-249-35:~$ echo stats| <strong>nc</strong> memcache.9vficl.cfg.euw1.cache.amazonaws.com 11211|grep [g,s]et
 <div>
 <span>STAT cmd_get 3
 <div>
@@ -360,9 +348,9 @@ Adding more nodes to the cluster is literally one click away: "Add node" :) Afte
 
 Let's update our web app and relaunch it:
 
-<span>// MemcacheClient = new mc.Client("10.234.177.74");</span>
+// MemcacheClient = new mc.Client("10.234.177.74");
 
-<span>MemcacheClient = new mc.Client(["memcache.9vficl.0001.euw1.cache.amazonaws.com",&nbsp;</span><span>"memcache.9vficl.0002.euw1.cache.amazonaws.com"]</span><span>);</span>
+MemcacheClient = new mc.Client(["memcache.9vficl.0001.euw1.cache.amazonaws.com",&nbsp;"memcache.9vficl.0002.euw1.cache.amazonaws.com"]);
 
 <span>
 ElastiCache has its own client, which allows the app to auto-discover new nodes without having to restart. Very nice, but the client is only available for Java (grumble) and PHP (bleh). Hopefully other languages are on the way.
@@ -396,43 +384,43 @@ Alright, what do the graphs say?
 One last thing to conclude: going back to the web app console output, we can clearly see the parallel asynchronous nature of Node.js at work.
 
 
-<span>Stored key=51e3ce08915082db3df32bfd, value=14</span>
+Stored key=51e3ce08915082db3df32bfd, value=14
 
-<span>Stored key=51e3ce08915082db3df32bff, value=16</span>
+Stored key=51e3ce08915082db3df32bff, value=16
 
-<span>Stored key=51e3ce08915082db3df32bfe, value=15</span>
+Stored key=51e3ce08915082db3df32bfe, value=15
 
-<span>Request received, id=51e3ce08915082db3df32bf0</span>
+Request received, id=51e3ce08915082db3df32bf0
 
-<span>Request received, id=51e3ce08915082db3df32bf2</span>
+Request received, id=51e3ce08915082db3df32bf2
 
-<span>Request received, id=51e3ce08915082db3df32bf1</span>
+Request received, id=51e3ce08915082db3df32bf1
 
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bf0, value=1</span>
+Cache hit, &nbsp;key=51e3ce08915082db3df32bf0, value=1
 
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bf2, value=3</span>
+Cache hit, &nbsp;key=51e3ce08915082db3df32bf2, value=3
 
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bf1, value=2</span>
+Cache hit, &nbsp;key=51e3ce08915082db3df32bf1, value=2
 
-<span>Request received, id=51e3ce08915082db3df32bfb</span>
+Request received, id=51e3ce08915082db3df32bfb
 
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bfb, value=12</span>
+Cache hit, &nbsp;key=51e3ce08915082db3df32bfb, value=12
 
-<span><b>Request received, id=51e3ce08915082db3df32bfd
+<span><strong>Request received, id=51e3ce08915082db3df32bfd
 
-<span>Request received, id=51e3ce08915082db3df32bfc</span>
+Request received, id=51e3ce08915082db3df32bfc
 
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bfc, value=13</span>
+Cache hit, &nbsp;key=51e3ce08915082db3df32bfc, value=13
 
-<span>Request received, id=51e3ce08915082db3df32bf4</span>
+Request received, id=51e3ce08915082db3df32bf4
 
-<span>Request received, id=51e3ce08915082db3df32bf3</span>
+Request received, id=51e3ce08915082db3df32bf3
 
-<span>Cache hit, &nbsp;key=51e3ce08915082db3df32bf3, value=4</span>
+Cache hit, &nbsp;key=51e3ce08915082db3df32bf3, value=4
 
-<span>Request received, id=51e3ce08915082db3df32bf5</span>
+Request received, id=51e3ce08915082db3df32bf5
 
-<span><b>Cache hit, &nbsp;key=51e3ce08915082db3df32bfd, value=14
+<span><strong>Cache hit, &nbsp;key=51e3ce08915082db3df32bfd, value=14
 
 
 The two lines I've highlighted above come from the processing of the same HTTP request. However, a lot of stuff happened in the middle because other requests. Did I create threads? No. Did I mess with 'worker pools' or similar atrocities? No. I just wrote my code and let the framework do the rest.

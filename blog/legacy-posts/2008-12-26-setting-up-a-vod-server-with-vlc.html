@@ -255,15 +255,15 @@
         </header>
         
         <div class="legacy-post-content">
-          <p>In a <a href="2008-12-21-compiling-vlc-live555-all-major-codecs-on-ubuntu.html">previous article</a>, I showed you how to build <span>VLC</span> from source. Since this build included the <span>live555</span> streaming libraries, the resulting <span>VLC</span> is able to serve audio / video streams.</p>
+          <p>In a <a href="2008-12-21-compiling-vlc-live555-all-major-codecs-on-ubuntu.html">previous article</a>, I showed you how to build VLC from source. Since this build included the live555 streaming libraries, the resulting VLC is able to serve audio / video streams.</p>
 
-<p>Thus, in this article, I'm going to give you a quick overview on how to configure <span>VLC</span> as an on-demand <a href="http://en.wikipedia.org/wiki/Real_Time_Streaming_Protocol">RTSP</a> streaming server, with on-the-fly transcoding thrown in for good measure ;)</p>
+<p>Thus, in this article, I'm going to give you a quick overview on how to configure VLC as an on-demand <a href="http://en.wikipedia.org/wiki/Real_Time_Streaming_Protocol">RTSP</a> streaming server, with on-the-fly transcoding thrown in for good measure ;)</p>
 
-<p>First of all, we need a machine to run the <span>VLC</span> server on. Here, it will be 192.168.0.2, an Ubuntu 8.04 machine with <span>VLC </span>0.9.8a, <span>ffmpeg </span>SVN-r16245 (built from source) <span>and</span><span>x264 </span>0.65.1057 (built from source).</p>
+<p>First of all, we need a machine to run the VLC server on. Here, it will be 192.168.0.2, an Ubuntu 8.04 machine with VLC 0.9.8a, ffmpeg SVN-r16245 (built from source) andx264 0.65.1057 (built from source).</p>
 
-<p>Then, we need to copy some media files on the server. I'll use an MP3 file (<span>music.mp3</span>) and an MPEG2 video (<span>video.mpg</span>), both located in <span>/home/julien/media</span>.</p>
+<p>Then, we need to copy some media files on the server. I'll use an MP3 file (music.mp3) and an MPEG2 video (video.mpg), both located in /home/julien/media.</p>
 
-<p>Now, let's write the <span>VLC</span> configuration file and save it as <span>vlc_vod_config</span>:
+<p>Now, let's write the VLC configuration file and save it as vlc_vod_config:
 <code>
 # VLC media player VLM command batch
 # http://www.videolan.org/vlc/</p>
@@ -277,25 +277,25 @@ setup MyVideo input "file:///home/julien/media/video.mpg"</p>
 <p>new MyVideoMobile vod enabled
 setup MyVideoMobile input "file:///home/julien/media/video.mpg" output "#transcode{venc=ffmpeg,vcodec=h264,vb=384,height=120,width=160,fps=20,aenc=ffmpeg,acodec=mp3,ab=64,channels=1}"
 It's fairly self explanatory :) As you can see, we need to create an entry for each media we want to stream:
-<ul><li>the media identifier (<span>MyMusic</span>, <span>MyVideo</span>) following the <span>new</span> keyword is important because it's going to be part of the URL used by the client to access the media.</li><li><span>vod</span> stands for Video on Demand (VLC can also do broadcast streams)</li><li><span>enabled</span>, well... you get the idea :)</li><li><span>setup...</span><span>input </span>links the identifier to the actual media file we want to stream</ul>The last stream, <span>MyVideoMobile</span>, is based on the same MPEG input file as the <span>MyVideo</span> stream. However, this file will be resized and transcoded on the fly into H264 video and MP3 audio. For example, this could be useful for mobile clients, which require a smaller resolution and a much lower bitrate than PC clients.</p>
+<ul><li>the media identifier (MyMusic, MyVideo) following the new keyword is important because it's going to be part of the URL used by the client to access the media.</li><li>vod stands for Video on Demand (VLC can also do broadcast streams)</li><li>enabled, well... you get the idea :)</li><li>setup...input links the identifier to the actual media file we want to stream</ul>The last stream, MyVideoMobile, is based on the same MPEG input file as the MyVideo stream. However, this file will be resized and transcoded on the fly into H264 video and MP3 audio. For example, this could be useful for mobile clients, which require a smaller resolution and a much lower bitrate than PC clients.</p>
 
-<p>Now let's open a terminal on the server and start <span>VLC</span>. We want it to run as an RTSP server on port 5554. We also want to use the <span>telnet</span> interface to configure it and the <span>telnet</span> password will be '<span>videolan</span>':
+<p>Now let's open a terminal on the server and start VLC. We want it to run as an RTSP server on port 5554. We also want to use the telnet interface to configure it and the telnet password will be 'videolan':
 <code>
-ubuntu% <span>vlc -I telnet --telnet-password videolan --rtsp-host 0.0.0.0:5554</span>
-<span>output removed</span>
+ubuntu% vlc -I telnet --telnet-password videolan --rtsp-host 0.0.0.0:5554
+output removed
 [00000405] telnet interface: telnet interface started on interface 4212
-That's it for the server. Now, let's configure it from a client using <span>telnet</span>:
+That's it for the server. Now, let's configure it from a client using telnet:
 <code>
-client% <span>telnet 192.168.0.2 4212</span>
+client% telnet 192.168.0.2 4212
 Trying 192.168.0.2...
 Connected to 192.168.0.2.
 Escape character is '^]'.
 Password:
 Welcome, Master
-> <span>load /home/julien/media/vlc_vod_config</span>
-Using the <span>show</span> command, we can check the configuration of a stream:
+> load /home/julien/media/vlc_vod_config
+Using the show command, we can check the configuration of a stream:
 <code>
-> <span>show MyMusic</span>
+> show MyMusic
 show
 MyMusic
     type : vod
@@ -306,17 +306,17 @@ MyMusic
     output :
     options
     instances
-This looks good. Let's start a <span>VLC</span> player on the client and connect to a stream:
+This looks good. Let's start a VLC player on the client and connect to a stream:
 <code>
-client% <span>/usr/bin/vlc rtsp://192.168.0.2:5554/MyMusic</span>
+client% /usr/bin/vlc rtsp://192.168.0.2:5554/MyMusic
 VLC media player 0.8.6e Janus
 This works :) Thanks to RSTP, you can pause or seek anywhere into the stream. Let's try the video stream now:
 <code>
-client% <span>/usr/bin/vlc rtsp://192.168.0.2:5554/MyVideo</span>
+client% /usr/bin/vlc rtsp://192.168.0.2:5554/MyVideo
 VLC media player 0.8.6e Janus
-Same thing: pause, fast forward and rewind all work. In the <span>telnet</span> session, the <span>show</span> command will give you additional info on an active stream:
+Same thing: pause, fast forward and rewind all work. In the telnet session, the show command will give you additional info on an active stream:
 <code>
-> <span>show MyVideo</span>
+> show MyVideo
 show
   MyVideo
       type : vod
@@ -340,18 +340,18 @@ show
               playlistindex : 1
 Now, let's try the mobile video stream:
 <code>
-client% <span>/usr/bin/vlc rtsp://192.168.0.2:5554/MyVideoMobile </span>
+client% /usr/bin/vlc rtsp://192.168.0.2:5554/MyVideoMobile 
 VLC media player 0.8.6e Janus
 [00000288] main decoder error: no suitable decoder module for fourcc `h264'.
 VLC probably does not support this sound or video format.
 [00000274] main playlist: stopping playback
 Ah #%$£... Now you see why you HAVE to rebuild VLC from source! Let's try again with the latest VLC:
 <code>
-ubuntu% <span>/usr/local/bin/vlc rtsp://192.168.0.2:5554/MyVideoMobile</span>
+ubuntu% /usr/local/bin/vlc rtsp://192.168.0.2:5554/MyVideoMobile
 VLC media player 0.9.8a Grishenko
 Ah, now it works. So do pausing and seeking, even with transcoding.</p>
 
-<p>If you run <span>ps</span> or <span>top</span> on the server, you'll notice that an extra <span>VLC</span> process is running to handle transcoding. Also, in the VLC player, under the <span>Tools</span> / <span>Media Information</span> menu, you can look at the <span>Codec Details</span> and <span>Statistics</span> tabs to check that the stream is indeed H264 / MP3 with a low bitrate.</p>
+<p>If you run ps or top on the server, you'll notice that an extra VLC process is running to handle transcoding. Also, in the VLC player, under the Tools / Media Information menu, you can look at the Codec Details and Statistics tabs to check that the stream is indeed H264 / MP3 with a low bitrate.</p>
 
 <p>Anyway, here's what it looks like (click the picture for a larger version):</p>
 
