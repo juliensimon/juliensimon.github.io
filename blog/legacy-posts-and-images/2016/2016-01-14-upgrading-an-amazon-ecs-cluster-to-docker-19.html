@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrading an Amazon ECS cluster to Docker 1.9</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upgrading an Amazon ECS cluster to Docker 1.9</h1>
+    <div class="date">Published: 2016-01-14</div>
+    <div class="content">
+        <a href="https://aws.amazon.com/fr/about-aws/whats-new/2016/01/amazon-ec2-container-service-supports-docker-1-9/">As announced yesterday</a>, <a href="https://aws.amazon.com/fr/ecs/">Amazon ECS</a> now supports Docker 1.9 (1.9.1 actually). Woohoo.<br />
+<br />
+In order to benefit from this update, a cluster must use the latest ECS-optimized Amazon Machine Image (AMI), which embeds Docker 1.9.1 and ECS Agent version 1.7.1. As a sidenote, if you want to pull Docker images from <a href="https://aws.amazon.com/fr/ecr/">Amazon ECR</a>, your agent version must be at least 1.7.0, so that's probably another reason to upgrade :)<br />
+<br />
+<span style="font-family: inherit;">The AMI you're looking for is <span class="guilabel"><i>amzn-ami-2015.09.d-amazon-ecs-optimized</i>. The AMI id varies from one region to the next, here's the <a href="https://docs.aws.amazon.com/fr_fr/AmazonECS/latest/developerguide/container_agent_versions.html">full table</a>. For eu-west-1, the id is </span><code class="literal">ami-03238b70</code>.&nbsp;</span><br />
+<br />
+<span style="font-family: inherit;"><span style="font-family: inherit;">Here<span style="font-family: inherit;">'s a simp<span style="font-family: inherit;">le way to upgrade <span style="font-family: inherit;">a<span style="font-family: inherit;"> cluster:</span></span></span></span></span></span><br />
+<br />
+<span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;">1<span style="font-family: inherit;">) Go to the EC<span style="font-family: inherit;">2 cons<span style="font-family: inherit;">ole and locate the <span style="font-family: inherit;">Launch Configuration used by </span></span></span>the A<span style="font-family: inherit;">uto Scaling group for your ECS instances.</span></span></span></span></span></span></span></span><br />
+<br />
+<span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;">2) C<span style="font-family: inherit;">lick "Copy L<span style="font-family: inherit;">aunch Configuration" to create <span style="font-family: inherit;">a copy.</span></span></span></span></span></span></span></span></span></span></span><br />
+<br />
+<span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;">3) Click "Edit AMI" and using the AMI<span style="font-family: inherit;"> id from the table above,</span> <span style="font-family: inherit;">search and select</span> the <span style="font-family: inherit;">new</span> AMI<span style="font-family: inherit;">.</span></span></span></span></span></span></span></span></span></span></span></span><br />
+<br />
+<span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;">4) Leave every<span style="font-family: inherit;">thing el<span style="font-family: inherit;">se unchange<span style="font-family: inherit;">d and create the launch configuration. You<span style="font-family: inherit;"> <span style="font-family: inherit;">should now see something similar to this:</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="2016-01-14-upgrading-an-amazon-ecs-cluster-to-docker-19-image-02.webp" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="84" src="2016-01-14-upgrading-an-amazon-ecs-cluster-to-docker-19-image-02.webp" width="640" /></a></div>
+<br />
+<span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;">5)<span style="font-family: inherit;"> <span style="font-family: inherit;">Edit the Auto Scaling group.<span style="font-family: inherit;"><span style="font-family: inherit;"> </span>The first step is to </span>replace the old <span style="font-family: inherit;">lau<span style="font-family: inherit;">nch configuration with<span style="font-family: inherit;"> the new one</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="2016-01-14-upgrading-an-amazon-ecs-cluster-to-docker-19-image-03.webp" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="80" src="2016-01-14-upgrading-an-amazon-ecs-cluster-to-docker-19-image-03.webp" width="640" /></a></div>
+<br />
+<span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;">Let's say you have 5 ECS instances in the cluster. The <span style="font-family: inherit;">next</span> s<span style="font-family: inherit;">tep is <span style="font-family: inherit;">then to <span style="font-family: inherit;">start <span style="font-family: inherit;">5 new</span> ECS instances<span style="font-family: inherit;"> in o<span style="font-family: inherit;">rder to</span></span> replace the older ones<span style="font-family: inherit;"> while providing enough capacity for all your <span style="font-family: inherit;">tasks</span>: edit<span style="font-family: inherit;"> 'De<span style="font-family: inherit;">sired' <span style="font-family: inherit;">(and possibl<span style="font-family: inherit;">y 'Max')<span style="font-family: inherit;"> </span></span></span>to 10 an<span style="font-family: inherit;">d sa<span style="font-family: inherit;">ve.</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br />
+<br />
+<span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;">Within a few minutes, you will have 10 ins<span style="font-family: inherit;">tances<span style="font-family: inherit;"> running:</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="2016-01-14-upgrading-an-amazon-ecs-cluster-to-docker-19-image-01.webp" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="203" src="2016-01-14-upgrading-an-amazon-ecs-cluster-to-docker-19-image-01.webp" width="640" /></a></div>
+<br />
+<span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;">6<span style="font-family: inherit;">) Der<span style="font-family: inherit;">e<span style="font-family: inherit;">gister the old instances.<span style="font-family: inherit;"> </span>In the ECS console, go through ea<span style="font-family: inherit;">ch one of the old instances and </span>click '<span style="font-family: inherit;">Deregister' to remove them from the cluster. At<span style="font-family: inherit;"> this point, the ECS scheduler will <span style="font-family: inherit;">launch <span style="font-family: inherit;">tasks as need<span style="font-family: inherit;">ed on the new instances<span style="font-family: inherit;"><span style="font-family: inherit;">. D</span>on't have to worry abo<span style="font-family: inherit;">ut your containe<span style="font-family: inherit;">rs, the<span style="font-family: inherit;">y</span> will quickly find a new home :)</span></span></span></span></span></span></span></span> </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br />
+<br />
+<span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;">7) Terminate the old instances<span style="font-family: inherit;">. </span>In the EC2 c<span style="font-family: inherit;">onsole, select all the old instances and terminate them.</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br />
+<br />
+<span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;">8</span>) <span style="font-family: inherit;">Res<span style="font-family: inherit;">ize the Auto Scaling group</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>. Go back to the Auto Scaling group and set the right values for 'Desired' and 'Max'.<br />
+<br />
+<span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;"><span style="font-family: inherit;">Job done<span style="font-family: inherit;">. </span>This should be a <span style="font-family: inherit;">quick and seamless operation. Happy to <span style="font-family: inherit;">hear your feedback<span style="font-family: inherit;">!</span></span></span></span> </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>
+    </div>
+</body>
+</html>

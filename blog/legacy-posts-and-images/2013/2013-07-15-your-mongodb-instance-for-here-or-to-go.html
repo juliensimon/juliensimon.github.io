@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your MongoDB instance for here or to go?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your MongoDB instance for here or to go?</h1>
+    <div class="date">Published: 2013-07-15</div>
+    <div class="content">
+        In this post, I'll show you how to install MongoDB either on your local machine or in the cloud.<br />
+<br />
+Let's look at the local installation first. This is <a href="http://docs.mongodb.org/manual/installation/">as easy as it gets</a>. Here's the Linux/MacOS version:<br />
+<br />
+<code>
+<code>$ curl http://downloads.mongodb.org/osx/mongodb-osx-x86_64-2.4.5.tgz > mongodb.tgz<br /></code>
+<code>$ tar xvfz mongodb.tgz<br /></code>
+<code>$ ln -s mongodb-osx-x86_64-2.4.5 mongodb<br /></code>
+<code>$ sudo mkdir -p /data/db<br /></code>
+<code>$ sudo chown `id -u` /data/db<br /><br /></code>
+</code><br />
+Done! Really.<br />
+<br />
+Starting MongoDB requires a single command:<br />
+<br />
+<span style="font-family: monospace;">$ ./mongodb/bin/mongod</span><br />
+<br />
+Now, let's open&nbsp;the MongoDB shell and type some commands from the <a href="http://docs.mongodb.org/manual/tutorial/getting-started/">MongoDB tutorial</a>:<br />
+<code><br /></code>
+<code>$ ./mongodb/bin/mongo</code><br />
+<span style="font-family: monospace;">MongoDB shell version: 2.4.5</span><br />
+<span style="font-family: monospace;">connecting to: test</span><br />
+<span style="font-family: monospace;">> db</span><br />
+<code>test</code><br />
+<code>> use mydb&nbsp;</code><br />
+<code>switched to db mydb&nbsp;</code><br />
+<code>> j = {name:"name"}
+{ "name" : "name" }</code><br />
+<code>> k = {x:3}
+{ "x" : 3 }</code><br />
+<code>> db.testData.insert(j)&nbsp;</code><br />
+<code>> db.testData.insert(k)</code><br />
+<code>> show collections&nbsp;</code><br />
+<code>system.indexes&nbsp;</code><br />
+<code>testData</code><br />
+<code>> db.testData.find()</code><br />
+<code>{ "_id" : ObjectId("51e3c14987d8afffb5a6f97c"), "name" : "name" }&nbsp;</code><br />
+<code>{ "_id" : ObjectId("51e3c15487d8afffb5a6f97d"), "x" : 3 }</code><br />
+<code>> exit&nbsp;</code><br />
+<br />
+Now, let's do the same thing in the cloud with&nbsp;<a href="http://www.mongolab.com/">MongoLab</a>. You can get a single instance for free, as long as it doesn't exceed 500 MB of data. Pretty cool. Another option is <a href="http://www.mongohq.com/">MongoHQ</a>&nbsp;who offer a similar service. I'm not affiliated with any, so feel free to check out both :)<br />
+<br />
+<ol>
+<li>Sign up at <a href="http://www.mongolab.com/">www.mongolab.com</a></li>
+<li>Create a database ('<i>mongolab-test</i>' in my case)</li>
+<li>Pick your hosting location: AWS, Google, etc. If you're simply testing, this doesn't really matter, but when you'll be deploying for real, you'll want to make sure your DB is the same cloud as your app, I suppose ;)</li>
+<li>Select the 'Sandbox' plan</li>
+<li>Create a first user (or you won't be able to connect to your DB, duh)</li>
+</ol>
+<div>
+Done. You should now see something similar to this:</div>
+<div>
+<br /></div>
+<div class="separator" style="clear: both; text-align: left;">
+<a href="2013-07-15-your-mongodb-instance-for-here-or-to-go-image-01.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="61" src="2013-07-15-your-mongodb-instance-for-here-or-to-go-image-01.webp" width="400" /></a></div>
+<div>
+<br /></div>
+<br />
+<br />
+<br />
+<br />
+<span style="font-family: monospace;"><br /></span>&nbsp;Click on the database name to view the connection information:<br />
+<div>
+<br /></div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="2013-07-15-your-mongodb-instance-for-here-or-to-go-image-06.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="271" src="2013-07-15-your-mongodb-instance-for-here-or-to-go-image-06.webp" width="400" /></a></div>
+<div>
+<br /></div>
+<div>
+<br /></div>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<code><br /></code>
+<br />
+<div>
+Add a collection, '<i>collection1</i>' in my case. Obviously, it will be empty.&nbsp;</div>
+<div>
+<br /></div>
+<div>
+Let's use the MongoDB shell again and add some data:</div>
+<code><br /></code>
+<code>$ ./mongo ds051067.mongolab.com:51067/mongolab-test -u DBUSER -p DBPASSWORD</code><br />
+<span style="font-family: monospace;">MongoDB shell version: 2.4.5</span><br />
+<span style="font-family: monospace;">connecting to: ds051067.mongolab.com:51067/mongolab-test</span><br />
+<span style="font-family: monospace;">> use mongolab-test</span><br />
+<span style="font-family: monospace;">switched to db mongolab-test</span><br />
+<span style="font-family: monospace;">> show collections</span><br />
+<span style="font-family: monospace;">collection1</span><br />
+<span style="font-family: monospace;">system.indexes</span><br />
+<span style="font-family: monospace;">system.users</span><br />
+<span style="font-family: monospace;">> for (var i = 1; i <= 25; i++) db.collection1.insert( { x : i } )</span><br />
+<span style="font-family: monospace;">> db.collection1.find()</span><br />
+<span style="font-family: monospace;">{ "_id" : ObjectId("51e3ce08915082db3df32bf0"), "x" : 1 }</span><br />
+<span style="font-family: monospace;">{ "_id" : ObjectId("51e3ce08915082db3df32bf1"), "x" : 2 }</span><br />
+<span style="font-family: monospace;">{ "_id" : ObjectId("51e3ce08915082db3df32bf2"), "x" : 3 }</span><br />
+<span style="font-family: monospace;">[Output removed for brevity]</span><br />
+<span style="font-family: monospace;">> db.collection1.find({x:18})</span><br />
+<span style="font-family: monospace;">{ "_id" : ObjectId("51e3ce08915082db3df32c01"), "x" : 18 }</span><br />
+<br />
+<div>
+All right, we wrote some stuff. Let's create an index:</div>
+<div>
+<br /></div>
+<div>
+<span style="font-family: monospace;">> db.collection1.ensureIndex({"x":1})</span></div>
+<div>
+<span style="font-family: monospace;">> db.collection1.getIndexes()</span></div>
+<div>
+<span style="font-family: monospace;"></span><br />
+<div>
+<span style="font-family: monospace;">[</span></div>
+<span style="font-family: monospace;">
+</span>
+<br />
+<div>
+<span style="font-family: monospace;"><span class="Apple-tab-span" style="white-space: pre;"> </span>{</span></div>
+<span style="font-family: monospace;">
+</span>
+<br />
+<div>
+<span style="font-family: monospace;"><span class="Apple-tab-span" style="white-space: pre;">  </span>"v" : 1,</span></div>
+<span style="font-family: monospace;">
+</span>
+<br />
+<div>
+<span style="font-family: monospace;"><span class="Apple-tab-span" style="white-space: pre;">  </span>"key" : {</span></div>
+<span style="font-family: monospace;">
+</span>
+<br />
+<div>
+<span style="font-family: monospace;"><span class="Apple-tab-span" style="white-space: pre;">   </span>"_id" : 1</span></div>
+<span style="font-family: monospace;">
+</span>
+<br />
+<div>
+<span style="font-family: monospace;"><span class="Apple-tab-span" style="white-space: pre;">  </span>},</span></div>
+<span style="font-family: monospace;">
+</span>
+<div>
+<span style="font-family: monospace;"><span class="Apple-tab-span" style="white-space: pre;">  </span>"ns" : "mongolab-test.collection1",</span></div>
+<span style="font-family: monospace;">
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">  </span>"name" : "_id_"</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>},</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>{</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">  </span>"v" : 1,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">  </span>"key" : {</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">   </span>"x" : 1</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">  </span>},</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">  </span>"ns" : "mongolab-test.collection1",</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">  </span>"name" : "x_1"</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>}</div>
+<div>
+]</div>
+<div>
+<div>
+> db.collection1.find({x:18}).explain()</div>
+<div>
+{</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"cursor" : "BtreeCursor x_1",</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"isMultiKey" : false,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"n" : 1,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"nscannedObjects" : 1,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"nscanned" : 1,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"nscannedObjectsAllPlans" : 1,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"nscannedAllPlans" : 1,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"scanAndOrder" : false,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"indexOnly" : false,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"nYields" : 0,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"nChunkSkips" : 0,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"millis" : 0,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"indexBounds" : {</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">  </span>"x" : [</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">   </span>[</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">    </span>18,</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">    </span>18</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">   </span>]</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;">  </span>]</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>},</div>
+<div>
+<span class="Apple-tab-span" style="white-space: pre;"> </span>"server" : "h000432.mongolab.com:51067"</div>
+<div>
+}</div>
+</div>
+</span></div>
+<div>
+</div>
+<div>
+<div>
+<br />
+The index works as intended, that's a relief :-P</div>
+</div>
+<div>
+<br /></div>
+<div>
+Going back to the MongoLab console, you should see the right number of documents:</div>
+<div>
+<br /></div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="2013-07-15-your-mongodb-instance-for-here-or-to-go-image-03.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="148" src="2013-07-15-your-mongodb-instance-for-here-or-to-go-image-03.webp" width="400" /></a></div>
+<div>
+<br /></div>
+<div>
+<br /></div>
+<div>
+<br /></div>
+<div>
+<br /></div>
+<div>
+<br /></div>
+<div>
+<br /></div>
+<div>
+<br /></div>
+<div>
+<br /></div>
+<div>
+<br /></div>
+<div>
+<br /></div>
+<div>
+That's it for today. I've just scratched the surface but it should get you started.&nbsp;See how easy this was? Happy learning!</div>
+<div>
+<br /></div>
+
+    </div>
+</body>
+</html>

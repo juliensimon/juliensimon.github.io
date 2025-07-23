@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtering the AWS CLI with jq</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Filtering the AWS CLI with jq</h1>
+    <div class="date">Published: 2015-11-16</div>
+    <div class="content">
+        The JSON-formatted output of the AWS CLI may sometimes feel daunting, especially with a large number of objects. Running '<i>aws ec2 describe-instances</i>' with more than 10 instances? Bad idea :)<br />
+<br />
+&nbsp;Fortunately, <a href="https://stedolan.github.io/jq/"><i>jq</i></a> - the self-proclaimed 'sed for JSON data' - is a pretty simple way to filter this output. This will especially come in handy when writing automation scripts :)<br />
+<br />
+Installing <i>jq</i> is one command away:<br />
+<span style="font-family: "Courier New",Courier,monospace;">$ <b>sudo apt-get install jq</b></span>&nbsp; (Debian / Ubuntu)<br />
+<span style="font-family: "Courier New",Courier,monospace;">$ <b>yum install jq</b></span>&nbsp; (CentOS)<br />
+<span style="font-family: "Courier New",Courier,monospace;">$ <b>brew install jq</b></span>&nbsp; (MacOS)<br />
+<br />
+Let's fire up a few EC2 instances and try the following examples.<br />
+<br />
+Show only one field, <i>OwnerId</i>:<br />
+<span style="font-family: "Courier New",Courier,monospace;">$ <b>aws ec2 describe-instances | jq '.Reservations[].OwnerId'</b></span><br />
+<br />
+Show all information on the first instance:&nbsp; <br />
+<span style="font-family: "Courier New",Courier,monospace;">$ <b>aws ec2 describe-instances | jq '.Reservations[].Instance[0]'</b></span><br />
+<br />
+Show the instance id and the IP address of the first instance:<br />
+
+
+<br />
+<div>
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">$ <b>aws ec2 describe-instances | jq '.Reservations[].Instances[0] | {InstanceId, PublicIpAddress}'</b></span></span></div>
+<div>
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">{<br />&nbsp; "InstanceId": "i-2181b498",<br />&nbsp; "PublicIpAddress": "52.31.231.110"<br />} </span></span></div>
+<br />
+Show the instance id and public IP address of all instances:<br />
+
+
+<br />
+<div>
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">$ <b>aws ec2 describe-instances | jq '.Reservations[].Instances[] | {InstanceId, PublicIpAddress}'</b></span></span></div>
+<div>
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">{<br />&nbsp; "InstanceId": "i-2181b498",<br />&nbsp; "PublicIpAddress": "52.31.231.110"<br />}<br />{<br />&nbsp; "InstanceId": "i-2081b499",<br />&nbsp; "PublicIpAddress": "52.31.208.25"<br />}<br />{<br />&nbsp; "InstanceId": "i-2581b49c",<br />&nbsp; "PublicIpAddress": "52.31.207.29"<br />}<br />{<br />&nbsp; "InstanceId": "i-2781b49e",<br />&nbsp; "PublicIpAddress": "52.31.228.234"<br />}<br />{<br />&nbsp; "InstanceId": "i-2681b49f",<br />&nbsp; "PublicIpAddress": "52.31.230.63"<br />} </span></span></div>
+<div>
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">&nbsp; </span></span></div>
+Fields can also be concatenated, like so:<br />
+
+
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;"><span>$ <b>aws ec2 describe-instances | jq '.Reservations[].Instances[] | .InstanceId + " " + .PublicIpAddress'</b></span></span></span><br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;"><span>"i-2181b498 52.31.231.110"<br />"i-2081b499 52.31.208.25"<br />"i-2581b49c 52.31.207.29"<br />"i-2781b49e 52.31.228.234"<br />"i-2681b49f 52.31.230.63" </span></span></span><br />
+<br />
+Show the instance id and launch time of all instances, sorted by IP address:<br />
+<span style="font-family: "Courier New",Courier,monospace;">$ <b>aws ec2 describe-instances | jq '.Reservations[].Instances[] | .PublicIpAddress + " " + .InstanceId + " " +.LaunchTime' | sort</b><br />"52.31.207.29 i-2581b49c 2015-11-16T19:14:57.000Z"<br />"52.31.208.25 i-2081b499 2015-11-16T19:14:57.000Z"<br />"52.31.228.234 i-2781b49e 2015-11-16T19:14:57.000Z"<br />"52.31.230.63 i-2681b49f 2015-11-16T19:14:57.000Z"<br />"52.31.231.110 i-2181b498 2015-11-16T19:14:57.000Z"</span><br />
+<br />
+All, let's add an '<i>environment</i>' tag on all instances, set to either '<i>dev</i>' or '<i>prod</i>'.<br />
+<br />
+Now, how about the instance id and IP address of all instances with a '<i>prod</i>' tag:<br />
+<span style="font-family: "Courier New",Courier,monospace;">$ <b>aws ec2 describe-instances | jq '.Reservations[].Instances[] | select(.Tags[].Value=="prod") | </b></span><b><span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;"><span>.InstanceId + " " + .PublicIpAddress'</span></span></span></b><br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;"><span>"i-2581b49c 52.31.207.29"<br />"i-2781b49e 52.31.228.234"<br />"i-2681b49f 52.31.230.63" </span></span></span><br />
+<br />
+We barely scratched the surface, but I'm sure you get the idea. Make sure you add this nifty tool to your collection!
+    </div>
+</body>
+</html>

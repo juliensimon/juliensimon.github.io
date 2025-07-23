@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set up the AWS CLI on MacOS in 60 seconds</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Set up the AWS CLI on MacOS in 60 seconds</h1>
+    <div class="date">Published: 2015-11-11</div>
+    <div class="content">
+        <span style="font-size: small;">I had to do this AGAIN on a new Mac, so here goes:</span><br />
+<br />
+<span style="font-size: small;">1) Install <a href="http://brew.sh/">Homebrew</a></span><br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;"><span style="font-family: "courier new" , "courier" , monospace;">$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"&nbsp;</span></span><br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;">2) Install <i>python</i> and <i>pip</i></span><br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;"><span style="font-family: "courier new" , "courier" , monospace;">$ brew install python&nbsp;</span></span><br />
+<span style="font-size: small;"><span style="font-family: "courier new" , "courier" , monospace;">$ curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"&nbsp;</span></span><br />
+<span style="font-size: small;"><span style="font-family: "courier new" , "courier" , monospace;">$ sudo python get-pip.py&nbsp;</span></span><br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;">3) Install <a href="http://iterm2.com/">Iterm2</a> (c'mon, how can you live without it?)</span><br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;">4) Install <i>zsh</i> and <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a></span><br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;"><span style="font-family: "courier new" , "courier" , monospace;">$ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"</span></span><br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;">5) Install and configure AWS CLI</span><br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;"><span style="font-family: "courier new" , "courier" , monospace;">$ sudo pip install awscli</span></span><br />
+<span style="font-size: small;"><span style="font-family: "courier new" , "courier" , monospace;">$ sudo pip install awsebcli<span style="font-family: "courier new" , "courier" , monospace;"> <span style="font-family: "times" , "times new roman" , serif;">(if you work with Elastic Beanstalk)</span></span></span></span><br />
+<span style="font-size: small;"><span style="font-family: "courier new" , "courier" , monospace;">$ aws configure&nbsp;</span></span> <br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;">6) Enable auto-completion for the AWS CLI in <i>zsh</i></span><br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;">Open <i>~/.zshrc&nbsp; </i>and add <i>aws</i> to the list of plugins, e.g.:<span style="font-family: "courier new" , "courier" , monospace;"><span style="font-family: "courier new" , "courier" , monospace;"> </span>plugins=(git aws)</span></span><br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;"><span style="font-family: "courier new" , "courier" , monospace;">$ source ~/.zshrc </span></span><br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;">7) Test :)</span><br />
+<span style="font-size: small;"><br /></span>
+<span style="font-size: small;"><span style="font-family: "courier new" , "courier" , monospace;">$ aws s3 ls</span></span><span style="font-size: small;"> </span><span style="font-size: small;">(or any other AWS command that you like!)</span><br />
+<span style="font-size: small;">&nbsp; </span>
+    </div>
+</body>
+</html>

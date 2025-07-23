@@ -1632,6 +1632,43 @@ a:focus {
 
 
 
+/* Image styling - center all images with no text wrapping */
+img {
+  display: block;
+  margin: var(--space-6) auto;
+  max-width: 100%;
+  height: auto;
+  clear: both;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+img:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Ensure images in links are also centered */
+a img {
+  display: block;
+  margin: var(--space-4) auto;
+}
+
+/* For images inside paragraphs, ensure they break out and center */
+p img {
+  display: block;
+  margin: var(--space-6) auto;
+  clear: both;
+}
+
+/* Special handling for image containers */
+.image-container {
+  text-align: center;
+  margin: var(--space-6) 0;
+  clear: both;
+}
+
 /* Print styles */
 @media print {
   .nav-tabs,
@@ -1669,6 +1706,14 @@ a:focus {
     content: " (" attr(href) ")";
     font-size: 0.8em;
     color: #666;
+  }
+  
+  /* Ensure images are properly styled in print */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+    display: block !important;
+    margin: 0.5rem auto !important;
   }
 }
 

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From one cloud to another (or is it the same one?)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>From one cloud to another (or is it the same one?)</h1>
+    <div class="date">Published: 2013-07-25</div>
+    <div class="content">
+        <a class="vt-p" href="#image-not-found">As previously described</a>, MongoLab offers multiple cloud options for your instances: AWS, Azure, etc. What about <a class="vt-p" href="#image-not-found">my now legendary Python program</a>? ;) Shouldn't I also run it in the cloud? Yeah, thought so.<br />
+<br />
+I've been using AWS for a while, mostly to store a ton of personal junk in S3 and Glacier, so the obvious choice is to launch an EC2 instance. I'm quite fond of micro-sized instances based on&nbsp;<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">ubuntu/images/ebs/ubuntu-precise-12.04-amd64-server-20130411.1</span> (ami-ce7b6fba): 1 core, 600 MB of RAM, 8 GB of disk... and free :) Perfect for experimentation!<br />
+<br />
+If you need to setup your own account, here's <a class="vt-p" href="https://aws.amazon.com/">where to start</a>. It's a straightforward process, no need to cover it in detail. Just some quick advice:<br />
+<br />
+<ul>
+<li>Once you've created and downloaded the key pair associated to the instance, don't forget to chmod it to 400 (or '<i>ssh</i>' will complain that it's not safe, bla bla bla)</li>
+<li>DO NOT LOSE THE KEYPAIR FILE, you won't be able to download it again.&nbsp;</li>
+<li>When the instance is running, make sure you note its public name (e.g. <span style="font-family: Courier New, Courier, monospace; font-size: x-small;">ec2-54-217-8-54.eu-west-1.compute.amazonaws.com</span>), that's the one you'll use from the outside world.</li>
+<li>The '<i>ssh</i>' port (22) is not open by default. "Security Groups" is where you need to look, just add a rule opening 22/TCP.</li>
+</ul>
+<div>
+<br /></div>
+Now, let's connect to the instance with '<i>ssh</i>':<br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ <b>ssh -i keypair.pem ubuntu@ec2-54-217-8-54.eu-west-1.compute.amazonaws.com</b></span><br />
+<div>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">ubuntu@ip-10-48-247-163:~$</span><br />
+<br />
+Congratulations, you're on AWS. Now, let's add some more software to this instance:</div>
+<span style="font-family: 'Courier New', Courier, monospace; font-size: x-small;">ubuntu@ip-10-48-247-163:~$</span><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp;<b>sudo apt-get update</b></span><br />
+<span style="font-family: 'Courier New', Courier, monospace; font-size: x-small;">ubuntu@ip-10-48-247-163:~$</span><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp;<b>sudo apt-get install mongodb-clients</b></span><br />
+<div>
+<br /></div>
+<div>
+Can't wait to connect to your db? All right, let's give it a try with the '<i>mongo</i>' client:</div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace; font-size: x-small;">ubuntu@ip-10-48-247-163:~$</span><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp;<b>mongo -u USERNAME -p PASSWORD ds051067.mongolab.com:51067/mongolab-test</b></span></div>
+<div>
+<div>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">MongoDB shell version: 2.0.4</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">connecting to: ds051067.mongolab.com:51067/mongolab-test</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">> <b>show collections</b></span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">collection1</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">objectlabs-system</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">objectlabs-system.admin.collections</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">system.indexes</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">system.users</span><span style="font-family: 'Courier New', Courier, monospace; font-size: x-small;">&nbsp;</span></div>
+</div>
+<div>
+<br /></div>
+<div>
+This MongoDB instance is hosted by MongoLab in AWS, so we didn't travel too far. A nice mix of PaaS and IaaS, all based on the same infrastructure :)<br />
+<br />
+Now let's add our Python tools:</div>
+<span style="font-family: 'Courier New', Courier, monospace; font-size: x-small;">ubuntu@ip-10-48-247-163:~$</span><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp;<b>sudo apt-get install build-essential python-dev</b></span><br />
+<div>
+<span style="font-family: 'Courier New', Courier, monospace; font-size: x-small;">ubuntu@ip-10-48-247-163:~$</span><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp;<b>sudo apt-get install python-pip</b></span></div>
+<span style="font-family: 'Courier New', Courier, monospace; font-size: x-small;">ubuntu@ip-10-48-247-163:~$</span><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp;<b>sudo pip install pymongo</b></span><br />
+<br />
+Let's copy our Python program to our EC2 instance:<br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ <b>scp -i keypair.pem mongo.py ubuntu@ec2-54-217-8-54.eu-west-1.compute.amazonaws.com:~</b></span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">mongo.py &nbsp;</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+<br />
+And now:<br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">ubuntu@ip-10-48-247-163:~$ <b>python mongo.py&nbsp;</b></span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">{u'x': 1.0, u'_id': ObjectId('51e3ce08915082db3df32bf0')}</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">{u'x': 2.0, u'_id': ObjectId('51e3ce08915082db3df32bf1')}</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">{u'x': 3.0, u'_id': ObjectId('51e3ce08915082db3df32bf2')}</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><i>output removed from brevity</i></span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">{u'x': 25.0, u'_id': ObjectId('51e3ce08915082db3df32c08')}</span><br />
+<div>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><br /></span></div>
+What's the point of all this? Simply to quickly demonstrate:<br />
+<br />
+<ol>
+<li>the insane amount of software technology available to anyone willing to read a few books or wikis</li>
+<li>how easy it is to get started and build fun stuff. You need nothing else on your own machine than '<i>ssh</i>'!</li>
+<li>it's all free (or very very unexpensive)</li>
+</ol>
+<div>
+None of this was possible 10 years ago. Back in the day.... well, who cares. You kids sure have it too easy, so stop wasting your time on Facebook or on reality TV (absolute scum, will it ever stop?), learn some proper <u>engineering</u> skills, get smart and start solving some problems, ok? There ain't no shortage of them!</div>
+<div>
+<br /></div>
+<div>
+Old man over and out.</div>
+
+    </div>
+</body>
+</html>

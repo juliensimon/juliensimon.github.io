@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 8 and lambdas : ooooh, that's how it works, then.</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Java 8 and lambdas : ooooh, that's how it works, then.</h1>
+    <div class="date">Published: 2015-03-19</div>
+    <div class="content">
+        <a href="2015-03-19-java-8-and-lambdas-ooooh-thats-how-it-works-then-image-01.webp" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" src="2015-03-19-java-8-and-lambdas-ooooh-thats-how-it-works-then-image-01.webp" height="200" width="199" /></a><br />
+<i>Disclaimer: several people "complained" about this code being overly complicated & verbose. Trust me, I did it on purpose to illustrate what many legacy Java apps look like these days. Hopefully lambdas can help us clean up some of the mess that has accumulated over the years. Read on!</i><br />
+<br />
+One of the key new features of Java 8 is the introduction of functional programming and lamba expressions. This article will give you a real-life example of how lambas can be introduced in existing code, reducing verbosity and increasing flexibility... or so they say ;)<br />
+<br />
+All code for this article is part of a larger repository available at:<br />
+<a href="http://github.com/juliensimon/SortAndSearch">github.com/juliensimon/SortAndSearch</a><br />
+<br />
+Let's get started. Imagine you had to code a linear search method for lists, which could apply different policies when an element has been found: <br />
+<ul>
+<li>move the element to the front of the list (aka "Most Recently Used"), </li>
+<li>move it to the back of the list (aka 'Least Recently Used"),&nbsp;</li>
+<li>move it one position closer to the the front of the list.</li>
+</ul>
+<br />
+After some experimentation ("Cut and paste ? Yuck. Anonymous classes ? Meh!"), you would realize that these policies only differ by a couple of instructions and that there's an elegant way to factorize them nicely: behavior injection.<br />
+<br />
+Surely, you would get something similar to: <br />
+<ul>
+<li>A <i>linearSearch</i>() method implementing the Strategy pattern through an object implementing the <i>LinearSearchMode</i> interface,</li>
+<li>A <i>LinearSearchMode </i>interface defining a single method in charge of performing the actual move,</li>
+<li>Three <i>LinearSearchModeXXX</i> classes implementing the interface for each move policy,</li>
+<li>A <i>LinearSearchModeFactory</i> class, implementing the Factory pattern to build <i>LinearSearchModeXXX</i> objects while hiding their internals.</li>
+</ul>
+<br />
+Here's the corresponding code. Pretty canonical, I guess.<br />
+<br />
+<script src="https://gist.github.com/juliensimon/c53daffee16db0a106a2.js"></script><br />
+<script src="https://gist.github.com/juliensimon/f9e6bcd88784c670dd8a.js"></script> 
+<script src="https://gist.github.com/juliensimon/cf4cdb1a4c1a1dee5b6c.js"></script><br />
+You would use the whole thing like this:<br />
+<br />
+<code>linearSearch(list,t,LinearSearchFactory.build(LinearSearchFactory.modeMoveFirst)</code><br />
+<br />
+Looks familiar? Yeah, thought so ;) Now, although this is pretty neat and tidy, this is awfully verbose, isn't it? There's a lot of boilerplate code and technical classes just to change of couple of lines of code. So yes, we did avoid cut-and-paste and code duplication, but in the end, we still had to write quite a bit of code. For lazy programmers, this is always going to be a problem :)<br />
+<br />
+And so, tada! Lambda expressions.You can read the theory elsewhere, here's what it means to our code:<br />
+<ul>
+<li>No change to our <i>linearSearch() </i>method,</li>
+<li>No change to our <i>LinearSearchMode</i> interface,</li>
+<li>No more need for <i>LinearSearchModeXXX</i> and <i>LinearSearchModeFactory</i>, which is great because they really added nothing to the logic of our application.</li>
+</ul>
+All you have to do, then, is to replace the <i>mode</i> parameter in <i>linearSearch</i>() with a lambda expression implementing the move policy :<br />
+<br />
+<script src="https://gist.github.com/juliensimon/cc31d9707e7ae8e22624.js"></script>
+
+Pretty nerdy, huh? I like it. Less code, less bugs, less problems, more sleep! Adding another move policy would only mean adding a couple of lines, so less verbosity and more flexibility indeed.<br />
+<br />
+For the record, let me say that I've always avoided functional languages like the plague (shoot me). I don't expect this to change in the near future, but I have to admit that the introduction of lambdas in Java 8 does solve a number of problems, so there. I'll keep digging :)<br />
+<br />
+That's it for today. Till next time, keep rockin'. <br />
+<br />
+    </div>
+</body>
+</html>

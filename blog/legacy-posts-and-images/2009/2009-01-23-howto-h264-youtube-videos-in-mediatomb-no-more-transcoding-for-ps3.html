@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOWTO: H.264 YouTube videos in mediatomb (no more transcoding for PS3!)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>HOWTO: H.264 YouTube videos in mediatomb (no more transcoding for PS3!)</h1>
+    <div class="date">Published: 2009-01-23</div>
+    <div class="content">
+        As you probably know (and as explained on <a href="http://en.wikipedia.org/wiki/Youtube#Video_quality">Wikipedia</a>), YouTube supports several video formats. Until then, <span style="font-style: italic;">mediatomb</span> could only stream standard videos based on the H.263 video codec, which required on-the-fly transcoding to be properly played on the Playstation 3. I showed you how to do this in <a href="#image-not-found">this previous super-popular article</a> ;)<br /><br />But hey, things have changed and as of revision 1998, <span style="font-style: italic;">mediatomb</span> now supports the <span>H.264</span> format, which is natively played by the PS3. This means that we no longer need to transcode YouTube videos :)<br /><br />First of all, you need to check what revision you have:<br /><code><br />ubuntu% <span style="font-weight: bold;">cd src/mediatomb</span><br />ubuntu% s<span style="font-weight: bold;">vn info</span><br />Path: .<br />URL: https://svn.mediatomb.cc/svnroot/mediatomb/trunk/mediatomb<br />Repository Root: https://svn.mediatomb.cc/svnroot/mediatomb<br />Repository UUID: f010a08f-7000-0410-b1fc-cb24403df210<br /><span style="font-weight: bold;">Revision: 2018</span><br />Node Kind: directory<br />Schedule: normal<br />Last Changed Author: jin_eld<br />Last Changed Rev: 2018<br />Last Changed Date: 2009-01-22 19:42:33 +0100 (Thu, 22 Jan 2009)<br /></code><br />I'm all set, but if you have a revision older than 1998, you need to update your sources ('<span style="font-style: italic;">svn update</span>') and rebuild <span style="font-style: italic;">mediatomb</span>.<br /><br />Then, all it takes is changing the YouTube configuration in <span style="font-style: italic;">~/.mediatomb/config.xml</span>, from:<br /><code><br /><YouTube enabled="yes" refresh="28800" update-at-start="yes" purge-after="604800" racy-content="exclude"><br /></code><br />to:<br /><code><br /><YouTube enabled="yes" <span style="font-weight: bold;">format="mp4" hd="no"</span> refresh="28800" update-at-start="yes" purge-after="604800" racy-content="exclude"><br /></code><br />Although the videos will now be based on the H.264 codec, they will still have the <span style="font-style: italic;">.flv</span> extension, so you also need to remove any transcoding profile for <span style="font-style: italic;">flv</span> files, i.e. something similar to:<br /><code><br /><transcode mimetype="video/x-flv"       using="video-generic"/><br /></code><br />Now, restart <span style="font-style: italic;">mediatomb</span> and browse your playlists. As you can see, the videos now appear as AVC (which is another name for H.264):<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="2009-01-23-howto-h264-youtube-videos-in-mediatomb-no-more-tra-image-03.webp"><img style="margin: 0px auto 10px; display: block; text-align: center; cursor: pointer; width: 320px; height: 240px;" src="2009-01-23-howto-h264-youtube-videos-in-mediatomb-no-more-tra-image-03.webp" alt="" id="BLOGGER_PHOTO_ID_5294550024880280066" border="0" /></a><br />This is confirmed by displaying the file properties during streaming: 128 Kbit/s stereo AAC audio and H.264 video :)<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="2009-01-23-howto-h264-youtube-videos-in-mediatomb-no-more-tra-image-04.webp"><img style="margin: 0px auto 10px; display: block; text-align: center; cursor: pointer; width: 320px; height: 240px;" src="2009-01-23-howto-h264-youtube-videos-in-mediatomb-no-more-tra-image-04.webp" alt="" id="BLOGGER_PHOTO_ID_5294550030855793426" border="0" /></a><br />Enjoy!
+    </div>
+</body>
+</html>

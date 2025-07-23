@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOWTO: compiling mediatomb + ffmpegthumbnailer + all libraries for Ubuntu... and PS3 :)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>HOWTO: compiling mediatomb + ffmpegthumbnailer + all libraries for Ubuntu... and PS3 :)</h1>
+    <div class="date">Published: 2008-12-22</div>
+    <div class="content">
+        Today I'd like to talk about <a style="font-style: italic;" href="http://www.mediatomb.cc/">mediatomb</a>, a media server with a nice web user interface allowing you to stream your digital media through your home network on a variety of 'Universal Plug and Play' (UPnP) compatible devices... such as the PS3 :)<br /><br />Of course, you could just go and install a packaged version of the last official release (0.11) with <span style="font-style: italic;">apt-get</span>, but:<br /><ol><li>0.11 was released in March'08, which means that you'll be missing the newest features</li><li>that's not fun :)<br /></li></ol>So, let's get to work and take care of all dependencies needed to build <span style="font-style: italic;">mediatomb</span> from source. This procedure was successfully performed on Ubuntu 8.04 and 8.10.<br /><br /><span style="font-weight: bold;">1) Installing <span style="font-style: italic; font-weight: bold;"><a href="http://code.google.com/p/ffmpegthumbnailer/">ffmpegthumbnailer</a></span></span><br /><br /><span style="font-style: italic;">ffmpegthumbnailer</span> is a small tool which uses <span style="font-style: italic;">ffmpeg</span> to generate video thumbnails. These thumbnails will be displayed by <span style="font-style: italic;">mediatomb</span> while you're browsing your video collection.<br /><br /><span style="font-style: italic;">[Updated on 2008/01/02] This supposes that you have </span><a style="font-style: italic;" href="#image-not-found">built ffmpeg</a><span style="font-style: italic;">. If not, you may be missing a number of libraries: please check the comments below for solutions.</span><br /><br />First, we need to install <span style="font-style: italic;">libpng</span>:<br /><br /><code>ubuntu% <span style="font-weight: bold;">sudo apt-get install <span style="font-family:Georgia,serif;">libpng12-dev</span></span></code><br /><br />Now, let's fetch the <span style="font-style: italic;">ffmpegthumbnailer </span>source and build it:<br /><code><br />ubuntu% <span style="font-weight: bold;">wget http://ffmpegthumbnailer.googlecode.com/files/ffmpegthumbnailer-1.3.0.tar.gz</span><br />ubuntu% <span style="font-weight: bold;">tar xvfz ffmpegthumbnailer-1.3.0.tar.gz</span><br />ubuntu% <span style="font-weight: bold;">cd ffmpegthumbnailer-1.3.0  </span><br />ubuntu% <span style="font-weight: bold;">./configure --prefix=/usr/local</span><br />ubuntu% <span style="font-weight: bold;">make</span><br />ubuntu% <span style="font-weight: bold;">sudo make install<br /></span></code><span style="font-weight: bold;"></span><br />OK, let's move on.<br /><br /><span style="font-weight: bold;">2a) Installing </span><a style="font-weight: bold; font-style: italic;" href="#image-not-found">libdvdnav</a><span style="font-weight: bold;"> and <span style="font-style: italic;">libdvdread</span></span><span style="font-weight: bold;"> from source</span><br /><br />These two libraries are used to browse DVD file structures: <span style="font-style: italic;">mediatomb</span> needs them to read and stream DVD ISO images.<br /><br /><span style="font-style: italic;"></span> Since we're going to build the very latest <span style="font-style: italic;">mediatomb</span> version, let's make sure we have up to date libs as well.<br /><br />You do need to build and install <span style="font-style: italic;">libdvdread</span> before <span style="font-style: italic;">libdvdnav</span>, or the latter won't link.<br /><code><br />ubuntu% <span style="font-weight: bold;">wget ftp://ftp6.mplayerhq.hu/MPlayer/releases/dvdnav/libdvdread-4.1.3.tar.bz2</span><br />ubuntu% <span style="font-weight: bold;">bzip2 -d libdvdread-4.1.3.tar.bz2</span><br />ubuntu% <span style="font-weight: bold;">tar xvf libdvdread-4.1.3.tar</span><br />ubuntu% <span style="font-weight: bold;">./configure2 --prefix=/usr/local --enable-shared</span><br />ubuntu% <span style="font-weight: bold;">make</span><br />ubuntu% <span style="font-weight: bold;">sudo make install</span><br /><br />ubuntu% <span style="font-weight: bold;">wget ftp://ftp6.mplayerhq.hu/MPlayer/releases/dvdnav/libdvdnav-4.1.3.tar.bz2</span><br />ubuntu% <span style="font-weight: bold;">bzip2 -d libdvdnav-4.1.3.tar.bz2</span><br />ubuntu% <span style="font-weight: bold;">tar xvf libdvdnav-4.1.3.tar</span><br />ubuntu% <span style="font-weight: bold;">./configure2 --prefix=/usr/local --enable-shared</span><br />ubuntu% <span style="font-weight: bold;">make</span><br />ubuntu% <span style="font-weight: bold;">sudo make install<br /><br /></span></code><span style="font-weight: bold;">2b) Installing </span><a style="font-weight: bold; font-style: italic;" href="#image-not-found">libdvdnav</a><span style="font-weight: bold;"> and <span style="font-style: italic;">libdvdread</span></span><span style="font-weight: bold;"> from APT</span><br /><br />Both are available as APT packages (<span style="font-style: italic;">libdvdread-dev</span> and <span style="font-style: italic;">libdvdnav-dev</span>), but they're not up to date on Ubuntu 8.04. Anyway, if you don't want to build them, here's how to install them quickly:<br /><br /><code>ubuntu% <span style="font-weight: bold;">sudo apt-get install libdvdread-dev libdvdnav-dev</span><br /></code><code></code><br /><span style="font-weight: bold;">3) Installing everything else</span><br /><br /><span style="font-style: italic;">Sqlite3</span> is one of the two databases that mediatomb can use (the other is <span style="font-style: italic;">mySQL</span>).<br /><code><br />ubuntu% <span style="font-weight: bold;">sudo apt-get install libsqlite3-dev</span><br /></code><br /><span style="font-style: italic;">Libtag</span> is needed to read tags in MP3 files, FLAC files and so on:<br /><code><br />ubuntu% <span style="font-weight: bold;">sudo apt-get install libtag1-dev</span><br /></code><br /><span style="font-style: italic;">Libexpat</span> is needed parse XML files:<br /><code><br />ubuntu% <span style="font-weight: bold;">sudo apt-get install libexpat1-dev<br /><br /></span></code><span style="font-style: italic;">Libexif</span> is needed to read tags stored in some digital pictures.<br /><code><br />ubuntu% <span style="font-weight: bold;">sudo apt-get install libexif-dev</span><br /></code><br /><span style="font-style: italic;">Libmp4v2</span> is needed to parse mp4 files.<br /><code><br />ubuntu% <span style="font-weight: bold;">sudo apt-get install libmp4v2-dev</span><br /></code><br /><span style="font-style: italic;">Libmagic</span> helps to find the MIME type of a file based on the 'magic number' usually stored in the file header.<br /><code><br />ubuntu% <span style="font-weight: bold;">sudo apt-get install libmagic-dev</span><br /></code><br /><span style="font-style: italic;">Libcurl</span> is used to fetch web content using HTTP requests. This is how <span style="font-style: italic;">mediatomb</span> can fetch YouTube content and stream it.<br /><code><br />ubuntu% <span style="font-weight: bold;">sudo apt-get install libcurl4-openssl-dev</span><br /></code><br />Last, <span style="font-style: italic;">libmozjs</span> is the JavaScript engine used by <span style="font-style: italic;">mediatomb</span>.<br /><code><br />ubuntu% <span style="font-weight: bold;">sudo apt-get install libmozjs-dev</span><br /></code><br /><span style="font-weight: bold;">4) Building <span style="font-style: italic;">mediatomb</span></span><br /><br />Let's fetch the latest sources from the Subversion repository:<br /><code><br />ubuntu% <span style="font-weight: bold;">svn co https://svn.mediatomb.cc/svnroot/mediatomb/trunk/mediatomb mediatomb</span><br /></code><br />Now, let's generate the <span style="font-style: italic;">configure</span> script and run it (you need <span style="font-style: italic;">autoconf</span> and <span style="font-style: italic;">automake</span> for this):<br /><code><br />ubuntu% <span style="font-weight: bold;">cd mediatomb</span><br />ubuntu% <span style="font-weight: bold;">autoreconf -i</span><br />ubuntu% <span style="font-weight: bold;">./configure --prefix=/usr/local</span><br /><span style="font-style: italic;">lots of output removed</span><br />CONFIGURATION SUMMARY ----<br />sqlite3               : yes<br />mysql                 : missing<br />libjs                 : yes<br />libmagic              : yes<br />inotify               : yes<br />libexif               : yes<br />id3lib                : disabled<br />taglib                : yes<br />libmp4v2              : yes<br />libdvdnav             : yes<br />ffmpeg                : yes<br />ffmpegthumbnailer     : yes<br />external transcoding  : yes<br />curl                  : yes<br />YouTube               : yes<br />Weborama              : disabled<br />Apple Trailers        : yes<br />SopCast               : disabled<br />libextractor          : disabled<br />db-autocreate         : yes<br /></code><br />As you can see, we have pretty much enabled everything (again, <span style="font-style: italic;">sqlite3</span> is preferred over <span style="font-style: italic;">mySQL</span>, and <span style="font-style: italic;">taglib</span> over <span style="font-style: italic;">id3lib</span>). Support for SopCast and Weborama isn't completely ready yet, so it's probably safer to leave them out.<br /><br />All right, let's build <span style="font-style: italic;">mediatomb</span>:<br /><code><br />ubuntu% <span style="font-weight: bold;">make</span><br />ubuntu% <span style="font-weight: bold;">sudo make install</span><br />ubuntu% <span style="font-weight: bold;">sudo ldconfig</span><br /></code><br />And now...<br /><code><br />ubuntu% <span style="font-weight: bold;">mediatomb</span><br />MediaTomb UPnP Server version 0.12.0 - http://mediatomb.cc/<br />===============================================================================<br />Copyright 2005-2008 Gena Batsyan, Sergey Bostandzhyan, Leonhard Wimmer.<br />MediaTomb is free software, covered by the GNU General Public License version 2<br /></code><br /><br />All right. Let's power up the PS3 and see if it can see the <span style="font-style: italic;">mediatomb</span> server.<br /><br /><div style="text-align: center;"><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="2008-12-22-howto-compiling-mediatomb-ffmpegthumbnailer-all-li-image-06.webp"><img style="margin: 0pt 10px 10px 0pt; cursor: pointer; width: 320px; height: 240px;" src="2008-12-22-howto-compiling-mediatomb-ffmpegthumbnailer-all-li-image-06.webp" alt="" id="BLOGGER_PHOTO_ID_5282598856460939234" border="0" /></a><br /></div><br />Yes it does. Now using the <span style="font-style: italic;">mediatomb</span> GUI, in just a few clicks, I added some pictures and music to my library. They are almost immediately visible on the PS3:<br /><br /><div style="text-align: center;"><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="2008-12-22-howto-compiling-mediatomb-ffmpegthumbnailer-all-li-image-03.webp"><img style="margin: 0pt 10px 10px 0pt; cursor: pointer; width: 320px; height: 240px;" src="2008-12-22-howto-compiling-mediatomb-ffmpegthumbnailer-all-li-image-03.webp" alt="" id="BLOGGER_PHOTO_ID_5282598860461592418" border="0" /></a><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="2008-12-22-howto-compiling-mediatomb-ffmpegthumbnailer-all-li-image-02.webp"><img style="margin: 0pt 10px 10px 0pt; cursor: pointer; width: 320px; height: 240px;" src="2008-12-22-howto-compiling-mediatomb-ffmpegthumbnailer-all-li-image-02.webp" alt="" id="BLOGGER_PHOTO_ID_5282598857497879538" border="0" /></a><br /></div><br />Not bad at all! That's it for the <span style="font-style: italic;">mediatomb</span> installation. There's still plenty of configuration to do, but this will be the subject of another entry :)
+    </div>
+</body>
+</html>

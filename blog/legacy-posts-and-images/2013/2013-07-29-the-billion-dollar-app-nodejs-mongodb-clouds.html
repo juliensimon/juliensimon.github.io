@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The billion dollar app (Node.js! MongoDB! Clouds!)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>The billion dollar app (Node.js! MongoDB! Clouds!)</h1>
+    <div class="date">Published: 2013-07-29</div>
+    <div class="content">
+        Today, I'd like to show you how to build a basic web app running on EC2 and connecting to a MongoDB instance running on MongoLab. <a href="#image-not-found">We used Python so far</a>, so why not use Node.js this time around: Javascript and JSON should work with MongoDB, huh?<br />
+<br />
+We'll start from the same Ubuntu VM running in EC2. Only a little bit of extra setup is required.<br />
+<br />
+First, make sure you open a port for your web app (say, 8080): in the AWS console, go to the "<i>Security group</i>" section and add a custom rule opening port 8080/TCP. Don't forget to click on "<i>Apply rules changes</i>" ;) No need to restart your VM, the change is effective immediately.<br />
+<br />
+Then, '<i>ssh</i>' into to your VM and install the packages required by Node.js: the environment itself plus its package manager:<br />
+<br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">ubuntu@ip-10-48-45-182:~$&nbsp;<b>sudo apt-get install nodejs npm</b></span><br />
+<br />
+Now, let's install the <a href="http://github.com/mongodb/node-mongodb-native">native MongoDB</a> driver used by Node.js:<br />
+<br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">ubuntu@ip-10-48-45-182:~$&nbsp;<b>npm install mongodb</b></span><br />
+<br />
+This generated errors on Ubuntu 12.04, but the package still got installed. YMMV.<br />
+<br />
+All right, now to the good stuff. Here's our web server in Node.js:<br />
+<ul>
+<li>connect to our MongoDB instance (once again, make sure you use your own URI, username and password). Then, select '<i>collection1</i>', containing 25 documents (<i>{"_id", "x"}</i>)</li>
+<li>create a web server running on port 8080 and wait for incoming requests: they will be served by the <i>onRequest</i> function, which issues a global <i>find()</i> on the collection and prints out all documents. <i>JSON.stringify()</i> is a life-saving browser function, it should hopefully work everywhere. If not, use Chrome ;)</li>
+</ul>
+<div>
+Everything will run asynchronously, which is pretty much the point of Node.js, but this is out of scope for today. I strongly recommend the <a href="http://www.nodebeginner.org/">Node Beginner website</a> if you'd like to know more.</div>
+<br />
+<textarea cols="80" rows="32">// www.js
+var http = require("http");
+var MongoClient = require('mongodb').MongoClient;
+var c;
+
+function onRequest(request, response) {
+  console.log("Request received");
+  c.find().toArray(function (err, items) {
+        response.writeHead(200, {"Content-Type": "text/html"});
+        response.write("<HTML>");
+        for (var i = 0; i < items.length; i++) {
+                response.write(JSON.stringify(items[i])+"<br>");
+        }
+        response.write("</HTML>");
+        response.end();
+  });
+}
+
+MongoClient.connect("mongodb://USER:PWD@ds051067.mongolab.com:51067/mongolab-test", function(err, db) {
+        if (!err) {
+                console.log("Connected to database");
+                c = db.collection("collection1");
+        }
+        else {
+                console.log("Dude, where's my DB?");
+        }
+});
+
+http.createServer(onRequest).listen(8080);
+console.log("Web server started");
+</textarea>
+
+<br />
+<div>
+<br /></div>
+<div>
+Pretty cool, yeah? Let's start this program on our VM:<br />
+<br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">ubuntu@ip-10-48-45-182:~$&nbsp;<b>node www.js</b></span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">Web server started</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">Connected to database</span><br />
+<br />
+Our web server is now running. Yes, really. Now, let's connect to our instance from another machine. I'll use '<i>curl</i>' but your web browser will work too (feel free to actually try, my VM may be running):<br />
+<br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ <b>curl http://ec2-54-216-192-183.eu-west-1.compute.amazonaws.com:8080/</b></span><br />
+<textarea cols="50" rows="30"><HTML>
+{"_id":"51e3ce08915082db3df32bf0","x":1}<br />
+{"_id":"51e3ce08915082db3df32bf1","x":2}<br />
+{"_id":"51e3ce08915082db3df32bf2","x":3}<br />
+{"_id":"51e3ce08915082db3df32bf3","x":4}<br />
+{"_id":"51e3ce08915082db3df32bf4","x":5}<br />
+{"_id":"51e3ce08915082db3df32bf5","x":6}<br />
+{"_id":"51e3ce08915082db3df32bf6","x":7}<br />
+{"_id":"51e3ce08915082db3df32bf7","x":8}<br />
+{"_id":"51e3ce08915082db3df32bf8","x":9}<br />
+{"_id":"51e3ce08915082db3df32bf9","x":10}<br />
+{"_id":"51e3ce08915082db3df32bfa","x":11}<br />
+{"_id":"51e3ce08915082db3df32bfb","x":12}<br />
+{"_id":"51e3ce08915082db3df32bfc","x":13}<br />
+{"_id":"51e3ce08915082db3df32bfd","x":14}<br />
+{"_id":"51e3ce08915082db3df32bfe","x":15}<br />
+{"_id":"51e3ce08915082db3df32bff","x":16}<br />
+{"_id":"51e3ce08915082db3df32c00","x":17}<br />
+{"_id":"51e3ce08915082db3df32c01","x":18}<br />
+{"_id":"51e3ce08915082db3df32c02","x":19}<br />
+{"_id":"51e3ce08915082db3df32c03","x":20}<br />
+{"_id":"51e3ce08915082db3df32c04","x":21}<br />
+{"_id":"51e3ce08915082db3df32c05","x":22}<br />
+{"_id":"51e3ce08915082db3df32c06","x":23}<br />
+{"_id":"51e3ce08915082db3df32c07","x":24}<br />
+{"_id":"51e3ce08915082db3df32c08","x":25}<br />
+</HTML>
+</textarea>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;"></span></div>
+<br />
+And this, ladies and gentlemen, is a super scalable, state of the hype, cloud-based web application. Anybody wants to buy it for a billion dollars? :D<br />
+<br />
+Until next time, read, learn and write some code!
+    </div>
+</body>
+</html>

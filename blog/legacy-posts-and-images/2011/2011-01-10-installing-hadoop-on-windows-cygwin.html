@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installing Hadoop on Windows / cygwin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Installing Hadoop on Windows / cygwin</h1>
+    <div class="date">Published: 2011-01-10</div>
+    <div class="content">
+        Highly unnecessary... unless you're stuck with a Windows machine :-/<br />
+<br />
+<u>1) Install <a href="http://cygwin.com/">Cygwin</a></u><br />
+<br />
+This is as straightforward as it gets, but don't forget to add your favorite editor : <i>vim </i>is not included in the default install (!).<br />
+<br />
+The default directory is <i>c:\cygwin</i>, no reason to change it.<br />
+<br />
+<u>2) Install the <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java Development Kit</a></u><br />
+<br />
+You should avoid unnecessary spaces in the installation directory : <i>c:\jdk1.6</i> will do nicely.<br />
+<br />
+<u>3) Install <a href="http://hadoop.apache.org/common/releases.html">Hadoop</a></u><br />
+<br />
+Download the latest release (0.21.0 at the time of writing) and extract it to <i>d:\work</i> (or something similar).<br />
+<br />
+<u>4) Fix your environment variables</u><br />
+<br />
+Start <i>cygwin </i>and append the following lines at the end of your <i>.bashrc</i> file:<br />
+<code><br />
+<code>$ <b>export JAVA_HOME=/cygdrive/c/jdk1.6</b><br /></code>
+<code>$ <b>export HADOOP_INSTALL=/cygdrive/d/work/hadoop-0.21.0</b><br /></code>
+<code>$ <b>export PATH=$PATH:$HADOOP_INSTALL/bin</b></code><br /></code>
+<br />
+<u>5) Fix the <i>hadoop-config</i> script</u><br />
+<br />
+<code>$ <b>vi $HADOOP_INSTALL/bin/hadoop-config.sh</b></code><br />
+<br />
+Locate this section starting with "<i># cygwin path translation</i>" and add the following line :<br />
+<br />
+<code>CLASSPATH=`cygpath -wp "$CLASSPATH"`</code><br />
+<br />
+Save and exit.<br />
+<br />
+<u>6) Test your installation</u><br />
+<code><br />
+<code>$ <b>hadoop version</b><br /></code>
+Hadoop 0.21.0<br />
+<i>etc etc.</i><br />
+</code><br />
+<br />
+That's it. Happy hadoop'ing :)
+    </div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test drive: real-time prediction in Java with Amazon Machine Learning</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test drive: real-time prediction in Java with Amazon Machine Learning</h1>
+    <div class="date">Published: 2015-04-17</div>
+    <div class="content">
+        Following up on my two previous Amazon ML articles (<a href="#image-not-found">batch prediction with Redshift</a> and <a href="#image-not-found">real-time prediction with the AWS CLI</a>), here's a quickie on implementing real-time prediction with the AWS SDK for Java.<br />
+<br />
+At the time of writing, I'm using SDK version 1.9.31:<br />
+<ul>
+<li>sources on Github: <a href="https://github.com/aws/aws-sdk-java">https://github.com/aws/aws-sdk-java</a></li>
+<li>Javadoc : <a href="https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/">https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/ </a></li>
+</ul>
+Here's the Maven dependency:<br />
+<br />
+<script src="https://gist.github.com/juliensimon/57d280635d8ae6490f5c.js"></script>
+
+The code (<a href="https://github.com/juliensimon/DataStuff/blob/master/src/org/julien/datastuff/MLSample.java">source</a> on Github) is pretty self-explanatory and totally similar to the CLI example in the previous article.<br />
+<ul>
+<li>Get the list of models</li>
+<li>Pick one </li>
+<li>Build a prediction request : data record + endpoint</li>
+<li>Fire the request </li>
+<li>Get a result!</li>
+</ul>
+<br />
+<script src="https://gist.github.com/juliensimon/93b58f19031796f39749.js"></script> Here's the output:<br />
+<br />
+<script src="https://gist.github.com/juliensimon/bb0a661eae7759c0585b.js"></script>
+Nice and simple. What about performance? My previous article measured a CLI call (aka '<i>aws machinelearning predict</i>') within <i>us-east-1</i> at around 300ms, well above the 100ms mentioned in the FAQ.<br />
+<br />
+Believe or not, the Amazon product team got in touch (I'm not worthy, I'm not worthy... and thanks for reading!). They kindly pointed out that this measurement includes much more than the call to the web service and of course, they're right.<br />
+<br />
+Fortunately, the Java program above is finer-grained and allows us to measure only the actual API call. I packaged it, deployed it to a t2.micro EC2 instance running in <i>us-east-1</i> (same configuration as before) and...<br />
+<br />
+<script src="https://gist.github.com/juliensimon/6e54fad4093ca00fbc76.js"></script>
+
+
+Average time is around 80ms, which is indeed under the 100ms limit mentioned in the FAQ. There you go :)<br />
+<br />
+I'm definitely looking forward to using this in production. Till next time, keep rockin'.
+    </div>
+</body>
+</html>

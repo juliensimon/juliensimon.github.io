@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB and Python gang thegither!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>MongoDB and Python gang thegither!</h1>
+    <div class="date">Published: 2013-07-24</div>
+    <div class="content">
+        After a couple of recent posts on <a class="vt-p" href="#image-not-found">MongoLab</a> and <a class="vt-p" href="#image-not-found">Python</a>, I guess it was pretty obvious to mix both :) &nbsp;The only thing you need to add to your system is <a class="vt-p" href="http://pypi.python.org/pypi/pymongo/">PyMongo</a>, the Python driver for MongoDB. If you're using Linux or MacOS, it should be as easy as:<br />
+<code><br /></code>
+<code><span style="font-size: x-small;">
+<code>$ <b>sudo easy_install pymongo&nbsp;</b></span></code><br /></code>
+<code><span style="font-size: x-small;">Searching for pymongo&nbsp;</span></code><br />
+<code><span style="font-size: x-small;">Best match: pymongo 2.5.2&nbsp;</span></code><br />
+<code><span style="font-size: x-small;">Processing pymongo-2.5.2-py2.7-macosx-10.8-intel.egg&nbsp;</span></code><br />
+<code><span style="font-size: x-small;">Adding pymongo 2.5.2 to easy-install.pth file&nbsp;
+</span></code><br />
+<code><span style="font-size: x-small;">Using /Library/Python/2.7/site-packages/pymongo-2.5.2-py2.7-macosx-10.8-intel.egg&nbsp;</span></code><br />
+<code><span style="font-size: x-small;">Processing dependencies for pymongo&nbsp;</span></code><br />
+<code><span style="font-size: x-small;">Finished processing dependencies for pymongo&nbsp;</span></code><br />
+<br />
+Let's try some basic stuff first. You'll just need to use your own username, password, URI, database and collection :)<br />
+<br />
+<code><span style="font-size: x-small;"># Python 2.7</span></code><br />
+<span style="font-family: monospace; font-size: x-small;">from pymongo import *</span><br />
+<code><span style="font-size: x-small;">&nbsp;</span></code><span style="font-family: monospace; font-size: x-small;">connection = MongoClient("mongodb://</span><span style="font-family: monospace; font-size: x-small;">USERNAME:PASSWORD</span><span style="font-family: monospace; font-size: x-small;">@ds051067.mongolab.com:51067/mongolab-test", 51067)</span><br />
+<span style="font-family: monospace; font-size: x-small;">db = connection["mongolab-test"]</span><br />
+<span style="font-family: monospace;"><span style="font-size: x-small;">c = db["collection1"]</span></span><br />
+<span style="font-family: monospace;"><span style="font-size: x-small;">posts = c.find()</span></span><br />
+<span style="font-family: monospace;"><span style="font-size: x-small;">for post in posts:</span></span><br />
+<span style="font-family: monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; print (post)</span><br />
+<br />
+Output:<br />
+<span style="font-family: monospace; font-size: x-small;">{u'x': 1.0, u'_id': ObjectId('51e3ce08915082db3df32bf0')}</span><br />
+<span style="font-family: monospace; font-size: x-small;">{u'x': 2.0, u'_id': ObjectId('51e3ce08915082db3df32bf1')}</span><br />
+<span style="font-family: monospace; font-size: x-small;">{u'x': 3.0, u'_id': ObjectId('51e3ce08915082db3df32bf2')}</span><br />
+<span style="font-family: monospace; font-size: x-small;"><i>output removed from brevity</i></span><br />
+<span style="font-family: monospace; font-size: x-small;">{u'x': 25.0, u'_id': ObjectId('51e3ce08915082db3df32c08')}</span><br />
+<code><br /></code>
+OK, now let's go a little bit crazeee:<br />
+<br />
+<code><span style="font-size: x-small;"># Python 2.7&nbsp;</span></code><br />
+<span style="font-family: monospace; font-size: x-small;">from pymongo import *</span><br />
+<span style="font-family: monospace; font-size: x-small;">connection = MongoClient("mongodb://USERNAME:PASSWORD@ds051067.mongolab.com:51067/mongolab-test", 51067)</span><br />
+<span style="font-family: monospace; font-size: x-small;">db = connection["mongolab-test"]</span><br />
+<span style="font-family: monospace; font-size: x-small;">c = db["collection1"]</span><br />
+<span style="font-family: monospace; font-size: x-small;">posts = c.find({"x":{"$gte":5,"$lte":10}}).sort([("x",DESCENDING)])</span><br />
+<span style="font-family: monospace; font-size: x-small;">print (c.count())</span><br />
+<span style="font-family: monospace; font-size: x-small;">for post in posts:</span><br />
+<span style="font-family: monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; print (post)</span><br />
+<span style="font-family: monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; c.insert({"y":post["x"]})</span><br />
+<span style="font-family: monospace; font-size: x-small;">print (c.count())</span><br />
+<div>
+<span style="font-family: monospace; font-size: x-small;"><br /></span></div>
+Output:<br />
+<code><span style="font-size: x-small;">25&nbsp;</span></code><br />
+<code><span style="font-size: x-small;">{u'x': 10.0, u'_id': ObjectId('51e3ce08915082db3df32bf9')}&nbsp;</span></code><br />
+<code><span style="font-size: x-small;">{u'x': 9.0, u'_id': ObjectId('51e3ce08915082db3df32bf8')}&nbsp;</span></code><br />
+<code><span style="font-size: x-small;">{u'x': 8.0, u'_id': ObjectId('51e3ce08915082db3df32bf7')}&nbsp;</span></code><br />
+<code><span style="font-size: x-small;">{u'x': 7.0, u'_id': ObjectId('51e3ce08915082db3df32bf6')}&nbsp;</span></code><br />
+<code><span style="font-size: x-small;">{u'x': 6.0, u'_id': ObjectId('51e3ce08915082db3df32bf5')}&nbsp;</span></code><br />
+<code><span style="font-size: x-small;">{u'x': 5.0, u'_id': ObjectId('51e3ce08915082db3df32bf4')}&nbsp;</span></code><br />
+<code><span style="font-size: x-small;">31
+</span></code><br />
+<code><span style="font-size: x-small;"><br /></span></code>
+<code></code><br />
+See how easy this is (again)? The Python syntax is pretty much identical to the MongoDB syntax and their dictionaries are a perfect match. No conversion needed (DALs and ORMs, rot in Hell!).<br />
+<br />
+Robert Burns, the famous 18th-century Scottish poet, once wrote: "Freedom an' whisky gang thegither!". With all due respect for such a wise man, please let me add: "So do MongoDB and Python, especially with a glass of 18-year old Glenlivet". Open Source (on the) rocks :D<br />
+<br />
+That's it for today. Now write some code, will ya?
+    </div>
+</body>
+</html>

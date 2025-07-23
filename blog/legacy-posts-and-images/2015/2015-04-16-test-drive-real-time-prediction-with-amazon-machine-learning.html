@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test drive: real-time prediction with Amazon Machine Learning</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test drive: real-time prediction with Amazon Machine Learning</h1>
+    <div class="date">Published: 2015-04-16</div>
+    <div class="content">
+        <div class="separator" style="clear: both; text-align: center;">
+<a href="http://carzz.co/insane-flames-lambo-top-gear-hot-cars-motorized-vehicles-cars-t_194875.jpg" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" src="http://carzz.co/insane-flames-lambo-top-gear-hot-cars-motorized-vehicles-cars-t_194875.jpg" height="180" width="320" /></a></div>
+As explained in my <a href="#image-not-found" target="_blank">previous article</a>, Amazon ML supports both batch prediction and real-time prediction.<br />
+<br />
+I burned some rubber (and some cash!) on batch prediction, but there's still some gas in the tank and tires ain't totally dead yet, so let's do a few more laps and see how the real-time thing works :)<br />
+<br />
+Assuming you've already built and evaluated a model, one single operation is required to perform real-time prediction: create a real-time endpoint, i.e. a web service URL to send your requests to.<br />
+<br />
+Of course, we could to this in the AWS console, but why not use the CLI instead?&nbsp; A word of warning: at the time of writing, the CLI package available from the AWS website suffers from a nasty bug on prediction calls (see <a href="https://forums.aws.amazon.com/thread.jspa?messageID=615018">https://forums.aws.amazon.com/thread.jspa?messageID=615018</a>). You'll need to download and install the latest version from Github:<br />
+<br />
+<script src="https://gist.github.com/juliensimon/050948f43d42894ccc41.js"></script>
+
+While we're at it, let's take a quick look at the CLI for Amazon ML. Here's our model, built from 100,000 lines with the format described in my previous article:<br />
+<br />
+<script src="https://gist.github.com/juliensimon/1b3bad080dda5fba87c1.js"></script>
+
+Let's also look at the evaluation for this model. The log file URL gives away the fact Amazon ML jobs are based on EMR... in case you had any doubts ;)<br />
+&nbsp;<script src="https://gist.github.com/juliensimon/932740ca93c55a175a60.js"></script>
+
+All right, everything looks good. Time to create a prediction endpoint for our model:<br />
+<br />
+<script src="https://gist.github.com/juliensimon/e5122d8f0b249a0f601a.js"></script>
+
+Pretty simple. We can now see that our model is accessible at <i>https://realtime.machinelearning.us-east-1.amazonaws.com</i><br />
+<br />
+<script src="https://gist.github.com/juliensimon/730b6e69f7548d559df9.js"></script>
+
+And now, the moment of truth: let's hit the endpoint with a record.<br />
+<br />
+<script src="https://gist.github.com/juliensimon/1b76c384ea6bd187bb72.js"></script>
+
+Boom. We got a predicted value. This actually worked on the first call, I guess caffeine was stronger this morning ;)<br />
+<br />
+One last question for today: how fast is this baby? I tested two different setups :<br />
+<ul>
+<li>Return trip between my office in Paris and the endpoint in <i>us-east-1 </i>: about 700 ms</li>
+<li>Return trip between an EC2 instance in <i>us-east-1</i> and the endpoint in <i>us-east-1 </i>: about 300 ms</li>
+</ul>
+<br />
+<script src="https://gist.github.com/juliensimon/17f9cc88a3c0f70725b6.js"></script>
+
+(<i>and yes, I did run the tests multiple times. These numbers are average values</i>).<br />
+<br />
+Slower than expected. The <a href="https://aws.amazon.com/fr/machine-learning/faqs/" target="_blank">Amazon ML FAQ</a> says: <br />
+<br />
+<i><b>Q: How fast can the Amazon Machine Learning real-time API generate predictions?</b></i><br />
+<i> 
+          Most real-time prediction requests return a response within
+ 100 MS, making them fast enough for interactive web, mobile, or desktop
+ applications. The exact time it takes for the real-time API to generate
+ a prediction varies depending on the size of the input data record, and
+ the complexity of the data processing “recipe” associated with the ML 
+model that is generating the predictions</i><br />
+<br />
+300 ms feels slow, especially since my model doesn't strike me as super-complicated. Maybe I'm jaded ;)<br />
+<br />
+Ok, enough bitching :) This product has only been out a week or so and it's already fuckin' AWESOME. It's hard to believe Amazon made ML this simple. If I can get this to work, anyone can.<br />
+<br />
+Given the right level of price, performance and scale (all will come quickly), I see this product&nbsp; crushing the competition... and not only other ML SaaS providers. Hardware & software vendors should start sweating even more than they already do.<br />
+<br />
+C'mon, give this thing a try and tell me you're STILL eager to build Hadoop clusters and write Map-Reduce jobs. Seriously?<br />
+<br />
+Till next time, keep rockin'.
+    </div>
+</body>
+</html>

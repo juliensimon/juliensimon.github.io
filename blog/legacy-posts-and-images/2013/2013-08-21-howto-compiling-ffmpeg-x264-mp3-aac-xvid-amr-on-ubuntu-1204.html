@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOWTO: compiling ffmpeg + x264 + MP3 + AAC + Xvid + AMR on Ubuntu 12.04</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>HOWTO: compiling ffmpeg + x264 + MP3 + AAC + Xvid + AMR on Ubuntu 12.04</h1>
+    <div class="date">Published: 2013-08-21</div>
+    <div class="content">
+        <i><span style="font-family: inherit;"><b>By popular demand (according to page view stats), I've decided to refresh the Dec'2008 post (<a href="#image-not-found">"HOWTO: compiling ffmpeg + x264 + MP3 + Xvid + AMR on Ubuntu 8.x"</a>)&nbsp;for Ubuntu 12.04. Enjoy :)</b></span></i><br />
+<span style="font-family: inherit;"><br /></span>
+<span style="font-family: inherit;"><span style="background-color: white; color: #222222; font-style: italic; line-height: 16.363636016845703px;">ffmpeg&nbsp;</span><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">is THE audio/video conversion tool. Unfortunately, the default build included in Ubuntu is usually quite outdated, as well as lacking support for many codecs.</span><br style="background-color: white; color: #222222; line-height: 16.363636016845703px;" /><br style="background-color: white; color: #222222; line-height: 16.363636016845703px;" /><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">The purpose of this article is to show you how you can build a fresh, up to date version of&nbsp;</span><span style="background-color: white; color: #222222; font-style: italic; line-height: 16.363636016845703px;">ffmpeg&nbsp;</span><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">supporting (almost) all major codecs. This procedure was successfully performed on a vanilla Ubuntu 12.04 system.</span></span><br />
+<br />
+<span style="font-family: inherit;"><span style="background-color: white; color: #222222; font-weight: bold; line-height: 16.363636016845703px;">0) Prerequisites</span><br style="background-color: white; color: #222222; line-height: 16.363636016845703px;" /><br />First, we need to enable the 'multiverse" repository in <i>/etc/apt/sources.list, </i>because that's where some of our external libraries live.&nbsp;All you have to do is </span><span style="font-family: inherit;">uncomment the line similar to:</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">add deb http://eu-west-1.ec2.archive.ubuntu.com/ubuntu/ precise multiverse sudo apt-get update</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><br /></span>
+Don't forget to refresh the repos:<br />
+<span style="font-family: 'Courier New', Courier, monospace; font-size: x-small;">$ sudo <b>apt-get</b>&nbsp;</span><span style="font-family: 'Courier New', Courier, monospace; font-size: x-small;">update</span><br />
+<br />
+<span style="background-color: white; font-family: inherit;">Then</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">, we need to make sure that </span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;"><span style="font-style: italic;">git</span></span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">&nbsp;and <i>svn</i> are installed. We'll need them to fetch source code.</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ sudo <b>apt-get</b> install git subversion</span><br />
+<span style="font-family: inherit;"><br /></span>
+<span style="font-family: inherit;">Let's also add some mandatory build tools:</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$&nbsp;sudo <b>apt-get</b>&nbsp;install build-essential nasm pkg-config&nbsp;</span><br />
+<br />
+<span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">Now would be a good time to decide where you're going to build all those sources. Just create a temporary directory anywhere you like (you'll need about 150MB).</span><br />
+<br />
+<span style="font-family: inherit;">The <i>x264</i> build requires a recent version of the <i>yasm</i> assembler. Let's take care of it:</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ sudo <b>apt-get</b> remove yasm&nbsp;</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ <b>wget</b> http://www.tortall.net/projects/yasm/releases/yasm-1.2.0.tar.gz&nbsp;</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ <b>tar</b> xvfz yasm-1.2.0.tar.gz&nbsp;</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ cd yasm-1.2.0&nbsp;</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ ./<b>configure</b> --prefix=/usr/local&nbsp;</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ <b>make</b>&nbsp;</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ sudo <b>make</b> install&nbsp;</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ <b>yasm</b> --version</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">yasm 1.2.0 Compiled on Aug 21 2013.&nbsp;</span><br />
+<span style="font-family: inherit;"><br /><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">Done!&nbsp;</span><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">One final note before we start building: if you have an existing installation of <i>ffmpeg</i>, you may run into linking issues caused by conflicting library versions. My advice is to remove all existing copies of <i>libav</i>* (<i>libavcodec</i> and so on) which may be present&nbsp;</span><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">in <i>/usr/lib</i>, either by uninstalling them with APT or by deleting the .a and .so files.</span></span><br />
+<span style="font-family: inherit;"><span style="background-color: white; color: #222222; font-style: italic; line-height: 16.363636016845703px;"><br /></span><span style="background-color: white; color: #222222; font-weight: bold; line-height: 16.363636016845703px;">1) Fetching the&nbsp;<span style="font-style: italic;">ffmpeg</span>&nbsp;sources</span><br style="background-color: white; color: #222222; line-height: 16.363636016845703px;" /><br style="background-color: white; color: #222222; line-height: 16.363636016845703px;" /><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">First of all, let's get the latest&nbsp;</span><span style="background-color: white; color: #222222; font-style: italic; line-height: 16.363636016845703px;">ffmpeg</span><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">&nbsp;source:</span><code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><br /></code></span><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ <b>git </b>clone git://source.ffmpeg.org/ffmpeg.git ffmpeg</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><br /></span>
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">Of course, you could just go ahead with&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">configure</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">,&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">make</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">,&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">make install</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">&nbsp;and be done with it. Unfortunately, it's not that simple. Go ahead, run&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">configure</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">:</span><br />
+<code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><br /><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$&nbsp;cd ffmpeg<br />$./<b>configure</b>&nbsp;</span></code><code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">--prefix=/usr/local</span></code><code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><br /><span style="font-style: italic;">output removed</span><br />Creating config.mak and config.h...</span></code><br />
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">Take a closer look at the output, especially at the '</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">Enabled encoders</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">' section. A number of major formats, like AAC, MP3, x.264 or XViD are missing. Can you live without these? Probably not...</span><br />
+<br style="background-color: white; color: #222222; line-height: 16.363636016845703px;" />
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">Why, oh why are they missing? Take another look at the output of the&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">configure</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">&nbsp;command:</span><br />
+<code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">libfaac enabled no<br />libmp3lame enabled no<br />libx264 enabled no<br />libxvid enabled no</span></code><br />
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">These encoders are missing because they're handled by external libraries which are not part of the&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">ffmpeg</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">&nbsp;source package. Chasing them all is a bit of a pain in the #$$ and hopefully this article will help!</span><br />
+<br style="background-color: white; color: #222222; line-height: 16.363636016845703px;" />
+<span style="font-family: inherit;"><span style="line-height: 16.363636016845703px;"><code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"></code></span></span><span style="background-color: white; color: #222222; font-family: inherit; font-weight: bold; line-height: 16.363636016845703px;">2) Configuring&nbsp;<span style="font-style: italic;">ffmpeg</span>... and failing</span><br />
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;"><br /></span>
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">Let's go wild and enable these additional encoders:&nbsp;</span>AAC, MP3, Theora, Vorbis, x264, xvid, AMR, GSM. Let's also build<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">&nbsp;shared libraries, which are useful if you're running multiple copies of&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">ffmpeg</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">:</span><br />
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;"><br /></span>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">$&nbsp;</span>./<b>configure</b> --prefix=/usr/local --enable-gpl --enable-version3 --enable-nonfree --enable-shared --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libfaac --enable-libgsm --enable-libmp3lame --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid&nbsp;</span><br />
+<br style="background-color: white; color: #222222; line-height: 16.363636016845703px;" />
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">It will inevitably lead to something like:</span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">ERROR: libfaac not found</span></span><br />
+<div>
+<br /></div>
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">That's ok, we haven't installed the external libraries required by our&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">ffmpeg</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">&nbsp;build. Let's get to it!</span><br />
+<br />
+<span style="font-family: inherit;"><b><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">3) Installing&nbsp;</span><span style="background-color: white; color: #222222; line-height: 16.359375px;">AAC, MP3, Theora, Vorbis, AMR, GSM</span></b></span><br />
+<span style="font-family: inherit;"><b><span style="background-color: white; color: #222222; line-height: 16.359375px;"><br /></span></b></span>
+<span style="color: #222222; line-height: 16.363636016845703px;">These are readily available in the Ubuntu repository, let's add them:</span><br />
+<span style="color: #222222; line-height: 16.363636016845703px;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ sudo <b>apt-get</b> install libfaac-dev libmp3lame-dev libtheora-dev libvorbis-dev libopencore-amrnb-dev libopencore-amrwb-dev libgsm1-dev zlib1g-dev libgpac1-dev</span></span><br />
+<br style="background-color: white; color: #222222; line-height: 16.363636016845703px;" />
+<span style="background-color: white; color: #222222; font-family: inherit; font-weight: bold; line-height: 16.363636016845703px;">4) Installing&nbsp;</span><a href="http://www.videolan.org/developers/x264.html" style="background-color: white; color: #888888; font-family: inherit; font-weight: bold; line-height: 16.363636016845703px; text-decoration: none;"><i>libx264</i></a><span style="font-family: inherit;"><span style="background-color: white; color: #222222; font-weight: bold; line-height: 16.363636016845703px;"></span></span><br />
+<br style="background-color: white; color: #222222; line-height: 16.363636016845703px;" />
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">x264 is a free library for encoding H264/AVC video streams.&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">It can be installed with APT using '</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">apt-get install libx264-dev</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">' but let's make sure we have both the latest&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">ffmpeg</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">&nbsp;and the latest&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">x264</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">.</span><br />
+<br />
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">So, let's fetch the&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">x264</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">&nbsp;sources and build them:</span><br />
+<code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$&nbsp;<b>git</b> clone git://git.videolan.org/x264.git<br />$&nbsp;cd x264</span></code><code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><br /></span></code><code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ ./<b>configure</b> --prefix=/usr/local --enable-shared<br />$&nbsp;<b>make</b><br />$&nbsp;sudo <b>make</b> install</span></code><br />
+<code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><br /></span></code>
+<span style="background-color: white; color: #222222; font-family: inherit; font-weight: bold; line-height: 16.363636016845703px;">5) Installing&nbsp;</span><a href="http://www.xvid.org/" style="background-color: white; color: #888888; font-family: inherit; font-style: italic; font-weight: bold; line-height: 16.363636016845703px; text-decoration: none;">libxvid</a><br />
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;"><br /></span>
+<span style="background-color: white; font-family: inherit;">Let's fetch the&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">xvid</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">&nbsp;sources and build them:</span><br />
+<code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="color: black; line-height: normal;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ <b>wget</b> http://downloads.xvid.org/downloads/xvidcore-1.3.2.tar.gz&nbsp;</span></span></code><br />
+<code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="color: black; line-height: normal;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ <b>tar</b> xvfz xvidcore-1.3.2.tar.gz&nbsp;</span></span></code><br />
+<code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="color: black; line-height: normal;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ cd xvidcore-1.3.2/build/generic&nbsp;</span></span></code><br />
+<code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="color: black; line-height: normal;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ ./<b>configure</b> --prefix=/usr/local&nbsp;</span></span></code><br />
+<code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="color: black; line-height: normal;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ <b>make</b></span></span></code><br />
+<code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="color: black; line-height: normal;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ sudo <b>make</b> install</span></span></code><br />
+<code style="background-color: white;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><br /></span></code><span style="background-color: white; color: #222222; font-family: inherit; font-weight: bold; line-height: 16.363636016845703px;">6) Configuring&nbsp;<span style="font-style: italic;">ffmpeg</span>... and succeeding!</span><br />
+<code style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;"><br /></code><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">We should have everything we need now. Let's try that&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">configure</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">&nbsp;command again:</span><br />
+<code style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;"><span style="font-family: 'Courier New', Courier, monospace; font-size: x-small; line-height: 16.363636016845703px;">$&nbsp;</span><span style="color: black; font-family: 'Courier New', Courier, monospace; font-size: x-small; line-height: normal;">./</span><b style="color: black; font-family: 'Courier New', Courier, monospace; font-size: small; line-height: normal;">configure</b><span style="color: black; font-family: 'Courier New', Courier, monospace; font-size: x-small; line-height: normal;">&nbsp;--prefix=/usr/local --enable-gpl --enable-version3 --enable-nonfree --enable-shared --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libfaac --enable-libgsm --enable-libmp3lame --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid</span></code><br />
+<code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="color: black; line-height: normal;"><span style="font-family: inherit;">output removed</span></span></code><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">Creating config.mak, config.h, and doc/config.texi...</span><br />
+<div>
+<br /></div>
+<span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">All right, let's build it. Time for coffee(s), this is a rather long build:</span><span style="background-color: white; color: #222222; font-family: inherit; font-weight: bold; line-height: 16.363636016845703px;"><br /></span><span style="color: #222222; font-family: 'Courier New', Courier, monospace; font-size: x-small; line-height: 16.363636016845703px;">$ <b>make</b></span><br />
+<span style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ sudo <b>make</b> install</span></span><br />
+<span style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$ sudo <b>ldconfig</b> -v</span></span><br />
+<span style="font-family: inherit;"><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><br /></span></span>
+<span style="font-family: inherit;"><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">Cool, huh? Now, let's check this new <i>ffmpeg</i>:</span></span><br />
+<code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"><span style="font-family: Courier New, Courier, monospace; font-size: x-small;">$&nbsp;<b>which</b> ffmpeg<br />/usr/local/bin/ffmpeg</span></code><br />
+<span style="color: #222222; font-family: 'Courier New', Courier, monospace; font-size: x-small; line-height: 16.359375px;">$ <b>ffmpeg</b> -encoders|<b>grep</b> -E "mp3|xvid|aac|gsm|amr|x264|theora|vorbis"</span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">ffmpeg version N-55691-gca7f637 Copyright (c) 2000-2013 the FFmpeg developers</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp; built on Aug 21 2013 15:44:17 with gcc 4.6 (Ubuntu/Linaro 4.6.3-1ubuntu5)</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp; configuration: --prefix=/usr/local --enable-gpl --enable-version3 --enable-nonfree --enable-shared --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libfaac --enable-libgsm --enable-libmp3lame --enable-libtheora --enable-libvorbis --enable-libx264 --enable-libxvid</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp; libavutil &nbsp; &nbsp; &nbsp;52. 42.100 / 52. 42.100</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp; libavcodec &nbsp; &nbsp; 55. 29.100 / 55. 29.100</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp; libavformat &nbsp; &nbsp;55. 14.100 / 55. 14.100</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp; libavdevice &nbsp; &nbsp;55. &nbsp;3.100 / 55. &nbsp;3.100</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp; libavfilter &nbsp; &nbsp; 3. 82.100 / &nbsp;3. 82.100</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp; libswscale &nbsp; &nbsp; &nbsp;2. &nbsp;5.100 / &nbsp;2. &nbsp;5.100</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp; libswresample &nbsp; 0. 17.103 / &nbsp;0. 17.103</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp; libpostproc &nbsp; &nbsp;52. &nbsp;3.100 / 52. &nbsp;3.100</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp;V..... libx264 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (codec h264)</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp;V..... libx264rgb &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 RGB (codec h264)</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp;V..... libxvid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;libxvidcore MPEG-4 part 2 (codec mpeg4)</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp;V..... libtheora &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;libtheora Theora (codec theora)</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp;A..X.. aac &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;AAC (Advanced Audio Coding)</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp;A..... libfaac &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;libfaac AAC (Advanced Audio Coding) (codec aac)</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp;A..... libopencore_amrnb &nbsp; &nbsp;OpenCORE AMR-NB (Adaptive Multi-Rate Narrow-Band) (codec amr_nb)</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp;A..... libgsm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; libgsm GSM (codec gsm)</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp;A..... libgsm_ms &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;libgsm GSM Microsoft variant (codec gsm_ms)</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp;A..... libmp3lame &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; libmp3lame MP3 (MPEG audio layer 3) (codec mp3)</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp;A..X.. vorbis &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Vorbis</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;">&nbsp;A..... libvorbis &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;libvorbis (codec vorbis)</span></span><br />
+<span style="color: #222222; font-family: Courier New, Courier, monospace; font-size: x-small;"><span style="line-height: 16.359375px;"><br /></span></span>
+<span style="font-family: inherit;"><span style="line-height: 16.363636016845703px;"><code style="background-color: white; color: #222222; line-height: 16.363636016845703px;"></code></span></span>Congratulations, your brand new <i>ffmpeg</i> can now encode AAC, MP3, Theora, Vorbis, x264, xvid, AMR and GSM :)<br />
+<br style="background-color: white; color: #222222; line-height: 16.363636016845703px;" />
+<span style="background-color: white; color: #222222; font-family: inherit; font-weight: bold; line-height: 16.363636016845703px;">7) Cleaning up (optional)</span><code style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;"><br /></code><span style="background-color: white;"><span style="color: #222222; font-family: inherit;"><span style="line-height: 16.363636016845703px;">If like me you keep building the latest version, you will eventually end up with a lot of&nbsp;</span></span><span style="color: #222222;"><span style="line-height: 16.359375px;">unnecessary</span></span><span style="color: #222222; font-family: inherit;"><span style="line-height: 16.363636016845703px;">&nbsp;libraries in&nbsp;</span></span></span><span style="background-color: white; color: #222222; font-family: inherit; font-style: italic; line-height: 16.363636016845703px;">/usr/local/lib.&nbsp;</span><span style="background-color: white; color: #222222; font-family: inherit; line-height: 16.363636016845703px;">There's nothing really wrong with old versions, but for the sake of clarity, you may want to remove the old shared libraries, i.e. the ones NOT linked as lib*.so.</span><br />
+<span style="font-family: inherit;"><br style="background-color: white; color: #222222; line-height: 16.363636016845703px;" /><span style="background-color: white; color: #222222; line-height: 16.363636016845703px;">That's it for today :)</span></span>
+    </div>
+</body>
+</html>

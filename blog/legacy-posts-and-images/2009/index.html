@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog posts from 2009 by Julien Simon - 11 technical articles covering MediaInfo, VLC, x264 optimization, and multimedia processing">
+    <meta name="keywords" content="Julien Simon, blog posts, 2009, MediaInfo, VLC, x264, FFmpeg, video encoding, PS3, MediaTomb, multimedia">
+    <meta name="author" content="Julien Simon">
+    <meta name="robots" content="index, follow">
+    
+    <title>Blog Posts - 2009 – Julien Simon</title>
+    
+    <!-- Umami Analytics -->
+    <script>
+        window.addEventListener('load', function() {
+            var script = document.createElement('script');
+            script.src = 'https://cloud.umami.is/script.js';
+            script.setAttribute('data-website-id', '27550dad-d418-4f5d-ad1b-dab573da1020');
+            document.head.appendChild(script);
+        });
+    </script>
+    
+    <!-- Resource hints -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/social-icons.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../../assets/favicon.ico">
+    
+    <!-- Year page specific styles -->
+    <style>
+        .year-hero {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+            padding: var(--space-12) 0;
+            margin-bottom: var(--space-16);
+            border-radius: 0 0 1rem 1rem;
+            text-align: center;
+        }
+        
+        .year-hero h1 {
+            font-size: clamp(2.5rem, 8vw, var(--text-5xl));
+            color: var(--primary-color);
+            margin-bottom: var(--space-3);
+            font-weight: 800;
+        }
+        
+        .year-hero p {
+            font-size: clamp(1rem, 3vw, var(--text-lg));
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .year-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            background: rgba(30, 64, 175, 0.1);
+            padding: var(--space-3) var(--space-5);
+            border-radius: 1.5rem;
+            font-size: var(--text-sm);
+            color: var(--primary-color);
+            font-weight: 600;
+            border: 1px solid rgba(30, 64, 175, 0.2);
+        }
+        
+        .posts-grid {
+            display: grid;
+            gap: var(--space-6);
+            margin: var(--space-8) 0;
+        }
+        
+        .post-card {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: var(--space-6);
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+            contain: layout style;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+        }
+        
+        .post-header {
+            margin-bottom: var(--space-4);
+        }
+        
+        .post-date {
+            font-size: var(--text-sm);
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .post-title {
+            font-size: var(--text-xl);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-3);
+            line-height: 1.3;
+        }
+        
+        .post-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .post-title a:hover {
+            color: var(--primary-color);
+        }
+        
+        .post-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--space-4);
+        }
+        
+        .post-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: var(--text-sm);
+            transition: all var(--transition-fast);
+        }
+        
+        .post-link:hover {
+            color: var(--primary-dark);
+            transform: translateX(2px);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: var(--space-12) 0;
+            padding: var(--space-4);
+            background: var(--surface);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: var(--space-4);
+        }
+        
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-5);
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all var(--transition-normal);
+            font-size: var(--text-sm);
+        }
+        
+        .nav-link:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .nav-link.secondary {
+            background: var(--secondary-color);
+        }
+        
+        .nav-link.secondary:hover {
+            background: var(--text-secondary);
+        }
+        
+        .year-summary {
+            text-align: center;
+            margin-bottom: var(--space-8);
+        }
+        
+        @media (max-width: 768px) {
+            .year-stats {
+                gap: var(--space-3);
+            }
+            
+            .stat {
+                padding: var(--space-2) var(--space-4);
+                font-size: var(--text-xs);
+            }
+            
+            .navigation {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .post-card {
+                padding: var(--space-5);
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header>
+        <div class="container">
+            <img src="../../../assets/julien.webp" alt="Julien Simon" class="profile-image">
+            <h1>Julien Simon</h1>
+            <p class="title">Chief Evangelist @ Arcee AI</p>
+            <p class="subtitle">Leading the AI revolution through Small Language Models, empowering enterprises with cost-effective, privacy-first AI solutions that deliver superior performance at scale.</p>
+            <div class="social-links">
+                <a class="btn" href="https://github.com/juliensimon" target="_blank" rel="noopener noreferrer"><span class="emoji">🐙</span>GitHub</a>
+                <a class="btn" href="https://huggingface.co/juliensimon" target="_blank" rel="noopener noreferrer"><span class="emoji">🤖</span>Hugging Face</a>
+                <a class="btn" href="https://linkedin.com/in/juliensimon" target="_blank" rel="noopener noreferrer"><span class="emoji">💼</span>LinkedIn</a>
+                <a class="btn" href="https://julsimon.medium.com/" target="_blank" rel="noopener noreferrer"><span class="emoji">📝</span>Medium</a>
+                <a class="btn" href="https://julsimon.substack.com/" target="_blank" rel="noopener noreferrer"><span class="emoji">📧</span>Substack</a>
+                <a class="btn" href="https://x.com/julsimon" target="_blank" rel="noopener noreferrer"><span class="emoji">🐦</span>Twitter (X)</a>
+                <a class="btn" href="https://youtube.com/juliensimonfr" target="_blank" rel="noopener noreferrer"><span class="emoji">📺</span>YouTube</a>
+                <a class="btn" href="https://fr.slideshare.net/JulienSIMON5/presentations" target="_blank" rel="noopener noreferrer"><span class="emoji">📊</span>Slideshare</a>
+            </div>
+        </div>
+    </header>
+    
+    <nav class="nav-tabs" role="navigation" aria-label="Main navigation">
+        <a href="../../../index.html" class="nav-tab">Home</a>
+        <a href="../../../experience.html" class="nav-tab">Experience</a>
+        <a href="../../../speaking.html" class="nav-tab">Speaking</a>
+        <a href="../../../publications.html" class="nav-tab">Publications</a>
+        <a href="../../../code.html" class="nav-tab">Code</a>
+        <a href="../../../youtube.html" class="nav-tab">YouTube</a>
+        <a href="../../../books.html" class="nav-tab">Books</a>
+        <a href="../../../computers.html" class="nav-tab">Computers, UNIX, and Me</a>
+        <a href="../../../legacy-posts.html" class="nav-tab active">Legacy Posts</a>
+    </nav>
+    
+    <main class="container" id="main-content">
+        <section class="year-hero">
+            <h1>2009</h1>
+            <p>Blog posts and technical articles from 2009</p>
+            
+            <div class="year-stats">
+                <div class="stat">11 Posts</div>
+                <div class="stat">Jan - Apr 2009</div>
+                <div class="stat">Multimedia & Encoding Focus</div>
+            </div>
+        </section>
+        
+        <section class="year-summary">
+            <h2>Posts from 2009</h2>
+            <p>Deep technical explorations into multimedia processing, video encoding optimization, and system administration. Heavy focus on VLC, x264, MediaTomb, and PS3 compatibility.</p>
+        </section>
+        
+        <section class="posts-grid">
+            <article class="post-card">
+                <header class="post-header">
+                    <div class="post-date">April 3, 2009</div>
+                    <h3 class="post-title">
+                        <a href="2009-04-03-howto-compiling-vlc-099-live555-all-major-codecs-on-ubuntu-810.html">How To: Compiling VLC 0.9.9 + Live555 + All Major Codecs on Ubuntu 8.10</a>
+                    </h3>
+                </header>
+                <p class="post-excerpt">
+                    Advanced compilation guide for VLC media player with Live555 streaming support and comprehensive codec collection on Ubuntu 8.10.
+                </p>
+                <a href="2009-04-03-howto-compiling-vlc-099-live555-all-major-codecs-on-ubuntu-810.html" class="post-link">
+                    Read Post →
+                </a>
+            </article>
+
+            <article class="post-card">
+                <header class="post-header">
+                    <div class="post-date">January 23, 2009</div>
+                    <h3 class="post-title">
+                        <a href="2009-01-23-howto-h264-youtube-videos-in-mediatomb-no-more-transcoding-for-ps3.html">How To: H.264 YouTube Videos in MediaTomb - No More Transcoding for PS3</a>
+                    </h3>
+                </header>
+                <p class="post-excerpt">
+                    Optimization guide for serving H.264 YouTube videos through MediaTomb to PlayStation 3 without expensive transcoding processes.
+                </p>
+                <a href="2009-01-23-howto-h264-youtube-videos-in-mediatomb-no-more-transcoding-for-ps3.html" class="post-link">
+                    Read Post →
+                </a>
+            </article>
+
+            <article class="post-card">
+                <header class="post-header">
+                    <div class="post-date">January 19, 2009</div>
+                    <h3 class="post-title">
+                        <a href="2009-01-19-howto-building-evolution-on-ubuntu-810-to-fix-imap-slowness.html">How To: Building Evolution on Ubuntu 8.10 to Fix IMAP Slowness</a>
+                    </h3>
+                </header>
+                <p class="post-excerpt">
+                    Custom compilation of Evolution email client on Ubuntu 8.10 to address IMAP performance issues and improve email synchronization.
+                </p>
+                <a href="2009-01-19-howto-building-evolution-on-ubuntu-810-to-fix-imap-slowness.html" class="post-link">
+                    Read Post →
+                </a>
+            </article>
+
+            <article class="post-card">
+                <header class="post-header">
+                    <div class="post-date">January 16, 2009</div>
+                    <h3 class="post-title">
+                        <a href="2009-01-16-howto-processing-multichannel-audio-dts-ac3-wav.html">How To: Processing Multichannel Audio (DTS, AC3, WAV)</a>
+                    </h3>
+                </header>
+                <p class="post-excerpt">
+                    Technical guide for handling multichannel audio formats including DTS, AC3, and high-quality WAV files with various processing tools.
+                </p>
+                <a href="2009-01-16-howto-processing-multichannel-audio-dts-ac3-wav.html" class="post-link">
+                    Read Post →
+                </a>
+            </article>
+
+            <article class="post-card">
+                <header class="post-header">
+                    <div class="post-date">January 12, 2009</div>
+                    <h3 class="post-title">
+                        <a href="2009-01-12-press-release-digiplug-selects-telecity-group-for-its-digital-asset-management-platform.html">Press Release: DigiPlug Selects TeleCity Group for Its Digital Asset Management Platform</a>
+                    </h3>
+                </header>
+                <p class="post-excerpt">
+                    Corporate announcement regarding DigiPlug's partnership with TeleCity Group for digital asset management and infrastructure services.
+                </p>
+                <a href="2009-01-12-press-release-digiplug-selects-telecity-group-for-its-digital-asset-management-platform.html" class="post-link">
+                    Read Post →
+                </a>
+            </article>
+
+            <article class="post-card">
+                <header class="post-header">
+                    <div class="post-date">January 10, 2009</div>
+                    <h3 class="post-title">
+                        <a href="2009-01-10-x264-benchmarks-individual-flags-motion-estimation.html">x264 Benchmarks: Individual Flags Motion Estimation</a>
+                    </h3>
+                </header>
+                <p class="post-excerpt">
+                    Comprehensive benchmarking analysis of x264 encoder flags focusing on motion estimation algorithms and their performance impact.
+                </p>
+                <a href="2009-01-10-x264-benchmarks-individual-flags-motion-estimation.html" class="post-link">
+                    Read Post →
+                </a>
+            </article>
+
+            <article class="post-card">
+                <header class="post-header">
+                    <div class="post-date">January 10, 2009</div>
+                    <h3 class="post-title">
+                        <a href="2009-01-10-howto-converting-mkv-files-to-play-on-the-ps3.html">How To: Converting MKV Files to Play on the PS3</a>
+                    </h3>
+                </header>
+                <p class="post-excerpt">
+                    Step-by-step guide for converting Matroska (MKV) video files to formats compatible with PlayStation 3 gaming console.
+                </p>
+                <a href="2009-01-10-howto-converting-mkv-files-to-play-on-the-ps3.html" class="post-link">
+                    Read Post →
+                </a>
+            </article>
+
+            <article class="post-card">
+                <header class="post-header">
+                    <div class="post-date">January 7, 2009</div>
+                    <h3 class="post-title">
+                        <a href="2009-01-07-howto-ffmpeg-x264-presets.html">How To: FFmpeg x264 Presets</a>
+                    </h3>
+                </header>
+                <p class="post-excerpt">
+                    Configuration guide for optimizing FFmpeg with x264 encoding presets for various quality and performance requirements.
+                </p>
+                <a href="2009-01-07-howto-ffmpeg-x264-presets.html" class="post-link">
+                    Read Post →
+                </a>
+            </article>
+
+            <article class="post-card">
+                <header class="post-header">
+                    <div class="post-date">January 5, 2009</div>
+                    <h3 class="post-title">
+                        <a href="2009-01-05-french-scrum-user-group.html">French Scrum User Group</a>
+                    </h3>
+                </header>
+                <p class="post-excerpt">
+                    Introduction to the French Scrum User Group community and agile development practices in the French technology ecosystem.
+                </p>
+                <a href="2009-01-05-french-scrum-user-group.html" class="post-link">
+                    Read Post →
+                </a>
+            </article>
+
+            <article class="post-card">
+                <header class="post-header">
+                    <div class="post-date">January 5, 2009</div>
+                    <h3 class="post-title">
+                        <a href="2009-01-05-do-not-scream-at-your-hard-drives.html">Do Not Scream at Your Hard Drives</a>
+                    </h3>
+                </header>
+                <p class="post-excerpt">
+                    Humorous yet practical advice on hard drive care, data backup strategies, and avoiding storage-related disasters.
+                </p>
+                <a href="2009-01-05-do-not-scream-at-your-hard-drives.html" class="post-link">
+                    Read Post →
+                </a>
+            </article>
+
+            <article class="post-card">
+                <header class="post-header">
+                    <div class="post-date">January 4, 2009</div>
+                    <h3 class="post-title">
+                        <a href="2009-01-04-howto-compiling-mediainfo-cli-gui-on-ubuntu.html">How To: Compiling MediaInfo CLI + GUI on Ubuntu</a>
+                    </h3>
+                </header>
+                <p class="post-excerpt">
+                    Compilation guide for MediaInfo command-line and graphical user interface tools on Ubuntu for comprehensive media file analysis.
+                </p>
+                <a href="2009-01-04-howto-compiling-mediainfo-cli-gui-on-ubuntu.html" class="post-link">
+                    Read Post →
+                </a>
+            </article>
+        </section>
+        
+        <nav class="navigation">
+            <a href="../index.html" class="nav-link">
+                ← All Years
+            </a>
+            <div class="stat">
+                <strong>11</strong> posts in 2009
+            </div>
+            <a href="../../../index.html" class="nav-link secondary">
+                🏠 Home
+            </a>
+        </nav>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Julien Simon</p>
+        </div>
+    </footer>
+    
+    <script src="../../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VirtualBox: ssh to guest VMs in 30 seconds</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>VirtualBox: ssh to guest VMs in 30 seconds</h1>
+    <div class="date">Published: 2013-07-19</div>
+    <div class="content">
+        Playing with VirtualBox again... but how the hell do you ssh into NAT guests? Looks like I forgot how to do it :D &nbsp;So, for all of us memory-challenged people out there, here's how to set it up painlessly, using port forwarding from host to guest.<br />
+<br />
+In this example, I'm using a Linux Ubuntu 12.04 guest running in VirtualBox 4.2.16 on a MacOS X host, but this should be pretty generic.<br />
+<br />
+First of all, make sure your VM is stopped.<br />
+<br />
+In VirtualBox:<br />
+<ul>
+<li>Go to "<i>Settings / Network /&nbsp;</i><i>Advanced / Port Forwarding</i>"</li>
+<li>Add a new rule by clicking on the "+" icon</li>
+<ul>
+<li>Name: <i>guestssh</i></li>
+<li>Protocol: <i>TCP</i></li>
+<li>Host IP: <i>127.0.0.1</i></li>
+<li>Host port: <i>2222</i></li>
+<li>Guest IP : leave blank</li>
+<li>Guest port 22: <i>22</i></li>
+</ul>
+</ul>
+<div>
+Alternatively, or if you have a large number of VMs to tweak, you can script this:</div>
+<div>
+<br /></div>
+<div>
+On the host:</div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">$&nbsp;/usr/bin/VBoxManage list vms</span></div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">"Ubuntu 12.04" {e0cdb5d7-8079-452e-9eeb-e68824532173}</span></div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">$ /usr/bin/VBoxManage modifyvm "Ubuntu 12.04" --natpf1 "guestssh,tcp,127.0.0.1,2222,,22"</span></div>
+<div>
+<br /></div>
+<div>
+</div>
+<br />
+<div>
+That's it for VirtualBox. Now, start your VM. You need to have <i>openssh-server</i> installed on the guest. If it's not there, just type:</div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">$ sudo apt-get install openssh-server</span></div>
+<div>
+<br /></div>
+<div>
+Now, back on the host:</div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">$ ssh -p 2222 julien@127.0.0.1</span></div>
+<div>
+<div>
+<span style="font-family: Courier New, Courier, monospace;">The authenticity of host '[127.0.0.1]:2222 ([127.0.0.1]:2222)' can't be established.</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace;">RSA key fingerprint is 2d:23:96:0b:c2:56:02:40:0b:f3:fb:17:78:3b:a6:48.</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace;">Are you sure you want to continue connecting (yes/no)? yes</span></div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">Warning: Permanently added '[127.0.0.1]:2222' (RSA) to the list of known hosts.</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace;">julien@127.0.0.1's password:&nbsp;</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace;">Welcome to Ubuntu 12.04.2 LTS (GNU/Linux 3.5.0-36-generic x86_64)</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace;"><br /></span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace;">&nbsp;* Documentation: &nbsp;https://help.ubuntu.com/</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace;"><br /></span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace;">Last login: Fri Jul 19 10:22:55 2013</span></div>
+<div>
+<span style="font-family: Courier New, Courier, monospace;">julien@julien-VirtualBox:~$</span></div>
+</div>
+<div>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><br /></span></div>
+<div>
+<div>
+And, as we say in France: "voila" :)&nbsp;</div>
+</div>
+
+    </div>
+</body>
+</html>

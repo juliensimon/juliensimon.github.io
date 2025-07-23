@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installing a Minecraft server on AWS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Installing a Minecraft server on AWS</h1>
+    <div class="date">Published: 2015-12-31</div>
+    <div class="content">
+        <div class="separator" style="clear: both; text-align: center;">
+<a href="http://www.element14.com/community/servlet/JiveServlet/showImage/38-17903-210072/minecraft-banner-3_3510581_3522898.jpg" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" src="http://www.element14.com/community/servlet/JiveServlet/showImage/38-17903-210072/minecraft-banner-3_3510581_3522898.jpg" height="149" width="320" /></a></div>
+This one is for all the kids (and geek dads & moms) out there. I'm surprised I didn't get to write this sooner :)<br />
+<br />
+Running your own Minecraft server in AWS is pretty straightforward, so here goes!<br />
+<br />
+<u>1) Create an EC2 instance</u><br />
+<br />
+I've picked a t2.small instance (2 GB RAM) running the Amazon Linux AMI and costing $0.028 per hour at the time of writing. Anything smaller feels... small for a complex Java app, but you're welcome to try. Details and pricing for EC2 instances may be found <a href="https://aws.amazon.com/ec2/pricing/" target="_blank">here</a>.<br />
+<br />
+Only the security group needs to be tweaked: on top of SSH access, you also need to open a port for the server (default port is 25565). If you want to play with friends (which is kind of the point), allow access from anywhere.<br />
+<br />
+Your inbound rules should look like this:<br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="2015-12-31-installing-a-minecraft-server-on-aws-image-02.webp" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="121" src="2015-12-31-installing-a-minecraft-server-on-aws-image-02.webp" width="640" /></a></div>
+Select a key pair and launch your instance.<br />
+<br />
+<u>2) Install the Minecraft server</u><br />
+<br />
+Once you ssh'ed into your instance, it's time to select a Minecraft version. Let's retrieve the list (conveniently hosted in S3) :<br />
+<br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">$ wget https://s3.amazonaws.com/Minecraft.Download/versions/versions.json</span></span><br />
+<br />
+My customer (ok, my son) wants to run 1.8.9, so let's download and extract this version:<br />
+<br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">$ mkdir minecraft</span></span><br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">$ cd minecraft</span></span><br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">$ wget http://s3.amazonaws.com/Minecraft.Download/versions/1.8.9/minecraft_server.1.8.9.jar</span></span><br />
+<br />
+<u>3) Configure the Minecraft server</u><br />
+<br />
+Start it once:<br />
+<br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">$ java -jar minecraft_server.1.8.9.jar</span></span><br />
+<br />
+It will fail and complain about approving the user agreement (bleh). All you need to do is to edit the <span style="font-family: "Courier New",Courier,monospace;">eula.txt</span> file:<br />
+<br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">eula=true</span></span><br />
+<br />
+Feel free to edit the <a href="http://minecraft.gamepedia.com/Server.properties">server.properties</a> file to add your favorite settings.<br />
+<br />
+&nbsp;<u>4) Start the Minecraft server</u><br />
+<br />
+The best way to start a long-running server without losing access to the console is to use <a href="https://www.gnu.org/software/screen/"><i>screen</i></a>. <a href="https://www.rackaid.com/blog/linux-screen-tutorial-and-how-to/">Here</a> is a simple tutorial.<br />
+<br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">$ sudo yum install screen -y</span></span><br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">$ screen java -jar minecraft_server.1.8.9.jar</span></span><br />
+<br />
+Your server is running, congratulations. You should be able to connect to it using the Minecraft client.<br />
+<br />
+In the console, you will see players joining and leaving the game, as well as their UUID, e.g.:<br />
+<br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">[17:08:11] [User Authenticator #1/INFO]: UUID of player _____Dante_____ is xxxxxxxx-xxxx-xxxx-xxxx-</span><span style="font-family: "Courier New",Courier,monospace;">xxxxxxxxxxxx</span></span><br />
+<br />
+This UUID is useful to declare players as operators in <span style="font-family: "Courier New",Courier,monospace;">ops.json</span>:<br />
+<br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">$ cat ops.json<br />[<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; "uuid": "</span><span style="font-family: "Courier New",Courier,monospace;"><span style="font-family: "Courier New",Courier,monospace;">xxxxxxxx-xxxx-xxxx-xxxx-</span><span style="font-family: "Courier New",Courier,monospace;">xxxxxxxxxxxx</span>",<br />&nbsp;&nbsp;&nbsp; "name": "_____Dante_____",<br />&nbsp;&nbsp;&nbsp; "level": 4<br />&nbsp; }</span></span><br />
+<span style="font-size: small;"><span style="font-family: "Courier New",Courier,monospace;">]</span></span><br />
+<br />
+That's it. Don't forget to detach from your server before ending your SSH session, or it will be killed (hint: CTRL-A D). And don't forget to stop the instance when you're not playing, it will save you money :)<br />
+<br />
+Have a nice game and happy New Year!<br />
+<br />
+    </div>
+</body>
+</html>

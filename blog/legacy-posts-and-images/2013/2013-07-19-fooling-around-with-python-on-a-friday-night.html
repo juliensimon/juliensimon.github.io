@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fooling around with Python on a Friday night</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fooling around with Python on a Friday night</h1>
+    <div class="date">Published: 2013-07-19</div>
+    <div class="content">
+        Browsing and listening to my LP collection... and updating the corresponding Excel file because, well, I have quite a lot of stuff and I can't remember it all when I'm hitting the record stores :D<br />
+<div>
+<div>
+<br /></div>
+<div>
+<div>
+And then I asked myself, why not write a short program to parse and search this file? A totally pointless little hack, the way I like them. It's too warm to sleep anyway... and "can you still do it, old man?" says the devil on my shoulder.</div>
+<div>
+<br /></div>
+<div>
+CSV file, one line per record: sounds like a Python job, baby.<br />
+<br />
+<i>A little while - and quite a bit of profanity - later...</i><br />
+<br />
+<span style="font-family: 'Courier New', Courier, monospace; font-size: x-small;">import codecs</span></div>
+<div>
+<div style="orphans: auto; text-align: start; text-indent: 0px; widows: auto;">
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><br /></span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">def loadRecords(filename, delimiter):</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; "Load record collection into a dictionary of dictionaries"</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; records = {}</span></div>
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; # The most painful line in this program. F..k you Excel!</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; reader = codecs.open(filename, 'r', encoding='ISO-8859-1')</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; key=0</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; for line in reader:</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; row=line.split(delimiter)</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # Some dates are missing or are not integers. Oops :)</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; try:</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; year = int(row[5])</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; except:</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # 1970 is the year Black Sabbath released their 1st album</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # How's that for a default date, huh?</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; year = 1970</span><span style="font-family: 'Courier New', Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp;&nbsp;</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; records[key] = {'band':row[0], 'album':row[1], 'year':year}</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; key=key+1</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; return records</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><br /></span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">def findRecords(collection, band, startYear=1900, endYear=2013):</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; "Find records by band and year range"</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; for key in collection:</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; current = collection[key]</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (current['band'] == band) & ((current['year']) in range(startYear,endYear)):</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; print (band, current['album'], current['year'])</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: 'Courier New', Courier, monospace; font-size: x-small;">myCollection = loadRecords("records.csv",";")</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">findRecords(myCollection, "ANATHEMA")</span></div>
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; text-transform: none; white-space: normal; word-spacing: 0px;">
+<div style="margin: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">findRecords(myCollection, "AMON AMARTH", 2002)</span></div>
+</div>
+<div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; margin: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">findRecords(myCollection, "OPETH", 2004, 2008)</span></div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; margin: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;"><br /></span></div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; margin: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">
+</div>
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px;">
+</div>
+<br />
+You want to see the output, huh? All right:</div>
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">ANATHEMA The crestfallen E.P. 1992</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">ANATHEMA They die 1992</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">ANATHEMA We are the bible 1994</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">AMON AMARTH Fate of norns 2004</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">AMON AMARTH Twilight of the thunder god 2008</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">AMON AMARTH Versus the world 2002</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">OPETH Ghost reveries 2005</span><br />
+<span style="font-family: Courier New, Courier, monospace; font-size: x-small;">OPETH Orchid 2004</span><br />
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: Times; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; margin: 0px; text-transform: none; white-space: normal; word-spacing: 0px;">
+<br /></div>
+Python is definitely a cool language. I'm sure this code could be perfected and I've also got more feature ideas now... but that's it for today. And yeah, I can still do it ;)</div>
+</div>
+</div>
+</div>
+
+    </div>
+</body>
+</html>

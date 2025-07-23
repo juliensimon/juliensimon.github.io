@@ -114,6 +114,12 @@ A high-performance, SEO-optimized personal website for Julien Simon, Chief Evang
 - **JavaScript (ES6+)**: Modern JavaScript features
 - **Service Worker**: Offline capabilities
 
+### Content Management
+- **Blog Archive**: 90 legacy posts (2008-2016) with full-text search
+- **Python Scripts**: Automated blog processing and organization
+- **WebP Images**: Optimized image formats for better performance
+- **Static Generation**: Self-contained HTML files with embedded CSS
+
 ### Performance Tools
 - **Performance Observer**: Real-time monitoring
 - **Intersection Observer**: Efficient lazy loading
@@ -185,6 +191,9 @@ augmented-website/
 ├── youtube.html           # YouTube videos
 ├── books.html             # Book collection
 ├── computers.html         # Vintage computer collection
+├── blog/
+│   └── legacy-posts-and-images/  # Legacy blog archive (90 posts, 2008-2016)
+├── scripts/               # Blog processing scripts
 ├── css/
 │   └── styles.css         # Main stylesheet
 ├── js/

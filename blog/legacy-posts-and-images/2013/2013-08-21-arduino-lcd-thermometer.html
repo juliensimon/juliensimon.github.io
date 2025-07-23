@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino: LCD thermometer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        img {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            clear: both;
+        }
+        
+        /* Override any inline float styles on image links */
+        a[style*="float"] {
+            float: none !important;
+            clear: both !important;
+            display: block !important;
+            text-align: center !important;
+            margin: 1.5rem auto !important;
+        }
+        
+        /* Center image containers */
+        .separator {
+            text-align: center !important;
+            clear: both !important;
+            margin: 1.5rem 0 !important;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Arduino: LCD thermometer</h1>
+    <div class="date">Published: 2013-08-21</div>
+    <div class="content">
+        <a href="2013-08-21-arduino-lcd-thermometer-image-01.webp" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" src="2013-08-21-arduino-lcd-thermometer-image-01.webp" height="320" width="188" /></a>I am truly and utterly in love with the <a href="http://arduino.cc/">Arduino project</a>. There is no simpler and easier way to learn both programming and electronics. Believe me, the smartest gift for a 12-year old kid today is a C beginner book (<a href="http://www.amazon.com/gp/product/1430247762/ref=as_li_qf_sp_asin_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1430247762&linkCode=as2&tag=blog017f-20%22%3EBeginning%20C%20for%20Arduino:%20Learn%20C%20Programming%20for%20the%20Arduino%3C/a%3E%3Cimg%20src=%22http://ir-na.amazon-adsystem.com/e/ir?t=blog017f-20&l=as2&o=1&a=1430247762%22%20width=%221%22%20height=%221%22%20border=%220%22%20alt=%22%22%20style=%22border:none%20!important;%20margin:0px%20!important;%22%20/%3E">"<i>Beginning C with Arduino</i>"</a> is a perfect fit: read and approved!), an Arduino <a href="http://arduino.cc/en/Main/ArduinoStarterKit">starter kit</a> and some guidance to get going. If this had been around 30 years ago, a lot of innocent components would have been spared an untimely death at my n00b hands :D<br />
+<br />
+I usually practice what I preach, so my own kids (10 and 12) are on their way. I can't believe how fast they learn, you should see reading schematics, wiring at light speed and correcting my fat finger mistakes: "<i>Dad, you got this one wrong, it must go to the ground</i>". Awesome.<br />
+<br />
+Anyway, here's a cool little project I've built once I could actually lay my hands on the board again. This is a mix between two projects included in the starter kit, i.e. the <a href="https://www.youtube.com/watch?v=RJPKuGF4lRE">Love-o-meter</a> (temperature sensor) and the <a href="https://www.youtube.com/watch?v=TirVG6tmTnQ">Crystal Ball</a> (LCD screen). <a href="http://fritzing.org/">Fritzing</a> schematic and code are on&nbsp;<a href="https://github.com/juliensimon/Arduino/tree/master/LCD_Temp">GitHub</a>.<br />
+<br />
+The TMP36 temperature sensor is connected to analog input A0. Its value is read every second by the program. The LCD screen is wired like in the Crystal Ball project, with a potentiometer to adjust brightness.<br />
+<br />
+To avoid displaying "jumpy" temperatures, I'm storing and averaging the last 256 samples. This is implemented using a simple array-based circular buffer. Once the average temperature has been computed, it's displayed on the LCD screen.<br />
+<br />
+A couple more things:<br />
+<br />
+<ul>
+<li>I'm defining a custom character (°), using a 5x7 bitmap.</li>
+<li>I'm using&nbsp;<i>dtostrf</i>() to convert a float into a string. Normally, <i>sprintf</i>() would be used, but the Arduino library doesn't provide float support in <i>sprintf</i>().</li>
+</ul>
+<br />
+Here's the full code.<br />
+<br />
+<textarea cols="80" rows="100">#define DEBUG
+
+<code>#include <LiquidCrystal.h></code>
+// initialize the library with the numbers of the interface pins
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+// custom character : ° (degree)
+byte degree[8] = {
+  B00111,
+  B00101,
+  B00111,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+};
+
+// pin the temperature sensor is connected to
+const int temperaturePin = A0;
+// number of temperature samples we want to keep
+const int TEMP_ARRAY_SIZE = 256;
+// the array where we'll keep them
+float temps[TEMP_ARRAY_SIZE];
+// next position to insert at
+int head = 0;
+// flag needed to remember if we've already wrapped around or not
+boolean wrap;
+// string to display
+char tempStr[5];
+  
+void setup() {
+<code>#ifdef DEBUG</code>
+  Serial.begin(115200);
+<code>#endif</code>
+  // set the number of columns and rows on the LCD 
+  lcd.begin(16, 2);
+  // create custom character
+  lcd.createChar(0, degree);
+  
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Temperature is ");
+}
+
+float getAverageTemp(float temperature) {
+  float averageTemp = 0;
+  int lastIndex;
+  // Add new sample
+  temps[head] = temperature;
+  // Figure out what samples to average (i.e. have we filled the array already?)
+  if (wrap) {
+    // we've already wrapped around, all samples are valid
+    lastIndex = TEMP_ARRAY_SIZE-1;
+  }
+  else {
+    // only the 'head' first samples are valid
+    lastIndex = head;
+  }
+  // compute average temperature
+  for (int i=0;i<=lastIndex;i++) {
+    averageTemp += temps[i];
+  }
+  averageTemp /= lastIndex+1;
+  // move head to next position
+  if (head == TEMP_ARRAY_SIZE-1) {
+    // wrap around
+    head = 0;
+    wrap = true;
+  }
+  else {
+    head++;
+  }
+   
+<code>#ifdef DEBUG</code>
+  Serial.print("samples: "); Serial.print(lastIndex+1);
+  Serial.print(", head: "); Serial.print(head);
+  Serial.print(", temp: "); Serial.print(temperature);
+  Serial.print(", avg temp: "); Serial.println(averageTemp);
+<code>#endif</code>
+  return averageTemp;
+}
+
+void loop() {
+  // read the analog value (0...1023) and convert it to voltage (0...5V) 
+  float voltage = (analogRead(temperaturePin)/1024.0) * 5.0;
+  // convert voltage to temperature in degrees C: 10 mV per degree, 500mV offset
+  float temperature = (voltage - 0.5) * 100;
+  // compute average temperature
+  temperature = getAverageTemp(temperature);
+  // convert to string: sprintf() doesn't support floats...
+  dtostrf(temperature, 3, 1, tempStr);
+  // display new temperature
+  lcd.setCursor(0, 1);
+  lcd.print(tempStr);
+  lcd.write(byte(0));
+  lcd.write("C");
+  // wait for 1s
+  delay(1000);
+}
+</textarea>
+
+<br />
+<br />
+Till next time... Hack at the world!
+<script type="text/javascript" src="http://wms-na.amazon-adsystem.com/20070822/US/js/link-enhancer-common.js?tag=blog017f-20">
+</script>
+<noscript>
+    <img src="http://wms-na.amazon-adsystem.com/20070822/US/img/noscript.gif?tag=blog017f-20" alt="" />
+</noscript>
+
+
+    </div>
+</body>
+</html>
