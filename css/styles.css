@@ -1502,6 +1502,58 @@ a:focus {
   background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
 }
 
+/* Featured repository card styles */
+.repo-card.featured {
+  border: 2px solid var(--primary-color);
+  background: linear-gradient(135deg, rgba(30, 64, 175, 0.02) 0%, rgba(59, 130, 246, 0.02) 100%);
+  position: relative;
+  transform: scale(1.02);
+}
+
+.repo-card.featured::before {
+  background: var(--gradient-primary);
+  opacity: 0.1;
+}
+
+.repo-card.featured:hover {
+  transform: scale(1.03) translateY(-2px);
+  box-shadow: var(--shadow-xl);
+}
+
+.repo-card.featured .repo-header h3 a {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+/* Feature tags for repositories */
+.repo-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.feature-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  transition: all var(--transition-fast);
+}
+
+.feature-tag:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
 /* Responsive adjustments for repo grid */
 @media (max-width: 768px) {
   .repo-grid {
@@ -1522,6 +1574,14 @@ a:focus {
   .repo-header h3 {
     font-size: 1.125rem;
   }
+  
+  .repo-card.featured {
+    transform: scale(1.01);
+  }
+  
+  .repo-card.featured:hover {
+    transform: scale(1.02) translateY(-1px);
+  }
 }
 
 @media (max-width: 480px) {
@@ -1536,6 +1596,15 @@ a:focus {
   .repo-language {
     font-size: 0.7rem;
     padding: 0.25rem 0.5rem;
+  }
+  
+  .repo-features {
+    gap: 0.25rem;
+  }
+  
+  .feature-tag {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
   }
 }
 
