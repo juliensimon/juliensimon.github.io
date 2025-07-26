@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>AWS DeepComposer – Now Generally Available With New Features - Julien Simon | AWS Expert</title>
+  <meta name="title" content="AWS DeepComposer – Now Generally Available With New Features - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on aws deepcomposer – now generally available with new features by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['AWS', 'DeepComposer', '–'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/aws-deepcomposer-now-generally-available-with-new-features/"/>
+  <meta property="og:title" content="AWS DeepComposer – Now Generally Available With New Features - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on aws deepcomposer – now generally available with new features by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2020-04-02T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/aws-deepcomposer-now-generally-available-with-new-features/"/>
+  <meta property="twitter:title" content="AWS DeepComposer – Now Generally Available With New Features - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on aws deepcomposer – now generally available with new features by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/aws-deepcomposer-now-generally-available-with-new-features/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "AWS DeepComposer – Now Generally Available With New Features",
+    "description": "Expert analysis and technical deep-dive on aws deepcomposer – now generally available with new features by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2020-04-02T00:00:00Z",
+    "dateModified": "2020-04-02T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/aws-deepcomposer-now-generally-available-with-new-features/"
+    },
+    "url": "https://julien.org/blog/aws-deepcomposer-now-generally-available-with-new-features/",
+    "keywords": "AWS, Amazon Web Services, ['AWS', 'DeepComposer', '–'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   AWS DeepComposer – Now Generally Available With New Features
+  </div>
+  
+  <h1>AWS DeepComposer – Now Generally Available With New Features</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-04-02 | Originally published at <a href="https://aws.amazon.com/blogs/aws/aws-deepcomposer-now-generally-available-with-new-features/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   AWS DeepComposer – Now Generally Available With New Features
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-04-02
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/aws-deepcomposer-now-generally-available-with-new-features/">
+    https://aws.amazon.com/blogs/aws/aws-deepcomposer-now-generally-available-with-new-features/
+   </a>
+  </p>
+  <p>
+   <a href="https://aws.amazon.com/deepcomposer/?&amp;trk=el_a134p000006BrTdAAK&amp;trkCampaign=2020_ML_DeepComposer_PDP&amp;sc_channel=el&amp;sc_campaign=DeepComposer_AW_Blog_campaign_landing_page&amp;sc_outcome=AIML_Digital_Marketing&amp;sc_geo=NAMER&amp;sc_country=mult">
+    AWS DeepComposer
+   </a>
+   , a creative way to get started with machine learning, was
+   <a href="https://aws.amazon.com/blogs/aws/aws-deepcomposer-compose-music-with-generative-machine-learning-models/">
+    launched
+   </a>
+   in preview at
+   <a href="https://reinvent.awsevents.com/">
+    AWS re:Invent
+   </a>
+   2019. Today, I’m extremely happy to announce that DeepComposer is now available to all AWS customers, and that it has been expanded with new features.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     A primer on AWS DeepComposer
+     <br/>
+    </span>
+   </strong>
+   If you’re new to
+   <a href="https://aws.amazon.com/deepcomposer/?&amp;trk=el_a134p000006BrTdAAK&amp;trkCampaign=2020_ML_DeepComposer_PDP&amp;sc_channel=el&amp;sc_campaign=DeepComposer_AW_Blog_campaign_landing_page&amp;sc_outcome=AIML_Digital_Marketing&amp;sc_geo=NAMER&amp;sc_country=mult">
+    AWS DeepComposer
+   </a>
+   , here’s how to get started.
+  </p>
+  <ul>
+   <li>
+    Log into the AWS DeepComposer
+    <a href="https://console.aws.amazon.com/deepcomposer/home?region=us-east-1">
+     console
+    </a>
+    .
+   </li>
+   <li>
+    Learn about the service and how it uses generative AI.
+   </li>
+   <li>
+    Record a short musical tune, using either the virtual keyboard in the console, or a physical keyboard
+    <a href="https://www.amazon.com/dp/B07YGZ4V5B">
+     available for order
+    </a>
+    on Amazon.com.
+    <strong>
+     <br/>
+    </strong>
+   </li>
+   <li>
+    Select a pretrained model for your favorite genre.
+   </li>
+   <li>
+    Use this model to generate a new polyphonic composition based on your tune.
+   </li>
+   <li>
+    Play the composition in the console.
+   </li>
+   <li>
+    Export the composition, or share it on
+    <a href="https://soundcloud.com/">
+     SoundCloud
+    </a>
+    .
+   </li>
+  </ul>
+  <p>
+   <img alt="" class="size-large wp-image-36344 aligncenter" height="359" src="image01.webp" width="1024"/>
+  </p>
+  <p>
+   Now let’s look at the new features, which make it even easier to get started with generative AI.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Learning Capsules
+    </strong>
+   </span>
+   <br/>
+   <a href="https://aws.amazon.com/deepcomposer/&amp;trk=el_a134p000006BrTdAAK&amp;trkCampaign=2020_ML_DeepComposer_PDP&amp;sc_channel=el&amp;sc_campaign=DeepComposer_AW_Blog_campaign_landing_page&amp;sc_outcome=AIML_Digital_Marketing&amp;sc_geo=NAMER&amp;sc_country=mult">
+    DeepComposer
+   </a>
+   is powered by Generative Adversarial Networks (aka GANs,
+   <a href="https://arxiv.org/abs/1406.2661">
+    research paper
+   </a>
+   ), a neural network architecture built specifically to generate new samples from an existing data set. A GAN pits two different neural networks against each other to produce original digital works based on sample inputs: with
+   <a href="https://aws.amazon.com/deepcomposer/&amp;trk=el_a134p000006BrTdAAK&amp;trkCampaign=2020_ML_DeepComposer_PDP&amp;sc_channel=el&amp;sc_campaign=DeepComposer_AW_Blog_campaign_landing_page&amp;sc_outcome=AIML_Digital_Marketing&amp;sc_geo=NAMER&amp;sc_country=mult">
+    DeepComposer
+   </a>
+   , you can train and optimize GAN models to create original music.
+  </p>
+  <p>
+   Until now, developers interested in growing skills in GANs haven’t had an easy way to get started. In order to help them regardless of their background in ML or music, we are building a collection of easy learning capsules that introduce key concepts, and how to train and evaluate GANs. This includes an hands-on lab with step-by-step instructions and code to build a GAN model.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/03/27/julsimon-deepcomposerga-1.png">
+    <img alt="" class="size-large wp-image-36347 aligncenter" height="835" loading="lazy" src="image02.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Once you’re familiar with GANs, you’ll be ready to move on to training your own model!
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     In-console Training
+    </strong>
+   </span>
+   <br/>
+   You now have the ability to train your own generative model right in the
+   <a href="https://console.aws.amazon.com/deepcomposer/home?region=us-east-1">
+    DeepComposer console
+   </a>
+   , without having to write a single line of machine learning code.
+  </p>
+  <p>
+   First, let’s select a GAN architecture:
+  </p>
+  <ul>
+   <li>
+    MuseGAN, by Hao-Wen Dong, Wen-Yi Hsiao, Li-Chia Yang and Yi-Hsuan Yang (
+    <a href="https://arxiv.org/abs/1709.06298">
+     research paper
+    </a>
+    ,
+    <a href="https://salu133445.github.io/musegan/">
+     Github
+    </a>
+    ): MuseGAN has been specifically designed for generating music. The generator in MuseGAN is composed of a shared network to learn a high level representation of the song, and a series of private networks to learn how to generate individual music tracks.
+   </li>
+   <li>
+    U-Net, by Olaf Ronneberger, Philipp Fischer and Thomas Brox (
+    <a href="https://arxiv.org/abs/1505.04597">
+     research paper
+    </a>
+    ,
+    <a href="https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/">
+     project page
+    </a>
+    ): U-Net has been extremely successful in the image translation domain (e.g. converting winter images to summer images), and it can also be used for music generation. It’s a simpler architecture than MuseGAN, and therefore easier for beginners to understand. If you’re curious what’s happening under the hood, you can learn more about the U-Net architecture in this
+    <a href="https://github.com/aws-samples/aws-deepcomposer-samples/tree/master/Lab%202">
+     Jupyter notebook
+    </a>
+    .
+   </li>
+  </ul>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/03/27/julsimon-deepcomposerga-2.png">
+    <img alt="" class="size-large wp-image-36351 aligncenter" height="547" loading="lazy" src="image03.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Let’s go with MuseGAN, and give the new model a name.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/03/27/julsimon-deepcomposerga-4.png">
+    <img alt="" class="size-large wp-image-36352 aligncenter" height="378" loading="lazy" src="image04.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Next, I just have to pick the dataset I want to train my model on.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/03/27/julsimon-deepcomposerga-3.png">
+    <img alt="" class="size-large wp-image-36353 aligncenter" height="391" loading="lazy" src="image05.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Optionally, I can also set hyperparameters (i.e. training parameters), but I’ll go with default settings this time. Finally, I click on ‘Start training’, and
+   <a href="https://aws.amazon.com/deepcomposer/?&amp;trk=el_a134p000006BrTdAAK&amp;trkCampaign=2020_ML_DeepComposer_PDP&amp;sc_channel=el&amp;sc_campaign=DeepComposer_AW_Blog_campaign_landing_page&amp;sc_outcome=AIML_Digital_Marketing&amp;sc_geo=NAMER&amp;sc_country=mult">
+    AWS DeepComposer
+   </a>
+   fires up a training job, taking care of all the infrastructure and machine learning setup for me.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/03/27/julsimon-deepcomposer-6.png">
+    <img alt="" class="size-large wp-image-36368 aligncenter" height="367" loading="lazy" src="image06.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   About 8 hours later, the model has been trained, and I can use it to generate compositions. Here, I can add the new ‘rhythm assist’ feature, that helps correct the timing of musical notes in your input, and make sure notes are in time with the beat.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/04/01/Capture-d’écran-2020-04-01-à-12.05.30.png">
+    <img alt="" class="size-large wp-image-36451 aligncenter" height="888" loading="lazy" src="image07.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Getting started
+     <br/>
+    </strong>
+   </span>
+   <a href="https://aws.amazon.com/deepcomposer/?&amp;trk=el_a134p000006BrTdAAK&amp;trkCampaign=2020_ML_DeepComposer_PDP&amp;sc_channel=el&amp;sc_campaign=DeepComposer_AW_Blog_campaign_landing_page&amp;sc_outcome=AIML_Digital_Marketing&amp;sc_geo=NAMER&amp;sc_country=mult">
+    AWS DeepComposer
+   </a>
+   is available today in the US East (N. Virginia) region.
+  </p>
+  <p>
+   The service includes a 12-month Free Tier for all AWS customers, so you can generate 500 compositions using our sample models at no cost.
+  </p>
+  <p>
+   In addition to the Free Tier,
+   <a href="https://www.amazon.com/dp/B07YGZ4V5B">
+    ordering the keyboard
+   </a>
+   from Amazon.com in the US, and linking it to the
+   <a href="https://aws.amazon.com/deepcomposer/&amp;trk=el_a134p000006BrTdAAK&amp;trkCampaign=2020_ML_DeepComposer_PDP&amp;sc_channel=el&amp;sc_campaign=DeepComposer_AW_Blog_campaign_landing_page&amp;sc_outcome=AIML_Digital_Marketing&amp;sc_geo=NAMER&amp;sc_country=mult">
+    DeepComposer
+   </a>
+   console will get you another 3 months of free trial!
+  </p>
+  <p>
+   <img alt="picture of underside of the keyboard" class="alignnone size-full wp-image-36525" height="419" loading="lazy" src="image08.webp" width="610"/>
+  </p>
+  <p>
+   Give
+   <a href="https://aws.amazon.com/deepcomposer/?&amp;trk=el_a134p000006BrTdAAK&amp;trkCampaign=2020_ML_DeepComposer_PDP&amp;sc_channel=el&amp;sc_campaign=DeepComposer_AW_Blog_campaign_landing_page&amp;sc_outcome=AIML_Digital_Marketing&amp;sc_geo=NAMER&amp;sc_country=mult">
+    AWS DeepComposer
+   </a>
+   a try, and let us know what you think! You can send your feedback through your usual AWS Support contacts, or on the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=361">
+    AWS Forum
+   </a>
+   for
+   <a href="https://aws.amazon.com/deepcomposer/&amp;trk=el_a134p000006BrTdAAK&amp;trkCampaign=2020_ML_DeepComposer_PDP&amp;sc_channel=el&amp;sc_campaign=DeepComposer_AW_Blog_campaign_landing_page&amp;sc_outcome=AIML_Digital_Marketing&amp;sc_geo=NAMER&amp;sc_country=mult">
+    DeepComposer
+   </a>
+   .
+  </p>
+  <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+   - Julien
+  </a>
+  <p>
+  </p>
+  <h6>
+   Modified 10/24/2020 – In an effort to ensure a great experience, expired links in this post have been updated or removed from the original post.
+  </h6>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

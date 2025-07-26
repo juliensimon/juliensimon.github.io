@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Amazon SageMaker Neo – Train Your Machine Learning Models Once, Run Them Anywhere - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Amazon SageMaker Neo – Train Your Machine Learning Models Once, Run Them Anywhere - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on amazon sagemaker neo – train your machine learning models once, run them anywhere by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'SageMaker', 'Neo'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/amazon-sagemaker-neo-train-your-machine-learning-models-once-run-them-anywhere/"/>
+  <meta property="og:title" content="Amazon SageMaker Neo – Train Your Machine Learning Models Once, Run Them Anywhere - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on amazon sagemaker neo – train your machine learning models once, run them anywhere by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2018-11-28T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/amazon-sagemaker-neo-train-your-machine-learning-models-once-run-them-anywhere/"/>
+  <meta property="twitter:title" content="Amazon SageMaker Neo – Train Your Machine Learning Models Once, Run Them Anywhere - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on amazon sagemaker neo – train your machine learning models once, run them anywhere by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/amazon-sagemaker-neo-train-your-machine-learning-models-once-run-them-anywhere/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Amazon SageMaker Neo – Train Your Machine Learning Models Once, Run Them Anywhere",
+    "description": "Expert analysis and technical deep-dive on amazon sagemaker neo – train your machine learning models once, run them anywhere by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2018-11-28T00:00:00Z",
+    "dateModified": "2018-11-28T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/amazon-sagemaker-neo-train-your-machine-learning-models-once-run-them-anywhere/"
+    },
+    "url": "https://julien.org/blog/amazon-sagemaker-neo-train-your-machine-learning-models-once-run-them-anywhere/",
+    "keywords": "AWS, Amazon Web Services, ['Amazon', 'SageMaker', 'Neo'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Amazon SageMaker Neo – Train Your Machine Learning Models Once, Run Them Anywhere
+  </div>
+  
+  <h1>Amazon SageMaker Neo – Train Your Machine Learning Models Once, Run Them Anywhere</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2018-11-28 | Originally published at <a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-neo-train-your-machine-learning-models-once-run-them-anywhere/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Amazon SageMaker Neo – Train Your Machine Learning Models Once, Run Them Anywhere
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2018-11-28
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-neo-train-your-machine-learning-models-once-run-them-anywhere/">
+    https://aws.amazon.com/blogs/aws/amazon-sagemaker-neo-train-your-machine-learning-models-once-run-them-anywhere/
+   </a>
+  </p>
+  <p>
+   Machine learning (ML) is split in two distinct phases: training and inference. Training deals with building the model, i.e. running a ML algorithm on a dataset in order to identify meaningful patterns. This often requires large amounts of storage and computing power, making the cloud a natural place to train ML jobs with services such as
+   <a href="https://aws.amazon.com/sagemaker">
+    Amazon SageMaker
+   </a>
+   and the
+   <a href="https://aws.amazon.com/machine-learning/amis/">
+    AWS Deep Learning AMIs
+   </a>
+   .
+  </p>
+  <p>
+   Inference deals with using the model, i.e. predicting results for data samples that the model has never seen. Here, the requirements are different: developers are typically concerned with optimizing latency (how long does a single prediction take?) and throughput (how many predictions can I run in parallel?). Of course, the hardware architecture of your prediction environment has a very significant impact on such metrics, especially if you’re dealing with resource-constrained devices: as a Raspberry Pi enthusiast, I often wish the little fellow packed a little more punch to speed up my inference code.
+  </p>
+  <p>
+   Tuning a model for a specific hardware architecture is possible, but the lack of tooling makes this an error-prone and time-consuming process. Minor changes to the ML framework or the model itself usually require the user to start all over again. Unfortunately, this forces most ML developers to deploy the same model everywhere regardless of the underlying hardware, thus missing out on significant performance gains.
+  </p>
+  <p>
+   Well, no more. Today, I’m very happy to announce
+   <a href="https://aws.amazon.com/sagemaker/neo/">
+    Amazon SageMaker Neo
+   </a>
+   , a new capability of
+   <a href="http://aws.amazon.com/sagemaker/" rel="noopener noreferrer" target="_blank">
+    Amazon SageMaker
+   </a>
+   that enables machine learning models to train once and run anywhere in the cloud and at the edge with optimal performance.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    Introducing Amazon SageMaker Neo
+   </span>
+  </p>
+  <p>
+   Without any manual intervention, Amazon SageMaker Neo optimizes models deployed on Amazon EC2 instances, Amazon SageMaker endpoints and devices managed by AWS Greengrass.
+  </p>
+  <p>
+   Here are the supported configurations:
+  </p>
+  <ul>
+   <li>
+    Frameworks and algorithms: TensorFlow, Apache MXNet, PyTorch, ONNX, and XGBoost.
+   </li>
+   <li>
+    Hardware architectures: ARM, Intel, and NVIDIA starting today, with support for Cadence, Qualcomm, and Xilinx hardware coming soon. In addition, Amazon SageMaker Neo is released as open source code under the Apache Software License, enabling hardware vendors to customize it for their processors and devices.
+   </li>
+  </ul>
+  <p>
+   The Amazon SageMaker Neo compiler converts models into an efficient common format, which is executed on the device by a compact runtime that uses less than one-hundredth of the resources that a generic framework would traditionally consume. The Amazon SageMaker Neo runtime is optimized for the underlying hardware, using specific instruction sets that help speed up ML inference.
+  </p>
+  <p>
+   This has three main benefits:
+  </p>
+  <ul>
+   <li>
+    Converted models perform at up to twice the speed, with no loss of accuracy.
+   </li>
+   <li>
+    Sophisticated models can now run on virtually any resource-limited device, unlocking innovative use cases like autonomous vehicles, automated video security, and anomaly detection in manufacturing.
+   </li>
+   <li>
+    Developers can run models on the target hardware without dependencies on the framework.
+   </li>
+  </ul>
+  <p>
+   <span style="text-decoration: underline">
+    Under the hood
+   </span>
+  </p>
+  <p>
+   Most machine learning frameworks represent a model as a computational graph: a vertex represents an operation on data arrays (tensors) and an edge represents data dependencies between operations. The Amazon SageMaker Neo compiler exploits patterns in the computational graph to apply high-level optimizations including operator fusion, which fuses multiple small operations together; constant-folding, which statically pre-computes portions of the graph to save execution costs; a static memory planning pass, which pre-allocates memory to hold each intermediate tensor; and data layout transformations, which transform internal data layouts into hardware-friendly forms. The compiler then produces efficient code for each operator.
+  </p>
+  <p>
+   Once a model has been compiled, it can be run by the Amazon SageMaker Neo runtime. This runtime takes about 1MB of disk space, compared to the 500MB-1GB required by popular deep learning libraries. An application invokes a model by first loading the runtime, which then loads the model definition, model parameters, and precompiled operations.
+  </p>
+  <p>
+   I can’t wait to try this on my Raspberry Pi. Let’s get to work.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    Downloading a pre-trained model
+    <br/>
+   </span>
+  </p>
+  <p>
+   Plenty of pre-trained models are available in the Apache MXNet
+   <a href="https://mxnet.apache.org/model_zoo/index.html">
+    ,
+   </a>
+   Gluon CV or
+   <a href="https://github.com/tensorflow/models">
+    TensorFlow
+   </a>
+   model zoos: here, I’m using a 50-layer model based on the ResNet architecture, pre-trained with Apache MXNet on the
+   <a href="http://www.image-net.org/" rel="noopener noreferrer" target="_blank">
+    ImageNet
+   </a>
+   dataset.
+  </p>
+  <p>
+   First, I’m downloading the 227MB model as well as the JSON file defining its different layers. This file is particularly important: it tells me that the input symbol is called ‘data’ and that its shape is [1, 3, 224, 224], i.e. 1 image, 3 channels (red, green and blue), 224×224 pixels. I’ll need to make sure that images passed to the model have this exact shape. The output shape is [1, 1000], i.e. a vector containing the probability for each one of the 1,000 classes present in the ImageNet dataset.
+  </p>
+  <p>
+   To define a performance baseline, I use this model and a vanilla unoptimized version of Apache MXNet 1.2 to predict a few images: on average, inference takes about 6.5 seconds and requires about 306 MB of RAM.
+  </p>
+  <p>
+   That’s pretty slow: let’s compile the model and see how fast it gets.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    Compiling the model for the Raspberry Pi
+    <br/>
+   </span>
+  </p>
+  <p>
+   First, let’s store both model files in a compressed TAR archive and upload it to an Amazon S3 bucket.
+  </p>
+  <pre><code class="lang-bash">$ tar cvfz model.tar.gz resnet50_v1-symbol.json resnet50_v1-0000.params
+a resnet50_v1-symbol.json
+a resnet50_v1-0000.paramsresnet50_v1-0000.params
+$ aws s3 cp model.tar.gz s3://jsimon-neo/
+upload: ./model.tar.gz to s3://jsimon-neo/model.tar.gz</code></pre>
+  <p>
+   Then, I just have to write a simple configuration file for my compilation job. If you’re curious about other frameworks and hardware targets, ‘
+   <em>
+    aws sagemaker create-compilation-job help
+   </em>
+   ‘ will give you the exact syntax to use.
+  </p>
+  <pre><code class="lang-json">{
+    "CompilationJobName": "resnet50-mxnet-raspberrypi",
+    "RoleArn": $SAGEMAKER_ROLE_ARN,
+    "InputConfig": {
+        "S3Uri": "s3://jsimon-neo/model.tar.gz",
+        "DataInputConfig": "{\"data\": [1, 3, 224, 224]}",
+        "Framework": "MXNET"
+    },
+    "OutputConfig": {
+        "S3OutputLocation": "s3://jsimon-neo/",
+        "TargetDevice": "rasp3b"
+    },
+    "StoppingCondition": {
+        "MaxRuntimeInSeconds": 300
+    }
+}</code></pre>
+  <p>
+   Launching the compilation process takes a single command.
+  </p>
+  <pre><code class="lang-json">$ aws sagemaker create-compilation-job \ </code></pre>
+  <pre><code class="lang-json">--cli-input-json file://job.json \</code></pre>
+  <pre><code class="lang-json"></code><code class="lang-json">--compilation-job-name resnet50-mxnet-raspberrypi 
+</code></pre>
+  <p>
+   Compilation is complete in seconds. Let’s figure out the name of the compilation artifact, fetch it from Amazon S3 and extract it locally
+  </p>
+  <pre><code class="lang-json">$ aws sagemaker describe-compilation-job \
+--compilation-job-name resnet50-mxnet-raspberrypi \
+--query "ModelArtifacts"
+{
+"S3ModelArtifacts": "s3://jsimon-neo/model-rasp3b.tar.gz"
+}
+$ aws s3 cp s3://jsimon-neo/model-rasp3b.tar.gz .
+$ tar xvfz model-rasp3b.tar.gz
+x compiled.params
+x compiled_model.json
+x compiled.so</code></pre>
+  <p>
+   As you can see, the artifact contains:
+  </p>
+  <ul>
+   <li>
+    The original model and symbol files.
+   </li>
+   <li>
+    A shared object file storing compiled, hardware-optimized, operators used by the model.
+   </li>
+  </ul>
+  <p>
+   For convenience, let’s rename them to ‘model.params’, ‘model.json’ and ‘model.so’, and then copy them on the Raspberry pi in a ‘resnet50’ directory.
+  </p>
+  <pre><code class="lang-bash">$ mkdir resnet50
+$ mv compiled.params resnet50/model.params
+$ mv compiled_model.json resnet50/model.json
+$ mv compiled.so resnet50/model.so
+$ scp -r resnet50 pi@raspberrypi.local:~</code></pre>
+  <p>
+   <span style="text-decoration: underline">
+    Setting up the inference environment on the Raspberry Pi
+   </span>
+  </p>
+  <p>
+   Before I can predict images with the model, I need to install the appropriate runtime on my Raspberry Pi. Pre-built packages are available: I just have to download the one for ‘armv7l’ architectures and to install it on my Pi with the provided script. Please note that I don’t need to install any additional deep learning framework (Apache MXNet in this case), saving up to 1GB of persistent storage.
+  </p>
+  <pre><code class="lang-bash">$ scp -r dlr-1.0-py2.py3-armv7l pi@raspberrypi.local:~
+&lt;ssh to the Pi&gt;
+$ cd dlr-1.0-py2.py3-armv7l
+$ sh ./install-py3.sh</code></pre>
+  <p>
+   We’re all set. Time to predict images!
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    Using the Amazon SageMaker Neo runtime
+   </span>
+  </p>
+  <p>
+   On the Pi, the runtime is available as a Python package named ‘dlr’ (deep learning runtime). Using it to predict images is what you would expect:
+  </p>
+  <ul>
+   <li>
+    Load the model, defining its input and output symbols.
+   </li>
+   <li>
+    Load an image.
+   </li>
+   <li>
+    Predict!
+   </li>
+  </ul>
+  <p>
+   Here’s the corresponding Python code.
+  </p>
+  <pre><code class="lang-python">import os
+import numpy as np
+from dlr import DLRModel
+
+# Load the compiled model
+input_shape = {'data': [1, 3, 224, 224]} # A single RGB 224x224 image
+output_shape = [1, 1000]                 # The probability for each one of the 1,000 classes
+device = 'cpu'                           # Go, Raspberry Pi, go!
+model = DLRModel('resnet50', input_shape, output_shape, device)
+
+# Load names for ImageNet classes
+synset_path = os.path.join(model_path, 'synset.txt')
+with open(synset_path, 'r') as f:
+    synset = eval(f.read())
+
+# Load an image stored as a numpy array
+image = np.load('dog.npy').astype(np.float32)
+print(image.shape)
+input_data = {'data': image}
+
+# Predict 
+out = model.run(input_data)
+top1 = np.argmax(out[0])
+prob = np.max(out)
+print("Class: %s, probability: %f" % (synset[top1], prob))</code></pre>
+  <p>
+   Let’s give it a try on this image. Aren’t chihuahuas and Raspberry Pis made for one another?
+  </p>
+  <pre><code class="lang-bash"><img alt="" class="size-full wp-image-26617 alignnone" height="224" src="image01.webp" width="224"/>
+
+(1, 3, 224, 224)
+Class: Chihuahua, probability: 0.901803</code></pre>
+  <p>
+   The prediction is correct, but what about speed and memory consumption? Well, this prediction takes about 0.85 second and requires about 260MB of RAM: with Amazon SageMaker Neo, it’s now 5 times faster and 15% more RAM-efficient than with a vanilla model.
+  </p>
+  <p>
+   This impressive performance gain didn’t require any complex and time-consuming work: all we had to do was to compile the model. Of course, your mileage will vary depending on models and hardware architectures, but you should see significant improvements across the board, including on Amazon EC2 instances such as the C5 or P3 families.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    Now available
+   </span>
+  </p>
+  <p>
+   I hope this post was informative. Compiling models with
+   <a href="https://aws.amazon.com/sagemaker/neo/">
+    Amazon SageMaker Neo
+   </a>
+   is free of charge, you will only pay for the underlying resource using the model (Amazon EC2 instances, Amazon SageMaker instances and devices managed by AWS Greengrass).
+  </p>
+  <p>
+   The service is generally available today in US-East (N. Virginia), US-West (Oregon), US-East (Ohio) and Europe (Ireland). Please start exploring and let us know what you think. We can’t wait to see what you will build!
+  </p>
+  <p>
+   —
+   <a href="https://twitter.com/julsimon">
+    Julien
+   </a>
+   ;
+  </p>
+  <h6>
+   Modified 11/09/2020 – In an effort to ensure a great experience, expired links in this post have been updated or removed from the original post.
+  </h6>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

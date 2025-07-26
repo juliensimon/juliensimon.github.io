@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Now Available on Amazon SageMaker: The Deep Graph Library - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Now Available on Amazon SageMaker: The Deep Graph Library - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on now available on amazon sagemaker: the deep graph library by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Now', 'Available', 'on'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/now-available-on-amazon-sagemaker-the-deep-graph-library/"/>
+  <meta property="og:title" content="Now Available on Amazon SageMaker: The Deep Graph Library - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on now available on amazon sagemaker: the deep graph library by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2019-12-03T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/now-available-on-amazon-sagemaker-the-deep-graph-library/"/>
+  <meta property="twitter:title" content="Now Available on Amazon SageMaker: The Deep Graph Library - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on now available on amazon sagemaker: the deep graph library by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/now-available-on-amazon-sagemaker-the-deep-graph-library/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Now Available on Amazon SageMaker: The Deep Graph Library",
+    "description": "Expert analysis and technical deep-dive on now available on amazon sagemaker: the deep graph library by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2019-12-03T00:00:00Z",
+    "dateModified": "2019-12-03T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/now-available-on-amazon-sagemaker-the-deep-graph-library/"
+    },
+    "url": "https://julien.org/blog/now-available-on-amazon-sagemaker-the-deep-graph-library/",
+    "keywords": "AWS, Amazon Web Services, ['Now', 'Available', 'on'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Now Available on Amazon SageMaker: The Deep Graph Library
+  </div>
+  
+  <h1>Now Available on Amazon SageMaker: The Deep Graph Library</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-12-03 | Originally published at <a href="https://aws.amazon.com/blogs/aws/now-available-on-amazon-sagemaker-the-deep-graph-library/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Now Available on Amazon SageMaker: The Deep Graph Library
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-12-03
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/now-available-on-amazon-sagemaker-the-deep-graph-library/">
+    https://aws.amazon.com/blogs/aws/now-available-on-amazon-sagemaker-the-deep-graph-library/
+   </a>
+  </p>
+  <p>
+   Today, we’re happy to announce that the
+   <a href="https://www.dgl.ai/">
+    Deep Graph Library
+   </a>
+   , an open source library built for easy implementation of graph neural networks, is now available on
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   .
+  </p>
+  <p>
+   In recent years, Deep learning has taken the world by storm thanks to its uncanny ability to extract elaborate patterns from complex data, such as free-form text, images, or videos. However, lots of datasets don’t fit these categories and are better expressed with graphs. Intuitively, we can feel that traditional neural network architectures like convolution neural networks or recurrent neural networks are not a good fit for such datasets, and a new approach is required.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     A Primer On Graph Neural Networks
+     <br/>
+    </span>
+   </strong>
+   Graph neural networks (GNN) are one of the most exciting developments in machine learning today, and these
+   <a href="https://docs.dgl.ai/tutorials/models/index.html">
+    reference papers
+   </a>
+   will get you started.
+  </p>
+  <p>
+   GNNs are used to train predictive models on datasets such as:
+  </p>
+  <ul>
+   <li>
+    Social networks, where graphs show connections between related people,
+   </li>
+   <li>
+    Recommender systems, where graphs show interactions between customers and items,
+   </li>
+   <li>
+    Chemical analysis, where compounds are modeled as graphs of atoms and bonds,
+   </li>
+   <li>
+    Cybersecurity, where graphs describe connections between source and destination IP addresses,
+   </li>
+   <li>
+    And more!
+   </li>
+  </ul>
+  <p>
+   Most of the time, these datasets are extremely large and only partially labeled. Consider a fraud detection scenario where we would try to predict the likelihood that an individual is a fraudulent actor by analyzing his connections to known fraudsters. This problem could be defined as a semi-supervised learning task, where only a fraction of graph nodes would be labeled (‘fraudster’ or ‘legitimate’). This should be a better solution than trying to build a large hand-labeled dataset, and “linearizing” it to apply traditional machine learning algorithms.
+  </p>
+  <p>
+   Working on these problems requires domain knowledge (retail, finance, chemistry, etc.), computer science knowledge (Python, deep learning, open source tools), and infrastructure knowledge (training, deploying, and scaling models). Very few people master all these skills, which is why tools like the
+   <a href="https://www.dgl.ai/">
+    Deep Graph Library
+   </a>
+   and
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   are needed.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Introducing The Deep Graph Library
+    </span>
+   </strong>
+   <br/>
+   First released on
+   <a href="https://github.com/dmlc/dgl">
+    Github
+   </a>
+   in December 2018, the
+   <a href="https://www.dgl.ai/">
+    Deep Graph Library
+   </a>
+   (DGL) is a Python open source library that helps researchers and scientists quickly build, train, and evaluate GNNs on their datasets.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/11/21/dgl1.png">
+    <img alt="" class="size-large wp-image-33411 aligncenter" height="531" src="image01.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   DGL is built on top of popular deep learning frameworks like
+   <a href="https://pytorch.org">
+    PyTorch
+   </a>
+   and
+   <a href="https://mxnet.apache.org">
+    Apache MXNet
+   </a>
+   . If you know either one or these, you’ll find yourself quite at home. No matter which framework you use, you can get started easily thanks to these beginner-friendly
+   <a href="https://docs.dgl.ai/tutorials/basics/1_first.html">
+    examples
+   </a>
+   . I also found the slides and code for the GTC 2019 workshop very useful.
+  </p>
+  <p>
+   Once you’re done with toy examples, you can start exploring the collection of
+   <a href="https://docs.dgl.ai/tutorials/models/index.html">
+    cutting edge models
+   </a>
+   already implemented in DGL. For example, you can train a document classification model using a
+   <a href="https://github.com/dmlc/dgl/tree/master/examples/pytorch/gcn">
+    Graph Convolution Network
+   </a>
+   (GCN) and the
+   <a href="https://relational.fit.cvut.cz/dataset/CORA">
+    CORA
+   </a>
+   dataset by simply running:
+  </p>
+  <p>
+   <code>
+    $ python3 train.py --dataset cora --gpu 0 --self-loop
+   </code>
+  </p>
+  <p>
+   The code for all models is available for inspection and tweaking. These implementations have been carefully validated by AWS teams, who verified performance claims and made sure results could be reproduced.
+  </p>
+  <p>
+   DGL also includes a collection of
+   <a href="https://docs.dgl.ai/en/latest/api/python/data.html">
+    graph datasets
+   </a>
+   , that you can easily download and experiment with.
+  </p>
+  <p>
+   Of course, you can install and run DGL locally, but to make your life simpler, we added it to the
+   <a href="https://aws.amazon.com/machine-learning/containers/">
+    Deep Learning Containers
+   </a>
+   for PyTorch and Apache MXNet. This makes it easy to use DGL on
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   , in order to train and deploy models at any scale, without having to manage a single server. Let me show you how.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Using DGL On Amazon SageMaker
+    </strong>
+   </span>
+   <br/>
+   We added complete examples in the Github
+   <a href="https://github.com/awslabs/amazon-sagemaker-examples">
+    repository
+   </a>
+   for
+   <span title="Amazon SageMaker">
+    SageMaker
+   </span>
+   examples: one of them trains a simple GNN for molecular toxicity prediction using the
+   <a href="https://tripod.nih.gov/tox21/challenge/">
+    Tox21
+   </a>
+   dataset.
+  </p>
+  <p>
+   The problem we’re trying to solve is figuring it the potential toxicity of new chemical compounds with respect to 12 different targets (receptors inside biological cells, etc.). As you can imagine, this type of analysis is crucial when designing new drugs, and being able to quickly predict results without having to run in vitro experiments helps researchers focus their efforts on the most promising drug candidates.
+  </p>
+  <p>
+   The dataset contains a little over 8,000 compounds: each one is modeled as a graph (atoms are vertices, atomic bonds are edges), and labeled 12 times (one label per target). Using a GNN, we’re going to build a multi-label binary classification model, allowing us to predict the potential toxicity of candidate molecules.
+  </p>
+  <p>
+   In the training script, we can easily download the dataset from the DGL collection.
+  </p>
+  <p>
+   <code>
+    from dgl.data.chem import Tox21
+   </code>
+   <br/>
+   <code>
+    dataset = Tox21()
+   </code>
+  </p>
+  <p>
+   Similarly, we can easily build a GNN classifier using the DGL
+   <a href="https://docs.dgl.ai/en/latest/api/python/model_zoo.html">
+    model zoo
+   </a>
+   .
+  </p>
+  <p>
+   <code>
+    from dgl import model_zoo
+   </code>
+   <br/>
+   <code>
+    model = model_zoo.chem.GCNClassifier(
+   </code>
+   <br/>
+   <code>
+    in_feats=args['n_input'],
+   </code>
+   <br/>
+   <code>
+    gcn_hidden_feats=[args['n_hidden'] for _ in range(args['n_layers'])],
+   </code>
+   <br/>
+   <code>
+    n_tasks=dataset.n_tasks,
+   </code>
+   <br/>
+   <code>
+    classifier_hidden_feats=args['n_hidden']).to(args['device'])
+   </code>
+  </p>
+  <p>
+   The rest of the code is mostly vanilla PyTorch, and you should be able to find your bearings if you’re familiar with this library.
+  </p>
+  <p>
+   When it comes to running this code on
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   , all we have to do is use a
+   <span title="Amazon SageMaker">
+    SageMaker
+   </span>
+   <code>
+    Estimator
+   </code>
+   , passing the full name of our DGL container, and the name of the training script as a hyperparameter.
+  </p>
+  <p>
+   <code>
+    estimator = sagemaker.estimator.Estimator(container,
+   </code>
+   <br/>
+   <code>
+    role,
+   </code>
+   <br/>
+   <code>
+    train_instance_count=1,
+   </code>
+   <br/>
+   <code>
+    train_instance_type='ml.p3.2xlarge',
+   </code>
+   <br/>
+   <code>
+    hyperparameters={'entrypoint': 'main.py'},
+   </code>
+   <br/>
+   <code>
+    sagemaker_session=sess)
+    <br/>
+    code_location = sess.upload_data(CODE_PATH,
+    <br/>
+    bucket=bucket,
+    <br/>
+    key_prefix=custom_code_upload_location)
+    <br/>
+    estimator.fit({'training-code': code_location})
+   </code>
+  </p>
+  <p>
+   <code>
+    &lt;output removed&gt;
+    <br/>
+    epoch 23/100, batch 48/49, loss 0.4684
+   </code>
+   <br/>
+   <code>
+    epoch 23/100, batch 49/49, loss 0.5389
+   </code>
+   <br/>
+   <code>
+    epoch 23/100, training roc-auc 0.9451
+   </code>
+   <br/>
+   <code>
+    EarlyStopping counter: 10 out of 10
+   </code>
+   <br/>
+   <code>
+    epoch 23/100, validation roc-auc 0.8375, best validation roc-auc 0.8495
+   </code>
+   <br/>
+   <code>
+    Best validation score 0.8495
+   </code>
+   <br/>
+   <code>
+    Test score 0.8273
+   </code>
+   <br/>
+   <code>
+    2019-11-21 14:11:03 Uploading - Uploading generated training model
+   </code>
+   <br/>
+   <code>
+    2019-11-21 14:11:03 Completed - Training job completed
+   </code>
+   <br/>
+   <code>
+    Training seconds: 209
+   </code>
+   <br/>
+   <code>
+    Billable seconds: 209
+   </code>
+  </p>
+  <p>
+   Now, we could grab the trained model in S3, and use it to predict toxicity for large number of compounds, without having to run actual experiments. Fascinating stuff!
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Now Available!
+    </strong>
+   </span>
+   <br/>
+   You can start using DGL on SageMaker today. To get started, please visit the
+   <a href="https://www.dgl.ai/pages/start.html">
+    DGL Get Started
+   </a>
+   and the
+   <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/deep-graph-libary.html">
+    DGL SageMaker documentation.
+   </a>
+  </p>
+  <p>
+   Give it a try, and please send us feedback in the DGL
+   <a href="https://discuss.dgl.ai/">
+    forum
+   </a>
+   , in the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=285">
+    AWS forum
+   </a>
+   for
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   , or through your usual AWS support contacts.
+  </p>
+  <p>
+   –
+   <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+    Julien
+   </a>
+  </p>
+  <h6>
+   Modified 2/11/2021 – In an effort to ensure a great experience, expired links in this post have been updated or removed from the original post.
+  </h6>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

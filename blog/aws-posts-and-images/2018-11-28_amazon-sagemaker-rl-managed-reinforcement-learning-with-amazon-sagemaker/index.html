@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Amazon SageMaker RL – Managed Reinforcement Learning with Amazon SageMaker - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Amazon SageMaker RL – Managed Reinforcement Learning with Amazon SageMaker - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on amazon sagemaker rl – managed reinforcement learning with amazon sagemaker by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'SageMaker', 'RL'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/amazon-sagemaker-rl-managed-reinforcement-learning-with-amazon-sagemaker/"/>
+  <meta property="og:title" content="Amazon SageMaker RL – Managed Reinforcement Learning with Amazon SageMaker - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on amazon sagemaker rl – managed reinforcement learning with amazon sagemaker by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2018-11-28T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/amazon-sagemaker-rl-managed-reinforcement-learning-with-amazon-sagemaker/"/>
+  <meta property="twitter:title" content="Amazon SageMaker RL – Managed Reinforcement Learning with Amazon SageMaker - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on amazon sagemaker rl – managed reinforcement learning with amazon sagemaker by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/amazon-sagemaker-rl-managed-reinforcement-learning-with-amazon-sagemaker/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Amazon SageMaker RL – Managed Reinforcement Learning with Amazon SageMaker",
+    "description": "Expert analysis and technical deep-dive on amazon sagemaker rl – managed reinforcement learning with amazon sagemaker by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2018-11-28T00:00:00Z",
+    "dateModified": "2018-11-28T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/amazon-sagemaker-rl-managed-reinforcement-learning-with-amazon-sagemaker/"
+    },
+    "url": "https://julien.org/blog/amazon-sagemaker-rl-managed-reinforcement-learning-with-amazon-sagemaker/",
+    "keywords": "AWS, Amazon Web Services, ['Amazon', 'SageMaker', 'RL'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Amazon SageMaker RL – Managed Reinforcement Learning with Amazon SageMaker
+  </div>
+  
+  <h1>Amazon SageMaker RL – Managed Reinforcement Learning with Amazon SageMaker</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2018-11-28 | Originally published at <a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-rl-managed-reinforcement-learning-with-amazon-sagemaker/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Amazon SageMaker RL – Managed Reinforcement Learning with Amazon SageMaker
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2018-11-28
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-rl-managed-reinforcement-learning-with-amazon-sagemaker/">
+    https://aws.amazon.com/blogs/aws/amazon-sagemaker-rl-managed-reinforcement-learning-with-amazon-sagemaker/
+   </a>
+  </p>
+  <p>
+   In the last few years, machine learning (ML) has generated a lot of excitement. Indeed, from
+   <a href="https://aws.amazon.com/blogs/machine-learning/matrix-analytics-uses-deep-learning-on-aws-to-boost-early-cancer-detection/">
+    medical image analysis
+   </a>
+   to
+   <a href="https://aws.amazon.com/machine-learning/customers/innovators/tusimple/">
+    self-driving trucks
+   </a>
+   , the list of complex tasks that ML models can successfully accomplish keeps growing, but what makes these models so smart?
+  </p>
+  <p>
+   In a nutshell, you can train a model in several different ways of which these are three:
+  </p>
+  <ol>
+   <li>
+    <strong>
+     Supervised learning
+    </strong>
+    : run an algorithm on a labelled data set, i.e. a data set containing samples and answers. Gradually, the model will learn how to correctly predict the right answer. Regression and classification are examples of supervised learning.
+   </li>
+   <li>
+    <strong>
+     Unsupervised learning
+    </strong>
+    : run an algorithm on an unlabelled data set, i.e. a data set containing samples only. Here, the model will progressively learn patterns in data and organize samples accordingly. Clustering and topic modeling are examples of unsupervised learning.
+   </li>
+   <li>
+    <strong>
+     Reinforcement learning
+    </strong>
+    : this one is quite different. Here, a computer program (aka an agent) interacts with its environment: most of the time, this takes place in a simulator. The agent receives a positive or negative reward for actions that it takes: rewards are computed by a user-defined function which outputs a numeric representation of the actions that should be incentivized. By trying to maximize positive rewards, the agent learns an optimal strategy for decision making.
+   </li>
+  </ol>
+  <p>
+   Launched at AWS re:Invent 2017, Amazon SageMaker is helping customers quickly build, train and deploy ML models. Today, with the launch of
+   <a href="https://aws.amazon.com/sagemaker/features/">
+    Amazon SageMaker RL
+   </a>
+   , we’re happy to extend the advantages of Amazon SageMaker to reinforcement learning, making it easier for all developers and data scientists regardless of their ML expertise.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    A quick primer on reinforcement learning
+   </span>
+  </p>
+  <p>
+   Reinforcement learning (RL) can sound very confusing at first, so let’s take an example. Imagine an agent learning to navigate a maze. The simulator allows it to move in certain directions but blocks it from going through walls: using RL to learn a policy, the agent soon starts to take increasingly relevant actions.
+  </p>
+  <p>
+   One critical thing to understand is that the RL model isn’t trained on a predefined set of labelled mazes (that would be supervised learning). Instead, the agent discovers its environment (the current maze) one step at at time, moves one more step and receives a reward: stepping into a dead end is a negative reward, moving one step closer to the exit is a positive reward. Once a number of different mazes have been processed, the agent learns the action/reward data points and trains a model to make better decisions next time around. This cycle of exploring and training is central to RL: given enough mazes and enough training time, we would soon enough know how to navigate any maze.
+  </p>
+  <p>
+   RL is particularly suitable for complex, unpredictable, environments that can be simulated and where building a prior dataset would either be infeasible or prohibitively expensive: autonomous vehicles, games, portfolio management, inventory management, robotics or industrial control systems. For instance, researchers have shown that applying RL-based control to HVAC systems can result in 20% – 40% cost savings compared to typical rule-based systems [1], not to mention the large reduction in ecological footprint.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    Introducing Amazon SageMaker RL
+    <br/>
+   </span>
+  </p>
+  <p>
+   Amazon SageMaker RL builds on top of Amazon SageMaker, adding pre-packaged RL toolkits and making it easy to integrate any simulation environment. As you would expect, training and prediction infrastructure is fully managed, so that you can focus on your RL problem and not on managing servers.
+  </p>
+  <p>
+   Today, you can use containers provided by SageMaker for Apache MXNet and Tensorflow that include
+   <a href="https://gym.openai.com/">
+    Open AI Gym
+   </a>
+   ,
+   <a href="https://github.com/NervanaSystems/coach">
+    Intel Coach
+   </a>
+   and
+   <a href="https://ray.readthedocs.io/en/latest/rllib.html">
+    Berkeley Ray RLLib
+   </a>
+   . As usual with Amazon SageMaker, you can easily create your own custom environment using other RL libraries such as
+   <a href="https://github.com/reinforceio/tensorforce">
+    TensorForce
+   </a>
+   or
+   <a href="https://github.com/hill-a/stable-baselines">
+    StableBaselines.
+   </a>
+  </p>
+  <p>
+   When it comes to simulation environments, Amazon SageMaker RL supports the following options:
+  </p>
+  <ul>
+   <li>
+    First party simulators for AWS RoboMaker and Amazon Sumerian.
+   </li>
+   <li>
+    Open AI Gym environments and open source simulation environments that are developed using Gym interfaces, such as
+    <a href="https://github.com/openai/roboschool">
+     Roboschool
+    </a>
+    or
+    <a href="https://energyplus.net/">
+     EnergyPlus.
+    </a>
+   </li>
+   <li>
+    Customer-developed simulation environments using the Gym interface.
+   </li>
+   <li>
+    Commercial simulators such as MATLAB and Simulink (customers will need to manage their own licenses).
+   </li>
+  </ul>
+  <p>
+   <em>
+    <strong>
+     Editors note May 18, 2022 –
+    </strong>
+    Amazon Sumerian is no longer available to new customers. Existing customers’ Sumerian data will be available until February 21, 2023. We recommend that these customers transition their existing scenes to Babylon.js where they can be published using AWS Amplify. For more information about Amazon Sumerian and tutorials on transitioning your existing scenes, please see
+    <a href="https://aws.amazon.com/sumerian/faqs/">
+     our FAQ here
+    </a>
+    .
+   </em>
+  </p>
+  <p>
+   Amazon SageMaker RL also comes with a collection of Jupyter notebooks, just like Amazon SageMaker does. They are available on
+   <a href="https://github.com/awslabs/amazon-sagemaker-examples">
+    Github,
+   </a>
+   featuring both simple examples (cartpole, simple corridor) as well as advanced ones in a variety of domains such as robotics, operations research, finance, and more. You can easily extend these notebooks and customize them for your own business problem.
+  </p>
+  <p>
+   In addition, you’ll find examples showing you how to scale RL using either homogeneous or heterogeneous scaling. The latter is particularly important for many RL applications where simulation runs on CPUs and training on GPUs. Your simulation environment can also run locally or remotely in a different network and SageMaker will set everything up for you.
+  </p>
+  <p>
+   Don’t worry, this is easier than it seems. Let’s look at an example.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    Predictive Auto Scaling with Amazon SageMaker RL
+    <br/>
+   </span>
+  </p>
+  <p>
+   Auto Scaling allows you to dynamically scale your service (such as Amazon EC2), adding or removing capacity automatically according to conditions you define. Today, this typically requires setting up thresholds, alarms, scaling policies, etc.
+  </p>
+  <p>
+   Let’s see how we could optimize this process with a RL model and a custom simulator, pretending to scale your Amazon EC2 capacity (of course, this is just a toy example). For the sake of brevity, I will only highlight the most important code snippets: you’ll find the complete example on
+   <a href="https://github.com/awslabs/amazon-sagemaker-examples">
+    Github
+   </a>
+   .
+  </p>
+  <p>
+   Here, the name of the game is to adapt the instance capacity to the load profile. We don’t want to be under-provisioned (losing traffic) or over-provisioned (wasting money): we want to be ‘just right’.
+  </p>
+  <p>
+   In RL terms:
+  </p>
+  <ul>
+   <li>
+    The environment contains the load profile and the number of running instances.
+   </li>
+   <li>
+    At each step, the agent can take two actions: add instances and remove instances. Adding instances helps process more transactions, but they cost money and need a few minutes to come online. Removing instances saves money but reduces the overall processing capacity.
+   </li>
+   <li>
+    The reward is a combination of the cost for running instances and the value for completing successful transactions, with a big penalty for insufficient capacity.
+   </li>
+  </ul>
+  <p>
+   <span style="text-decoration: underline;">
+    Setting up the simulation
+    <br/>
+   </span>
+  </p>
+  <p>
+   First, we need a simulator in order to generate load profiles similar to what you would observe on a high-traffic web server: let’s use a very simple Python program for that. Here’s an example plotting transactions per minute (tpm) over a 3-day period: mostly periodic with sharp unpredictable spikes.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2018/11/09/juliensimon-rl-autoscaling.png">
+    <img alt="Load profile" class="alignnone size-large wp-image-26016" height="430" src="image01.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   This is the initial state:
+  </p>
+  <pre><code class="lang-python">config_defaults = {
+            "warmup_latency": 5,       # It takes 5 minutes for a new machine to warm up and become available.
+            "tpm_per_machine": 300,    # Each machine can process 300 transactions per minute (tpm) on average
+            "tpm_sigma": 30,           # Machine's TPM capacity is variable with +/- 30 standard deviation
+            "machine_cost": 0.05,      # Machines cost $0.05/min
+            "transaction_val": 0.90,   # Successful transactions are worth $0.90 per thousand (CPM)
+            "downtime_cost": 200,      # Downtime is assumed to cost the business $200/min beyond incomplete transactions
+            "downtime_percent": 99.5,  # Downtime is defined as availability dropping below 99.5%
+            "initial_machines": 50,    # How many machines are initially turned on
+            "max_time_steps": 1000,    # Maximum number of timesteps per episode
+        }
+</code></pre>
+  <p>
+   <span style="text-decoration: underline;">
+    Computing the reward
+   </span>
+  </p>
+  <p>
+   This is quite straightforward! The current load is compared to the current capacity, we deduct the cost of any lost transaction and we apply a large penalty for losing more than 0.5% (a pretty strict definition of downtime!).
+  </p>
+  <pre><code class="lang-python">def _react_to_load(self):
+        self.capacity = int(self.active_machines * np.random.normal(self.tpm_per_machine, self.tpm_sigma))
+        if self.current_load &lt;= self.capacity:
+            # All transactions succeed
+            self.failed = 0
+            succeeded = self.current_load
+        else:
+            # Some transactions failed
+            self.failed = self.current_load - self.capacity
+            succeeded = self.capacity
+        reward = succeeded * self.transaction_val / 1000.0  # divide by thousand for CPM
+        percent_success = 100.0 * succeeded / (self.current_load + 1e-20)
+        if percent_success &lt; self.downtime_percent:
+            self.is_down = 1
+            reward -= self.downtime_cost
+        else:
+            self.is_down = 0
+        reward -= self.active_machines * self.machine_cost
+        return reward</code></pre>
+  <p>
+   <span style="text-decoration: underline;">
+    Stepping through the simulation
+   </span>
+  </p>
+  <p>
+   Here’s how the agent goes through each time step initiated by the RL framework. As explained above, the model will initially predict random actions, but after a few training rounds, it’ll get much smarter.
+  </p>
+  <pre><code class="lang-python">def step(self, action):
+        # First, react to the actions and adjust the fleet
+        turn_on_machines = int(action[0])
+        turn_off_machines = int(action[1])
+        self.active_machines = max(0, self.active_machines - turn_off_machines)
+        warmed_up_machines = self.warmup_queue[0]
+        self.active_machines = min(self.active_machines + warmed_up_machines, self.max_machines)
+        self.warmup_queue = self.warmup_queue[1:] + [turn_on_machines]
+        # Now react to the current load and calculate reward
+        self.current_load = self.load_simulator.time_step_load()
+        reward = self._react_to_load()
+        self.t += 1
+        done = self.t &gt; self.max_time_steps
+        return self._observation(), reward, done, {}</code></pre>
+  <p>
+   <span style="text-decoration: underline;">
+    Training on Amazon SageMaker
+    <br/>
+   </span>
+  </p>
+  <p>
+   Now, we’re ready to train our model, just like any other SageMaker model: passing the image name (here, the TensorFlow container for Intel Coach), the instance type, etc.
+  </p>
+  <pre><code class="lang-python">rlestimator = RLEstimator(role=role,
+        framework=Framework.TENSORFLOW,
+        framework_version='1.11.0',
+        toolkit=Toolkit.COACH,
+        entry_point="train-autoscale.py",
+        train_instance_count=1,
+        train_instance_type=p3.2xlarge)
+rlestimator.fit()</code><code class="lang-python"></code></pre>
+  <p>
+   In the training log, we see that the agent first explores its environment without any training: this is called the heatup phase and it's used to generate an initial dataset to learn from.
+  </p>
+  <pre><code class="lang-bash">## simple_rl_graph: Starting heatup
+Heatup&gt; Name=main_level/agent, Worker=0, Episode=1, Total reward=-39771.13, Steps=1001, Training iteration=0
+Heatup&gt; Name=main_level/agent, Worker=0, Episode=2, Total reward=-3089.54, Steps=2002, Training iteration=0
+Heatup&gt; Name=main_level/agent, Worker=0, Episode=3, Total reward=-43205.29, Steps=3003, Training iteration=0
+Heatup&gt; Name=main_level/agent, Worker=0, Episode=4, Total reward=-24542.07, Steps=4004, Training iteration=0
+...</code></pre>
+  <p>
+   Once the heatup phase is complete, the model goes through repeated cycles of learning (aka 'policy training') and exploration based on what it has learned (aka 'training').
+  </p>
+  <pre><code class="lang-bash">Policy training&gt; Surrogate loss=-0.09095033258199692, KL divergence=0.0003891458618454635, Entropy=2.8382163047790527, training epoch=0, learning_rate=0.0003
+Policy training&gt; Surrogate loss=-0.1263471096754074, KL divergence=0.00145535240881145, Entropy=2.836780071258545, training epoch=1, learning_rate=0.0003
+Policy training&gt; Surrogate loss=-0.12835979461669922, KL divergence=0.0022696126252412796, Entropy=2.835214376449585, training epoch=2, learning_rate=0.0003
+Policy training&gt; Surrogate loss=-0.12992703914642334, KL divergence=0.00254297093488276, Entropy=2.8339898586273193, training epoch=3, learning_rate=0.0003
+....
+Training&gt; Name=main_level/agent, Worker=0, Episode=152, Total reward=-54843.29, Steps=152152, Training iteration=1
+Training&gt; Name=main_level/agent, Worker=0, Episode=153, Total reward=-51277.82, Steps=153153, Training iteration=1
+Training&gt; Name=main_level/agent, Worker=0, Episode=154, Total reward=-26061.17, Steps=154154, Training iteration=1 
+</code></pre>
+  <p>
+   Once the model hits the number of epochs that we set, training is complete. In this case, we trained for 18 minutes: let's see how well our model learned.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2018/11/16/juliensimon-rl-train.png">
+    <img alt="" class="alignnone size-large wp-image-26412" height="38" loading="lazy" src="image02.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    Visualizing training
+   </span>
+  </p>
+  <p>
+   One way to find out is to plot the rewards received by the agent after each exploration iteration. As expected, rewards in the heatup phase (150 iterations) are extremely negative because the agent hasn't been trained at all. Then, as soon as training is applied, rewards start to improve rapidly.
+  </p>
+  <p>
+   <img alt="Rewards vs iterations" class="wp-image-26567 aligncenter" height="412" loading="lazy" src="image03.webp" width="640"/>
+  </p>
+  <p>
+   Here's a zoom on post-heatup iterations. As you can see, about halfway through, the agent starts receiving pretty consistent positive rewards, showing that it's able to apply efficient scaling to the load profiles that it discovers.
+  </p>
+  <p>
+   <img alt="Rewards vs iterations" class="wp-image-26568 aligncenter" height="413" loading="lazy" src="image04.webp" width="640"/>
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    Deploying the model
+   </span>
+  </p>
+  <p>
+   If we're happy with the model, we can then deploy it just like any SageMaker model and use the newly-created HTTPS endpoint to predict. Alternatively, if you are training a robot then you can also deploy on Edge devices using AWS Greengrass.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    Now available
+   </span>
+  </p>
+  <p>
+   I hope this post was informative. We've barely scratched the surface of what Amazon
+   <a href="https://aws.amazon.com/sagemaker/features/">
+    SageMaker RL
+   </a>
+   can do. You can use it today in all regions where Amazon SageMaker is available. Please start exploring and let us know what you think. We can't wait to see what you will build!
+  </p>
+  <p>
+   —
+   <a href="https://twitter.com/julsimon">
+    Julien
+   </a>
+   ;
+  </p>
+  <p>
+   <em>
+    [1] "Deep Reinforcement Learning for Building HVAC Control", T. Wei, Y. Wang and Q. Zhu, DAC'17, June 18-22, 2017, Austin, TX, USA.
+   </em>
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

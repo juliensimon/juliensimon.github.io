@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Now available in Amazon Transcribe: Automatic Redaction of Personally Identifiable Information - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Now available in Amazon Transcribe: Automatic Redaction of Personally Identifiable Information - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on now available in amazon transcribe: automatic redaction of personally identifiable information by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Now', 'available', 'in'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/now-available-in-amazon-transcribe-automatic-redaction-of-personally-identifiable-information/"/>
+  <meta property="og:title" content="Now available in Amazon Transcribe: Automatic Redaction of Personally Identifiable Information - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on now available in amazon transcribe: automatic redaction of personally identifiable information by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2020-02-26T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/now-available-in-amazon-transcribe-automatic-redaction-of-personally-identifiable-information/"/>
+  <meta property="twitter:title" content="Now available in Amazon Transcribe: Automatic Redaction of Personally Identifiable Information - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on now available in amazon transcribe: automatic redaction of personally identifiable information by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/now-available-in-amazon-transcribe-automatic-redaction-of-personally-identifiable-information/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Now available in Amazon Transcribe: Automatic Redaction of Personally Identifiable Information",
+    "description": "Expert analysis and technical deep-dive on now available in amazon transcribe: automatic redaction of personally identifiable information by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2020-02-26T00:00:00Z",
+    "dateModified": "2020-02-26T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/now-available-in-amazon-transcribe-automatic-redaction-of-personally-identifiable-information/"
+    },
+    "url": "https://julien.org/blog/now-available-in-amazon-transcribe-automatic-redaction-of-personally-identifiable-information/",
+    "keywords": "AWS, Amazon Web Services, ['Now', 'available', 'in'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Now available in Amazon Transcribe: Automatic Redaction of Personally Identifiable Information
+  </div>
+  
+  <h1>Now available in Amazon Transcribe: Automatic Redaction of Personally Identifiable Information</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-02-26 | Originally published at <a href="https://aws.amazon.com/blogs/aws/now-available-in-amazon-transcribe-automatic-redaction-of-personally-identifiable-information/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Now available in Amazon Transcribe: Automatic Redaction of Personally Identifiable Information
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-02-26
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/now-available-in-amazon-transcribe-automatic-redaction-of-personally-identifiable-information/">
+    https://aws.amazon.com/blogs/aws/now-available-in-amazon-transcribe-automatic-redaction-of-personally-identifiable-information/
+   </a>
+  </p>
+  <p>
+   <a href="https://aws.amazon.com/blogs/aws/amazon-transcribe-scalable-and-accurate-automatic-speech-recognition/">
+    Launched
+   </a>
+   at AWS re:Invent 2017,
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   is an automatic speech recognition (ASR) service that makes it easy for AWS
+   <a href="https://aws.amazon.com/transcribe/customers">
+    customers
+   </a>
+   to add speech-to-text capabilities to their applications. At the time of writing,
+   <span title="Amazon Transcribe">
+    Transcribe
+   </span>
+   supports
+   <a href="https://docs.aws.amazon.com/transcribe/latest/dg/what-is-transcribe.html">
+    31 languages
+   </a>
+   <strong>
+    ,
+   </strong>
+   6 of which can be transcribed in real-time.
+  </p>
+  <p>
+   A popular use case for
+   <span title="Amazon Transcribe">
+    Transcribe
+   </span>
+   is the automatic transcription of customer calls (call centers, telemarketing, etc.), in order to build data sets for downstream analytics and natural language processing tasks, such as sentiment analysis. Thus, any Personally Identifiable Information (PII) should be removed to protect privacy, and comply with local laws and regulations.
+  </p>
+  <p>
+   As you can imagine, doing this manually is quite tedious, time-consuming, and error-prone, which is why we’re extremely happy to announce that
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   now supports automatic redaction of PII.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Introducing Content Redaction in Amazon Transcribe
+     <br/>
+    </strong>
+   </span>
+   If instructed to do so,
+   <span title="Amazon Transcribe">
+    Transcribe
+   </span>
+   will automatically identify the following pieces of PII:
+  </p>
+  <ul>
+   <li>
+    Social Security Number,
+   </li>
+   <li>
+    Credit card/Debit card number,
+   </li>
+   <li>
+    Credit card/Debit card expiration date,
+   </li>
+   <li>
+    Credit card/Debit card CVV code,
+   </li>
+   <li>
+    Bank account number,
+   </li>
+   <li>
+    Bank routing number,
+   </li>
+   <li>
+    Debit/Credit card PIN,
+   </li>
+   <li>
+    Name,
+   </li>
+   <li>
+    Email address,
+   </li>
+   <li>
+    Phone number (10 digits),
+   </li>
+   <li>
+    Mailing address.
+   </li>
+  </ul>
+  <p>
+   They will be replaced with a ‘[PII]’ tag in the transcribed text. You also get a redaction confidence score (instead of the usual ASR score), as well as start and end timestamps. These timestamps will help you locate PII in your audio files for secure storage and sharing, or for additional audio processing to redact it at the source.
+  </p>
+  <p>
+   This feature is extremely easy to use, let’s do a quick demo.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Redacting Personal Information with Amazon Transcribe
+     <br/>
+    </span>
+   </strong>
+   First, I’ve recorded a short sound file full of personal information (of course, it’s all fake). I’m using the mp3 format here, but we recommend that you use lossless formats like FLAC or WAV for maximum accuracy.
+  </p>
+  <p>
+   Then, I upload this file to an S3 bucket using the
+   <a href="https://aws.amazon.com/cli/">
+    AWS CLI
+   </a>
+   .
+  </p>
+  <p>
+   <code>
+    $ aws s3 cp julien.mp3 s3://jsimon-transcribe-us-east-1
+   </code>
+  </p>
+  <p>
+   The next step is to transcribe this sound file using the
+   <a href="https://docs.aws.amazon.com/cli/latest/reference/transcribe/start-transcription-job.html">
+    <code>
+     StartTranscriptionJob
+    </code>
+   </a>
+   API: why not use the
+   <a href="https://aws.amazon.com/sdk-for-php/">
+    AWS SDK for PHP
+   </a>
+   this time?
+  </p>
+  <pre><code class="lang-php">&lt;?php
+require 'aws.phar';
+
+use Aws\TranscribeService\TranscribeServiceClient;
+
+$client = new TranscribeServiceClient([
+    'profile' =&gt; 'default',
+    'region' =&gt; 'us-east-1',
+    'version' =&gt; '2017-10-26'
+]);
+
+$result = $client-&gt;startTranscriptionJob([
+    'LanguageCode' =&gt; 'en-US',
+    'Media' =&gt; [
+        'MediaFileUri' =&gt; 's3://jsimon-transcribe-us-east-1/julien.mp3',
+    ],
+    'MediaFormat' =&gt; 'mp3',
+    'OutputBucketName' =&gt; 'jsimon-transcribe-us-east-1',
+    'ContentRedaction' =&gt; [
+        'RedactionType' =&gt; 'PII',
+        'RedactionOutput' =&gt; 'redacted'
+    ],
+    'TranscriptionJobName' =&gt; 'redaction'
+]);
+?&gt;</code></pre>
+  <p>
+   A single API call is really all it takes. The
+   <code>
+    RedactionOutput
+   </code>
+   parameter lets me control whether I want both the full and the redacted output, or just the redacted output. I go for the latter. Now, let’s run this script.
+  </p>
+  <p>
+   <code>
+    $ php transcribe.php
+   </code>
+  </p>
+  <p>
+   Immediately, I can see the job running in the
+   <span title="Amazon Transcribe">
+    Transcribe
+   </span>
+   console.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/11/19/transcribe1.png">
+    <img alt="" class="size-large wp-image-33147 aligncenter" height="275" src="image01.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   I could also use the
+   <a href="https://docs.aws.amazon.com/transcribe/latest/dg/API_GetTranscriptionJob">
+    GetTranscriptionJob
+   </a>
+   and
+   <a href="https://docs.aws.amazon.com/transcribe/latest/dg/API_ListTranscriptionJobs">
+    ListTranscriptionJobs
+   </a>
+   APIs to check that content redaction has been applied. Once the job is complete, I simply fetch the transcription from my S3 bucket.
+  </p>
+  <p>
+   <code>
+    $ aws s3 cp s3://jsimon-transcribe-us-east-1/redacted-redactiontest.json .
+   </code>
+  </p>
+  <p>
+   The transcription is a JSON document containing detailed information about each word. Here, I’m only interested in the full transcript, so I use a nice open source tool called
+   <a href="https://stedolan.github.io/jq/">
+    jq
+   </a>
+   to filter the document.
+  </p>
+  <p>
+   <code>
+    $ cat redacted-redactiontest.json| jq '.results.transcripts'
+   </code>
+   <br/>
+   <code>
+    [
+   </code>
+   <code>
+    {
+   </code>
+   <br/>
+   <code>
+    "transcript": "Good morning, everybody. My name is [PII], and today I feel like sharing a whole lot of personal information with you. Let's start with my Social Security number [PII]. My credit card number is [PII] And my C V V code is [PII] My bank account number is [PII] My email address is [PII], and my phone number is [PII]. Well, I think that's it. You know a whole lot about me. And I hope that Amazon transcribe is doing a good job at redacting that personal information away. Let's check."
+   </code>
+   <br/>
+   <code>
+    }
+   </code>
+   <code>
+    ]
+   </code>
+  </p>
+  <p>
+   Well done,
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   . My privacy is safe.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Now available!
+     <br/>
+    </span>
+   </strong>
+   The content redaction feature is available for US English in the following regions:
+  </p>
+  <ul>
+   <li>
+    US East (N. Virginia), US East (Ohio), US West (N. California), US West (Oregon), AWS GovCloud (US-West),
+   </li>
+   <li>
+    Canada (Central), South America (São Paulo),
+   </li>
+   <li>
+    Europe (Ireland), Europe (London), Europe (Paris), Europe (Frankfurt),
+   </li>
+   <li>
+    Middle East (Bahrain),
+   </li>
+   <li>
+    Asia Pacific (Mumbai), Asia Pacific (Hong Kong), Asia Pacific (Seoul), Asia Pacific (Singapore), Asia Pacific (Sydney), Asia Pacific (Tokyo).
+   </li>
+  </ul>
+  <p>
+   Take a look at the
+   <a href="https://aws.amazon.com/transcribe/pricing/">
+    pricing page
+   </a>
+   , give the feature a try, and please send us feedback either in the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=278">
+    AWS forum
+   </a>
+   for
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   or through your usual AWS support contacts.
+  </p>
+  <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+   - Julien
+  </a>
+  <p>
+  </p>
+  <p>
+  </p>
+  <p>
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Managed Spot Training: Save Up to 90% On Your Amazon SageMaker Training Jobs - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Managed Spot Training: Save Up to 90% On Your Amazon SageMaker Training Jobs - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on managed spot training: save up to 90% on your amazon sagemaker training jobs by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Managed', 'Spot', 'Training:'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/managed-spot-training-save-up-to-90-on-your-amazon-sagemaker-training-jobs/"/>
+  <meta property="og:title" content="Managed Spot Training: Save Up to 90% On Your Amazon SageMaker Training Jobs - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on managed spot training: save up to 90% on your amazon sagemaker training jobs by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2019-08-26T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/managed-spot-training-save-up-to-90-on-your-amazon-sagemaker-training-jobs/"/>
+  <meta property="twitter:title" content="Managed Spot Training: Save Up to 90% On Your Amazon SageMaker Training Jobs - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on managed spot training: save up to 90% on your amazon sagemaker training jobs by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/managed-spot-training-save-up-to-90-on-your-amazon-sagemaker-training-jobs/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Managed Spot Training: Save Up to 90% On Your Amazon SageMaker Training Jobs",
+    "description": "Expert analysis and technical deep-dive on managed spot training: save up to 90% on your amazon sagemaker training jobs by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2019-08-26T00:00:00Z",
+    "dateModified": "2019-08-26T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/managed-spot-training-save-up-to-90-on-your-amazon-sagemaker-training-jobs/"
+    },
+    "url": "https://julien.org/blog/managed-spot-training-save-up-to-90-on-your-amazon-sagemaker-training-jobs/",
+    "keywords": "AWS, Amazon Web Services, ['Managed', 'Spot', 'Training:'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Managed Spot Training: Save Up to 90% On Your Amazon SageMaker Training Jobs
+  </div>
+  
+  <h1>Managed Spot Training: Save Up to 90% On Your Amazon SageMaker Training Jobs</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-08-26 | Originally published at <a href="https://aws.amazon.com/blogs/aws/managed-spot-training-save-up-to-90-on-your-amazon-sagemaker-training-jobs/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Managed Spot Training: Save Up to 90% On Your Amazon SageMaker Training Jobs
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-08-26
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/managed-spot-training-save-up-to-90-on-your-amazon-sagemaker-training-jobs/">
+    https://aws.amazon.com/blogs/aws/managed-spot-training-save-up-to-90-on-your-amazon-sagemaker-training-jobs/
+   </a>
+  </p>
+  <p>
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   is a fully-managed, modular machine learning (ML) service that enables developers and data scientists to easily build, train, and deploy models at any scale. With a choice of using built-in algorithms, bringing your own, or choosing from algorithms available in
+   <a href="https://aws.amazon.com/marketplace/solutions/machinelearning/">
+    AWS Marketplace
+   </a>
+   , it’s never been easier and faster to get ML models from experimentation to scale-out production.
+  </p>
+  <p>
+   One of the key benefits of
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   is that it frees you of any infrastructure management, no matter the scale you’re working at. For instance, instead of having to set up and manage complex training clusters, you simply tell
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   which
+   <a href="https://aws.amazon.com/ec2/">
+    Amazon Elastic Compute Cloud (Amazon EC2)
+   </a>
+   instance type to use, and how many you need: the appropriate instances are then created on-demand, configured, and terminated automatically once the training job is complete. As
+   <a href="https://aws.amazon.com/sagemaker/customers/">
+    customers
+   </a>
+   have quickly understood, this means that they will never pay for idle training instances, a simple way to keep costs under control.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Introducing Managed Spot Training
+    </span>
+   </strong>
+   <br/>
+   Going one step further, we’re extremely happy to announce Managed Spot Training for
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   , a new feature based on Amazon EC2
+   <a href="https://aws.amazon.com/ec2/spot/">
+    Spot Instances
+   </a>
+   that will help you lower ML training costs by up to 90% compared to using on-demand instances in
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   .
+   <a href="https://aws.amazon.com/blogs/aws/ec2-spot-instances-and-now-how-much-would-you-pay/">
+    Launched
+   </a>
+   almost 10 years ago, Spot Instances have since been one of the cornerstones of building scalable and cost-optimized IT platforms on AWS. Starting today, not only will your
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   training jobs run on fully-managed infrastructure, they will also benefit from fully-managed cost optimization, letting you achieve much more with the same budget. Let’s dive in!
+  </p>
+  <p>
+   Managed Spot Training is available in all training configurations:
+  </p>
+  <ul>
+   <li>
+    All instance types supported by
+    <a href="https://aws.amazon.com/sagemaker/">
+     Amazon SageMaker
+    </a>
+    ,
+   </li>
+   <li>
+    All models: built-in
+    <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html">
+     algorithms
+    </a>
+    , built-in
+    <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/frameworks.html">
+     frameworks
+    </a>
+    , and custom
+    <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms.html">
+     models
+    </a>
+    ,
+   </li>
+   <li>
+    All configurations: single instance training, distributed training, and automatic
+    <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning.html">
+     model tuning
+    </a>
+    .
+   </li>
+  </ul>
+  <p>
+   Setting it up is extremely simple, as it should be when working with a fully-managed service:
+  </p>
+  <ul>
+   <li>
+    If you’re using the console, just switch the feature on.
+   </li>
+   <li>
+    If you’re working with the
+    <a href="https://github.com/aws/sagemaker-python-sdk">
+     Amazon SageMaker SDK
+    </a>
+    , just set the
+    <code>
+     train_use_spot_instances
+    </code>
+    to
+    <code>
+     true
+    </code>
+    in the
+    <code>
+     Estimator
+    </code>
+    constructor.
+   </li>
+  </ul>
+  <p>
+   That’s all it takes: do this, and you’ll save up to 90%. Pretty cool, don’t you think?
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Interruptions and Checkpointing
+     <br/>
+    </strong>
+   </span>
+   There’s an important difference when working with Managed Spot Training. Unlike on-demand training instances that are expected to be available until a training job completes, Managed Spot Training instances may be reclaimed at any time if we need more capacity.
+  </p>
+  <p>
+   With
+   <a href="https://aws.amazon.com/ec2/">
+    Amazon Elastic Compute Cloud (Amazon EC2)
+   </a>
+   Spot Instances, you would receive a
+   <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html">
+    termination notification
+   </a>
+   2 minutes in advance, and would have to take appropriate action yourself. Don’t worry, though: as
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   is a fully-managed service, it will handle this process automatically, interrupting the training job, obtaining adequate spot capacity again, and either restarting or resuming the training job. This makes Managed Spot Training particularly interesting when you’re flexible on job starting time and job duration. You can also use the
+   <code>
+    MaxWaitTimeInSeconds
+   </code>
+   parameter to control the total duration of your training job (actual training time plus waiting time).
+  </p>
+  <p>
+   To avoid restarting a training job from scratch should it be interrupted, we strongly recommend that you implement checkpointing, a technique that saves the model in training at periodic intervals. Thanks to this, you can resume a training job from a well-defined point in time, continuing from the most recent partially trained model:
+  </p>
+  <ul>
+   <li style="padding-bottom: 0.5em;">
+    Built-in frameworks and custom models: you have full control over the training code. Just make sure that you use the appropriate APIs to save model checkpoints to
+    <a href="https://aws.amazon.com/s3/">
+     Amazon Simple Storage Service (Amazon S3)
+    </a>
+    regularly, using the location you defined in the
+    <code>
+     CheckpointConfig
+    </code>
+    parameter and passed to the SageMaker
+    <code>
+     Estimator
+    </code>
+    . Please note that TensorFlow uses checkpoints by default. For other frameworks, you’ll find examples in our
+    <a href="https://github.com/awslabs/amazon-sagemaker-examples/tree/master/sagemaker-python-sdk">
+     sample notebooks
+    </a>
+    and in the
+    <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/frameworks.html">
+     documentation
+    </a>
+    .
+   </li>
+   <li>
+    Built-in algorithms: computer vision algorithms support checkpointing (
+    <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/object-detection.html">
+     Object Detection
+    </a>
+    ,
+    <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/semantic-segmentation.html">
+     Semantic Segmentation
+    </a>
+    , and very soon
+    <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/image-classification.html">
+     Image Classification
+    </a>
+    ). As they tend to train on large data sets and run for longer than other algorithms, they have a higher likelihood of being interrupted. Other built-in algorithms do not support checkpointing for now.
+   </li>
+  </ul>
+  <p>
+   Alright, enough talk, time for a quick demo!
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Training a Built-in Object Detection Model with Managed Spot Training
+    </strong>
+    <br/>
+   </span>
+   Reading from this
+   <a href="https://github.com/awslabs/amazon-sagemaker-examples/blob/master/introduction_to_amazon_algorithms/imageclassification_caltech/Image-classification-fulltraining-highlevel.ipynb">
+    sample notebook
+   </a>
+   , let’s use the AWS console to train the same job with Managed Spot Training instead of on-demand training. As explained before, I only need to take care of two things:
+  </p>
+  <ul>
+   <li>
+    Enable Managed Spot Training (obviously).
+   </li>
+   <li>
+    Set
+    <code>
+     MaxWaitTimeInSeconds
+    </code>
+    .
+   </li>
+  </ul>
+  <p>
+   First, let’s name our training job, and make sure it has appropriate
+   <a href="https://aws.amazon.com/iam/">
+    AWS Identity and Access Management (IAM)
+   </a>
+   permissions (no change).
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/08/20/julsimon-sm-spot-1.png">
+    <img alt="" class="size-large wp-image-30434 aligncenter" height="452" src="image01.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Then, I select the built-in algorithm for object detection.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/08/20/julsimon-sm-spot-2.png">
+    <img alt="" class="size-large wp-image-30435 aligncenter" height="808" loading="lazy" src="image02.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Then, I select the instance count and instance type for my training job, making sure I have enough storage for the checkpoints.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/08/20/julsimon-sm-spot-3.png">
+    <img alt="" class="size-large wp-image-30437 aligncenter" height="589" loading="lazy" src="image03.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   The next step is to set
+   <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/IC-Hyperparameter.html">
+    hyper parameters
+   </a>
+   , and I’ll use the same ones as in the notebook. I then define the location and properties of the training data set.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/08/20/julsimon-sm-spot-4.png">
+    <img alt="" class="size-large wp-image-30438 aligncenter" height="822" loading="lazy" src="image04.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   I do the same for the validation data set.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/08/09/juliensimon-sm-spot-6.png">
+    <img alt="" class="size-large wp-image-30270 aligncenter" height="605" loading="lazy" src="image05.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   I also define where model checkpoints should be saved. This is where
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   will pick them up to resume my training job should it be interrupted.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/08/20/julsimon-sm-spot-6.png">
+    <img alt="" class="size-large wp-image-30440 aligncenter" height="379" loading="lazy" src="image06.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   This is where the final model artifact should be saved.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/08/20/julsimon-sm-spot-7.png">
+    <img alt="" class="size-large wp-image-30441 aligncenter" height="298" loading="lazy" src="image07.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Good things come to those who wait! This is where I enable Managed Spot Training, configuring a very relaxed 48 hours of maximum wait time.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/08/20/julsimon-sm-spot-8.png">
+    <img alt="" class="size-large wp-image-30442 aligncenter" height="354" loading="lazy" src="image08.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   I’m done, let’s train this model. Once training is complete, cost savings are clearly visible in the console.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/08/20/julsimon-sm-spot-9.png">
+    <img alt="" class="size-large wp-image-30444 aligncenter" height="403" loading="lazy" src="image09.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   As you can see, my training job ran for 2423 seconds, but I’m only billed for 837 seconds, saving 65% thanks to Managed Spot Training! While we’re on the topic, let me explain how pricing works.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Pricing
+    </span>
+   </strong>
+   <br/>
+   A Managed Spot training job is priced for the duration for which it ran before it completed, or before it was terminated.
+  </p>
+  <p>
+   For built-in algorithms and AWS Marketplace algorithms that don’t use checkpointing, we’re enforcing a maximum training time of 60 minutes (
+   <code>
+    MaxWaitTimeInSeconds
+   </code>
+   parameter).
+  </p>
+  <p>
+   Last but not least, no matter how many times the training job restarts or resumes, you only get charged for data download time once.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Now Available!
+     <br/>
+    </span>
+   </strong>
+   This new feature is available in all regions where
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   is available, so don’t wait and start saving now!
+  </p>
+  <p>
+   As always, we’d love to hear your feedback: please post it to the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=285">
+    AWS forum
+   </a>
+   for
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   , or send it through your usual AWS contacts.
+  </p>
+  <p>
+   —
+   <a href="http://aws.amazon.com/evangelists/julien-simon" rel="noopener noreferrer" target="_blank">
+    Julien
+   </a>
+   ;
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

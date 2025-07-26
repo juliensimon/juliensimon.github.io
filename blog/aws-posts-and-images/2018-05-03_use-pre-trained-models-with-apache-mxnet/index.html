@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Use pre-trained models with Apache MXNet - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Use pre-trained models with Apache MXNet - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on use pre-trained models with apache mxnet by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Use', 'pre-trained', 'models'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/use-pre-trained-models-with-apache-mxnet/"/>
+  <meta property="og:title" content="Use pre-trained models with Apache MXNet - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on use pre-trained models with apache mxnet by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2018-05-03T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/use-pre-trained-models-with-apache-mxnet/"/>
+  <meta property="twitter:title" content="Use pre-trained models with Apache MXNet - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on use pre-trained models with apache mxnet by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/use-pre-trained-models-with-apache-mxnet/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Use pre-trained models with Apache MXNet",
+    "description": "Expert analysis and technical deep-dive on use pre-trained models with apache mxnet by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2018-05-03T00:00:00Z",
+    "dateModified": "2018-05-03T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/use-pre-trained-models-with-apache-mxnet/"
+    },
+    "url": "https://julien.org/blog/use-pre-trained-models-with-apache-mxnet/",
+    "keywords": "AWS, Amazon Web Services, ['Use', 'pre-trained', 'models'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Use pre-trained models with Apache MXNet
+  </div>
+  
+  <h1>Use pre-trained models with Apache MXNet</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2018-05-03 | Originally published at <a href="https://aws.amazon.com/blogs/machine-learning/use-pre-trained-models-with-apache-mxnet/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Use pre-trained models with Apache MXNet
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2018-05-03
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/machine-learning/use-pre-trained-models-with-apache-mxnet/">
+    https://aws.amazon.com/blogs/machine-learning/use-pre-trained-models-with-apache-mxnet/
+   </a>
+  </p>
+  <p>
+   In this blog post, I’ll show you how to use multiple pre-trained models with Apache MXNet. Why would you want to try multiple models? Why not just pick the one with the best accuracy? As we will see later in the blog post, even though these models have been trained on the same data set and optimized for maximum accuracy, they do behave slightly differently on specific images. In addition, prediction speed can vary, and that’s an important factor for many applications. By trying a few pretrained models, you have an opportunity to find a model that can be a good fit for solving your business problem.
+  </p>
+  <p>
+   First, let’s download three image classification models from the Apache MXNet
+   <a href="http://mxnet.io/model_zoo/" rel="noopener noreferrer" target="_blank">
+    model zoo
+   </a>
+   .
+  </p>
+  <ul>
+   <li>
+    <strong>
+     VGG-16
+    </strong>
+    (
+    <a href="https://arxiv.org/abs/1409.1556" rel="noopener noreferrer" target="_blank">
+     research paper
+    </a>
+    ), the 2014 classification winner at the
+    <a href="http://image-net.org/challenges/LSVRC" rel="noopener noreferrer" target="_blank">
+     ImageNet Large Scale Visual Recognition Challenge
+    </a>
+    .
+   </li>
+   <li>
+    <strong>
+     Inception v3
+    </strong>
+    (
+    <a href="https://arxiv.org/abs/1512.00567v1" rel="noopener noreferrer" target="_blank">
+     research paper
+    </a>
+    ), an evolution of GoogleNet, the 2014 winner for object detection.
+   </li>
+   <li>
+    <strong>
+     ResNet-152
+    </strong>
+    (
+    <a href="https://arxiv.org/abs/1512.03385v1" rel="noopener noreferrer" target="_blank">
+     research paper
+    </a>
+    ), the 2015 winner in multiple categories.
+   </li>
+  </ul>
+  <p>
+   For each model, we need to download two files:
+  </p>
+  <ul>
+   <li>
+    The symbol file containing the JSON definition of the neural network: layers, connections, activation functions, etc.
+   </li>
+   <li>
+    The weights file storing values for all connection weights and biases, AKA parameters, learned by the network during the training phase.
+   </li>
+  </ul>
+  <div class="hide-language">
+   <pre><code class="lang-bash"># MacOS users can easily install 'wget' with Homebrew: 'brew install wget'
+!wget http://data.dmlc.ml/models/imagenet/vgg/vgg16-symbol.json -O vgg16-symbol.json
+!wget http://data.dmlc.ml/models/imagenet/vgg/vgg16-0000.params -O vgg16-0000.params
+!wget http://data.dmlc.ml/models/imagenet/inception-bn/Inception-BN-symbol.json -O Inception-BN-symbol.json
+!wget http://data.dmlc.ml/models/imagenet/inception-bn/Inception-BN-0126.params -O Inception-BN-0000.params
+!wget http://data.dmlc.ml/models/imagenet/resnet/152-layers/resnet-152-symbol.json -O resnet-152-symbol.json
+!wget http://data.dmlc.ml/models/imagenet/resnet/152-layers/resnet-152-0000.params -O resnet-152-0000.params
+!wget http://data.dmlc.ml/models/imagenet/synset.txt -O synset.txt</code></pre>
+  </div>
+  <p>
+   Let’s take a look at the first lines of the VGG-16 symbol file. We can see the definition of the input layer (‘data’), the weights and biases for the first convolution layer. A convolution operation is defined (‘conv1_1’) as well as a Rectified Linear Unit activation function (‘relu1_1’).
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">!head -48 vgg16-symbol.json</code></pre>
+  </div>
+  <p>
+   All three models have been pre-trained on the ImageNet data set, which includes over 1.2 million pictures of objects and animals sorted in 1,000 categories. We can view these categories in the synset.txt file.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">!head -10 synset.txt
+import mxnet as mx
+import numpy as np
+import cv2, sys, time   # You can easily install OpenCV with 'pip install cv2'
+from collections import namedtuple
+from IPython.core.display import Image, display
+
+print("MXNet version: %s"  % mx.__version__)
+</code></pre>
+  </div>
+  <p>
+   Now, let’s load a model.
+  </p>
+  <p>
+   First, we have to load the weights and model description from file. MXNet calls this a checkpoint. It’s good practice to save weights after each training epoch. Once training is complete, we can look at the training log and pick the weights for the best epoch, that is, the one with the highest validation accuracy. It’s quite likely it won’t be the very last one!
+  </p>
+  <p>
+   After loading is complete, we get a
+   <em>
+    Symbol
+   </em>
+   object and the weights, AKA model parameters. We then create a new
+   <em>
+    Module
+   </em>
+   and assign it the input
+   <em>
+    Symbol
+   </em>
+   . We could select the
+   <em>
+    context
+   </em>
+   where we want to run the model: the default behavior is to use a CPU context. There are two reasons for this:
+  </p>
+  <ul>
+   <li>
+    First, this will allow you to test
+    <a href="https://s3.amazonaws.com/aws-ml-blog/artifacts/pre-trained-apache-mxnet-models/Pre-trained%2Bmodels.ipynb" rel="noopener noreferrer" target="_blank">
+     the notebook
+    </a>
+    even if your machine is not equipped with a GPU.
+   </li>
+   <li>
+    Second, we’re going to predict a single image and we don’t have any specific performance requirements. For production applications where you’d want to predict large batches of images with the best possible throughput, a GPU would definitely be the way to go.
+   </li>
+  </ul>
+  <p>
+   Then, we bind the input
+   <em>
+    Symbol
+   </em>
+   to input data. We have to call it ‘data’ because that’s its name in the input layer of the network (remember the first few lines of the JSON file).
+  </p>
+  <p>
+   Finally, we define the shape of ‘data’ as 1 x 3 x 224 x 224. 224 x 224’ is the image resolution : That’s how the model was trained. 3 is the number of channels: Red, green, and blue (in this order). 1 is the batch size: We’ll predict one image at a time.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-python">def loadModel(modelname, gpu=False):
+        sym, arg_params, aux_params = mx.model.load_checkpoint(modelname, 0)
+        arg_params['prob_label'] = mx.nd.array([0])
+        arg_params['softmax_label'] = mx.nd.array([0])
+        if gpu:
+            mod = mx.mod.Module(symbol=sym, context=mx.gpu(0))
+        else:
+            mod = mx.mod.Module(symbol=sym)
+        mod.bind(for_training=False, data_shapes=[('data', (1,3,224,224))])
+        mod.set_params(arg_params, aux_params)
+        return mod</code></pre>
+  </div>
+  <p>
+   We also need to load the 1,000 categories stored in the synset.txt file. We’ll need the actual descriptions at prediction time.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-python">def loadCategories():
+        synsetfile = open('synset.txt', 'r')
+        synsets = []
+        for l in synsetfile:
+                synsets.append(l.rstrip())
+        return synsets
+    
+synsets = loadCategories()
+print(synsets[:10])</code></pre>
+  </div>
+  <p>
+   Now let’s write a function to load an image from file. Remember that the model expects a 4-dimension
+   <em>
+    NDArray
+   </em>
+   holding the red, green, and blue channels of a single 224 x 224 image. We’re going to use the OpenCV library to build this
+   <em>
+    NDArray
+   </em>
+   from our input image.
+  </p>
+  <p>
+   Here are the steps:
+  </p>
+  <ul>
+   <li>
+    Read the image: This will return a numpy array shaped as image height, image width, and 3. It has the three channels in BGR order (blue, green, red).
+   </li>
+   <li>
+    Convert the image to RGB (red, green, blue).
+   </li>
+   <li>
+    Resize the image to 224 x 224.
+   </li>
+   <li>
+    Reshape the array from image height, image width, 3 to 3, image height, image width.
+   </li>
+   <li>
+    Add a
+    <strong>
+     fourth dimension
+    </strong>
+    and build the
+    <em>
+     NDArray
+    </em>
+    .
+   </li>
+  </ul>
+  <div class="hide-language">
+   <pre><code class="lang-python">def prepareNDArray(filename):
+        img = cv2.imread(filename)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = cv2.resize(img, (224, 224,))
+        img = np.swapaxes(img, 0, 2)
+        img = np.swapaxes(img, 1, 2)
+        img = img[np.newaxis, :]
+        array = mx.nd.array(img)
+        print(array.shape)
+        return array</code></pre>
+  </div>
+  <p>
+   Let’s take care of prediction. Our parameters are an image, a model, a list of categories, and the number of top categories we’d like to return.
+  </p>
+  <p>
+   Remember that a
+   <em>
+    Module
+   </em>
+   object must feed data to a model in
+   <strong>
+    batches
+   </strong>
+   . The common way to do this is to use a data iterator. Here, we want to predict a single image, so although we could use a data iterator, it’d probably be overkill. Instead, let’s create a named tuple, called
+   <em>
+    Batch
+   </em>
+   , which will act as a fake iterator by returning our input
+   <em>
+    NDArray
+   </em>
+   when its ‘data’ attribute is referenced.
+  </p>
+  <p>
+   After the image has been forwarded, the model outputs an
+   <em>
+    NDArray
+   </em>
+   holding 1,000 probabilities, corresponding to the 1,000 categories it has been trained on. The
+   <em>
+    NDArray
+   </em>
+   has only one line since batch size is equal to 1.
+  </p>
+  <p>
+   Let’s turn this into an array with
+   <em>
+    squeeze()
+   </em>
+   . Then, using
+   <em>
+    argsort()
+   </em>
+   , we create a second array holding the
+   <strong>
+    index
+   </strong>
+   of these probabilities sorted in
+   <strong>
+    descending order
+   </strong>
+   . Finally, we return the top n categories and their descriptions.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-python">def predict(filename, model, categories, n):
+        array = prepareNDArray(filename)
+        Batch = namedtuple('Batch', ['data'])
+        t1 = time.time()
+        model.forward(Batch([array]))
+        prob = model.get_outputs()[0].asnumpy()
+        t2 = time.time()
+        print("Predicted in %.2f microseconds" % (t2-t1))
+        prob = np.squeeze(prob)
+        sortedprobindex = np.argsort(prob)[::-1]
+        
+        topn = []
+        for i in sortedprobindex[0:n]:
+                topn.append((prob[i], categories[i]))
+        return topn</code></pre>
+  </div>
+  <p>
+   Time to put everything together. Let’s load all three models.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">gpu = False
+vgg16 = loadModel("vgg16", gpu)
+resnet152 = loadModel("resnet-152", gpu)
+inceptionv3 = loadModel("Inception-BN", gpu)
+categories = loadCategories()</code></pre>
+  </div>
+  <p>
+   Before classifying images, let’s take a closer look at some of the VGG-16 parameters we just loaded from the ‘.params’ file. First, let’s print the names of all layers.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">params = vgg16.get_params()
+
+layers = []
+for layer in params[0].keys():
+    layers.append(layer)
+    
+layers.sort()    
+print(layers)</code></pre>
+  </div>
+  <p>
+   For each layer, we see two components: the weights and the biases. Count the weights and you’ll see that there are
+   <strong>
+    sixteen
+   </strong>
+   layers: thirteen convolutional layers and three fully connected layers. Now you know why this model is called VGG-16.
+  </p>
+  <p>
+   Now let’s print the weights for the last fully connected layer.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">print(params[0]['fc8_weight'])
+</code></pre>
+  </div>
+  <p>
+   Did you notice the shape of this matrix? It’s 1000×4096. This layer contains 1,000 neurons: each of which will store the probability of the image belonging to a specific category. Each neuron is also fully connected to all 4,096 neurons in the previous layer (‘fc7’).
+  </p>
+  <p>
+   OK, enough exploring! Let’s use these models to classify our own images.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">!wget http://jsimon-public.s3.amazonaws.com/violin.jpg -O violin.jpg
+image = "violin.jpg"
+
+display(Image(filename=image))
+
+topn = 5
+print("*** VGG16")
+print(predict(image,vgg16,categories,topn))
+print("*** ResNet-152")
+print(predict(image,resnet152,categories,topn))
+print("*** Inception v3")
+print(predict(image,inceptionv3,categories,topn))</code></pre>
+  </div>
+  <p>
+   Let’s try again with a GPU context this time.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">gpu = True
+vgg16 = loadModel("vgg16", gpu)
+resnet152 = loadModel("resnet-152", gpu)
+inceptionv3 = loadModel("Inception-BN", gpu)
+
+print("*** VGG16")
+print(predict(image,vgg16,categories,topn))
+print("*** ResNet-152")
+print(predict(image,resnet152,categories,topn))
+print("*** Inception v3")
+print(predict(image,inceptionv3,categories,topn))</code></pre>
+  </div>
+  <p>
+   <strong>
+    Note
+    <em>
+     :
+    </em>
+   </strong>
+   If you get an error about GPU support, either your machine or instance is not equipped with a GPU, or you’re using a version of MXNet that hasn’t been built with GPU support (USE_CUDA=1).
+  </p>
+  <p>
+   Here are the
+   <a href="https://mxnet.incubator.apache.org/get_started/build_from_source.html" rel="noopener noreferrer" target="_blank">
+    instructions
+   </a>
+   to build MXNet from source with GPU support. Alternatively, you can also install a
+   <a href="https://mxnet.incubator.apache.org/install/index.html" rel="noopener noreferrer" target="_blank">
+    pre-built version
+   </a>
+   .
+  </p>
+  <p>
+   The difference in performance is quite noticeable: between 15x and 20x. If we predicted multiple images at the same time, the gap would widen even more due to the massive parallelism of GPU architectures.
+  </p>
+  <p>
+   Now it’s time to try your own images. Just copy them in the same folder as
+   <a href="https://s3.amazonaws.com/aws-ml-blog/artifacts/pre-trained-apache-mxnet-models/Pre-trained%2Bmodels.ipynb" rel="noopener noreferrer" target="_blank">
+    this notebook
+   </a>
+   , update the filename in the cell above and run the
+   <em>
+    predict()
+   </em>
+   calls again.
+  </p>
+  <p>
+   Have fun with pre-trained models!
+  </p>
+  <p>
+  </p>
+  <hr/>
+  <h3>
+   About the Author
+  </h3>
+  <p>
+   <img alt="" class="alignleft size-full wp-image-3134" height="115" src="image01.webp" width="100"/>
+   <strong>
+    Julien is the Artificial Intelligence &amp; Machine Learning Evangelist for EMEA
+   </strong>
+   . He focuses on helping developers and enterprises bring their ideas to life. In his spare time, he reads the works of JRR Tolkien again and again.
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

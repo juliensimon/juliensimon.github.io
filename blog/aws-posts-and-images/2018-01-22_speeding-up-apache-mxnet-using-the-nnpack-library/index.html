@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Speeding up Apache MXNet using the NNPACK library - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Speeding up Apache MXNet using the NNPACK library - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on speeding up apache mxnet using the nnpack library by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Speeding', 'up', 'Apache'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/speeding-up-apache-mxnet-using-the-nnpack-library/"/>
+  <meta property="og:title" content="Speeding up Apache MXNet using the NNPACK library - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on speeding up apache mxnet using the nnpack library by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2018-01-22T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/speeding-up-apache-mxnet-using-the-nnpack-library/"/>
+  <meta property="twitter:title" content="Speeding up Apache MXNet using the NNPACK library - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on speeding up apache mxnet using the nnpack library by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/speeding-up-apache-mxnet-using-the-nnpack-library/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Speeding up Apache MXNet using the NNPACK library",
+    "description": "Expert analysis and technical deep-dive on speeding up apache mxnet using the nnpack library by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2018-01-22T00:00:00Z",
+    "dateModified": "2018-01-22T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/speeding-up-apache-mxnet-using-the-nnpack-library/"
+    },
+    "url": "https://julien.org/blog/speeding-up-apache-mxnet-using-the-nnpack-library/",
+    "keywords": "AWS, Amazon Web Services, ['Speeding', 'up', 'Apache'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Speeding up Apache MXNet using the NNPACK library
+  </div>
+  
+  <h1>Speeding up Apache MXNet using the NNPACK library</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2018-01-22 | Originally published at <a href="https://aws.amazon.com/blogs/machine-learning/speeding-up-apache-mxnet-using-the-nnpack-library/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Speeding up Apache MXNet using the NNPACK library
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2018-01-22
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/machine-learning/speeding-up-apache-mxnet-using-the-nnpack-library/">
+    https://aws.amazon.com/blogs/machine-learning/speeding-up-apache-mxnet-using-the-nnpack-library/
+   </a>
+  </p>
+  <p>
+   Apache MXNet is an open source library developers can use to build, train, and re-use deep learning networks. In this  blog post, I’ll show you to speed up inference by using the NNPACK library. Indeed, when GPU inference is not available, adding NNPACK to Apache MXNet might be a simple option to extract more performance from your instances. As always, “your mileage may vary,” and you should always run your own tests.
+  </p>
+  <p>
+   Before we start, let’s look at some training and inference fundamentals.
+  </p>
+  <h2>
+   Training
+  </h2>
+  <p>
+   <em>
+    Training
+   </em>
+   is the step where a neural network learns how to correctly predict the right label for each sample in the data set. One batch at a time (typically from 32 to 256 samples), the data set is fed into the network, which proceeds to minimize total error by adjusting weights thanks to the
+   <a href="https://en.wikipedia.org/wiki/Backpropagation" rel="noopener noreferrer" target="_blank">
+    backpropagation
+   </a>
+   algorithm.
+  </p>
+  <p>
+   Going through the full data set is called an
+   <em>
+    epoch
+   </em>
+   . Large networks might be trained for hundreds of epochs to reach the highest accuracy possible. This might take days or even weeks. By using GPUs, with their formidable parallel processing power, training times can be significantly cut down, compared to even the most powerful of CPUs.
+  </p>
+  <h2>
+   Inference
+  </h2>
+  <p>
+   <em>
+    Inference
+   </em>
+   is the step where you actually use the trained network to predict new data samples. You could be predicting one sample at a time, for example trying to identify objects in a single picture as
+   <a href="https://aws.amazon.com/rekognition/" rel="noopener noreferrer" target="_blank">
+    Amazon Rekognition
+   </a>
+   does, or you could be predicting multiple samples at a time when processing requests coming from multiple users.
+  </p>
+  <p>
+   Of course, GPUs are equally efficient at inference. However, many systems are not able to accommodate a GPU because of cost, power consumption, or form-factor constraints. Thus, being able to run fast, CPU-based inference remains an important topic. This is where the NNPACK library comes into play because it will help us speed up CPU inference in Apache MXNet.
+  </p>
+  <h2>
+   The NNPACK Library
+  </h2>
+  <p>
+   NNPACK is an Open Source library available on
+   <a href="https://github.com/Maratyszcza/NNPACK" rel="noopener noreferrer" target="_blank">
+    GitHub
+   </a>
+   . How can it help? Well, you’ve surely read about
+   <a href="https://en.wikipedia.org/wiki/Convolutional_neural_network" rel="noopener noreferrer" target="_blank">
+    Convolution Neural Networks
+   </a>
+   . These networks are built from multiple layers applying convolution and pooling to detect features in the input image.
+  </p>
+  <p>
+   We won’t go into the actual theory in this post, but let’s just say that NNPACK implements these operations (and others, like matrix multiplication) in a highly-optimized fashion. If you’re curious about the underlying theory, please refer to the research papers mentioned by the author in this
+   <a href="https://www.reddit.com/r/MachineLearning/comments/4bswi6/nnpack_acceleration_package_for_neural_networks/" rel="noopener noreferrer" target="_blank">
+    Reddit post
+   </a>
+   .
+  </p>
+  <p>
+   NNPACK is available for Linux and MacOS X platforms. It’s optimized for the Intel x86-64 processor with the AVX2 instruction set, as well as the ARMv7 processor with the NEON instruction set and the ARM v8.
+  </p>
+  <p>
+   In this post, I use a c5.9xlarge instance running the
+   <a href="https://aws.amazon.com/marketplace/pp/B076TGJHY1?qid=1513639687120&amp;sr=0-2&amp;ref_=srh_res_product_title" rel="noopener noreferrer" target="_blank">
+    Deep Learning AMI
+   </a>
+   . Here’s what we’re going to do:
+  </p>
+  <ul>
+   <li>
+    Build NNPACK library from source.
+   </li>
+   <li>
+    Build Apache MXNet from source with NNPACK
+   </li>
+   <li>
+    Run some image classification benchmarks using a variety of networks
+   </li>
+  </ul>
+  <p>
+   Let’s get to work.
+  </p>
+  <h2>
+   Building NNPACK
+  </h2>
+  <p>
+   NNPACK uses the
+   <a href="http://ninja-build.org/" rel="noopener noreferrer" target="_blank">
+    Ninja
+   </a>
+   build tool. Unfortunately, the Ubuntu repository does not host the latest version, so we need to build it from source as well.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">cd ~
+git clone git://github.com/ninja-build/ninja.git &amp;&amp; cd ninja
+git checkout release
+./configure.py --bootstrap
+sudo cp ninja /usr/bin</code></pre>
+  </div>
+  <p>
+   Now let’s prepare the NNPACK build, following the
+   <a href="https://github.com/Maratyszcza/NNPACK" rel="noopener noreferrer" target="_blank">
+    instructions
+   </a>
+   .
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">cd ~
+sudo -H pip install --upgrade git+https://github.com/Maratyszcza/PeachPy
+sudo -H pip install --upgrade git+https://github.com/Maratyszcza/confu
+git clone https://github.com/Maratyszcza/NNPACK.git
+cd NNPACK
+confu setup
+python ./configure.py
+</code></pre>
+  </div>
+  <p>
+   Before we actually build, we need to tweak the configuration file. The reason for this is that NNPACK only builds as a static library whereas MXNET builds as a dynamic library. This means that they won’t link properly. The MXNet documentation suggests using an older version of NNPACK, but there’s another way.
+  </p>
+  <p>
+   We need to edit the build.ninja file and the ‘-fPIC’ flag, in order to build C and C++ files as position-independent code, which is really all we need to link with the MXNet shared library.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">cflags = -std=gnu99 -g -pthread -fPIC
+cxxflags = -std=gnu++11 -g -pthread -fPIC</code></pre>
+  </div>
+  <p>
+   Now, let’s build NNPACK and run some basic tests.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">ninja
+ninja smoketest</code></pre>
+  </div>
+  <p>
+   We’re done with NNPACK. You should see the library in ~/NNPACK/lib.
+  </p>
+  <h2>
+   Building Apache MXNet with NNPACK
+  </h2>
+  <p>
+   First, let’s install dependencies as well as the latest MXNet sources (1.0 at the time of writing). Detailed build instructions are available on the
+   <a href="https://mxnet.incubator.apache.org/get_started/build_from_source" rel="noopener noreferrer" target="_blank">
+    MXNet website
+   </a>
+   .
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">cd ~
+sudo apt-get install -y libopenblas-dev liblapack-dev libopencv-dev
+git clone --recursive https://github.com/apache/incubator-mxnet.git
+cd incubator-mxnet/
+git checkout 1.0.0</code></pre>
+  </div>
+  <p>
+   Now, we need to configure the MXNet build. You should edit the make/config.mk file and set the variables that follow in order to include NNPACK in the build, as well as the dependencies we installed earlier. Just copy everything at the end of the file.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">NNPACK = /home/ubuntu/NNPACK
+# the additional link flags you want to add
+ADD_LDFLAGS = -L$(NNPACK)/lib/ -lnnpack -lpthreadpool
+# the additional compile flags you want to add
+ADD_CFLAGS = -I$(NNPACK)/include/ -I$(NNPACK)/deps/pthreadpool/include/
+
+USE_NNPACK=1
+USE_BLAS=openblas
+USE_OPENCV=1</code></pre>
+  </div>
+  <p>
+   Now, we’re ready to build MXNet. Our instance has 36 vCPUs, so let’s put them to good use.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">make -j72</code></pre>
+  </div>
+  <p>
+   About four minutes later, the build is complete. Let’s install our new MXNet library and its Python bindings.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">sudo apt-get install -y python-dev python-setuptools python-numpy python-pip
+cd python
+sudo -H pip install --upgrade pip
+sudo -H pip install -e .</code></pre>
+  </div>
+  <p>
+   We can quickly check that we have the proper version by importing MXNet in Python.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">Python 2.7.12 (default, Nov 20 2017, 18:23:56)
+[GCC 5.4.0 20160609] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import mxnet
+&gt;&gt;&gt; mxnet.__version__
+'1.0.0'
+</code></pre>
+  </div>
+  <p>
+   We’re all set. Time to run some benchmarks.
+  </p>
+  <h2>
+   Benchmarking
+  </h2>
+  <p>
+   Benchmarking with a couple of images isn’t going to give us a reliable view on whether NNPACK makes a difference. Fortunately, the MXNet sources include a benchmarking script which feeds randomly generated images in a variety of batch sizes through the following models: AlexNet, VGG16, Inception-BN, Inception v3, ResNet-50, and ResNet-152. Of course, the point here is not to perform predictions, only to measure inference time.
+  </p>
+  <p>
+   Before we begin, we need to fix a line of code in the script. Our instance doesn’t have a GPU installed (which is the whole point here) and the script is unable to properly detect that fact. Here’s the modification you need to make in ~/incubator-mxnet/example/image-classification/benchmark_score.py. While we’re at it, let’s add additional batch sizes.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">#devs = [mx.gpu(0)] if len(get_gpus()) &gt; 0 else []
+devs = []
+devs.append(mx.cpu())
+batch_sizes = [1, 2, 4, 8, 16, 32, 64, 128, 256]</code></pre>
+  </div>
+  <p>
+   Time to run some benchmarks. Let’s use eight threads for NNPACK, which is the largest recommended value.
+  </p>
+  <div class="hide-language">
+   <pre><code class="lang-bash">cd ~/incubator-mxnet/example/image-classification/
+export MXNET_CPU_NNPACK_NTHREADS=8
+python benchmark_score.py</code></pre>
+  </div>
+  <p>
+   As a reference, I also ran the same script on an identical instance running the vanilla MXNet 1.0. The graphs that follow plot the number of images per second vs. batch size. As you can guess, higher images per second is better.
+  </p>
+  <p>
+   As you can see, NNPACK delivers very significant speedups for AlexNet, VGG, and Inception-BN, especially for single picture inference (up to 4x faster).
+  </p>
+  <p>
+   <strong>
+    Note
+   </strong>
+   : For reasons beyond the scope of this article, there is no speedup for Inception v3 and ResNet, so I didn’t provide graphs for these networks.
+  </p>
+  <p>
+   <img alt="" class="alignnone size-full wp-image-3130" height="554" src="image01.webp" style="margin: 20px 0px 20px 0px" width="1000"/>
+   <br/>
+   <img alt="" class="size-full wp-image-3131 alignnone" height="554" loading="lazy" src="image02.webp" style="margin: 20px 0px 20px 0px" width="1000"/>
+  </p>
+  <h2>
+   Conclusion
+  </h2>
+  <p>
+   I hope you enjoyed this article, and I welcome your feedback. For more deep learning and Apache MXNet content, feel free to follow me on
+   <a href="http://medium.com/@julsimon" rel="noopener noreferrer" target="_blank">
+    Medium
+   </a>
+   and
+   <a href="http://twitter.com/julsimon" rel="noopener noreferrer" target="_blank">
+    Twitter
+   </a>
+   .
+  </p>
+  <p>
+  </p>
+  <hr/>
+  <h3>
+   About the Author
+  </h3>
+  <p>
+   <img alt="" class="alignleft size-full wp-image-3134" height="115" loading="lazy" src="image03.webp" width="100"/>
+   <strong>
+    Julien is the Artificial Intelligence &amp; Machine Learning Evangelist for EMEA
+   </strong>
+   . He focuses on helping developers and enterprises bring their ideas to life. In his spare time, he reads the works of JRR Tolkien again and again.
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

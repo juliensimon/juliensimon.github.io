@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Now Available: Bare Metal Arm-Based EC2 Instances - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Now Available: Bare Metal Arm-Based EC2 Instances - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on now available: bare metal arm-based ec2 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Now', 'Available:', 'Bare'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/now-available-bare-metal-arm-based-ec2-instances/"/>
+  <meta property="og:title" content="Now Available: Bare Metal Arm-Based EC2 Instances - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on now available: bare metal arm-based ec2 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2019-10-10T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/now-available-bare-metal-arm-based-ec2-instances/"/>
+  <meta property="twitter:title" content="Now Available: Bare Metal Arm-Based EC2 Instances - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on now available: bare metal arm-based ec2 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/now-available-bare-metal-arm-based-ec2-instances/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Now Available: Bare Metal Arm-Based EC2 Instances",
+    "description": "Expert analysis and technical deep-dive on now available: bare metal arm-based ec2 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2019-10-10T00:00:00Z",
+    "dateModified": "2019-10-10T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/now-available-bare-metal-arm-based-ec2-instances/"
+    },
+    "url": "https://julien.org/blog/now-available-bare-metal-arm-based-ec2-instances/",
+    "keywords": "AWS, Amazon Web Services, ['Now', 'Available:', 'Bare'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Now Available: Bare Metal Arm-Based EC2 Instances
+  </div>
+  
+  <h1>Now Available: Bare Metal Arm-Based EC2 Instances</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-10-10 | Originally published at <a href="https://aws.amazon.com/blogs/aws/now-available-bare-metal-arm-based-ec2-instances/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Now Available: Bare Metal Arm-Based EC2 Instances
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-10-10
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/now-available-bare-metal-arm-based-ec2-instances/">
+    https://aws.amazon.com/blogs/aws/now-available-bare-metal-arm-based-ec2-instances/
+   </a>
+  </p>
+  <p>
+   At AWS re:Invent 2018, we
+   <a href="https://aws.amazon.com/blogs/aws/new-ec2-instances-a1-powered-by-arm-based-aws-graviton-processors/">
+    announced
+   </a>
+   a new line of
+   <a href="https://aws.amazon.com/ec2/">
+    Amazon Elastic Compute Cloud (Amazon EC2)
+   </a>
+   instances: the
+   <a href="https://aws.amazon.com/ec2/instance-types/a1/">
+    A1 family
+   </a>
+   , powered by Arm-based AWS Graviton processors. This family is a great fit for scale-out workloads e.g. web front-ends, containerized microservices or caching fleets. By expanding the choice of compute options, A1 instances help customers use the right instances for the right applications, and deliver up to 45% cost savings. In addition, A1 instances enable Arm developers to build and test natively on Arm-based infrastructure in the cloud: no more cross compilation or emulation required.
+  </p>
+  <p>
+   Today, we are happy to expand the A1 family with a bare metal option.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Bare Metal for A1
+    </span>
+   </strong>
+  </p>
+  <table cellpadding="8" style="margin-left: auto;margin-right: auto;border: 1px solid black;border-collapse: collapse">
+   <tbody>
+    <tr style="background-color: #e0e0e0">
+     <td style="border-bottom: 1px solid black;text-align: center">
+      <strong>
+       Instance Name
+      </strong>
+     </td>
+     <td style="border-bottom: 1px solid black;text-align: center">
+      <strong>
+       Logical Processors
+      </strong>
+     </td>
+     <td align="center" style="border-bottom: 1px solid black">
+      <strong>
+       Memory
+      </strong>
+     </td>
+     <td align="center" style="border-bottom: 1px solid black">
+      <strong>
+       EBS-Optimized Bandwidth
+      </strong>
+     </td>
+     <td align="center" style="border-bottom: 1px solid black">
+      <strong>
+       Network Bandwidth
+      </strong>
+     </td>
+    </tr>
+    <tr>
+     <td align="left">
+      <strong>
+       a1.metal
+      </strong>
+     </td>
+     <td align="center">
+      16
+     </td>
+     <td align="center">
+      32 GiB
+     </td>
+     <td align="center">
+      3.5 Gbps
+     </td>
+     <td align="center">
+      Up to 10 Gbps
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <p>
+   Just like for existing bare metal instances (M5, M5d, R5, R5d, z1d, and so forth), your operating system runs directly on the underlying hardware with direct access to the processor.
+  </p>
+  <p>
+   As described in a previous
+   <a href="https://aws.amazon.com/blogs/aws/now-available-five-new-amazon-ec2-bare-metal-instances-m5-m5d-r5-r5d-and-z1d/">
+    blog post
+   </a>
+   , you can leverage bare metal instances for applications that:
+  </p>
+  <ul>
+   <li>
+    need access to physical resources and low-level hardware features, such as performance counters, that are not always available or fully supported in virtualized environments,
+   </li>
+   <li>
+    are intended to run directly on the hardware, or licensed and supported for use in non-virtualized environments.
+   </li>
+  </ul>
+  <p>
+   Bare metal instances can also take advantage of
+   <a href="https://aws.amazon.com/elasticloadbalancing">
+    Elastic Load Balancing
+   </a>
+   ,
+   <a href="https://aws.amazon.com/autoscaling">
+    Auto Scaling
+   </a>
+   ,
+   <a href="https://aws.amazon.com/cloudwatch/">
+    Amazon CloudWatch
+   </a>
+   , and other AWS services.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Working with A1 Instances
+     <br/>
+    </span>
+   </strong>
+   Bare metal or not, it’s never been easier to work with A1 instances. Initially launched in four AWS regions, they’re now available in four additional regions: Europe (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Mumbai), and Asia Pacific (Sydney).
+  </p>
+  <p>
+   From a software perspective, you can run on A1 instances
+   <a href="https://aws.amazon.com/marketplace/search/results?searchTerms=&amp;filters=architectures&amp;architectures=64-bit-Arm">
+    Amazon Machine Images
+   </a>
+   for popular Linux distributions like
+   <a href="https://aws.amazon.com/marketplace/search/results?page=1&amp;filters=vendor_id%2Carchitectures&amp;vendor_id=565feec9-3d43-413e-9760-c651546613f2&amp;architectures=64-bit-Arm&amp;searchTerms=">
+    Ubuntu
+   </a>
+   ,
+   <a href="https://aws.amazon.com/marketplace/pp/B07KTFV2S8?qid=1560500617485&amp;sr=0-1&amp;ref_=srh_res_product_title">
+    Red Hat Enterprise Linux
+   </a>
+   ,
+   <a href="https://aws.amazon.com/marketplace/pp/B07SPTXBDX?qid=1560500617485&amp;sr=0-5&amp;ref_=srh_res_product_image">
+    SUSE Linux Enterprise Server
+   </a>
+   ,
+   <a href="https://aws.amazon.com/marketplace/pp/B073HW9SP3">
+    Debian
+   </a>
+   , and of course
+   <a href="https://aws.amazon.com/marketplace/pp/B07KWFRJV3?qid=1561032490065&amp;sr=0-1&amp;ref_=srh_res_product_title">
+    Amazon Linux 2
+   </a>
+   . Applications such as the Apache HTTP Server and
+   <a href="https://aws.amazon.com/marketplace/pp/B07QD34VKD">
+    NGINX Plus
+   </a>
+   are available too. So are all major programming languages and run-times including PHP, Python, Perl, Golang, Ruby, NodeJS and multiple flavors of Java including
+   <a href="https://aws.amazon.com/corretto/">
+    Amazon Corretto
+   </a>
+   , a supported open source OpenJDK implementation.
+  </p>
+  <p>
+   What about containers? Good news here as well!
+   <a href="https://aws.amazon.com/about-aws/whats-new/2019/05/amazon-ecs-console-support-for-ecs-optimized-amazon-linux-2-ami-/">
+    Amazon ECS
+   </a>
+   and
+   <a href="https://aws.amazon.com/about-aws/whats-new/2019/04/-amazon-eks-supports-ec2-a1-instances-as-a-public-preview-/">
+    Amazon EKS
+   </a>
+   both support A1 instances. Docker has announced support for Arm-based architectures in
+   <a href="https://docs.docker.com/v17.09/enterprise/#supported-platforms">
+    Docker Enterprise Edition
+   </a>
+   , and most Docker official images support Arm. In addition, millions of developers can now use Arm emulation to build, run and test containers on their desktop machine before moving them to production.
+  </p>
+  <p>
+   As you would expect, A1 instances are seamlessly integrated with many AWS services, such as Amazon EBS, Amazon CloudWatch,
+   <a href="https://aws.amazon.com/about-aws/whats-new/2019/03/amazon-inspector-adds-support-for-amazon-ec2-a1-instances/">
+    Amazon Inspector
+   </a>
+   , AWS Systems Manager and
+   <a href="https://aws.amazon.com/about-aws/whats-new/2019/02/aws-batch-now-supports-amazon-ec2-a1-instances-and-ec2-g3s-insta/">
+    AWS Batch
+   </a>
+   .
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Now Available!
+    </strong>
+    <br/>
+   </span>
+   You can start using a1.metal instances today in US East (N. Virginia), US East (Ohio), US West (Oregon), Europe (Ireland), Europe (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Mumbai), and Asia Pacific (Sydney). As always, we appreciate your feedback, so please don’t hesitate to get in touch via the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=30">
+    AWS Compute Forum
+   </a>
+   , or through your usual AWS support contacts.
+  </p>
+  <p>
+   —
+   <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+    Julien
+   </a>
+   ;
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

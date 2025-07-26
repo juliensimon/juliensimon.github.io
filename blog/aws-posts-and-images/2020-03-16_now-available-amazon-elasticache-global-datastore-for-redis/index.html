@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Now Available: Amazon ElastiCache Global Datastore for Redis - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Now Available: Amazon ElastiCache Global Datastore for Redis - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on now available: amazon elasticache global datastore for redis by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Now', 'Available:', 'Amazon'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/now-available-amazon-elasticache-global-datastore-for-redis/"/>
+  <meta property="og:title" content="Now Available: Amazon ElastiCache Global Datastore for Redis - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on now available: amazon elasticache global datastore for redis by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2020-03-16T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/now-available-amazon-elasticache-global-datastore-for-redis/"/>
+  <meta property="twitter:title" content="Now Available: Amazon ElastiCache Global Datastore for Redis - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on now available: amazon elasticache global datastore for redis by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/now-available-amazon-elasticache-global-datastore-for-redis/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Now Available: Amazon ElastiCache Global Datastore for Redis",
+    "description": "Expert analysis and technical deep-dive on now available: amazon elasticache global datastore for redis by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2020-03-16T00:00:00Z",
+    "dateModified": "2020-03-16T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/now-available-amazon-elasticache-global-datastore-for-redis/"
+    },
+    "url": "https://julien.org/blog/now-available-amazon-elasticache-global-datastore-for-redis/",
+    "keywords": "AWS, Amazon Web Services, ['Now', 'Available:', 'Amazon'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Now Available: Amazon ElastiCache Global Datastore for Redis
+  </div>
+  
+  <h1>Now Available: Amazon ElastiCache Global Datastore for Redis</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-03-16 | Originally published at <a href="https://aws.amazon.com/blogs/aws/now-available-amazon-elasticache-global-datastore-for-redis/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Now Available: Amazon ElastiCache Global Datastore for Redis
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-03-16
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/now-available-amazon-elasticache-global-datastore-for-redis/">
+    https://aws.amazon.com/blogs/aws/now-available-amazon-elasticache-global-datastore-for-redis/
+   </a>
+  </p>
+  <p>
+   In-memory data stores are widely used for application scalability, and developers have long appreciated their benefits for storing frequently accessed data, whether volatile or persistent. Systems like
+   <a href="https://redis.io/">
+    Redis
+   </a>
+   help decouple databases and backends from incoming traffic, shedding most of the traffic that would had otherwise reached them, and reducing application latency for users.
+  </p>
+  <p>
+   Obviously, managing these servers is a critical task, and great care must be taken to keep them up and running no matter what. In a previous job, my team had to move a cluster of physical cache servers across hosting suites: one by one, they connected them to external batteries, unplugged external power, unracked them, and used an office trolley (!) to roll them to the other suite where they racked them again! It happened without any service interruption, but we all breathed a sigh of relief once this was done… Lose cache data on a high-traffic platform, and things get ugly. Fast. Fortunately, cloud infrastructure is more flexible! To help minimize service disruption should an incident occur, we have added many
+   <a href="https://aws.amazon.com/blogs/database/configuring-amazon-elasticache-for-redis-for-higher-availability/">
+    high-availability features
+   </a>
+   to
+   <a href="https://aws.amazon.com/elasticache/">
+    Amazon ElastiCache
+   </a>
+   , our managed in-memory data store for
+   <a href="https://memcached.org/">
+    Memcached
+   </a>
+   and
+   <a href="https://redis.io/">
+    Redis
+   </a>
+   : cluster mode, multi-AZ with automatic failover, etc.
+  </p>
+  <p>
+   As Redis is often used to serve low latency traffic to global users, customers have told us that they’d love to be able to replicate
+   <a href="https://aws.amazon.com/elasticache/">
+    Amazon ElastiCache
+   </a>
+   clusters across AWS regions. We listened to them, got to work, and today, we’re very happy to announce that this replication capability is now available for Redis clusters.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Introducing Amazon ElastiCache Global Datastore For Redis
+     <br/>
+    </strong>
+   </span>
+   In a nutshell,
+   <a href="https://aws.amazon.com/elasticache/redis/global-datastore/">
+    Amazon ElastiCache Global Datastore for Redis
+   </a>
+   lets you replicate a cluster in one region to clusters in up to two other regions. Customers typically do this in order to:
+  </p>
+  <ul>
+   <li>
+    Bring cached data closer to your users, in order to reduce network latency and improve application responsiveness.
+   </li>
+   <li>
+    Build disaster recovery capabilities, should a region be partially or totally unavailable.
+   </li>
+  </ul>
+  <p>
+   Setting up a global datastore is extremely easy. First, you pick a cluster to be the primary cluster receiving writes from applications: this can either be a new cluster, or an existing cluster provided that it runs Redis 5.0.6 or above. Then, you add up to two secondary clusters in other regions which will receive updates from the primary.
+  </p>
+  <p>
+   This setup is available for all Redis configurations except single node clusters: of course, you can convert a single node cluster to a replication group cluster, and then use it as a primary cluster.
+  </p>
+  <p>
+   Last but not least, clusters that are part of a global datastore can be modified and resized as usual (adding or removing nodes, changing node type, adding or removing shards, adding or removing replica nodes).
+  </p>
+  <p>
+   Let’s do a quick demo.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Replicating a Redis Cluster Across Regions
+     <br/>
+    </span>
+   </strong>
+   Let me show you how to build from scratch a three-cluster global datastore: the primary cluster will be located in the us-east-1 region, and the two secondary clusters will be located in the us-west-1 and us-west-2 regions. For the sake of simplicity, I’ll use the same default configuration for all clusters: three cache.r5.large nodes, multi-AZ, one shard.
+  </p>
+  <p>
+   Heading out to the AWS Console, I click on ‘Global Datastore’, and then on ‘Create’ to create my global datastore. I’m asked if I’d like to create a new cluster supporting the datastore, or if I’d rather use an existing cluster. I go for the former, and create a cluster named
+   <em>
+    global-ds-1-useast1
+   </em>
+   .
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/03/05/julsimon-globalds1-1.png">
+    <img alt="" class="size-large wp-image-35984 aligncenter" height="1024" src="image01.webp" style="border: 1px solid black" width="880"/>
+   </a>
+  </p>
+  <p>
+   I click on ‘Next’, and fill in details for a secondary cluster hosted in the us-west-1 region. I unimaginatively name it
+   <em>
+    global-ds-1-us-west1
+   </em>
+   .
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/03/05/julsimon-globalds2-1.png">
+    <img alt="" class="size-large wp-image-35988 aligncenter" height="792" loading="lazy" src="image02.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Then, I add another secondary cluster in the us-west-2 region, named
+   <em>
+    global-ds-1-uswest2:
+   </em>
+   I go to ‘Global Datastore’, click on ‘Add Region’, and fill in cluster details.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/03/05/julsimon-globalds3.png">
+    <img alt="" class="size-large wp-image-35990 aligncenter" height="823" loading="lazy" src="image03.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   A little while later, all three clusters are up, and have been associated to the global datastore.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/02/03/julsimon-globalds3.png">
+    <img alt="" class="size-large wp-image-35573 aligncenter" height="500" loading="lazy" src="image04.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Using the
+   <em>
+    redis-cli
+   </em>
+   client running on an
+   <a href="https://aws.amazon.com/ec2/">
+    Amazon Elastic Compute Cloud (Amazon EC2)
+   </a>
+   instance hosted in the us-east-1 region, I can quickly connect to the cluster endpoint and check that it’s indeed operational.
+  </p>
+  <p>
+   <code>
+    [us-east-1-instance] $ redis-cli -h $US_EAST_1_CLUSTER_READWRITE
+   </code>
+   <br/>
+   <code>
+    &gt; ping
+   </code>
+   <br/>
+   <code>
+    PONG
+   </code>
+   <br/>
+   <code>
+    &gt; set paris france
+   </code>
+   <br/>
+   <code>
+    OK
+   </code>
+   <br/>
+   <code>
+    &gt; set berlin germany
+   </code>
+   <br/>
+   <code>
+    OK
+   </code>
+   <br/>
+   <code>
+    &gt; set london uk
+   </code>
+   <br/>
+   <code>
+    OK
+   </code>
+   <br/>
+   <code>
+    &gt; keys *
+   </code>
+   <br/>
+   <code>
+    1) "london"
+   </code>
+   <br/>
+   <code>
+    2) "berlin"
+   </code>
+   <br/>
+   <code>
+    3) "paris"
+   </code>
+   <br/>
+   <code>
+    &gt; get paris
+   </code>
+   <br/>
+   <code>
+    "france"
+   </code>
+  </p>
+  <p>
+   This looks fine. Using an EC2 instance hosted in the us-west-1 region, let’s now check that the data we stored in the primary cluster has been replicated to the us-west-1 secondary cluster.
+  </p>
+  <p>
+   <code>
+    [us-west-1-instance] $ redis-cli -h $US_WEST_1_CLUSTER_READONLY
+   </code>
+   <br/>
+   <code>
+    &gt; keys *
+   </code>
+   <br/>
+   <code>
+    1) "london"
+   </code>
+   <br/>
+   <code>
+    2) "berlin"
+   </code>
+   <br/>
+   <code>
+    3) "paris"
+   </code>
+   <br/>
+   <code>
+    &gt; get paris
+   </code>
+   <br/>
+   <code>
+    "france"
+   </code>
+  </p>
+  <p style="text-align: left">
+   Nice. Now let’s add some more data on the primary cluster…
+  </p>
+  <p style="text-align: left">
+   <code>
+    &gt; hset Parsifal composer "Richard Wagner" date 1882 acts 3 language "German"
+   </code>
+   <br/>
+   <code>
+    &gt; hset DonGiovanni composer "W.A. Mozart" date 1787 acts 2 language "Italian"
+   </code>
+   <br/>
+   <code>
+    &gt; hset Tosca composer "Giacomo Puccini" date 1900 acts 3 language "Italian"
+   </code>
+  </p>
+  <p style="text-align: left">
+   …and check as quickly as possible on the secondary cluster.
+  </p>
+  <p style="text-align: left">
+   <code>
+    &gt; keys *
+   </code>
+   <br/>
+   <code>
+    1) "DonGiovanni"
+   </code>
+   <br/>
+   <code>
+    2) "london"
+   </code>
+   <br/>
+   <code>
+    3) "berlin"
+   </code>
+   <br/>
+   <code>
+    4) "Parsifal"
+   </code>
+   <br/>
+   <code>
+    5) "Tosca"
+   </code>
+   <br/>
+   <code>
+    6) "paris"
+   </code>
+   <br/>
+   <code>
+    &gt; hget Parsifal composer
+   </code>
+   <br/>
+   <code>
+    "Richard Wagner"
+   </code>
+  </p>
+  <p>
+   That was fast: by the time I switched to the other terminal and ran the command, the new data was already there. That’s not really surprising since the typical network latency for cross region traffic ranges from 60 milliseconds to 200 milliseconds depending on regions.
+  </p>
+  <p>
+   Now, what would happen if something went wrong with our primary cluster hosted in us-east-1? Well, we could easily promote one of the secondary clusters to full read/write capabilities.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/11/04/globalds4.png">
+    <img alt="" class="size-large wp-image-32023 aligncenter" height="471" loading="lazy" src="image05.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   For good measure, I also remove the us-east-1 cluster from the global datastore. Once this is complete, the global datastore looks like this.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/02/03/julsimon-globalds4.png">
+    <img alt="" class="size-large wp-image-35574 aligncenter" height="463" loading="lazy" src="image06.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Now, using my EC2 instance in the us-west-1 region, and connecting to the read/write endpoint of my cluster, I add more data…
+  </p>
+  <p>
+   <code>
+    [us-west-1-instance] $ redis-cli -h $US_WEST_1_CLUSTER_READWRITE
+   </code>
+   <br/>
+   <code>
+    &gt; hset Lohengrin composer "Richard Wagner" date 1850 acts 3 language "German"
+   </code>
+  </p>
+  <p>
+   … and check that it’s been replicated to the us-west-2 cluster.
+  </p>
+  <p>
+   <code>
+    [us-west-2-instance] $ redis-cli -h $US_WEST_2_CLUSTER_READONLY
+    <br/>
+   </code>
+   <code>
+   </code>
+   <code>
+    &gt; hgetall Lohengrin
+   </code>
+   <br/>
+   <code>
+    1) "composer"
+   </code>
+   <br/>
+   <code>
+    2) "Richard Wagner"
+   </code>
+   <br/>
+   <code>
+    3) "date"
+   </code>
+   <br/>
+   <code>
+    4) "1850"
+   </code>
+   <br/>
+   <code>
+    5) "acts"
+   </code>
+   <br/>
+   <code>
+    6) "3"
+   </code>
+   <br/>
+   <code>
+    7) "language"
+   </code>
+   <br/>
+   <code>
+    8) "German"
+   </code>
+  </p>
+  <p>
+   It’s all there. Global datastores make it really easy to replicate
+   <a href="https://aws.amazon.com/elasticache/">
+    Amazon ElastiCache
+   </a>
+   data across regions!
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Now Available!
+     <br/>
+    </span>
+   </strong>
+   This new global datastore feature is available today in US East (N. Virginia), US East (Ohio), US West (N. California), US West (Oregon), Asia Pacific (Seoul), Asia Pacific (Sydney), Asia Pacific (Singapore), Asia Pacific (Tokyo), Europe (Frankfurt), Europe (Ireland), Europe (London). Please give it a try and send us feedback, either on the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=127">
+    AWS forum for Amazon ElastiCache
+   </a>
+   , or through your usual AWS support contacts.
+  </p>
+  <p>
+   —
+   <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+    Julien
+   </a>
+   ;
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

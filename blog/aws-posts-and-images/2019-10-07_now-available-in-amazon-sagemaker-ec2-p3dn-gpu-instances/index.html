@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Now available in Amazon SageMaker: EC2 P3dn GPU Instances - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Now available in Amazon SageMaker: EC2 P3dn GPU Instances - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on now available in amazon sagemaker: ec2 p3dn gpu instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Now', 'available', 'in'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/now-available-in-amazon-sagemaker-ec2-p3dn-gpu-instances/"/>
+  <meta property="og:title" content="Now available in Amazon SageMaker: EC2 P3dn GPU Instances - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on now available in amazon sagemaker: ec2 p3dn gpu instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2019-10-07T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/now-available-in-amazon-sagemaker-ec2-p3dn-gpu-instances/"/>
+  <meta property="twitter:title" content="Now available in Amazon SageMaker: EC2 P3dn GPU Instances - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on now available in amazon sagemaker: ec2 p3dn gpu instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/now-available-in-amazon-sagemaker-ec2-p3dn-gpu-instances/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Now available in Amazon SageMaker: EC2 P3dn GPU Instances",
+    "description": "Expert analysis and technical deep-dive on now available in amazon sagemaker: ec2 p3dn gpu instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2019-10-07T00:00:00Z",
+    "dateModified": "2019-10-07T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/now-available-in-amazon-sagemaker-ec2-p3dn-gpu-instances/"
+    },
+    "url": "https://julien.org/blog/now-available-in-amazon-sagemaker-ec2-p3dn-gpu-instances/",
+    "keywords": "AWS, Amazon Web Services, ['Now', 'available', 'in'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Now available in Amazon SageMaker: EC2 P3dn GPU Instances
+  </div>
+  
+  <h1>Now available in Amazon SageMaker: EC2 P3dn GPU Instances</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-10-07 | Originally published at <a href="https://aws.amazon.com/blogs/aws/now-available-in-amazon-sagemaker-ec2-p3dn-gpu-instances/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Now available in Amazon SageMaker: EC2 P3dn GPU Instances
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-10-07
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/now-available-in-amazon-sagemaker-ec2-p3dn-gpu-instances/">
+    https://aws.amazon.com/blogs/aws/now-available-in-amazon-sagemaker-ec2-p3dn-gpu-instances/
+   </a>
+  </p>
+  <p>
+   In recent years, the meteoric rise of deep learning has made incredible applications possible, such as detecting skin cancer (
+   <a href="https://aws.amazon.com/fr/solutions/case-studies/skinvision/">
+    SkinVision
+   </a>
+   ) and building autonomous vehicles (
+   <a href="https://aws.amazon.com/machine-learning/customers/innovators/tusimple/">
+    TuSimple
+   </a>
+   ). Thanks to neural networks, deep learning indeed has the uncanny ability to extract and model intricate patterns from vast amounts of unstructured data (e.g. images, video, and free-form text).
+  </p>
+  <p>
+   However, training these neural networks requires equally vasts amounts of computing power. Graphics Processing Units (GPUs) have long proven that they were up to that task, and AWS customers have quickly understood how they could use
+   <a href="https://aws.amazon.com/ec2/">
+    Amazon Elastic Compute Cloud (Amazon EC2)
+   </a>
+   <a href="https://aws.amazon.com/ec2/instance-types/p2/">
+    P2
+   </a>
+   and
+   <a href="https://aws.amazon.com/ec2/instance-types/p3/">
+    P3
+   </a>
+   instances to train their models, in particular on
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   , our fully-managed, modular, machine learning service.
+  </p>
+  <p>
+   Today, I’m very happy to announce that the largest P3 instance, named
+   <strong>
+    p3dn.24xlarge
+   </strong>
+   , is now available for model training on
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   .
+   <a href="https://aws.amazon.com/blogs/aws/new-ec2-p3dn-gpu-instances-with-100-gbps-networking-local-nvme-storage-for-faster-machine-learning-p3-price-reduction/">
+    Launched
+   </a>
+   last year, this instance is designed to accelerate large, complex, distributed training jobs: it has twice as much GPU memory as other P3 instances, 50% more vCPUs, blazing-fast local NVMe storage, and 100 Gbit networking.
+  </p>
+  <p>
+   How about we give it a try on
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   ?
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Introducing EC2 P3dn instances on Amazon SageMaker
+    </strong>
+   </span>
+   <br/>
+   Let’s start from this
+   <a href="https://github.com/awslabs/amazon-sagemaker-examples/blob/master/introduction_to_amazon_algorithms/imageclassification_caltech/Image-classification-fulltraining-highlevel.ipynb">
+    notebook
+   </a>
+   , which uses the
+   <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/image-classification.html">
+    built-in image classification
+   </a>
+   algorithm to train a model on the
+   <a href="http://www.vision.caltech.edu/Image_Datasets/Caltech256/" rel="noopener noreferrer" target="_blank">
+    Caltech-256
+   </a>
+   dataset. All I have to do to use a
+   <strong>
+    p3dn.24xlarge
+   </strong>
+   instance on
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   is to set
+   <code>
+    train_instance_type
+   </code>
+   to
+   <code>
+    'ml.p3dn.24xlarge'
+   </code>
+   , and train!
+  </p>
+  <pre><code class="lang-python">ic = sagemaker.estimator.Estimator(training_image,
+                                         role, 
+                                         train_instance_count=1, 
+                                         train_instance_type='ml.p3dn.24xlarge',
+                                         input_mode='File',
+                                         output_path=s3_output_location,
+                                         sagemaker_session=sess)
+...
+ic.fit(...)</code></pre>
+  <p>
+   I ran some quick tests on this notebook, and I got a sweet 20% training speedup out of the box (your mileage may vary!). I’m using
+   <code>
+    'File'
+   </code>
+   mode here, meaning that the full dataset is copied to the training instance: the faster network (100 Gbit, up from 25 Gbit) and storage (local NVMe instead of Amazon EBS) are certainly helping!
+  </p>
+  <p>
+   When working with large data sets, you could put 100 Gbit networking to good use either by streaming data from
+   <a href="https://aws.amazon.com/s3/">
+    Amazon Simple Storage Service (Amazon S3)
+   </a>
+   with
+   <a href="https://aws.amazon.com/blogs/machine-learning/accelerate-model-training-using-faster-pipe-mode-on-amazon-sagemaker/">
+    Pipe Mode
+   </a>
+   , or by
+   <a href="https://aws.amazon.com/blogs/machine-learning/speed-up-training-on-amazon-sagemaker-using-amazon-efs-or-amazon-fsx-for-lustre-file-systems/">
+    storing it
+   </a>
+   in
+   <a href="https://aws.amazon.com/efs">
+    Amazon Elastic File System (Amazon EFS)
+   </a>
+   or
+   <a href="https://aws.amazon.com/fsx/lustre/">
+    Amazon FSx for Lustre
+   </a>
+   . It would also help with distributed training (using
+   <a href="https://aws.amazon.com/blogs/machine-learning/launching-tensorflow-distributed-training-easily-with-horovod-or-parameter-servers-in-amazon-sagemaker/">
+    Horovod
+   </a>
+   , maybe), as instances would be able to exchange parameter updates faster.
+  </p>
+  <p>
+   In short, the
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   and P3dn tag team packs quite a punch, and it should deliver a significant performance improvement for large-scale deep learning workloads.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Now available!
+     <br/>
+    </strong>
+   </span>
+   P3dn instances are available on
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   in the US East (N. Virginia) and US West (Oregon) regions. If you are ready to get started, please contact your AWS account team or use the
+   <a href="https://aws.amazon.com/contact-us/">
+    Contact Us
+   </a>
+   page to make a request.
+  </p>
+  <p>
+   As always, we’d love to hear your feedback, either on the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=285">
+    AWS Forum
+   </a>
+   for
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   , or through your usual AWS contacts.
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

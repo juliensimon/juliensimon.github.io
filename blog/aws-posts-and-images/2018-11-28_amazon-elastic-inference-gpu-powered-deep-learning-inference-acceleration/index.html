@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Amazon Elastic Inference – GPU-Powered Deep Learning Inference Acceleration - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Amazon Elastic Inference – GPU-Powered Deep Learning Inference Acceleration - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on amazon elastic inference – gpu-powered deep learning inference acceleration by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'Elastic', 'Inference'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/amazon-elastic-inference-gpu-powered-deep-learning-inference-acceleration/"/>
+  <meta property="og:title" content="Amazon Elastic Inference – GPU-Powered Deep Learning Inference Acceleration - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on amazon elastic inference – gpu-powered deep learning inference acceleration by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2018-11-28T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/amazon-elastic-inference-gpu-powered-deep-learning-inference-acceleration/"/>
+  <meta property="twitter:title" content="Amazon Elastic Inference – GPU-Powered Deep Learning Inference Acceleration - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on amazon elastic inference – gpu-powered deep learning inference acceleration by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/amazon-elastic-inference-gpu-powered-deep-learning-inference-acceleration/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Amazon Elastic Inference – GPU-Powered Deep Learning Inference Acceleration",
+    "description": "Expert analysis and technical deep-dive on amazon elastic inference – gpu-powered deep learning inference acceleration by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2018-11-28T00:00:00Z",
+    "dateModified": "2018-11-28T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/amazon-elastic-inference-gpu-powered-deep-learning-inference-acceleration/"
+    },
+    "url": "https://julien.org/blog/amazon-elastic-inference-gpu-powered-deep-learning-inference-acceleration/",
+    "keywords": "AWS, Amazon Web Services, ['Amazon', 'Elastic', 'Inference'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Amazon Elastic Inference – GPU-Powered Deep Learning Inference Acceleration
+  </div>
+  
+  <h1>Amazon Elastic Inference – GPU-Powered Deep Learning Inference Acceleration</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2018-11-28 | Originally published at <a href="https://aws.amazon.com/blogs/aws/amazon-elastic-inference-gpu-powered-deep-learning-inference-acceleration/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Amazon Elastic Inference – GPU-Powered Deep Learning Inference Acceleration
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2018-11-28
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/amazon-elastic-inference-gpu-powered-deep-learning-inference-acceleration/">
+    https://aws.amazon.com/blogs/aws/amazon-elastic-inference-gpu-powered-deep-learning-inference-acceleration/
+   </a>
+  </p>
+  <p>
+   One of the reasons for the recent progress of Artificial Intelligence and Deep Learning is the fantastic computing capabilities of Graphics Processing Units (GPU). About ten years ago, researchers learned how to harness their massive hardware parallelism for Machine Learning and High Performance Computing: curious minds will enjoy the seminal paper (
+   <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=2ahUKEwiO2JGJva7eAhUrBMAKHf2ABr4QFjAAegQIAxAC&amp;url=http%3A%2F%2Frobotics.stanford.edu%2F~ang%2Fpapers%2Ficml09-LargeScaleUnsupervisedDeepLearningGPU.pdf&amp;usg=AOvVaw0TY6vv8nTJlkpFCHkxXbkY">
+    PDF
+   </a>
+   ) published in 2009 by Stanford University.
+  </p>
+  <p>
+   Today, GPUs help developers and data scientists train complex models on massive data sets for
+   <a href="https://aws.amazon.com/blogs/machine-learning/matrix-analytics-uses-deep-learning-on-aws-to-boost-early-cancer-detection/">
+    medical image analysis
+   </a>
+   or autonomous driving. For instance, the
+   <a href="https://aws.amazon.com/ec2/instance-types/p3/">
+    Amazon EC2 P3 family
+   </a>
+   lets you use up to eight NVIDIA V100 GPUs in the same instance, for up to 1 PetaFLOP of mixed-precision performance: can you believe that 10 years ago this was the performance of the
+   <a href="https://en.wikipedia.org/wiki/IBM_Roadrunner">
+    fastest supercomputer
+   </a>
+   ever built?
+  </p>
+  <p>
+   Of course, training a model is half the story: what about inference, i.e. putting the model to work and predicting results for new data samples? Unfortunately, developers are often stumped when the time comes to pick an instance type and size. Indeed, for larger models, the inference latency of CPUs may not meet the needs of online applications, while the cost of a full-fledged GPU may not be justified. In addition, resources like RAM and CPU may be more important to the overall performance of your application than raw inference speed.
+  </p>
+  <p>
+   For example, let’s say your power-hungry application requires a c5.9xlarge instance ($1.53 per hour in us-east-1): a single inference call with an SSD model would take close to 400 milliseconds, which is certainly too slow for real-time interaction. Moving your application to a p2.xlarge instance (the most inexpensive general-purpose GPU instance at $0.90 per hour in us-east-1) would improve inference performance to 180 milliseconds: then again, this would impact application performance as p2.xlarge has less vCPUs and less RAM.
+  </p>
+  <p>
+   Well, no more compromising. Today, I’m very happy to announce
+   <a href="https://aws.amazon.com/machine-learning/elastic-inference/">
+    Amazon Elastic Inference
+   </a>
+   , a new service that lets you attach just the right amount of GPU-powered inference acceleration to any Amazon EC2 instance. This is also available for Amazon SageMaker notebook instances and endpoints, bringing acceleration to built-in algorithms and to deep learning environments.
+  </p>
+  <p>
+   Pick the best CPU instance type for your application, attach the right amount of GPU acceleration and get the best of both worlds! Of course, you can use EC2 Auto Scaling to add and remove accelerated instances whenever needed.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    Introducing Amazon Elastic Inference
+   </span>
+  </p>
+  <p>
+   Amazon Elastic Inference supports popular machine learning frameworks TensorFlow, Apache MXNet and ONNX (applied via MXNet). Changes to your existing code are minimal, but you will need to use AWS-optimized builds which automatically detect accelerators attached to instances, ensure that only authorized access is allowed, and distribute computation across the local CPU resource and the attached accelerator. These builds are available in the AWS Deep Learning AMIs, on Amazon S3 so you can build it into your own image or container, and provided automatically when you use Amazon SageMaker.
+  </p>
+  <p>
+   Amazon Elastic Inference is available in three sizes, making it efficient for a wide range of inference models including computer vision, natural language processing, and speech recognition.
+  </p>
+  <ul>
+   <li>
+    eia1.medium: 8 TeraFLOPs of mixed-precision performance.
+   </li>
+   <li>
+    eia1.large: 16 TeraFLOPs of mixed-precision performance.
+   </li>
+   <li>
+    eia1.xlarge: 32 TeraFLOPs of mixed-precision performance.
+   </li>
+  </ul>
+  <p>
+   This lets you select the best price/performance ratio for your application. For instance, a c5.large instance configured with eia1.medium acceleration will cost you $0.22 an hour (us-east-1). This combination is only 10-15% slower than a p2.xlarge instance, which hosts a dedicated NVIDIA K80 GPU and costs $0.90 an hour (us-east-1). Bottom line: you get a 75% cost reduction for equivalent GPU performance, while picking the exact instance type that fits your application.
+  </p>
+  <p>
+   Let’s dive in and look at Apache MXNet and TensorFlow examples on an Amazon EC2 instance.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    Setting up Amazon Elastic Inference
+    <br/>
+   </span>
+  </p>
+  <p>
+   Here are the high-level steps required to use the service with an Amazon EC2 instance.
+  </p>
+  <ol>
+   <li>
+    Create a security group for the instance allowing only incoming SSH traffic.
+   </li>
+   <li>
+    Create an IAM role for the instance, allowing it to connect to the Amazon Elastic Inference service.
+   </li>
+   <li>
+    Create a VPC endpoint for Amazon Elastic Inference in the VPC where the instance will run, attaching a security group allowing only incoming HTTPS traffic from the instance. Please note that you’ll only have to do this once per VPC and that charges for the endpoint are included in the cost of the accelerator.
+   </li>
+  </ol>
+  <p>
+   <img alt="VPC endpoint" class="size-full wp-image-26189 aligncenter" height="65" src="image01.webp" width="822"/>
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    Creating an accelerated instance
+   </span>
+  </p>
+  <p>
+   Now that the endpoint is available, let’s use the AWS CLI to fire up a c5.large instance with the AWS
+   <a href="https://aws.amazon.com/machine-learning/amis/">
+    Deep Learning AMI
+   </a>
+   .
+  </p>
+  <pre><code class="lang-bash">aws ec2 run-instances --image-id $AMI_ID \
+--key-name $KEYPAIR_NAME --security-group-ids $SG_ID \
+--subnet-id $SUBNET_ID --instance-type c5.large \
+--elastic-inference-accelerator Type=eia1.large
+--iam-instance-profile Name="enter the name of your accelerator profile"</code></pre>
+  <p>
+   That’s it! You don’t need to learn any new APIs to use Amazon Elastic Inference: simply pass an extra parameter describing the accelerator type. After a few minutes, the instance is up and we can connect to it.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    Accelerating Apache MXNet
+    <br/>
+   </span>
+  </p>
+  <p>
+   In this classic example, we will load a large pre-trained convolution neural network on the Amazon Elastic Inference Accelerator (if you’re not familiar with pre-trained models, I covered the topic in a previous post). Specifically, we’ll use a ResNet-152 network trained on the
+   <a href="http://www.image-net.org/" rel="noopener noreferrer" target="_blank">
+    ImageNet
+   </a>
+   dataset.
+  </p>
+  <p>
+   Then, we’ll simply classify an image on the Amazon Elastic Inference Accelerator
+  </p>
+  <pre><code class="lang-python">import mxnet as mx
+import numpy as np
+from collections import namedtuple
+Batch = namedtuple('Batch', ['data'])
+
+# Download model (ResNet-152 trained on ImageNet) and ImageNet categories
+path='http://data.mxnet.io/models/imagenet/'
+[mx.test_utils.download(path+'resnet/152-layers/resnet-152-0000.params'),
+ mx.test_utils.download(path+'resnet/152-layers/resnet-152-symbol.json'),
+ mx.test_utils.download(path+'synset.txt')]
+
+# Set compute context to Elastic Inference Accelerator
+# ctx = mx.gpu(0) # This is how we'd predict on a GPU
+ctx = mx.eia()    # This is how we predict on an EI accelerator
+
+# Load pre-trained model
+sym, arg_params, aux_params = mx.model.load_checkpoint('resnet-152', 0)
+mod = mx.mod.Module(symbol=sym, context=ctx, label_names=None)
+mod.bind(for_training=False, data_shapes=[('data', (1,3,224,224))],
+         label_shapes=mod._label_shapes)
+mod.set_params(arg_params, aux_params, allow_missing=True)
+
+# Load ImageNet category labels
+with open('synset.txt', 'r') as f:
+    labels = [l.rstrip() for l in f]
+
+# Download and load test image
+fname = mx.test_utils.download('https://github.com/dmlc/web-data/blob/master/mxnet/doc/tutorials/python/predict_image/dog.jpg?raw=true')
+img = mx.image.imread(fname)
+
+# Convert and reshape image to (batch=1, channels=3, width, height)
+img = mx.image.imresize(img, 224, 224) # Resize to training settings
+img = img.transpose((2, 0, 1)) # Channels 
+img = img.expand_dims(axis=0)  # Batch size
+# img = img.as_in_context(ctx) # Not needed: data is loaded automatically to the EIA
+
+# Predict the image
+mod.forward(Batch([img]))
+prob = mod.get_outputs()[0].asnumpy()
+
+# Print the top 3 classes
+prob = np.squeeze(prob)
+a = np.argsort(prob)[::-1]
+for i in a[0:3]:
+    print('probability=%f, class=%s' %(prob[i], labels[i]))</code></pre>
+  <p>
+   As you can see, there are only a couple of differences:
+  </p>
+  <ul>
+   <li>
+    I set the compute context to
+    <em>
+     mx.eia()
+    </em>
+    . No numbering is required, as only one Amazon Elastic Inference accelerator may be attached on an Amazon EC2 instance.
+   </li>
+   <li>
+    I did not explicitly load the image on the Amazon Elastic Inference accelerator, as I would have done with a GPU. This is taken care of automatically.
+   </li>
+  </ul>
+  <p>
+   Running this example produces the following result.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2018/11/18/juliensimon-eia-dog.jpg">
+    <img alt="" class="alignnone size-medium wp-image-26577" height="169" loading="lazy" src="image02.webp" width="300"/>
+   </a>
+  </p>
+  <pre><code class="lang-bash">probability=0.979113, class=n02110958 pug, pug-dog
+probability=0.003781, class=n02108422 bull mastiff
+probability=0.003718, class=n02112706 Brabancon griffon</code></pre>
+  <p>
+   What about performance? On our c5.large instance, this prediction takes about 0.23 second on the CPU, and only 0.031 second on its eia1.large accelerator. For comparison, it takes about 0.015 second on a p3.2xlarge instance equipped with a full-fledged NVIDIA V100 GPU. If we use a eia1.medium accelerator instead, this prediction takes 0.046 second, which is just as fast as a p2.xlarge (0.042 second) but at a 75% discount!
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    Accelerating TensorFlow
+    <br/>
+   </span>
+  </p>
+  <p>
+   You can use
+   <a href="https://www.tensorflow.org/serving/">
+    TensorFlow Serving
+   </a>
+   to serve accelerated predictions: it’s a model server which loads saved models and serves high-performance prediction through REST APIs and gRPC.
+  </p>
+  <p>
+   Amazon Elastic Inference includes an accelerated version of TensorFlow Serving, which you would use like this.
+  </p>
+  <pre><code class="lang-python">$ AmazonEI_TensorFlow_Serving_v1.11_v1 --model_name=resnet --model_base_path=$MODEL_PATH --port=9000
+$ python resnet_client.py --server=localhost:9000</code></pre>
+  <p>
+   <span style="text-decoration: underline">
+    Now Available
+   </span>
+  </p>
+  <p>
+   I hope this post was informative.
+   <a href="https://aws.amazon.com/machine-learning/elastic-inference/">
+    Amazon Elastic Inference
+   </a>
+   is available now in US East (N. Virginia and Ohio), US West (Oregon), EU (Ireland) and Asia Pacific (Seoul and Tokyo). You can start building applications with it today!
+  </p>
+  <p>
+   —
+   <a href="https://twitter.com/julsimon">
+    Julien
+   </a>
+   ;
+  </p>
+  <h6>
+   Modified 08/13/2020 – In an effort to ensure a great experience, expired links in this post have been updated or removed from the original post.
+  </h6>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

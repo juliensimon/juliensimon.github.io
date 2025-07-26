@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Announcing TorchServe, An Open Source Model Server for PyTorch - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Announcing TorchServe, An Open Source Model Server for PyTorch - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on announcing torchserve, an open source model server for pytorch by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Announcing', 'TorchServe,', 'An'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/announcing-torchserve-an-open-source-model-server-for-pytorch/"/>
+  <meta property="og:title" content="Announcing TorchServe, An Open Source Model Server for PyTorch - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on announcing torchserve, an open source model server for pytorch by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2020-04-21T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/announcing-torchserve-an-open-source-model-server-for-pytorch/"/>
+  <meta property="twitter:title" content="Announcing TorchServe, An Open Source Model Server for PyTorch - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on announcing torchserve, an open source model server for pytorch by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/announcing-torchserve-an-open-source-model-server-for-pytorch/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Announcing TorchServe, An Open Source Model Server for PyTorch",
+    "description": "Expert analysis and technical deep-dive on announcing torchserve, an open source model server for pytorch by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2020-04-21T00:00:00Z",
+    "dateModified": "2020-04-21T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/announcing-torchserve-an-open-source-model-server-for-pytorch/"
+    },
+    "url": "https://julien.org/blog/announcing-torchserve-an-open-source-model-server-for-pytorch/",
+    "keywords": "AWS, Amazon Web Services, ['Announcing', 'TorchServe,', 'An'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Announcing TorchServe, An Open Source Model Server for PyTorch
+  </div>
+  
+  <h1>Announcing TorchServe, An Open Source Model Server for PyTorch</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-04-21 | Originally published at <a href="https://aws.amazon.com/blogs/aws/announcing-torchserve-an-open-source-model-server-for-pytorch/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Announcing TorchServe, An Open Source Model Server for PyTorch
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-04-21
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/announcing-torchserve-an-open-source-model-server-for-pytorch/">
+    https://aws.amazon.com/blogs/aws/announcing-torchserve-an-open-source-model-server-for-pytorch/
+   </a>
+  </p>
+  <p>
+   <a href="http://aws.amazon.com/pytorch" rel="noopener noreferrer" target="_blank">
+    PyTorch
+   </a>
+   is one of the most popular open source libraries for deep learning. Developers and researchers particularly enjoy the flexibility it gives them in building and training models. Yet, this is only half the story, and deploying and managing models in production is often the most difficult part of the machine learning process: building bespoke prediction APIs, scaling them, securing them, etc.
+  </p>
+  <p>
+   One way to simplify the model deployment process is to use a model server, i.e. an off-the-shelf web application specially designed to serve machine learning predictions in production. Model servers make it easy to load one or several models, automatically creating a prediction API backed by a scalable web server. They’re also able to run preprocessing and postprocessing code on prediction requests. Last but not least, model servers also provide production-critical features like logging, monitoring, and security. Popular model servers include
+   <a href="https://www.tensorflow.org/tfx/guide/serving">
+    TensorFlow Serving
+   </a>
+   and the
+   <a href="https://github.com/awslabs/multi-model-server">
+    Multi Model Server
+   </a>
+   .
+  </p>
+  <p>
+   Today, I’m extremely happy to announce
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   , a PyTorch model serving library that makes it easy to deploy trained PyTorch models at scale without having to write custom code.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Introducing TorchServe
+     <br/>
+    </strong>
+   </span>
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   is a collaboration between AWS and Facebook, and it’s available as part of the
+   <a href="https://pytorch.org/">
+    PyTorch
+   </a>
+   open source project. If you’re interested in how the project was initiated, you can read the initial
+   <a href="https://github.com/pytorch/pytorch/issues/27610">
+    RFC
+   </a>
+   on Github.
+  </p>
+  <p>
+   With
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   , PyTorch users can now bring their models to production quicker, without having to write custom code: on top of providing a low latency prediction API,
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   embeds default handlers for the most common applications such as object detection and text classification. In addition,
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   includes multi-model serving, model versioning for A/B testing, monitoring metrics, and RESTful endpoints for application integration. As you would expect,
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   supports any machine learning environment, including
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   , container services, and
+   <a href="https://aws.amazon.com/ec2/">
+    Amazon Elastic Compute Cloud (Amazon EC2)
+   </a>
+   .
+  </p>
+  <p>
+   Several customers are already enjoying the benefits of
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   .
+  </p>
+  <p>
+   <a href="https://www.tri-ad.global/">
+    Toyota Research Institute Advanced Development, Inc.
+   </a>
+   (TRI-AD) is developing software for automated driving at
+   <a href="https://global.toyota/en/">
+    Toyota Motor Corporation
+   </a>
+   . Says Yusuke Yachide, Lead of ML Tools at TRI-AD: “we continuously optimize and improve our computer vision models, which are critical to TRI-AD’s mission of achieving safe mobility for all with autonomous driving. Our models are trained with PyTorch on AWS, but until now PyTorch lacked a model serving framework. As a result, we spent significant engineering effort in creating and maintaining software for deploying PyTorch models to our fleet of vehicles and cloud servers. With
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   , we now have a performant and lightweight model server that is officially supported and maintained by AWS and the PyTorch community”.
+  </p>
+  <p>
+   <a href="https://www.matroid.com/">
+    Matroid
+   </a>
+   is a maker of computer vision software that detects objects and events in video footage. Says Reza Zadeh, Founder and CEO at Matroid Inc.: “we develop a rapidly growing number of machine learning models using PyTorch on AWS and on-premise environments. The models are deployed using a custom model server that requires converting the models to a different format, which is time-consuming and burdensome.
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   allows us to simplify model deployment using a single servable file that also serves as the single source of truth, and is easy to share and manage”.
+  </p>
+  <p>
+   Now, I’d like to show you how to install
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   , and load a pretrained model on
+   <a href="https://aws.amazon.com/ec2/">
+    Amazon Elastic Compute Cloud (Amazon EC2)
+   </a>
+   . You can try other environments by following the
+   <a href="https://github.com/pytorch/serve/tree/master/docs">
+    documentation
+   </a>
+   .
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Installing TorchServe
+    </strong>
+   </span>
+   <br/>
+   First, I fire up a CPU-based
+   <a href="https://aws.amazon.com/ec2/">
+    Amazon Elastic Compute Cloud (Amazon EC2)
+   </a>
+   instance running the
+   <a href="https://aws.amazon.com/marketplace/pp/Amazon-Web-Services-AWS-Deep-Learning-AMI-Ubuntu-1/B07Y43P7X5">
+    Deep Learning AMI (Ubuntu edition)
+   </a>
+   . This AMI comes preinstalled with several dependencies that I’ll need, which will speed up setup. Of course you could use any AMI instead.
+  </p>
+  <p>
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   is implemented in Java, and I need the latest OpenJDK to run it.
+  </p>
+  <p>
+   <code>
+    sudo apt install openjdk-11-jdk
+   </code>
+  </p>
+  <p>
+   Next, I create and activate a new
+   <a href="https://docs.conda.io/en/latest/">
+    Conda
+   </a>
+   environment for
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   . This will keep my Python packages nice and tidy (
+   <em>
+    virtualenv
+   </em>
+   works too, of course).
+  </p>
+  <p>
+   <code>
+    conda create -n torchserve
+   </code>
+  </p>
+  <p>
+   <code>
+    source activate torchserve
+   </code>
+  </p>
+  <p>
+   Next, I install dependencies for
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   .
+  </p>
+  <p>
+   <code>
+    pip install sentencepiece       # not available as a Conda package
+   </code>
+  </p>
+  <p>
+   <code>
+    conda install psutil pytorch torchvision torchtext -c pytorch
+   </code>
+  </p>
+  <p>
+   If you’re using a GPU instance, you’ll need an extra package.
+  </p>
+  <p>
+   <code>
+    conda install cudatoolkit=10.1
+   </code>
+   <code>
+   </code>
+  </p>
+  <p>
+   Now that dependencies are installed, I can clone the
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   repository, and install
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   .
+  </p>
+  <p>
+   <code>
+    git clone https://github.com/pytorch/serve.git
+   </code>
+  </p>
+  <p>
+   <code>
+    cd serve
+   </code>
+  </p>
+  <p>
+   <code>
+    pip install .
+   </code>
+  </p>
+  <p>
+   <code>
+    cd model-archiver
+   </code>
+  </p>
+  <p>
+   <code>
+    pip install .
+   </code>
+  </p>
+  <p>
+   Setup is complete, let’s deploy a model!
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Deploying a Model
+     <br/>
+    </strong>
+   </span>
+   For the sake of this demo, I’ll simply download a pretrained model from the PyTorch
+   <a href="https://pytorch.org/docs/stable/torchvision/models.html">
+    model zoo
+   </a>
+   . In real life, you would probably use your own model.
+  </p>
+  <p>
+   <code>
+    wget https://download.pytorch.org/models/densenet161-8d451a50.pth
+   </code>
+  </p>
+  <p>
+   Next, I need to package the model into a model archive. A model archive is a ZIP file storing all model artefacts, i.e. the model itself (
+   <em>
+    densenet161-8d451a50.pth
+   </em>
+   ), a Python script to load the state dictionary (matching tensors to layers), and any extra file you may need. Here, I include a file named
+   <em>
+    index_to_name.json
+   </em>
+   , which maps class identifiers to class names. This will be used by the built-in
+   <em>
+    image_classifier
+   </em>
+   handler, which is in charge of the prediction logic. Other built-in handlers are available (
+   <em>
+    object_detector
+   </em>
+   ,
+   <em>
+    text_classifier
+   </em>
+   ,
+   <em>
+    image_segmenter
+   </em>
+   ), and you can implement your own.
+  </p>
+  <p>
+   <code>
+    torch-model-archiver --model-name densenet161 --version 1.0 \
+    <br/>
+    --model-file examples/image_classifier/densenet_161/model.py \
+    <br/>
+    --serialized-file densenet161-8d451a50.pth \
+    <br/>
+    --extra-files examples/image_classifier/index_to_name.json \
+    <br/>
+    --handler image_classifier
+   </code>
+  </p>
+  <p>
+   Next, I create a directory to store model archives, and I move the one I just created there.
+  </p>
+  <p>
+   <code>
+    mkdir model_store
+   </code>
+  </p>
+  <p>
+   <code>
+    mv densenet161.mar model_store/
+   </code>
+  </p>
+  <p>
+   Now, I can start
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   , pointing it at the model store and at the model I want to load. Of course, I could load several models if needed.
+  </p>
+  <p>
+   <code>
+    torchserve --start --model-store model_store --models densenet161=densenet161.mar
+   </code>
+  </p>
+  <p>
+   Still on the same machine, I grab an image and easily send it to
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   for local serving using an HTTP POST request. Note the format of the URL, which includes the name of the model I want to use.
+  </p>
+  <p>
+   <code>
+    curl -O https://s3.amazonaws.com/model-server/inputs/kitten.jpg
+   </code>
+  </p>
+  <p>
+   <code>
+    curl -X POST http://127.0.0.1:8080/predictions/densenet161 -T kitten.jpg
+   </code>
+  </p>
+  <p>
+   The result appears immediately. Note that class names are visible, thanks to the built-in handler.
+  </p>
+  <p>
+   <code>
+    [
+   </code>
+   <br/>
+   <code>
+    {"tiger_cat": 0.4693356156349182},
+   </code>
+   <br/>
+   <code>
+    {"tabby": 0.46338796615600586},
+   </code>
+   <br/>
+   <code>
+    {"Egyptian_cat": 0.06456131488084793},
+   </code>
+   <br/>
+   <code>
+    {"lynx": 0.0012828155886381865},
+   </code>
+   <br/>
+   <code>
+    {"plastic_bag": 0.00023323005007114261}
+   </code>
+   <br/>
+   <code>
+    ]
+   </code>
+  </p>
+  <p>
+   I then stop
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   with the ‘
+   <em>
+    stop
+   </em>
+   ‘ command.
+  </p>
+  <p>
+   <code>
+    torchserve --stop
+   </code>
+  </p>
+  <p>
+   As you can see, it’s easy to get started with
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   using the default configuration. Now let me show you how to set it up for remote serving.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Configuring TorchServe for Remote Serving
+    </span>
+   </strong>
+   <br/>
+   Let’s create a configuration file for
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   , named
+   <em>
+    config.properties
+   </em>
+   (the default name). This files defines which model to load, and sets up remote serving. Here, I’m binding the server to all public IP addresses, but you can restrict it to a specific address if you want to. As this is running on an EC2 instance, I need to make sure that ports 8080 and 8081 are open in the Security Group.
+  </p>
+  <p>
+   <code>
+    model_store=model_store
+   </code>
+   <br/>
+   <code>
+    load_models=densenet161.mar
+   </code>
+   <br/>
+   <code>
+    inference_address=http://0.0.0.0:8080
+   </code>
+   <br/>
+   <code>
+    management_address=http://0.0.0.0:8081
+   </code>
+  </p>
+  <p>
+   Now I can start
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   in the same directory, without having to pass any command line arguments.
+  </p>
+  <p>
+   <code>
+    torchserve --start
+   </code>
+  </p>
+  <p>
+   Moving back to my local machine, I can now invoke
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   remotely, and get the same result.
+  </p>
+  <p>
+   <code>
+    curl -X POST http://ec2-54-85-61-250.compute-1.amazonaws.com:8080/predictions/densenet161 -T kitten.jpg
+   </code>
+  </p>
+  <p>
+   You probably noticed that I used HTTP. I’m guessing a lot of you will require HTTPS in production, so let me show you how to set it up.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Configuring TorchServe for HTTPS
+     <br/>
+    </span>
+   </strong>
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   can use either the Java keystore or a certificate. I’ll go with the latter.
+  </p>
+  <p>
+   First, I create a certificate and a private key with
+   <em>
+    openssl
+   </em>
+   .
+  </p>
+  <p>
+   <code>
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout mykey.key -out mycert.pem
+   </code>
+  </p>
+  <p>
+   Then, I update the configuration file to define the location of the certificate and key, and I bind
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   to its default secure ports (don’t forget to update the Security Group).
+  </p>
+  <p>
+   <code>
+    model_store=model_store
+   </code>
+   <br/>
+   <code>
+    load_models=densenet161.mar
+   </code>
+   <br/>
+   <code>
+    inference_address=https://0.0.0.0:8443
+   </code>
+   <br/>
+   <code>
+    management_address=https://0.0.0.0:8444
+   </code>
+   <br/>
+   <code>
+    private_key_file=mykey.key
+   </code>
+   <br/>
+   <code>
+    certificate_file=mycert.pem
+   </code>
+  </p>
+  <p>
+   I restart
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   , and I can now invoke it with HTTPS. As I use a self-signed certificate, I need to pass the ‘–insecure’ flag to
+   <em>
+    curl
+   </em>
+   .
+  </p>
+  <p>
+   <code>
+    curl --insecure -X POST https://ec2-54-85-61-250.compute-1.amazonaws.com:8443/predictions/densenet161 -T kitten.jpg
+   </code>
+  </p>
+  <p>
+   There’s a lot more to
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   configuration, and I encourage you to read its
+   <a href="https://github.com/pytorch/serve/tree/master/docs">
+    documentation
+   </a>
+   !
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Getting Started
+    </span>
+   </strong>
+   <br/>
+   <a href="https://github.com/pytorch/serve">
+    TorchServe
+   </a>
+   is available now at
+   <a href="https://github.com/pytorch/serve">
+    https://github.com/pytorch/serve
+   </a>
+   .
+  </p>
+  <p>
+   Give it a try, and please send us feedback on
+   <a href="https://github.com/pytorch/pytorch/issues/">
+    Github
+   </a>
+   .
+  </p>
+  <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+   - Julien
+  </a>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Amazon Transcribe Now Supports Mandarin and Russian - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Amazon Transcribe Now Supports Mandarin and Russian - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on amazon transcribe now supports mandarin and russian by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'Transcribe', 'Now'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/amazon-transcribe-now-supports-mandarin-and-russian/"/>
+  <meta property="og:title" content="Amazon Transcribe Now Supports Mandarin and Russian - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on amazon transcribe now supports mandarin and russian by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2019-08-23T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/amazon-transcribe-now-supports-mandarin-and-russian/"/>
+  <meta property="twitter:title" content="Amazon Transcribe Now Supports Mandarin and Russian - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on amazon transcribe now supports mandarin and russian by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/amazon-transcribe-now-supports-mandarin-and-russian/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Amazon Transcribe Now Supports Mandarin and Russian",
+    "description": "Expert analysis and technical deep-dive on amazon transcribe now supports mandarin and russian by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2019-08-23T00:00:00Z",
+    "dateModified": "2019-08-23T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/amazon-transcribe-now-supports-mandarin-and-russian/"
+    },
+    "url": "https://julien.org/blog/amazon-transcribe-now-supports-mandarin-and-russian/",
+    "keywords": "AWS, Amazon Web Services, ['Amazon', 'Transcribe', 'Now'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Amazon Transcribe Now Supports Mandarin and Russian
+  </div>
+  
+  <h1>Amazon Transcribe Now Supports Mandarin and Russian</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-08-23 | Originally published at <a href="https://aws.amazon.com/blogs/aws/amazon-transcribe-now-supports-mandarin-and-russian/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Amazon Transcribe Now Supports Mandarin and Russian
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-08-23
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/amazon-transcribe-now-supports-mandarin-and-russian/">
+    https://aws.amazon.com/blogs/aws/amazon-transcribe-now-supports-mandarin-and-russian/
+   </a>
+  </p>
+  <p>
+   <strong>
+    Update October 1, 2021
+   </strong>
+   – This post has been edited to remove outdated S3 buckets and files.
+  </p>
+  <hr/>
+  <p>
+   As speech is central to human interaction, artificial intelligence research has long focused on speech recognition, the first step in designing and building systems allowing humans to interact intuitively with machines. The diversity in languages, accents and voices makes this an incredibly difficult problem, requiring expert skills, extremely large data sets, and vast amounts of computing power to train efficient models.
+  </p>
+  <p>
+   In order to help organizations and developers use speech recognition in their applications, we
+   <a href="https://www.youtube.com/watch?v=oVo-IKiM8Xk">
+    launched
+   </a>
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   at AWS re:Invent 2017, an automatic speech recognition service. Thanks to
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   ,
+   <a href="https://aws.amazon.com/transcribe/customers/">
+    customers
+   </a>
+   such as
+   <a href="https://videopeel.com/">
+    VideoPeel
+   </a>
+   ,
+   <a href="https://echo360.com/">
+    Echo360
+   </a>
+   , or
+   <a href="https://www.geappliances.com">
+    GE Appliances
+   </a>
+   have been able to quickly and easily add speech recognition capabilities to their applications and devices.
+  </p>
+  <p>
+   A single API call is all that it takes… and you don’t need to know the first thing about machine learning. You can analyze audio files stored in
+   <a href="https://aws.amazon.com/s3/">
+    Amazon Simple Storage Service (Amazon S3)
+   </a>
+   and have the service return a text file of the transcribed speech. You can also send a live audio stream to
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   and receive a stream of transcripts in real time.
+  </p>
+  <p>
+   Since launch, the team has constantly added new languages, and today we are happy to announce support for Mandarin and Russian, bringing the total number of
+   <a href="https://docs.aws.amazon.com/transcribe/latest/dg/what-is-transcribe.html">
+    supported languages
+   </a>
+   to 16.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Introducing Mandarin
+    </strong>
+   </span>
+   <br/>
+   Working with
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   is extremely simple: let me show you how to get started in just a few minutes.
+  </p>
+  <p>
+   Let’s try Mandarin first. Starting from this Little Red Riding Hood
+   <a href="https://www.youtube.com/watch?v=By5ql5a6Y40">
+    video
+   </a>
+   , I extracted the audio track, saved it in MP3 format, and uploaded it to one of my
+   <a href="https://aws.amazon.com/s3/">
+    Amazon Simple Storage Service (Amazon S3)
+   </a>
+   buckets.
+  </p>
+  <p>
+   Then, I started a
+   <a href="https://docs.aws.amazon.com/cli/latest/reference/transcribe/start-transcription-job.html">
+    transcription job
+   </a>
+   using the
+   <a href="https://aws.amazon.com/cli/">
+    AWS CLI
+   </a>
+   :
+  </p>
+  <p>
+   <code>
+    $ aws transcribe start-transcription-job--media MediaFileUri=https://s3-us-west-2.amazonaws.com/&lt;Your-Bucket&gt;/little_red_riding_hood-mandarin.mp3 --media-format mp3 --language-code zh-CN --transcription-job-name little_red_riding_hood-mandarin
+   </code>
+  </p>
+  <p>
+   After a few minutes, the job is complete. Looking at the AWS console, I can either download it using the URL provided by
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   , or read it directly.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/08/09/juliensimon-transcribe-2.png">
+    <img alt="" class="size-large wp-image-30252 aligncenter" height="368" src="image01.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Unfortunately, I don’t speak Mandarin, but using
+   <a href="https://aws.amazon.com/translate/">
+    Amazon Translate
+   </a>
+   , this text is about a sick grandmother and a big bad wolf, so it looks like
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   did its job!
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Introducing Russian
+     <br/>
+    </strong>
+   </span>
+   Let’s try Russian now, using the dialogue in this short
+   <a href="https://www.youtube.com/watch?v=rz_GxFLlTnc">
+    video
+   </a>
+   .
+  </p>
+  <table>
+   <tbody>
+    <tr>
+     <td>
+      Здравствуйте!
+     </td>
+     <td>
+      Greetings!
+     </td>
+    </tr>
+    <tr>
+     <td>
+      Добрый день!
+     </td>
+     <td>
+      Good day!
+     </td>
+    </tr>
+    <tr>
+     <td>
+      Давайте познакомимся. Меня зовут Слава.
+     </td>
+     <td>
+      Let’s introduce ourselves. My name is Slava.
+     </td>
+    </tr>
+    <tr>
+     <td>
+      Очень приятно, а меня – Наташа.
+     </td>
+     <td>
+      Nice to meet you, and mine – Natasha.
+     </td>
+    </tr>
+    <tr>
+     <td>
+      Наташа, кто вы по профессии?
+     </td>
+     <td>
+      Natasha, what is your profession?
+     </td>
+    </tr>
+    <tr>
+     <td>
+      Я врач. А вы?
+     </td>
+     <td>
+      I (am a) doctor. And you?
+     </td>
+    </tr>
+    <tr>
+     <td>
+      Я инженер.
+     </td>
+     <td>
+      I (am an) engineer.
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <p>
+   This time, I will ask
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   to perform speaker identification too.
+  </p>
+  <p>
+   <code>
+    $ aws transcribe start-transcription-job --media MediaFileUri=https://s3-us-west-2.amazonaws.com/&lt;Your-Bucket&gt;/russian-dialogue.mp3 --media-format mp3 --language-code ru-RU --transcription-job-name russian_dialogue --settings ShowSpeakerLabels=true,MaxSpeakerLabels=2
+   </code>
+  </p>
+  <p>
+   Here is the result.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/08/09/juliensimon-transcribe-4.png">
+    <img alt="" class="size-large wp-image-30255 aligncenter" height="514" loading="lazy" src="image02.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   As you can see, not only has
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   faithfully converted speech to text, it has also correctly assigned each sentence to the correct speaker.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Now Available!
+    </strong>
+   </span>
+   <br/>
+   You can start using these two new languages today in the following regions:
+  </p>
+  <ul>
+   <li>
+    Americas: US East (Ohio), US East (N. Virginia), US West (N. California), US West (Oregon), AWS GovCloud (US-West), Canada (Central), South America (Sao Paulo).
+   </li>
+   <li>
+    Europe: EU (Frankfurt), EU (Ireland), EU (London), EU (Paris).
+   </li>
+   <li>
+    Asia Pacific: Asia Pacific (Mumbai), Asia Pacific (Seoul), Asia Pacific (Singapore), Asia Pacific (Sydney).
+   </li>
+  </ul>
+  <p>
+   The
+   <a href="https://aws.amazon.com/free/">
+    free tier
+   </a>
+   covers 60 minutes for the first 12 months, starting from your first transcription request.
+  </p>
+  <p>
+   As always, we’d love to hear your feedback: please post it to the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=278">
+    AWS forum
+   </a>
+   for
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   , or send it through your usual AWS contacts.
+  </p>
+  <p>
+   —
+   <a href="http://aws.amazon.com/evangelists/julien-simon" rel="noopener noreferrer" target="_blank">
+    Julien
+   </a>
+   ;
+  </p>
+  <h6>
+   Modified 10/23/2020 – In an effort to ensure a great experience, expired links in this post have been updated or removed from the original post.
+  </h6>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

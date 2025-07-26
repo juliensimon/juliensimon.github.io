@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Amazon ECS Now Supports EC2 Inf1 Instances - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Amazon ECS Now Supports EC2 Inf1 Instances - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on amazon ecs now supports ec2 inf1 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'ECS', 'Now'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/amazon-ecs-now-supports-ec2-inf1-instances/"/>
+  <meta property="og:title" content="Amazon ECS Now Supports EC2 Inf1 Instances - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on amazon ecs now supports ec2 inf1 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2020-08-14T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/amazon-ecs-now-supports-ec2-inf1-instances/"/>
+  <meta property="twitter:title" content="Amazon ECS Now Supports EC2 Inf1 Instances - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on amazon ecs now supports ec2 inf1 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/amazon-ecs-now-supports-ec2-inf1-instances/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Amazon ECS Now Supports EC2 Inf1 Instances",
+    "description": "Expert analysis and technical deep-dive on amazon ecs now supports ec2 inf1 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2020-08-14T00:00:00Z",
+    "dateModified": "2020-08-14T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/amazon-ecs-now-supports-ec2-inf1-instances/"
+    },
+    "url": "https://julien.org/blog/amazon-ecs-now-supports-ec2-inf1-instances/",
+    "keywords": "AWS, Amazon Web Services, ['Amazon', 'ECS', 'Now'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Amazon ECS Now Supports EC2 Inf1 Instances
+  </div>
+  
+  <h1>Amazon ECS Now Supports EC2 Inf1 Instances</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-08-14 | Originally published at <a href="https://aws.amazon.com/blogs/aws/amazon-ecs-now-supports-ec2-inf1-instances/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Amazon ECS Now Supports EC2 Inf1 Instances
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-08-14
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/amazon-ecs-now-supports-ec2-inf1-instances/">
+    https://aws.amazon.com/blogs/aws/amazon-ecs-now-supports-ec2-inf1-instances/
+   </a>
+  </p>
+  <p>
+   As machine learning and deep learning models become more sophisticated, hardware acceleration is increasingly required to deliver fast predictions at high throughput. Today, we’re very happy to announce that AWS customers can now use the Amazon EC2
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances on
+   <a href="https://aws.amazon.com/ecs/">
+    Amazon Elastic Container Service (Amazon ECS)
+   </a>
+   , for high performance and the lowest prediction cost in the cloud. For a few weeks now, these instances have also been
+   <a href="https://aws.amazon.com/blogs/aws/amazon-eks-now-supports-ec2-inf1-instances/">
+    available
+   </a>
+   on
+   <a href="https://aws.amazon.com/eks/">
+    Amazon Elastic Kubernetes Service (Amazon EKS)
+   </a>
+   .
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     A primer on EC2 Inf1 instances
+    </span>
+   </strong>
+   <br/>
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances were launched at AWS re:Invent 2019. They are powered by
+   <a href="https://aws.amazon.com/machine-learning/inferentia/">
+    AWS Inferentia
+   </a>
+   , a custom chip built from the ground up by AWS to accelerate machine learning inference workloads.
+  </p>
+  <p>
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances are available in multiple sizes, with 1, 4, or 16
+   <a href="https://aws.amazon.com/machine-learning/inferentia/">
+    AWS Inferentia
+   </a>
+   chips, with up to 100 Gbps network bandwidth and up to 19 Gbps EBS bandwidth. An
+   <a href="https://aws.amazon.com/machine-learning/inferentia/">
+    AWS Inferentia
+   </a>
+   chip contains four NeuronCores. Each one implements a high-performance systolic array matrix multiply engine, which massively speeds up typical deep learning operations such as convolution and transformers. NeuronCores are also equipped with a large on-chip cache, which helps cut down on external memory accesses, saving I/O time in the process. When several
+   <a href="https://aws.amazon.com/machine-learning/inferentia/">
+    AWS Inferentia
+   </a>
+   chips are available on an
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instance, you can partition a model across them and store it entirely in cache memory. Alternatively, to serve multi-model predictions from a single
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instance, you can partition the NeuronCores of an
+   <a href="https://aws.amazon.com/machine-learning/inferentia/">
+    AWS Inferentia
+   </a>
+   chip across several models.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Compiling Models for EC2 Inf1 Instances
+    </span>
+   </strong>
+   <br/>
+   To run machine learning models on
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances, you need to compile them to a hardware-optimized representation using the
+   <a href="https://github.com/aws/aws-neuron-sdk">
+    AWS Neuron SDK
+   </a>
+   . All tools are readily available on the
+   <a href="https://aws.amazon.com/machine-learning/amis/">
+    AWS Deep Learning AMI
+   </a>
+   , and you can also install them on your own instances. You’ll find instructions in the Deep Learning AMI
+   <a href="https://docs.aws.amazon.com/dlami/latest/devguide/tutorial-inferentia.html">
+    documentation
+   </a>
+   , as well as tutorials for TensorFlow, PyTorch, and Apache MXNet in the AWS Neuron SDK
+   <a href="https://github.com/aws/aws-neuron-sdk/blob/master/README.md#getting-started">
+    repository
+   </a>
+   .
+  </p>
+  <p>
+   In the demo below, I will show you how to deploy a Neuron-optimized model on an ECS cluster of
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances, and how to serve predictions with
+   <a href="https://www.tensorflow.org/tfx/guide/serving">
+    TensorFlow Serving
+   </a>
+   . The model in question is
+   <a href="https://github.com/google-research/bert">
+    BERT
+   </a>
+   , a state of the art model for natural language processing tasks. This is a huge model with hundreds of millions of parameters, making it a great candidate for hardware acceleration.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Creating an Amazon ECS Cluster
+    </strong>
+   </span>
+   <br/>
+   Creating a cluster is the simplest thing: all it takes is a call to the
+   <code>
+    <a href="https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_CreateCluster.html">
+     CreateCluster
+    </a>
+   </code>
+   API.
+  </p>
+  <p>
+   <code>
+    $ aws ecs create-cluster --cluster-name ecs-inf1-demo
+   </code>
+  </p>
+  <p>
+   Immediately, I see the new cluster in the console.
+  </p>
+  <p>
+   <img alt="New cluster" class="alignnone size-full wp-image-39411" height="302" src="image01.webp" style="border: 1px solid black" width="969"/>
+  </p>
+  <p>
+   Several prerequisites are required before we can add instances to this cluster:
+  </p>
+  <ul>
+   <li>
+    An
+    <a href="https://aws.amazon.com/iam/">
+     AWS Identity and Access Management (IAM)
+    </a>
+    role for ECS instances: if you don’t have one already, you can find instructions in the
+    <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/instance_IAM_role.html">
+     documentation
+    </a>
+    . Here, my role is named
+    <code>
+     ecsInstanceRole
+    </code>
+    .
+   </li>
+   <li>
+    An Amazon Machine Image (AMI) containing the
+    <a href="https://github.com/aws/amazon-ecs-agent">
+     ECS agent
+    </a>
+    and supporting
+    <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+     Inf1
+    </a>
+    instances. You could build your own, or use the
+    <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html">
+     ECS-optimized AMI for Inferentia
+    </a>
+    . In the us-east-1 region, its id is
+    <code>
+     ami-04450f16e0cd20356
+    </code>
+    .
+   </li>
+   <li>
+    A Security Group, opening network ports for TensorFlow Serving (8500 for gRPC, 8501 for HTTP). The identifier for mine is
+    <code>
+     sg-0994f5c7ebbb48270
+    </code>
+    .
+   </li>
+   <li>
+    If you’d like to have ssh access, your Security Group should also open port 22, and you should pass the name of an SSH key pair. Mine is called
+    <code>
+     admin
+    </code>
+    .
+   </li>
+  </ul>
+  <p>
+   We also need to create a small user data file in order to let instances join our cluster. This is achieved by storing the name of the cluster in an environment variable, itself written to the configuration file of the ECS agent.
+  </p>
+  <p>
+   <code>
+    #!/bin/bash
+   </code>
+   <br/>
+   <code>
+    echo ECS_CLUSTER=ecs-inf1-demo &gt;&gt; /etc/ecs/ecs.config
+   </code>
+  </p>
+  <p>
+   We’re all set. Let’s add a couple of
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances with the
+   <code>
+    <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html">
+     RunInstances
+    </a>
+   </code>
+   API. To minimize cost, we’ll request
+   <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html">
+    Spot Instances
+   </a>
+   .
+  </p>
+  <p>
+   <code>
+    $ aws ec2 run-instances \
+   </code>
+   <br/>
+   <code>
+    --image-id ami-04450f16e0cd20356 \
+   </code>
+   <br/>
+   <code>
+    --count 2 \
+   </code>
+   <br/>
+   <code>
+    --instance-type inf1.xlarge \
+   </code>
+   <br/>
+   <code>
+    --instance-market-options '{"MarketType":"spot"}' \
+   </code>
+   <br/>
+   <code>
+    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=ecs-inf1-demo}]' \
+   </code>
+   <br/>
+   <code>
+    --key-name admin \
+   </code>
+   <br/>
+   <code>
+    --security-group-ids sg-0994f5c7ebbb48270 \
+   </code>
+   <br/>
+   <code>
+    --iam-instance-profile Name=ecsInstanceRole \
+   </code>
+   <br/>
+   <code>
+    --user-data file://user-data.txt
+   </code>
+  </p>
+  <p>
+   Both instances appear right away in the EC2 console.
+  </p>
+  <p>
+   <img alt="Inf1 instances" class="size-full wp-image-39415 aligncenter" height="234" loading="lazy" src="image02.webp" style="border: 1px solid black" width="993"/>
+  </p>
+  <p>
+   A couple of minutes later, they’re ready to run tasks on the cluster.
+  </p>
+  <p>
+   <img alt="Inf1 instances" class="size-full wp-image-39417 aligncenter" height="643" loading="lazy" src="image03.webp" style="border: 1px solid black" width="982"/>
+  </p>
+  <p>
+   Our infrastructure is ready. Now, let’s build a container storing our BERT model.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Building a Container for Inf1 Instances
+    </strong>
+   </span>
+   <br/>
+   The
+   <code>
+    Dockerfile
+   </code>
+   is pretty straightforward:
+  </p>
+  <ul>
+   <li>
+    Starting from an
+    <a href="https://hub.docker.com/_/amazonlinux/">
+     Amazon Linux 2
+    </a>
+    image, we open ports 8500 and 8501 for TensorFlow Serving.
+   </li>
+   <li>
+    Then, we add the Neuron SDK repository to the list of repositories, and we install a version of TensorFlow Serving that supports
+    <a href="https://aws.amazon.com/machine-learning/inferentia/">
+     AWS Inferentia
+    </a>
+    .
+   </li>
+   <li>
+    Finally, we copy our BERT model inside the container, and we load it at startup.
+   </li>
+  </ul>
+  <p>
+   Here is the complete file.
+  </p>
+  <p>
+   <code>
+    FROM amazonlinux:2
+   </code>
+   <br/>
+   <code>
+    EXPOSE 8500 8501
+   </code>
+   <br/>
+   <code>
+    RUN echo $'[neuron] \n\
+   </code>
+   <br/>
+   <code>
+    name=Neuron YUM Repository \n\
+   </code>
+   <br/>
+   <code>
+    baseurl=https://yum.repos.neuron.amazonaws.com \n\
+   </code>
+   <br/>
+   <code>
+    enabled=1' &gt; /etc/yum.repos.d/neuron.repo
+    <br/>
+   </code>
+   <code>
+    RUN rpm --import https://yum.repos.neuron.amazonaws.com/GPG-PUB-KEY-AMAZON-AWS-NEURON.PUB
+   </code>
+   <br/>
+   <code>
+    RUN yum install -y tensorflow-model-server-neuron
+   </code>
+   <br/>
+   <code>
+    COPY bert /bert
+   </code>
+   <br/>
+   <code>
+    CMD ["/bin/sh", "-c", "/usr/local/bin/tensorflow_model_server_neuron --port=8500 --rest_api_port=8501 --model_name=bert --model_base_path=/bert/"]
+   </code>
+  </p>
+  <p>
+   Then, I build and push the container to a repository hosted in
+   <a href="https://aws.amazon.com/ecr/">
+    Amazon Elastic Container Registry (Amazon ECR)
+   </a>
+   . Business as usual.
+  </p>
+  <p>
+   <code>
+    $ docker build -t neuron-tensorflow-inference .
+   </code>
+  </p>
+  <p>
+   <code>
+    $ aws ecr create-repository --repository-name ecs-inf1-demo
+   </code>
+  </p>
+  <p>
+   <code>
+    $ aws ecr get-login-password | docker login --username AWS --password-stdin 123456789012.dkr.ecr.us-east-1.amazonaws.com
+   </code>
+  </p>
+  <p>
+   <code>
+    $ docker tag neuron-tensorflow-inference 123456789012.dkr.ecr.us-east-1.amazonaws.com/ecs-inf1-demo:latest
+   </code>
+  </p>
+  <p>
+   <code>
+    $ docker push
+   </code>
+  </p>
+  <p>
+   Now, we need to create a
+   <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html">
+    task definition
+   </a>
+   in order to run this container on our cluster.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Creating a Task Definition for Inf1 Instances
+     <br/>
+    </span>
+   </strong>
+   If you don’t have one already, you should first create an execution role, i.e. a role allowing the ECS agent to perform API calls on your behalf. You can find more information in the
+   <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html">
+    documentation
+   </a>
+   . Mine is called
+   <code>
+    ecsTaskExecutionRole
+   </code>
+   .
+  </p>
+  <p>
+   The full task definition is visible below. As you can see, it holds two containers:
+  </p>
+  <ul>
+   <li>
+    The BERT container that I built,
+   </li>
+   <li>
+    A sidecar container called
+    <code>
+     neuron-rtd
+    </code>
+    , that allows the BERT container to access NeuronCores present on the
+    <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+     Inf1
+    </a>
+    instance. The
+    <code>
+     AWS_NEURON_VISIBLE_DEVICES
+    </code>
+    environment variable lets you control which ones may be used by the container. You could use it to pin a container on one or several specific NeuronCores.
+   </li>
+  </ul>
+  <pre><code class="lang-json">{
+  "family": "ecs-neuron",
+  "executionRoleArn": "arn:aws:iam::123456789012:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "entryPoint": [
+        "sh",
+        "-c"
+      ],
+      "portMappings": [
+        {
+          "hostPort": 8500,
+          "protocol": "tcp",
+          "containerPort": 8500
+        },
+        {
+          "hostPort": 8501,
+          "protocol": "tcp",
+          "containerPort": 8501
+        },
+        {
+          "hostPort": 0,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
+      "command": [
+        "tensorflow_model_server_neuron --port=8500 --rest_api_port=8501 --model_name=bert --model_base_path=/bert"
+      ],
+      "cpu": 0,
+      "environment": [
+        {
+          "name": "NEURON_RTD_ADDRESS",
+          "value": "unix:/sock/neuron-rtd.sock"
+        }
+      ],
+      "mountPoints": [
+        {
+          "containerPath": "/sock",
+          "sourceVolume": "sock"
+        }
+      ],
+      "memoryReservation": 1000,
+      "image": "123456789012.dkr.ecr.us-east-1.amazonaws.com/ecs-inf1-demo:latest",
+      "essential": true,
+      "name": "bert"
+    },
+    {
+      "entryPoint": [
+        "sh",
+        "-c"
+      ],
+      "portMappings": [],
+      "command": [
+        "neuron-rtd -g unix:/sock/neuron-rtd.sock"
+      ],
+      "cpu": 0,
+      "environment": [
+        {
+          "name": "AWS_NEURON_VISIBLE_DEVICES",
+          "value": "ALL"
+        }
+      ],
+      "mountPoints": [
+        {
+          "containerPath": "/sock",
+          "sourceVolume": "sock"
+        }
+      ],
+      "memoryReservation": 1000,
+      "image": "790709498068.dkr.ecr.us-east-1.amazonaws.com/neuron-rtd:latest",
+      "essential": true,
+      "linuxParameters": { "capabilities": { "add": ["SYS_ADMIN", "IPC_LOCK"] } },
+      "name": "neuron-rtd"
+    }
+  ],
+  "volumes": [
+    {
+      "name": "sock",
+      "host": {
+        "sourcePath": "/tmp/sock"
+      }
+    }
+  ]
+}</code></pre>
+  <p>
+   Finally, I call the
+   <code>
+    <a href="https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_RegisterTaskDefinition.html">
+     RegisterTaskDefinition
+    </a>
+   </code>
+   API to let the ECS backend know about it.
+  </p>
+  <p>
+   <code>
+    $ aws ecs register-task-definition --cli-input-json file://inf1-task-definition.json
+   </code>
+  </p>
+  <p>
+   We’re now ready to run our container, and predict with it.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Running a Container on Inf1 Instances
+    </strong>
+   </span>
+   <br/>
+   As this is a prediction service, I want to make sure that it’s always available on the cluster. Instead of simply running a task, I create an ECS
+   <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html">
+    Service
+   </a>
+   that will make sure the required number of container copies is running, relaunching them should any failure happen.
+  </p>
+  <p>
+   <code>
+    $ aws ecs create-service --cluster ecs-inf1-demo \
+   </code>
+   <br/>
+   <code>
+    --service-name bert-inf1 \
+   </code>
+   <br/>
+   <code>
+    --task-definition ecs-neuron:1 \
+   </code>
+   <br/>
+   <code>
+    --desired-count 1
+   </code>
+  </p>
+  <p>
+   A minute later, I see that both task containers are running on the cluster.
+  </p>
+  <p>
+   <img alt="Running containers" class="size-full wp-image-39426 aligncenter" height="439" loading="lazy" src="image04.webp" style="border: 1px solid black" width="815"/>
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Predicting with BERT on ECS and Inf1
+     <br/>
+    </span>
+   </strong>
+   The inner workings of BERT are beyond the scope of this post. This particular model expects a sequence of 128 tokens, encoding the words of two sentences we’d like to compare for semantic equivalence.
+  </p>
+  <p>
+   Here, I’m only interested in measuring prediction latency, so dummy data is fine. I build 100 prediction requests storing a sequence of 128 zeros. Using the IP address of the BERT container, I send them to the TensorFlow Serving endpoint via grpc, and I compute the average prediction time.
+  </p>
+  <p>
+   Here is the full code.
+  </p>
+  <pre><code class="lang-python">import numpy as np
+import grpc
+import tensorflow as tf
+from tensorflow_serving.apis import predict_pb2
+from tensorflow_serving.apis import prediction_service_pb2_grpc
+import time
+
+if __name__ == '__main__':
+    channel = grpc.insecure_channel('18.234.61.31:8500')
+    stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
+    request = predict_pb2.PredictRequest()
+    request.model_spec.name = 'bert'
+    i = np.zeros([1, 128], dtype=np.int32)
+    request.inputs['input_ids'].CopyFrom(tf.contrib.util.make_tensor_proto(i, shape=i.shape))
+    request.inputs['input_mask'].CopyFrom(tf.contrib.util.make_tensor_proto(i, shape=i.shape))
+    request.inputs['segment_ids'].CopyFrom(tf.contrib.util.make_tensor_proto(i, shape=i.shape))
+
+    latencies = []
+    for i in range(100):
+        start = time.time()
+        result = stub.Predict(request)
+        latencies.append(time.time() - start)
+        print("Inference successful: {}".format(i))
+    print ("Ran {} inferences successfully. Latency average = {}".format(len(latencies), np.average(latencies)))</code></pre>
+  <p>
+   For convenience, I’m running this code on an EC2 instance based on the
+   <a href="https://aws.amazon.com/machine-learning/amis/">
+    Deep Learning AMI
+   </a>
+   . It comes pre-installed with a
+   <a href="https://docs.conda.io/en/latest/">
+    Conda
+   </a>
+   environment for TensorFlow and TensorFlow Serving, saving me from installing any dependencies.
+  </p>
+  <p>
+   <code>
+    $ source activate tensorflow_p36
+   </code>
+   <br/>
+   <code>
+    $ python predict.py
+   </code>
+  </p>
+  <p>
+   On average, prediction took 56.5ms. As far as BERT goes, this is pretty good!
+  </p>
+  <p>
+   <code>
+    Ran 100 inferences successfully. Latency average = 0.05647835493087769
+   </code>
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Getting Started
+    </span>
+   </strong>
+   <br/>
+   You can now deploy Amazon Elastic Compute Cloud (EC2)
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances on
+   <a href="https://aws.amazon.com/ecs/">
+    Amazon Elastic Container Service (Amazon ECS)
+   </a>
+   today in the US East (N. Virginia), US West (Oregon), US East (Ohio), Europe (Frankfurt), Europe (Ireland), Asia Pacific (Sydney), and Asia Pacific (Tokyo) regions. As
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   deployment progresses, you’ll be able to use them with
+   <a href="https://aws.amazon.com/ecs/">
+    Amazon Elastic Container Service (Amazon ECS)
+   </a>
+   in more regions.
+  </p>
+  <p>
+   Give this a try, and please send us feedback either through your usual AWS Support contacts, on the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=187">
+    AWS Forum
+   </a>
+   for
+   <a href="https://aws.amazon.com/ecs/">
+    Amazon Elastic Container Service (Amazon ECS)
+   </a>
+   , or on the
+   <a href="https://github.com/aws/containers-roadmap">
+    container roadmap
+   </a>
+   on Github.
+  </p>
+  <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+   - Julien
+  </a>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

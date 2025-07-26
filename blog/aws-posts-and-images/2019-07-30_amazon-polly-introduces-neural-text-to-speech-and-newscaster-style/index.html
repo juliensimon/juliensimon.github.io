@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Amazon Polly Introduces Neural Text-To-Speech and Newscaster Style - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Amazon Polly Introduces Neural Text-To-Speech and Newscaster Style - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on amazon polly introduces neural text-to-speech and newscaster style by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'Polly', 'Introduces'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/amazon-polly-introduces-neural-text-to-speech-and-newscaster-style/"/>
+  <meta property="og:title" content="Amazon Polly Introduces Neural Text-To-Speech and Newscaster Style - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on amazon polly introduces neural text-to-speech and newscaster style by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2019-07-30T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/amazon-polly-introduces-neural-text-to-speech-and-newscaster-style/"/>
+  <meta property="twitter:title" content="Amazon Polly Introduces Neural Text-To-Speech and Newscaster Style - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on amazon polly introduces neural text-to-speech and newscaster style by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/amazon-polly-introduces-neural-text-to-speech-and-newscaster-style/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Amazon Polly Introduces Neural Text-To-Speech and Newscaster Style",
+    "description": "Expert analysis and technical deep-dive on amazon polly introduces neural text-to-speech and newscaster style by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2019-07-30T00:00:00Z",
+    "dateModified": "2019-07-30T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/amazon-polly-introduces-neural-text-to-speech-and-newscaster-style/"
+    },
+    "url": "https://julien.org/blog/amazon-polly-introduces-neural-text-to-speech-and-newscaster-style/",
+    "keywords": "AWS, Amazon Web Services, ['Amazon', 'Polly', 'Introduces'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Amazon Polly Introduces Neural Text-To-Speech and Newscaster Style
+  </div>
+  
+  <h1>Amazon Polly Introduces Neural Text-To-Speech and Newscaster Style</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-07-30 | Originally published at <a href="https://aws.amazon.com/blogs/aws/amazon-polly-introduces-neural-text-to-speech-and-newscaster-style/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Amazon Polly Introduces Neural Text-To-Speech and Newscaster Style
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-07-30
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/amazon-polly-introduces-neural-text-to-speech-and-newscaster-style/">
+    https://aws.amazon.com/blogs/aws/amazon-polly-introduces-neural-text-to-speech-and-newscaster-style/
+   </a>
+  </p>
+  <p>
+   <strong>
+    Update September 28, 2021 –
+   </strong>
+   Removed outdated S3 buckets from this post.
+  </p>
+  <hr/>
+  <p>
+   From
+   <a href="https://en.wikipedia.org/wiki/Robby_the_Robot">
+    Robbie the Robot
+   </a>
+   to
+   <a href="https://en.wikipedia.org/wiki/J.A.R.V.I.S.">
+    Jarvis
+   </a>
+   , science fiction writers have long understood how important it was for an artificial being to sound as lifelike as possible. Speech is central to human interaction, and beyond words, it helps us express feelings and emotions: who can forget HAL 9000’s haunting
+   <a href="https://www.youtube.com/watch?v=UgkyrW2NiwM">
+    final scene
+   </a>
+   in
+   <em>
+    2001: A Space Odyssey
+   </em>
+   ?
+  </p>
+  <p>
+   In the real world, things are more complicated of course. Decades before the term ‘artificial intelligence’ had even been coined, scientists were designing systems that tried to mimic the human voice. In 1937, almost 20 years before the seminal
+   <a href="https://en.wikipedia.org/wiki/Dartmouth_workshop">
+    Dartmouth workshop
+   </a>
+   ,
+   <a href="https://en.wikipedia.org/wiki/Homer_Dudley">
+    Homer Dudley
+   </a>
+   invented the
+   <a href="https://en.wikipedia.org/wiki/Voder">
+    Voder
+   </a>
+   , the first attempt to synthesize human speech with electronic components: this
+   <a href="https://www.youtube.com/watch?v=5hyI_dM5cGo">
+    video
+   </a>
+   has sound samples and extra information on this incredible device.
+  </p>
+  <p>
+   We’ve come a long way since then! At AWS re:Invent 2016, we
+   <a href="https://aws.amazon.com/blogs/aws/polly-text-to-speech-in-47-voices-and-24-languages/">
+    announced
+   </a>
+   <a href="http://aws.amazon.com/polly">
+    Polly
+   </a>
+   , a managed service that turns text into lifelike speech, allowing customers to create applications that talk, and build entirely new categories of speech-enabled products. Zero machine learning expertise required: just call an API and get the job done! Since then, the team has regularly added new voices, for a current total of
+   <a href="https://docs.aws.amazon.com/polly/latest/dg/voicelist.html">
+    29 languages and 59 voices
+   </a>
+   .
+  </p>
+  <p>
+   Today, we’re happy to announce two major new features for
+   <a href="http://aws.amazon.com/polly">
+    Polly
+   </a>
+   : Neural Text-To-Speech, and a groundbreaking newscaster style.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Introducing Neural Text-To-Speech (NTTS)
+     <br/>
+    </span>
+   </strong>
+   Through a new machine learning approach, NTTS delivers significant improvements in speech quality. It increases naturalness and expressiveness, two key factors in synthesizing lifelike speech that is getting closer than ever from human voices. Here’s an example of the quality you can expect.
+  </p>
+  <p>
+   As of today, NTTS is available for 11 voices, both in real-time and in batch mode:
+  </p>
+  <ul>
+   <li>
+    All 3 UK English voices: Amy, Emma and Brian.
+   </li>
+   <li>
+    All 8 US English voices: Ivy, Joanna, Kendra, Kimberly, Salli, Joey, Justin and Matthew.
+   </li>
+  </ul>
+  <p>
+   Why not head out to the
+   <a href="http://console.aws.amazon.com/" rel="noopener noreferrer" target="_blank">
+    AWS console
+   </a>
+   for a quick test?
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    Introducing the newscaster style
+   </span>
+  </p>
+  <p>
+   Speech quality is certainly important, but more can be done to make a synthetic voice sound even more realistic and engaging. What about style? For sure, human ears can tell the difference between a newscast, a sportscast, a university class and so on; indeed, most humans adopt the right style of speech for the right context, and this certainly helps in getting their message across.
+  </p>
+  <p>
+   Thanks to NTTS, it’s possible to apply styles to synthesized speech, and you can now use a newscaster style with
+   <a href="http://aws.amazon.com/polly">
+    Polly
+   </a>
+   . Here’s an example.
+  </p>
+  <p>
+   From news to blog posts, this makes narration sound even more realistic, and customers like
+   <a href="https://www.theglobeandmail.com/">
+    The Globe and Mail
+   </a>
+   already use it today. Thanks to
+   <a href="http://aws.amazon.com/polly">
+    Polly
+   </a>
+   and the newscaster style, their readers (or should we say listeners now?) can enjoy articles read in a high-quality voice that sounds like what they might expect to hear on the TV or radio. Adding
+   <a href="https://aws.amazon.com/translate/">
+    Amazon Translate
+   </a>
+   , they can also listen to articles that are automatically translated to a language they understand.
+  </p>
+  <p>
+   As of today, the newscaster style is available for two US English voices (Joanna and Matthew), both in real-time and in batch mode. Again, you can head out to the
+   <a href="http://console.aws.amazon.com/" rel="noopener noreferrer" target="_blank">
+    AWS console
+   </a>
+   for a quick test, and here’s the same clip as above with the newscaster style.
+  </p>
+  <p>
+   Using
+   <a href="http://aws.amazon.com/polly">
+    Polly
+   </a>
+   APIs with the NTTS voices and the newscaster style is extremely easy. Please let me show you how to get started with both.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Using NTTS Voices and the Newscaster Style
+    </strong>
+    <br/>
+   </span>
+   Let’s grab a bit of text for
+   <a href="http://aws.amazon.com/polly">
+    Polly
+   </a>
+   to read: how about this paragraph from
+   <a href="https://aws.amazon.com/s3/">
+    Amazon Simple Storage Service (Amazon S3)
+   </a>
+   ‘s announcement in 2006?
+  </p>
+  <p>
+   <em>
+    “Earlier today we rolled out Amazon S3, our reliable, highly scalable, and low-latency data storage service. Using SOAP and REST interfaces, developers can easily store any number of blocks of data in S3. Each block can be up to 5 GB in length, and is associated with a user-defined key and additional key-value metadata pairs. Further, each block is protected by an ACL (Access Control List) allowing the developer to keep the data private, share it for reading, or share it for reading and writing, as desired. The system was designed to provide a data availability factor of 99.99%; all data is transparently stored in multiple locations”.
+   </em>
+  </p>
+  <p>
+   I will use batch mode in order to save sound files in S3 and let you grab them: I explicitly changed permissions to make them public, but don’t worry, your own files are completely private by default.
+  </p>
+  <p>
+   Let’s first try the standard Matthew voice.
+  </p>
+  <pre><code class="lang-bash">$ aws polly start-speech-synthesis-task
+      --voice-id Matthew --text file://s3.txt
+      --output-s3-bucket-name "&lt;&lt;Your-Bucket&gt;&gt;" --output-format mp3
+      --query "SynthesisTask.TaskId"
+"e3db409c-419d-4a31-a3a7-72c1e712fe23"
+$ wget https://&lt;&lt;Your-Bucket&gt;&gt;.s3.amazonaws.com/e3db409c-419d-4a31-a3a7-72c1e712fe23.mp3 -O matthew-standard.mp3</code></pre>
+  <p>
+   Tell us a bit about S3, Matthew.
+  </p>
+  <p>
+   Now, let’s use the NTTS version of the same voice: all we have to do is set the ‘
+   <em>
+    engine
+   </em>
+   ‘ parameter to ‘
+   <em>
+    neural
+   </em>
+   ‘.
+  </p>
+  <pre><code class="lang-bash">$ aws polly start-speech-synthesis-task
+      --voice-id Matthew --engine neural --text file://s3.txt
+      --output-s3-bucket-name "&lt;&lt;Your-Bucket&gt;&gt;" --output-format mp3
+      --query "SynthesisTask.TaskId"
+"e3902335-c1e6-450b-b6e9-f913d6d52055"
+$ wget https://&lt;&lt;Your-Bucket&gt;&gt;.s3.amazonaws.com/e3902335-c1e6-450b-b6e9-f913d6d52055.mp3 -O matthew-neural.mp3</code></pre>
+  <p>
+   You should immediately notice the quality improvement that NTTS brings. Of course,
+   <a href="http://aws.amazon.com/polly">
+    Polly
+   </a>
+   has correctly picked up technical abbreviations, numbers, etc.
+  </p>
+  <p>
+   Now let’s spice things up and apply the newscaster style. This requires that we use the
+   <a href="https://docs.aws.amazon.com/polly/latest/dg/supported-ssml.html">
+    SSML
+   </a>
+   markup language. All we need to do is to enclose the text like so:
+  </p>
+  <p>
+   <code>
+    &lt;speak&gt;
+   </code>
+   <br/>
+   <code>
+    &lt;amazon:domain name="news"&gt;
+   </code>
+   <br/>
+   <em>
+    Earlier today we rolled out Amazon S3, our reliable, highly scalable, and low-latency data storage service. Using SOAP and REST interfaces, developers can easily store any number of blocks of data in S3. Each block can be up to 5 GB in length, and is associated with a user-defined key and additional key-value metadata pairs. Further, each block is protected by an ACL (Access Control List) allowing the developer to keep the data private, share it for reading, or share it for reading and writing, as desired. The system was designed to provide a data availability factor of 99.99%; all data is transparently stored in multiple locations.
+   </em>
+   <br/>
+   <code>
+    &lt;/amazon:domain&gt;
+   </code>
+   <br/>
+   <code>
+    &lt;/speak&gt;
+   </code>
+  </p>
+  <p>
+   Let’s synthesize this text again, making sure to set text type to SSML.
+  </p>
+  <pre><code class="lang-bash">$ aws polly start-speech-synthesis-task
+       --voice-id Matthew --engine neural
+       --text file://s3.ssml --text-type ssml
+       --output-s3-bucket-name "&lt;&lt;Your-Bucket&gt;&gt;" --output-format mp3
+       --query "SynthesisTask.TaskId"
+"25c18bda-b32b-4485-a45f-eb9b757a513b"
+$ wget https://&lt;&lt;Your-Bucket&gt;&gt;.s3.amazonaws.com/25c18bda-b32b-4485-a45f-eb9b757a513b.mp3 -O matthew-neural-newscaster.mp3
+</code></pre>
+  <p>
+   I’m sure you can immediately tell the difference! Doesn’t this sound like a news reporter reading our text?
+  </p>
+  <p>
+   If you’re curious about the Joanna voice, here are the equivalent clips: standard, neural, and neural with newscaster style.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Available Now!
+     <br/>
+    </span>
+   </strong>
+   As you can see, it’s extremely easy to use these new features, and they are available today in US East (N. Virginia), US West (Oregon) and Europe (Ireland). The
+   <a href="http://aws.amazon.com/free" rel="noopener noreferrer" target="_blank">
+    free tier
+   </a>
+   offers 1 million characters for NTTS voices per month for the first 12 months, starting from your first request for speech (standard or NTTS).
+  </p>
+  <p>
+   We’re looking forward to your feedback! Please post it to the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=235">
+    AWS Forum
+   </a>
+   for Polly, or send it to your usual AWS support contacts.
+  </p>
+  <p>
+   —
+   <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+    Julien
+   </a>
+   ;
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>New – Amazon SageMaker Pipelines Brings DevOps Capabilities to your Machine Learning Projects - Julien Simon | AWS Expert</title>
+  <meta name="title" content="New – Amazon SageMaker Pipelines Brings DevOps Capabilities to your Machine Learning Projects - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on new – amazon sagemaker pipelines brings devops capabilities to your machine learning projects by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['New', '–', 'Amazon'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/new-amazon-sagemaker-pipelines-brings-devops-capabilities-to-your-machine-learning-projects/"/>
+  <meta property="og:title" content="New – Amazon SageMaker Pipelines Brings DevOps Capabilities to your Machine Learning Projects - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on new – amazon sagemaker pipelines brings devops capabilities to your machine learning projects by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2020-12-08T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/new-amazon-sagemaker-pipelines-brings-devops-capabilities-to-your-machine-learning-projects/"/>
+  <meta property="twitter:title" content="New – Amazon SageMaker Pipelines Brings DevOps Capabilities to your Machine Learning Projects - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on new – amazon sagemaker pipelines brings devops capabilities to your machine learning projects by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/new-amazon-sagemaker-pipelines-brings-devops-capabilities-to-your-machine-learning-projects/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "New – Amazon SageMaker Pipelines Brings DevOps Capabilities to your Machine Learning Projects",
+    "description": "Expert analysis and technical deep-dive on new – amazon sagemaker pipelines brings devops capabilities to your machine learning projects by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2020-12-08T00:00:00Z",
+    "dateModified": "2020-12-08T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/new-amazon-sagemaker-pipelines-brings-devops-capabilities-to-your-machine-learning-projects/"
+    },
+    "url": "https://julien.org/blog/new-amazon-sagemaker-pipelines-brings-devops-capabilities-to-your-machine-learning-projects/",
+    "keywords": "AWS, Amazon Web Services, ['New', '–', 'Amazon'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   New – Amazon SageMaker Pipelines Brings DevOps Capabilities to your Machine Learning Projects
+  </div>
+  
+  <h1>New – Amazon SageMaker Pipelines Brings DevOps Capabilities to your Machine Learning Projects</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-12-08 | Originally published at <a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-pipelines-brings-devops-to-machine-learning-projects/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   New – Amazon SageMaker Pipelines Brings DevOps Capabilities to your Machine Learning Projects
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-12-08
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-pipelines-brings-devops-to-machine-learning-projects/">
+    https://aws.amazon.com/blogs/aws/amazon-sagemaker-pipelines-brings-devops-to-machine-learning-projects/
+   </a>
+  </p>
+  <p>
+   Today, I’m extremely happy to announce
+   <a href="https://aws.amazon.com/sagemaker/pipelines/">
+    Amazon SageMaker Pipelines
+   </a>
+   , a new capability of
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   that makes it easy for data scientists and engineers to build, automate, and scale end to end machine learning pipelines.
+  </p>
+  <p>
+   Machine learning (ML) is intrinsically experimental and unpredictable in nature. You spend days or weeks exploring and processing data in many different ways, trying to crack the geode open to reveal its precious gemstones. Then, you experiment with different algorithms and parameters, training and optimizing lots of models in search of highest accuracy. This process typically involves lots of different steps with dependencies between them, and managing it manually can become quite complex. In particular, tracking model lineage can be difficult, hampering auditability and governance. Finally, you deploy your top models, and you evaluate them against your reference test sets. Finally? Not quite, as you’ll certainly iterate again and again, either to try out new ideas, or simply to periodically retrain your models on new data.
+  </p>
+  <p>
+   No matter how exciting ML is, it does unfortunately involve a lot of repetitive work. Even small projects will require hundreds of steps before they get the green light for production. Over time, not only does this work detract from the fun and excitement of your projects, it also creates ample room for oversight and human error.
+  </p>
+  <p>
+   To alleviate manual work and improve traceability, many ML teams have adopted the DevOps philosophy and implemented tools and processes for Continuous Integration and Continuous Delivery (CI/CD). Although this is certainly a step in the right direction, writing your own tools often leads to complex projects that require more software engineering and infrastructure work than you initially anticipated. Valuable time and resources are diverted from the actual ML project, and innovation slows down. Sadly, some teams decide to revert to manual work, for model management, approval, and deployment.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Introducing Amazon SageMaker Pipelines
+    </span>
+   </strong>
+   <br/>
+   Simply put,
+   <a href="https://aws.amazon.com/sagemaker/pipelines/">
+    Amazon SageMaker Pipelines
+   </a>
+   brings in best-in-class DevOps practices to your ML projects. This new capability makes it easy for data scientists and ML developers to create automated and reliable end-to-end ML pipelines. As usual with SageMaker, all infrastructure is fully managed, and doesn’t require any work on your side.
+  </p>
+  <p style="padding-left: 40px">
+   <a href="https://www.care.com">
+    Care.com
+   </a>
+   is the world’s leading platform for finding and managing high-quality family care. Here’s what
+   <a href="https://www.linkedin.com/in/clemenstummeltshammer/">
+    Clemens Tummeltshammer
+   </a>
+   , Data Science Manager, Care.com, told us: “
+   <em>
+    A strong care industry where supply matches demand is essential for economic growth from the individual family up to the nation’s GDP. We’re excited about Amazon SageMaker Feature Store and Amazon SageMaker Pipelines, as we believe they will help us scale better across our data science and development teams, by using a consistent set of curated data that we can use to build scalable end-to-end machine learning (ML) model pipelines from data preparation to deployment. With the newly announced capabilities of Amazon SageMaker, we can accelerate development and deployment of our ML models for different applications, helping our customers make better informed decisions through faster real-time recommendations.
+   </em>
+   ”
+  </p>
+  <p>
+   Let me tell you more about the main components in
+   <a href="https://aws.amazon.com/sagemaker/pipelines/">
+    Amazon SageMaker Pipelines
+   </a>
+   : pipelines, model registry, and MLOps templates.
+  </p>
+  <p>
+   <strong>
+    Pipelines
+   </strong>
+   – Model building pipelines are defined with a simple Python SDK. They can include any operation available in
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   , such as data preparation with
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker Processing
+   </a>
+   or
+   <a href="https://aws.amazon.com/sagemaker/data-wrangler">
+    Amazon SageMaker Data Wrangler
+   </a>
+   , model training, model deployment to a real-time endpoint, or batch transform. You can also add
+   <a href="https://aws.amazon.com/sagemaker/clarify">
+    Amazon SageMaker Clarify
+   </a>
+   to your pipelines, in order to detect bias prior to training, or once the model has been deployed. Likewise, you can add
+   <a href="https://aws.amazon.com/sagemaker/model-monitor">
+    Amazon SageMaker Model Monitor
+   </a>
+   to detect data and prediction quality issues.
+  </p>
+  <p>
+   Once launched, model building pipelines are executed as CI/CD pipelines. Every step is recorded, and detailed logging information is available for traceability and debugging purposes. Of course, you can also visualize pipelines in
+   <a href="https://aws.amazon.com/sagemaker/studio">
+    Amazon SageMaker Studio
+   </a>
+   , and track their different executions in real time.
+  </p>
+  <p>
+   <strong>
+    Model Registry
+   </strong>
+   – The model registry lets you track and catalog your models. In
+   <span title="Amazon SageMaker Studio">
+    SageMaker Studio
+   </span>
+   , you can easily view model history, list and compare versions, and track metadata such as model evaluation metrics. You can also define which versions may or may not be deployed in production. In fact, you can even build pipelines that automatically trigger model deployment once approval has been given. You’ll find that the model registry is very useful in tracing model lineage, improving model governance, and strengthening your compliance posture.
+  </p>
+  <p>
+   <strong>
+    MLOps Templates
+   </strong>
+   –
+   <span title="Amazon SageMaker Pipelines">
+    SageMaker Pipelines
+   </span>
+   includes a collection of built-in CI/CD templates published via
+   <a href="https://aws.amazon.com/servicecatalog">
+    AWS Service Catalog
+   </a>
+   for popular pipelines (build/train/deploy, deploy only, and so on). You can also add and publish your own templates, so that your teams can easily discover them and deploy them. Not only do templates save lots of time, they also make it easy for ML teams to collaborate from experimentation to deployment, using standard processes and without having to manage any infrastructure. Templates also let Ops teams customize steps as needed, and give them full visibility for troubleshooting.
+  </p>
+  <p>
+   Now, let’s do a quick demo!
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Building an End-to-end Pipeline with Amazon SageMaker Pipelines
+     <br/>
+    </strong>
+   </span>
+   Opening SageMaker Studio, I select the “Components” tab and the “Projects” view. This displays a list of built-in project templates. I pick one to build, train, and deploy a model.
+   <span style="text-decoration: underline">
+    <strong>
+     <br/>
+    </strong>
+   </span>
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/pipeline01.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43833 size-large" height="333" src="image01.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Then, I simply give my project a name, and create it.
+  </p>
+  <p>
+   A few seconds later, the project is ready. I can see that it includes two Git repositories hosted in
+   <a href="https://aws.amazon.com/codecommit/">
+    AWS CodeCommit
+   </a>
+   , one for model training, and one for model deployment.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/pipelines4.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43814 size-large" height="426" loading="lazy" src="image02.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   The first repository provides scaffolding code to create a multi-step model building pipeline: data processing, model training, model evaluation, and conditional model registration based on accuracy. As you’ll see in the
+   <code>
+    pipeline.py
+   </code>
+   file, this pipeline trains a linear regression model using the XGBoost algorithm on the well-known
+   <a href="https://archive.ics.uci.edu/ml/datasets/abalone">
+    Abalone
+   </a>
+   dataset. This repository also includes a
+   <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html">
+    build specification file
+   </a>
+   , used by
+   <a href="https://aws.amazon.com/codepipeline/">
+    AWS CodePipeline
+   </a>
+   and
+   <a href="https://aws.amazon.com/codebuild/">
+    AWS CodeBuild
+   </a>
+   to execute the pipeline automatically.
+  </p>
+  <p>
+   Likewise, the second repository contains code and configuration files for model deployment, as well as test scripts required to pass the quality gate. This operation is also based on
+   <a href="https://aws.amazon.com/codepipeline/">
+    AWS CodePipeline
+   </a>
+   and
+   <a href="https://aws.amazon.com/codebuild/">
+    AWS CodeBuild
+   </a>
+   , which run a
+   <a href="https://aws.amazon.com/cloudformation/">
+    AWS CloudFormation
+   </a>
+   template to create model endpoints for staging and production.
+  </p>
+  <p>
+   Clicking on the two blue links, I clone the repositories locally. This triggers the first execution of the pipeline.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/pipelines9.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43817 size-large" height="290" loading="lazy" src="image03.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   A few minutes later, the pipeline has run successfully. Switching to the “Pipelines” view, I can visualize its steps.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/pipelines12.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43820 size-large" height="487" loading="lazy" src="image04.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Clicking on the training step, I can see the Root Mean Square Error (RMSE) metrics for my model.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/pipelines13.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43821 size-large" height="457" loading="lazy" src="image05.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   As the RMSE is lower than the threshold defined in the conditional step, my model is added to the model registry, as visible below.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/pipelines14-1.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43924 size-large" height="419" loading="lazy" src="image06.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   For simplicity, the registration step sets the model status to “Approved”, which automatically triggers its deployment to a real-time endpoint in the same account. Within seconds, I see that the model is being deployed.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/pipelines15.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43925 size-large" height="280" loading="lazy" src="image07.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Alternatively, you could register your model with a “Pending manual approval” status. This will block deployment until the model has been reviewed and approved manually. As the model registry supports cross-account deployment, you could also easily deploy in a different account, without having to copy anything across accounts.
+  </p>
+  <p>
+   A few minutes later, the endpoint is up, and I could use it to test my model.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/pipelines16.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43926 size-large" height="498" loading="lazy" src="image08.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Once I’ve made sure that this model works as expected, I could ping the MLOps team, and ask them to deploy the model in production.
+  </p>
+  <p>
+   Putting my MLOps hat on, I open the
+   <a href="https://aws.amazon.com/codepipeline/">
+    AWS CodePipeline
+   </a>
+   console, and I see that my deployment is indeed waiting for approval.
+  </p>
+  <p>
+   <img alt="SageMaker screenshot" class="aligncenter wp-image-43927 size-full" height="944" loading="lazy" src="image09.webp" style="border: 1px solid black" width="733"/>
+  </p>
+  <p>
+   I then approve the model for deployment, which triggers the final stage of the pipeline.
+  </p>
+  <p>
+   <img alt="SageMaker screenshot" class="aligncenter wp-image-43928 size-full" height="388" loading="lazy" src="image10.webp" style="border: 1px solid black" width="586"/>
+  </p>
+  <p>
+   Reverting to my Data Scientist hat, I see in
+   <span title="Amazon SageMaker Studio">
+    SageMaker Studio
+   </span>
+   that my model is being deployed. Job done!
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/pipelines19.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43929 size-large" height="326" loading="lazy" src="image11.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Getting Started
+     <br/>
+    </strong>
+   </span>
+   As you can see,
+   <a href="https://aws.amazon.com/sagemaker/pipelines/">
+    Amazon SageMaker Pipelines
+   </a>
+   makes it really easy for Data Science and MLOps teams to collaborate using familiar tools. They can create and execute robust, automated ML pipelines that deliver high quality models in production quicker than before.
+  </p>
+  <p>
+   You can start using
+   <span title="Amazon SageMaker Pipelines">
+    SageMaker Pipelines
+   </span>
+   in all commercial regions where SageMaker is available. The MLOps capabilities are available in the regions where CodePipeline is also available.
+  </p>
+  <p>
+   <a href="https://github.com/aws/amazon-sagemaker-examples">
+    Sample notebooks
+   </a>
+   are available to get you started.
+   <a href="http://console.aws.amazon.com/sagemaker" rel="noopener noreferrer" target="_blank">
+    Give them a try
+   </a>
+   , and let us know what you think. We’re always looking forward to your feedback, either through your usual AWS support contacts, or on the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=285">
+    AWS Forum
+   </a>
+   for SageMaker.
+  </p>
+  <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+   - Julien
+  </a>
+  <p>
+   <em>
+    Special thanks to my colleague Urvashi Chowdhary for her precious assistance during early testing.
+   </em>
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

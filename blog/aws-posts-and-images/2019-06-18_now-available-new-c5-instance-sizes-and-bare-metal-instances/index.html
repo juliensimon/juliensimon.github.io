@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Now Available: New C5 instance sizes and bare metal instances - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Now Available: New C5 instance sizes and bare metal instances - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on now available: new c5 instance sizes and bare metal instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Now', 'Available:', 'New'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/now-available-new-c5-instance-sizes-and-bare-metal-instances/"/>
+  <meta property="og:title" content="Now Available: New C5 instance sizes and bare metal instances - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on now available: new c5 instance sizes and bare metal instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2019-06-18T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/now-available-new-c5-instance-sizes-and-bare-metal-instances/"/>
+  <meta property="twitter:title" content="Now Available: New C5 instance sizes and bare metal instances - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on now available: new c5 instance sizes and bare metal instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/now-available-new-c5-instance-sizes-and-bare-metal-instances/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Now Available: New C5 instance sizes and bare metal instances",
+    "description": "Expert analysis and technical deep-dive on now available: new c5 instance sizes and bare metal instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2019-06-18T00:00:00Z",
+    "dateModified": "2019-06-18T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/now-available-new-c5-instance-sizes-and-bare-metal-instances/"
+    },
+    "url": "https://julien.org/blog/now-available-new-c5-instance-sizes-and-bare-metal-instances/",
+    "keywords": "AWS, Amazon Web Services, ['Now', 'Available:', 'New'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Now Available: New C5 instance sizes and bare metal instances
+  </div>
+  
+  <h1>Now Available: New C5 instance sizes and bare metal instances</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-06-18 | Originally published at <a href="https://aws.amazon.com/blogs/aws/now-available-new-c5-instance-sizes-and-bare-metal-instances/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Now Available: New C5 instance sizes and bare metal instances
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-06-18
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/now-available-new-c5-instance-sizes-and-bare-metal-instances/">
+    https://aws.amazon.com/blogs/aws/now-available-new-c5-instance-sizes-and-bare-metal-instances/
+   </a>
+  </p>
+  <p>
+   <a href="https://aws.amazon.com/ec2/instance-types/c5/">
+    Amazon EC2 C5 instances
+   </a>
+   are very popular for running compute-heavy workloads like batch processing, distributed analytics, high-performance computing, machine/deep learning inference, ad serving, highly scalable multiplayer gaming, and video encoding.
+  </p>
+  <p>
+   Today, we are happy to expand the Amazon EC2 C5 family with:
+  </p>
+  <ul>
+   <li>
+    New larger virtualized instance sizes: 12xlarge and 24xlarge,
+   </li>
+   <li>
+    A bare metal option.
+   </li>
+  </ul>
+  <p>
+   The new C5 instance sizes run on Intel’s Second Generation Xeon Scalable processors (code-named Cascade Lake) with sustained all-core turbo frequency of 3.6GHz and maximum single core turbo frequency of 3.9GHz.
+  </p>
+  <p>
+   The new processors also enable a new feature called Intel Deep Learning Boost, a capability based on the AVX-512 instruction set. Thanks to the new Vector Neural Network Instructions (AVX-512 VNNI), deep learning frameworks will speed up typical machine learning operations like convolution, and automatically improve inference performance over a wide range of workloads.
+  </p>
+  <p>
+   These instances are also based on the AWS Nitro System, with dedicated hardware accelerators for EBS processing (including crypto operations), the software-defined network inside of each Virtual Private Cloud (VPC), and ENA networking.
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    New C5 instance sizes: 12xlarge and 24xlarge
+   </span>
+  </p>
+  <p>
+   Previously, the largest C5 instance available was C5.18xlarge, with 72 logical processors and 144 GiB of memory. As you can see, the new 24xlarge size increases available resources by 33%, in order to scale up and reduce the time required to compute intensive tasks.
+  </p>
+  <table cellpadding="8" style="margin-left: auto;margin-right: auto;border: 1px solid black;border-collapse: collapse">
+   <tbody>
+    <tr style="background-color: #e0e0e0">
+     <td style="border-bottom: 1px solid black;text-align: center">
+      <strong>
+       Instance Name
+      </strong>
+     </td>
+     <td style="border-bottom: 1px solid black;text-align: center">
+      <strong>
+       Logical Processors
+      </strong>
+     </td>
+     <td align="center" style="border-bottom: 1px solid black">
+      <strong>
+       Memory
+      </strong>
+     </td>
+     <td align="center" style="border-bottom: 1px solid black">
+      <strong>
+       EBS-Optimized Bandwidth
+      </strong>
+     </td>
+     <td align="center" style="border-bottom: 1px solid black">
+      <strong>
+       Network Bandwidth
+      </strong>
+     </td>
+    </tr>
+    <tr style="border-bottom: 1px solid #ddd">
+     <td align="left">
+      <strong>
+       c5.12xlarge
+      </strong>
+     </td>
+     <td align="center">
+      48
+     </td>
+     <td align="center">
+      96 GiB
+     </td>
+     <td align="center">
+      7 Gbps
+     </td>
+     <td align="center">
+      12 Gbps
+     </td>
+    </tr>
+    <tr>
+     <td align="left">
+      <strong>
+       c5.24xlarge
+      </strong>
+     </td>
+     <td align="center">
+      96
+     </td>
+     <td align="center">
+      192 GiB
+     </td>
+     <td align="center">
+      14 Gbps
+     </td>
+     <td align="center">
+      25 Gbps
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <p>
+   <span style="text-decoration: underline">
+    Bare metal C5
+    <br/>
+   </span>
+  </p>
+  <p>
+   Just like for existing bare metal instances (M5, M5d, R5, R5d, z1d, and so forth), your operating system runs directly on the underlying hardware with direct access to the processor.
+  </p>
+  <p>
+   As described in a previous
+   <a href="https://aws.amazon.com/blogs/aws/now-available-five-new-amazon-ec2-bare-metal-instances-m5-m5d-r5-r5d-and-z1d/">
+    blog post
+   </a>
+   , you can leverage bare metal instances for applications that:
+  </p>
+  <ul>
+   <li>
+    do not want to take the performance hit of nested virtualization,
+   </li>
+   <li>
+    need access to physical resources and low-level hardware features, such as performance counters and Intel VT that are not always available or fully supported in virtualized environments,
+   </li>
+   <li>
+    are intended to run directly on the hardware, or licensed and supported for use in non-virtualized environments.
+   </li>
+  </ul>
+  <p>
+   Bare metal instances can also take advantage of
+   <a href="https://aws.amazon.com/elasticloadbalancing">
+    Elastic Load Balancing
+   </a>
+   ,
+   <a href="https://aws.amazon.com/autoscaling">
+    Auto Scaling
+   </a>
+   ,
+   <a href="https://aws.amazon.com/cloudwatch/">
+    Amazon CloudWatch
+   </a>
+   , and other AWS services.
+  </p>
+  <table cellpadding="8" style="margin-left: auto;margin-right: auto;border: 1px solid black;border-collapse: collapse">
+   <tbody>
+    <tr style="background-color: #e0e0e0">
+     <td style="border-bottom: 1px solid black;text-align: center">
+      <strong>
+       Instance Name
+      </strong>
+     </td>
+     <td style="border-bottom: 1px solid black;text-align: center">
+      <strong>
+       Logical Processors
+      </strong>
+     </td>
+     <td align="center" style="border-bottom: 1px solid black">
+      <strong>
+       Memory
+      </strong>
+     </td>
+     <td align="center" style="border-bottom: 1px solid black">
+      <strong>
+       EBS-Optimized Bandwidth
+      </strong>
+     </td>
+     <td align="center" style="border-bottom: 1px solid black">
+      <strong>
+       Network Bandwidth
+      </strong>
+     </td>
+    </tr>
+    <tr>
+     <td align="left">
+      <strong>
+       c5.metal
+      </strong>
+     </td>
+     <td align="center">
+      96
+     </td>
+     <td align="center">
+      192 GiB
+     </td>
+     <td align="center">
+      14 Gbps
+     </td>
+     <td align="center">
+      25 Gbps
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <p>
+   <span style="text-decoration: underline">
+    Now Available!
+   </span>
+  </p>
+  <p>
+   You can start using these new instances today in the following regions: US East (N. Virginia), US West (Oregon), Europe (Ireland), Europe (London), Europe (Frankfurt), Europe (Stockholm), Europe (Paris), Asia Pacific (Singapore), Asia Pacific (Sydney), and AWS GovCloud (US-West).
+  </p>
+  <p>
+   Please send us feedback and help us build the next generation of compute-optimized instances.
+  </p>
+  <p>
+   —
+   <a href="http://aws.amazon.com/evangelists/julien-simon" rel="noopener noreferrer" target="_blank">
+    Julien
+   </a>
+   ;
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

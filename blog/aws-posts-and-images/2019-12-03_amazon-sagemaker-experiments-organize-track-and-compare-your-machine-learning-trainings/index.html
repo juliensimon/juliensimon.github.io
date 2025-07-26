@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Amazon SageMaker Experiments – Organize, Track And Compare Your Machine Learning Trainings - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Amazon SageMaker Experiments – Organize, Track And Compare Your Machine Learning Trainings - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on amazon sagemaker experiments – organize, track and compare your machine learning trainings by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'SageMaker', 'Experiments'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/amazon-sagemaker-experiments-organize-track-and-compare-your-machine-learning-trainings/"/>
+  <meta property="og:title" content="Amazon SageMaker Experiments – Organize, Track And Compare Your Machine Learning Trainings - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on amazon sagemaker experiments – organize, track and compare your machine learning trainings by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2019-12-03T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/amazon-sagemaker-experiments-organize-track-and-compare-your-machine-learning-trainings/"/>
+  <meta property="twitter:title" content="Amazon SageMaker Experiments – Organize, Track And Compare Your Machine Learning Trainings - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on amazon sagemaker experiments – organize, track and compare your machine learning trainings by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/amazon-sagemaker-experiments-organize-track-and-compare-your-machine-learning-trainings/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Amazon SageMaker Experiments – Organize, Track And Compare Your Machine Learning Trainings",
+    "description": "Expert analysis and technical deep-dive on amazon sagemaker experiments – organize, track and compare your machine learning trainings by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2019-12-03T00:00:00Z",
+    "dateModified": "2019-12-03T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/amazon-sagemaker-experiments-organize-track-and-compare-your-machine-learning-trainings/"
+    },
+    "url": "https://julien.org/blog/amazon-sagemaker-experiments-organize-track-and-compare-your-machine-learning-trainings/",
+    "keywords": "AWS, Amazon Web Services, ['Amazon', 'SageMaker', 'Experiments'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Amazon SageMaker Experiments – Organize, Track And Compare Your Machine Learning Trainings
+  </div>
+  
+  <h1>Amazon SageMaker Experiments – Organize, Track And Compare Your Machine Learning Trainings</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-12-03 | Originally published at <a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-experiments-organize-track-and-compare-your-machine-learning-trainings/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Amazon SageMaker Experiments – Organize, Track And Compare Your Machine Learning Trainings
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-12-03
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-experiments-organize-track-and-compare-your-machine-learning-trainings/">
+    https://aws.amazon.com/blogs/aws/amazon-sagemaker-experiments-organize-track-and-compare-your-machine-learning-trainings/
+   </a>
+  </p>
+  <p>
+   Today, we’re extremely happy to announce Amazon SageMaker Experiments, a new capability of
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   that lets you organize, track, compare and evaluate machine learning (ML) experiments and model versions.
+  </p>
+  <p>
+   ML is a highly iterative process. During the course of a single project, data scientists and ML engineers routinely train thousands of different models in search of maximum accuracy. Indeed, the number of combinations for algorithms, data sets, and training parameters (aka hyperparameters) is infinite… and therein lies the proverbial challenge of finding a needle in a haystack.
+  </p>
+  <p>
+   Tools like
+   <a href="https://aws.amazon.com/blogs/aws/sagemaker-automatic-model-tuning/">
+    Automatic Model Tuning
+   </a>
+   and
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker Autopilot
+   </a>
+   help ML practitioners explore a large number of combinations automatically, and quickly zoom in on high-performance models. However, they further add to the explosive growth of training jobs. Over time, this creates a new difficulty for ML teams, as it becomes near-impossible to efficiently deal with hundreds of thousands of jobs: keeping track of metrics, grouping jobs by experiment, comparing jobs in the same experiment or across experiments, querying past jobs, etc.
+  </p>
+  <p>
+   Of course, this can be solved by building, managing and scaling bespoke tools: however, doing so diverts valuable time and resources away from actual ML work. In the spirit of helping customers focus on ML and nothing else, we couldn’t leave this problem unsolved.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Introducing Amazon SageMaker Experiments
+     <br/>
+    </strong>
+   </span>
+   First, let’s define core concepts:
+  </p>
+  <ul>
+   <li>
+    A trial is a collection of training steps involved in a single training job. Training steps typically includes preprocessing, training, model evaluation, etc. A trial is also enriched with metadata for inputs (e.g. algorithm, parameters, data sets) and outputs (e.g. models, checkpoints, metrics).
+   </li>
+   <li>
+    An experiment is simply a collection of trials, i.e. a group of related training jobs.
+   </li>
+  </ul>
+  <p>
+   The goal of
+   <span title="Amazon SageMaker Experiments">
+    SageMaker Experiments
+   </span>
+   is to make it as simple as possible to create experiments, populate them with trials, and run analytics across trials and experiments. For this purpose, we introduce a new Python SDK containing logging and analytics APIs.
+  </p>
+  <p>
+   Running your training jobs on
+   <span title="Amazon SageMaker">
+    SageMaker
+   </span>
+   or
+   <span title="Amazon SageMaker Autopilot">
+    SageMaker Autopilot
+   </span>
+   , all you have to do is pass an extra parameter to the
+   <a href="https://sagemaker.readthedocs.io/en/stable/estimators.html">
+    <code>
+     Estimator
+    </code>
+   </a>
+   , defining the name of the experiment that this trial should be attached to. All inputs and outputs will be logged automatically.
+  </p>
+  <p>
+   Once you’ve run your training jobs, the
+   <span title="Amazon SageMaker Experiments">
+    SageMaker Experiments
+   </span>
+   SDK lets you load experiment and trial data in the popular
+   <a href="https://pandas.pydata.org/">
+    pandas
+   </a>
+   dataframe format.
+   <a href="https://pandas.pydata.org/">
+    Pandas
+   </a>
+   truly is the Swiss army knife of ML practitioners, and you’ll be able to perform any analysis that you may need. Go one step further by building cool visualizations with
+   <a href="https://matplotlib.org/">
+    matplotlib
+   </a>
+   , and you’ll be well on your way to taming that wild horde of training jobs!
+  </p>
+  <p>
+   As you would expect,
+   <span title="Amazon SageMaker Experiments">
+    SageMaker Experiments
+   </span>
+   is nicely integrated in
+   <a href="https://aws.amazon.com/sagemaker/studio">
+    Amazon SageMaker Studio
+   </a>
+   . You can run complex queries to quickly find the past trial you’re looking for. You can also visualize real-time model leaderboards and metric charts.
+  </p>
+  <p>
+   How about a quick demo?
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Logging Training Information With Amazon SageMaker Experiments
+     <br/>
+    </strong>
+   </span>
+   Let’s start from a
+   <a href="https://pytorch.org">
+    PyTorch
+   </a>
+   script classifying images from the
+   <a href="http://yann.lecun.com/exdb/mnist/" rel="noopener noreferrer" target="_blank">
+    MNIST
+   </a>
+   data set, using a simple two-layer convolution neural network (CNN). If I wanted to run a single job on
+   <span title="Amazon SageMaker">
+    SageMaker
+   </span>
+   , I could use the PyTorch
+   <a href="https://sagemaker.readthedocs.io/en/stable/using_pytorch.html">
+    estimator
+   </a>
+   like so:
+  </p>
+  <pre><code class="lang-python">estimator = PyTorch(
+        entry_point='mnist.py',
+        role=role,
+        sagemaker_session=sess
+        framework_version='1.1.0',
+        train_instance_count=1,
+        train_instance_type='ml.p3.2xlarge')
+    
+    estimator.fit(inputs={'training': inputs})</code></pre>
+  <p>
+   Instead, let’s say that I want to run multiple versions of the same script, changing only one of the hyperparameters (the number of convolution filters used by the two convolution layers, aka number of hidden channels) to measure its impact on model accuracy. Of course, we could run these jobs, grab the training logs, extract metrics with fancy text filtering, etc. Or we could use
+   <span title="Amazon SageMaker Experiments">
+    SageMaker Experiments
+   </span>
+   !
+  </p>
+  <p>
+   All I need to do is:
+  </p>
+  <ul>
+   <li>
+    Set up an experiment,
+   </li>
+   <li>
+    Use a tracker to log experiment metadata,
+   </li>
+   <li>
+    Create a trial for each training job I want to run,
+   </li>
+   <li>
+    Run each training job, passing parameters for the experiment name and the trial name.
+   </li>
+  </ul>
+  <p>
+   First things first, let’s take care of the experiment.
+  </p>
+  <pre><code class="lang-python">from smexperiments.experiment import Experiment
+mnist_experiment = Experiment.create(
+    experiment_name="mnist-hand-written-digits-classification", 
+    description="Classification of mnist hand-written digits", 
+    sagemaker_boto_client=sm)</code></pre>
+  <p>
+   Then, let’s add a few things that we want to keep track of, like the location of the data set and normalization values we applied to it.
+  </p>
+  <pre><code class="lang-python">from smexperiments.tracker import Tracker
+with Tracker.create(display_name="Preprocessing", sagemaker_boto_client=sm) as tracker:
+     tracker.log_input(name="mnist-dataset", media_type="s3/uri", value=inputs)
+     tracker.log_parameters({
+        "normalization_mean": 0.1307,
+        "normalization_std": 0.3081,
+    })
+</code></pre>
+  <p>
+   Now let’s run a few jobs. I simply loop over the different values that I want to try, creating a new trial for each training job and adding the tracker information to it.
+  </p>
+  <pre><code class="lang-python">for i, num_hidden_channel in enumerate([2, 5, 10, 20, 32]):
+    trial_name = f"cnn-training-job-{num_hidden_channel}-hidden-channels-{int(time.time())}"
+    cnn_trial = Trial.create(
+        trial_name=trial_name, 
+        experiment_name=mnist_experiment.experiment_name,
+        sagemaker_boto_client=sm,
+    )
+    cnn_trial.add_trial_component(tracker.trial_component)</code></pre>
+  <p>
+   Then, I configure the estimator, passing the value for the hyperparameter I’m interested in, and leaving the other ones as is. I’m also passing regular expressions to extract metrics from the training log. All these will push stored in the trial: in fact, all parameters (passed or default) will be.
+  </p>
+  <pre><code class="lang-python">    estimator = PyTorch(
+        entry_point='mnist.py',
+        role=role,
+        sagemaker_session=sess,
+        framework_version='1.1.0',
+        train_instance_count=1,
+        train_instance_type='ml.p3.2xlarge',
+        hyperparameters={
+            'hidden_channels': num_hidden_channels
+        },
+        metric_definitions=[
+            {'Name':'train:loss', 'Regex':'Train Loss: (.*?);'},
+            {'Name':'test:loss', 'Regex':'Test Average loss: (.*?),'},
+            {'Name':'test:accuracy', 'Regex':'Test Accuracy: (.*?)%;'}
+        ]
+    )</code></pre>
+  <p>
+   Finally, I run the training job, associating it to the experiment and the trial.
+  </p>
+  <pre><code class="lang-python">    cnn_training_job_name = "cnn-training-job-{}".format(int(time.time()))
+    
+    estimator.fit(
+        inputs={'training': inputs}, 
+        job_name=cnn_training_job_name,
+        experiment_config={
+            "ExperimentName": mnist_experiment.experiment_name, 
+            "TrialName": cnn_trial.trial_name,
+            "TrialComponentDisplayName": "Training",
+        }
+    )
+# end of loop</code></pre>
+  <p>
+   Once all jobs are complete, I can run analytics. Let’s find out how we did.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Analytics with Amazon SageMaker Experiments
+    </span>
+   </strong>
+   <br/>
+   All information on an experiment can be easily exported to a
+   <a href="https://pandas.pydata.org/">
+    Pandas
+   </a>
+   <code>
+    DataFrame
+   </code>
+   .
+  </p>
+  <pre><code class="lang-python">from sagemaker.analytics import ExperimentAnalytics
+trial_component_analytics = ExperimentAnalytics(
+    sagemaker_session=sess, 
+    experiment_name=mnist_experiment.experiment_name
+)
+analytic_table = trial_component_analytics.dataframe()</code></pre>
+  <p>
+   If I want to drill down, I can specify additional parameters, e.g.:
+  </p>
+  <pre><code class="lang-python">trial_component_analytics = ExperimentAnalytics(
+    sagemaker_session=sess, 
+    experiment_name=mnist_experiment.experiment_name,
+    sort_by="metrics.test:accuracy.max",
+    sort_order="Descending",
+    metric_names=['test:accuracy'],
+    parameter_names=['hidden_channels', 'epochs', 'dropout', 'optimizer']
+)
+analytic_table = trial_component_analytics.dataframe()</code></pre>
+  <p>
+   This builds a
+   <code>
+    DataFrame
+   </code>
+   where trials are sorted by decreasing test accuracy, and showing only some of the hyperparameters for each trial.
+  </p>
+  <pre><code class="lang-python">for col in analytic_table.columns: 
+    print(col) 
+
+TrialComponentName
+DisplayName
+SourceArn
+dropout
+epochs
+hidden_channels
+optimizer
+test:accuracy - Min
+test:accuracy - Max
+test:accuracy - Avg
+test:accuracy - StdDev
+test:accuracy - Last
+test:accuracy - Count</code></pre>
+  <p>
+   From here on, your imagination is the limit.
+   <a href="https://pandas.pydata.org">
+    Pandas
+   </a>
+   is the Swiss army knife of data analysis, and you’ll be able to compare trials and experiments in every possible way.
+  </p>
+  <p>
+   Last but not least, thanks to the integration with
+   <a href="https://aws.amazon.com/sagemaker/studio">
+    Amazon SageMaker Studio
+   </a>
+   , you’ll be able to visualize all this information in real-time with predefined widgets. To learn more about
+   <a href="https://aws.amazon.com/sagemaker/studio">
+    Amazon SageMaker Studio
+   </a>
+   , visit
+   <a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-studio-the-first-fully-integrated-development-environment-for-machine-learning/">
+    this blog post
+   </a>
+   .
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Now Available!
+    </strong>
+   </span>
+   <br/>
+   I just scratched the surface of what you can do with
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker Experiments
+   </a>
+   , and I believe it will help you tame the wild horde of jobs that you have to deal with everyday.
+  </p>
+  <p>
+   The service is available today in all commercial AWS Regions where
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   is available.
+  </p>
+  <p>
+   Give it a try and please send us feedback, either in the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=285">
+    AWS forum for Amazon SageMaker
+   </a>
+   , or through your usual AWS contacts.
+  </p>
+  <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+   - Julien
+  </a>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

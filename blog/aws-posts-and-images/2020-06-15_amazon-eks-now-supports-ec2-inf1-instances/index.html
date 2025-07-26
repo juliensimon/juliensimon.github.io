@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Amazon EKS Now Supports EC2 Inf1 Instances - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Amazon EKS Now Supports EC2 Inf1 Instances - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on amazon eks now supports ec2 inf1 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'EKS', 'Now'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/amazon-eks-now-supports-ec2-inf1-instances/"/>
+  <meta property="og:title" content="Amazon EKS Now Supports EC2 Inf1 Instances - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on amazon eks now supports ec2 inf1 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2020-06-15T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/amazon-eks-now-supports-ec2-inf1-instances/"/>
+  <meta property="twitter:title" content="Amazon EKS Now Supports EC2 Inf1 Instances - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on amazon eks now supports ec2 inf1 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/amazon-eks-now-supports-ec2-inf1-instances/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Amazon EKS Now Supports EC2 Inf1 Instances",
+    "description": "Expert analysis and technical deep-dive on amazon eks now supports ec2 inf1 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2020-06-15T00:00:00Z",
+    "dateModified": "2020-06-15T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/amazon-eks-now-supports-ec2-inf1-instances/"
+    },
+    "url": "https://julien.org/blog/amazon-eks-now-supports-ec2-inf1-instances/",
+    "keywords": "AWS, Amazon Web Services, ['Amazon', 'EKS', 'Now'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Amazon EKS Now Supports EC2 Inf1 Instances
+  </div>
+  
+  <h1>Amazon EKS Now Supports EC2 Inf1 Instances</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-06-15 | Originally published at <a href="https://aws.amazon.com/blogs/aws/amazon-eks-now-supports-ec2-inf1-instances/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Amazon EKS Now Supports EC2 Inf1 Instances
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-06-15
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/amazon-eks-now-supports-ec2-inf1-instances/">
+    https://aws.amazon.com/blogs/aws/amazon-eks-now-supports-ec2-inf1-instances/
+   </a>
+  </p>
+  <p>
+   <a href="https://aws.amazon.com/eks/">
+    Amazon Elastic Kubernetes Service (Amazon EKS)
+   </a>
+   (EKS) has quickly become a leading choice for machine learning workloads. It combines the developer agility and the scalability of Kubernetes, with the wide selection of
+   <a href="https://aws.amazon.com/ec2/">
+    Amazon Elastic Compute Cloud (Amazon EC2)
+   </a>
+   instance types available on AWS, such as the
+   <a href="https://aws.amazon.com/ec2/instance-types/c5/">
+    C5
+   </a>
+   ,
+   <a href="https://aws.amazon.com/ec2/instance-types/p3/">
+    P3
+   </a>
+   , and
+   <a href="https://aws.amazon.com/ec2/instance-types/g4/">
+    G4
+   </a>
+   families.
+  </p>
+  <p>
+   As models become more sophisticated, hardware acceleration is increasingly required to deliver fast predictions at high throughput. Today, we’re very happy to announce that AWS customers can now use the Amazon EC2
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances on
+   <a href="https://aws.amazon.com/eks/">
+    Amazon Elastic Kubernetes Service (Amazon EKS)
+   </a>
+   , for high performance and the lowest prediction cost in the cloud.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     A primer on EC2 Inf1 instances
+    </span>
+   </strong>
+   <br/>
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances were launched at AWS re:Invent 2019. They are powered by
+   <a href="https://aws.amazon.com/machine-learning/inferentia/">
+    AWS Inferentia
+   </a>
+   , a custom chip built from the ground up by AWS to accelerate machine learning inference workloads.
+  </p>
+  <p>
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances are available in multiple sizes, with 1, 4, or 16
+   <a href="https://aws.amazon.com/machine-learning/inferentia/">
+    AWS Inferentia
+   </a>
+   chips, with up to 100 Gbps network bandwidth and up to 19 Gbps EBS bandwidth. An
+   <a href="https://aws.amazon.com/machine-learning/inferentia/">
+    AWS Inferentia
+   </a>
+   chip contains four NeuronCores. Each one implements a high-performance systolic array matrix multiply engine, which massively speeds up typical deep learning operations such as convolution and transformers. NeuronCores are also equipped with a large on-chip cache, which helps cut down on external memory accesses, saving I/O time in the process. When several
+   <a href="https://aws.amazon.com/machine-learning/inferentia/">
+    AWS Inferentia
+   </a>
+   chips are available on an
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instance, you can partition a model across them and store it entirely in cache memory. Alternatively, to serve multi-model predictions from a single
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instance, you can partition the NeuronCores of an
+   <a href="https://aws.amazon.com/machine-learning/inferentia/">
+    AWS Inferentia
+   </a>
+   chip across several models.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Compiling Models for EC2 Inf1 Instances
+    </span>
+   </strong>
+   <br/>
+   To run machine learning models on
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances, you need to compile them to a hardware-optimized representation using the
+   <a href="https://github.com/aws/aws-neuron-sdk">
+    AWS Neuron SDK
+   </a>
+   . All tools are readily available on the
+   <a href="https://aws.amazon.com/machine-learning/amis/">
+    AWS Deep Learning AMI
+   </a>
+   , and you can also install them on your own instances. You’ll find instructions in the Deep Learning AMI
+   <a href="https://docs.aws.amazon.com/dlami/latest/devguide/tutorial-inferentia.html">
+    documentation
+   </a>
+   , as well as tutorials for TensorFlow, PyTorch, and Apache MXNet in the AWS Neuron SDK
+   <a href="https://github.com/aws/aws-neuron-sdk/blob/master/README.md#getting-started">
+    repository
+   </a>
+   .
+  </p>
+  <p>
+   In the demo below, I will show you how to deploy a Neuron-optimized model on an EKS cluster of
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances, and how to serve predictions with
+   <a href="https://www.tensorflow.org/tfx/guide/serving">
+    TensorFlow Serving
+   </a>
+   . The model in question is
+   <a href="https://github.com/google-research/bert">
+    BERT
+   </a>
+   , a state of the art model for natural language processing tasks. This is a huge model with hundreds of millions of parameters, making it a great candidate for hardware acceleration.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Building an EKS Cluster of EC2 Inf1 Instances
+    </span>
+   </strong>
+   <br/>
+   First of all, let’s build a cluster with two inf1.2xlarge instances. I can easily do this with
+   <code>
+    eksctl
+   </code>
+   , the command-line tool to provision and manage EKS clusters. You can find
+   <a href="https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html">
+    installation instructions
+   </a>
+   in the EKS documentation.
+  </p>
+  <p>
+   Here is the configuration file for my cluster.
+   <code>
+    Eksctl
+   </code>
+   detects that I’m launching a node group with an
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instance type, and will start your worker nodes using the
+   <a href="https://docs.aws.amazon.com/eks/latest/userguide/gpu-ami.html">
+    EKS-optimized Accelerated AMI
+   </a>
+   .
+  </p>
+  <pre><code class="lang-yaml">apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: cluster-inf1
+  region: us-west-2
+nodeGroups:
+  - name: ng1-public
+    instanceType: inf1.2xlarge
+    minSize: 0
+    maxSize: 3
+    desiredCapacity: 2
+    ssh:
+      allow: true</code></pre>
+  <p>
+   Then, I use
+   <code>
+    eksctl
+   </code>
+   to create the cluster. This process will take approximately 10 minutes.
+  </p>
+  <p>
+   <code>
+    $ eksctl create cluster -f inf1-cluster.yaml
+   </code>
+  </p>
+  <p>
+   <code>
+    Eksctl
+   </code>
+   automatically installs the
+   <a href="https://github.com/aws/aws-neuron-sdk/tree/master/docs/neuron-container-tools">
+    Neuron device plugin
+   </a>
+   in your cluster. This plugin advertises Neuron devices to the Kubernetes scheduler, which can be requested by containers in a deployment spec. I can check with
+   <a href="https://kubernetes.io/docs/reference/kubectl/kubectl/">
+    <code>
+     kubectl
+    </code>
+   </a>
+   that the device plug-in container is running fine on both
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances.
+  </p>
+  <pre><code class="lang-bash">$ kubectl get pods -n kube-system
+NAME                                  READY STATUS  RESTARTS AGE
+aws-node-tl5xv                        1/1   Running 0        14h
+aws-node-wk6qm                        1/1   Running 0        14h
+coredns-86d5cbb4bd-4fxrh              1/1   Running 0        14h
+coredns-86d5cbb4bd-sts7g              1/1   Running 0        14h
+kube-proxy-7px8d                      1/1   Running 0        14h
+kube-proxy-zqvtc                      1/1   Running 0        14h
+neuron-device-plugin-daemonset-888j4  1/1   Running 0        14h
+neuron-device-plugin-daemonset-tq9kc  1/1   Running 0        14h</code></pre>
+  <p>
+   Next, I define AWS credentials in a Kubernetes secret. They will allow me to grab my BERT model stored in S3. Please note that both keys needs to be base64-encoded.
+  </p>
+  <pre><code class="lang-yaml">apiVersion: v1 
+kind: Secret 
+metadata: 
+  name: aws-s3-secret 
+type: Opaque 
+data: 
+  AWS_ACCESS_KEY_ID: &lt;base64-encoded value&gt; 
+  AWS_SECRET_ACCESS_KEY: &lt;base64-encoded value&gt;</code></pre>
+  <p>
+   Finally, I store these credentials on the cluster.
+  </p>
+  <p>
+   <code>
+    $ kubectl apply -f secret.yaml
+   </code>
+  </p>
+  <p>
+   The cluster is correctly set up. Now, let’s build an application container storing a Neuron-enabled version of
+   <a href="https://www.tensorflow.org/tfx/guide/serving">
+    TensorFlow Serving
+   </a>
+   .
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Building an Application Container for TensorFlow Serving
+    </span>
+   </strong>
+   <br/>
+   The Dockerfile is very simple. We start from an
+   <a href="https://hub.docker.com/_/amazonlinux">
+    Amazon Linux 2
+   </a>
+   base image. Then, we install the
+   <a href="https://github.com/aws/aws-cli">
+    AWS CLI
+   </a>
+   , and the
+   <a href="https://github.com/aws/aws-neuron-sdk/blob/master/docs/tensorflow-neuron/tutorial-tensorflow-serving.md">
+    TensorFlow Serving package
+   </a>
+   available in the Neuron
+   <a href="https://github.com/aws/aws-neuron-sdk">
+    repository
+   </a>
+   .
+  </p>
+  <pre><code class="lang-bash">FROM amazonlinux:2
+RUN yum install -y awscli
+RUN echo $'[neuron] \n\
+name=Neuron YUM Repository \n\
+baseurl=https://yum.repos.neuron.amazonaws.com \n\
+enabled=1' &gt; /etc/yum.repos.d/neuron.repo
+RUN rpm --import https://yum.repos.neuron.amazonaws.com/GPG-PUB-KEY-AMAZON-AWS-NEURON.PUB
+RUN yum install -y tensorflow-model-server-neuron</code></pre>
+  <p>
+   I build the image, create an
+   <a href="https://aws.amazon.com/ecr/">
+    Amazon Elastic Container Registry (Amazon ECR)
+   </a>
+   repository, and push the image to it.
+  </p>
+  <pre><code class="lang-bash">$ docker build . -f Dockerfile -t tensorflow-model-server-neuron
+$ docker tag IMAGE_NAME 123456789012.dkr.ecr.us-west-2.amazonaws.com/inf1-demo
+$ aws ecr create-repository --repository-name inf1-demo
+$ docker push 123456789012.dkr.ecr.us-west-2.amazonaws.com/inf1-demo</code></pre>
+  <p>
+   Our application container is ready. Now, let’s define a Kubernetes
+   <a href="https://kubernetes.io/docs/concepts/services-networking/service/">
+    service
+   </a>
+   that will use this container to serve BERT predictions. I’m using a model that has already been compiled with the Neuron SDK. You can compile your own using the
+   <a href="https://github.com/aws/aws-neuron-sdk/blob/master/src/examples/tensorflow/bert_demo/README.md#compiling-neuron-compatible-bert-large">
+    instructions
+   </a>
+   available in the Neuron SDK
+   <a href="https://github.com/aws/aws-neuron-sdk">
+    repository
+   </a>
+   .
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Deploying BERT as a Kubernetes Service
+     <br/>
+    </strong>
+   </span>
+   The deployment manages two containers: the Neuron runtime container, and my application container. The Neuron runtime runs as a sidecar container image, and is used to interact with the
+   <a href="https://aws.amazon.com/machine-learning/inferentia/">
+    AWS Inferentia
+   </a>
+   chips. At startup, the latter configures the AWS CLI with the appropriate security credentials. Then, it fetches the BERT model from S3. Finally, it launches TensorFlow Serving, loading the BERT model and waiting for prediction requests. For this purpose, the HTTP and grpc ports are open. Here is the full manifest.
+  </p>
+  <pre><code class="lang-yaml">kind: Service
+apiVersion: v1
+metadata:
+  name: eks-neuron-test
+  labels:
+    app: eks-neuron-test
+spec:
+  ports:
+  - name: http-tf-serving
+    port: 8500
+    targetPort: 8500
+  - name: grpc-tf-serving
+    port: 9000
+    targetPort: 9000
+  selector:
+    app: eks-neuron-test
+    role: master
+  type: ClusterIP
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: eks-neuron-test
+  labels:
+    app: eks-neuron-test
+    role: master
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: eks-neuron-test
+      role: master
+  template:
+    metadata:
+      labels:
+        app: eks-neuron-test
+        role: master
+    spec:
+      volumes:
+        - name: sock
+          emptyDir: {}
+      containers:
+      - name: eks-neuron-test
+        image: 123456789012.dkr.ecr.us-west-2.amazonaws.com/inf1-demo:latest
+        command: ["/bin/sh","-c"]
+        args:
+          - "mkdir ~/.aws/ &amp;&amp; \
+           echo '[eks-test-profile]' &gt; ~/.aws/credentials &amp;&amp; \
+           echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID &gt;&gt; ~/.aws/credentials &amp;&amp; \
+           echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY &gt;&gt; ~/.aws/credentials; \
+           /usr/bin/aws --profile eks-test-profile s3 sync s3://example-bucket/bert /tmp/bert &amp;&amp; \
+           /usr/local/bin/tensorflow_model_server_neuron --port=9000 --rest_api_port=8500 --model_name=bert_mrpc_hc_gelus_b4_l24_0926_02 --model_base_path=/tmp/bert/"
+        ports:
+        - containerPort: 8500
+        - containerPort: 9000
+        imagePullPolicy: Always
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              key: AWS_ACCESS_KEY_ID
+              name: aws-s3-secret
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              key: AWS_SECRET_ACCESS_KEY
+              name: aws-s3-secret
+        - name: NEURON_RTD_ADDRESS
+          value: unix:/sock/neuron.sock
+
+        resources:
+          limits:
+            cpu: 4
+            memory: 4Gi
+          requests:
+            cpu: "1"
+            memory: 1Gi
+        volumeMounts:
+          - name: sock
+            mountPath: /sock
+
+      - name: neuron-rtd
+        image: 790709498068.dkr.ecr.us-west-2.amazonaws.com/neuron-rtd:1.0.6905.0
+        securityContext:
+          capabilities:
+            add:
+            - SYS_ADMIN
+            - IPC_LOCK
+
+        volumeMounts:
+          - name: sock
+            mountPath: /sock
+        resources:
+          limits:
+            hugepages-2Mi: 256Mi
+            aws.amazon.com/neuron: 1
+          requests:
+            memory: 1024Mi</code></pre>
+  <p>
+   I use
+   <code>
+    kubectl
+   </code>
+   to create the service.
+  </p>
+  <p>
+   <code>
+    $ kubectl create -f bert_service.yml
+   </code>
+  </p>
+  <p>
+   A few seconds later, the pods are up and running.
+  </p>
+  <p>
+   <code>
+    $ kubectl get pods
+   </code>
+   <br/>
+   <code>
+    NAME                           READY STATUS  RESTARTS AGE
+   </code>
+   <br/>
+   <code>
+    eks-neuron-test-5d59b55986-7kdml 2/2   Running 0        14h
+   </code>
+   <br/>
+   <code>
+    eks-neuron-test-5d59b55986-gljlq 2/2   Running 0        14h
+   </code>
+  </p>
+  <p>
+   Finally, I redirect service port 9000 to local port 9000, to let my prediction client connect locally.
+  </p>
+  <p>
+   <code>
+    $ kubectl port-forward svc/eks-neuron-test 9000:9000 &amp;
+   </code>
+  </p>
+  <p>
+   Now, everything is ready for prediction, so let’s invoke the model.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Predicting with BERT on EKS and Inf1
+     <br/>
+    </span>
+   </strong>
+   The inner workings of BERT are beyond the scope of this post. This particular model expects a sequence of 128 tokens, encoding the words of two sentences we’d like to compare for semantic equivalence.
+  </p>
+  <p>
+   Here, I’m only interested in measuring prediction latency, so dummy data is fine. I build 100 prediction requests storing a sequence of 128 zeros. I send them to the TensorFlow Serving endpoint via grpc, and I compute the average prediction time.
+  </p>
+  <pre><code class="lang-python">import numpy as np
+import grpc
+import tensorflow as tf
+from tensorflow_serving.apis import predict_pb2
+from tensorflow_serving.apis import prediction_service_pb2_grpc
+import time
+
+if __name__ == '__main__':
+    channel = grpc.insecure_channel('localhost:9000')
+    stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
+    request = predict_pb2.PredictRequest()
+    request.model_spec.name = 'bert_mrpc_hc_gelus_b4_l24_0926_02'
+    i = np.zeros([1, 128], dtype=np.int32)
+    request.inputs['input_ids'].CopyFrom(tf.contrib.util.make_tensor_proto(i, shape=i.shape))
+    request.inputs['input_mask'].CopyFrom(tf.contrib.util.make_tensor_proto(i, shape=i.shape))
+    request.inputs['segment_ids'].CopyFrom(tf.contrib.util.make_tensor_proto(i, shape=i.shape))
+
+    latencies = []
+    for i in range(100):
+        start = time.time()
+        result = stub.Predict(request)
+        latencies.append(time.time() - start)
+        print("Inference successful: {}".format(i))
+    print ("Ran {} inferences successfully. Latency average = {}".format(len(latencies), np.average(latencies)))</code></pre>
+  <p>
+   On average, prediction took 59.2ms. As far as BERT goes, this is pretty good!
+  </p>
+  <p>
+   <code>
+    Ran 100 inferences successfully. Latency average = 0.05920819044113159
+   </code>
+  </p>
+  <p>
+   In real-life, we would certainly be batching prediction requests in order to increase throughput. If needed, we could also scale to larger
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances supporting several Inferentia chips, and deliver even more prediction performance at low cost.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Getting Started
+    </span>
+   </strong>
+   <br/>
+   Kubernetes users can deploy Amazon Elastic Compute Cloud (EC2)
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   instances on
+   <a href="https://aws.amazon.com/eks/">
+    Amazon Elastic Kubernetes Service (Amazon EKS)
+   </a>
+   today in the US East (N. Virginia) and US West (Oregon) regions. As
+   <a href="https://aws.amazon.com/ec2/instance-types/inf1/">
+    Inf1
+   </a>
+   deployment progresses, you’ll be able to use them with
+   <a href="https://aws.amazon.com/eks/">
+    Amazon Elastic Kubernetes Service (Amazon EKS)
+   </a>
+   in more regions.
+  </p>
+  <p>
+   Give this a try, and please send us feedback either through your usual AWS Support contacts, on the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=303">
+    AWS Forum
+   </a>
+   for
+   <a href="https://aws.amazon.com/eks/">
+    Amazon Elastic Kubernetes Service (Amazon EKS)
+   </a>
+   , or on the
+   <a href="https://github.com/aws/containers-roadmap">
+    container roadmap
+   </a>
+   on Github.
+  </p>
+  <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+   - Julien
+  </a>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

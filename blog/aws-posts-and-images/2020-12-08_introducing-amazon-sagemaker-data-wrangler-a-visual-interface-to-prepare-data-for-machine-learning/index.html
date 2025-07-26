@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Introducing Amazon SageMaker Data Wrangler, a Visual Interface to Prepare Data for Machine Learning - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Introducing Amazon SageMaker Data Wrangler, a Visual Interface to Prepare Data for Machine Learning - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on introducing amazon sagemaker data wrangler, a visual interface to prepare data for machine learning by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Introducing', 'Amazon', 'SageMaker'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/introducing-amazon-sagemaker-data-wrangler-a-visual-interface-to-prepare-data-for-machine-learning/"/>
+  <meta property="og:title" content="Introducing Amazon SageMaker Data Wrangler, a Visual Interface to Prepare Data for Machine Learning - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on introducing amazon sagemaker data wrangler, a visual interface to prepare data for machine learning by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2020-12-08T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/introducing-amazon-sagemaker-data-wrangler-a-visual-interface-to-prepare-data-for-machine-learning/"/>
+  <meta property="twitter:title" content="Introducing Amazon SageMaker Data Wrangler, a Visual Interface to Prepare Data for Machine Learning - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on introducing amazon sagemaker data wrangler, a visual interface to prepare data for machine learning by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/introducing-amazon-sagemaker-data-wrangler-a-visual-interface-to-prepare-data-for-machine-learning/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Introducing Amazon SageMaker Data Wrangler, a Visual Interface to Prepare Data for Machine Learning",
+    "description": "Expert analysis and technical deep-dive on introducing amazon sagemaker data wrangler, a visual interface to prepare data for machine learning by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2020-12-08T00:00:00Z",
+    "dateModified": "2020-12-08T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/introducing-amazon-sagemaker-data-wrangler-a-visual-interface-to-prepare-data-for-machine-learning/"
+    },
+    "url": "https://julien.org/blog/introducing-amazon-sagemaker-data-wrangler-a-visual-interface-to-prepare-data-for-machine-learning/",
+    "keywords": "AWS, Amazon Web Services, ['Introducing', 'Amazon', 'SageMaker'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Introducing Amazon SageMaker Data Wrangler, a Visual Interface to Prepare Data for Machine Learning
+  </div>
+  
+  <h1>Introducing Amazon SageMaker Data Wrangler, a Visual Interface to Prepare Data for Machine Learning</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-12-08 | Originally published at <a href="https://aws.amazon.com/blogs/aws/introducing-amazon-sagemaker-data-wrangler-a-visual-interface-to-prepare-data-for-machine-learning/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Introducing Amazon SageMaker Data Wrangler, a Visual Interface to Prepare Data for Machine Learning
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-12-08
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/introducing-amazon-sagemaker-data-wrangler-a-visual-interface-to-prepare-data-for-machine-learning/">
+    https://aws.amazon.com/blogs/aws/introducing-amazon-sagemaker-data-wrangler-a-visual-interface-to-prepare-data-for-machine-learning/
+   </a>
+  </p>
+  <p>
+   Today, I’m extremely happy to announce
+   <a href="https://aws.amazon.com/sagemaker/data-wrangler">
+    Amazon SageMaker Data Wrangler
+   </a>
+   , a new capability of
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   that makes it faster for data scientists and engineers to prepare data for machine learning (ML) applications by using a visual interface.
+  </p>
+  <p>
+   Whenever I ask a group of data scientists and ML engineers how much time they actually spend studying ML problems, I often hear a collective sigh, followed by something along the lines of, “
+   <em>
+    20%, if we’re lucky.
+   </em>
+   ” When I ask them why, the answer is invariably the same, “
+   <em>
+    data preparation consistently takes up to 80% of our time!
+   </em>
+   ”
+  </p>
+  <p>
+   Indeed, preparing data for training is a crucial step of the ML process, and no one would think about botching it up. Typical tasks include:
+  </p>
+  <ul>
+   <li style="padding-bottom: 0.5em;">
+    Locating data: finding where raw data is stored, and getting access to it
+   </li>
+   <li style="padding-bottom: 0.5em;">
+    Data visualization: examining statistical properties for each column in the dataset, building histograms, studying outliers
+   </li>
+   <li style="padding-bottom: 0.5em;">
+    Data cleaning: removing duplicates, dropping or filling entries with missing values, removing outliers
+   </li>
+   <li>
+    Data enrichment and feature engineering: processing columns to build more expressive features, selecting a subset of features for training
+   </li>
+  </ul>
+  <p>
+   In the early stage of a new ML project, this is a highly manual process, where intuition and experience play a large part. Using a mix of bespoke tools and open source tools such as
+   <a href="https://pandas.pydata.org/">
+    pandas
+   </a>
+   or
+   <a href="https://spark.apache.org/docs/latest/api/python/index.html">
+    PySpark
+   </a>
+   , data scientists often experiment with different combinations of data transformations, and use them to process datasets before training models. Then, they analyze prediction results and iterate. As important as this is, looping through this process again and again can be time-consuming, tedious, and error-prone.
+  </p>
+  <p>
+   At some point, you will hit the right level of accuracy (or whatever other metric you’ve picked), and you’ll then want to train on the full dataset in your production environment. However, you’ll first have to reproduce and automate the exact data preparation steps that you experimented within your sandbox. Unfortunately, there’s always room for error given the interactive nature of this work, even if you carefully document it.
+  </p>
+  <p>
+   Last but not least, you’ll have to manage and scale your data processing infrastructure before you get to the finish line. Now that I think of it, 80% of your time may not be enough to do all of this!
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Introducing Amazon SageMaker Data Wrangler
+    </span>
+   </strong>
+   <br/>
+   <a href="https://aws.amazon.com/sagemaker/data-wrangler">
+    Amazon SageMaker Data Wrangler
+   </a>
+   is integrated in
+   <a href="https://aws.amazon.com/sagemaker/studio">
+    Amazon SageMaker Studio
+   </a>
+   , our fully managed integrated development environment (IDE) for ML. With just a few clicks, you can connect to data sources, explore and visualize data, apply built-in transformations as well as your own, export the resulting code to an auto-generated script, and run it on managed infrastructure. Let’s look at each step in more detail.
+  </p>
+  <p>
+   Obviously, data preparation starts with locating and accessing data. Out of the box,
+   <span title="Amazon SageMaker Data Wrangler">
+    SageMaker Data Wrangler
+   </span>
+   lets you easily and quickly connect to
+   <a href="https://aws.amazon.com/s3/">
+    Amazon Simple Storage Service (Amazon S3)
+   </a>
+   ,
+   <a href="https://aws.amazon.com/athena">
+    Amazon Athena
+   </a>
+   ,
+   <a href="https://aws.amazon.com/redshift/">
+    Amazon Redshift
+   </a>
+   and
+   <a href="https://console.aws.amazon.com/lakeformation/">
+    AWS Lake Formation
+   </a>
+   . You can also import data from
+   <a href="https://aws.amazon.com/sagemaker/feature-store/">
+    Amazon SageMaker Feature Store
+   </a>
+   . As all things AWS, access management is governed by
+   <a href="https://aws.amazon.com/iam/">
+    AWS Identity and Access Management (IAM)
+   </a>
+   , based on the permissions attached to your
+   <span title="Amazon SageMaker Studio">
+    SageMaker Studio
+   </span>
+   instance.
+  </p>
+  <p>
+   Once you’ve connected to your data sources, you’ll probably want to visualize your data. Using the
+   <span title="Amazon SageMaker Data Wrangler">
+    SageMaker Data Wrangler
+   </span>
+   user interface, you can view table summaries, histograms, and scatter plots in seconds. You can also build your own custom graphs by simply copying and running code written with the popular
+   <a href="https://altair-viz.github.io/">
+    Altair
+   </a>
+   open source library.
+  </p>
+  <p>
+   Once you’ve got a good grasp on what your data looks like, it’s time to start preparing it.
+   <span title="Amazon SageMaker Data Wrangler">
+    SageMaker Data Wrangler
+   </span>
+   includes 300+ built-in transformations, such as finding and replacing data, splitting/renaming/dropping columns, scaling numerical values, encoding categorical values, and so on. All you have to do is select the transformation in a drop-down list, and fill in the parameters it may require. You can then preview the change, and decide whether you’d like to add it or not to the list of preparation steps for this dataset. If you’d like, you can also add your own code to implement custom transformations, using either
+   <a href="https://pandas.pydata.org/">
+    pandas
+   </a>
+   ,
+   <a href="https://spark.apache.org/docs/latest/api/python/index.html">
+    PySpark
+   </a>
+   , or
+   <a href="https://spark.apache.org/docs/latest/api/python/pyspark.sql.html">
+    PySpark SQL
+   </a>
+   .
+  </p>
+  <p>
+   As you add transformation steps to your processing pipeline, you can view its graphical summary in
+   <span title="Amazon SageMaker Studio">
+    SageMaker Studio
+   </span>
+   . You can also add new stages to the pipeline, for example a new data source, or another group of transformation steps (say, a data cleaning group, followed by a feature engineering group). Thanks to the intuitive user interface, your data preparation pipeline will take shape in front of your eyes, and you’ll instantly be able to check that processed data looks the way that it should.
+  </p>
+  <p>
+   Early on, you’d certainly love to check your data preparation steps, and also get a sense of their predictive power, wouldn’t you? Good news, then! For regression and classification problem types, the “Quick model” capability lets you select a subset of your data, train a model, and determine which features are contributing most to the predicted outcome. Looking at the model, you can easily diagnose and fix data preparation issues as early as possible, and to determine if additional feature engineering is needed to improve your model performance.
+  </p>
+  <p>
+   Once you’re happy with your pipeline, you can export it in one click to a Python script that faithfully reproduces your manual steps. You won’t waste any time chasing discrepancies, and you can directly add this code to your ML project.
+  </p>
+  <p>
+   In addition, you can also export your processing code to:
+  </p>
+  <ul>
+   <li style="padding-bottom: 0.5em;">
+    A notebook running it as a
+    <a href="https://aws.amazon.com/sagemaker/">
+     Amazon SageMaker Processing
+    </a>
+    job.
+   </li>
+   <li style="padding-bottom: 0.5em;">
+    A notebook running it as a
+    <a href="https://aws.amazon.com/sagemaker/pipelines/">
+     Amazon SageMaker Pipelines
+    </a>
+    workflow.
+   </li>
+   <li>
+    A notebook pushing your processed features to
+    <a href="https://aws.amazon.com/sagemaker/feature-store/">
+     Amazon SageMaker Feature Store
+    </a>
+    .
+   </li>
+  </ul>
+  <p>
+   Now, let’s do a quick demo, and show you how easy it is to work with
+   <span title="Amazon SageMaker Data Wrangler">
+    SageMaker Data Wrangler
+   </span>
+   .
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Using Amazon SageMaker Data Wrangler
+     <br/>
+    </strong>
+   </span>
+   Opening
+   <span title="Amazon SageMaker Studio">
+    SageMaker Studio
+   </span>
+   , I create a new data flow in order to process the
+   <a href="https://www.kaggle.com/c/titanic">
+    Titanic
+   </a>
+   dataset, which contains information on passengers, and labels showing whether they survived the wreck or not.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/w1.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43954 size-large" height="322" src="image01.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   My dataset is stored as a CSV file in
+   <a href="https://aws.amazon.com/s3/">
+    Amazon Simple Storage Service (Amazon S3)
+   </a>
+   , and I select the appropriate data source.
+  </p>
+  <p>
+   <img alt="SageMaker screenshot" class="aligncenter wp-image-43955 size-full" height="398" loading="lazy" src="image02.webp" width="918"/>
+  </p>
+  <p>
+   Using the built-in tool, I quickly navigate my S3 buckets, and I locate the CSV file containing my data. For larger datasets, SageMaker Data Wrangler also supports the Parquet format.
+  </p>
+  <p>
+   As I select my file, SageMaker Data Wrangler shows me the first few rows.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/w3.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43985 size-large" height="444" loading="lazy" src="image03.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   I import the dataset, and I’m presented with an initial view of the data flow. Right-clicking on the dataset, I select “Edit data types” to make sure that SageMaker Data Wrangler has correctly detected the type of each column in the dataset.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/w4.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43958 size-large" height="627" loading="lazy" src="image04.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Checking each column, it looks like all types are correct.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/w5.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43962 size-large" height="486" loading="lazy" src="image05.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Moving back to the data flow view, I select “Add analysis” this time. This opens a new view where I can visualize data using histograms, scatterplots, and more. For example, I build an histogram showing me the age distribution of passengers according to their survival status, and coloring the bins using their gender. Of course, I can save it for future use.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/w6.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43964 size-large" height="485" loading="lazy" src="image06.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Moving back to the data flow view once again, I select “Add transform” in order to start processing the dataset. This opens a new view, showing me the first lines of the dataset, as well as a list of 300+ built-in transforms.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/w7.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43966 size-large" height="579" loading="lazy" src="image07.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   <code>
+    Pclass
+   </code>
+   , the passenger class, is a categorical variable, and I decide to encode it using one-hot encoding. This creates 3 new columns representing different dimensions, and I can preview them. As this is exactly what I wanted, I apply this transform for good. Likewise, I apply the same transform to the
+   <code>
+    Sex
+   </code>
+   column.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/w8.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43968 size-large" height="481" loading="lazy" src="image08.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Then, I drop the original
+   <code>
+    Pclass
+   </code>
+   column. Using the same transform, I also drop the
+   <code>
+    Name
+   </code>
+   column.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/w9.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43970 size-large" height="481" loading="lazy" src="image09.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   In order to get a quick idea on whether these transformations increase or decrease the accuracy of the model, I can create a analysis that trains a model on the spot. As my problem is a binary classification problem, SageMaker Data Wrangler uses a metric called the F1 score. 0.749 is a good start, and additional processing would certainly improve it. I can also see which features contribute most to the predicted outcome: sex, age, and being a third class passenger.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/w10.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43971 size-large" height="489" loading="lazy" src="image10.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Then, moving to the “Export” view, I select all the transforms I’ve created so far, in order to add them to my ML project.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/w11.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43973 size-large" height="496" loading="lazy" src="image11.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Here, I select “Python Code” to generate a Python script. Other options are available for
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker Processing
+   </a>
+   ,
+   <a href="https://aws.amazon.com/sagemaker/pipelines/">
+    Amazon SageMaker Pipelines
+   </a>
+   , and
+   <a href="https://aws.amazon.com/sagemaker/feature-store/">
+    Amazon SageMaker Feature Store
+   </a>
+   .
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/w12.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43974 size-large" height="468" loading="lazy" src="image12.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   A few seconds later, the script is available. I could add it as is to my ML project, and rest assured that my data preparation steps would be consistent with the interactive transforms that I’ve created above.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/11/24/w13.png">
+    <img alt="SageMaker screenshot" class="aligncenter wp-image-43975 size-large" height="653" loading="lazy" src="image13.webp" width="1024"/>
+   </a>
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Getting Started
+     <br/>
+    </strong>
+   </span>
+   As you can see,
+   <a href="https://aws.amazon.com/sagemaker/data-wrangler">
+    Amazon SageMaker Data Wrangler
+   </a>
+   makes it really easy to work interactively on data preparation steps, before transforming them into code that can be used immediately for experimentation and production.
+  </p>
+  <p>
+   You can start using this capability today in all regions where SageMaker Studio is available.
+  </p>
+  <p>
+   <a href="http://console.aws.amazon.com/sagemaker/" rel="noopener noreferrer" target="_blank">
+    Give it a try
+   </a>
+   , and let us know what you think. We’re always looking forward to your feedback, either through your usual AWS support contacts, or on the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=285">
+    AWS Forum
+   </a>
+   for SageMaker.
+  </p>
+  <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+   - Julien
+  </a>
+  <p>
+   <em>
+    Special thanks to my colleague Peter Liu for his precious help during early testing.
+   </em>
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

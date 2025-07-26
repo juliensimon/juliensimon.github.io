@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Reinventing Enterprise Search – Amazon Kendra is Now Generally Available - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Reinventing Enterprise Search – Amazon Kendra is Now Generally Available - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on reinventing enterprise search – amazon kendra is now generally available by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Reinventing', 'Enterprise', 'Search'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/reinventing-enterprise-search-amazon-kendra-is-now-generally-available/"/>
+  <meta property="og:title" content="Reinventing Enterprise Search – Amazon Kendra is Now Generally Available - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on reinventing enterprise search – amazon kendra is now generally available by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2020-05-11T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/reinventing-enterprise-search-amazon-kendra-is-now-generally-available/"/>
+  <meta property="twitter:title" content="Reinventing Enterprise Search – Amazon Kendra is Now Generally Available - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on reinventing enterprise search – amazon kendra is now generally available by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/reinventing-enterprise-search-amazon-kendra-is-now-generally-available/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Reinventing Enterprise Search – Amazon Kendra is Now Generally Available",
+    "description": "Expert analysis and technical deep-dive on reinventing enterprise search – amazon kendra is now generally available by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2020-05-11T00:00:00Z",
+    "dateModified": "2020-05-11T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/reinventing-enterprise-search-amazon-kendra-is-now-generally-available/"
+    },
+    "url": "https://julien.org/blog/reinventing-enterprise-search-amazon-kendra-is-now-generally-available/",
+    "keywords": "AWS, Amazon Web Services, ['Reinventing', 'Enterprise', 'Search'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Reinventing Enterprise Search – Amazon Kendra is Now Generally Available
+  </div>
+  
+  <h1>Reinventing Enterprise Search – Amazon Kendra is Now Generally Available</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-05-11 | Originally published at <a href="https://aws.amazon.com/blogs/aws/reinventing-enterprise-search-amazon-kendra-is-now-generally-available/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Reinventing Enterprise Search – Amazon Kendra is Now Generally Available
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-05-11
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/reinventing-enterprise-search-amazon-kendra-is-now-generally-available/">
+    https://aws.amazon.com/blogs/aws/reinventing-enterprise-search-amazon-kendra-is-now-generally-available/
+   </a>
+  </p>
+  <p>
+   At the end of 2019, we launched a preview version of
+   <a href="https://aws.amazon.com/kendra">
+    Amazon Kendra
+   </a>
+   , a highly accurate and easy to use enterprise search service powered by machine learning. Today, I’m very happy to announce that
+   <a href="https://aws.amazon.com/kendra">
+    Amazon Kendra
+   </a>
+   is now generally available.
+  </p>
+  <p>
+   For all its amazing achievements in past decades, Information Technology had yet to solve a problem that all of us face every day: quickly and easily finding the information we need. Whether we’re looking for the latest version of the company travel policy, or asking a more technical question like “what’s the tensile strength of epoxy adhesives?”, we never seem to be able to get the correct answer right away. Sometimes, we never get it at all!
+  </p>
+  <p>
+   Not only are these issues frustrating for users, they’re also responsible for major productivity losses. According to an IDC study, the cost of inefficient search is $5,700 per employee per year: for a 1,000-employee company, $5.7 million evaporate every year, not counting the liability and compliance risks imposed by low accuracy search.
+  </p>
+  <p>
+   This problem has several causes. First, most enterprise data is unstructured, making it difficult to pinpoint the information you need. Second, data is often spread across organizational silos, and stored in heterogeneous backends: network shares, relational databases, 3rd party applications, and more. Lastly, keyword-based search systems require figuring out the right combination of keywords, and usually return a large number of hits, most of them irrelevant to our query.
+  </p>
+  <p>
+   Taking note of these pain points, we decided to help our customers build the search capabilities that they deserve. The result of this effort is
+   <a href="https://aws.amazon.com/kendra">
+    Amazon Kendra
+   </a>
+   .
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Introducing Amazon Kendra
+    </strong>
+   </span>
+   <br/>
+   With just a few clicks,
+   <a href="https://aws.amazon.com/kendra">
+    Amazon Kendra
+   </a>
+   enables organizations to index structured and unstructured data stored in different backends, such as file systems, applications, Intranet, and relational databases. As you would expect, all data is encrypted in flight using HTTPS, and can be encrypted at rest with
+   <a href="https://aws.amazon.com/kms/">
+    AWS Key Management Service (AWS KMS)
+   </a>
+   .
+  </p>
+  <p>
+   <a href="https://aws.amazon.com/kendra">
+    Amazon Kendra
+   </a>
+   is optimized to understand complex language from domains like IT (e.g. “How do I set up my VPN?”), healthcare and life sciences (e.g. “What is the genetic marker for ALS?”), and many other domains. This multi-domain expertise allows
+   <span title="Amazon Kendra">
+    Kendra
+   </span>
+   to find more accurate answers. In addition, developers can explicitly tune the relevance of results, using criteria such as authoritative data sources or document freshness.
+  </p>
+  <p>
+   <span title="Amazon Kendra">
+    Kendra
+   </span>
+   search can be quickly deployed to any application (search page, chat apps, chatbots, etc.) via the code samples available in the AWS console, or via APIs. Customers can be up and running with state the art semantic search from Kendra in minutes.
+  </p>
+  <p>
+   Many organizations already use
+   <a href="https://aws.amazon.com/kendra">
+    Amazon Kendra
+   </a>
+   today. For example, the
+   <a href="https://alleninstitute.org/">
+    Allen Institute
+   </a>
+   is committed to solving some of the biggest mysteries of bioscience, researching the unknown of human biology, in the brain, the human cell and the immune system. Says Dr. Oren Etzioni, Chief Executive Officer of the Allen Institute for AI: “
+   <em>
+    One of the most impactful things AI like Amazon Kendra can do right now is help scientists, academics, and technologists quickly find the right information in a sea of scientific literature and move important research faster. The Semantic Scholar team at Allen Institute for AI, along with our partners, is proud to provide
+    <a href="https://cord19.aws/">
+     CORD-19
+    </a>
+    and to support the AI resources the community is building to leverage this resource to tackle this crucial problem
+   </em>
+   ”.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Introducing New Features in Amazon Kendra
+    </span>
+   </strong>
+   <br/>
+   Based on customer feedback collected during the preview phase, we added the following features to
+   <a href="https://aws.amazon.com/kendra">
+    Amazon Kendra
+   </a>
+   .
+  </p>
+  <ul>
+   <li>
+    New scaling options for the Enterprise Edition, as well as a newly-introduced Developer Edition (see details below).
+   </li>
+   <li>
+    3 new Cloud Connectors: OneDrive, Salesforce, and ServiceNow (in addition to S3,
+    <span title="Amazon Relational Database Service (Amazon RDS)">
+     RDS
+    </span>
+    , and SharePoint Online).
+   </li>
+   <li>
+    Expertise on 8 new domains: Automotive, Health, HR, Legal, Media and Entertainment, News, Telecom, Travel and Leisure (in addition to Chemical, Energy, Finance, Insurance, IT, and Pharmaceuticals).
+   </li>
+   <li>
+    Faster indexing, and improved accuracy.
+   </li>
+  </ul>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Indexing Data with Amazon Kendra
+    </span>
+   </strong>
+   <br/>
+   For the purpose of this demo, I downloaded a small subset of
+   <a href="https://dumps.wikimedia.org/">
+    Wikipedia
+   </a>
+   (about 50,000 web pages). I uploaded the individual files in HTML format to an
+   <a href="https://aws.amazon.com/s3/">
+    Amazon Simple Storage Service (Amazon S3)
+   </a>
+   bucket.
+  </p>
+  <p>
+   Heading out to the
+   <span title="Amazon Kendra">
+    Kendra
+   </span>
+   <a href="http://console.aws.amazon.com/kendra" rel="noopener noreferrer" target="_blank">
+    console
+   </a>
+   , I start by creating a new index, giving it a name and a description. One click is all it takes to enable encryption with
+   <a href="https://aws.amazon.com/kms/">
+    AWS Key Management Service (AWS KMS)
+   </a>
+   .
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/05/06/Capture-d%E2%80%99e%CC%81cran-2020-05-06-a%CC%80-12.43.00.png">
+    <img alt="" class="size-large wp-image-37511 aligncenter" height="767" src="image01.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   After 30 minutes or so, the index is in service. I can now add data sources to it.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/05/06/Capture-d%E2%80%99e%CC%81cran-2020-05-06-a%CC%80-13.26.42.png">
+    <img alt="" class="size-large wp-image-37513 aligncenter" height="284" loading="lazy" src="image02.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Adding my S3 bucket is extremely easy. I first enter a name for the data source.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/05/06/Capture-d%E2%80%99e%CC%81cran-2020-05-06-a%CC%80-13.27.23.png">
+    <img alt="" class="size-large wp-image-37515 aligncenter" height="429" loading="lazy" src="image03.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Then, I define the name of the S3 bucket. I also need to specify the name of the
+   <span title="AWS Identity and Access Management (IAM)">
+    IAM
+   </span>
+   role used by
+   <span title="Amazon Kendra">
+    Kendra
+   </span>
+   , either selecting an existing role or creating a new one.
+  </p>
+  <p>
+   I’m given the choice to schedule synchronization at periodic intervals, in order to refresh the index with new data added to the data source. I go for a daily refresh running at midnight.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/05/06/Capture-d%E2%80%99e%CC%81cran-2020-05-06-a%CC%80-13.28.11.png">
+    <img alt="" class="size-large wp-image-37514 aligncenter" height="1021" loading="lazy" src="image04.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   The next screen lets me review all parameters, and create the data source. Once it’s active, I launch the initial synchronization by clicking on the “Sync now” button.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/05/06/Capture-d%E2%80%99e%CC%81cran-2020-05-06-a%CC%80-13.32.38.png">
+    <img alt="" class="size-large wp-image-37516 aligncenter" height="220" loading="lazy" src="image05.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   After a little while, synchronization is complete. Moving to the test window, I can now start running queries on the index.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Querying Data with Amazon Kendra
+     <br/>
+    </strong>
+   </span>
+   While working on one of my posts the other day, I listened to a Jazz song that I really liked, played by a musician named Thad Jones. Knowing absolutely nothing about Jazz players, I’m curious whether
+   <span title="Amazon Kendra">
+    Kendra
+   </span>
+   can help me learn more.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/05/06/Capture-d%E2%80%99e%CC%81cran-2020-05-06-a%CC%80-12.28.27.png">
+    <img alt="" class="size-large wp-image-37507 aligncenter" height="503" loading="lazy" src="image06.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Unsurprisingly, this query matches a large number of documents. However,
+   <span title="Amazon Kendra">
+    Kendra
+   </span>
+   comes up with a suggested answer, a high confidence answer to my query. It points at a specific paragraph in one of indexed pages. Relevant content is highlighted for more convenience, and I can immediately see that this is the right answer to my query. No need to look any further! Accordingly, I give it a thumbs up so that
+   <a href="https://aws.amazon.com/kendra">
+    Amazon Kendra
+   </a>
+   knows that this is indeed a good answer.
+  </p>
+  <p>
+   Looking to learn more about Thad Jones, I ask a second question.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/05/06/Capture-d%E2%80%99e%CC%81cran-2020-05-06-a%CC%80-12.31.00.png">
+    <img alt="" class="size-large wp-image-37509 aligncenter" height="534" loading="lazy" src="image07.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Once again, I get a suggested answer. This time,
+   <span title="Amazon Kendra">
+    Kendra
+   </span>
+   went one step further by returning the exact answer from the document, instead of just returning the document itself. This shows how
+   <span title="Amazon Kendra">
+    Kendra
+   </span>
+   is able to understand context and extract relationships, in this case the link between an individual and their city of birth.
+  </p>
+  <p>
+   Still curious, I ask a third question.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2020/05/06/Capture-d%E2%80%99e%CC%81cran-2020-05-06-a%CC%80-12.29.00.png">
+    <img alt="" class="size-large wp-image-37508 aligncenter" height="474" loading="lazy" src="image08.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   I get another suggested answer, and it’s once again right on target. The information I’m looking for is in the first sentence: Thad Jones has played with Count Basie. As you can see, the paragraph above doesn’t even include the word “play”. Yet,
+   <a href="https://aws.amazon.com/kendra">
+    Amazon Kendra
+   </a>
+   interpreted my question correctly. Thad Jones is a musician: if I’m asking about him playing with someone else, it’s very likely that I’m looking for other musicians, not for sport partners! This ability to understand natural language queries and to extract deep domain knowledge is what makes
+   <a href="https://aws.amazon.com/kendra">
+    Amazon Kendra
+   </a>
+   so accurate.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Getting Started
+    </strong>
+   </span>
+   <br/>
+   <a href="https://aws.amazon.com/kendra">
+    Amazon Kendra
+   </a>
+   is available today in US East (N. Virginia), US West (Oregon), and Europe (Ireland).
+  </p>
+  <p>
+   You can pick one of two editions.
+  </p>
+  <p>
+   The Enterprise Edition lets you search up to 500,000 documents, and run up to 40,000 queries per day for $7 per hour. You will also be charged $0.000001 per document scanned, and $0.35 per hour per connector when syncing. If you need more indexing or querying capacity, you can now scale each independently: $3.5 per hour for additional 40,000 queries, and $3.5 per hour for additional 500,000 searchable documents.
+  </p>
+  <p>
+   The Developer Edition has the same features as the Enterprise Edition. However, it’s limited to 4,000 queries per day, on up to 10,000 searchable documents across 5 data sources. No scaling options are available. Please note that the Developer Edition runs on a single availability zone, which is why it shouldn’t be used for production purposes.
+  </p>
+  <p>
+   Please give
+   <a href="https://aws.amazon.com/kendra">
+    Amazon Kendra
+   </a>
+   a try! We’d love to get your feedback, either through your usual AWS Support contacts, or on the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=362">
+    AWS Forum
+   </a>
+   for
+   <span title="Amazon Kendra">
+    Kendra
+   </span>
+   .
+  </p>
+  <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+   - Julien
+  </a>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

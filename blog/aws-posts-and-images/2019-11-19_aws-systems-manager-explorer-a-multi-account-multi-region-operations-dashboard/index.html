@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>AWS Systems Manager Explorer – A Multi-Account, Multi-Region Operations Dashboard - Julien Simon | AWS Expert</title>
+  <meta name="title" content="AWS Systems Manager Explorer – A Multi-Account, Multi-Region Operations Dashboard - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on aws systems manager explorer – a multi-account, multi-region operations dashboard by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['AWS', 'Systems', 'Manager'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/aws-systems-manager-explorer-a-multi-account-multi-region-operations-dashboard/"/>
+  <meta property="og:title" content="AWS Systems Manager Explorer – A Multi-Account, Multi-Region Operations Dashboard - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on aws systems manager explorer – a multi-account, multi-region operations dashboard by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2019-11-19T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/aws-systems-manager-explorer-a-multi-account-multi-region-operations-dashboard/"/>
+  <meta property="twitter:title" content="AWS Systems Manager Explorer – A Multi-Account, Multi-Region Operations Dashboard - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on aws systems manager explorer – a multi-account, multi-region operations dashboard by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/aws-systems-manager-explorer-a-multi-account-multi-region-operations-dashboard/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "AWS Systems Manager Explorer – A Multi-Account, Multi-Region Operations Dashboard",
+    "description": "Expert analysis and technical deep-dive on aws systems manager explorer – a multi-account, multi-region operations dashboard by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2019-11-19T00:00:00Z",
+    "dateModified": "2019-11-19T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/aws-systems-manager-explorer-a-multi-account-multi-region-operations-dashboard/"
+    },
+    "url": "https://julien.org/blog/aws-systems-manager-explorer-a-multi-account-multi-region-operations-dashboard/",
+    "keywords": "AWS, Amazon Web Services, ['AWS', 'Systems', 'Manager'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   AWS Systems Manager Explorer – A Multi-Account, Multi-Region Operations Dashboard
+  </div>
+  
+  <h1>AWS Systems Manager Explorer – A Multi-Account, Multi-Region Operations Dashboard</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-11-19 | Originally published at <a href="https://aws.amazon.com/blogs/aws/aws-systems-manager-explorer-a-multi-account-multi-region-operations-dashboard/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   AWS Systems Manager Explorer – A Multi-Account, Multi-Region Operations Dashboard
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-11-19
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/aws-systems-manager-explorer-a-multi-account-multi-region-operations-dashboard/">
+    https://aws.amazon.com/blogs/aws/aws-systems-manager-explorer-a-multi-account-multi-region-operations-dashboard/
+   </a>
+  </p>
+  <p>
+   Since 2006, Amazon Web Services has been striving to simplify IT infrastructure. Thanks to services like
+   <a href="https://aws.amazon.com/ec2/">
+    Amazon Elastic Compute Cloud (Amazon EC2)
+   </a>
+   ,
+   <a href="https://aws.amazon.com/s3/">
+    Amazon Simple Storage Service (Amazon S3)
+   </a>
+   ,
+   <a href="https://aws.amazon.com/rds/">
+    Amazon Relational Database Service (Amazon RDS)
+   </a>
+   ,
+   <a href="https://aws.amazon.com/cloudformation/">
+    AWS CloudFormation
+   </a>
+   and many more,
+   <a href="https://aws.amazon.com/solutions/case-studies/">
+    millions of customers
+   </a>
+   can build reliable, scalable, and secure platforms in any
+   <a href="https://aws.amazon.com/about-aws/global-infrastructure/">
+    AWS region
+   </a>
+   in minutes. Having spent 10 years procuring, deploying and managing more hardware than I care to remember, I’m still amazed every day by the pace of innovation that builders achieve with our services.
+  </p>
+  <p>
+   With great power come great responsibility. The second you create AWS resources, you’re responsible for them:
+   <a href="https://aws.amazon.com/compliance/shared-responsibility-model/">
+    security
+   </a>
+   of course, but also cost and scaling. This makes monitoring and alerting all the more important, which is why we built services like
+   <a href="https://aws.amazon.com/cloudwatch/">
+    Amazon CloudWatch
+   </a>
+   ,
+   <a href="https://aws.amazon.com/config/">
+    AWS Config
+   </a>
+   and
+   <a href="https://aws.amazon.com/systems-manager/">
+    AWS Systems Manager
+   </a>
+   .
+  </p>
+  <p>
+   Still, customers told us that their operations work would be much simpler if they could just look at a single dashboard, listing potential issues on AWS resources no matter which ones of their accounts or which region they’ve been created in.
+  </p>
+  <p>
+   We got to work, and today we’re very happy to announce the availability of AWS Systems Manager Explorer, a unified operations dashboard built as part of Systems Manager.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Introducing AWS Systems Manager Explorer
+     <br/>
+    </span>
+   </strong>
+   Collecting monitoring information and alerts from EC2,
+   <span title="AWS Config">
+    Config
+   </span>
+   ,
+   <span title="Amazon CloudWatch">
+    CloudWatch
+   </span>
+   and Systems Manager, Explorer presents you with an intuitive graphical dashboard that lets you quickly view and browse problems affecting your AWS resources. By default, this data comes from the account and region you’re running in, and you can easily include other regions as well as other accounts managed with
+   <a href="https://aws.amazon.com/organizations/">
+    AWS Organizations
+   </a>
+   .
+  </p>
+  <p>
+   Specifically, Explorer can provide operational information about:
+  </p>
+  <ul>
+   <li>
+    EC2 issues, such as unhealthy instances,
+   </li>
+   <li>
+    EC2 instances that have a non-compliant patching status,
+   </li>
+   <li>
+    AWS resources that don’t comply with
+    <span title="AWS Config">
+     Config
+    </span>
+    rules (predefined or your own),
+   </li>
+   <li>
+    AWS resources that have triggered a
+    <span title="Amazon CloudWatch">
+     CloudWatch
+    </span>
+    Events rule (predefined or your own).
+   </li>
+  </ul>
+  <p>
+   Each issue is stored as an OpsItem in
+   <a href="https://aws.amazon.com/blogs/aws/opscenter-a-new-feature-to-streamline-it-operations/">
+    AWS Systems Manager OpsCenter
+   </a>
+   , and is assigned a status (open, in progress, resolved), a severity and a category (security, performance, cost, etc.). Widgets let you quickly browse OpsItems, and a timeline of all OpsItems is also available.
+  </p>
+  <p>
+   In addition to OpsItems, the Explorer dashboard also includes widgets that show consolidated information on EC2 instances:
+  </p>
+  <ul>
+   <li>
+    Instance count, with a tag filter,
+   </li>
+   <li>
+    Instances managed by Systems Manager, as well as unmanaged instances,
+   </li>
+   <li>
+    Instances sorted by AMI id.
+   </li>
+  </ul>
+  <p>
+   As you would expect, all information can be exported to S3 for archival or further processing, and you can also set up
+   <a href="https://aws.amazon.com/sns/">
+    Amazon Simple Notification Service (Amazon SNS)
+   </a>
+   notifications. Last but not least, all data visible on the dashboard can be accessed from the AWS CLI or any AWS SDK with the
+   <a href="https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_GetOpsSummary.html">
+    <em>
+     GetOpsSummary
+    </em>
+   </a>
+   API.
+  </p>
+  <p>
+   Let’s take a quick tour.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     A Look at AWS Systems Manager Explorer
+    </span>
+   </strong>
+   <br/>
+   Before using Explorer, we recommend that you first set up
+   <span title="AWS Config">
+    Config
+   </span>
+   and Systems Manager. This will help populate your Explorer dashboard immediately. No setup is required for
+   <span title="Amazon CloudWatch">
+    CloudWatch
+   </span>
+   events.
+  </p>
+  <p>
+   Setting up
+   <span title="AWS Config">
+    Config
+   </span>
+   is a best practice, and the
+   <a href="https://docs.aws.amazon.com/config/latest/developerguide/gs-console.html">
+    procedure
+   </a>
+   is extremely simple: don’t forget to enable EC2 rules too. Setting up Systems Manager is equally simple, thanks to the quick setup
+   <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-quick-setup.html">
+    procedure
+   </a>
+   : add managed instances and check for patch compliance in just a few clicks! Don’t forget to do this in all regions and accounts you want Explorer to manage.
+  </p>
+  <p>
+   If you set these services up later, you’ll have to wait for a little while for data to be retrieved and displayed.
+  </p>
+  <p>
+   Now, let’s head out to the AWS console for Explorer.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/11/08/explorer0.png">
+    <img alt="" class="size-large wp-image-32223 aligncenter" height="643" src="image01.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Once I’ve completed the one-click setup page creating a service role and enabling data sources, a quick look at the CloudWatch Events console confirms that rules have been created automatically.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/11/08/explorer5.png">
+    <img alt="" class="size-large wp-image-32231 aligncenter" height="529" loading="lazy" src="image02.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Explorer recommends that I add regions and accounts in order to get a unified view. Of course, you can skip this step if you just want a quick taste of the service.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/11/08/explorer3.png">
+    <img alt="" class="size-large wp-image-32224 aligncenter" height="188" loading="lazy" src="image03.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   If you’re keen on synchronizing data, you can easily create a resource data sync, which will fetch operations data coming from other regions and other accounts. I’m going all in here, but please make sure you tick the boxes that work for you.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/11/08/explorer4.png">
+    <img alt="" class="alignnone size-large wp-image-32225" height="740" loading="lazy" src="image04.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   Once data has been retrieved and processed, my dashboard lights up. Good thing it’s only a test account!
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/11/08/explorer1-1.png">
+    <img alt="" class="size-large wp-image-32221 aligncenter" height="1024" loading="lazy" src="image05.webp" style="border: 1px solid black;" width="1020"/>
+   </a>
+  </p>
+  <p>
+   I can also see information on all EC2 instances.
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/11/08/explorer2-1.png">
+    <img alt="" class="size-large wp-image-32229 aligncenter" height="343" loading="lazy" src="image06.webp" style="border: 1px solid black;" width="1024"/>
+   </a>
+  </p>
+  <p>
+   From here on, I can group OpsItems and instances according to different dimensions (accounts, regions, tags). I can also drill down on OpsItems, view their details in Opscenter, and apply
+   <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-remediating.html">
+    runbooks
+   </a>
+   to fix them. If you want to know more about Opscenter, here’s the launch
+   <a href="https://aws.amazon.com/blogs/aws/opscenter-a-new-feature-to-streamline-it-operations/">
+    post
+   </a>
+   .
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline;">
+     Now Available!
+    </span>
+   </strong>
+   <br/>
+   We believe AWS Systems Manager Explorer will help Operations teams find and solve problems easier and faster, no matter what the scale of their AWS infrastructure is.
+  </p>
+  <p>
+   This feature is available today in all regions where
+   <a href="https://aws.amazon.com/blogs/aws/opscenter-a-new-feature-to-streamline-it-operations/">
+    AWS Systems Manager OpsCenter
+   </a>
+   is available. Give it a try, and please share your feedback in the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=185">
+    AWS forum for AWS Systems Manager
+   </a>
+   , or with your usual AWS support contacts.
+  </p>
+  <p>
+   –
+   <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+    Julien
+   </a>
+  </p>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>

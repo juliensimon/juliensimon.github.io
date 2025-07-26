@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- Primary Meta Tags -->
+  <title>Amazon Transcribe Medical – Real-Time Automatic Speech Recognition for Healthcare Customers - Julien Simon | AWS Expert</title>
+  <meta name="title" content="Amazon Transcribe Medical – Real-Time Automatic Speech Recognition for Healthcare Customers - Julien Simon | AWS Expert"/>
+  <meta name="description" content="Expert analysis and technical deep-dive on amazon transcribe medical – real-time automatic speech recognition for healthcare customers by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'Transcribe', 'Medical'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="author" content="Julien Simon"/>
+  <meta name="robots" content="index, follow"/>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://julien.org/blog/amazon-transcribe-medical-real-time-automatic-speech-recognition-for-healthcare-customers/"/>
+  <meta property="og:title" content="Amazon Transcribe Medical – Real-Time Automatic Speech Recognition for Healthcare Customers - Julien Simon | AWS Expert"/>
+  <meta property="og:description" content="Expert analysis and technical deep-dive on amazon transcribe medical – real-time automatic speech recognition for healthcare customers by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="og:site_name" content="Julien Simon - AWS Expert"/>
+  <meta property="article:author" content="Julien Simon"/>
+  <meta property="article:published_time" content="2019-12-02T00:00:00Z"/>
+  <meta property="article:section" content="AWS"/>
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI"/>
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:url" content="https://julien.org/blog/amazon-transcribe-medical-real-time-automatic-speech-recognition-for-healthcare-customers/"/>
+  <meta property="twitter:title" content="Amazon Transcribe Medical – Real-Time Automatic Speech Recognition for Healthcare Customers - Julien Simon | AWS Expert"/>
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on amazon transcribe medical – real-time automatic speech recognition for healthcare customers by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg"/>
+  <meta property="twitter:creator" content="@julsimon"/>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/amazon-transcribe-medical-real-time-automatic-speech-recognition-for-healthcare-customers/"/>
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/"/>
+  <link rel="publisher" href="https://julien.org/"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Amazon Transcribe Medical – Real-Time Automatic Speech Recognition for Healthcare Customers",
+    "description": "Expert analysis and technical deep-dive on amazon transcribe medical – real-time automatic speech recognition for healthcare customers by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2019-12-02T00:00:00Z",
+    "dateModified": "2019-12-02T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/amazon-transcribe-medical-real-time-automatic-speech-recognition-for-healthcare-customers/"
+    },
+    "url": "https://julien.org/blog/amazon-transcribe-medical-real-time-automatic-speech-recognition-for-healthcare-customers/",
+    "keywords": "AWS, Amazon Web Services, ['Amazon', 'Transcribe', 'Medical'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon"/>
+  <meta name="twitter:creator" content="@julsimon"/>
+  <meta name="theme-color" content="#FF9900"/>
+  <meta name="msapplication-TileColor" content="#FF9900"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico"/>
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png"/>
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 1em;
+        }
+        .breadcrumb a {
+            color: #FF9900;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="breadcrumb">
+   <a href="https://julien.org/">Home</a> &gt; 
+   <a href="https://julien.org/blog/">Blog</a> &gt; 
+   <a href="https://julien.org/blog/aws/">AWS</a> &gt; 
+   Amazon Transcribe Medical – Real-Time Automatic Speech Recognition for Healthcare Customers
+  </div>
+  
+  <h1>Amazon Transcribe Medical – Real-Time Automatic Speech Recognition for Healthcare Customers</h1>
+  
+  <div class="author-bio">
+   <h3>About the Author</h3>
+   <p><strong>Julien Simon</strong> is a leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services (2018-2021). With over 20 years of experience in software engineering and machine learning, Julien has authored 60+ technical blog posts and is recognized as one of the foremost authorities on AWS AI/ML services, particularly Amazon SageMaker.</p>
+   <p>Follow Julien on <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> and <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> for the latest insights on AWS, machine learning, and cloud computing.</p>
+  </div>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-12-02 | Originally published at <a href="https://aws.amazon.com/blogs/aws/amazon-transcribe-medical-real-time-automatic-speech-recognition-for-healthcare-customers/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ <body>
+  <h1>
+   Amazon Transcribe Medical – Real-Time Automatic Speech Recognition for Healthcare Customers
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2019-12-02
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://aws.amazon.com/blogs/aws/amazon-transcribe-medical-real-time-automatic-speech-recognition-for-healthcare-customers/">
+    https://aws.amazon.com/blogs/aws/amazon-transcribe-medical-real-time-automatic-speech-recognition-for-healthcare-customers/
+   </a>
+  </p>
+  <p>
+   In 2017, we launched
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   , an automatic speech recognition service that makes it easy for developers to add speech-to-text capability to their applications: today, we’re extremely happy to extend it to medical speech with
+   <a href="https://aws.amazon.com/transcribe/medical/">
+    Amazon Transcribe Medical
+   </a>
+   .
+  </p>
+  <p>
+   When I was a child, my parents – both medical doctors – often spent evenings recording letters and exam reports with a microcassette recorder, so that their secretary could later type them and archive them. That was a long time ago, but according to a 2017 study by the University of Wisconsin and the American Medical Association, primary care physicians in the US spend a staggering 6 hours per day entering their medical reports in electronic health record (EHR) systems, now a standard requirement at healthcare providers.
+  </p>
+  <p>
+   I don’t think that anyone would argue that doctors should go back to paper reports: working with digital data is so much more efficient. Still, could they be spared these long hours of administrative work? Surely, that time would be better spent engaging with patients, and getting a little extra rest after a busy day at the hospital?
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Introducing Amazon Transcribe Medical
+    </span>
+   </strong>
+   <br/>
+   Thanks to
+   <a href="https://aws.amazon.com/transcribe/medical/">
+    Amazon Transcribe Medical
+   </a>
+   , physicians will now be able to easily and quickly dictate their clinical notes and see their speech converted to accurate text in real-time, without any human intervention. Clinicians can use natural speech and do not have to explicitly call out punctuation like “comma” or “full stop”. This text can then be automatically fed to downstream applications such as EHR systems, or to AWS language services such as
+   <a href="https://aws.amazon.com/comprehend/medical/">
+    Amazon Comprehend Medical
+   </a>
+   for
+   <a href="https://aws.amazon.com/blogs/aws/amazon-comprehend-medical-natural-language-processing-for-healthcare-customers/">
+    entity extraction
+   </a>
+   .
+  </p>
+  <p>
+   In the spirit of fully managed services,
+   <span title="Amazon Transcribe Medical">
+    Transcribe Medical
+   </span>
+   frees you from any infrastructure work, and lets you scale effortlessly while only paying for what you actually use: no upfront fees for costly licenses! As you would expect,
+   <span title="Amazon Transcribe Medical">
+    Transcribe Medical
+   </span>
+   is also HIPAA eligible.
+  </p>
+  <p>
+   From a technical perspective, all you have to do is capture audio using your device’s microphone, and send
+   <a href="https://en.wikipedia.org/wiki/Pulse-code_modulation">
+    PCM
+   </a>
+   audio to a streaming API based on the popular
+   <a href="https://en.wikipedia.org/wiki/WebSocket">
+    Websocket
+   </a>
+   protocol. This API will respond with a series of
+   <a href="https://en.wikipedia.org/wiki/JSON">
+    JSON
+   </a>
+   blobs with the transcribed text, as well as word-level time stamps, punctuation, etc. Optionally, you can save this data to an
+   <a href="https://aws.amazon.com/s3/">
+    Amazon Simple Storage Service (Amazon S3)
+   </a>
+   bucket.
+  </p>
+  <p>
+   <strong>
+    <span style="text-decoration: underline">
+     Amazon Transcribe Medical In Action
+    </span>
+   </strong>
+   <br/>
+   Let’s do a quick demo with medical text from
+   <a href="https://www.mtsamples.com">
+    MT Samples
+   </a>
+   , a great collection of real-life anonymized medical transcripts that are free to use and distribute.
+  </p>
+  <p>
+   I’m using a
+   <a href="https://github.com/aws-samples/amazon-transcribe-websocket-static">
+    streaming application
+   </a>
+   modified for
+   <span title="Amazon Transcribe Medical">
+    Transcribe Medical
+   </span>
+   , and you’ll be able to do the same in the AWS console. You can view a video recording of this demo
+   <a href="https://www.youtube.com/watch?v=_FoA5DZn7M8">
+    here
+   </a>
+   .
+  </p>
+  <p>
+   <a href="https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2019/11/25/medical1.png">
+    <img alt="" class="size-large wp-image-33947 aligncenter" height="647" src="image01.webp" style="border: 1px solid black" width="1024"/>
+   </a>
+  </p>
+  <p>
+   <span style="text-decoration: underline">
+    <strong>
+     Now Available!
+    </strong>
+   </span>
+   <br/>
+   You can start using
+   <a href="https://aws.amazon.com/transcribe/medical/">
+    Amazon Transcribe Medical
+   </a>
+   today in the US East (N. Virginia) and US West (Oregon) regions.
+  </p>
+  <p>
+   Give it a try, and please share your feedback in the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=278">
+    AWS forum for Amazon Transcribe
+   </a>
+   , or with your usual AWS support contacts.
+  </p>
+  <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+   - Julien
+  </a>
+  <!-- '"` -->
+ 
+  <hr style="margin: 3em 0; border: none; border-top: 1px solid #eee;">
+  
+  <div style="background: #f8f9fa; padding: 2em; border-radius: 8px; margin-top: 3em;">
+   <h3>About Julien Simon - AWS Expert</h3>
+   <p>Julien Simon is a renowned AWS expert with extensive experience in machine learning, artificial intelligence, and cloud computing. During his tenure as Global Technical Evangelist for AI & ML at Amazon Web Services, he authored over 60 technical blog posts covering Amazon SageMaker, AWS AI services, and cloud innovations.</p>
+   
+   <h4>Key Areas of Expertise:</h4>
+   <ul>
+    <li>Amazon SageMaker and MLOps</li>
+    <li>AWS AI/ML Services (Comprehend, Transcribe, Translate, Polly)</li>
+    <li>Machine Learning Infrastructure and Best Practices</li>
+    <li>Cloud Architecture and Optimization</li>
+    <li>Enterprise AI Strategy and Implementation</li>
+   </ul>
+   
+   <p><strong>Connect with Julien:</strong> <a href="https://twitter.com/julsimon" target="_blank">Twitter</a> | <a href="https://linkedin.com/in/juliensimon" target="_blank">LinkedIn</a> | <a href="https://github.com/juliensimon" target="_blank">GitHub</a></p>
+  </div>
+  
+  <div style="text-align: center; margin-top: 2em; color: #666; font-size: 0.9em;">
+   <p>© 2025 Julien Simon - AWS Expert | <a href="https://julien.org/">julien.org</a></p>
+  </div>
+ </body>
+</html>
