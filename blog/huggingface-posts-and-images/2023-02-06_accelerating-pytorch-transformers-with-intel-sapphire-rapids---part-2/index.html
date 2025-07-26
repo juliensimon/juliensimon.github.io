@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        /* Hugging Face specific styling */
+        .prose {
+            max-width: none;
+        }
+        .prose pre {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        .prose code {
+            background: #f1f5f9;
+            color: #dc2626;
+        }
+  </style>
+ </head>
+ <body>
+
+  <div style="margin-bottom: 2em;">
+   <a href="../../../../huggingface-blog-posts.html" style="color: #3498db; text-decoration: none; font-weight: 500;">← Back to Hugging Face Blog Posts</a>
+  </div>
+  <h1>
+   Accelerating PyTorch Transformers with Intel Sapphire Rapids - part 2
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2023-02-06
+  </p>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://huggingface.co/blog/intel-sapphire-rapids-inference">
+    https://huggingface.co/blog/intel-sapphire-rapids-inference
+   </a>
+  </p>
+  <h1 class="group relative flex items-center">
+   <!-- HTML_TAG_START -->
+   <span>
+    Accelerating PyTorch Transformers with Intel Sapphire Rapids, part 2
+   </span>
+   <!-- HTML_TAG_END -->
+  </h1>
+  <!-- HTML_TAG_START -->
+  <p>
+   In a
+   <a href="https://huggingface.co/blog/intel-sapphire-rapids">
+    recent post
+   </a>
+   , we introduced you to the fourth generation of Intel Xeon CPUs, code-named
+   <a href="https://en.wikipedia.org/wiki/Sapphire_Rapids">
+    Sapphire Rapids
+   </a>
+   , and its new Advanced Matrix Extensions (
+   <a href="https://en.wikipedia.org/wiki/Advanced_Matrix_Extensions">
+    AMX
+   </a>
+   ) instruction set. Combining a cluster of Sapphire Rapids servers running on Amazon EC2 and Intel libraries like the
+   <a href="https://github.com/intel/intel-extension-for-pytorch">
+    Intel Extension for PyTorch
+   </a>
+   , we showed you how to efficiently run distributed training at scale, achieving an 8-fold speedup compared to the previous Xeon generation (Ice Lake) with near-linear scaling.
+  </p>
+  <p>
+   In this post, we're going to focus on inference. Working with popular HuggingFace transformers implemented with PyTorch, we'll first measure their performance on an Ice Lake server for short and long NLP token sequences. Then, we'll do the same with a Sapphire Rapids server and the latest version of Hugging Face
+   <a href="https://github.com/huggingface/optimum-intel">
+    Optimum Intel
+   </a>
+   , an open-source library dedicated to hardware acceleration for Intel platforms.
+  </p>
+  <p>
+   Let's get started!
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Why You Should Consider CPU-based Inference
+   </span>
+  </h2>
+  <p>
+   There are several factors to consider when deciding whether to run deep learning inference on a CPU or GPU. The most important one is certainly the size of the model. In general, larger models may benefit more from the additional computational power provided by a GPU, while smaller models can run efficiently on a CPU.
+  </p>
+  <p>
+   Another factor to consider is the level of parallelism in the model and the inference task. GPUs are designed to excel at massively parallel processing, so they may be more efficient for tasks that can be parallelized effectively. On the other hand, if the model or inference task does not have a very high level of parallelism, a CPU may be a more effective choice.
+  </p>
+  <p>
+   Cost is also an important factor to consider. GPUs can be expensive, and using a CPU may be a more cost-effective option, particularly if your business use case doesn't require extremely low latency. In addition, if you need the ability to easily scale up or down the number of inference workers, or if you need to be able to run inference on a wide variety of hardware, using CPUs may be a more flexible option.
+  </p>
+  <p>
+   Now, let's set up our test servers.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Setting up our Test Servers
+   </span>
+  </h2>
+  <p>
+   Just like in the previous post, we're going to use Amazon EC2 instances:
+  </p>
+  <ul>
+   <li>
+    a
+    <code>
+     c6i.16xlarge
+    </code>
+    instance, based on the Ice Lake architecture,
+   </li>
+   <li>
+    a
+    <code>
+     r7iz.16xlarge-metal
+    </code>
+    instance, based on the Sapphire Rapids architecture. You can read more about the new r7iz family on the
+    <a href="https://aws.amazon.com/ec2/instance-types/r7iz/">
+     AWS website
+    </a>
+    .
+   </li>
+  </ul>
+  <p>
+   Both instances have 32 physical cores (thus, 64 vCPUs). We will set them up in the same way:
+  </p>
+  <ul>
+   <li>
+    Ubuntu 22.04 with Linux 5.15.0 (
+    <code>
+     ami-0574da719dca65348
+    </code>
+    ),
+   </li>
+   <li>
+    PyTorch 1.13 with Intel Extension for PyTorch 1.13,
+   </li>
+   <li>
+    Transformers 4.25.1.
+   </li>
+  </ul>
+  <p>
+   The only difference will be the addition of the Optimum Intel Library on the r7iz instance.
+  </p>
+  <p>
+   Here are the setup steps. As usual, we recommend using a virtual environment to keep things nice and tidy.
+  </p>
+  <pre><code>sudo apt-get update
+
+# Add libtcmalloc for extra performance
+sudo apt install libgoogle-perftools-dev -y
+export LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libtcmalloc.so"
+
+sudo apt-get install python3-pip -y
+pip install pip --upgrade
+export PATH=/home/ubuntu/.local/bin:$PATH
+pip install virtualenv
+virtualenv inference_env
+source inference_env/bin/activate
+
+pip3 install torch==1.13.0 -f https://download.pytorch.org/whl/cpu
+pip3 install intel_extension_for_pytorch==1.13.0 -f https://developer.intel.com/ipex-whl-stable-cpu
+pip3 install transformers
+
+# Only needed on the r7iz instance
+pip3 install optimum[intel]
+</code></pre>
+  <p>
+   Once we've completed these steps on the two instances, we can start running our tests.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Benchmarking Popular NLP models
+   </span>
+  </h2>
+  <p>
+   In this example, we're going to benchmark several NLP models on a text classification task:
+   <a href="https://huggingface.co/distilbert-base-uncased">
+    distilbert-base-uncased
+   </a>
+   ,
+   <a href="https://huggingface.co/bert-base-uncased">
+    bert-base-uncased
+   </a>
+   and
+   <a href="https://huggingface.co/roberta-base">
+    roberta-base
+   </a>
+   . You can find the
+   <a href="https://gist.github.com/juliensimon/7ae1c8d12e8a27516e1392a3c73ac1cc">
+    full script
+   </a>
+   on Github. Feel free to try it with your models!
+  </p>
+  <pre><code>models = ["distilbert-base-uncased", "bert-base-uncased", "roberta-base"]
+</code></pre>
+  <p>
+   Using both 16-token and 128-token sentences, we will measure mean and p99 prediction latency for single inference and batch inference. This should give us a decent view of the speedup we can expect in real-life scenarios.
+  </p>
+  <pre><code>sentence_short = "This is a really nice pair of shoes, I am completely satisfied with my purchase"
+sentence_short_array = [sentence_short] * 8
+
+sentence_long = "These Adidas Lite Racer shoes hit a nice sweet spot for comfort shoes. Despite being a little snug in the toe box, these are very comfortable to wear and provide nice support while wearing. I would stop short of saying they are good running shoes or cross-trainers because they simply lack the ankle and arch support most would desire in those type of shoes and the treads wear fairly quickly, but they are definitely comfortable. I actually walked around Disney World all day in these without issue if that is any reference. Bottom line, I use these as the shoes they are best; versatile, inexpensive, and comfortable, without expecting the performance of a high-end athletic sneaker or expecting the comfort of my favorite pair of slippers."
+sentence_long_array = [sentence_long] * 8
+</code></pre>
+  <p>
+   The benchmarking function is very simple. After a few warmup iterations, we run 1,000 predictions with the pipeline API, store the prediction times, and compute both their mean and p99 values.
+  </p>
+  <pre><code>import time
+import numpy as np
+
+def benchmark(pipeline, data, iterations=1000):
+    # Warmup
+    for i in range(100):
+        result = pipeline(data)
+    times = []
+    for i in range(iterations):
+        tick = time.time()
+        result = pipeline(data)
+        tock = time.time()
+        times.append(tock - tick)
+    return "{:.2f}".format(np.mean(times) * 1000), "{:.2f}".format(
+        np.percentile(times, 99) * 1000
+    )
+</code></pre>
+  <p>
+   On the c6i (Ice Lake) instance, we only use a vanilla Transformers pipeline.
+  </p>
+  <pre><code>from transformers import pipeline
+
+for model in models:
+    print(f"Benchmarking {model}")
+    pipe = pipeline("sentiment-analysis", model=model)
+    result = benchmark(pipe, sentence_short)
+    print(f"Transformers pipeline, short sentence: {result}")
+    result = benchmark(pipe, sentence_long)
+    print(f"Transformers pipeline, long sentence: {result}")
+    result = benchmark(pipe, sentence_short_array)
+    print(f"Transformers pipeline, short sentence array: {result}")
+    result = benchmark(pipe, sentence_long_array)
+    print(f"Transformers pipeline, long sentence array: {result}")
+</code></pre>
+  <p>
+   On the r7iz (Sapphire Rapids) instance, we use both a vanilla pipeline and an Optimum pipeline. In the Optimum pipeline, we enable
+   <code>
+    bfloat16
+   </code>
+   mode to leverage the AMX instructions. We also set
+   <code>
+    jit
+   </code>
+   to
+   <code>
+    True
+   </code>
+   to further optimize the model with just-in-time compilation.
+  </p>
+  <pre><code>   import torch
+    from optimum.intel import inference_mode
+    
+    with inference_mode(pipe, dtype=torch.bfloat16, jit=True) as opt_pipe:
+        result = benchmark(opt_pipe, sentence_short)
+        print(f"Optimum pipeline, short sentence: {result}")
+        result = benchmark(opt_pipe, sentence_long)
+        print(f"Optimum pipeline, long sentence: {result}")
+        result = benchmark(opt_pipe, sentence_short_array)
+        print(f"Optimum pipeline, short sentence array: {result}")
+        result = benchmark(opt_pipe, sentence_long_array)
+        print(f"Optimum pipeline, long sentence array: {result}")
+</code></pre>
+  <p>
+   For the sake of brevity, we'll just look at the p99 results for
+   <a href="https://huggingface.co/distilbert-base-uncased">
+    distilbert-base-uncased
+   </a>
+   . All times are in milliseconds. You'll find full results at the end of the post.
+  </p>
+  <kbd>
+   <img src="image01.webp"/>
+  </kbd>
+  <p>
+   As you can see in the graph above, single predictions run
+   <strong>
+    60-65%
+   </strong>
+   faster compared to the previous generation of Xeon CPUs. In other words, thanks to the combination of Intel Sapphire Rapids and Hugging Face Optimum, you can accelerate your predictions 3x with only tiny changes to your code.
+  </p>
+  <p>
+   This lets you achieve reach
+   <strong>
+    single-digit prediction latency
+   </strong>
+   even with long text sequences, which was only possible with GPUs so far.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Conclusion
+   </span>
+  </h2>
+  <p>
+   The fourth generation of Intel Xeon CPUs delivers excellent inference performance, especially when combined with Hugging Face Optimum. This is yet another step on the way to making Deep Learning more accessible and more cost-effective, and we're looking forward to continuing this work with our friends at Intel.
+  </p>
+  <p>
+   Here are some additional resources to help you get started:
+  </p>
+  <ul>
+   <li>
+    <a href="https://github.com/intel/intel-extension-for-pytorch">
+     Intel IPEX
+    </a>
+    on GitHub
+   </li>
+   <li>
+    <a href="https://github.com/huggingface/optimum">
+     Hugging Face Optimum
+    </a>
+    on GitHub
+   </li>
+  </ul>
+  <p>
+   If you have questions or feedback, we'd love to read them on the
+   <a href="https://discuss.huggingface.co/">
+    Hugging Face forum
+   </a>
+   .
+  </p>
+  <p>
+   Thanks for reading!
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Appendix: full results
+   </span>
+  </h2>
+  <kbd>
+   <img src="image02.webp"/>
+  </kbd>
+  <p>
+   <em>
+    Ubuntu 22.04 with libtcmalloc, Linux 5.15.0 patched for Intel AMX support, PyTorch 1.13 with Intel Extension for PyTorch, Transformers 4.25.1, Optimum 1.6.1, Optimum Intel 1.7.0.dev0
+   </em>
+  </p>
+  <!-- HTML_TAG_END -->
+ </body>
+</html>

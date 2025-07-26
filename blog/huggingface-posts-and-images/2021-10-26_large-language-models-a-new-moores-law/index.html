@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        /* Hugging Face specific styling */
+        .prose {
+            max-width: none;
+        }
+        .prose pre {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        .prose code {
+            background: #f1f5f9;
+            color: #dc2626;
+        }
+  </style>
+ </head>
+ <body>
+
+  <div style="margin-bottom: 2em;">
+   <a href="../../../../huggingface-blog-posts.html" style="color: #3498db; text-decoration: none; font-weight: 500;">← Back to Hugging Face Blog Posts</a>
+  </div>
+  <h1>
+   Large Language Models: A New Moore's Law?
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2021-10-26
+  </p>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://huggingface.co/blog/large-language-models">
+    https://huggingface.co/blog/large-language-models
+   </a>
+  </p>
+  <!-- HTML_TAG_START -->
+  <p>
+   A few days ago, Microsoft and NVIDIA
+   <a href="https://www.microsoft.com/en-us/research/blog/using-deepspeed-and-megatron-to-train-megatron-turing-nlg-530b-the-worlds-largest-and-most-powerful-generative-language-model/">
+    introduced
+   </a>
+   Megatron-Turing NLG 530B, a Transformer-based model hailed as "
+   <em>
+    the world’s largest and most powerful generative language model
+   </em>
+   ."
+  </p>
+  <p>
+   This is an impressive show of Machine Learning engineering, no doubt about it. Yet, should we be excited about this mega-model trend?  I, for one, am not. Here's why.
+  </p>
+  <kbd>
+   <img src="image01.webp"/>
+  </kbd>
+  <h3 class="relative group flex items-center">
+   <span>
+    This is your Brain on Deep Learning
+   </span>
+  </h3>
+  <p>
+   Researchers estimate that the human brain contains an average of
+   <a href="https://pubmed.ncbi.nlm.nih.gov/19226510/">
+    86 billion neurons
+   </a>
+   and 100 trillion synapses. It's safe to assume that not all of them are dedicated to language either. Interestingly, GPT-4 is
+   <a href="https://www.wired.com/story/cerebras-chip-cluster-neural-networks-ai/">
+    expected
+   </a>
+   to have about 100 trillion parameters... As crude as this analogy is, shouldn't we wonder whether building language models that are about the size of the human brain is the best long-term approach?
+  </p>
+  <p>
+   Of course, our brain is a marvelous device, produced by millions of years of evolution, while Deep Learning models are only a few decades old. Still, our intuition should tell us that something doesn't compute (pun intended).
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Deep Learning, Deep Pockets?
+   </span>
+  </h3>
+  <p>
+   As you would expect, training a 530-billion parameter model on humongous text datasets requires a fair bit of infrastructure. In fact, Microsoft and NVIDIA used hundreds of DGX A100 multi-GPU servers. At $199,000 a piece, and factoring in networking equipment, hosting costs, etc., anyone looking to replicate this experiment would have to spend close to $100 million dollars. Want fries with that?
+  </p>
+  <p>
+   Seriously, which organizations have business use cases that would justify spending $100 million on Deep Learning infrastructure? Or even $10 million? Very few. So who are these models for, really?
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    That Warm Feeling is your GPU Cluster
+   </span>
+  </h3>
+  <p>
+   For all its engineering brilliance, training Deep Learning models on GPUs is a brute force technique. According to the spec sheet, each DGX server can consume up to 6.5 kilowatts. Of course, you'll need at least as much cooling power in your datacenter (or your server closet). Unless you're the Starks and need to keep Winterfell warm in winter, that's another problem you'll have to deal with.
+  </p>
+  <p>
+   In addition, as public awareness grows on climate and social responsibility issues, organizations need to account for their carbon footprint. According to this 2019
+   <a href="https://arxiv.org/pdf/1906.02243.pdf">
+    study
+   </a>
+   from the University of Massachusetts, "
+   <em>
+    training BERT on GPU is roughly equivalent to a trans-American flight
+   </em>
+   ".
+  </p>
+  <p>
+   BERT-Large has 340 million parameters. One can only extrapolate what the footprint of Megatron-Turing could be... People who know me wouldn't call me a bleeding-heart environmentalist. Still, some numbers are hard to ignore.
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    So?
+   </span>
+  </h3>
+  <p>
+   Am I excited by Megatron-Turing NLG 530B and whatever beast is coming next? No. Do I think that the (relatively small) benchmark improvement is worth the added cost, complexity and carbon footprint? No. Do I think that building and promoting these huge models is helping organizations understand and adopt Machine Learning ? No.
+  </p>
+  <p>
+   I'm left wondering what's the point of it all. Science for the sake of science? Good old marketing? Technological supremacy? Probably a bit of each. I'll leave them to it, then.
+  </p>
+  <p>
+   Instead, let me focus on pragmatic and actionable techniques that you can all use to build high quality Machine Learning solutions.
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Use Pretrained Models
+   </span>
+  </h3>
+  <p>
+   In the vast majority of cases, you won't need a custom model architecture. Maybe you'll
+   <em>
+    want
+   </em>
+   a custom one (which is a different thing), but there be dragons. Experts only!
+  </p>
+  <p>
+   A good starting point is to look for
+   <a href="https://huggingface.co/models">
+    models
+   </a>
+   that have been pretrained for the task you're trying to solve (say,
+   <a href="https://huggingface.co/models?language=en&amp;pipeline_tag=summarization&amp;sort=downloads">
+    summarizing English text
+   </a>
+   ).
+  </p>
+  <p>
+   Then, you should quickly try out a few models to predict your own data. If metrics tell you that one works well enough, you're done! If you need a little more accuracy, you should consider fine-tuning the model (more on this in a minute).
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Use Smaller Models
+   </span>
+  </h3>
+  <p>
+   When evaluating models, you should pick the smallest one that can deliver the accuracy you need. It will predict faster and require fewer hardware resources for training and inference. Frugality goes a long way.
+  </p>
+  <p>
+   It's nothing new either. Computer Vision practitioners will remember when
+   <a href="https://arxiv.org/abs/1602.07360">
+    SqueezeNet
+   </a>
+   came out in 2017, achieving a 50x reduction in model size compared to
+   <a href="https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html">
+    AlexNet
+   </a>
+   , while meeting or exceeding its accuracy. How clever that was!
+  </p>
+  <p>
+   Downsizing efforts are also under way in the Natural Language Processing community, using transfer learning techniques such as
+   <a href="https://en.wikipedia.org/wiki/Knowledge_distillation">
+    knowledge distillation
+   </a>
+   .
+   <a href="https://arxiv.org/abs/1910.01108">
+    DistilBERT
+   </a>
+   is perhaps its most widely known achievement. Compared to the original BERT model, it retains 97% of language understanding while being 40% smaller and 60% faster. You can try it
+   <a href="https://huggingface.co/distilbert-base-uncased">
+    here
+   </a>
+   . The same approach has been applied to other models, such as Facebook's
+   <a href="https://arxiv.org/abs/1910.13461">
+    BART
+   </a>
+   , and you can try DistilBART
+   <a href="https://huggingface.co/models?search=distilbart">
+    here
+   </a>
+   .
+  </p>
+  <p>
+   Recent models from the
+   <a href="https://bigscience.huggingface.co/">
+    Big Science
+   </a>
+   project are also very impressive. As visible in this graph included in the
+   <a href="https://arxiv.org/abs/2110.08207">
+    research paper
+   </a>
+   , their T0 model outperforms GPT-3 on many tasks while being 16x smaller.
+  </p>
+  <kbd>
+   <img src="image02.webp"/>
+  </kbd>
+  <p>
+   You can try T0
+   <a href="https://huggingface.co/bigscience/T0pp">
+    here
+   </a>
+   . This is the kind of research we need more of!
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Fine-Tune Models
+   </span>
+  </h3>
+  <p>
+   If you need to specialize a model, there should be very few reasons to train it from scratch. Instead, you should fine-tune it, that is to say train it only for a few epochs on your own data. If you're short on data, maybe of one these
+   <a href="https://huggingface.co/datasets">
+    datasets
+   </a>
+   can get you started.
+  </p>
+  <p>
+   You guessed it, that's another way to do transfer learning, and it'll help you save on everything!
+  </p>
+  <ul>
+   <li>
+    Less data to collect, store, clean and annotate,
+   </li>
+   <li>
+    Faster experiments and iterations,
+   </li>
+   <li>
+    Fewer resources required in production.
+   </li>
+  </ul>
+  <p>
+   In other words: save time, save money, save hardware resources, save the world!
+  </p>
+  <p>
+   If you need a tutorial, the Hugging Face
+   <a href="https://huggingface.co/course">
+    course
+   </a>
+   will get you started in no time.
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Use Cloud-Based Infrastructure
+   </span>
+  </h3>
+  <p>
+   Like them or not, cloud companies know how to build efficient infrastructure. Sustainability studies show that cloud-based infrastructure is more energy and carbon efficient than the alternative: see
+   <a href="https://sustainability.aboutamazon.com/environment/the-cloud">
+    AWS
+   </a>
+   ,
+   <a href="https://azure.microsoft.com/en-us/global-infrastructure/sustainability">
+    Azure
+   </a>
+   , and
+   <a href="https://cloud.google.com/sustainability">
+    Google
+   </a>
+   . Earth.org
+   <a href="https://earth.org/environmental-impact-of-cloud-computing/">
+    says
+   </a>
+   that while cloud infrastructure is not perfect, "[
+   <em>
+    it's] more energy efficient than the alternative and facilitates environmentally beneficial services and economic growth.
+   </em>
+   "
+  </p>
+  <p>
+   Cloud certainly has a lot going for it when it comes to ease of use, flexibility and pay as you go. It's also a little greener than you probably thought. If you're short on GPUs, why not try fine-tune your Hugging Face models on
+   <a href="https://aws.amazon.com/sagemaker/">
+    Amazon SageMaker
+   </a>
+   , AWS' managed service for Machine Learning? We've got
+   <a href="https://huggingface.co/docs/sagemaker/train">
+    plenty of examples
+   </a>
+   for you.
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Optimize Your Models
+   </span>
+  </h3>
+  <p>
+   From compilers to virtual machines, software engineers have long used tools that automatically optimize their code for whatever hardware they're running on.
+  </p>
+  <p>
+   However, the Machine Learning community is still struggling with this topic, and for good reason. Optimizing models for size and speed is a devilishly complex task, which involves techniques such as:
+  </p>
+  <ul>
+   <li>
+    Specialized hardware that speeds up training (
+    <a href="https://www.graphcore.ai/">
+     Graphcore
+    </a>
+    ,
+    <a href="https://habana.ai/">
+     Habana
+    </a>
+    ) and inference (
+    <a href="https://cloud.google.com/tpu">
+     Google TPU
+    </a>
+    ,
+    <a href="https://aws.amazon.com/machine-learning/inferentia/">
+     AWS Inferentia
+    </a>
+    ).
+   </li>
+   <li>
+    Pruning: remove model parameters that have little or no impact on the predicted outcome.
+   </li>
+   <li>
+    Fusion: merge model layers (say, convolution and activation).
+   </li>
+   <li>
+    Quantization: storing model parameters in smaller values (say, 8 bits instead of 32 bits)
+   </li>
+  </ul>
+  <p>
+   Fortunately, automated tools are starting to appear, such as the
+   <a href="https://huggingface.co/hardware">
+    Optimum
+   </a>
+   open source library, and
+   <a href="https://huggingface.co/infinity">
+    Infinity
+   </a>
+   , a containerized solution that delivers Transformers accuracy at 1-millisecond latency.
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Conclusion
+   </span>
+  </h3>
+  <p>
+   Large language model size has been increasing 10x every year for the last few years. This is starting to look like another
+   <a href="https://en.wikipedia.org/wiki/Moore%27s_law">
+    Moore's Law
+   </a>
+   .
+  </p>
+  <p>
+   We've been there before, and we should know that this road leads to diminishing returns, higher cost, more complexity, and new risks. Exponentials tend not to end well. Remember
+   <a href="https://meltdownattack.com/">
+    Meltdown and Spectre
+   </a>
+   ? Do we want to find out what that looks like for AI?
+  </p>
+  <p>
+   Instead of chasing trillion-parameter models (place your bets), wouldn't all be better off if we built practical and efficient solutions that all developers can use to solve real-world problems?
+  </p>
+  <p>
+   <em>
+    Interested in how Hugging Face can help your organization build and deploy production-grade Machine Learning solutions? Get in touch at
+    <a href="mailto:julsimon@huggingface.co">
+     julsimon@huggingface.co
+    </a>
+    (no recruiters, no sales pitches, please).
+   </em>
+  </p>
+  <!-- HTML_TAG_END -->
+ </body>
+</html>

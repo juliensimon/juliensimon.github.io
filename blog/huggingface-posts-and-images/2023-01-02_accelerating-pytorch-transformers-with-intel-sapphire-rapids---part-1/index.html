@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        /* Hugging Face specific styling */
+        .prose {
+            max-width: none;
+        }
+        .prose pre {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        .prose code {
+            background: #f1f5f9;
+            color: #dc2626;
+        }
+  </style>
+ </head>
+ <body>
+
+  <div style="margin-bottom: 2em;">
+   <a href="../../../../huggingface-blog-posts.html" style="color: #3498db; text-decoration: none; font-weight: 500;">← Back to Hugging Face Blog Posts</a>
+  </div>
+  <h1>
+   Accelerating PyTorch Transformers with Intel Sapphire Rapids - part 1
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2023-01-02
+  </p>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://huggingface.co/blog/intel-sapphire-rapids">
+    https://huggingface.co/blog/intel-sapphire-rapids
+   </a>
+  </p>
+  <h1 class="group relative flex items-center">
+   <!-- HTML_TAG_START -->
+   <span>
+    Accelerating PyTorch Transformers with Intel Sapphire Rapids, part 1
+   </span>
+   <!-- HTML_TAG_END -->
+  </h1>
+  <!-- HTML_TAG_START -->
+  <p>
+   About a year ago, we
+   <a href="https://huggingface.co/blog/accelerating-pytorch">
+    showed you
+   </a>
+   how to distribute the training of Hugging Face transformers on a cluster or third-generation
+   <a href="https://www.intel.com/content/www/us/en/products/details/processors/xeon/scalable.html">
+    Intel Xeon Scalable
+   </a>
+   CPUs (aka Ice Lake). Recently, Intel has launched the fourth generation of Xeon CPUs, code-named Sapphire Rapids, with exciting new instructions that speed up operations commonly found in deep learning models.
+  </p>
+  <p>
+   In this post, you will learn how to accelerate a PyTorch training job with a cluster of Sapphire Rapids servers running on AWS. We will use the
+   <a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/oneccl.html">
+    Intel oneAPI Collective Communications Library
+   </a>
+   (CCL) to distribute the job, and the
+   <a href="https://github.com/intel/intel-extension-for-pytorch">
+    Intel Extension for PyTorch
+   </a>
+   (IPEX) library to automatically put the new CPU instructions to work. As both libraries are already integrated with the Hugging Face transformers library, we will be able to run our sample scripts out of the box without changing a line of code.
+  </p>
+  <p>
+   In a follow-up post, we'll look at inference on Sapphire Rapids CPUs and the performance boost that they bring.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Why You Should Consider Training On CPUs
+   </span>
+  </h2>
+  <p>
+   Training a deep learning (DL) model on Intel Xeon CPUs can be a cost-effective and scalable approach, especially when using techniques such as distributed training and fine-tuning on small and medium datasets.
+  </p>
+  <p>
+   Xeon CPUs support advanced features such as Advanced Vector Extensions (
+   <a href="https://en.wikipedia.org/wiki/AVX-512">
+    AVX-512
+   </a>
+   ) and Hyper-Threading, which help improve the parallelism and efficiency of DL models. This enables faster training times as well as better utilization of hardware resources.
+  </p>
+  <p>
+   In addition, Xeon CPUs are generally more affordable and widely available compared to specialized hardware such as GPUs, which are typically required for training large deep learning models. Xeon CPUs can also be easily repurposed for other production tasks, from web servers to databases, making them a versatile and flexible choice for your IT infrastructure.
+  </p>
+  <p>
+   Finally, cloud users can further reduce the cost of training on Xeon CPUs with spot instances. Spot instances are built from spare compute capacities and sold at a discounted price. They can provide significant cost savings compared to using on-demand instances, sometimes up to 90%. Last but not least, CPU spot instances also are generally easier to procure than GPU instances.
+  </p>
+  <p>
+   Now, let's look at the new instructions in the Sapphire Rapids architecture.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Advanced Matrix Extensions: New Instructions for Deep Learning
+   </span>
+  </h2>
+  <p>
+   The Sapphire Rapids architecture introduces the Intel Advanced Matrix Extensions (
+   <a href="https://en.wikipedia.org/wiki/Advanced_Matrix_Extensions">
+    AMX
+   </a>
+   ) to accelerate DL workloads. Using them is as easy as installing the latest version of IPEX. There is no need to change anything in your Hugging Face code.
+  </p>
+  <p>
+   The AMX instructions accelerate matrix multiplication, an operation central to training DL models on data batches. They support both Brain Floating Point (
+   <a href="https://en.wikipedia.org/wiki/Bfloat16_floating-point_format">
+    BF16
+   </a>
+   ) and 8-bit integer (INT8) values, enabling acceleration for different training scenarios.
+  </p>
+  <p>
+   AMX introduces new 2-dimensional CPU registers, called tile registers. As these registers need to be saved and restored during context switches, they require kernel support: On Linux, you'll need
+   <a href="https://discourse.ubuntu.com/t/kinetic-kudu-release-notes/27976">
+    v5.16
+   </a>
+   or newer.
+  </p>
+  <p>
+   Now, let's see how we can build a cluster of Sapphire Rapids CPUs for distributed training.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Building a Cluster of Sapphire Rapids CPUs
+   </span>
+  </h2>
+  <p>
+   At the time of writing, the simplest way to get your hands on Sapphire Rapids servers is to use the new Amazon EC2
+   <a href="https://aws.amazon.com/ec2/instance-types/r7iz/">
+    R7iz
+   </a>
+   instance family. As it's still in preview, you have to
+   <a href="https://pages.awscloud.com/R7iz-Preview.html">
+    sign up
+   </a>
+   to get access. In addition, virtual servers don't yet support AMX, so we'll use bare metal instances (
+   <code>
+    r7iz.metal-16xl
+   </code>
+   , 64 vCPU, 512GB RAM).
+  </p>
+  <p>
+   To avoid setting up each node in the cluster manually, we will first set up the master node and create a new Amazon Machine Image (
+   <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html">
+    AMI
+   </a>
+   ) from it. Then, we will use this AMI to launch additional nodes.
+  </p>
+  <p>
+   From a networking perspective, we will need the following setup:
+  </p>
+  <ul>
+   <li>
+    <p>
+     Open port 22 for ssh access on all instances for setup and debugging.
+    </p>
+   </li>
+   <li>
+    <p>
+     Configure
+     <a href="https://www.redhat.com/sysadmin/passwordless-ssh">
+      password-less ssh
+     </a>
+     from the master instance (the one you'll launch training from) to all other instances (master included). In other words, the ssh public key of the master node must be authorized on all nodes.
+    </p>
+   </li>
+   <li>
+    <p>
+     Allow all network traffic inside the cluster, so that distributed training runs unencumbered. AWS provides a safe and convenient way to do this with
+     <a href="https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html">
+      security groups
+     </a>
+     . We just need to create a security group that allows all traffic from instances configured with that same security group and make sure to attach it to all instances in the cluster. Here's how my setup looks.
+    </p>
+   </li>
+  </ul>
+  <kbd>
+   <img src="image01.webp"/>
+  </kbd>
+  <p>
+   Let's get to work and build the master node of the cluster.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Setting Up the Master Node
+   </span>
+  </h2>
+  <p>
+   We first create the master node by launching an
+   <code>
+    r7iz.metal-16xl
+   </code>
+   instance with an Ubunutu 20.04 AMI (
+   <code>
+    ami-07cd3e6c4915b2d18
+   </code>
+   ) and the security group we created earlier. This AMI includes Linux v5.15.0, but Intel and AWS have fortunately patched the kernel to add AMX support. Thus, we don't need to upgrade the kernel to v5.16.
+  </p>
+  <p>
+   Once the instance is running, we ssh to it and check with
+   <code>
+    lscpu
+   </code>
+   that AMX are indeed supported. You should see the following in the flags section:
+  </p>
+  <pre><code>amx_bf16 amx_tile amx_int8
+</code></pre>
+  <p>
+   Then, we install native and Python dependencies.
+  </p>
+  <pre><code>sudo apt-get update 
+
+# Install tcmalloc for extra performance (https://github.com/google/tcmalloc)
+sudo apt install libgoogle-perftools-dev -y
+
+# Create a virtual environment
+sudo apt-get install python3-pip -y
+pip install pip --upgrade
+export PATH=/home/ubuntu/.local/bin:$PATH
+pip install virtualenv
+
+# Activate the virtual environment
+virtualenv cluster_env
+source cluster_env/bin/activate
+
+# Install PyTorch, IPEX, CCL and Transformers
+pip3 install torch==1.13.0 -f https://download.pytorch.org/whl/cpu
+pip3 install intel_extension_for_pytorch==1.13.0 -f https://developer.intel.com/ipex-whl-stable-cpu
+pip3 install oneccl_bind_pt==1.13 -f https://developer.intel.com/ipex-whl-stable-cpu
+pip3 install transformers==4.24.0
+
+# Clone the transformers repository for its example scripts
+git clone https://github.com/huggingface/transformers.git
+cd transformers
+git checkout v4.24.0
+</code></pre>
+  <p>
+   Next, we create a new ssh key pair called 'cluster' with
+   <code>
+    ssh-keygen
+   </code>
+   and store it at the default location (
+   <code>
+    ~/.ssh
+   </code>
+   ).
+  </p>
+  <p>
+   Finally, we create a
+   <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html">
+    new AMI
+   </a>
+   from this instance.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Setting Up the Cluster
+   </span>
+  </h2>
+  <p>
+   Once the AMI is ready, we use it to launch 3 additional
+   <code>
+    r7iz.16xlarge-metal
+   </code>
+   instances, without forgetting to attach the security group created earlier.
+  </p>
+  <p>
+   While these instances are starting, we ssh to the master node to complete the network setup. First, we edit the ssh configuration file at
+   <code>
+    ~/.ssh/config
+   </code>
+   to enable password-less connections from the master to all other nodes, using their private IP address and the key pair created earlier. Here's what my file looks like.
+  </p>
+  <pre><code>Host 172.31.*.*
+   StrictHostKeyChecking no
+
+Host node1
+    HostName 172.31.10.251
+    User ubuntu
+    IdentityFile ~/.ssh/cluster
+
+Host node2
+    HostName 172.31.10.189
+    User ubuntu
+    IdentityFile ~/.ssh/cluster
+
+Host node3
+    HostName 172.31.6.15
+    User ubuntu
+    IdentityFile ~/.ssh/cluster
+</code></pre>
+  <p>
+   At this point, we can use
+   <code>
+    ssh node[1-3]
+   </code>
+   to connect to any node without any prompt.
+  </p>
+  <p>
+   On the master node sill, we create a
+   <code>
+    ~/hosts
+   </code>
+   file with the names of all nodes in the cluster, as defined in the ssh configuration above. We use
+   <code>
+    localhost
+   </code>
+   for the master as we will launch the training script there. Here's what my file looks like.
+  </p>
+  <pre><code>localhost
+node1
+node2
+node3
+</code></pre>
+  <p>
+   The cluster is now ready. Let's start training!
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Launching a Distributed Training Job
+   </span>
+  </h2>
+  <p>
+   In this example, we will fine-tune a
+   <a href="https://huggingface.co/distilbert-base-uncased">
+    DistilBERT
+   </a>
+   model for question answering on the
+   <a href="https://huggingface.co/datasets/squad">
+    SQUAD
+   </a>
+   dataset. Feel free to try other examples if you'd like.
+  </p>
+  <pre><code>source ~/cluster_env/bin/activate
+cd ~/transformers/examples/pytorch/question-answering
+pip3 install -r requirements.txt
+</code></pre>
+  <p>
+   As a sanity check, we first launch a local training job. Please note several important flags:
+  </p>
+  <ul>
+   <li>
+    <code>
+     no_cuda
+    </code>
+    makes sure the job is ignoring any GPU on this machine,
+   </li>
+   <li>
+    <code>
+     use_ipex
+    </code>
+    enables the IPEX library and thus the AVX and AMX instructions,
+   </li>
+   <li>
+    <code>
+     bf16
+    </code>
+    enables BF16 training.
+   </li>
+  </ul>
+  <pre><code>export LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libtcmalloc.so"
+python run_qa.py --model_name_or_path distilbert-base-uncased \
+--dataset_name squad --do_train --do_eval --per_device_train_batch_size 32 \
+--num_train_epochs 1  --output_dir /tmp/debug_squad/ \
+--use_ipex --bf16 --no_cuda
+</code></pre>
+  <p>
+   No need to let the job run to completion, We just run for a minute to make sure that all dependencies have been correctly installed. This also gives us a baseline for single-instance training: 1 epoch takes about
+   <strong>
+    26 minutes
+   </strong>
+   . For reference, we clocked the same job on a comparable Ice Lake instance (
+   <code>
+    c6i.16xlarge
+   </code>
+   ) with the same software setup at
+   <strong>
+    3 hours and 30 minutes
+   </strong>
+   per epoch. That's an
+   <strong>
+    8x speedup
+   </strong>
+   . We can already see how beneficial the new instructions are!
+  </p>
+  <p>
+   Now, let's distribute the training job on four instances. An
+   <code>
+    r7iz.16xlarge
+   </code>
+   instance has 32 physical CPU cores, which we prefer to work with directly instead of using vCPUs (
+   <code>
+    KMP_HW_SUBSET=1T
+   </code>
+   ).  We decide to allocate 24 cores for training (
+   <code>
+    OMP_NUM_THREADS
+   </code>
+   ) and 2 for CCL communication (
+   <code>
+    CCL_WORKER_COUNT
+   </code>
+   ), leaving the last 6 threads to the kernel and other processes. The 24 training threads support 2 Python processes (
+   <code>
+    NUM_PROCESSES_PER_NODE
+   </code>
+   ). Hence, the total number of Python jobs running on the 4-node cluster is 8 (
+   <code>
+    NUM_PROCESSES
+   </code>
+   ).
+  </p>
+  <pre><code># Set up environment variables for CCL
+oneccl_bindings_for_pytorch_path=$(python -c "from oneccl_bindings_for_pytorch import cwd; print(cwd)")
+source $oneccl_bindings_for_pytorch_path/env/setvars.sh
+
+export MASTER_ADDR=172.31.3.190
+export NUM_PROCESSES=8
+export NUM_PROCESSES_PER_NODE=2
+export CCL_WORKER_COUNT=2
+export CCL_WORKER_AFFINITY=auto
+export KMP_HW_SUBSET=1T
+</code></pre>
+  <p>
+   Now, we launch the distributed training job.
+  </p>
+  <pre><code># Launch distributed training
+mpirun -f ~/hosts \
+ -n $NUM_PROCESSES -ppn $NUM_PROCESSES_PER_NODE  \
+ -genv OMP_NUM_THREADS=24 \
+ -genv LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libtcmalloc.so" \
+ python3 run_qa.py \
+ --model_name_or_path distilbert-base-uncased \
+ --dataset_name squad \
+ --do_train \
+ --do_eval \
+ --per_device_train_batch_size 32  \
+ --num_train_epochs 1  \
+ --output_dir /tmp/debug_squad/ \
+ --overwrite_output_dir \
+ --no_cuda \
+ --xpu_backend ccl \
+ --bf16
+</code></pre>
+  <p>
+   One epoch now takes
+   <strong>
+    7 minutes and 30 seconds
+   </strong>
+   .
+  </p>
+  <p>
+   Here's what the job looks like. The master node is at the top, and you can see the two training processes running on each one of the other 3 nodes.
+  </p>
+  <kbd>
+   <img src="image02.webp"/>
+  </kbd>
+  <p>
+   Perfect linear scaling on 4 nodes would be 6 minutes and 30 seconds (26 minutes divided by 4). We're very close to this ideal value, which shows how scalable this approach is.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Conclusion
+   </span>
+  </h2>
+  <p>
+   As you can see, training Hugging Face transformers on a cluster of Intel Xeon CPUs is a flexible, scalable, and cost-effective solution, especially if you're working with small or medium-sized models and datasets.
+  </p>
+  <p>
+   Here are some additional resources to help you get started:
+  </p>
+  <ul>
+   <li>
+    <a href="https://github.com/intel/intel-extension-for-pytorch">
+     Intel IPEX
+    </a>
+    on GitHub
+   </li>
+   <li>
+    Hugging Face documentation: "
+    <a href="https://huggingface.co/docs/transformers/perf_train_cpu">
+     Efficient training on CPU
+    </a>
+    " and "
+    <a href="https://huggingface.co/docs/transformers/perf_train_cpu_many">
+     Efficient training on many CPUs
+    </a>
+    ".
+   </li>
+  </ul>
+  <p>
+   If you have questions or feedback, we'd love to read them on the
+   <a href="https://discuss.huggingface.co/">
+    Hugging Face forum
+   </a>
+   .
+  </p>
+  <p>
+   Thanks for reading!
+  </p>
+  <!-- HTML_TAG_END -->
+ </body>
+</html>

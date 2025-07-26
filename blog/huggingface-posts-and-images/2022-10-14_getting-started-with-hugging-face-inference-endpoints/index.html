@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        /* Hugging Face specific styling */
+        .prose {
+            max-width: none;
+        }
+        .prose pre {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        .prose code {
+            background: #f1f5f9;
+            color: #dc2626;
+        }
+  </style>
+ </head>
+ <body>
+
+  <div style="margin-bottom: 2em;">
+   <a href="../../../../huggingface-blog-posts.html" style="color: #3498db; text-decoration: none; font-weight: 500;">← Back to Hugging Face Blog Posts</a>
+  </div>
+  <h1>
+   Getting Started with Hugging Face Inference Endpoints
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2022-10-14
+  </p>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://huggingface.co/blog/inference-endpoints">
+    https://huggingface.co/blog/inference-endpoints
+   </a>
+  </p>
+  <!-- HTML_TAG_START -->
+  <p>
+   Training machine learning models has become quite simple, especially with the rise of pre-trained models and transfer learning. OK, sometimes it's not
+   <em>
+    that
+   </em>
+   simple, but at least, training models will never break critical applications, and make customers unhappy about your quality of service. Deploying models, however... Yes, we've all been there.
+  </p>
+  <p>
+   Deploying models in production usually requires jumping through a series of hoops. Packaging your model in a container, provisioning the infrastructure, creating your prediction API, securing it, scaling it, monitoring it, and more. Let's face it: building all this plumbing takes valuable time away from doing actual machine learning work. Unfortunately, it can also go awfully wrong.
+  </p>
+  <p>
+   We strive to fix this problem with the newly launched Hugging Face
+   <a href="https://huggingface.co/inference-endpoints">
+    Inference Endpoints
+   </a>
+   . In the spirit of making machine learning ever simpler without compromising on state-of-the-art quality, we've built a service that lets you deploy machine learning models directly from the
+   <a href="https://huggingface.co">
+    Hugging Face hub
+   </a>
+   to managed infrastructure on your favorite cloud in just a few clicks. Simple, secure, and scalable: you can have it all.
+  </p>
+  <p>
+   Let me show you how this works!
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Deploying a model on Inference Endpoints
+   </span>
+  </h3>
+  <p>
+   Looking at the list of
+   <a href="https://huggingface.co/docs/inference-endpoints/supported_tasks">
+    tasks
+   </a>
+   that Inference Endpoints support, I decided to deploy a Swin image classification model that I recently fine-tuned with
+   <a href="https://huggingface.co/autotrain">
+    AutoTrain
+   </a>
+   on the
+   <a href="https://huggingface.co/datasets/food101">
+    food101
+   </a>
+   dataset. If you're interested in how I built this model, this
+   <a href="https://youtu.be/uFxtl7QuUvo">
+    video
+   </a>
+   will show you the whole process.
+  </p>
+  <p>
+   Starting from my
+   <a href="https://huggingface.co/juliensimon/autotrain-food101-1471154053">
+    model page
+   </a>
+   , I click on
+   <code>
+    Deploy
+   </code>
+   and select
+   <code>
+    Inference Endpoints
+   </code>
+   .
+  </p>
+  <kbd>
+   <img src="image01.webp"/>
+  </kbd>
+  <p>
+   This takes me directly to the
+   <a href="https://ui.endpoints.huggingface.co/new">
+    endpoint creation
+   </a>
+   page.
+  </p>
+  <kbd>
+   <img src="image02.webp"/>
+  </kbd>
+  <p>
+   I decide to deploy the latest revision of my model on a single GPU instance, hosted on AWS in the
+   <code>
+    eu-west-1
+   </code>
+   region. Optionally, I could set up autoscaling, and I could even deploy the model in a
+   <a href="https://huggingface.co/docs/inference-endpoints/guides/custom_container">
+    custom container
+   </a>
+   .
+  </p>
+  <kbd>
+   <img src="image03.webp"/>
+  </kbd>
+  <p>
+   Next, I need to decide who can access my endpoint. From least secure to most secure, the three options are:
+  </p>
+  <ul>
+   <li>
+    <strong>
+     Public
+    </strong>
+    : the endpoint runs in a public Hugging Face subnet, and anyone on the Internet can access it without any authentication. Think twice before selecting this!
+   </li>
+   <li>
+    <strong>
+     Protected
+    </strong>
+    : the endpoint runs in a public Hugging Face subnet, and anyone on the Internet with the appropriate organization token can access it.
+   </li>
+   <li>
+    <strong>
+     Private
+    </strong>
+    : the endpoint runs in a private Hugging Face subnet. It's not accessible on the Internet. It's only available in your AWS account through a VPC Endpoint created with
+    <a href="https://aws.amazon.com/privatelink/">
+     AWS PrivateLink
+    </a>
+    . You can control which VPC and subnet(s) in your AWS account have access to the endpoint.
+   </li>
+  </ul>
+  <p>
+   Let's first deploy a protected endpoint, and then we'll deploy a private one.
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Deploying a Protected Inference Endpoint
+   </span>
+  </h3>
+  <p>
+   I simply select
+   <code>
+    Protected
+   </code>
+   and click on
+   <code>
+    Create Endpoint
+   </code>
+   .
+  </p>
+  <kbd>
+   <img src="image04.webp"/>
+  </kbd>
+  <p>
+   After a few minutes, the endpoint is up and running, and its URL is visible.
+  </p>
+  <kbd>
+   <img src="image05.webp"/>
+  </kbd>
+  <p>
+   I can immediately test it by uploading an
+   <a href="/blog/assets/109_inference_endpoints/food.jpg">
+    image
+   </a>
+   in the inference widget.
+  </p>
+  <kbd>
+   <img src="image06.webp"/>
+  </kbd>
+  <p>
+   Of course, I can also invoke the endpoint directly with a few lines of Python code, and I authenticate with my Hugging Face API token (you'll find yours in your account settings on the hub).
+  </p>
+  <pre><code>import requests, json
+
+API_URL = "https://oncm9ojdmjwesag2.eu-west-1.aws.endpoints.huggingface.cloud"
+
+headers = {
+  "Authorization": "Bearer MY_API_TOKEN",
+  "Content-Type": "image/jpg"
+}
+
+def query(filename):
+    with open(filename, "rb") as f:
+        data = f.read()
+    response = requests.request("POST", API_URL, headers=headers, data=data)
+    return json.loads(response.content.decode("utf-8"))
+
+output = query("food.jpg")
+</code></pre>
+  <p>
+   As you would expect, the predicted result is identical.
+  </p>
+  <pre><code>[{'score': 0.9998438358306885,    'label': 'hummus'},
+ {'score': 6.674625183222815e-05, 'label': 'falafel'}, 
+ {'score': 6.490697160188574e-06, 'label': 'escargots'}, 
+ {'score': 5.776922080258373e-06, 'label': 'deviled_eggs'}, 
+ {'score': 5.492902801051969e-06, 'label': 'shrimp_and_grits'}]
+</code></pre>
+  <p>
+   Moving to the
+   <code>
+    Analytics
+   </code>
+   tab, I can see endpoint metrics. Some of my requests failed because I deliberately omitted the
+   <code>
+    Content-Type
+   </code>
+   header.
+  </p>
+  <kbd>
+   <img src="image07.webp"/>
+  </kbd>
+  <p>
+   For additional details, I can check the full logs in the
+   <code>
+    Logs
+   </code>
+   tab.
+  </p>
+  <pre><code>5c7fbb4485cd8w7 2022-10-10T08:19:04.915Z 2022-10-10 08:19:04,915 | INFO | POST / | Duration: 142.76 ms
+5c7fbb4485cd8w7 2022-10-10T08:19:05.860Z 2022-10-10 08:19:05,860 | INFO | POST / | Duration: 148.06 ms
+5c7fbb4485cd8w7 2022-10-10T09:21:39.251Z 2022-10-10 09:21:39,250 | ERROR | Content type "None" not supported. Supported content types are: application/json, text/csv, text/plain, image/png, image/jpeg, image/jpg, image/tiff, image/bmp, image/gif, image/webp, image/x-image, audio/x-flac, audio/flac, audio/mpeg, audio/wave, audio/wav, audio/x-wav, audio/ogg, audio/x-audio, audio/webm, audio/webm;codecs=opus
+5c7fbb4485cd8w7 2022-10-10T09:21:44.114Z 2022-10-10 09:21:44,114 | ERROR | Content type "None" not supported. Supported content types are: application/json, text/csv, text/plain, image/png, image/jpeg, image/jpg, image/tiff, image/bmp, image/gif, image/webp, image/x-image, audio/x-flac, audio/flac, audio/mpeg, audio/wave, audio/wav, audio/x-wav, audio/ogg, audio/x-audio, audio/webm, audio/webm;codecs=opus
+</code></pre>
+  <p>
+   Now, let's increase our security level and deploy a private endpoint.
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Deploying a Private Inference Endpoint
+   </span>
+  </h3>
+  <p>
+   Repeating the steps above, I select
+   <code>
+    Private
+   </code>
+   this time.
+  </p>
+  <p>
+   This opens a new box asking me for the identifier of the AWS account in which the endpoint will be visible. I enter the appropriate ID and click on
+   <code>
+    Create Endpoint
+   </code>
+   .
+  </p>
+  <p>
+   Not sure about your AWS account id? Here's an AWS CLI one-liner for you:
+   <code>
+    aws sts get-caller-identity --query Account --output text
+   </code>
+  </p>
+  <kbd>
+   <img src="image08.webp"/>
+  </kbd>
+  <p>
+   After a few minutes, the Inference Endpoints user interface displays the name of the VPC service name. Mine is
+   <code>
+    com.amazonaws.vpce.eu-west-1.vpce-svc-07a49a19a427abad7
+   </code>
+   .
+  </p>
+  <p>
+   Next, I open the AWS console and go to the
+   <a href="https://console.aws.amazon.com/vpc/home?#Endpoints:">
+    VPC Endpoints
+   </a>
+   page. Then, I click on
+   <code>
+    Create endpoint
+   </code>
+   to create a VPC endpoint, which will enable my AWS account to access my Inference Endpoint through AWS PrivateLink.
+  </p>
+  <p>
+   In a nutshell, I need to fill in the name of the VPC service name displayed above, select the VPC and subnets(s) allowed to access the endpoint, and attach an appropriate Security Group. Nothing scary: I just follow the steps listed in the
+   <a href="https://huggingface.co/docs/inference-endpoints/guides/private_link">
+    Inference Endpoints documentation
+   </a>
+   .
+  </p>
+  <p>
+   Once I've created the VPC endpoint, my setup looks like this.
+  </p>
+  <kbd>
+   <img src="image09.webp"/>
+  </kbd>
+  <p>
+   Returning to the Inference Endpoints user interface, the private endpoint runs a minute or two later. Let's test it!
+  </p>
+  <p>
+   Launching an Amazon EC2 instance in one of the subnets allowed to access the VPC endpoint, I use the inference endpoint URL to predict my test image.
+  </p>
+  <pre><code>curl https://oncm9ojdmjwesag2.eu-west-1.aws.endpoints.huggingface.cloud \
+-X POST --data-binary '@food.jpg' \
+-H "Authorization: Bearer MY_API_TOKEN" \
+-H "Content-Type: image/jpeg"
+
+[{"score":0.9998466968536377,     "label":"hummus"},
+ {"score":0.00006414744711946696, "label":"falafel"},
+ {"score":6.4065129663504194e-6,  "label":"escargots"},
+ {"score":5.819705165777123e-6,   "label":"deviled_eggs"},
+ {"score":5.532585873879725e-6,   "label":"shrimp_and_grits"}]
+</code></pre>
+  <p>
+   This is all there is to it. Once I'm done testing, I delete the endpoints that I've created to avoid unwanted charges. I also delete the VPC Endpoint in the AWS console.
+  </p>
+  <p>
+   Hugging Face customers are already using Inference Endpoints. For example,
+   <a href="https://phamily.com/">
+    Phamily
+   </a>
+   , the #1 in-house chronic care management &amp; proactive care platform,
+   <a href="https://www.youtube.com/watch?v=20C9X5OYO2Q">
+    told us
+   </a>
+   that Inference Endpoints is helping them simplify and accelerate HIPAA-compliant Transformer deployments.
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Now it's your turn!
+   </span>
+  </h3>
+  <p>
+   Thanks to Inference Endpoints, you can deploy production-grade, scalable, secure endpoints in minutes, in just a few clicks. Why don't you
+   <a href="https://ui.endpoints.huggingface.co/new">
+    give it a try
+   </a>
+   ?
+  </p>
+  <p>
+   We have plenty of ideas to make the service even better, and we'd love to hear your feedback in the
+   <a href="https://discuss.huggingface.co/">
+    Hugging Face forum
+   </a>
+   .
+  </p>
+  <p>
+   Thank you for reading and have fun with Inference Endpoints!
+  </p>
+  <!-- HTML_TAG_END -->
+ </body>
+</html>

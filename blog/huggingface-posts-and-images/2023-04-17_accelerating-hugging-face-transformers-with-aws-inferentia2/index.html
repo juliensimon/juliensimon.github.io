@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        /* Hugging Face specific styling */
+        .prose {
+            max-width: none;
+        }
+        .prose pre {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        .prose code {
+            background: #f1f5f9;
+            color: #dc2626;
+        }
+  </style>
+ </head>
+ <body>
+
+  <div style="margin-bottom: 2em;">
+   <a href="../../../../huggingface-blog-posts.html" style="color: #3498db; text-decoration: none; font-weight: 500;">← Back to Hugging Face Blog Posts</a>
+  </div>
+  <h1>
+   Accelerating Hugging Face Transformers with AWS Inferentia2
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2023-04-17
+  </p>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://huggingface.co/blog/accelerate-transformers-with-inferentia2">
+    https://huggingface.co/blog/accelerate-transformers-with-inferentia2
+   </a>
+  </p>
+  <!-- HTML_TAG_START -->
+  <script async="" defer="" src="https://unpkg.com/medium-zoom-element@0/dist/medium-zoom-element.min.js">
+  </script>
+  <p>
+   In the last five years, Transformer models [
+   <a href="https://arxiv.org/abs/1706.03762">
+    1
+   </a>
+   ] have become the
+   <em>
+    de facto
+   </em>
+   standard for many machine learning (ML) tasks, such as natural language processing (NLP), computer vision (CV),  speech, and more. Today, many data scientists and ML engineers rely on popular transformer architectures like BERT [
+   <a href="https://arxiv.org/abs/1810.04805">
+    2
+   </a>
+   ], RoBERTa [
+   <a href="https://arxiv.org/abs/1907.11692">
+    3
+   </a>
+   ], the Vision Transformer [
+   <a href="https://arxiv.org/abs/2010.11929">
+    4
+   </a>
+   ], or any of the 130,000+ pre-trained models available on the
+   <a href="https://huggingface.co">
+    Hugging Face
+   </a>
+   hub to solve complex business problems with state-of-the-art accuracy.
+  </p>
+  <p>
+   However, for all their greatness, Transformers can be challenging to deploy in production. On top of the infrastructure plumbing typically associated with model deployment, which we largely solved with our
+   <a href="https://huggingface.co/inference-endpoints">
+    Inference Endpoints
+   </a>
+   service, Transformers are large models which routinely exceed the multi-gigabyte mark. Large language models (LLMs) like
+   <a href="https://huggingface.co/EleutherAI/gpt-j-6B">
+    GPT-J-6B
+   </a>
+   ,
+   <a href="https://huggingface.co/google/flan-t5-xxl">
+    Flan-T5
+   </a>
+   , or
+   <a href="https://huggingface.co/facebook/opt-30b">
+    Opt-30B
+   </a>
+   are in the tens of gigabytes, not to mention behemoths like
+   <a href="https://huggingface.co/bigscience/bloom">
+    BLOOM
+   </a>
+   , our very own LLM, which clocks in at 350 gigabytes.
+  </p>
+  <p>
+   Fitting these models on a single accelerator can be quite difficult, let alone getting the high throughput and low inference latency that applications require, like conversational applications and search. So far, ML experts have designed complex manual techniques to slice large models, distribute them on a cluster of accelerators, and optimize their latency. Unfortunately, this work is extremely difficult, time-consuming, and completely out of reach for many ML practitioners.
+  </p>
+  <p>
+   At Hugging Face, we're democratizing ML and always looking to partner with companies who also believe that every developer and organization should benefit from state-of-the-art models. For this purpose, we're excited to partner with Amazon Web Services to optimize Hugging Face Transformers for AWS
+   <a href="https://aws.amazon.com/machine-learning/inferentia/">
+    Inferentia 2
+   </a>
+   ! It’s a new purpose-built inference accelerator that delivers unprecedented levels of throughput, latency, performance per watt, and scalability.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Introducing AWS Inferentia2
+   </span>
+  </h2>
+  <p>
+   AWS Inferentia2 is the next generation to Inferentia1 launched in 2019. Powered by Inferentia1, Amazon EC2 Inf1 instances delivered 25% higher throughput and 70% lower cost than comparable G5 instances based on NVIDIA A10G GPU, and with Inferentia2, AWS is pushing the envelope again.
+  </p>
+  <p>
+   The new Inferentia2 chip delivers a 4x throughput increase and a 10x latency reduction compared to Inferentia. Likewise, the new
+   <a href="https://aws.amazon.com/de/ec2/instance-types/inf2/">
+    Amazon EC2 Inf2
+   </a>
+   instances have up to 2.6x better throughput, 8.1x lower latency, and 50% better performance per watt than comparable G5 instances. Inferentia 2 gives you the best of both worlds: cost-per-inference optimization thanks to high throughput and response time for your application thanks to low inference latency.
+  </p>
+  <p>
+   Inf2 instances are available in multiple sizes, which are equipped with between 1 to 12 Inferentia 2 chips. When several chips are present, they are interconnected by a blazing-fast direct Inferentia2 to Inferentia2 connectivity for distributed inference on large models. For example, the largest instance size, inf2.48xlarge, has 12 chips and enough memory to load a 175-billion parameter model like GPT-3 or BLOOM.
+  </p>
+  <p>
+   Thankfully none of this comes at the expense of development complexity. With
+   <a href="https://github.com/huggingface/optimum-neuron">
+    optimum neuron
+   </a>
+   , you don't need to slice or modify your model. Because of the native integration in
+   <a href="https://github.com/aws-neuron/aws-neuron-sdk">
+    AWS Neuron SDK
+   </a>
+   , all it takes is a single line of code to compile your model for Inferentia 2. You can experiment in minutes! Test the performance your model could reach on Inferentia 2 and see for yourself.
+  </p>
+  <p>
+   Speaking of, let’s show you how several Hugging Face models run on Inferentia 2. Benchmarking time!
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Benchmarking Hugging Face Models on AWS Inferentia 2
+   </span>
+  </h2>
+  <p>
+   We evaluated some of the most popular NLP models from the
+   <a href="https://huggingface.co/models">
+    Hugging Face Hub
+   </a>
+   including BERT, RoBERTa, DistilBERT, and vision models like Vision Transformers.
+  </p>
+  <p>
+   The first benchmark compares the performance of Inferentia, Inferentia 2, and GPUs. We ran all experiments on AWS with the following instance types:
+  </p>
+  <ul>
+   <li>
+    Inferentia1 -
+    <a href="https://aws.amazon.com/ec2/instance-types/inf1/?nc1=h_ls">
+     inf1.2xlarge
+    </a>
+    powered by a single Inferentia chip.
+   </li>
+   <li>
+    Inferentia2 -
+    <a href="https://aws.amazon.com/ec2/instance-types/inf2/?nc1=h_ls">
+     inf2.xlarge
+    </a>
+    powered by a single Inferentia2 chip.
+   </li>
+   <li>
+    GPU -
+    <a href="https://aws.amazon.com/ec2/instance-types/g5/">
+     g5.2xlarge
+    </a>
+    powered by a single NVIDIA A10G GPU.
+   </li>
+  </ul>
+  <p>
+   <em>
+    Note: that we did not optimize the model for the GPU environment, the models were evaluated in fp32.
+   </em>
+  </p>
+  <p>
+   When it comes to benchmarking Transformer models, there are two metrics that are most adopted:
+  </p>
+  <ul>
+   <li>
+    <strong>
+     Latency
+    </strong>
+    : the time it takes for the model to perform a single prediction (pre-process, prediction, post-process).
+   </li>
+   <li>
+    <strong>
+     Throughput
+    </strong>
+    : the number of executions performed in a fixed amount of time for one benchmark configuration
+   </li>
+  </ul>
+  <p>
+   We looked at latency across different setups and models to understand the benefits and tradeoffs of the new Inferentia2 instance. If you want to run the benchmark yourself, we created a
+   <a href="https://github.com/philschmid/aws-neuron-samples/tree/main/benchmark">
+    Github repository
+   </a>
+   with all the information and scripts to do so.
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Results
+   </span>
+  </h3>
+  <p>
+   The benchmark confirms that the performance improvements claimed by AWS can be reproduced and validated by real use-cases and examples. On average, AWS Inferentia2 delivers 4.5x better latency than NVIDIA A10G GPUs and 4x better latency than Inferentia1 instances.
+  </p>
+  <p>
+   We ran 144 experiments on 6 different model architectures:
+  </p>
+  <ul>
+   <li>
+    Accelerators: Inf1, Inf2, NVIDIA A10G
+   </li>
+   <li>
+    Models:
+    <a href="https://huggingface.co/bert-base-uncased">
+     BERT-base
+    </a>
+    ,
+    <a href="https://huggingface.co/bert-large-uncased">
+     BERT-Large
+    </a>
+    ,
+    <a href="https://huggingface.co/roberta-base">
+     RoBERTa-base
+    </a>
+    ,
+    <a href="https://huggingface.co/distilbert-base-uncased">
+     DistilBERT
+    </a>
+    ,
+    <a href="https://huggingface.co/albert-base-v2">
+     ALBERT-base
+    </a>
+    ,
+    <a href="https://huggingface.co/google/vit-base-patch16-224">
+     ViT-base
+    </a>
+   </li>
+   <li>
+    Sequence length: 8, 16, 32, 64, 128, 256, 512
+   </li>
+   <li>
+    Batch size: 1
+   </li>
+  </ul>
+  <p>
+   In each experiment, we collected numbers for p95 latency. You can find the full details of the benchmark in this spreadsheet:
+   <a href="https://docs.google.com/spreadsheets/d/1AULEHBu5Gw6ABN8Ls6aSB2CeZyTIP_y5K7gC7M3MXqs/edit?usp=sharing">
+    HuggingFace: Benchmark Inferentia2
+   </a>
+   .
+  </p>
+  <p>
+   Let’s highlight a few insights of the benchmark.
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    BERT-base
+   </span>
+  </h3>
+  <p>
+   Here is the latency comparison for running
+   <a href="https://huggingface.co/bert-base-uncased">
+    BERT-base
+   </a>
+   on each of the infrastructure setups, with a logarithmic scale for latency. It is remarkable to see how Inferentia2 outperforms all other setups by ~6x for sequence lengths up to 256.
+  </p>
+  <br/>
+  <figure class="image table text-center m-0 w-full">
+   <medium-zoom alt="BERT-base p95 latency" background="rgba(0,0,0,.7)" src="assets/140_accelerate_transformers_with_inferentia2/bert.png">
+   </medium-zoom>
+   <figcaption>
+    Figure 1. BERT-base p95 latency
+   </figcaption>
+  </figure>
+  <br/>
+  <h3 class="relative group flex items-center">
+   <span>
+    Vision Transformer
+   </span>
+  </h3>
+  <p>
+   Here is the latency comparison for running
+   <a href="https://huggingface.co/google/vit-base-patch16-224">
+    ViT-base
+   </a>
+   on the different infrastructure setups. Inferentia2 delivers 2x better latency than the NVIDIA A10G, with the potential to greatly help companies move from traditional architectures, like CNNs, to Transformers for - real-time applications.
+  </p>
+  <br/>
+  <figure class="image table text-center m-0 w-full">
+   <medium-zoom alt="ViT p95 latency" background="rgba(0,0,0,.7)" src="assets/140_accelerate_transformers_with_inferentia2/vit.png">
+   </medium-zoom>
+   <figcaption>
+    Figure 1. ViT p95 latency
+   </figcaption>
+  </figure>
+  <br/>
+  <h2 class="relative group flex items-center">
+   <span>
+    Conclusion
+   </span>
+  </h2>
+  <p>
+   Transformer models have emerged as the go-to solution for many machine learning tasks. However, deploying them in production has been challenging due to their large size and latency requirements. Thanks to AWS Inferentia2 and the collaboration between Hugging Face and AWS, developers and organizations can now leverage the benefits of state-of-the-art models without the prior need for extensive machine learning expertise. You can start testing for as low as 0.76$/h.
+  </p>
+  <p>
+   The initial benchmarking results are promising, and show that Inferentia2 delivers superior latency performance when compared to both Inferentia and NVIDIA A10G GPUs. This latest breakthrough promises high-quality machine learning models can be made available to a much broader audience delivering AI accessibility to everyone.
+  </p>
+  <!-- HTML_TAG_END -->
+ </body>
+</html>

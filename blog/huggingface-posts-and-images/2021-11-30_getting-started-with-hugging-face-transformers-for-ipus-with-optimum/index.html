@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        /* Hugging Face specific styling */
+        .prose {
+            max-width: none;
+        }
+        .prose pre {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        .prose code {
+            background: #f1f5f9;
+            color: #dc2626;
+        }
+  </style>
+ </head>
+ <body>
+
+  <div style="margin-bottom: 2em;">
+   <a href="../../../../huggingface-blog-posts.html" style="color: #3498db; text-decoration: none; font-weight: 500;">← Back to Hugging Face Blog Posts</a>
+  </div>
+  <h1>
+   Getting Started with Hugging Face Transformers for IPUs with Optimum
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2021-11-30
+  </p>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://huggingface.co/blog/graphcore-getting-started">
+    https://huggingface.co/blog/graphcore-getting-started
+   </a>
+  </p>
+  <!-- HTML_TAG_START -->
+  <p>
+   Transformer models have proven to be extremely efficient on a wide range of machine learning tasks, such as natural language processing, audio processing, and computer vision. However, the prediction speed of these large models can make them impractical for latency-sensitive use cases like conversational applications or search. Furthermore, optimizing their performance in the real world requires considerable time, effort and skills that are beyond the reach of many companies and organizations.
+  </p>
+  <p>
+   Luckily, Hugging Face has introduced
+   <a href="https://huggingface.co/hardware">
+    Optimum
+   </a>
+   , an open source library which makes it much easier to reduce the prediction latency of Transformer models on a variety of hardware platforms. In this blog post, you will learn how to accelerate Transformer models for the Graphcore
+   <a href="https://www.graphcore.ai/products/ipu">
+    Intelligence Processing Unit
+   </a>
+   (IPU), a highly flexible, easy-to-use parallel processor designed from the ground up for AI workloads.
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Optimum Meets Graphcore IPU
+   </span>
+  </h3>
+  <p>
+   Through this partnership between Graphcore and Hugging Face, we are now introducing BERT as the first IPU-optimized model. We will be introducing many more of these IPU-optimized models in the coming months, spanning applications such as vision, speech, translation and text generation.
+  </p>
+  <p>
+   Graphcore engineers have implemented and optimized BERT for our IPU systems using Hugging Face transformers to help developers easily train, fine-tune and accelerate their state-of-the-art models.
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Getting started with IPUs and Optimum
+   </span>
+  </h3>
+  <p>
+   Let’s use BERT as an example to help you get started with using Optimum and IPUs.
+  </p>
+  <p>
+   In this guide, we will use an
+   <a href="https://www.graphcore.ai/products/mk2/ipu-pod16">
+    IPU-POD16
+   </a>
+   system in Graphcloud, Graphcore’s cloud-based machine learning platform and follow PyTorch setup instructions found in
+   <a href="https://docs.graphcore.ai/projects/graphcloud-getting-started/en/latest/index.html">
+    Getting Started with Graphcloud
+   </a>
+   .
+  </p>
+  <p>
+   Graphcore’s
+   <a href="https://www.graphcore.ai/developer">
+    Poplar SDK
+   </a>
+   is already installed on the Graphcloud server. If you have a different setup, you can find the instructions that apply to your system in the
+   <a href="https://docs.graphcore.ai/projects/poptorch-user-guide/en/latest/intro.html">
+    PyTorch for the IPU: User Guide
+   </a>
+   .
+  </p>
+  <h4 class="relative group flex items-center">
+   <span>
+    Set up the Poplar SDK Environment
+   </span>
+  </h4>
+  <p>
+   You will need to run the following commands to set several environment variables that enable Graphcore tools and Poplar libraries. On the latest system running Poplar SDK version 2.3 on Ubuntu 18.04, you can find
+   <sdk-path>
+    in the folder
+    <code>
+     /opt/gc/poplar_sdk-ubuntu_18_04-2.3.0+774-b47c577c2a/
+    </code>
+    .
+   </sdk-path>
+  </p>
+  <p>
+   You would need to run both enable scripts for Poplar and PopART (Poplar Advanced Runtime) to use PyTorch:
+  </p>
+  <pre><code>$ cd /opt/gc/poplar_sdk-ubuntu_18_04-2.3.0+774-b47c577c2a/
+$ source poplar-ubuntu_18_04-2.3.0+774-b47c577c2a/enable.sh
+$ source popart-ubuntu_18_04-2.3.0+774-b47c577c2a/enable.sh
+</code></pre>
+  <h4 class="relative group flex items-center">
+   <span>
+    Set up PopTorch for the IPU
+   </span>
+  </h4>
+  <p>
+   PopTorch is part of the Poplar SDK. It provides functions that allow PyTorch models to run on the IPU with minimal code changes. You can create and activate a PopTorch environment following the guide
+   <a href="https://docs.graphcore.ai/projects/graphcloud-pytorch-quick-start/en/latest/pytorch_setup.html">
+    Setting up PyTorch for the IPU
+   </a>
+   :
+  </p>
+  <pre><code>$ virtualenv -p python3 ~/workspace/poptorch_env
+$ source ~/workspace/poptorch_env/bin/activate
+$ pip3 install -U pip
+$ pip3 install /opt/gc/poplar_sdk-ubuntu_18_04-2.3.0+774-b47c577c2a/poptorch-&lt;sdk-version&gt;.whl
+</code></pre>
+  <h4 class="relative group flex items-center">
+   <span>
+    Install Optimum Graphcore
+   </span>
+  </h4>
+  <p>
+   Now that your environment has all the Graphcore Poplar and PopTorch libraries available, you need to install the latest 🤗 Optimum Graphcore package in this environment. This will be the interface between the 🤗 Transformers library and Graphcore IPUs.
+  </p>
+  <p>
+   Please make sure that the PopTorch virtual environment you created in the previous step is activated. Your terminal should have a prefix showing the name of the poptorch environment like below:
+  </p>
+  <pre><code>(poptorch_env) user@host:~/workspace/poptorch_env$ pip3 install optimum[graphcore] optuna
+</code></pre>
+  <h4 class="relative group flex items-center">
+   <span>
+    Clone Optimum Graphcore Repository
+   </span>
+  </h4>
+  <p>
+   The Optimum Graphcore repository contains the sample code for using Optimum models in IPU. You should clone the repository and change the directory to the
+   <code>
+    example/question-answering
+   </code>
+   folder which contains the IPU implementation of BERT.
+  </p>
+  <pre><code>$ git clone https://github.com/huggingface/optimum-graphcore.git
+$ cd optimum-graphcore/examples/question-answering
+</code></pre>
+  <p>
+   Now, we will use
+   <code>
+    run_qa.py
+   </code>
+   to fine-tune the IPU implementation of
+   <a href="https://huggingface.co/bert-large-uncased">
+    BERT
+   </a>
+   on the SQUAD1.1 dataset.
+  </p>
+  <h4 class="relative group flex items-center">
+   <span>
+    Run a sample to fine-tune BERT on SQuAD1.1
+   </span>
+  </h4>
+  <p>
+   The
+   <code>
+    run_qa.py
+   </code>
+   script only works with models that have a fast tokenizer (backed by the 🤗 Tokenizers library), as it uses special features of those tokenizers. This is the case for our
+   <a href="https://huggingface.co/bert-large-uncased">
+    BERT
+   </a>
+   model, and you should pass its name as the input argument to
+   <code>
+    --model_name_or_path
+   </code>
+   . In order to use the IPU, Optimum will look for the
+   <code>
+    ipu_config.json
+   </code>
+   file from the path passed to the argument
+   <code>
+    --ipu_config_name
+   </code>
+   .
+  </p>
+  <pre><code>$ python3 run_qa.py \
+    --ipu_config_name=./ \
+    --model_name_or_path bert-base-uncased \
+    --dataset_name squad \
+    --do_train \
+    --do_eval \
+    --output_dir output \
+    --overwrite_output_dir \
+    --per_device_train_batch_size 2 \
+    --per_device_eval_batch_size 2 \
+--learning_rate 6e-5 \
+--num_train_epochs 3 \
+--max_seq_length 384 \
+--doc_stride 128 \
+--seed 1984 \
+--lr_scheduler_type linear \
+--loss_scaling 64 \
+--weight_decay 0.01 \
+--warmup_ratio 0.1 \
+--output_dir /tmp/debug_squad/
+</code></pre>
+  <h3 class="relative group flex items-center">
+   <span>
+    A closer look at Optimum-Graphcore
+   </span>
+  </h3>
+  <h4 class="relative group flex items-center">
+   <span>
+    Getting the data
+   </span>
+  </h4>
+  <p>
+   A very simple way to get datasets is to use the Hugging Face
+   <a href="https://github.com/huggingface/datasets">
+    Datasets library
+   </a>
+   , which makes it easy for developers to download and share datasets on the Hugging Face hub. It also has pre-built data versioning based on git and git-lfs, so you can iterate on updated versions of the data by just pointing to the same repo.
+  </p>
+  <p>
+   Here, the dataset comes with the training and validation files, and dataset configs to help facilitate which inputs to use in each model execution phase. The argument
+   <code>
+    --dataset_name==squad
+   </code>
+   points to
+   <a href="https://huggingface.co/datasets/squad">
+    SQuAD v1.1
+   </a>
+   on the Hugging Face Hub. You could also provide your own CSV/JSON/TXT training and evaluation files as long as they follow the same format as the SQuAD dataset or another question-answering dataset in Datasets library.
+  </p>
+  <h4 class="relative group flex items-center">
+   <span>
+    Loading the pretrained model and tokenizer
+   </span>
+  </h4>
+  <p>
+   To turn words into tokens, this script will require a fast tokenizer. It will show an error if you didn't pass one. For reference, here's the
+   <a href="https://huggingface.co/transformers/index.html#supported-frameworks">
+    list
+   </a>
+   of supported tokenizers.
+  </p>
+  <pre><code>    # Tokenizer check: this script requires a fast tokenizer.
+    if not isinstance(tokenizer, PreTrainedTokenizerFast):
+        raise ValueError("This example script only works for models that have a fast tokenizer. Checkout the big table of models
+            "at https://huggingface.co/transformers/index.html#supported-frameworks to find the model types that meet this "
+            "requirement"
+                  	)
+</code></pre>
+  <p>
+   The argument ```--model_name_or_path==bert-base-uncased`` loads the
+   <a href="https://huggingface.co/bert-base-uncased">
+    bert-base-uncased
+   </a>
+   model implementation available in the Hugging Face Hub.
+  </p>
+  <p>
+   From the Hugging Face Hub description:
+  </p>
+  <p>
+   "
+   <em>
+    BERT base model (uncased): Pretrained model on English language using a masked language modeling (MLM) objective. It was introduced in this paper and first released in this repository. This model is uncased: it does not make a difference between english and English.
+   </em>
+   "
+  </p>
+  <h4 class="relative group flex items-center">
+   <span>
+    Training and Validation
+   </span>
+  </h4>
+  <p>
+   You can now use the
+   <code>
+    IPUTrainer
+   </code>
+   class available in Optimum to leverage the entire Graphcore software and hardware stack, and train your models in IPUs with minimal code changes. Thanks to Optimum, you can plug-and-play state of the art hardware to train your state of the art models.
+  </p>
+  <kbd>
+   <img src="image01.webp"/>
+  </kbd>
+  <p>
+   In order to train and validate the BERT model, you can pass the arguments
+   <code>
+    --do_train
+   </code>
+   and
+   <code>
+    --do_eval
+   </code>
+   to the
+   <code>
+    run_qa.py
+   </code>
+   script. After executing the script with the hyper-parameters above, you should see the following training and validation results:
+  </p>
+  <pre><code>"epoch": 3.0,
+"train_loss": 0.9465060763888888,
+"train_runtime": 368.4015,
+"train_samples": 88524,
+"train_samples_per_second": 720.877,
+"train_steps_per_second": 2.809
+
+The validation step yields the following results:
+***** eval metrics *****
+  epoch            =     3.0
+  eval_exact_match = 80.6623
+  eval_f1          = 88.2757
+  eval_samples     =   10784
+</code></pre>
+  <p>
+   You can see the rest of the IPU BERT implementation in the
+   <a href="https://github.com/huggingface/optimum-graphcore/tree/main/examples/question-answering">
+    Optimum-Graphcore: SQuAD Examples
+   </a>
+   .
+  </p>
+  <h3 class="relative group flex items-center">
+   <span>
+    Resources for Optimum Transformers on IPU Systems
+   </span>
+  </h3>
+  <ul>
+   <li>
+    <a href="https://github.com/huggingface/optimum-graphcore/tree/main/examples/question-answering">
+     Optimum-Graphcore: SQuAD Examples
+    </a>
+   </li>
+   <li>
+    <a href="https://github.com/graphcore/tutorials/tree/master/tutorials/pytorch/tut_finetuning_bert#tutorial-on-bert-fine-tuning-on-ipu">
+     Graphcore Hugging Face Models &amp; Datasets
+    </a>
+   </li>
+   <li>
+    GitHub Tutorial:
+    <a href="https://github.com/graphcore/tutorials/tree/master/tutorials/pytorch/tut_finetuning_bert#tutorial-on-bert-fine-tuning-on-ipu">
+     BERT Fine-tuning on IPU using Hugging Face transformers
+    </a>
+   </li>
+   <li>
+    <a href="https://github.com/graphcore/tutorials/tree/master/tutorials/pytorch/tut_finetuning_bert#tutorial-on-bert-fine-tuning-on-ipu">
+     Graphcore Developer Portal
+    </a>
+   </li>
+   <li>
+    <a href="https://github.com/graphcore">
+     Graphcore GitHub
+    </a>
+   </li>
+   <li>
+    <a href="https://hub.docker.com/u/graphcore">
+     Graphcore SDK Containers on Docker Hub
+    </a>
+   </li>
+  </ul>
+  <!-- HTML_TAG_END -->
+ </body>
+</html>

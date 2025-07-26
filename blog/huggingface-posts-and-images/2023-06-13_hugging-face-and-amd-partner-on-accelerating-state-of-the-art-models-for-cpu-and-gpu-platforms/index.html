@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        /* Hugging Face specific styling */
+        .prose {
+            max-width: none;
+        }
+        .prose pre {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        .prose code {
+            background: #f1f5f9;
+            color: #dc2626;
+        }
+  </style>
+ </head>
+ <body>
+
+  <div style="margin-bottom: 2em;">
+   <a href="../../../../huggingface-blog-posts.html" style="color: #3498db; text-decoration: none; font-weight: 500;">← Back to Hugging Face Blog Posts</a>
+  </div>
+  <h1>
+   Hugging Face and AMD partner on accelerating state-of-the-art models for CPU and GPU platforms
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2023-06-13
+  </p>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://huggingface.co/blog/huggingface-and-amd">
+    https://huggingface.co/blog/huggingface-and-amd
+   </a>
+  </p>
+  <!-- HTML_TAG_START -->
+  <kbd>
+   <img src="image01.webp"/>
+  </kbd>
+  <p>
+   Whether language models, large language models, or foundation models, transformers require significant computation for pre-training, fine-tuning, and inference. To help developers and organizations get the most performance bang for their infrastructure bucks, Hugging Face has long been working with hardware companies to leverage acceleration features present on their respective chips.
+  </p>
+  <p>
+   Today, we're happy to announce that AMD has officially joined our
+   <a href="https://huggingface.co/hardware">
+    Hardware Partner Program
+   </a>
+   . Our CEO Clement Delangue gave a keynote at AMD's
+   <a href="https://www.amd.com/en/solutions/data-center/data-center-ai-premiere.html">
+    Data Center and AI Technology Premiere
+   </a>
+   in San Francisco to launch this exciting new collaboration.
+  </p>
+  <p>
+   AMD and Hugging Face work together to deliver state-of-the-art transformer performance on AMD CPUs and GPUs. This partnership is excellent news for the Hugging Face community at large, which will soon benefit from the latest AMD platforms for training and inference.
+  </p>
+  <p>
+   The selection of deep learning hardware has been limited for years, and prices and supply are growing concerns. This new partnership will do more than match the competition and help alleviate market dynamics: it should also set new cost-performance standards.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Supported hardware platforms
+   </span>
+  </h2>
+  <p>
+   On the GPU side, AMD and Hugging Face will first collaborate on the enterprise-grade Instinct MI2xx and MI3xx families, then on the customer-grade Radeon Navi3x family. In initial testing, AMD
+   <a href="https://youtu.be/mPrfh7MNV_0?t=462">
+    recently reported
+   </a>
+   that the MI250 trains BERT-Large 1.2x faster and GPT2-Large 1.4x faster than its direct competitor.
+  </p>
+  <p>
+   On the CPU side, the two companies will work on optimizing inference for both the client Ryzen and server EPYC CPUs. As discussed in several previous posts, CPUs can be an excellent option for transformer inference, especially with model compression techniques like quantization.
+  </p>
+  <p>
+   Lastly, the collaboration will include the
+   <a href="https://www.xilinx.com/applications/data-center/v70.html">
+    Alveo V70
+   </a>
+   AI accelerator, which can deliver incredible performance with lower power requirements.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Supported model architectures and frameworks
+   </span>
+  </h2>
+  <p>
+   We intend to support state-of-the-art transformer architectures for natural language processing, computer vision, and speech, such as BERT, DistilBERT, ROBERTA, Vision Transformer, CLIP, and Wav2Vec2.  Of course, generative AI models will be available too (e.g., GPT2, GPT-NeoX, T5, OPT, LLaMA), including our own BLOOM and StarCoder models. Lastly, we will also support more traditional computer vision models, like ResNet and ResNext, and deep learning recommendation models, a first for us.
+  </p>
+  <p>
+   We'll do our best to test and validate these models for PyTorch, TensorFlow, and ONNX Runtime for the above platforms. Please remember that not all models may be available for training and inference for all frameworks or all hardware platforms.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    The road ahead
+   </span>
+  </h2>
+  <p>
+   Our initial focus will be ensuring the models most important to our community work great out of the box on AMD platforms. We will work closely with the AMD engineering team to optimize key models to deliver optimal performance thanks to the latest AMD hardware and software features. We will integrate the
+   <a href="https://www.amd.com/graphics/servers-solutions-rocm">
+    AMD ROCm SDK
+   </a>
+   seamlessly in our open-source libraries, starting with the transformers library.
+  </p>
+  <p>
+   Along the way, we'll undoubtedly identify opportunities to optimize training and inference further, and we'll work closely with AMD to figure out where to best invest moving forward through this partnership. We expect this work to lead to a new
+   <a href="https://huggingface.co/docs/optimum/index">
+    Optimum
+   </a>
+   library dedicated to AMD platforms to help Hugging Face users leverage them with minimal code changes, if any.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Conclusion
+   </span>
+  </h2>
+  <p>
+   We're excited to work with a world-class hardware company like AMD. Open-source means the freedom to build from a wide range of software and hardware solutions. Thanks to this partnership, Hugging Face users will soon have new hardware platforms for training and inference with excellent cost-performance benefits. In the meantime, feel free to visit the
+   <a href="https://huggingface.co/amd">
+    AMD page
+   </a>
+   on the Hugging Face hub. Stay tuned!
+  </p>
+  <p>
+   <em>
+    This post is 100% ChatGPT-free.
+   </em>
+  </p>
+  <!-- HTML_TAG_END -->
+ </body>
+</html>

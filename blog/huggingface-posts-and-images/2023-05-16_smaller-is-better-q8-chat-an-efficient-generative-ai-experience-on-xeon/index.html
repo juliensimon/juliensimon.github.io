@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        /* Hugging Face specific styling */
+        .prose {
+            max-width: none;
+        }
+        .prose pre {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        .prose code {
+            background: #f1f5f9;
+            color: #dc2626;
+        }
+  </style>
+ </head>
+ <body>
+
+  <div style="margin-bottom: 2em;">
+   <a href="../../../../huggingface-blog-posts.html" style="color: #3498db; text-decoration: none; font-weight: 500;">← Back to Hugging Face Blog Posts</a>
+  </div>
+  <h1>
+   Smaller is better: Q8-Chat, an efficient generative AI experience on Xeon
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2023-05-16
+  </p>
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://huggingface.co/blog/generative-ai-models-on-intel-cpu">
+    https://huggingface.co/blog/generative-ai-models-on-intel-cpu
+   </a>
+  </p>
+  <!-- HTML_TAG_START -->
+  <p>
+   Large language models (LLMs) are taking the machine learning world by storm. Thanks to their
+   <a href="https://arxiv.org/abs/1706.03762">
+    Transformer
+   </a>
+   architecture, LLMs have an uncanny ability to learn from vast amounts of unstructured data, like text, images, video, or audio. They perform very well on many
+   <a href="https://huggingface.co/tasks">
+    task types
+   </a>
+   , either extractive like text classification or generative like text summarization and text-to-image generation.
+  </p>
+  <p>
+   As their name implies, LLMs are
+   <em>
+    large
+   </em>
+   models that often exceed the 10-billion parameter mark. Some have more than 100 billion parameters, like the
+   <a href="https://huggingface.co/bigscience/bloom">
+    BLOOM
+   </a>
+   model. LLMs require lots of computing power, typically found in high-end GPUs, to predict fast enough for low-latency use cases like search or conversational applications. Unfortunately, for many organizations, the associated costs can be prohibitive and make it difficult to use state-of-the-art LLMs in their applications.
+  </p>
+  <p>
+   In this post, we will discuss optimization techniques that help reduce LLM size and inference latency, helping them run efficiently on Intel CPUs.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    A primer on quantization
+   </span>
+  </h2>
+  <p>
+   LLMs usually train with 16-bit floating point parameters (a.k.a FP16/BF16). Thus, storing the value of a single weight or activation value requires 2 bytes of memory. In addition, floating point arithmetic is more complex and slower than integer arithmetic and requires additional computing power.
+  </p>
+  <p>
+   Quantization is a model compression technique that aims to solve both problems by reducing the range of unique values that model parameters can take. For instance, you can quantize models to lower precision like 8-bit integers (INT8) to shrink them and replace complex floating-point operations with simpler and faster integer operations.
+  </p>
+  <p>
+   In a nutshell, quantization rescales model parameters to smaller value ranges. When successful, it shrinks your model by at least 2x, without any impact on model accuracy.
+  </p>
+  <p>
+   You can apply quantization during training, a.k.a quantization-aware training (
+   <a href="https://arxiv.org/abs/1910.06188">
+    QAT
+   </a>
+   ), which generally yields the best results. If you’d prefer to quantize an existing model, you can apply post-training quantization (
+   <a href="https://www.tensorflow.org/lite/performance/post_training_quantization#:~:text=Post%2Dtraining%20quantization%20is%20a,little%20degradation%20in%20model%20accuracy.">
+    PTQ
+   </a>
+   ), a much faster technique that requires very little computing power.
+  </p>
+  <p>
+   Different quantization tools are available. For example, PyTorch has built-in support for
+   <a href="https://pytorch.org/docs/stable/quantization.html">
+    quantization
+   </a>
+   . You can also use the Hugging Face
+   <a href="https://huggingface.co/docs/optimum/intel/index">
+    Optimum Intel
+   </a>
+   library, which includes developer-friendly APIs for QAT and PTQ.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Quantizing LLMs
+   </span>
+  </h2>
+  <p>
+   Recent studies
+   <a href="https://arxiv.org/abs/2206.01861">
+    [1]
+   </a>
+   <a href="https://arxiv.org/abs/2211.10438">
+    [2]
+   </a>
+   show that current quantization techniques don’t work well with LLMs. In particular, LLMs exhibit large-magnitude outliers in specific activation channels across all layers and tokens. Here’s an example with the OPT-13B model. You can see that one of the activation channels has much larger values than all others across all tokens. This phenomenon is visible in all the Transformer layers of the model.
+  </p>
+  <kbd>
+   <img src="image01.webp"/>
+  </kbd>
+  <br/>
+  *Source: SmoothQuant*
+  <p>
+   The best quantization techniques to date quantize activations token-wise, causing either truncated outliers or underflowing low-magnitude activations. Both solutions hurt model quality significantly. Moreover, quantization-aware training requires additional model training, which is not practical in most cases due to lack of compute resources and data.
+  </p>
+  <p>
+   SmoothQuant
+   <a href="https://arxiv.org/abs/2211.10438">
+    [3]
+   </a>
+   <a href="https://github.com/mit-han-lab/smoothquant">
+    [4]
+   </a>
+   is a new quantization technique that solves this problem. It applies a joint mathematical transformation to weights and activations, which reduces the ratio between outlier and non-outlier values for activations at the cost of increasing the ratio for weights. This transformation makes the layers of the Transformer "quantization-friendly" and enables 8-bit quantization without hurting model quality. As a consequence, SmoothQuant produces smaller, faster models that run well on Intel CPU platforms.
+  </p>
+  <kbd>
+   <img src="image02.webp"/>
+  </kbd>
+  <br/>
+  *Source: SmoothQuant*
+  <p>
+   Now, let’s see how SmoothQuant works when applied to popular LLMs.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Quantizing LLMs with SmoothQuant
+   </span>
+  </h2>
+  <p>
+   Our friends at Intel have quantized several LLMs with SmoothQuant-O3: OPT
+   <a href="https://huggingface.co/facebook/opt-2.7b">
+    2.7B
+   </a>
+   and
+   <a href="https://huggingface.co/facebook/opt-6.7b">
+    6.7B
+   </a>
+   <a href="https://arxiv.org/pdf/2205.01068.pdf">
+    [5]
+   </a>
+   , LLaMA
+   <a href="https://huggingface.co/decapoda-research/llama-7b-hf">
+    7B
+   </a>
+   <a href="https://ai.facebook.com/blog/large-language-model-llama-meta-ai/">
+    [6]
+   </a>
+   , Alpaca
+   <a href="https://huggingface.co/tatsu-lab/alpaca-7b-wdiff">
+    7B
+   </a>
+   <a href="https://crfm.stanford.edu/2023/03/13/alpaca.html">
+    [7]
+   </a>
+   , Vicuna
+   <a href="https://huggingface.co/lmsys/vicuna-7b-delta-v1.1">
+    7B
+   </a>
+   <a href="https://vicuna.lmsys.org/">
+    [8]
+   </a>
+   , BloomZ
+   <a href="https://huggingface.co/bigscience/bloomz-7b1">
+    7.1B
+   </a>
+   <a href="https://huggingface.co/bigscience/bloomz">
+    [9]
+   </a>
+   MPT-7B-chat
+   <a href="https://www.mosaicml.com/blog/mpt-7b">
+    [10]
+   </a>
+   . They also evaluated the accuracy of the quantized models, using
+   <a href="https://github.com/EleutherAI/lm-evaluation-harness">
+    Language Model Evaluation Harness
+   </a>
+   .
+  </p>
+  <p>
+   The table below presents a summary of their findings. The second column shows the ratio of benchmarks that have improved post-quantization. The third column contains the mean average degradation (
+   <em>
+    * a negative value indicates that the benchmark has improved
+   </em>
+   ). You can find the detailed results at the end of this post.
+  </p>
+  <kbd>
+   <img src="image03.webp"/>
+  </kbd>
+  <p>
+   As you can see, OPT models are great candidates for SmoothQuant quantization. Models are ~2x smaller compared to pretrained 16-bit models. Most of the metrics improve, and those who don’t are only marginally penalized.
+  </p>
+  <p>
+   The picture is a little more contrasted for LLaMA 7B and BloomZ 7.1B. Models are compressed by a factor of ~2x, with about half the task seeing metric improvements. Again, the other half is only marginally impacted, with a single task seeing more than 3% relative degradation.
+  </p>
+  <p>
+   The obvious benefit of working with smaller models is a significant reduction in inference latency. Here’s a
+   <a href="https://drive.google.com/file/d/1Iv5_aV8mKrropr9HeOLIBT_7_oYPmgNl/view?usp=sharing">
+    video
+   </a>
+   demonstrating real-time text generation with the MPT-7B-chat model on a single socket Intel Sapphire Rapids CPU with 32 cores and a batch size of 1.
+  </p>
+  <p>
+   In this example, we ask the model: “*What is the role of Hugging Face in democratizing NLP?*”. This sends the following prompt to the model:
+"
+   <em>
+    A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions. USER: What is the role of Hugging Face in democratizing NLP? ASSISTANT:
+   </em>
+   "
+  </p>
+  <figure class="image table text-center m-0 w-full">
+   <video alt="MPT-7B Demo" autobuffer="" autoplay="" loop="" muted="" playsinline="" style="max-width: 70%; margin: auto;">
+    <source src="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/143_q8chat/mpt-7b-int8-hf-role.mov" type="video/mp4"/>
+   </video>
+  </figure>
+  <p>
+   The example shows the additional benefits you can get from 8bit quantization coupled with 4th Gen Xeon resulting in very low generation time for each token. This level of performance definitely makes it possible to run LLMs on CPU platforms, giving customers more IT flexibility and better cost-performance than ever before.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Chat experience on Xeon
+   </span>
+  </h2>
+  <p>
+   Recently, Clement, the CEO of HuggingFace, recently said: “*More companies would be better served focusing on smaller, specific models that are cheaper to train and run.*” The emergence of relatively smaller models like Alpaca, BloomZ and Vicuna, open a new opportunity for enterprises to lower the cost of fine-tuning and inference in production. As demonstrated above, high-quality quantization brings high-quality chat experiences to Intel CPU platforms, without the need of running mammoth LLMs and complex AI accelerators.
+  </p>
+  <p>
+   Together with Intel, we're hosting a new exciting demo in Spaces called
+   <a href="https://huggingface.co/spaces/Intel/Q8-Chat">
+    Q8-Chat
+   </a>
+   (pronounced "Cute chat"). Q8-Chat offers you a ChatGPT-like chat experience, while only running on a single socket Intel Sapphire Rapids CPU with 32 cores and a batch size of 1.
+  </p>
+  <iframe frameborder="0" height="1600" src="https://intel-q8-chat.hf.space" width="100%">
+  </iframe>
+  <h2 class="relative group flex items-center">
+   <span>
+    Next steps
+   </span>
+  </h2>
+  <p>
+   We’re currently working on integrating these new quantization techniques into the Hugging Face
+   <a href="https://huggingface.co/docs/optimum/intel/index">
+    Optimum Intel
+   </a>
+   library through
+   <a href="https://github.com/intel/neural-compressor">
+    Intel Neural Compressor
+   </a>
+   . 
+Once we’re done, you’ll be able to replicate these demos with just a few lines of code.
+  </p>
+  <p>
+   Stay tuned. The future is 8-bit!
+  </p>
+  <p>
+   <em>
+    This post is guaranteed 100% ChatGPT-free.
+   </em>
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Acknowledgment
+   </span>
+  </h2>
+  <p>
+   This blog was made in conjunction with Ofir Zafrir, Igor Margulis, Guy Boudoukh and Moshe Wasserblat from Intel Labs.
+Special thanks to them for their great comments and collaboration.
+  </p>
+  <h2 class="relative group flex items-center">
+   <span>
+    Appendix: detailed results
+   </span>
+  </h2>
+  <p>
+   A negative value indicates that the benchmark has improved.
+  </p>
+  <kbd>
+   <img src="image04.webp"/>
+  </kbd>
+  <kbd>
+   <img src="image05.webp"/>
+  </kbd>
+  <kbd>
+   <img src="image06.webp"/>
+  </kbd>
+  <kbd>
+   <img src="image07.webp"/>
+  </kbd>
+  <!-- HTML_TAG_END -->
+ </body>
+</html>
