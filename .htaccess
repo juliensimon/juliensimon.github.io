@@ -131,6 +131,9 @@
     RewriteCond %{HTTPS} off
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     
+    # Redirect /blog/aws/ to aws-blog-posts.html
+    RewriteRule ^blog/aws/?$ /aws-blog-posts.html [R=301,L]
+    
     # Remove trailing slashes
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{THE_REQUEST} /+[^?\s]*//
