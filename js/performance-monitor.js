@@ -105,6 +105,18 @@ class SEOPerformanceMonitor {
         page: window.location.pathname,
         timestamp: Date.now()
       });
+    } else {
+      // Fallback: wait for Umami to load
+      setTimeout(() => {
+        if (typeof umami !== 'undefined') {
+          umami.track('web_vital', {
+            metric: name,
+            value: value,
+            page: window.location.pathname,
+            timestamp: Date.now()
+          });
+        }
+      }, 1000);
     }
 
     // Store for debugging
