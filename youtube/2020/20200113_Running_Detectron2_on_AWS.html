@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Running Detectron2 on AWS - In this video, I show you how to run Facebook's state of the art Detectron2 model on an Amazon EC2 instance with the Deep Learning AMI. I go through the full no..." name="description"/><meta content="Running Detectron2 on AWS - Julien Simon" property="og:title"/><meta content="Running Detectron2 on AWS - In this video, I show you how to run Facebook's state of the art Detectron2 model on an Amazon EC2 instance with the Deep Learning AMI. I go through the full no..." property="og:description"/><meta content="https://www.julien.org/youtube/2020/20200113_Running_Detectron2_on_AWS.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Running Detectron2 on AWS - Julien Simon" name="twitter:title"/><meta content="Running Detectron2 on AWS - In this video, I show you how to run Facebook's state of the art Detectron2 model on an Amazon EC2 instance with the Deep Learning AMI. I go through the full no..." name="twitter:description"/><link href="https://www.julien.org/youtube/2020/20200113_Running_Detectron2_on_AWS.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Running Detectron2 on AWS - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Running Detectron2 on AWS</h1>
+<div class="date">January 13, 2020</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/7R8-VAk0ruk">
+</iframe>
+</div>
+<div class="description">In this video, I show you how to run Facebook's state of the art Detectron2 model on an Amazon EC2 instance with the Deep Learning AMI. I go through the full notebook, pointing to the few modifications that are required.
+
+⭐️⭐️⭐️ Don't forget to subscribe and to enable notifications ⭐️⭐️⭐️
+
+* Detectron2: <a href="https://github.com/facebookresearch/detectron2" rel="noopener noreferrer" target="_blank">https://github.com/facebookresearch/detectron2</a>
+* Modifed notebook: <a href="https://gitlab.com/juliensimon/dlnotebooks/blob/master/pytorch/Detectron2_Tutorial.ipynb" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/dlnotebooks/blob/master/pytorch/Detectron2_Tutorial.ipynb</a>
+
+For more content, follow me on:
+* Medium: <a href="https://medium.com/@julsimon" rel="noopener noreferrer" target="_blank">https://medium.com/@julsimon</a>
+* Twitter: <a href="https://twitter.com/julsimon" rel="noopener noreferrer" target="_blank">https://twitter.com/julsimon</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Let's create an EC2 instance. From the EC2 console, click on Launch Instance, and we want to use the DeepRunning AMI, which will have Jupyter installed and all the necessary tools. We can find it in the marketplace. There are different versions, so let's pick the latest one, which is v26, with all the latest tools and frameworks. I want to use the Ubuntu edition, so that's what I select.
+
+Next, we're going to select an instance type. The Detectron model is compute-heavy, so let's grab a GPU instance for this. A P32XL sounds about right; it has one GPU, which should be enough. You can leave all the other settings at their defaults. I like to have a power user role allowing me to do various tasks, but that's probably not needed here. Make sure you have the right permissions. Storage is important because we're going to download the COCO dataset, which is quite large—tens of gigabytes if I remember correctly. Let's ensure we have plenty of storage. Why not use SSD storage as well? You don't have to, but I can tweak all those things since I'm not paying my bills.
+
+For tags, let's call this "detectron" to demo. For the security group, I will only need SSH and Jupyter Notebook access. So that's already created. If you haven't, you just need SSH, TCP 22. I'm going to redirect the Jupyter port to 8888, so you need to have that one open as well. Review and launch. Select your key pair. Yes, that's the one I want. And launch. This will take a few minutes, so let's pause the video and I'll see you when the instance is up.
+
+After a few minutes, the instance is up. Now let's connect to it. I'm using SSH here, setting up port redirection from instance port 8888 to local port 8000. This will allow me to connect from my Mac using my local browser to the remote Jupyter Notebook running on the EC2 instance. Let's connect now. This is the EC2 instance I've started. Now I just need to start a notebook. If I grab that URL with the token and open it, remember to change 8888 to 8000, I should be redirected to the notebook running on the EC2 instance.
+
+The next step is to grab the Detectron notebook from the Colab website. Just download the IPython notebook. In the interest of time, I've done all of this and created a "Detect Run 2" folder so that everything is in the right place. Here is the notebook. This is the exact one I downloaded from Colab. I've made a few changes to make it run on the Deep Learning MI. I've highlighted my changes, and this notebook is available in one of my GitLab repos. The URL is in the description, so you can grab my version and run it directly on the Deep Learning MI.
+
+This cell confirms it's running on Deep Learning MI v26 with the Python 3 kernel. I won't explain all the cells; you can go through the tutorial for more information. I'll highlight the changes I've made. For example, we need to install OpenCV, which is not present by default on the Deep Learning MI. We also need to clone the repo, and if you're trying this on your local machine, ensure you have a recent version of the GNU compiler (GCC) because it will compile some components. Another package I need to install is the Google Colab package because some cells use proprietary methods from that package. It's good practice to restart the kernel to ensure all imports are taken into account. Let's do this, clear everything, and resume from here.
+
+The first step is to use a pre-trained Detectron model to segment an image. We can visualize the results. There's a lot to explain, but the tutorial has plenty of good information. Next, we train a dataset. We use the balloon dataset, which has many balloon pictures. Download, unzip, and write utility methods to load images. Here's an image from the dataset. This is one of the annotated images. Now we fine-tune the segmentation model on the balloon class. This is where a GPU instance is helpful, as it takes a while on CPU. We can see the training is fast, taking about a minute. Once done, we predict on images from the validation dataset. The segmentation looks neat, and the model works well. We can see metrics like AP, which is a good metric for segmentation models.
+
+We can also try keypoint detection, which focuses on detecting key points for humans, such as arms, legs, and eyes. Panoptic segmentation tries to segment everything in a picture, associating every pixel with an instance. We can try this on a video, which is cool. The video is grabbed from YouTube, and one change is to install FFmpeg, which is not present by default on the Deep Learning MI. In the demo script, you need to replace x264 with MPEG if your FFmpeg version doesn't support x264 due to licensing issues. Once you make this change, the script will process the video, using the segmentation model on each frame. This takes about one minute and 40 seconds. After processing, we can check that the MPEG file is there. I commented out the last few lines and SCP the file to my local machine. If I open it, we see the segmented video. This is just the beginning, but by tweaking the script, you can segment arbitrary length videos.
+
+That's it for today. See you next time with another exciting topic. Bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">EC2</span><span class="tag">DeepLearningAMI</span><span class="tag">Detectron</span><span class="tag">JupyterNotebook</span><span class="tag">GPUInstance</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

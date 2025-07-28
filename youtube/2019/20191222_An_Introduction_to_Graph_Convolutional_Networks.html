@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="An Introduction to Graph Convolutional Networks - In this video, I show you how to build and train a simple Graph Convolutional Network, with the Deep Graph Library and PyTorch.
+
+⭐️⭐️⭐️ Don't forget to subscrib..." name="description"/><meta content="An Introduction to Graph Convolutional Networks - Julien Simon" property="og:title"/><meta content="An Introduction to Graph Convolutional Networks - In this video, I show you how to build and train a simple Graph Convolutional Network, with the Deep Graph Library and PyTorch.
+
+⭐️⭐️⭐️ Don't forget to subscrib..." property="og:description"/><meta content="https://www.julien.org/youtube/2019/20191222_An_Introduction_to_Graph_Convolutional_Networks.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="An Introduction to Graph Convolutional Networks - Julien Simon" name="twitter:title"/><meta content="An Introduction to Graph Convolutional Networks - In this video, I show you how to build and train a simple Graph Convolutional Network, with the Deep Graph Library and PyTorch.
+
+⭐️⭐️⭐️ Don't forget to subscrib..." name="twitter:description"/><link href="https://www.julien.org/youtube/2019/20191222_An_Introduction_to_Graph_Convolutional_Networks.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>An Introduction to Graph Convolutional Networks - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>An Introduction to Graph Convolutional Networks</h1>
+<div class="date">December 22, 2019</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/2bfxnj1J00A">
+</iframe>
+</div>
+<div class="description">In this video, I show you how to build and train a simple Graph Convolutional Network, with the Deep Graph Library and PyTorch.
+
+⭐️⭐️⭐️ Don't forget to subscribe and to enable notifications ⭐️⭐️⭐️
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" rel="noopener noreferrer" target="_blank">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+Blog post: <a href="https://medium.com/@julsimon/a-primer-on-graph-neural-networks-with-amazon-neptune-and-the-deep-graph-library-5ce64984a276" rel="noopener noreferrer" target="_blank">https://medium.com/@julsimon/a-primer-on-graph-neural-networks-with-amazon-neptune-and-the-deep-graph-library-5ce64984a276</a>
+
+Notebook: <a href="https://gitlab.com/juliensimon/dlnotebooks/tree/master/dgl/01_karate_club" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/dlnotebooks/tree/master/dgl/01_karate_club</a>
+
+DGL: <a href="https://dgl.ai" rel="noopener noreferrer" target="_blank">https://dgl.ai</a>
+
+For more content, follow me on :
+* Medium: <a href="https://medium.com/@julsimon" rel="noopener noreferrer" target="_blank">https://medium.com/@julsimon</a>
+* Twitter: <a href="https://twitter.com/juliensimon" rel="noopener noreferrer" target="_blank">https://twitter.com/juliensimon</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from AWS. In this video, I would like to discuss graph neural networks. This video is a companion to a blog post I published on Medium, and you'll find the URL in the video description. In the blog post, I start by loading graph data into Amazon Neptune, our graph database, and then I train a simple graph neural network using the Deep Graph Library, an open-source library in Python. Here, I would like to run the sample notebook and give you a few pointers on how graph neural networks actually learn. So let me switch to the notebook.
+
+Here it is. First, let's make sure we have the latest libraries. I'm using the Deep Graph Library with the PyTorch backend, and these are the versions I'm using. The next step is to load the list of edges that define the graph. As mentioned, I uploaded some data to Amazon Neptune, queried it, and exported it, which is probably what you would do in a real-life scenario. I saved the list of edges to a pickle file, which I'm loading here. This graph has 34 nodes, and we can print all the edges. We see the node IDs defining the edges. With this, we can build a graph, add the nodes and edges. We have 34 nodes and 156 edges. Using the NetworkX library, we can visualize the graph. The graph has 34 nodes, and the edges are undirected, meaning they are bi-directional. We see two heavy nodes, node 0 and node 33. The purpose of this sample is to learn how to split this graph into two groups around node 0 and node 33. You can read the blog post for the full story on why we do this.
+
+Now, let's start with the high-level architecture. We're using a network architecture called GCN, Graph Convolutional Network. The network architecture is pretty simple: a first GCN layer activated by ReLU, a second GCN layer, and then a softmax layer. The first GCN layer takes the input features for the nodes as input, applies a learning process, and outputs hidden features with a lower dimensionality. Here, as we have 34 nodes, we will have 34 features, and the hidden features have five dimensions. The second layer takes those five features as input, applies some learning, and outputs two features. These two features correspond to the two classes we want to learn. We want to split the graph into two groups around node 0 and node 33, so we need two classes. The final layer applies the softmax function to make those two features look like probabilities. Softmax ensures all the values in the vector add up to one, making them look like probabilities.
+
+Now, let's look at what the GCN layer actually does. The forward function, which is the forward propagation function, takes the graph itself and input features as input. The first thing it does is use those input features and assign them to nodes. This is a shortcut in DGL to assign each node a feature vector from the input matrix, where each line corresponds to a node and each column to a feature. For each node, we take one of those lines and set a feature in the node called H to that vector. This is done using node IDs, so node zero gets the first line, node one gets the second line, and so on.
+
+Then, the layer asks all nodes to send a message across all their outgoing edges. Since edges are bi-directional, it means all edges. Once the messages are sent, each node on the receiving end of an edge will reduce those messages, applying an operation to the information in the messages. Finally, we take the updated features for each node and apply a linear transformation to reduce dimensionality. This is how we go from 34 features to 5 to 2, to get to the two classes.
+
+What do nodes actually send in those messages? In the GCN architecture, nodes send their features across all their edges. Once all nodes have done this, each node looks at all the messages it received, containing the features of its adjacent nodes, and updates its own features to the sum of those. For example, if we have three nodes connected like this, node one will send its features to nodes two and three, and node three will send its features to node two. Node two will then update its features to the sum of the features it received from nodes one and three.
+
+In practice, it's a bit more complicated, but as a first explanation, this is enough. After the reduction, we apply a linear transformation to shrink the features to a lower dimension. So, in the first layer, features go from 34 to 5, and in the second layer, from 5 to 2. At this point, we apply softmax, and the features become probabilities. These probabilities indicate the likelihood of a node belonging to class 0 or class 1.
+
+Now, let's look at the input features and the training process. The input features are simple here. Nodes don't have properties, but in real life, they would. The input features are one-hot encoded node IDs. The input feature matrix has one line per node, and each line is the one-hot encoded node ID. The size of the input matrix is 34x34 because we have 34 nodes and are using one-hot encoded IDs. We label the nodes we know: node 0 as class 0 and node 33 as class 1. We then train the model to figure out the class for every other node.
+
+The training process is standard for PyTorch: create an optimizer, run epochs, and for each epoch, use the graph and inputs, run them through the GCN layers and the softmax layer, and apply a loss function. We use cross-entropy because it's a classification problem. We compare the predicted probabilities for the labeled nodes to their actual labels, apply backpropagation, and update the weights. This is a semi-supervised learning scenario because we only label two nodes and use the learned parameters to compute the class for all other nodes.
+
+After training, we can look at the predictions for the last epoch, get the top class for each node, and print them out. We see that nodes close to 0 are in class 0, and nodes close to 33 are in class 1. For example, node 13, which is directly connected to 33, is strongly classified as class 0 due to its connections to nodes 0, 1, and 2, which are also close to 0.
+
+That's a quick intro to graph neural networks. I hope it made sense. If you want more context, please read the blog post. If you have questions or comments, please leave them. I love questions. I'll see you next time. Bye-bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Graph Neural Networks</span><span class="tag">Amazon Neptune</span><span class="tag">Deep Graph Library</span><span class="tag">Graph Convolutional Network</span><span class="tag">Semi-Supervised Learning</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

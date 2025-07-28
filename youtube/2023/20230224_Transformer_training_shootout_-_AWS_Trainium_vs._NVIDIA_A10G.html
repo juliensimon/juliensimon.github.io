@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Transformer training shootout   AWS Trainium vs. NVIDIA A10G - In this video, I compare the cost-performance of AWS Trainium, a new custom chip designed by AWS, with NVIDIA A10G GPUs.
+
+I first launch a trn1.32xlarge instanc..." name="description"/><meta content="Transformer training shootout   AWS Trainium vs. NVIDIA A10G - Julien Simon" property="og:title"/><meta content="Transformer training shootout   AWS Trainium vs. NVIDIA A10G - In this video, I compare the cost-performance of AWS Trainium, a new custom chip designed by AWS, with NVIDIA A10G GPUs.
+
+I first launch a trn1.32xlarge instanc..." property="og:description"/><meta content="https://www.julien.org/youtube/2023/20230224_Transformer_training_shootout_-_AWS_Trainium_vs._NVIDIA_A10G.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Transformer training shootout   AWS Trainium vs. NVIDIA A10G - Julien Simon" name="twitter:title"/><meta content="Transformer training shootout   AWS Trainium vs. NVIDIA A10G - In this video, I compare the cost-performance of AWS Trainium, a new custom chip designed by AWS, with NVIDIA A10G GPUs.
+
+I first launch a trn1.32xlarge instanc..." name="twitter:description"/><link href="https://www.julien.org/youtube/2023/20230224_Transformer_training_shootout_-_AWS_Trainium_vs._NVIDIA_A10G.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Transformer training shootout   AWS Trainium vs. NVIDIA A10G - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Transformer training shootout   AWS Trainium vs. NVIDIA A10G</h1>
+<div class="date">February 24, 2023</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/2SquGhkld7k">
+</iframe>
+</div>
+<div class="description">In this video, I compare the cost-performance of AWS Trainium, a new custom chip designed by AWS, with NVIDIA A10G GPUs.
+
+I first launch a trn1.32xlarge instance (16 Trainium chips) and a g5.48xlarge (8 A10Gs). Then, I run a natural language processing job, fine-tuning the BERT Large model on the full Yelp review datatset. I use the BF16 data format with the maximum sequence length supported by the model (512).
+
+The results? The Trainium job is 5x faster. As the trn1 instance is only 30% more expensive, this is a huge improvement in cost-performance!
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" rel="noopener noreferrer" target="_blank">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+- Original Trainium video with the AWS Deep Learning AMI: <a href="https://youtu.be/HweP7OYNiIA" rel="noopener noreferrer" target="_blank">https://youtu.be/HweP7OYNiIA</a>
+- Trainium video with the Hugging Face Neuron AMI: <a href="https://youtu.be/0Y5E8RI_D2E" rel="noopener noreferrer" target="_blank">https://youtu.be/0Y5E8RI_D2E</a>
+
+- Amazon EC2 trn1: <a href="https://aws.amazon.com/ec2/instance-types/trn1/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/ec2/instance-types/trn1/</a>
+- Amazon EC2 g5: <a href="https://aws.amazon.com/ec2/instance-types/g5/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/ec2/instance-types/g5/</a>
+
+- Code: <a href="https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/trainium" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/trainium</a>
+- AWS Neuron SDK documentation: <a href="https://awsdocs-neuron.readthedocs-hosted.com/en/latest/frameworks/torch/index.html" rel="noopener noreferrer" target="_blank">https://awsdocs-neuron.readthedocs-hosted.com/en/latest/frameworks/torch/index.html</a>
+
+Interested in hardware acceleration? Check out my other videos :
+- Habana Gaudi: <a href="https://youtu.be/56fpEa1Y1F8" rel="noopener noreferrer" target="_blank">https://youtu.be/56fpEa1Y1F8</a>
+- Graphcore: <a href="https://youtu.be/DgcJscPu1Vo" rel="noopener noreferrer" target="_blank">https://youtu.be/DgcJscPu1Vo</a>
+- Trainium on SageMaker: <a href="https://youtu.be/pokM1r3rgIg" rel="noopener noreferrer" target="_blank">https://youtu.be/pokM1r3rgIg</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi, everybody. This is Julien from Arcee. Yesterday, I posted a video where I showed you how to very easily train a transformer model on Tranium, a custom training accelerator designed by AWS, thanks to our new Hugging Face Amazon Machine Image, AMI. We trained BERT-BASE on a subset of the Yelp review dataset, and I promised I would scale things up. So that's what we're going to do today. We're going to train BERT large at maximum sequence length on the full dataset on Tranium. And because everyone loves a benchmark, I'm going to do the same on the largest G5 instance, which comes with eight 10G GPUs. Let's get to work.
+
+First, I launched a TRN132XL instance, which is the largest size. This is the same as I used yesterday. Same setup, same Hugging Face Neuron AMI available on AWS Marketplace. That's in the Oregon region, and then in the North Virginia region, because I couldn't get a large G5 instance in Oregon. It looks like we don't have the quota for it. So in US East 1, I launched a G5 48 XL instance with the AWS Deep Learning AMI. This one comes with eight 8nG GPUs. Okay. All right. So, no particular setup here. Just launch the instances with the appropriate AMIs. And then, of course, we can connect to the instances. So on the left, we have the Tranium instance, as we can see. And on the right, we have the GPU instance, the G5 instance. We can see those eight GPUs doing nothing right now, just like the neuron cores themselves are doing much. But we're going to fix that.
+
+On the Tranium side, I'm using the same code as in the previous video, which is basically a vanilla PyTorch training loop for distributed training. In the previous video, I used BERT-BASE and 10,000 samples from the Yelp review dataset, which is a text classification dataset with five labels, one star to five stars. Now we're bumping this to BERT large and using the full training set, as you can see here. Although it's still called small, it's the full training set. I'm also bumping the sequence length to 512, which is the maximum that BERT large can handle. A lot of those reviews are pretty long, so I want to take all that text into account. The rest is unchanged. So, in short, fine-tuning BERT large on the full review dataset and at max sequence length. You can't go much bigger with this setup.
+
+On the GPU side, I'm actually using the text classification example that comes in the Transformers library. So I'll just clone the repo and use this. I'm going to run this example here. BERT large, uncased, Yelp review full, max seq length 512. Batch size is 12, which is the largest I could fit. I tried different values but got out-of-memory errors when trying to go up. Even using gradient accumulation steps didn't solve the problem. If there's a way to fit more data, it's above my pay grade. As you can see, I'm going to train in BF16. I could do FP16 as well, but as this is a more recent GPU, it supports the BF16 data format. When the model is compiled, by default, all the acceleration features and optimization features are enabled for BF16, which optimizes for speed. If you see accuracy degradation, you can look at the speed. There's a compiler option for the Neuron compiler called Fast Math. You can look it up in the Neuron SDK documentation where you can selectively enable some optimizations to find the right balance between speed and accuracy. But here we want to go at full speed. So I'll leave everything on by default and go ahead.
+
+I ran it before, so we shouldn't see any model compilation happening, fingers crossed. Let's run this as well. Just double-checking the command line. Yeah, it looks okay to me. Here we go. I'm just trying for one epoch because I'm only really interested in the time it takes to run one epoch. Of course, for maximum accuracy, you could want to run a little longer. The training job is using the cached version, which means the model has already been pre-compiled. It's all stored in /var/tmp/neuron-compile-cache. You may want to save those and put them somewhere, maybe in S3, and reuse them as you go because this will save you a ton of time. Every time you change the model or the batch size, compilation will happen. So if you get tired of that, you can back up your compile cache and find a way to bring it back for further jobs.
+
+I just waited for a couple of minutes, and now the Tranium instance is actually training. We can see all 32 cores running pretty much to the max. Device memory is around 27 gigabytes out of 32. I think the batch size here is 4. I can double-check in the code. I couldn't increase it without getting out-of-memory errors. How are we doing on training speed? We're looking at, let's call it 55 minutes of training time for a single epoch versus five hours on the right. That's a 5x speedup in favor of Tranium on a really large training job. Performance is one thing, but we need to look at cost as well. The Tranium instance I'm using costs $21.50 per hour on demand, and the G5 instance is more than $60. So Tranium is about 30% more expensive. But it is 5x faster, so the cost-performance improvement is huge. I would really encourage everyone to run their own numbers and not always look at training times. Sometimes people ping me and say, "I could train this fast on this instance." But how much did that cost? As a developer, sometimes you don't care because you're not paying the bills, but your boss and your company are. From an enterprise perspective, cost-performance is what you want to look at, and in this case, it's very impressive.
+
+Your mileage will vary if you try different models, datasets, or task types. I did see less of a difference for shorter sequence lengths. I actually tried 128 and 256, and the gap was smaller. Maybe Tranium is just a little bit more efficient at loading data versus loading data on the 8 GPUs. There might be a bottleneck here that could explain the scalability gap when moving to larger sequences, but this would warrant a deeper investigation. Happy to continue the conversation in the comments. If you train on GPUs, and particularly if you train on G5, I highly recommend giving Tranium a shot. I think you could have a very nice surprise. Well, let's wrap it up for today. Go, Tranium. I'll see you soon with more videos. Until then, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Tranium</span><span class="tag">BERT-large</span><span class="tag">AWS</span><span class="tag">G5</span><span class="tag">Cost-performance</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

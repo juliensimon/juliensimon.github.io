@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="AWS re  Invent 2021   Serverless Inference on SageMaker FOR REAL - At long last, Amazon SageMaker supports serverless endpoints. In this video, I demo this newly launched capability, named Serverless Inference.
+
+Starting from a..." name="description"/><meta content="AWS re  Invent 2021   Serverless Inference on SageMaker FOR REAL - Julien Simon" property="og:title"/><meta content="AWS re  Invent 2021   Serverless Inference on SageMaker FOR REAL - At long last, Amazon SageMaker supports serverless endpoints. In this video, I demo this newly launched capability, named Serverless Inference.
+
+Starting from a..." property="og:description"/><meta content="https://www.julien.org/youtube/2021/20211208_AWS_re_-Invent_2021_-_Serverless_Inference_on_SageMaker_FOR_REAL.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="AWS re  Invent 2021   Serverless Inference on SageMaker FOR REAL - Julien Simon" name="twitter:title"/><meta content="AWS re  Invent 2021   Serverless Inference on SageMaker FOR REAL - At long last, Amazon SageMaker supports serverless endpoints. In this video, I demo this newly launched capability, named Serverless Inference.
+
+Starting from a..." name="twitter:description"/><link href="https://www.julien.org/youtube/2021/20211208_AWS_re_-Invent_2021_-_Serverless_Inference_on_SageMaker_FOR_REAL.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AWS re  Invent 2021   Serverless Inference on SageMaker FOR REAL - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>AWS re  Invent 2021   Serverless Inference on SageMaker FOR REAL</h1>
+<div class="date">December 08, 2021</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/cUhDLoBH80o">
+</iframe>
+</div>
+<div class="description">At long last, Amazon SageMaker supports serverless endpoints. In this video, I demo this newly launched capability, named Serverless Inference.
+
+Starting from a pre-trained DistilBERT model on the Hugging Face model hub, I fine-tune it for sentiment analysis on the IMDB movie review dataset. Then, I deploy the model to a serverless endpoint, and I run multi-threaded benchmarks with short and long token sequences. Finally, I plot latency numbers and compute latency quantiles. 
+
+*** Erratum: max concurrency factor is 50, not 40.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+Notebook: <a href="https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/serverless-inference" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/serverless-inference</a>
+
+Documentation: <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/serverless-endpoints.html" rel="noopener noreferrer" target="_blank">https://docs.aws.amazon.com/sagemaker/latest/dg/serverless-endpoints.html</a>
+
+New to Transformers? Check out the Hugging Face course at <a href="https://huggingface.co/course" rel="noopener noreferrer" target="_blank">https://huggingface.co/course</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In this video, I'm going to introduce the coolest SageMaker feature in a long time. Yes, I am actually excited about this. And of course, I mean serverless inference. When SageMaker was launched in late 2017, I believe the first customer question I got a couple of hours later was, can we deploy SageMaker models to Lambda and to a serverless endpoint? For years, I've had to say no. As of a few days ago, I can actually say, yes, you can now deploy SageMaker models to a serverless endpoint. This is exactly what we're going to look at today. And as you can guess, I'm going to demonstrate this using a Hugging Face model.
+
+What we're going to do here is fine-tune a Distilled BERT model on the IMDB movie review dataset to train a binary classification model. Then we're going to deploy it on a serverless endpoint and run some benchmarks to see how fast this thing is and how we can configure concurrency as well. Once again, I'm really, really excited about this. I've been waiting for a long time, and I know a lot of you have been waiting too. So without further ado, let's jump to the notebook. Here's my notebook, and of course, I will include the link in the video description.
+
+As you can imagine, we start with some dependencies: PyTorch, Transformers, SageMaker SDK, the usual stuff. Import the SageMaker SDK. Make sure you have the latest one, which is 2.70 at the time of recording. Then we're going to download our dataset, preprocess it a bit, upload to S3, and train. Downloading the dataset is just as simple as calling `load_dataset` in the datasets library. It's already split for training and test, which is fine. We have 20,000 samples in each dataset. These are movie reviews labeled with zero or one according to sentiment, negative or positive.
+
+Next, I download the tokenizer from the pre-trained version of Distilled BERT and apply a tokenization function to the training set and the test set to train my model on tokens, not on text itself. We've seen this quite a few times. If you're not familiar with transformers and this feels a little bit complicated, I'll also include a link to the Hugging Face course on transformers, which is completely free. That's a really good resource if you're just starting with transformers. Here, we just converted natural language to numerical tokens. Then we need to rename the label column because that's what the model actually expects. That's it for data processing. The next step is to upload the tokenized training set and test sets to S3. Here, I can use the datasets API again, using `save_to_disk` with the S3 file system as a target. So that's pretty handy. You don't need to go and use AWS APIs. You can use the datasets API you already know.
+
+Now my two datasets are hosted in S3, and I'm using the US West 2 region. Serverless inference is still in preview, although it's an open preview and restricted to a few regions. Check out the service page, which I will include in the video description, and make sure you use one of the supported regions for storage and deployment. But US West 2 is good to go. We have data in S3. The next step is to prepare the Hugging Face estimator that we use for training. I'll just fine-tune for one epoch with this batch size and this model name. I'm defining the versions for Transformers in PyTorch and Python, and at the time of recording, these are the latest versions available. Next, I define my estimator, which we've seen quite a few times unless this is the first time you watch a Hugging Face on SageMaker video. Pretty simple. We provide the name of the training script, which we'll take a look at in a second, hyperparameters, those software versions, and the instance type we like to train on. Here, I'm using a P3 GPU instance. Only one of them is enough for one epoch. To optimize cost, I'm also setting up managed spot training. SageMaker will try to grab a spot instance of that instance type and set a max waiting time of one hour, although you never wait really, and a max runtime of one hour as well. But this will only run for a few minutes. This is the Hugging Face estimator as you would use it for any training job.
+
+I won't spend too much time on the training script. You can take a look at it in the repo. I haven't changed anything here. Bottom line, you can bring your Hugging Face script as is. It doesn't need any modification to be deployed on a serverless endpoint. We grab hyperparameters and dataset locations, load the datasets from their S3 locations, set up training arguments, the trainer based on the model and the tokenizer that we defined, and then we just go and train and run evaluation, save results to a text file, and save the model to a well-known location. This is vanilla Hugging Face on SageMaker. No change at all. Feel free to take a look, and if you have questions, you can always ask in the comments.
+
+We have the estimator, and we call `fit` to actually launch the training job. We see all the usual stuff in the log. We see the pre-trained model being downloaded, the tokenizer being downloaded, and then the training job starts. Of course, we'll see the evaluation, and let's get all the way to the end, where we should see the model being saved and how long this lasted. Yes, so we see the tokenizer and the model being saved, and the training job lasted for just a thousand and one seconds. That's about 15 minutes, but we're only billed for 300 seconds, so that's five minutes because, thanks to Managed Spot Training, we got a sweet discount of 70%. There was no waiting time at all for that Spot instance. If you're not familiar, just go and read about Managed Spot Training on SageMaker, which is just an option you need to set in the estimator, and you can save 70%. It's worth reading about.
+
+Now the model is trained, and we have the model artifact in S3. The next step is to go and deploy. As mentioned before, serverless inference for SageMaker is still in preview. Although it's an open preview, so you don't need to sign up for anything, you can just go and use it in one of the supported regions. It comes with a few restrictions, and one of them is that it's not yet supported in the Python SageMaker SDK. So we have to use Boto3 to create the endpoint. It's a little more work than calling `deploy` on the estimator, but it's not a lot of work. We're going to cover those steps. We're going to create the model, create the endpoint configuration, create the endpoint itself, and once we're done with that, we can go and predict and run some testing.
+
+So, as mentioned, we need to import Boto3. We'll need a SageMaker client to create those resources and the SageMaker Runtime client for prediction. To make sure I have unique names for everything, I'm just adding a timestamp to the model name, the endpoint name, and the endpoint configuration name. Makes it simple to run this notebook many different times. The next step is to create the model. As I've complained about so many times, it's a terrible name calling that API `create_model`, but that's the name. We have to live with it. It's not really creating everything. We trained the model early on, so we do have the model in S3. If you ask me, it's created already. What this `create_model` API really does is register the model in SageMaker so that we can see it in the console. It's a model resource pointing to the artifact, but it's not creating a model. It's really registering a model.
+
+We need a few things to create the model. One thing we need is the name of the container that we'll use to deploy the model for inference. The container that will actually load the model and serve the predictions. You could go and look in the deep learning containers and find the actual name for the container, or you could use this utility function in the SageMaker SDK called `retrieve`. You have to pass the name of the framework. Here, of course, we're using HuggingFace, but if you use, let's say, the TensorFlow container, you'd say TensorFlow here. The base version of the framework. In this case, we are actually using PyTorch as a base framework for the Hugging Face model. So we need to pass the right PyTorch version. Which region we're running in, which transformer versions and Python version we need. And of course, this should be the same as the ones you used in your estimator. The scope of the image, as you probably know, SageMaker has different images for training and inference. In this case, we do want the inference image. And then the instance type, which is slightly confusing here because as we're deploying to serverless, there is no instance type per se. But what really matters here is whether we want the CPU container or the GPU container. There is no GPU support for serverless inference, so we just want to make sure we pass a CPU instance type so that this API understands, oh, yeah, you want the CPU container. But it could be M5 large or C5 something; it would still be the same container.
+
+So we see the name of that image. It's in US West 2, the Hugging Face PyTorch Inference Container version 1.91 for PyTorch, 4.12.3 for Transformers. It's the CPU image and supports Python 3.8. Again, you could find the list of all the images in the Deep Learning Containers Container, but if you don't want to be bothered, you can use this to figure it out. It's a shortcut. Now we can actually create the model, passing a name, which we created, information on the container, so the name of the image, the mode. Here we're deploying a single model. Deploy multi-model serverless endpoints, maybe later. And of course, we need to pass the location of the model artifact in S3, which we got from the estimator above. We call the `create_model` API, and as I showed you earlier, we see our model in the console.
+
+Next, we need to create the endpoint configuration. The endpoint configuration is basically, starting from this model, what are the infrastructure requirements for it? If we created an instance-backed endpoint, we would say, give me the M5 large instance and blah, blah, blah. Here it's going to be a little bit different because, of course, we don't use instances. So we create the config, give it a name, define production variants. In SageMaker, you can actually deploy multiple models, multiple model variants on the same endpoint, for example, to do A-B testing. Again, this is not supported in the preview, so we can only deploy a single variant. That's, of course, the model we trained. We point at the model we created just in the previous cell and then pass the serverless config, which has the memory size, and we can go from one gigabyte to six gigabytes, and the level of concurrency that we expect from 1 to 40, if I'm not mistaken. These are the current parameters for the preview. Here I went for the largest memory size and a concurrency of 8 because I'm going to run 8 threads later on. That's enough. Feel free to increase this if you'd like. Once we've created this endpoint config, of course, we can see it in the SageMaker console as well. That's going to be the same information. No surprise.
+
+Now we can go and create the endpoint itself. That's a super simple operation. We name the endpoint and give it the endpoint config that we just created. Then we wait for the endpoint to be up using a Boto3 waiter. If you're not used to using Boto3 APIs to do this stuff, now you know what happens when you actually call `deploy` on the Hugging Face or any other estimator. The `deploy` API in the Python SageMaker SDK is equivalent to `create_model`, `create_endpoint_config`, and `create_endpoint`. It's a very nice shortcut, but again, we don't have that for the preview. It's certainly coming soon. But the logic is still the same. We wait for a little bit, and it says in service. If I go to the endpoints section here, we see we have a serverless endpoint, and it says in service, which is quite promising. Please note that it still says real-time endpoint. It doesn't say serverless endpoint. There's no different name here. And we can see all the other stuff. Good.
+
+Now the endpoint is up, and it's time to invoke it. That's pretty simple too. Let's do that. Let's invoke the endpoint. This section of the notebook is actually independent from what we've done so far. You can go and reuse it if you have existing model artifacts or an existing endpoint. Just define those variables here and you can reuse them. I've got a couple of samples. I have a movie review of my own, which has 16 tokens, I believe. Sorry, Jar Jar. And I have a longer movie review that I got from the web, which is 250 tokens. First, let's go and predict my own review. It's as simple as `invoke_endpoint`, passing the name, a JSON object with my review, and the JSON content type. I'm measuring the invocation time, printing it, and printing the prediction as well. Let's run that. This movie is quite obviously very negative, as I believe all Phantom Menace reviews should be. That's just me. We see the invocation time, so that's about 155 milliseconds. That's a pretty okay number for a CPU instance. Let's see how well that holds if we actually go and fire up several threads that run a few more predictions.
+
+In the next cell, using the same sample, I'm going to fire up eight threads, which will all run 100 predictions, pretty much in parallel. Remember, I set concurrency for the serverless endpoint to 8. So that's a consistent number here. Prediction is just the same. We fire up the thread, run 100 predictions, record all the prediction times and thread IDs so that we can do some plotting afterwards, and then I just fire up those threads and let them predict. We see the eight threads. After a few seconds, we see we have 800 measures, which is what we expect, 100 measures per thread. I can go and extract the times. If you want to plot the individual threads, you can do that. I didn't try it. Just want to have the aggregated times here. Then I can plot a histogram for all those prediction times. I went for 100 bins, and there's not much of a long tail, honestly. Most predictions fall into the first bin. We can see 90% of the predictions, if not more, fall into the first bin. We have very little variability. This is pretty stable. If you compute the quantiles, you see that your P90 quantile is under 200 milliseconds, and the P95 quantile is under 300. The P99 quantile is quite higher because of those outliers, but if you're looking at P95, it looks very good.
+
+These are the times for DistilBERT on classification with a short token sequence. Let me run the same example with the longer tokens, and we'll see those times. I've just switched the test sample to the 250 token sample and ran the same code again. We see the same strongly consistent times. Literally almost all of the 800 times are in the first two buckets. I just have a couple of outliers, but this is really, really tiny. No long tail at all. If I look at the quantiles again, I see the P90 quantile is under 700 milliseconds. P95 is quite close, actually. And P99 is just a little more, which is a good number for such a long sequence. Our initial impression on performance here is pretty good. You can go and run the example where you can try different models, more threads, higher concurrency. The notebook gives you all the code you need to go and try that. We're going to write a couple of blog posts as well. Keep an eye on the Hugging Face blog in the next week or so. I will try to give you more details and show you a few more things, like deploying any model straight from the hub.
+
+When you're done, as always, you should go and clean everything up, which you can easily do with those three APIs below: `delete_endpoint`, `delete_endpoint_config`, and `delete_model`. There's one more question we need to answer, and that's cold start. Cold start is how long it takes for the first prediction when the endpoint is cold. The first time you hit a Lambda function, it actually takes a little while to spin up and process whatever data you're sending to it. The number I've seen here is 25 seconds. But I want to make it clear, this is with this single example, and it's pretty much tied to model size. Smaller models would probably load faster, and bigger models would probably load longer. But what I've seen here is 25 seconds. The first hit takes 25 seconds, and then you'll see the numbers I've shown you. Go and run your own benchmarks. This notebook makes it pretty simple.
+
+It's a really cool feature. That's my conclusion. I'm really, really happy we have this now. It's easy to set up. It'll be easier once we have the Python SDK. It scales pretty nicely, as I can see here. The prediction times are consistent with what we would get on CPU instances. So yeah, it's in preview. It's not in all regions, and you have to use Boto3, but it's already quite cool. Sometimes I can be actually very, very happy about launches. That's not always the case if you've watched other videos, but this one I really like. Well done and congratulations. I'm looking forward to seeing more. We'll keep working on this at HuggingFace. We have a few blog posts in the works, trying to show you different ways to use this. Keep an eye on the Hugging Face blog in the next week or couple of weeks. And there should be more. Until then, thank you for watching. I hope you learned a few things. And until next time, keep learning.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">SageMaker</span><span class="tag">ServerlessInference</span><span class="tag">HuggingFace</span><span class="tag">DistilBERT</span><span class="tag">AWSLambda</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

@@ -1649,6 +1649,107 @@ a:focus {
   }
 } 
 
+/* Years Grid for YouTube Videos */
+.years-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-8);
+  margin: var(--space-12) 0;
+  contain: layout;
+}
+
+.year-card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: var(--space-8);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  contain: layout;
+  box-shadow: var(--shadow-sm);
+}
+
+.year-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-normal);
+}
+
+.year-card:hover::before {
+  transform: scaleX(1);
+}
+
+.year-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-color);
+}
+
+.year-number {
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  color: var(--primary-color);
+  margin-bottom: var(--space-4);
+  line-height: 1;
+}
+
+.year-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.video-count {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.year-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  background: var(--gradient-primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all var(--transition-normal);
+  width: 100%;
+  justify-content: center;
+  font-size: var(--text-base);
+}
+
+.year-link:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 768px) {
+  .years-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  
+  .year-card {
+    padding: var(--space-6);
+  }
+  
+  .year-number {
+    font-size: var(--text-3xl);
+  }
+}
+
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   :root {

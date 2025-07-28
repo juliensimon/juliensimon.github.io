@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Accelerate PyTorch Transformers with Intel Sapphire Rapids part 2 - In this video, you will learn how to accelerate PyTorch inference with an Intel Sapphire Rapids server running on AWS. Working with popular Hugging Face transfo..." name="description"/><meta content="Accelerate PyTorch Transformers with Intel Sapphire Rapids part 2 - Julien Simon" property="og:title"/><meta content="Accelerate PyTorch Transformers with Intel Sapphire Rapids part 2 - In this video, you will learn how to accelerate PyTorch inference with an Intel Sapphire Rapids server running on AWS. Working with popular Hugging Face transfo..." property="og:description"/><meta content="https://www.julien.org/youtube/2023/20230207_Accelerate_PyTorch_Transformers_with_Intel_Sapphire_Rapids_part_2.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Accelerate PyTorch Transformers with Intel Sapphire Rapids part 2 - Julien Simon" name="twitter:title"/><meta content="Accelerate PyTorch Transformers with Intel Sapphire Rapids part 2 - In this video, you will learn how to accelerate PyTorch inference with an Intel Sapphire Rapids server running on AWS. Working with popular Hugging Face transfo..." name="twitter:description"/><link href="https://www.julien.org/youtube/2023/20230207_Accelerate_PyTorch_Transformers_with_Intel_Sapphire_Rapids_part_2.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Accelerate PyTorch Transformers with Intel Sapphire Rapids part 2 - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Accelerate PyTorch Transformers with Intel Sapphire Rapids part 2</h1>
+<div class="date">February 07, 2023</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/-q9rmF6fK_w">
+</iframe>
+</div>
+<div class="description">In this video, you will learn how to accelerate PyTorch inference with an Intel Sapphire Rapids server running on AWS. Working with popular Hugging Face transformers implemented with PyTorch, we'll first measure their performance on an Ice Lake server for short and long NLP token sequences. Then, we'll do the same with a Sapphire Rapids server and the latest version of Hugging Face Optimum Intel, an open-source library dedicated to hardware acceleration for Intel platforms.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" rel="noopener noreferrer" target="_blank">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+- Blog post: <a href="https://huggingface.co/blog/intel-sapphire-rapids-inference" rel="noopener noreferrer" target="_blank">https://huggingface.co/blog/intel-sapphire-rapids-inference</a>
+- Code: <a href="https://gist.github.com/juliensimon/7ae1c8d12e8a27516e1392a3c73ac1cc" rel="noopener noreferrer" target="_blank">https://gist.github.com/juliensimon/7ae1c8d12e8a27516e1392a3c73ac1cc</a>
+- Intel Sapphire Rapids: <a href="https://en.wikipedia.org/wiki/Sapphire_Rapids" rel="noopener noreferrer" target="_blank">https://en.wikipedia.org/wiki/Sapphire_Rapids</a>
+- Intel Advanced Matrix Entensions: <a href="https://en.wikipedia.org/wiki/Advanced_Matrix_Extensions" rel="noopener noreferrer" target="_blank">https://en.wikipedia.org/wiki/Advanced_Matrix_Extensions</a> 
+- Amazon EC2 R7iz: <a href="https://aws.amazon.com/ec2/instance-types/r7iz" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/ec2/instance-types/r7iz</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In a previous video, I showed you how to run distributed training on the latest generation of Intel Xeon CPUs based on the Sapphire Rapids architecture, and we got a really good speedup. In this video, we're going to use those CPUs again, but for inference this time. We'll start from a few NLP models, benchmark them on the previous generation of Intel CPUs based on the Ice Lake architecture. And then, of course, we'll run the same tests on the new CPUs, and we'll see what's what. We'll add our own Optimum Intel library to the mix for extra performance. So get ready for some serious speedup. Let's get to work.
+
+To begin with, let's look at the test servers we're going to use. I'm going to use a C6i EC2 instance. This one is based on the Ice Lake architecture, so that will give me my baseline benchmark. And I'm going to use an R7IZ instance, which is based on the Sapphire Rapids architecture. At the time of recording, these are still in preview. They have the same size, 16XL, and I started from the same AMI to set them up. The setup itself is pretty simple. You'll find all the instructions in this companion blog post, link in the video description, but the steps are really simple. I'm installing Torch, the Intel extension for PyTorch, which will bring all the hardware acceleration for those different chips. We'll talk about the new Sapphire Rapids stuff when we get there. Of course, the Transformers library. And on the Sapphire Rapids instance, I'm just adding Optimum Intel. And we'll see why we want to do that.
+
+Let's look at the code. We'll start, of course, with the Ice Lake instance. And the benchmark is pretty simple. I'm starting from these three models: DistilledBERT, BERTBase, and RoBERTaBase. And I'm going to create a sentiment analysis pipeline for those three models. And I'm going to run predictions on a short customer review, as you can see here. Pretty simple. 16 tokens or something. And a longer one. This one, I think, is close to 128. And I'm going to iterate on those and try to measure something meaningful, hopefully. And so short sentence, long sentence, and then batching the short sentence, and then batching the long sentence. And doing this for each of the models. And the benchmark itself is very simple. I'm warming up everything for 100 iterations. And then I'm just literally predicting a thousand times, storing all the prediction times, and returning the mean and the 99th percentile. So that should give me a decent view of what's happening in real life. Short sequence, long sequence, and then batching them and looking at the mean and percentile.
+
+Okay, so we can just run this. It's going to run for a minute or two, and let's keep this thing running for a minute, and then I'll be back and we'll look at the times. Okay, so after a few minutes, we have our results, and they're pretty close to the ones in the blog post, so let's look at those. You want to focus on this one, okay? That gray area here, C16i. And we see for DistilledBERT, P99 is around 5 milliseconds. And for BERT, it's a little over 10. It's about the same for RoBERTa. And for longer sequences, we can't get single-digit, even for DistilBERT, right? We see 11, 20, and about 20 again for RoBERTa. And the numbers for the batch predictions are comparable. So not ugly, but difficult to stay under the 10 millisecond mark, even with us.
+
+So now let's run the same test on the other instance. And here we're actually running the test twice. We're running it with the vanilla transformers pipeline, as you see here. Exact same code. Just a different instance. And then we use an Optimum Intel pipeline. So the difference here is that we'll be able to leverage all of the hardware acceleration features present on those Sapphire Rapids instances like AMX and BFloat16 support. So if you want to be sure your instance actually has that, you can just go and LSCPU and look at the flags and you should see those AMX flags. You'll see all the AVX 512 stuff that has been around for a long time. But what's really new with Sapphire Rapids is the advanced matrix extensions, which bring new hardware registers, two-dimensional registers that can be used for matrix multiply and accumulate. These are called the tile registers. And so that multiply and accumulate operation is available for int8 and it's available for BF16. And if you're not so sure what BF16 is, here it is. So we all know FP32, we all know FP16, and the problem with FP16 is the exponent is actually quite shorter, and that can create overflow issues when working with FP16. So BF16 has the same exponent size, 8 bits, so it can represent the same range of values as FP32. Obviously, we're with less granularity because it has fewer significant bits, but at least the range of values we can cover is exactly the same, so that kind of removes the overflow issue that you could see with FP16. So yeah, BF16 is great for that, and it's also very fast thanks to this AMX extension. And to use this, as you can see, the only thing we need to do is create this Optimum Intel pipeline, make sure we pass the bfloat16 data type, and enable the JIT, so that we can use TorchScript and all the underlying acceleration present in PyTorch as well. And then the rest, of course, is the same. Okay, so very simple. All right, let's run this and see what kind of speedup we get. And it'll take a few minutes. Okay, so I'll see you there.
+
+So after a few minutes, we get our results. Again, they're really close to the ones in the post, so we'll look at that. We can see switching from Ice Lake to Sapphire Rapids, per se, brings some speedup. This is quite noticeable on DistilBERT, where we go from 5.48 to 4.57, less noticeable on the bigger models. But there is maybe, let's say, 20%, 30% improvement just with the new generation. But where we start hitting really sweet numbers is when we run the Optimum Intel pipeline with BF16, right? Because now we see we actually dropped to very low numbers and we're literally under two milliseconds consistently for Distilled BERT. For short sequences, we're under five for long sequences. And even with bigger models, we're extremely close to 10 milliseconds, even with longer sequences. And generally, across the board, we see anywhere from, let's say, 55 to 65% latency reduction. And that means about a 3x speedup, which is very, very noticeable. So this means even on CPU, you can get low single-digit latency for Distilled BERT and RoBERTa for short sequences, and you can stay within 10 milliseconds for longer sequences. So that's a really good number. This used to be GPU territory, one millisecond prediction, two millisecond prediction. And you can do the same with a CPU, which is just generally easier to work with and easier to manage in your infrastructure. I'm sure you have plenty of CPU servers lying around. Well, now you can use them for inference. No need to go and grab expensive and difficult to manage, difficult to procure GPU servers.
+
+But that's just me. Well, that's pretty much what I wanted to show you. Again, go and check out the blog. You can see some numbers. You can see the setup. And of course, the code is available, and you can replicate all of this yourself with your data and your models. OK? Well, that's it for today. I hope that was fun and informative. And until next time, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">CPU Inference</span><span class="tag">Sapphire Rapids</span><span class="tag">Optimum Intel</span><span class="tag">NLP Models</span><span class="tag">Performance Benchmark</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

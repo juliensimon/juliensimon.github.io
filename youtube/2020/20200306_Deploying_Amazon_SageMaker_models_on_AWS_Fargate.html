@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Deploying Amazon SageMaker models on AWS Fargate - In this video, I show you how to deploy an Amazon SageMaker model on AWS Fargate, our fully managed container service. First, I use a Jupyter notebook instance ..." name="description"/><meta content="Deploying Amazon SageMaker models on AWS Fargate - Julien Simon" property="og:title"/><meta content="Deploying Amazon SageMaker models on AWS Fargate - In this video, I show you how to deploy an Amazon SageMaker model on AWS Fargate, our fully managed container service. First, I use a Jupyter notebook instance ..." property="og:description"/><meta content="https://www.julien.org/youtube/2020/20200306_Deploying_Amazon_SageMaker_models_on_AWS_Fargate.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Deploying Amazon SageMaker models on AWS Fargate - Julien Simon" name="twitter:title"/><meta content="Deploying Amazon SageMaker models on AWS Fargate - In this video, I show you how to deploy an Amazon SageMaker model on AWS Fargate, our fully managed container service. First, I use a Jupyter notebook instance ..." name="twitter:description"/><link href="https://www.julien.org/youtube/2020/20200306_Deploying_Amazon_SageMaker_models_on_AWS_Fargate.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deploying Amazon SageMaker models on AWS Fargate - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Deploying Amazon SageMaker models on AWS Fargate</h1>
+<div class="date">March 06, 2020</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/JcOG9DmwSrY">
+</iframe>
+</div>
+<div class="description">In this video, I show you how to deploy an Amazon SageMaker model on AWS Fargate, our fully managed container service. First, I use a Jupyter notebook instance to train a Keras model. Then, I create a Fargate cluster, and I use the AWS Deep Learning Container for TensorFlow to deploy that model. This would work the same with PyTorch and Apache MXNet :)
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+Code: <a href="https://gitlab.com/juliensimon/dlnotebooks/-/blob/master/keras/04-fashion-mnist-sagemaker-advanced/Fashion%20MNIST-SageMaker-Fargate-DLC-TF115.ipynb" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/dlnotebooks/-/blob/master/keras/04-fashion-mnist-sagemaker-advanced/Fashion%20MNIST-SageMaker-Fargate-DLC-TF115.ipynb</a>
+
+For more content, follow me on :
+* Medium: <a href="https://medium.com/@julsimon" rel="noopener noreferrer" target="_blank">https://medium.com/@julsimon</a>
+* Twitter: <a href="https://twitter.com/juliensimon" rel="noopener noreferrer" target="_blank">https://twitter.com/juliensimon</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hey, everybody. This is Julien from Arcee. In this video, I'd like to show you how to combine SageMaker to train machine learning models and Fargate to deploy on fully managed containers. It's a pretty cool combination. What I'm going to do here is start from a Keras script, a simple script I've used before. It's a simple CNN trained to classify images on the fashion MNIST dataset, which is a drop-in replacement for MNIST, with the same number of classes and samples. The goal is to classify those images correctly into 10 classes.
+
+I'm using a script mode script, passing hyperparameters and dataset location as command line arguments, downloading the dataset, building the convolution blocks, training, and saving the model in TensorFlow serving format. This example is quite common, and although I'm using Keras, the process works with TensorFlow, PyTorch, and MXNet. It's a very generic way of training on SageMaker and deploying on Fargate.
+
+First, I download the dataset and upload it to S3. It's already split into training and validation sets, so I see my two S3 locations. As usual, I configure a SageMaker estimator, using the TensorFlow one, passing the script location, training on one P32 XL instance (a GPU instance), and using TensorFlow 1.15 in Python 3 mode, in script mode. I pass the location of the training and validation sets, and this trains for a few minutes, achieving 92% accuracy. All good.
+
+Now I have a trained model in S3, and I can see its location. I save this location to an environment variable and copy the model artifact to my local machine. I'm using a notebook instance, but you could use anything else. I extract the model artifact, which is indeed in TensorFlow serving format, to a directory called test models. This is one of my repos on GitLab, where I want to push the new model for deployment on my Fargate cluster.
+
+Next, I add, commit, and push the model to the GitLab repo. Now the model is archived in GitLab, ready to be deployed. The next step is to create the Fargate cluster, which is simple. I call the Create Cluster API, give it a name, and that's it. Fargate is fully managed, unlike ECS and EKS, where you need to manage clusters and instances. I use the ECS CLI tool, which you can grab from GitHub, install, and copy to your path. I set the ECS CLI to work with the Fargate demo cluster in eu-west-1, which will be the default for future commands.
+
+The cluster is created, but nothing is running yet. I use ECS CLI to check that no tasks are running. I need a container, and while I could build my own TensorFlow container, I'll use deep learning containers, which are pre-built for deep learning frameworks. We have containers for TensorFlow, PyTorch, MXNet, and different versions, available in many regions, with CPU and GPU versions. I trained on TensorFlow 1.15, so I pick the CPU version for inference in Python 3.6, as Fargate doesn't support GPU instances yet.
+
+I find the container name in ECR, our Docker registry service, and update the region and version details. The container has everything I need. To deploy and load the model, I write a task definition. The image is the one I showed for inference in Python 3.6. The entry point involves creating a local directory, cloning my repo with the models, and firing up TensorFlow Serving using the specified ports and model version. I set memory and CPU allocations, open ports 8500 and 8501 for TensorFlow Serving, and configure CloudWatch logs for the container.
+
+I register the task definition, which stores it in the Fargate backend. I call this API to create or update the task definition, and each update bumps the version number. I need both the name and version for the next steps. I run a task using the simple API, specifying the cluster name and task definition version. I pass a network configuration, launching the task in a subnet with a simple security group.
+
+After a few seconds, the task is running, and the deep learning container has been pulled and started. I see the IP and port for the task. The final step is to build a URL for the TensorFlow Serving endpoint, using the IP, port, and the standard format. I grab random samples from the validation dataset, build a prediction request in JSON format, and post it to the URL using the requests library. The response is a JSON object with prediction vectors for each sample. We see 10 samples, each with 10 probabilities for the 10 classes, and the predictions are mostly correct, with one mistake, as expected given the 92% accuracy.
+
+In the ECS console, I see the task running, and all the information is available. I hope you enjoyed this and learned a few things. I'll see you soon with another video. Bye-bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">SageMaker</span><span class="tag">Fargate</span><span class="tag">TensorFlow Serving</span><span class="tag">Machine Learning Deployment</span><span class="tag">AWS ECS</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

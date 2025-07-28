@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="SageMaker Fridays Season 4 Episode 7   Automating an end to end workflow for image classification - Broadcasted on 17/09/2021. Join us for more episodes at https://pages.awscloud.com/SageMakerFridays
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future v..." name="description"/><meta content="SageMaker Fridays Season 4 Episode 7   Automating an end to end workflow for image classification - Julien Simon" property="og:title"/><meta content="SageMaker Fridays Season 4 Episode 7   Automating an end to end workflow for image classification - Broadcasted on 17/09/2021. Join us for more episodes at https://pages.awscloud.com/SageMakerFridays
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future v..." property="og:description"/><meta content="https://www.julien.org/youtube/2021/20210920_SageMaker_Fridays_Season_4_Episode_7_-_Automating_an_end_to_end_workflow_for_image_classification.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="SageMaker Fridays Season 4 Episode 7   Automating an end to end workflow for image classification - Julien Simon" name="twitter:title"/><meta content="SageMaker Fridays Season 4 Episode 7   Automating an end to end workflow for image classification - Broadcasted on 17/09/2021. Join us for more episodes at https://pages.awscloud.com/SageMakerFridays
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future v..." name="twitter:description"/><link href="https://www.julien.org/youtube/2021/20210920_SageMaker_Fridays_Season_4_Episode_7_-_Automating_an_end_to_end_workflow_for_image_classification.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SageMaker Fridays Season 4 Episode 7   Automating an end to end workflow for image classification - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>SageMaker Fridays Season 4 Episode 7   Automating an end to end workflow for image classification</h1>
+<div class="date">September 20, 2021</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/hEVFGke2EuY">
+</iframe>
+</div>
+<div class="description">Broadcasted on 17/09/2021. Join us for more episodes at <a href="https://pages.awscloud.com/SageMakerFridays" rel="noopener noreferrer" target="_blank">https://pages.awscloud.com/SageMakerFridays</a>
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+In this episode, we revisit the metastasis image classification example from Episode 3, and we show you how to automate it end to end, from image labeling with SageMaker Ground Truth to workflow execution with SageMaker Pipelines
+
+*** Notebook
+
+<a href="https://github.com/aws/amazon-sagemaker-examples/tree/master/use-cases/computer_vision" rel="noopener noreferrer" target="_blank">https://github.com/aws/amazon-sagemaker-examples/tree/master/use-cases/computer_vision</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody and welcome to this new episode of Sage Makeup Fridays season 4. I think this is episode 7 today, right? My name is Julien, I'm a principal developer advocate focusing on AI and machine learning. I think by now you know my co-presenter. Thank you, Julien. So, hi everyone, my name is Tegelen, and I'm a senior data scientist working with the AWS Machine Learning Solution Lab. My role is to help customers get ML projects on the right track to create business value. Thank you for being with us.
+
+So, where are we in this season? Yes, we are at episode seven, which means today we are still discussing automation, deployment, and ops topics. In this particular episode, we are revisiting our computer vision example from healthcare, from episode three, actually. Exactly. Okay, so what are we going to do today, Tegelen? If you remember, during the last episode, we worked on classifying medical images to detect cancerous cells. We did this in August, and now we are going to see how to automate the process, plus a bonus on how to label data in case you have data to label. Yeah, I must have said at some point, "Oh, we'll show you data labeling." Okay, so we'll show you image labeling, actually. Okay? This is the example we're going to cover today. So take a screenshot, and I'll try to show it again before the end of the episode. Okay? All right. Let's jump to our notebook. And maybe we should start with a quick recap of the problem we are covering.
+
+We start from a dataset of medical images. Let me show you some examples. I think we have some samples here. Yes, which contain metastasis or not metastasis. We're going to train our classification model on this. Okay, and that's what we did in episode three. We trained the model. We'll revisit those steps quickly. But there's an assumption here, right? The assumption is we have labeled data. Yes. So doctors, experts have actually looked at the dataset and labeled these different images as showing metastasis cells or not. Okay. But that's a lot of work, right? And in real life, you generally do not have a labeled dataset. So let's talk about that. Let's talk about labeling some of those images ourselves. And of course, there's a huge disclaimer: none of us is a medical doctor, so we're going to try and label those images, but we're certainly going to make some mistakes. So apologies if specialists and doctors are watching this. We're just showing the technical capability, and of course, we're not showing that we know anything about the actual medical problem. Okay? So let's take a look at the dataset itself.
+
+The dataset itself... Oops, wrong example. Here it is. The dataset itself is a single file, an HDF5 file, which packs all the images as num binaries. So not really convenient, but in real life, we would certainly start from individual images, which we would label, and then we would pack the images and the labels into that file. What I've done is write a few lines of Python to extract some images from the HDF file. So, take a screenshot, but run this at your own risk. It's just opening the file and saving, in this case, 10 images and printing out the labels. Okay. So now what I have are those 10 images. Okay. And we can actually see them here. Just 10 images. They're really small images, by the way. They're 96 by 96 pixels. So that's why they're all small here. Okay. These are our images, and this is what we're trying to label.
+
+The first step is to put this stuff in an S3 bucket, right? So just upload those images, which I've done here. Now we can go and work with SageMaker Ground Truth. Let me zoom in a little bit. And maybe go full screen as well. The first step is to define a workforce, so a team. What is Ground Truth? Ground Truth is a SageMaker capability that helps us label data. We can label images, texts, 3D point clouds for autonomous driving, and build custom workflows. Obviously, we need people who know what they're doing. In this case, neither of us does. But you can create your workforce and you have three options. If you work at a super large scale, you can use Mechanical Turk and the labeling work to tens of thousands of workers. You can work with vendor workforces, AWS partners who can provide specialized teams for particular problems, like autonomous driving, etc. Or you can create a private workforce, which is just a list of people you know, people in your company, people in your hospital in this case, people who know what to do with those images. I've created a workforce, and it's just me. It's not a very powerful workforce, but we'll work with that.
+
+Once we have that workforce, we can now create a labeling job. The first step is to give our job a name. Let's do this: beta stasis job. Then we need to pass the location of our images. The cool thing is, Ground Truth will actually crawl this location and build a list of objects. You could also pass your own list. If you wanted to label a subset of that collection, you can pass a file called the input manifest. But here we're just doing it the easy way. Next, data type. Of course, in this case, we are working with images and an IAM role giving Ground Truth permissions to access that bucket. You can certainly use your existing SageMaker role if you use one of those SageMaker buckets. Click on this. It's going to check that location, check that you can access it, call the objects that are present there, and build a manifest file. We could do a little more. We could work on the full dataset or a sample, or write a query to select particular objects. Here, just do 10 minutes. If the objects are... if we want to encrypt the output, we could pass a KMS key for encryption as usual.
+
+Next, we select the task type. We can see image, text, or video, of course, point clouds, or custom tasks. Here we're working with images and we want to do image classification. We could do multi-label, bounding boxes for object detection use cases, or segmentation to segment certain objects in our images and label verification. For important images like these, label verification probably makes sense, especially if I'm labeling. Just click on Next. I'm selecting the private team made of me and myself. We could set a timeout for a worker, add a lot of different things, like how many workers would see each sample. If we had a real team, we could say each image to be labeled will be sent to, let's say, three or five labelers, and then the annotations are averaged. It gives you better accuracy, of course. We're not going to do any of those. Here we can and should provide examples. For labeling, it's pretty basic. But if you do object detection or object segmentation, you can customize this page and show really good instructions. Here we're going to keep it very basic. It's only two labels. The first one is no, and the other one will be yes. These are obviously mapped to integers. This label will be level zero, this label will be one. Make sure you put them in the right order because in your machine learning problem, you want the metastasis images to be flagged as well. Yes. Okay. Create. This will create the job. It takes a few minutes. So we're going to pause the video and we'll be right back when the job is ready for labeling.
+
+Once the job is ready to go, we can actually go to the workforce tab here and find a link to the labeling portal. Each user, each worker, has a login and password and can go and log into that portal. I've already done that, and here we go. I see that I've got some on labeling. I just go and start working. Can we show instructions? Yes, okay. We just need to start working. Now I'm presented with the different images in the dataset, and I just need to figure out if the data is a metastatic image or not. So again, apologies, I'm going to say no on this one. Maybe I'm wrong. Move on to the next. No. I'm going to say no. I think this one is fine from memory. This one doesn't look very good. This one, you'd say no, okay. All right. This one looks really awful, so probably bad. This one doesn't look too great. This is the reason for the level checkup. Obviously, you need people who know what they're doing. But you can see how fast we can go here, right? Imagine even if you have thousands and thousands of images and people really know what they're looking at, you can go really quickly. If you do object detection or segmentation, it's a little more work because you need to outline the particular area, but there are some graphical tools that make it very easy. Okay, so we're going to say this is a little bit. This one's bad. This one doesn't look very good. Okay, so I uploaded 10 images to S3. Now I'm done. Let's pause for a minute or two for the job to complete, and then we can see the annotations in the SageMaker console. Okay, we'll be right back.
+
+Now we see the job is complete. If we open it, we see the output location. If we go there and follow the manifest path, we actually find this file called output.manifest. If we open this, we can see a JSON file. We have the list of images that we labeled, and we see the label here, right? 0, 1, 0, 1, etc. So then we have the label dataset, and we could just go and parse this file and build the actual machine learning dataset with the images on one side and the label on the other side. See, and really, I showed you the whole thing. You can start labeling your images very easily. In fact, if you use the built-in computer vision algorithms in SageMaker, you can actually use this file directly. I'll point you at the documentation, but you can use the manifest file as the input file. If you use TensorFlow, PyTorch, etc., you need to do a bit of processing. But for the built-ins, you could use this thing as is. All right. So I think we're done with labeling. We can resume our story here. Now we have labeled data. Yes, we did splits for training and validation. We converted to a record IO, which is a packed format. So the training set will be one file, the validation set will be one file with thousands of images. We covered this stuff in detail previously. We create an estimator to train and actually use hyperparameter tuning. We ran 20 jobs and got some good results. Okay, so that's where we stopped last time around. Okay, so the next step would be deploying. We are creating some technical objects, grabbing the best model from the hyperparameter tuning job. Just like last week, it's a little more complicated than necessary because we are running in different notebooks. If you run all of it in your notebook, you can go, estimator.fit, estimator.deploy. Here we are just loading the model again because we want to deploy it from a different notebook. So we are referring to the best model from the tuning job. The estimator, the tuning job context does not exist in this notebook, so we just need to refer to that model. And then we'll just call deploy. What happens here is SageMaker automatically creates an endpoint, provisions an EC2 instance of the appropriate instance type, creates, loads the model, creates the HTTPS API, and we can start. And then, of course, we can predict. We can just grab an image from our dataset. Last week we saw the predict API, which is part of the SageMaker SDK. There's another way to do it. We can use invoke_endpoint, which is part of Boto3, the Python SDK for all AWS services. It's the lower level because we're working with lower level entities. But it works very well. In the case of SageMaker, it's actually very convenient because you can just say, hey, if I have an existing endpoint, even something that someone created, and I just want to invoke it, then we just need to pass the endpoint name, the correct MIME type, and then the payload, which is the image as a byte array. So it's a very easy way to invoke existing endpoints. We predict it, and of course, we get the probability for the two classes. This one is, yes, this one doesn't look very good. It scores very highly on the one class, which means this is certainly showing metastases. Class one. All right. So that's how we do this. Very simple. No infrastructure to manage, call, deploy, and either predict in the SageMaker SDK or invoke_endpoint in Boto3, and there you go.
+
+Okay, so we've labeled and trained and deployed. Now let's automate. Of course, we are going to use SageMaker Pipelines, just like in previous episodes. The game here is really to create each step independently and then combine them and run the pipeline. It makes sense in a real-life example when you've been doing such a solution, and you want to automate it once you get new data. Sure. I think we discussed this last week or the week before. Initially, explore your problem, work with the notebooks, and once you're ready to go to production and want to deploy easily or reuse the pipeline on different datasets, different versions of your dataset, or different parameters, start automating. It's the way we would be doing it. Get it to work and then automate it. That's the reasonable way to do it. So here, how many steps do we have? We don't really have Data Prep steps. Well, we have the labeling step, which we already did. So in this case, we will have the train, deploy, and register steps with the model registry. Let's look at those steps. First, of course, the training step. There's not a lot of difference between the syntax for manual work and the syntax for pipeline work. It's pretty easy to adapt your notebook code to pipeline. So, and then, again, it's all the more reason to get it to work first and then automate later. It's not a lot of work to adapt. Okay, so... Oh, there is a data prep step. Yeah, it's not really data prep. It's data formatting. Yes, we want to... Yeah, we won't forget about that. So, the first step, of course, is to split the data, to convert the data in record I.O. format. We start from that HDF file, and we have a script which is really exactly the same code we've run before, only it's in a Python script, which we will run as a SageMaker processing step. But it's the same function we used earlier in the notebook, and we split the dataset into three. Same code, except this time we are automating. We upload the dataset to S3, we upload the script to S3, and we create the compute resource, which is a scikit-learn processor. Instance type, instance count, not much more infrastructure work than this. We define the processing step. That's the first step of the pipeline. The input, of course, is the input dataset. The outputs are the training, validation, and test set. Here are the three splits. And the code is the location of that script in S3. So generally, just upload everything to S3, all the artifacts that you need, and configure your processing step. So that first step. Second step is now training. We have two inputs: the training dataset, the training split, and the validation split. We saw this again last week. We obviously reuse the output from the processing step as the input for the training step. So this connects automatically the steps. It creates the pipeline, the graph, the execution graph. The training step is just the estimator that we configured a few cells before and the inputs we just defined. The estimator is exactly what we saw above. Same parameters as in the manual training job. Once we've trained the model, remember we had this discussion last time around. We could go two ways. We could deploy, and pipelines does not provide a deploy step, so we use a Python script to deploy the model. That's one way. The other way is we add the model to the model registry with a certain status telling us if we can proceed and use further automation like CloudFormation or your own scripts to go and deploy automatically. In fact, in this pipeline, we're going both ways. We register the model, so we add it to the model and list the content type, the response type, the instance types that are allowed for inference, and the approval status, which is pending manual approval. So that model package is really just more than the model. It's the model and deployment package information configuration. It gets added to the model registry. The other way is, of course, we add the model to SageMaker. By now, you know I really hate this create model name for the API; it shouldn't be called create. We're not creating; we're just adding the model to SageMaker, making that S3 artifact something that we can deploy. And then we have another step, which is to deploy the model. We run a deployment script inside SageMaker processing, passing some hyperparameters, some command line parameters. The deployment is just very simple: create endpoint, etc. We've seen this before. All right. So we have all our steps and some parameters for the pipeline here. Of course, where is the input data? What's the status for the model that we add to the registry? And all the steps. Remember, you don't need to pass them in order because with the output becomes my input kind of thing. Pipelines, SageMaker pipelines, can use it out. We saw last week how to explicitly connect steps using dependencies. So you can also force the order of the steps if you have to. And then we add the pipeline and start execution. Let's go and see. We would go here to pipelines and see our pipeline, which I already opened. So run it once, and it's done. It worked. It ran for 33 minutes. There's just one execution. We can see the graph, the static graph. If you want to see the execution, we just double-click on this. Yes. We see the execution. If you need extra information, you can zoom out a bit. We can see inputs, outputs, logs, which are super useful. Remember, I showed you last week some mistakes that I made. You don't need to go to CloudWatch or any other location. You can see the log for that job here. If it turns red, something wrong happened, but in this case, it worked just fine. So we did deploy the model. If we go to endpoints, yes, there is this model here. This is the one actually, and we can see the URL for the endpoint, which we're actually invoking. We also registered the model. If I go to the model registry, I think that's this one here. Yes, and this is the actual one here. That's many versions, and we see the model, which, of course, is pending manual approval because that's how we've configured it. The reason you would want to do this is because there needs to be another part in your pipeline where someone or something takes the model in the registry and deploys it. It could be manual work. Someone could look at the model and say, "Is it good? I can say, 'Okay, yeah, it's a good model.' Just update it like that." And that would be checked by your CI/CD tools or maybe using CloudFormation templates, etc. You need some kind of gate to tell you that, "Yes, this model is good for you." If you automate completely, this could actually be checked by the code saying, "Well, wait a minute, you're passing me a model, a model name or a model version in this model group, that's not approved. So no one not deployed." There are many ways to do this, but the registry is where you will find all information about your versions, approval history, and settings, etc. It's a good central repository for all the metadata and the model. So you can just do it just like that.
+
+All right. What did I forget? I think that's about it. Oh, yes, of course. The final thing. So we saw the pipeline. As you're going to run lots of jobs, lots of pipelines, different parameters, at some point, you want to know where that model comes from. That model in the model registry, what is it? How is it built? Tracking that stuff is not very easy. SageMaker pipelines actually make it very easy because as we go through the steps, we know all the inputs and outputs. So can we build some kind of tracking system that just lets us know, "Hey, this step had those inputs and that output and just cascade all that stuff from step to step?" And the answer is yes. This is called Lineage Tracking. It's been built automatically by the pipeline. Automation is cool, generally, but this is a very good reason to use SageMaker Pipelines instead of trying to build your own automation system. This is really, really nice. You can just call this a LineageTableVisualizer object. And this gives you, for each step of the pipeline, the inputs and the output. For example, here, and we're looping over each step in the pipeline, and we're printing the lineage information that we have. For the split data step, we had three inputs: the code, the script, the location, so you know exactly which script was used. If you apply versioning to this, it's pretty bulletproof. The input dataset and the image, which in this case doesn't mean image; it means Docker image. So it's the actual container that you run this code in on this dataset. We saw three outputs. See the difference contributed to and produced. So you can see all the artifacts and whether they are inputs or outputs. If you need to know how was, "I have this training set in S3, who built it?" Thanks to this lineage information, you know exactly how this was run. And of course, you can get API information. For training, we can see for the train model step. Again, we see three inputs: the training set, which surprisingly is the output. The validation set, the Docker image, so in this case, the image classification, version one. And those three produced the model artifact in S3. We can continue like that. For register model, as a model artifact as input, the Docker image, because in the model registry, it's much more than the actual model artifact. It's also the image that will be used for deployment. It's the approval status. So me entering my comment is also tracked. It's an action this time. And of course, the output is the model package group that contains this. For deploy model, we have the deployment script and the deployment image, and there's no real output. There's no artifact. The output is the endpoint. All this stuff is built automatically, and so you can query it. You can query your pipeline executions and just like that, start from a pipeline and figure out what actually happened here. You can also do this manually. This is actually part of the example, I think it's Notebook 3, where we show you how to build those and associate those artifacts with the API. I'm not a huge fan of this. You know, it is absolutely possible if you don't want to use pipeline, you can still use the Lineage API to build all that stuff yourself. So go and check that notebook. But generally, using it in pipeline comes for free, automatically. And as everyone knows, I am lazy and cheap. So free stuff. No work to do. Right. So perfect. Dream feature for me. Right. So give it a try.
+
+Okay, I think we're almost done. So what did we see in this one? We revisited our computer vision example and actually jumped all the way to labeling. We extracted some images and, in case you're interested, I can show you where is my ugly code? Okay, yes. So here's my kindergarten code, if you really, really insist, make a screenshot. We extracted some images from the dataset. We labeled them with Ground Truth. We saw a little bit of training and tuning, which were covered in detail last time. Then we saw how to deploy once again and how to automate with pipeline and how to track lineage, which is super, super interesting. Once you have a thousand models and 10,000 datasets, and it's critical that you know exactly what this stuff is and where it's coming from. Different data scientists as well, different versions of the same jobs, etc. So, super nice. All right. So, let me show you that slide once again. This is the example we used today. So, go and run it and have fun with computer vision. Why not try some labeling? You can go and grab lots of image data. Ground Truth is very, very easy to use, so it's a good thing to learn. Okay, so I think that's the end of this one. Tegelen, thank you very much for your help. Thank you so much. Next week, we will revisit the retail recommendation example, and we'll talk about automation again, of course. Okay. All right. Until then, have a good week. See you soon. Bye-bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">SageMaker</span><span class="tag">GroundTruth</span><span class="tag">MachineLearningOps</span><span class="tag">DataLabeling</span><span class="tag">AutomatedPipelines</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

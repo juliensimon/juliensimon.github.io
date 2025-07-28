@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Deep dive   model merging part 1 - *** Part 2 is now available at https://youtu.be/qbAvOgGmFuE : Model Breadcrumbs, Model Stock, DELLA
+
+Model merging is an increasingly popular technique that mak..." name="description"/><meta content="Deep dive   model merging part 1 - Julien Simon" property="og:title"/><meta content="Deep dive   model merging part 1 - *** Part 2 is now available at https://youtu.be/qbAvOgGmFuE : Model Breadcrumbs, Model Stock, DELLA
+
+Model merging is an increasingly popular technique that mak..." property="og:description"/><meta content="https://www.julien.org/youtube/2024/20240318_Deep_dive_-_model_merging_part_1.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Deep dive   model merging part 1 - Julien Simon" name="twitter:title"/><meta content="Deep dive   model merging part 1 - *** Part 2 is now available at https://youtu.be/qbAvOgGmFuE : Model Breadcrumbs, Model Stock, DELLA
+
+Model merging is an increasingly popular technique that mak..." name="twitter:description"/><link href="https://www.julien.org/youtube/2024/20240318_Deep_dive_-_model_merging_part_1.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deep dive   model merging part 1 - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Deep dive   model merging part 1</h1>
+<div class="date">March 18, 2024</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/cvOpX75Kz4M">
+</iframe>
+</div>
+<div class="description">*** Part 2 is now available at <a href="https://youtu.be/qbAvOgGmFuE" rel="noopener noreferrer" target="_blank">https://youtu.be/qbAvOgGmFuE</a> : Model Breadcrumbs, Model Stock, DELLA
+
+Model merging is an increasingly popular technique that makes it possible to add or remove capabilities to transformer models, without the need for any additional training.
+
+In this video, we first introduce what model merging is. Then, we discuss different merging algorithms implemented in the mergekit library (<a href="https://github.com/arcee-ai):" rel="noopener noreferrer" target="_blank">https://github.com/arcee-ai):</a> model soups, SLERP, Task Arithmetic, TIES, DARE, and Franken-merging.
+
+Slides: <a href="https://fr.slideshare.net/slideshow/julien-simon-deep-dive-model-merging/270921708" rel="noopener noreferrer" target="_blank">https://fr.slideshare.net/slideshow/julien-simon-deep-dive-model-merging/270921708</a>
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. Follow me on Medium at <a href="https://julsimon.medium.com" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com</a> or Substack at <a href="https://julsimon.substack.com." rel="noopener noreferrer" target="_blank">https://julsimon.substack.com.</a> ⭐️⭐️⭐️
+
+<a href="https://www.youtube.com/watch?v=cvOpX75Kz4M&amp;t=0" rel="noopener noreferrer" target="_blank">00:00</a> Introduction
+<a href="https://www.youtube.com/watch?v=cvOpX75Kz4M&amp;t=76" rel="noopener noreferrer" target="_blank">01:16</a> What is model merging?
+<a href="https://www.youtube.com/watch?v=cvOpX75Kz4M&amp;t=430" rel="noopener noreferrer" target="_blank">07:10</a> Model soups
+<a href="https://www.youtube.com/watch?v=cvOpX75Kz4M&amp;t=840" rel="noopener noreferrer" target="_blank">14:00</a> Spherical Linear Interpolation (SLERP)
+<a href="https://www.youtube.com/watch?v=cvOpX75Kz4M&amp;t=1235" rel="noopener noreferrer" target="_blank">20:35</a> Task Arithmetic
+<a href="https://www.youtube.com/watch?v=cvOpX75Kz4M&amp;t=1635" rel="noopener noreferrer" target="_blank">27:15</a> Trim, Extract Sign and Merge (TIES)
+<a href="https://www.youtube.com/watch?v=cvOpX75Kz4M&amp;t=2180" rel="noopener noreferrer" target="_blank">36:20</a> Drop and Rescale (DARE) 
+<a href="https://www.youtube.com/watch?v=cvOpX75Kz4M&amp;t=2620" rel="noopener noreferrer" target="_blank">43:40</a> Franken-merging</div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julian from Hugging Face. As we all know, it can be challenging to build a high-quality model that meets our business use case. In the last few months, a new technique has become increasingly popular to build these high-quality models with less complexity, faster turnaround times, and less compute cost. This technique is called model merging. In this video, we're going to introduce what model merging is, and we're going to look at the most popular algorithms that have been designed for model merging, which are implemented in an open-source library called MergeKit. This is a very interesting topic, quite different from how we've built models before. Let's get started. If you enjoy this video, please give it a thumbs up and consider subscribing to my YouTube channel. If you do, please enable notifications so you won't miss anything in the future. Also, why not share this video on your social networks or with your colleagues? If you enjoyed it, it's quite likely someone else will. Thank you very much for your support.
+
+So, what's the problem that model merging is trying to solve? What is model merging and how does it work? As we know, trying to build the one great model that works best for a particular use case is not easy. It takes time, many iterations, probably multiple fine-tuning rounds, and different alignment datasets. It certainly takes time, compute, and energy, and there is such a thing as diminishing returns as we keep trying to improve the model. It's quite a bit of effort, and if we need to do this again and again for each project, it can be difficult to scale. Something different is required, and that's what model merging is about—finding another way to build high-quality models.
+
+The basic idea is that we have tons of good models out there. We have about half a million models on the hub for the best architectures, fine-tuned on all kinds of datasets. Chances are, the abilities we need from our model are present out there. Maybe they're present in different models. One model can summarize legal documents, another can translate healthcare documents. Maybe we need both. Instead of trying to fine-tune a single model on different datasets and teaching it different things, can we learn from existing models? That's what model merging is about. We identify good models that know things we're interested in and merge them into a single one, hoping the merged model retains all the goodness present in the source models. This is done without any training or fine-tuning, purely as a mathematical operation where we take the weights from different models and merge them using a particular algorithm. This is not an ensembling technique. Ensembling means having a collection of models that predict in parallel and then averaging or fine-tuning the outputs. Here, we start from several models, but at the end, there is only one model left.
+
+The good thing about merging is that there is no training involved, no fine-tuning, and we only need a tiny bit of compute. Everything runs very nicely on CPU. It's a very lightweight process, fast, and can be run in a few minutes on your local machine, depending on the model size. There's no extra cost for training or inference, and there's no extra inference latency. It's a vanilla model, with no tricks or additional layers on top of the merged model. This is a really interesting technique.
+
+The most popular library for this is called MergeKit. The founder of MergeKit has joined a machine learning startup called Arcee, started by a bunch of ex-Hugging Face folks. Hi guys, good job on this one. Feel free to look at MergeKit. We won't dive into MergeKit per se, but we'll look at the techniques implemented in MergeKit and focus on understanding those different algorithms. I might show a couple of code snippets from MergeKit and a couple of config files.
+
+These are the merging techniques we're going to look at:
+1. Model Soups
+2. SLURP (Spherical Linear Interpolation)
+3. Task Arithmetic
+4. TIES (Trim, Elect, Sign, and Merge)
+5. DARE (Drop and Rescale)
+6. Frankenmerging
+
+These are all available in MergeKit today. More will likely pop up, but at the time of recording, this is what we have. This is a very active field with a lot of excitement. If you're watching this later, there might be more merging techniques, and I might cover them too.
+
+Let's talk about Model Soups. Model Soups is quite easy to understand and is a bit similar to ensembling, where we train many variants of the same model on the same dataset with different hyperparameters. The assumption is that all these models know something about the data. In ensembling, we combine the different answers to get a strong learner. Model Soups starts similarly but ends with only one model. We start from a collection of models with the same architecture trained on the same dataset multiple times with different hyperparameters. We then average their model weights. This is why it's called a soup—we take all the fine-tuned models, put them in a big pot, and mix everything, hoping for a good soup. This is also called linear interpolation. Optionally, we can apply weights to the average, normalize the weights, and adjust the contribution of each model.
+
+The code snippet from MergeKit is straightforward. We take the different weights assigned to each model and layer, multiply the layer weights by the model weight, and sum everything. This is a weighted average, and if we normalize, we apply basic normalization. It's a simple averaging operation on tensors, requiring minimal compute and running anywhere.
+
+There are different ways to build your soup:
+- Uniform Soup: We take all models trained with different hyperparameter combinations and average them.
+- Greedy Soup: We average models one by one, evaluating with an evaluation set each time. We only keep the model if it improves test accuracy.
+
+On this graph, the x-axis shows ImageNet accuracy, and the y-axis shows accuracy on distribution shifts. The green dots are individual models trained with different hyperparameters. The blue dot is the uniform soup, which is almost the best on ImageNet and the best on distribution shift. The greedy soup is even better, more accurate, and generalizes almost as well on out-of-domain data. Model Soups generally do a little worse than ensembling but are better on out-of-distribution data. The greedy soup is as good as or better than the best individual model on various benchmarks, making it a good compromise for a single model close to ensemble performance.
+
+Here are some benchmarks from the paper on BERT and T5. The top line is the best individual model, and the bottom line is the greedy soup. The greedy soup is as good as or better than the best individual model on all benchmarks. Model Soups are very simple, lightweight in terms of compute, and efficient.
+
+Next, let's talk about SLURP, which stands for Spherical Linear Interpolation. This is a 1985 algorithm originally designed for computer graphics to find the smoothest path for camera rotations. SLURP only works with two models. We transition from one to the other, and we can favor one model over the other. The benefit of SLURP is that it helps preserve the magnitude of weights and the shape of the embedding space. Instead of linear averaging, we use spherical interpolation, which keeps the merged model on the sphere in high-dimensional space.
+
+In the drawing, P1 and P2 are two embeddings. The model soup average (PL) changes the magnitude and the shape of the embedding space. SLURP computes PS, which stays on the circle, preserving the structure. The code from MergeKit involves normalizing the vectors, finding the angle between them, and computing the new vector using the T parameter to favor one model or the other. This is a lightweight process, running nicely on CPU.
+
+SLURP generally performs better at averaging and merging but is limited to two models.
+
+Now, let's talk about Task Arithmetic. Pre-trained models can be fine-tuned for many tasks, and the Hugging Face Hub has half a million models. A task vector is the tensor updates applied to a pre-trained model during fine-tuning. We can produce many task vectors by fine-tuning on different datasets. Instead of looking at pre-trained models, we look at task vectors, which represent the changes. Task Arithmetic allows adding or subtracting task vectors to a base model to add or remove capabilities.
+
+For example, adding a task vector for motorcycles to an image classification model improves its accuracy on motorcycles. Subtracting a task vector for everyday objects can improve car classification. The graph shows the result of adding task vectors to a CLIP model. The pre-trained model (orange bars) doesn't perform well on new datasets, while the fine-tuned model (green bars) does well but at the cost of a full fine-tuning job. The task vector models (blue bars) are on par or slightly below the fine-tuned model without full fine-tuning. Another example shows adding pairs of tasks to a T5 model, with some models close to fine-tuning accuracy for one task and much better on the other.
+
+Task Arithmetic allows adding or removing task vectors to a model to add or remove capabilities, achieving fine-tuning accuracy without the time and cost of full fine-tuning.
+
+Next, let's talk about TIES, which stands for Trim, Elect, Sign, and Merge. TIES addresses parameter interference when merging models. Two major problems are influential versus redundant parameters and sign conflicts. Influential parameters in one model can be canceled out by averaging with redundant parameters in another. Sign conflicts can also cancel out the influence of parameters. TIES trims non-influential parameters, elects the dominant sign, and merges the remaining parameters.
+
+In the example, three models are merged. The first step is to trim each group of parameters to keep only the influential ones. The second step is to elect the dominant sign for each group. The third step is to merge the remaining parameters and compute the averages. The update is then applied to the baseline model, with a scale factor to control the influence of the new behavior.
+
+Benchmarks show that TIES improves performance, especially when using a validation set to fine-tune hyperparameters. TIES is an interesting technique for merging models while addressing parameter interference.
+
+Next, let's talk about DARE, which stands for Drop and Rescale. DARE realizes that many parameter updates during fine-tuning are redundant. We randomly eliminate up to 99% of the parameter updates and rescale the remaining updates to make them more impactful. Larger models are less affected by dropping updates, and sometimes performance improves due to reduced noise. DARE is not a merging technique but a task vector compression technique, making task vectors much smaller and easier to manage. Combining DARE with other methods like TIES or Task Arithmetic can help build multitask models that sometimes improve on the original score for a particular task.
+
+Finally, let's talk about Frankenmerging, named after Frankenstein. Previous techniques require models to share a common architecture, but Frankenmerging takes bits and pieces from different models, possibly with different architectures, and stitches them together. This is called pass-through merging, where the weights are left untouched, and layers from different models are recombined. Some interesting models have emerged using Frankenmerging, and you can find examples on the Hugging Face hub. Frankenmerging is highly experimental but can lead to breakthroughs.
+
+That's what I want to tell you about model merging. It's very different and can get pretty wild, but it's something we should all keep an eye on. Thank you very much for your support. Give the video a thumbs up if you enjoyed it, and until the next video, keep rocking!
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Model Merging</span><span class="tag">MergeKit</span><span class="tag">Machine Learning Techniques</span><span class="tag">Task Arithmetic</span><span class="tag">SLURP</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

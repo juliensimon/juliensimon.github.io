@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Summarizing financial news with Hugging Face AutoNLP - In this video, I use AutoNLP, an AutoML product designed by Hugging Face, to fine-tune a model on the Reuters news dataset in order to summarize financial artic..." name="description"/><meta content="Summarizing financial news with Hugging Face AutoNLP - Julien Simon" property="og:title"/><meta content="Summarizing financial news with Hugging Face AutoNLP - In this video, I use AutoNLP, an AutoML product designed by Hugging Face, to fine-tune a model on the Reuters news dataset in order to summarize financial artic..." property="og:description"/><meta content="https://www.julien.org/youtube/2021/20211118_Summarizing_financial_news_with_Hugging_Face_AutoNLP.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Summarizing financial news with Hugging Face AutoNLP - Julien Simon" name="twitter:title"/><meta content="Summarizing financial news with Hugging Face AutoNLP - In this video, I use AutoNLP, an AutoML product designed by Hugging Face, to fine-tune a model on the Reuters news dataset in order to summarize financial artic..." name="twitter:description"/><link href="https://www.julien.org/youtube/2021/20211118_Summarizing_financial_news_with_Hugging_Face_AutoNLP.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Summarizing financial news with Hugging Face AutoNLP - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Summarizing financial news with Hugging Face AutoNLP</h1>
+<div class="date">November 18, 2021</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/tBCEhNAjuag">
+</iframe>
+</div>
+<div class="description">In this video, I use AutoNLP, an AutoML product designed by Hugging Face, to fine-tune a model on the Reuters news dataset in order to summarize financial articles. 
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+Dataset: <a href="https://huggingface.co/datasets/reuters21578" rel="noopener noreferrer" target="_blank">https://huggingface.co/datasets/reuters21578</a>
+
+Preprocessing notebook and model: <a href="https://huggingface.co/juliensimon/autonlp-reuters-summarization-31447312" rel="noopener noreferrer" target="_blank">https://huggingface.co/juliensimon/autonlp-reuters-summarization-31447312</a>
+
+New to Transformers? Check out the Hugging Face course at <a href="https://huggingface.co/course" rel="noopener noreferrer" target="_blank">https://huggingface.co/course</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In this video, we're going to continue to explore AutoNLP, the AutoML product built by Hugging Face. I've done a few videos on AutoNLP before, and this one will focus on a different task type. Here, we're going to fine-tune a text summarization model. Summarization is a common problem. We all have mountains of data and documents living in data lakes on the web. It's very useful to summarize them, maybe because we just want to quickly understand what the doc is about and whether it's the one we're looking for or whether it's worth reading. We might also want to have a short description to store in the backend and run downstream tasks on that data. Anyway, there are lots of reasons to summarize data.
+
+So, what we're going to do today is start from a dataset called the Reuters dataset, which is, of course, available on the Hugging Face Hub. We're going to quickly look at it, process it just a little bit in a Jupyter notebook, and then we're going to feed it to AutoNLP and see what happens. Let's get started.
+
+Here is the Reuters dataset on the Hugging Face Hub, and we can preview the dataset, which is quite convenient. As we'll see, we have a bunch of articles, quite a few articles actually. We have some additional features, topics, IDs, etc., and we have a title. I'm really only interested in the text and the title, and I'm going to use the title as a summary. This is the data we're going to train on. As you can see, there are quite a few. This is an interesting dataset. It has a lot of finance information, stock market information, etc. Once we have a model, we'll actually try to summarize finance news articles and see how well that works. This is the dataset we're going to use. We have a training set and a test set, and we have different splits for those. It doesn't really matter which one we use here. So this is the dataset.
+
+Let's go and download it and start processing it just a little bit. I'm going to switch to a Jupyter notebook here. This is running locally on my machine, by the way. It's not compute-intensive at all. First, I'm going to import the datasets library and download it directly to my local machine. It's not huge, so it should be fast. Okay, now we have the dataset locally. I can check it out. We have a training set with 20K something articles, and we have a test set. As mentioned before, I'm only really interested in the text and the title, which I'll use as a summary. So I'm going to drop all those columns. As you can see, I'm using the dataset API. If you're happier with Pandas, you can use Pandas. You can very easily convert a dataset to a Pandas DataFrame. There's a `to_pandas` API, and then you can do that. But this time I wanted to show you the dataset API.
+
+So, drop columns, and I'm going to rename the title column to target, which is what the model expects. As we'll see later, AutoNLP actually lets you map columns to features. So not strictly necessary, but again, just a simple way to show you the rename column API. So let's do this. Now we can see one training example, so the text and the target. As usual, that data is just a little bit weird. We see newline characters, too many white spaces, and some funky HTML characters or tags. We need to do a bit of cleaning. I'm going to define a cleaning function and go pretty easy on this. I'm going to drop newlines, replace them with white space, the same with tabs. I'm going to remove all commas because we're going to store this file as a CSV file, which is what AutoNLP expects. I'll also remove quotes, which could be a problem—simple quotes, double quotes. There's apparently every article ends with "ROGER" either capitalized like that or in full capitals. There's not a lot of value in keeping that, so let's remove it anyway. Clean a few things here. Then I'm going to drop all the extra white space. Again, not strictly necessary, but let's clean up that data. This will just remove all the extra white space. In the target, I'm going to remove all those weird HTML tags, which actually correspond to ticker codes, stock quotes, and make sure we have the appropriate characters. There are probably more, but these are the main problems I saw. Maybe there are more. So that's my cleaning function. I can very easily apply it to the dataset just like that. And of course, here I'm going to do the training set and the test set in one go. Let's go and apply that. Good. Now if I check that example again, it looks a little nicer. So let's call it a day on data cleaning. I'm going to save the dataset to disk. So that's going to be saved in Hugging Face format, so Arrow files. And I'll also need CSV files. AutoNLP will only need the CSV files, but it's good to have an Arrow format copy so that we can push it back to the Hugging Face Hub. Later, I don't have to go through that processing again. I could just fetch that processed version directly. All right. So now we have our files, which we probably see here. We see the processed versions and, of course, our CSV versions. So now we're ready for AutoNLP. Let's go and do that.
+
+Let's create a new AutoNLP project. Of course, I've already run this because it takes a few hours, but I'm going to show you the steps, launch the project, and we'll jump to that one to see results. New project, let's call it AutoNLP Reuters demo. Task type is going to be summarization. We'll let AutoNLP pick the models. Dataset is in English. We'll train 15 models. Why not? And move on. Okay. And of course, I need to add my data. So the text should be called text, and the target should be called target, but again, we'll be able to map the data. Let's go and find those two files. This is the training set, so I'll use it for training. If you have a single file, you can just select auto, and AutoNLP will handle the split for you. So text is called text, and target is called target. Couldn't be simpler. And of course, we need to do the same for the validation set. Text and target, good to go. Add. Okay, so we're good. Now we can start training. We have a cost estimate, so if that's not all right, you can stop there. If you're happy with this, launch training. Yes. After a few seconds, the training jobs start. So AutoNLP picked the most interesting models on the Hugging Face Hub for summarization and launched 15 jobs that will start fine-tuning on my dataset using well-chosen hyperparameters. This will last for a while, and I'll leave that one running. Once those jobs start reporting metrics, we'll see them here. But in the interest of time, we're going to jump to a final training job. This is the one I ran a few days ago. We saw a lot of jobs were stopped because they were not very promising, and you don't get charged for those. We see a few jobs made it to the end, and the winner is this guy, the donkey has won. We can see the metric. It won by a pretty large margin. We see the ROUGE scores, which are metrics for summarization. You may be familiar with BLEU metrics for translation, so it's kind of equivalent. They're a little bit difficult to interpret, but higher is better. And 55.9 is actually a pretty good score, I think. In a nutshell, this measures the proximity between the actual label, so the actual title for that article, and the predicted title. ROUGE-1 looks at individual words, ROUGE-2 looks at word pairs, etc. You can go and figure that out. Okay, anyway, that model, the donkey model, we can go and see it on the Hub. Just click on this thing here, and we see the model. All the AutoNLP models are automatically pushed directly to your account on the Hub. So we have a generated model card. We can see the files here. And that's a Git repo, which we could, of course, clone. And we will clone, actually, later on. And that model was actually a Pegasus model, which is a Google model. Let's quickly try it.
+
+So let's go to this and let me pull a few articles, and we can see how well we do here. Okay, so I've got a couple of articles. The first one is from Yahoo Finance. Let's just go and grab the article here. We can immediately test this using the inference widget and click on compute. Okay, so we need to wait for a few seconds for the model to load. All right, it's all done on demand. So let's wait for a few seconds and we can see the results. Okay, so the model has been loaded, and we see the summary for this. And it's actually very good, US Medicare premiums rise on Alzheimer's drug, which is really exactly what the article is about. It's funny that the summary is actually more precise than the title. But the title needs to be enticing; they want you to click. So they're not going to give you the answer. It's like, "Why did premiums soar?" Well, the summary really tells you why. And the summary tells you they rise because of a new Alzheimer's drug. Okay, let's do another one. This one is from Bloomberg, and it's about the ECB. So we're going to go and use the full text. Let's delete this one and go and predict. The model is loaded now, so that should be reasonably fast. Economic spotlight, Euro central bank sees risk. And this is... told us that the title was "ECB warns of market exuberance as economy recovers from pandemic." So it's actually a good summary as well. Here we use presets in the inference widgets, but you could generate shorter summaries, longer summaries. It's something you can control when you work directly with the model. But again, these are really just two random articles, and the model seems to work pretty well.
+
+Anyway, that's what I wanted to show you. Go and try it. If you have questions, leave some comments, and I'll put some links to the model in the video description so that you can try it for yourself. Thanks for watching, and until next time, keep learning. Bye-bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">AutoNLP</span><span class="tag">TextSummarization</span><span class="tag">HuggingFace</span><span class="tag">ReutersDataset</span><span class="tag">MachineLearning</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

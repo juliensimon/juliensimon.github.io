@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Deploy Hugging Face models on Google Cloud   from the hub to Vertex AI - In this series of three videos, I walk you through the deployment of Hugging Face models on Google Cloud, in three different ways:
+
+- Deployment from the hub mo..." name="description"/><meta content="Deploy Hugging Face models on Google Cloud   from the hub to Vertex AI - Julien Simon" property="og:title"/><meta content="Deploy Hugging Face models on Google Cloud   from the hub to Vertex AI - In this series of three videos, I walk you through the deployment of Hugging Face models on Google Cloud, in three different ways:
+
+- Deployment from the hub mo..." property="og:description"/><meta content="https://www.julien.org/youtube/2024/20240409_Deploy_Hugging_Face_models_on_Google_Cloud_-_from_the_hub_to_Vertex_AI.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Deploy Hugging Face models on Google Cloud   from the hub to Vertex AI - Julien Simon" name="twitter:title"/><meta content="Deploy Hugging Face models on Google Cloud   from the hub to Vertex AI - In this series of three videos, I walk you through the deployment of Hugging Face models on Google Cloud, in three different ways:
+
+- Deployment from the hub mo..." name="twitter:description"/><link href="https://www.julien.org/youtube/2024/20240409_Deploy_Hugging_Face_models_on_Google_Cloud_-_from_the_hub_to_Vertex_AI.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deploy Hugging Face models on Google Cloud   from the hub to Vertex AI - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Deploy Hugging Face models on Google Cloud   from the hub to Vertex AI</h1>
+<div class="date">April 09, 2024</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/cBdLw5BnGrk">
+</iframe>
+</div>
+<div class="description">In this series of three videos, I walk you through the deployment of Hugging Face models on Google Cloud, in three different ways:
+
+- Deployment from the hub model page to Inference endpoints (<a href="https://youtu.be/mlU-2QYx4a0)," rel="noopener noreferrer" target="_blank">https://youtu.be/mlU-2QYx4a0),</a> with the Google Gemma 7B model,
+- Deployment from the hub model page to Vertex AI (this video), with the Microsoft Phi-2 2.7B model,
+- Deployment directly from within Vertex AI (<a href="https://youtu.be/PFHzfzyY2iY)," rel="noopener noreferrer" target="_blank">https://youtu.be/PFHzfzyY2iY),</a> with the TinyLlama 1.1B model.
+
+Get started at <a href="https://huggingface.co" rel="noopener noreferrer" target="_blank">https://huggingface.co</a> :)
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. Follow me on Medium at <a href="https://julsimon.medium.com" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com</a> or Substack at <a href="https://julsimon.substack.com." rel="noopener noreferrer" target="_blank">https://julsimon.substack.com.</a> ⭐️⭐️⭐️</div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi, everybody. This is Julien from Arcee. In a previous video, I showed you how you could very easily deploy Hugging Face models to Google Cloud using inference endpoints, our very own model deployment service. I mentioned there were other ways to do this. So, in this video, I'm going to show you method number two, which is starting from the hub and deploying Hugging Face models using Google's machine learning service called Vertex AI. This will give you more control and let you work with the Google Cloud Console. Let's get started.
+
+If you enjoy this video, please give it a thumbs up and consider subscribing to my YouTube channel. If you do, please don't forget to enable notifications so that you won't miss anything in the future. Also, why not share this video on your social networks or with your colleagues because if you enjoyed it, it's very likely someone else will. Thank you very much for your support.
+
+Just like in the previous video, let's start from the Hugging Face Hub. Last time we deployed Google Gemma. Let's try something else. Why don't we try Microsoft Phi 2, which I find really interesting. So click on deploy, and this time we won't select any different endpoints. We'll go for Google Cloud. If you're logged into your Google Cloud account, this should open the Google console immediately. If not, it will prompt you to log in.
+
+Let's maybe zoom in a bit here. So we see everything has been filled in automatically: the model, we get an option to deploy on Vertex or Kubernetes, but I guess I'll do Kubernetes next time. We'll stick to Vertex, which is quite simpler. We get to pick the region. If you want to deploy your private model, you have an option to enter your token. We don't need to do that here. Model name, model endpoint name are filled in, and the best instance type is automatically selected. We can see we are using TGI, and we get a sample request. So why don't we save this for later and click on deploy. Let's just do this. It starts deploying here. We see the little program indicator, and if we click on this, we're taken to a pretty useless place. What you really want to see is Vertex online prediction.
+
+We can see it's deploying. I've got one that I already deployed, in the interest of time. We can see some monitoring information here. It's not super busy at the moment. If we go back to the model garden, we see this thing "view my models," which is what I want. This is the one that's already been deployed. Let's just click on this. Alright, let's paste this example called predict. See how that goes. Yeah, we did get an answer. Of course, we could use the Google SDK and whatnot to do the same, but that's not really the point today. I just wanted to show you how simple it was to deploy those models from the Hugging Face hub straight to Vertex. And, of course, when you're done, you shouldn't forget to delete your models and delete your endpoints to avoid unnecessary charges.
+
+That's it for deployment technique number two. We have one more to go, which is deploying from Vertex directly without visiting the Hugging Face hub. So check out the last video of this series. Hope this was useful. Keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">HuggingFace</span><span class="tag">GoogleCloud</span><span class="tag">VertexAI</span><span class="tag">ModelDeployment</span><span class="tag">MachineLearning</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

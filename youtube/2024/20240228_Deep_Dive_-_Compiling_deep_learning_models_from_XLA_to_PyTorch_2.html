@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Deep Dive   Compiling deep learning models from XLA to PyTorch 2 - Compilation is an excellent technique to accelerate the training and inference of deep learning models, especially if it can be completely automated!
+
+⭐️⭐️⭐️ Do..." name="description"/><meta content="Deep Dive   Compiling deep learning models from XLA to PyTorch 2 - Julien Simon" property="og:title"/><meta content="Deep Dive   Compiling deep learning models from XLA to PyTorch 2 - Compilation is an excellent technique to accelerate the training and inference of deep learning models, especially if it can be completely automated!
+
+⭐️⭐️⭐️ Do..." property="og:description"/><meta content="https://www.julien.org/youtube/2024/20240228_Deep_Dive_-_Compiling_deep_learning_models_from_XLA_to_PyTorch_2.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Deep Dive   Compiling deep learning models from XLA to PyTorch 2 - Julien Simon" name="twitter:title"/><meta content="Deep Dive   Compiling deep learning models from XLA to PyTorch 2 - Compilation is an excellent technique to accelerate the training and inference of deep learning models, especially if it can be completely automated!
+
+⭐️⭐️⭐️ Do..." name="twitter:description"/><link href="https://www.julien.org/youtube/2024/20240228_Deep_Dive_-_Compiling_deep_learning_models_from_XLA_to_PyTorch_2.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deep Dive   Compiling deep learning models from XLA to PyTorch 2 - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Deep Dive   Compiling deep learning models from XLA to PyTorch 2</h1>
+<div class="date">February 28, 2024</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/Oo07fFb-aH0">
+</iframe>
+</div>
+<div class="description">Compilation is an excellent technique to accelerate the training and inference of deep learning models, especially if it can be completely automated!
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. Follow me on Medium at <a href="https://julsimon.medium.com" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com</a> or Substack at <a href="https://julsimon.substack.com." rel="noopener noreferrer" target="_blank">https://julsimon.substack.com.</a> ⭐️⭐️⭐️
+
+In this video, we discuss deep learning compilation, from the early days of TensorFlow to PyTorch 2. Along the way, you'll learn about key technologies such as XLA, PyTorch/XLA, OpenXLA, TorchScript, HLO, TorchDynamo, TorchInductor, and more. You'll see where they fit and how they help accelerate models on a wide range of devices, including custom chips like Google TPU and AWS Inferentia 2. Of course, we'll also share some simple examples, including how to easily accelerate Hugging Face models with PyTorch 2 and torch.compile().
+
+Slides: <a href="https://fr.slideshare.net/slideshow/deep-dive-compiling-deep-learning-models/271892112" rel="noopener noreferrer" target="_blank">https://fr.slideshare.net/slideshow/deep-dive-compiling-deep-learning-models/271892112</a>
+<a href="https://www.youtube.com/watch?v=Oo07fFb-aH0&amp;t=0" rel="noopener noreferrer" target="_blank">00:00</a> Introduction
+<a href="https://www.youtube.com/watch?v=Oo07fFb-aH0&amp;t=130" rel="noopener noreferrer" target="_blank">02:10</a> TensorFlow 1.x and graph mode
+<a href="https://www.youtube.com/watch?v=Oo07fFb-aH0&amp;t=352" rel="noopener noreferrer" target="_blank">05:52</a> TensorFlow XLA
+<a href="https://www.youtube.com/watch?v=Oo07fFb-aH0&amp;t=575" rel="noopener noreferrer" target="_blank">09:35</a> PyTorch TorchScript
+<a href="https://www.youtube.com/watch?v=Oo07fFb-aH0&amp;t=865" rel="noopener noreferrer" target="_blank">14:25</a> PyTorch/XLA and lazy tensors
+<a href="https://www.youtube.com/watch?v=Oo07fFb-aH0&amp;t=1048" rel="noopener noreferrer" target="_blank">17:28</a> PyTorch/XLA example with Google TPU
+<a href="https://www.youtube.com/watch?v=Oo07fFb-aH0&amp;t=1300" rel="noopener noreferrer" target="_blank">21:40</a> A quick look at HLO
+<a href="https://www.youtube.com/watch?v=Oo07fFb-aH0&amp;t=1445" rel="noopener noreferrer" target="_blank">24:05</a> OpenXLA
+<a href="https://www.youtube.com/watch?v=Oo07fFb-aH0&amp;t=1550" rel="noopener noreferrer" target="_blank">25:50</a> PyTorch/XLA example with AWS Inferentia 2
+<a href="https://www.youtube.com/watch?v=Oo07fFb-aH0&amp;t=1750" rel="noopener noreferrer" target="_blank">29:10</a> PyTorch 2 : torch.compile()
+<a href="https://www.youtube.com/watch?v=Oo07fFb-aH0&amp;t=2077" rel="noopener noreferrer" target="_blank">34:37</a> Hugging Face models with PyTorch 2
+<a href="https://www.youtube.com/watch?v=Oo07fFb-aH0&amp;t=2170" rel="noopener noreferrer" target="_blank">36:10</a> BERT on CPU with Torch Inductor and IPEX backends
+
+#ai #deeplearning #pytorch #computer #gpu #huggingface</div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In this video, we're going to continue exploring acceleration techniques for transformer and diffusion models. Previously, we looked at hardware acceleration across different devices, discussed parallelism techniques like tensor parallelism, pipeline parallelism, etc., and talked about new attention layers. All those are great, and today we're going to zoom in on a particular technique called model compilation. Most of the time, this is really just a one-line thing that you need to add to your Python script. But we're going to look under the hood, explore the history of model compilation, and of course, show you a few examples of how you could easily do this with transformer models. Okay, sounds good? Let's get started.
+
+If you enjoy this video, please give it a thumbs up, consider subscribing to my channel, and don't forget to enable notifications so that you won't miss a thing. Also, why not share this video on your social networks or with your colleagues because if you found this useful, other people may find it useful as well. Thank you for your support.
+
+This is where we started a while ago. We discussed attention layers, feel free to check out those videos. We certainly discussed hardware acceleration on CPU and GPU and different things, and there are more videos coming. But today, I want to focus on framework features and particularly on model compilation. I'll also cover quantization.
+
+To understand what model compilation is, we need to go back a few years and understand how deep learning models were originally built. Along the way, we'll see the different techniques, frameworks, and tools that have been introduced to make it simple and efficient to optimize those models through compilation. Let's take you back to the early days of TensorFlow. Full disclosure, I never was a huge fan of TensorFlow, particularly TensorFlow version 1. But hey, it was great for its time and definitely useful. This is how a lot of us got started.
+
+Once upon a time, designing a neural network, a deep learning model, meant writing Python code and building a graph where we would combine input tensors, training data, evaluation data, and the model parameters, and process them through compute operations. That's how TensorFlow got its name because tensors flow through a graph of compute operations. Here's a simple example. Define TensorFlow variables for weights and biases, define multiplication operations, activation operations, and start combining these step by step, layer by layer, to let your input tensors flow through the model. Here we see a first layer where we multiply the input tensor by weights (128 neurons), add the biases, and then apply the ReLU activation function. We do this again for a second layer with 256 neurons, and so on. You would define these layers one by one. As you can see, we're not executing anything yet; we are simply defining what will happen when we train or infer with the model. This is called "define then run" because we need to define the full execution graph before we can start working with it. Everything had to be predefined in a fairly static way. This is graph mode, and as you write that code, the framework (in this case, TensorFlow) creates an execution graph. You can see this in TensorBoard, where you actually see the graph that you build through your code.
+
+The key element here is that everything is fully defined in advance. We fully define the execution graph and then run it, whether for training or inference. If everything is fully defined, the tensor shapes, the operations, etc., there are many opportunities to optimize the graph. You can merge operations, optimize memory allocation, and more. The question becomes, can we do this automatically? Can we just define a graph and use a tool that will apply some magic to speed up training and inference? This question came early on, leading to the birth of TensorFlow XLA in 2017. XLA stands for Accelerated Linear Algebra and it appeared in TensorFlow 1.0. The first release candidate introduced XLA.
+
+XLA is a compiler that analyzes the graph built by your Python code and optimizes it automatically. For example, it uses tensor dimensions for memory allocation and optimization, and data types are known, allowing for hardwired acceleration of training and inference. It can eliminate redundancy, such as combining multiply and add operations into a single step. Once all graph-level optimizations are done, which are device-independent, you can generate device-dependent code. If you're training on CPU, GPU, or TPU, you want to make the most of the underlying hardware. This involves two angles: optimizing the high-level graph and generating optimized code for the specific device.
+
+Two techniques are available for this. You can do it at runtime, where the code is compiled just in time as you start evaluating the graph. This is more flexible but means compiling the model every time you run your code. For production, you generally want ahead-of-time compilation, where you compile the model once and deploy the compiled artifact. This avoids the overhead of compiling the model multiple times.
+
+TensorFlow XLA was the first effort to simplify model compilation and improve performance in TensorFlow. Meanwhile, PyTorch was rising, and they introduced TorchScript, a statically typed subset of Python. Static types help define things in advance, making it easier to understand the model and data types. The API has been around for a long time, with the trace API and the script API helping convert Python code into TorchScript code, which can be saved and loaded. Here's a simple example. TorchScript is still Python, but operators are replaced with function calls to make compute steps clear. More typing is introduced, making it easier to optimize.
+
+The next step is exporting TorchScript code into an intermediate representation (IR) using low-level PyTorch primitives. This IR is very verbose, defining every constant and using a small subset of operators to simplify and optimize the code. These low-level operations are implemented in C++ in PyTorch. Once we have this IR, we can convert it to a different language like C++ or compile it directly for different accelerators.
+
+TorchScript has limitations, such as not working with dynamic shapes or non-PyTorch code. It is now in maintenance mode. However, it was an important step. In 2018, PyTorch and Google started collaborating to support TPUs in PyTorch, creating an interesting problem. TensorFlow works in graph mode, where everything is defined and then optimized and run. PyTorch, however, runs in eager mode, where operations are executed immediately as the code runs. This means the graph cannot be built beforehand, making optimization challenging.
+
+PyTorch XLA, launched in late 2019, introduced lazy tensors for lazy evaluation. Lazy tensors allow the graph to be recorded, so you run the same PyTorch code, but no compute happens until the optimization step. This is called tracing, where tensors and operations are recorded. When compute cannot be delayed, the graph is compiled and run. This approach changes nothing in the existing PyTorch code, making it a powerful abstraction.
+
+Here's an example. We load the model in the same way, build a training loop, and run it lazily. Each operation is recorded, but no compute takes place. This process is called tracing. Once we need to compute, we use the internal representation built through tracing, translate it to HLO (high-level opcodes), and compile it for the device. The compiled code is then loaded and executed on the XLA device, such as a TPU. The only changes needed are importing the XLA package, grabbing the XLA device, and adding a line to trigger the compilation step. This triggers HLO generation, compilation, and loading the model on the XLA device.
+
+This is how things stayed for a while, but new devices emerged, making the world more complex. OpenXLA was initiated to support the same high-level, simple architecture for new frameworks and hardware. OpenXLA aims to make XLA the de facto toolkit for model compilation across current and future hardware platforms, breaking the TensorFlow dependency. The XLA compiler and HLO spec are now standard projects in the OpenXLA org on GitHub, making them easier to use and contribute to.
+
+The high-level architecture involves different frameworks generating HLO representations that can be fed to a front-end compiler for graph optimization, followed by hardware-specific optimizations. This is interesting in real life, such as with the AWS Inferentia 2 accelerator. The process is similar to the TPU example, where you import the vendor SDK specific to the hardware, which plugs into the Torch XLA API. The rest is the same, with tracing, HLO generation, and compilation happening under the hood with the Neuron SDK.
+
+For ahead-of-time compilation, which is important for large models, you can use the TorchScript API. In the case of Inferentia 2, this is still based on TorchScript, where you trace and save the model. The Neuron SDK documentation provides more details.
+
+In 2023 and 2024, we're still extending the original XLA model from five years ago. PyTorch 2 introduces a new way to optimize models with the Torch Compiler API, a complete new stack. The workflow remains the same, but the tools are different. Graph acquisition happens through TorchDynamo for the forward pass and autograd for the backward pass, recording all operations and translating them into a low-level representation. Dynamo and autograd solve long-standing problems, supporting data-dependent control flow, dynamic shapes, and non-PyTorch code.
+
+Once the graph is acquired and lowered, it can be compiled using Torch Inductor, which generates efficient code across different platforms. For CPU platforms, it uses OpenMP and C++; for GPUs, it generates Triton code. Recently, PyTorch 2.2 introduced ahead-of-time export, allowing you to compile your model into a shared library for CPU or GPU. PyTorch 2 uses OpenXLA as the back-end, enabling device and chip companies to plug their back-end compilers into Torch Inductor. This is good news, as it allows for easy extension to new devices.
+
+Working with Hugging Face models and PyTorch 2 is simple. You can add a one-liner to compile the model, picking the backend (default is inductor). This applies to pipelines as well. Here's an example with BERT, where adding the compile line speeds up the model. For CPU compilation, you can use the latest PyTorch 2.2 and Intel Extension for PyTorch (IPEX 2.2). Benchmarking shows a 9-10% speedup out of the box, with additional tweaks from IPEX providing a small but significant improvement.
+
+In summary, one line of code can significantly speed up your models. Experiment with it and share your results in the comments. If you enjoyed the video, don't forget to give it a thumbs up, subscribe, and enable notifications. Thank you for your support. Until next time, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Model Compilation</span><span class="tag">Deep Learning Optimization</span><span class="tag">TensorFlow XLA</span><span class="tag">PyTorch TorchScript</span><span class="tag">OpenXLA</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

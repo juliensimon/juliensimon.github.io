@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="End to end demo with AutoML on Amazon SageMaker - In this video, we walk through an end to end demo where we first build a binary classification model automatically with Amazon SageMaker AutoPilot. Thanks to th..." name="description"/><meta content="End to end demo with AutoML on Amazon SageMaker - Julien Simon" property="og:title"/><meta content="End to end demo with AutoML on Amazon SageMaker - In this video, we walk through an end to end demo where we first build a binary classification model automatically with Amazon SageMaker AutoPilot. Thanks to th..." property="og:description"/><meta content="https://www.julien.org/youtube/2020/20200122_End_to_end_demo_with_AutoML_on_Amazon_SageMaker.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="End to end demo with AutoML on Amazon SageMaker - Julien Simon" name="twitter:title"/><meta content="End to end demo with AutoML on Amazon SageMaker - In this video, we walk through an end to end demo where we first build a binary classification model automatically with Amazon SageMaker AutoPilot. Thanks to th..." name="twitter:description"/><link href="https://www.julien.org/youtube/2020/20200122_End_to_end_demo_with_AutoML_on_Amazon_SageMaker.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>End to end demo with AutoML on Amazon SageMaker - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>End to end demo with AutoML on Amazon SageMaker</h1>
+<div class="date">January 22, 2020</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/DRjOOaR2prQ">
+</iframe>
+</div>
+<div class="description">In this video, we walk through an end to end demo where we first build a binary classification model automatically with Amazon SageMaker AutoPilot. Thanks to the auto-generated notebook, we see how candidate models have been built and optimized. We also look at the top candidates with Amazon SageMaker Experiments. Finally, we deploy the top candidate (based on XGBoost), and configure data capture with Amazon SageMaker Model Monitor.
+
+⭐️⭐️⭐️ Don't forget to subscribe and to enable notifications ⭐️⭐️⭐️
+
+* My notebook: <a href="https://gitlab.com/juliensimon/aim307" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/aim307</a>
+* SageMaker AutoPilot notebooks: <a href="https://github.com/awslabs/amazon-sagemaker-examples/tree/master/autopilot" rel="noopener noreferrer" target="_blank">https://github.com/awslabs/amazon-sagemaker-examples/tree/master/autopilot</a>
+* SageMaker Model Monitor notebooks: <a href="https://github.com/awslabs/amazon-sagemaker-examples/tree/master/sagemaker_model_monitor" rel="noopener noreferrer" target="_blank">https://github.com/awslabs/amazon-sagemaker-examples/tree/master/sagemaker_model_monitor</a>
+
+For more content, follow me on:
+* Medium: <a href="https://medium.com/@julsimon" rel="noopener noreferrer" target="_blank">https://medium.com/@julsimon</a>
+* Twitter: <a href="https://twitter.com/julsimon" rel="noopener noreferrer" target="_blank">https://twitter.com/julsimon</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            In this video, I'll take you through an end-to-end example of using XGBoost on Amazon SageMaker, and I'll include many of the new features we recently added at re:Invent. Let's get started.
+
+First, grab my code from this GitLab repo. Here it is, and you'll find the notebook here. Just go to this URL, clone this repo, and open the notebook in your favorite Jupyter tool. I'm using a notebook instance on Amazon SageMaker. The first few cells ensure we have the latest SDKs, particularly the latest SageMaker SDK to use the newer features. We need to restart the notebook to ensure all upgrades are applied in our environment.
+
+Next, I import the SDKs, including SageMaker, and a few other dependencies. I grab the default bucket to store my data and the region name—standard SageMaker setup. I'll use Boto3 to show you the low-level APIs, so you understand what's happening. You can rewrite this notebook using only the SageMaker SDK, and I might do that later. For now, I want to highlight the low-level APIs and the specific aspects of the newer services.
+
+Let's grab a dataset. It's a direct marketing dataset with features for customers and a label indicating whether the customer accepted the marketing offer. It includes integers, strings, categorical variables, etc., with over 41,000 lines and 20 features, plus the label.
+
+I'll use SageMaker Autopilot to build a model automatically. You could pass the entire dataset to Autopilot, but I prefer to keep a small part aside for extra validation and testing. I'll split the dataset, using 95% for Autopilot and keeping 5% outside the process. An important note: SageMaker Autopilot currently works with CSV files, so features must be comma-separated. Ensure you save to CSV.
+
+After splitting, I'll upload the 95% training set to S3 and set up the Autopilot job. I can specify completion criteria, such as the maximum time a candidate can run and the number of candidates to evaluate. I'll stick with the default values, but you can limit the job to fewer candidates for quicker testing. You can also set a maximum job duration to keep it within time constraints.
+
+I need to define the data location and specify the target column, which is the "Y" attribute indicating whether the customer accepted the offer. You can specify the problem type, such as binary classification, and the evaluation metric, like F1, especially for imbalanced datasets. I'll use F1 because the dataset is biased towards the negative class.
+
+I'll start the job using the `createAutoML` API, passing the job name, input config, output config, job config, objective, and role. The job will begin, and we can track its progress using the `describeAutoMLJob` API. The job will analyze the data, define candidates, apply feature engineering, and perform hyperparameter optimization.
+
+Once the data analysis is complete, you can explore the generated notebooks. The Data Exploration Notebook provides information and stats on the dataset, while the Candidate Definition Notebook shows the evaluated pipelines. These notebooks help you understand the model's design and training process.
+
+After feature engineering, Autopilot moves to model tuning, where it optimizes hyperparameters for the top pipelines. You can use the SageMaker Experiment Service to monitor ongoing tuning jobs and view metadata and hyperparameters.
+
+Once model tuning is complete, we can see the top candidates, sorted by the objective metric, which is the F1 score in this case. The top model achieves an F1 score of 0.79, which is quite good. Deploying this model with SageMaker Model Monitor allows you to capture incoming data and detect data drift or quality issues.
+
+First, create the model and register the best candidate as a SageMaker model. Set up the data capture location in an S3 bucket, define the capture configuration, and create the endpoint configuration with the data capture config. Then, create the endpoint and wait for it to be ready. Send some data to the endpoint to ensure it works and to test data capture.
+
+I'll use the test dataset to compute the F1 score manually. I'll loop through the samples, invoke the endpoint, and score each prediction. This process takes about 30 seconds, and I'll print a confusion matrix. The results show a precision of 63%, recall of 95%, and an F1 score of 76%, which is close to the 0.79 from Autopilot.
+
+I can inspect the captured data to ensure it's working correctly. The capture files contain the input and output data, which you can sample or configure as needed. For more information on SageMaker Model Monitor, check the extra notebooks in the video description.
+
+That's it for this end-to-end example, from dataset to a trained and monitored model using SageMaker Autopilot, Experiments, and Model Monitor. If you have questions, leave them in the comments. Don't forget to subscribe to the channel, and I'll see you soon with another video. Bye-bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Amazon SageMaker</span><span class="tag">XGBoost</span><span class="tag">SageMaker Autopilot</span><span class="tag">Model Monitoring</span><span class="tag">Machine Learning Deployment</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

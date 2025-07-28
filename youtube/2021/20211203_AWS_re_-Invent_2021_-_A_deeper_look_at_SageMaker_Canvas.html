@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content='AWS re  Invent 2021   A deeper look at SageMaker Canvas - In this video, I demo the newly launched Amazon SageMaker Canvas, "a visual, no-code interface to build accurate machine learning models”. This builds upon a fi...' name="description"/><meta content="AWS re  Invent 2021   A deeper look at SageMaker Canvas - Julien Simon" property="og:title"/><meta content='AWS re  Invent 2021   A deeper look at SageMaker Canvas - In this video, I demo the newly launched Amazon SageMaker Canvas, "a visual, no-code interface to build accurate machine learning models”. This builds upon a fi...' property="og:description"/><meta content="https://www.julien.org/youtube/2021/20211203_AWS_re_-Invent_2021_-_A_deeper_look_at_SageMaker_Canvas.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="AWS re  Invent 2021   A deeper look at SageMaker Canvas - Julien Simon" name="twitter:title"/><meta content='AWS re  Invent 2021   A deeper look at SageMaker Canvas - In this video, I demo the newly launched Amazon SageMaker Canvas, "a visual, no-code interface to build accurate machine learning models”. This builds upon a fi...' name="twitter:description"/><link href="https://www.julien.org/youtube/2021/20211203_AWS_re_-Invent_2021_-_A_deeper_look_at_SageMaker_Canvas.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AWS re  Invent 2021   A deeper look at SageMaker Canvas - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>AWS re  Invent 2021   A deeper look at SageMaker Canvas</h1>
+<div class="date">December 03, 2021</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/_qgNMirKq6A">
+</iframe>
+</div>
+<div class="description">In this video, I demo the newly launched Amazon SageMaker Canvas, "a visual, no-code interface to build accurate machine learning models”. This builds upon a first (skeptical) review, documented in the following blog post: <a href="https://julsimon.medium.com/aws-re-invent-2021-a-first-look-at-sagemaker-canvas-13de63aa82e5" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com/aws-re-invent-2021-a-first-look-at-sagemaker-canvas-13de63aa82e5</a>
+
+This time, I start from a CSV dataset for fraud detection on insurance claims. I first load and join the dataset in Canvas. Then, I train models and inspect metrics. Next, I take a look at the underlying AutoML job running in SageMaker AutoPilot. Finally, I share the model in SageMaker Studio.
+
+So, do I like it a little more the second time around? Errr.....
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+Dataset: <a href="https://gitlab.com/juliensimon/amazon-studio-demos/-/tree/master/sagemaker_fridays/season4/s04e10" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/amazon-studio-demos/-/tree/master/sagemaker_fridays/season4/s04e10</a>
+
+SageMaker Friday episode where we used this dataset to train models with AutoGluon: <a href="https://youtu.be/7NA5aNrye0s" rel="noopener noreferrer" target="_blank">https://youtu.be/7NA5aNrye0s</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In this video, I'm going to take a look at SageMaker Canvas, a new launch from reInvent just a couple of days ago. According to AWS, SageMaker Canvas is a visual no-code interface to build accurate machine learning models. I wrote a blog post on it, so that was the first look, and I'll put the link to that post in the video description. To make a long story short, I wasn't too convinced. I had quite a few technical issues and was a bit skeptical about the service itself. So I figured, let's give it a second look. I'm going to try a different dataset and a different AWS region. Maybe this one has fewer bugs. We'll see what happens.
+
+Okay, so go and check the blog post if you haven't. That'll give you some context. Then come back here, and we'll dive into that second demo and see what's what. Okay, here we go. In my blog post, I used the Titanic survivor dataset. I figured, let's try something else, something a little more complicated. This time, I'm using a dataset for insurance claim fraud detection. Some of you may remember this one; we used it in a SageMaker Friday episode earlier this year. I'll include that link as well so you can watch that full demo where we used auto-glue-on to train models.
+
+The dataset is built from two CSV files: one called claims.csv and one called customers.csv. I've uploaded those two files to S3, and we're going to import them to Canvas and look at the files. Adding a dataset in Canvas is pretty simple. You can import, but unfortunately, the only option is importing from S3. Direct upload is still not working. Hopefully, they fix this soon. You can also import from Snowflake or Redshift, connecting to a backend and running a SQL query to import your data. Here, I just fetched those two files from S3 and clicked on import. That was it.
+
+The claims dataset, let me zoom in a little bit, contains information on the claim itself, such as driver information, incident type, number of vehicles involved, number of injuries, number of witnesses, the date, and a label fraud that tells us if the claim is fraudulent (0 or 1). There's a policy ID column that we can use to join on customers. Here, we have additional information on the customer, including the policy ID, customer age, the amount of the policy, zip code, gender, etc. The dataset has 5,000 rows. I imported both files and can join them. This is a nice little feature; I can grab those two files, and the join happens automatically because Canvas figures out there's a column with the same name in both datasets. I've already saved the joined dataset. If I look at it, we'll see all the columns: driver info, customer info, and claim info.
+
+Importing and joining is pretty straightforward, and I hope direct upload will be fixed soon. Less technical users would prefer that over messing with S3 buckets. Now, let's move on to modeling. I've already trained a few things, but I'll show you how it works. Let's click on New Model and keep that name. We pick a dataset, so I'll choose the joined dataset. I need to select a column to predict, which is called fraud. Immediately, we see this dataset is quite imbalanced, as expected, with about 3-4% of claims being fraudulent. Let's see how Canvas deals with the imbalance. I don't have any way to fix it, so we'll just have to live with that.
+
+The model type has been automatically detected from the distribution of the target column. I'll rant here: a two-category prediction doesn't mean anything. We're trying to say binary classification. The other types are equally silly: category model type and number model type. Can we use industry-standard terms? If a business analyst goes to a data scientist and says, "Could you look at my three-plus category model?" people will just laugh or be confused. Everyone's smart enough to understand binary classification and linear regression. Fix that, please. This is a terrible choice.
+
+Next, we see information on the columns, including mean values and missing values. This is useful, but I wish we could resize those panels. It's a bit inconvenient. I can see distributions and additional stats on all the columns and remove columns I don't want to include in the training job. I'll keep everything here. If I zoom out a bit, it looks better. Good information here; the visual side makes it easy to see what the columns are about.
+
+You can view, select, and inspect columns to learn about the data, then build a model. You have two options: a quick build, which trains a single job, or a standard build, which runs many jobs. Let's run a quick build first. I've already done this, so let me go back to the model I've trained. This quick model is 96.7% accurate, but don't get excited. The dataset is imbalanced towards the negative class. In fact, 96.72% accuracy means a naive model predicting zero all the time would still be right 96.72% of the time. This is a terrible model. People unfamiliar with ML might think it's good, but it's not. The F1 score is terrible; the model predicts 0 all the time, missing all true positives. Accuracy is high, but other metrics are not great.
+
+This is a quick model, so with a balanced dataset, it could do better. It did okay on the Titanic survivor dataset but not here. We should automatically flag high accuracy in imbalanced datasets. Let's discard this model and train another one. This time, I'll run a standard build. The process is the same, but it will take longer—about two hours. I've already done this, but let me show you what happens under the hood. In Studio, I see an AutoML job that ran, confirming Canvas uses SageMaker Autopilot. The completed job shows the best model and files in the studio storage. It would be better if these files were stored in a folder named after the Canvas job to avoid overwriting or clutter.
+
+After about two hours, the full training job was complete. This time, we see an accuracy of 90%. Let's look at the details. Accuracy is not relevant here. The F1 score is 0.27, very low due to poor performance on positives. AUC is okay but not great. I'm missing the ability to set the prediction threshold, which was possible in Amazon ML in 2015. This would help optimize for false positives or false negatives. It's a good feature to add.
+
+On top of metrics, we see information on how features and feature values contribute to the prediction, called column impact but really feature importance, based on SHAP values computed during training. For example, the number of witnesses has a strong negative contribution to fraud likelihood. More witnesses make a claim less likely to be fraudulent. The number of insurers in the past five years has a strong positive contribution, making a claim more likely to be fraudulent. This is useful and well-presented, though resizing and zooming would be nice.
+
+We can share the model. Let's try that. I've never tried this, so what happens now? Create a link, copy it, and open it. It opens the model view in Studio, showing the canvas job name, dataset, and best model. Clicking on the best model shows feature importance, metrics, and the confusion matrix. We see artifacts, input data, training splits, and the actual model, which is an XGBoost model. We can predict in batches. I don't have a test set, so I'll just predict. It took a few seconds, and I see predictions and probabilities. I can download this as a CSV file.
+
+Can I do single predictions? I see my features and some values, which are averages. I can reset to average and predict, seeing the probability change. This works, which is good. The missing piece is how to automate predictions with a good model. Do I upload the CSV file to Canvas and predict myself, or do I need the DataScience team or MLOps team to deploy this to a SageMaker endpoint and build a workflow? Some automation would be nice.
+
+That's my second look at Canvas, more positive than the first because I could test more. I hope AWS will iterate quickly, fixing missing or weird features, renaming "three plus" to multi-class classification, and adding more context for users about imbalance, missing values, and data quality. More task types and algorithms would be great. This is based on Autopilot, which has a small selection compared to other AutoML frameworks. Maybe we'll see computer vision and NLP down the road. For now, even though these are popular enterprise tasks, it's 2021, and there's more than just linear regression and classification.
+
+I hope this was informative. Check out all the links in the video description, and I'll see you soon with more content. Until then, have fun, keep learning. Bye-bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">AWS SageMaker Canvas</span><span class="tag">Machine Learning No-Code</span><span class="tag">Fraud Detection Dataset</span><span class="tag">Model Evaluation Metrics</span><span class="tag">AutoML Job Process</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

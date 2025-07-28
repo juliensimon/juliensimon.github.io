@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Accelerate Transformer inference with AWS Inferentia - In this video, I show you how to accelerate Transformer inference with AWS Inferentia, a custom chip designed by AWS. 
+
+Starting from a BERT model that I fine-t..." name="description"/><meta content="Accelerate Transformer inference with AWS Inferentia - Julien Simon" property="og:title"/><meta content="Accelerate Transformer inference with AWS Inferentia - In this video, I show you how to accelerate Transformer inference with AWS Inferentia, a custom chip designed by AWS. 
+
+Starting from a BERT model that I fine-t..." property="og:description"/><meta content="https://www.julien.org/youtube/2022/20221117_Accelerate_Transformer_inference_with_AWS_Inferentia.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Accelerate Transformer inference with AWS Inferentia - Julien Simon" name="twitter:title"/><meta content="Accelerate Transformer inference with AWS Inferentia - In this video, I show you how to accelerate Transformer inference with AWS Inferentia, a custom chip designed by AWS. 
+
+Starting from a BERT model that I fine-t..." name="twitter:description"/><link href="https://www.julien.org/youtube/2022/20221117_Accelerate_Transformer_inference_with_AWS_Inferentia.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Accelerate Transformer inference with AWS Inferentia - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Accelerate Transformer inference with AWS Inferentia</h1>
+<div class="date">November 17, 2022</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/un0WsUtGwVA">
+</iframe>
+</div>
+<div class="description">In this video, I show you how to accelerate Transformer inference with AWS Inferentia, a custom chip designed by AWS. 
+
+Starting from a BERT model that I fine-tuned on AWS Trainium (<a href="https://youtu.be/HweP7OYNiIA)" rel="noopener noreferrer" target="_blank">https://youtu.be/HweP7OYNiIA)</a> ,  I compile it with the Neuron SDK for Inferentia. Then, using an inf1.6xlarge instance (4 Inferentia chips, 16 Neuron Cores), I show you how to use pipeline mode to predict at scale, reaching over 4,000 predictions per second at 3-millisecond latency.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️ 
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" rel="noopener noreferrer" target="_blank">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+- Amazon EC2 Inf1: <a href="https://aws.amazon.com/ec2/instance-types/inf1/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/ec2/instance-types/inf1/</a> 
+- AWS Neuron SDK documentation: <a href="https://awsdocs-neuron.readthedocs-hosted.com/en/latest/index.html" rel="noopener noreferrer" target="_blank">https://awsdocs-neuron.readthedocs-hosted.com/en/latest/index.html</a> 
+- AWS blog post: <a href="https://aws.amazon.com/fr/blogs/machine-learning/achieve-12x-higher-throughput-and-lowest-latency-for-pytorch-natural-language-processing-applications-out-of-the-box-on-aws-inferentia/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/fr/blogs/machine-learning/achieve-12x-higher-throughput-and-lowest-latency-for-pytorch-natural-language-processing-applications-out-of-the-box-on-aws-inferentia/</a> 
+- Setup steps and code: <a href="https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/inferentia" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/inferentia</a>
+
+Interested in hardware acceleration for Transformers? Check out my other videos : 
+- Training on Habana Gaudi: <a href="https://youtu.be/56fpEa1Y1F8" rel="noopener noreferrer" target="_blank">https://youtu.be/56fpEa1Y1F8</a> 
+- Training on Graphcore: <a href="https://youtu.be/DgcJscPu1Vo" rel="noopener noreferrer" target="_blank">https://youtu.be/DgcJscPu1Vo</a>
+- Predicting with ONNX: <a href="https://youtu.be/_AKFDOnrZz8" rel="noopener noreferrer" target="_blank">https://youtu.be/_AKFDOnrZz8</a> 
+- Predicting with Intel OpenVINO: <a href="https://youtu.be/mfj1QrZWkk8" rel="noopener noreferrer" target="_blank">https://youtu.be/mfj1QrZWkk8</a>
+- Inferentia compilation on SageMaker: <a href="https://youtu.be/pokM1r3rgIg" rel="noopener noreferrer" target="_blank">https://youtu.be/pokM1r3rgIg</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In this video, we're going to continue exploring hardware acceleration on AWS for transformer models. In a previous video, I showed you how to use the newly launched Tranium chip to train a transformer model. In this video, we're going to start from the model that I trained on Tranium and use Inferentia, another custom chip from AWS, to predict at scale and run some benchmarks. And I think they're pretty impressive. So let's get to work.
+
+The model that I trained on Tranium is a text classification model. I started from a BERT model and fine-tuned it on the Yelp restaurant review dataset. It has five classes from one star to five stars. Once training is launched, I can see all the cores of the training chip training on the model. And this is super fast. It only lasts for a minute or two. And then at the end of the code here, I simply save the checkpoint as a PyTorch checkpoint. Okay, and this will be the starting point for the deployment video on Inferentia.
+
+There are a couple of resources you should check if you're not familiar with Inferentia. Obviously, you should read a little bit about the chip on the AWS website and about the INF1 instances, which are the EC2 instances that give you access to the chip. Here, I'm going to use an INF1 6x large instance, and it comes with four Inferentia chips. And so that lets me demonstrate inference at scale. Another good resource, obviously, is the Neuron SDK documentation. Neuron is the SDK that gives you access to Inferentia and Tranium as well. And they have some examples which are pretty interesting. You can go and read all about that and the setup procedure. I did tweak that a little bit. I started from the DeepSeek AMI. This is the one that I used, but you could use a newer one if you watch this later. And like I said, I adapted the instructions from the documentation. So, set up the neuron repos, import the package list, install the neuron tools, nothing really fancy, create a virtual environment, add the extensions for PyTorch neuron, okay? So nothing really difficult.
+
+The one gotcha is this. You have to use an older version of transformers because of this particular problem. So if you see your inferential model predicting NaN values, if you get nan logits, chances are this is the problem you have. And, well, that's the problem I had. And so you need to downgrade transformers. Hopefully that gets fixed. And, yeah, that's about it. And then, obviously, I need to grab the model that I trained on Tranium. So I copied it to S3, and from S3. So now it's on my instance, and this is the model I'm going to start with.
+
+So in my repo, you'll find two examples. The BERT MRPC example is the example in the Neuron tutorial. I just cleaned it up a bit. There's the compile section and the inference section. This one is interesting because it starts from a hub model, so it does pull a model from the hub directly. So if you're interested in this, you can go and read this example. It works perfectly. But my example is a little bit different because I am not starting from a model that I pushed to the hub. I am starting from a PyTorch checkpoint, right? That's the file that I saved on Tranium. So this one requires a little bit more preparation because I need to rebuild the model from the checkpoint. Okay, so let's look at that.
+
+So first, you know, I need to know which model I started from, right? So this is the model that I trained on Tranium. This is my starting model. And this is important because, again, I'm going to need to rebuild an empty model that I can load my checkpoint into. So you need to know what model you started from when you trained. I can download the tokenizer for that. That didn't change. Okay. And then I need to rebuild a Hugging Face model from my checkpoint. Okay. So it's not difficult. First, I need to create a config file. Okay. And I can use the AutoConfig object from transformers to do this. Okay. I need to tweak the config because this model by default will only have two labels and I want five. Okay. So I need to define that. And then I can create my BERT for sequence classification model from that configuration. So now I have this... empty model, right, so to speak, and I need to load my weights into it. So I start from the checkpoint, load it with Torch, and then I grab the state dictionary, which is just a dictionary of tensors and the weights, and I load this into my BERT for sequence.
+
+So let's first define a couple of samples, a positive restaurant review, a negative restaurant review, tokenize them. And then I need to change the format of those tokenized samples because we're going to use TorchScript. That's what the Neuron SDK uses and TorchScript expects inputs that are tensors or different combinations of tensors. And that's not what I have here. So I can just change, basically just grab the tensors from the tokenized inputs and build a tuple with those tensors. Okay. Then let's just predict those samples with the model just to make sure the model is working and the checkpoint was properly loaded. Okay, so we can do this. We can check that the appropriate class has been predicted. Okay, so defining the classes, finding in the logits the largest positive value, which will give the highest probability for the class, and then print out the results. Okay, so let's just run this, see how it goes. Okay, so just load the checkpoint and predict. And you shouldn't see any error while you load the checkpoint, by the way. All the tensors in the checkpoint should nicely fit into the model. If you see some errors, you need to pay attention because it means some weights haven't been properly loaded and that's bad. They're supposed to fit exactly right. Okay, so we see the logits and we see the predictions. So, fine, I was able to load my model and I was able to predict. So now let's move on to the next step, which is compiling the model for inference.
+
+And this is a really simple operation. All it takes is this API from the Neuron SDK. We pass the model. We pass an input. We define this tricked parameter to false because if we don't do that, compilation fails because there's a dictionary attached to the model and neuron doesn't like that. So that's why when we load a model from the hub, you may have seen this, return dict equal false. Okay, that's going to solve the problem here. So if you load a model from the hub, make sure you use this parameter. And this will make that strict mode unnecessary. But here, as I'm loading from a checkpoint, that dictionary is in there. And maybe there's a way to remove it. I didn't go into that. If you know how to remove it, happy to read about your comments. But otherwise, just use that strict equal false parameter and you're good to go. And more importantly, we ask the neuron SDK to compile the model for the number of cores present on our instance. Okay, so like I said, I've got a 6XL instance, it's got four inferential chips, each chip has four neuron cores, so that's a total of 16. And I'm asking Neuron to compile the model accordingly. That's going to give me the parallelism that I want. And then we just save the Neuron model just like that. So not difficult. You can read a little more about this API in the Neuron SDK. They also have an analyze API that tells you if the model is going to be successfully compiled or not. It's going to list operators that could be problematic, etc. So there are a few more things you could try here. Let's just go and compile the model. So it's going to tell you how many operators it found in the model, how many it can find quite a bit of information available there. Some operators will still run on CPU and you can actually visualize that as well. So let's give it a minute to compile the model and be back.
+
+After a couple of minutes, the model has been compiled. We can see it here. Yes. And now we can load it and predict with it. So let's move on to the second script. So here we start from the same examples, load the tokenizer, tokenize them, prepare the input accordingly. Same thing as in the previous script, right? We load the model using Torch JIT. We predict our positive and negative samples. We convert the logits to NumPy arrays. We print them out. Find the top class for this and print them out. So let's do this first. Let's make sure this model is working. So BERT Yelp tests. Just make sure we can load it and we get some good results. And the classes are what they should be. OK, so yeah, this looks like a positive review, very positive. And this looks like a very negative review. OK, so looks like the model is doing what it should be doing. So now, of course, I just run a couple of inferences here. What I really want to do is run this thing at scale, right? So I'll define this to measure latency. And we're going to run 100,000 predictions. I started from 16 threads because I figured we have 16 cores. So let's go and do this, build a progress indicator. And then we'll just fire up 16 threads and each one of those threads is going to call the inference latency function with the model and the input. And we're storing all the latency values returned by inference latency, which lets us compute quantiles and average throughput. So let's fire this thing and see how we go. So let's run this benchmark. Let me get out of the way. Otherwise, you won't see much, right? And here we are. Okay, loading the model and then running 100,000 inferences. And we can see our throughput is about 4,300 plus predictions per second, which looks to me like a good number. Let's wait for the latency. And so P95 is 3.7 milliseconds, which is not bad at all for a big monolithic BERT. 
+
+I actually experimented with other values, so let's try 20. See if that makes a difference. Yeah, we may have just a little bit extra throughput, but I'm not so sure. 43.18. Yeah, I think we might be able to squeeze a little more throughput, but probably at the expense of latency. Latency is definitely a little worse. And maybe let's try 12 just to see how we go here. Throughput should be a little lower. Yeah, it is a bit lower. But maybe latency goes down, which is fine. I mean, depending on your use case, you may want to optimize for latency or you may want to optimize for throughput. Or maybe you want a balanced scenario. You need to run your own tests. Yeah, so we have about 10% less throughput, but we have better latency. And again, this benchmark is a bit crude because I'm only predicting a single value here. It'd be a better idea to maybe load the test set and predict the test set or random samples from the test set to get a better view on latency for different sequences. I mean, these are really, really short sequences. But anyway, I think this is a really good number, 4000 plus predictions per second, and that's just one instance. Low single-digit latency, very interesting, especially given the cost of inferential instances or inf1 instances, I should say. This one is $1.18 per hour. Okay. And that's on demand. So if you use Spot, you should be able to slash that down quite a lot. And even if you go for the big 24XL instance, and this one has 16 chips. So that's going to mean 64 cores. Okay. And it's $4.7 per hour. So if that thing scales linearly, then, and you know, I'm thinking it is, you would be looking at, you know, maybe, yeah, 15K, 16K inferences per second, which is very good. And this is GPU territory for pricing. I mean, the P3 Excel instance is about $4, something like that. So that's really, really interesting. And if you want more detailed information, I found this really nice blog post. Again, I'll put the link in the description. They run some additional benchmarks. They compare that stuff to GPU. And they also explain the different parallel modes on Inferentia. Here I used the pipeline mode, which is so easy to use with just a compilation flag. There's a data parallel technique as well. You may want to read about that. And this is a really good one. So that's pretty much what I wanted to show you. So I guess the one question we did not answer here is how to deploy that stuff. Here I'm running predictions in a script. So obviously you could build that into your container and build a prediction API that receives input data and funnels it into your prediction threads, et cetera, et cetera. I'm sure you folks know how to do this. There's probably another way to do this, which is using Amazon SageMaker. So, you know, I'll give it a shot. I think Tranium and Inferentia are both supported by SageMaker. So, yeah, maybe I'll try and rebuild this into an example. Okay, well, that's it for today. I hope you learned a few things. I hope this was fun. All the links in the description. And until next time, as usual, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">AWS Inferentia</span><span class="tag">Transformer Models</span><span class="tag">BERT Fine-Tuning</span><span class="tag">AWS Tranium</span><span class="tag">Hardware Acceleration AWS</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

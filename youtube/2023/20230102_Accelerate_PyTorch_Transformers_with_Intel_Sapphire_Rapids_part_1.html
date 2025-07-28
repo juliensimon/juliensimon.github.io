@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Accelerate PyTorch Transformers with Intel Sapphire Rapids part 1 - In this video, you will learn how to accelerate a PyTorch training job with a cluster of Intel Sapphire Rapids servers running on AWS. We will use the Intel one..." name="description"/><meta content="Accelerate PyTorch Transformers with Intel Sapphire Rapids part 1 - Julien Simon" property="og:title"/><meta content="Accelerate PyTorch Transformers with Intel Sapphire Rapids part 1 - In this video, you will learn how to accelerate a PyTorch training job with a cluster of Intel Sapphire Rapids servers running on AWS. We will use the Intel one..." property="og:description"/><meta content="https://www.julien.org/youtube/2023/20230102_Accelerate_PyTorch_Transformers_with_Intel_Sapphire_Rapids_part_1.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Accelerate PyTorch Transformers with Intel Sapphire Rapids part 1 - Julien Simon" name="twitter:title"/><meta content="Accelerate PyTorch Transformers with Intel Sapphire Rapids part 1 - In this video, you will learn how to accelerate a PyTorch training job with a cluster of Intel Sapphire Rapids servers running on AWS. We will use the Intel one..." name="twitter:description"/><link href="https://www.julien.org/youtube/2023/20230102_Accelerate_PyTorch_Transformers_with_Intel_Sapphire_Rapids_part_1.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Accelerate PyTorch Transformers with Intel Sapphire Rapids part 1 - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Accelerate PyTorch Transformers with Intel Sapphire Rapids part 1</h1>
+<div class="date">January 02, 2023</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/Cb-lutbSvVQ">
+</iframe>
+</div>
+<div class="description">In this video, you will learn how to accelerate a PyTorch training job with a cluster of Intel Sapphire Rapids servers running on AWS. We will use the Intel oneAPI Collective Communications Library (CCL) to distribute the job, and the Intel Extension for PyTorch (IPEX) library to automatically put the new CPU instructions to work. As both libraries are already integrated with the Hugging Face transformers library, we will be able to run our sample scripts out of the box without changing a line of code.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" rel="noopener noreferrer" target="_blank">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+- Blog post: <a href="https://huggingface.co/blog/intel-sapphire-rapids" rel="noopener noreferrer" target="_blank">https://huggingface.co/blog/intel-sapphire-rapids</a>
+- Intel Sapphire Rapids: <a href="https://en.wikipedia.org/wiki/Sapphire_Rapids" rel="noopener noreferrer" target="_blank">https://en.wikipedia.org/wiki/Sapphire_Rapids</a>
+- Intel Advanced Matrix Entensions: <a href="https://en.wikipedia.org/wiki/Advanced_Matrix_Extensions" rel="noopener noreferrer" target="_blank">https://en.wikipedia.org/wiki/Advanced_Matrix_Extensions</a> 
+- Amazon EC2 R7iz: <a href="https://aws.amazon.com/ec2/instance-types/r7iz" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/ec2/instance-types/r7iz</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. Intel has just announced a new generation of the Xeon Scalable Processor platform. It's called Sapphire Rapids and it comes with a new instruction set specifically designed to accelerate matrix operations, which are very common in deep learning. In this video, I'm going to show you how to build a cluster based on these new Intel CPUs. We'll use brand new AWS instances and run a distributed training job on a PyTorch model. You'll see we get excellent speedup compared to the previous generation of Intel CPUs and really good scalability. If you thought training could only happen on GPUs, think again. I'm going to show you otherwise. Let's get started.
+
+If you'd like to learn more about this new Intel architecture, you can find good information on Wikipedia, specifically about the new features like AMX, Advanced Matrix Extensions, which is the one we're going to dive into. As the name implies, this brings new instructions to accelerate matrix operations. This is based on a whole new set of registers, CPU registers, two-dimensional, just like a matrix. What this implies is that you will need kernel support for these. I'll get back to that. So we need to pay attention to which Linux kernel we're using. In the first release, AMX supports brain float 16 and int 8 input types, giving us flexibility. It adds an instruction for matrix multiplication, a super common operation for deep learning training and inference. This is already supported in quite a few compilers, so we're good. If you want to see those instructions in detail, you can go to the reference documentation for AMX and find those instructions there, including what the tile registers are, etc. But it's pretty much load matrices into 2D registers and then multiply those matrices. You can read all about it. That's the whirlwind tour of AMX.
+
+Now, what do we do to actually get access to that? If you're lucky and have one of those servers, maybe on your desk or in your data center, that's fine. Go and use that. But if you need a cloud option, at the time of recording, the only cloud option for Sapphire Rapids is to use the new R7IZ instances on AWS. They've been announced at re:Invent just a few weeks ago and are still in preview. For the time being, you will need to sign up, but I'm lucky to have access already. So that's what we'll use. These are the R family, which are the memory-optimized instances. R is for memory, large memory sizes. C is for compute-optimized instances, etc. But for now, the only available option is this R family. They come with huge memory sizes, which might not be what we really want for distributed training, but that's the only option. So until we get maybe C7IZ, that's what we have to go with. But as you will see, they work very well. It's just that they have way too much memory and are probably a little bit too expensive for this purpose. But for a demo, it's fine. So that's what we'll use. In fact, I've created a few already.
+
+I've created four, actually going for bare metal instances because when I built this, this was the only instance type that would support the AMX instruction set. I expect very soon you'll be able to use the AMX instructions on the virtualized R7s as well. I've gone for 16XL, which has 32 cores, so 64 vCPUs. There's a bit of setup to do on those instances, but it's not particularly difficult. I'll skip the steps; they are explained in detail in a blog post I just published, where I walk you through the full setup for those instances. What I'm doing here is creating the master instance first, then creating an AWS AMI from that, and using this AMI to fire up the additional nodes in the cluster. There's nothing really difficult. It's really just `pip install torch` and the Intel extension for PyTorch, etc. There's a little bit of cluster setup; we need passwordless SSH across those instances so that we can run distributed training without any issue. But if you have trouble, you can ask me questions.
+
+So I've done this setup. I've got my master node and three additional nodes all running the same Ubuntu AMI with my dependencies installed. We can see them here. The master node is at the top, and the three additional nodes are listed below. The first thing we could try is using `lscpu` to see those AMX flags: BF16, AMX tile, AMX int 8. This tells us these instructions are supported and managed by the kernel. I'm using Linux 5.15, which came with the Ubuntu AMI. Technically, AMX is only available from Linux 5.16, but this particular AMI has been patched by Intel and AWS to keep things simple. If you have newer kernels 5.16 and above, you should be okay. If you want to stick with the same AMI I used, you'll find the reference in the blog post. Just make sure you see those AMX flags in `lscpu`. That means you're good to go. We also see all the other instructions: AVX-512, VNNI, etc.
+
+Now we need to do a little bit of setup to ensure we have all the environment variables. We have just a few things to set, related to the distributed communications library from Intel. I need to set the IP address of the master node. I need to grab the actual one, which is here. Master. Next, I have some CCL settings, so I'm going to use two threads for CCL communication, let those threads pick whatever CPU socket they want, and work with physical cores, not hyper-threads, to squeeze a little more performance. Finally, I need to decide how many processes and nodes I'm going to use. Based on the size of those instances, I've gone for two processes per node. For this particular job, the sweet spot seems to be two. Then I need to decide how many processes I will run total on the cluster. If I go for two, since I have two processes per node, it means I'm using one single node. Let's start with that as a sanity check that everything works. So here, I will only run things on the master node. Then I can run this distributed job.
+
+First, we need to decide how many processes, how many training processes, we're going to run on each node. Based on the size of those instances, I've gone for two. You can experiment with three or four, but for this particular job, the sweet spot seems to be two. Then I need to decide how many processes I will run total on the cluster. If I go for two, since I have two processes per node, it means I'm using one single node. So let's start with that as a sanity check that everything works. Here, I will only run things on the master node. Then I can run this distributed job. Passing the number of processes, number of processes per node, and how many threads I want to use on each node. I'm using 24 physical threads out of the 32 I have, keeping in mind I'm using two threads for distributed communication, leaving six threads for the kernel and everything else. For me, 24 was a sweet spot. Then I'm running a vanilla example from the Transformers examples. This is the question-answering example, where I'm fine-tuning DistilBERT on the SQuAD dataset, and the other parameters are vanilla. Obviously, I'm not using CUDA. There is no GPU on this instance, but just in case, I'm using the Intel CCL library as the distributed backend and enabling BF16 as well. Since I've got the Intel PyTorch extension installed and kernel support for AMX, I'm going to be using those new instructions directly. All I have to do is run this, and it should run right away on that single node. This gives us a baseline on the training time for a single instance.
+
+Just for comparison, I ran this on the previous generation of Intel Xeons, the C6i family on AWS, the Ice Lake family. Exact same software setup, everything the same except an Ice Lake CPU instead of a Sapphire Rapids CPU. One epoch came at three hours and 30 minutes. As you can see here, we're somewhere around 26 minutes with this new instance. That's about 8x faster out of the box. Same PyTorch, same everything, only the chip is different. Moving from Ice Lake to Sapphire Rapids gives an 8x training speedup. That's huge and good news. Now these training times are very reasonable, and we can actually run those workloads on CPUs and not on GPUs. Running on CPU is more flexible. You can repurpose CPU servers for different tasks, unlike GPU servers, which are generally only good for deep learning training and inference. So CPUs are a really interesting option.
+
+Let's stop it there and launch `top` to see what's going on on those other nodes. Now we're going to start scaling. We'll run four processes, sticking to two processes per node. This means I'm going to use two nodes. They've been listed here: Node 1, 2, 3. So let's run the MPI command again, exact same command. We can see the two Python processes starting. Node 2 and Node 3 are doing nothing. The training time now is about 14 to 20 minutes. Almost divided by two, but not exactly because of distributed communication overhead. Pretty close to linear scaling. I didn't change anything; I just said, "Give me more processes." Kudos to the Intel library and MPI for keeping that process smooth. I'm using the built-in examples from the Transformers library, which already support distributed training. If you want to adapt your own code, it's not difficult. Just look at those examples. It's using the built-in distributed training features in PyTorch. It's fairly transparent.
+
+Let's keep scaling and try six processes. Now we should be using three nodes. We see Python here and here. Now we're down to about 11 minutes. Give it a minute or two to hit cruising speed. We keep scaling nicely, and the number of threads being used is consistent with what we asked. Feel free to experiment with more processes per node. They will share the number of threads allocated. For me, those settings were pretty good.
+
+Let's put all nodes to work. Let's say eight processes. Run that again. We end up at around 7.30 minutes, which is pretty close to linear scaling. We started at 26 minutes and are down to seven and a half minutes. You can tweak more and improve on this. You can keep scaling to eight nodes, 16 nodes, etc. Now this is becoming a really short training job, but if you train for more epochs or on bigger datasets, you may want to use more servers. All it takes is having a bunch of those servers laying around, an AMI you can easily use to add nodes to the cluster, and you're set. This is a really simple process. Once you've done the initial setup, you can just add servers to the cluster in minutes and scale.
+
+This is a really cool distributed training job. You can go and try additional jobs; they should all support the distributed training mechanism I'm showing here. Again, go and read about AMX, check out the blog post for the full set of procedures, and check out those new R7IZ instances. You'll have everything you need to replicate that demo. If you have questions, I'm happy to answer them. I will put all the links in the video description. That's it for today. Hope this was useful and interesting. Until next time, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Intel Sapphire Rapids</span><span class="tag">AMX Advanced Matrix Extensions</span><span class="tag">Distributed Training</span><span class="tag">PyTorch</span><span class="tag">AWS R7IZ Instances</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

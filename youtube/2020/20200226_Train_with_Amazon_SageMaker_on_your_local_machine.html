@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Train with Amazon SageMaker on your local machine - In this video, I show you how to train on your local machine using SageMaker APIs. I use Jupyter, and this would also work with your preferred IDE (PyCharm, etc..." name="description"/><meta content="Train with Amazon SageMaker on your local machine - Julien Simon" property="og:title"/><meta content="Train with Amazon SageMaker on your local machine - In this video, I show you how to train on your local machine using SageMaker APIs. I use Jupyter, and this would also work with your preferred IDE (PyCharm, etc..." property="og:description"/><meta content="https://www.julien.org/youtube/2020/20200226_Train_with_Amazon_SageMaker_on_your_local_machine.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Train with Amazon SageMaker on your local machine - Julien Simon" name="twitter:title"/><meta content="Train with Amazon SageMaker on your local machine - In this video, I show you how to train on your local machine using SageMaker APIs. I use Jupyter, and this would also work with your preferred IDE (PyCharm, etc..." name="twitter:description"/><link href="https://www.julien.org/youtube/2020/20200226_Train_with_Amazon_SageMaker_on_your_local_machine.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Train with Amazon SageMaker on your local machine - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Train with Amazon SageMaker on your local machine</h1>
+<div class="date">February 26, 2020</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/K3ngZKF31mc">
+</iframe>
+</div>
+<div class="description">In this video, I show you how to train on your local machine using SageMaker APIs. I use Jupyter, and this would also work with your preferred IDE (PyCharm, etc.). This is a friendly and fast way to write and debug your code before running it at scale on managed instances. This technique also saves you money, as you’re not using notebook instances or SageMaker Studio. 
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" rel="noopener noreferrer" target="_blank">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+Code: <a href="https://gitlab.com/juliensimon/aim410/-/blob/master/local_training.ipynb" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/aim410/-/blob/master/local_training.ipynb</a>
+
+For more content, follow me on :
+* Medium: <a href="https://medium.com/@julsimon" rel="noopener noreferrer" target="_blank">https://medium.com/@julsimon</a>
+* Twitter: <a href="https://twitter.com/juliensimon" rel="noopener noreferrer" target="_blank">https://twitter.com/juliensimon</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi, this is Julien from Arcee. In this video, I would like to show you how to call SageMaker APIs from a Jupyter notebook running on your local machine. This means you can work strictly on your local machine without using SageMaker Studio or notebook instances. That's a convenient way to use your local environment, whether it's Jupyter, your local IDE, or whatever you prefer. Let's get started.
+
+The first step is to ensure you have a local environment with all the dependencies installed. The best way to do this is to use Conda. I've tried using various setups on my Mac, including virtual environments, and I've always encountered dependency issues, which waste a lot of time. Conda is really the way to go. Here's how you set it up:
+
+First, install the Anaconda distribution. You can quickly check that it's set up correctly and that you're using the right Jupyter version. If you don't see that you're using the Anaconda Jupyter, check your Unix path or your path if you're using something else. Then, create a local Conda environment. Here, I'm creating an environment called `local-SM` with Python 3.7. I activate it and install the necessary packages: `pip`, `pandas`, `tensorflow`, and `Keras`, which I'll use in my notebook. You need to install the SageMaker SDK with `pip` because it's not part of Conda. Then, create your own Jupyter kernel by installing `IPyKernel` and registering your Conda environment as a Jupyter kernel with the following command. Here, I'm registering it as a `local-SM` kernel, but you can use another name if you prefer.
+
+Of course, start Jupyter and ensure Docker is running on your local machine because we will pull Docker containers from AWS. Let's open Jupyter now. I'll add a link to this notebook in the video description.
+
+This is a simple Keras notebook. I want to focus on the few things you need to update in your notebook to run it locally. The first thing is to set the region. When you run on a notebook instance or SageMaker Studio, you have a default region. Here, you have two options: use the usual SageMaker session, which will use the AWS region configured with the AWS CLI, or pass a region name to the session if you want to use a different region. This saves you from changing your CLI configuration.
+
+The second thing is to handle the role. When working in Studio or on a notebook instance, you call the `getExecutionRole` API to get the IAM role associated with the notebook instance or Studio. However, your local machine doesn't have an IAM role, so calling this API will fail. The solution is to pass the ARN of your IAM role, the one you use with SageMaker. You can find it by running `aws iam list-roles` and looking for `SageMakerExecutionRole`. If you use the SageMaker wizards, it's likely called `AmazonSageMakerExecutionRole`. Pass the full ARN.
+
+Let's run this cell; it should be okay. The next cell is about fetching the dataset and saving the training and validation sets locally. I'm using the Fashion MNIST dataset. If you want to work locally, you need to save your data on the local machine. Define the input path for both the training and validation sets. If your data is in S3, you can use S3 URIs, but if you want to work strictly locally, use a file path.
+
+Next, define the location where you'll save the trained model. You can pass an S3 URI, but here I'm using a local path. The third thing is to point to the local dataset and a local location to save the model.
+
+Now we're ready to train. We'll use the SageMaker estimator for TensorFlow, passing the script, etc. The only thing to take care of is the instance type. Since we want to train locally, not on a fully managed instance, you can pass the instance type `local` for CPU training or `local_gpu` if you have an NVIDIA GPU. This is all we need to do. Call `fit` to start training, passing the location of the training and validation sets. Remember, these are local, so ensure Docker is running. Under the hood, SageMaker will pull the TensorFlow container to your local machine. Training will start immediately.
+
+Training starts, and this is business as usual. We're using script mode, so the script is invoked, passing the epochs hyperparameter and the local location to save the model. Training takes a minute or two, so I'll pause the video and wait for it to complete.
+
+Training is now complete, and I can find my model in `/tmp/model`. I have the training artifact, and if I extract it, it's saved in TensorFlow serving format, the standard format for TensorFlow models.
+
+To summarize, you need Conda, a set region, an IAM role, local data, a local instance type, and Docker. As you can see, it's very easy to train strictly on your local machine. You save money by not using Notebook Instances or Studio, and you can use your favorite tools while still calling AWS APIs. This works with all open-source containers, including TensorFlow, MXNet, PyTorch, scikit-learn, XGBoost, and your own containers. The only case it won't work is if you're using built-in SageMaker algorithms, as those containers are not open source.
+
+That's it. I hope this was useful. Feel free to ask questions, and I'll see you soon with another video. Bye-bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">SageMaker</span><span class="tag">LocalDevelopment</span><span class="tag">JupyterNotebook</span><span class="tag">MachineLearning</span><span class="tag">AWSAPIs</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

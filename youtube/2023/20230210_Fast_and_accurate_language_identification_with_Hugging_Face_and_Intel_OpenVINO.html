@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Fast and accurate language identification with Hugging Face and Intel OpenVINO - In this video, I'm showing you how to train a Hugging Face Transformer model capable of identifying 102 languages with 99%+ accuracy. I also use the Optimum Int..." name="description"/><meta content="Fast and accurate language identification with Hugging Face and Intel OpenVINO - Julien Simon" property="og:title"/><meta content="Fast and accurate language identification with Hugging Face and Intel OpenVINO - In this video, I'm showing you how to train a Hugging Face Transformer model capable of identifying 102 languages with 99%+ accuracy. I also use the Optimum Int..." property="og:description"/><meta content="https://www.julien.org/youtube/2023/20230210_Fast_and_accurate_language_identification_with_Hugging_Face_and_Intel_OpenVINO.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Fast and accurate language identification with Hugging Face and Intel OpenVINO - Julien Simon" name="twitter:title"/><meta content="Fast and accurate language identification with Hugging Face and Intel OpenVINO - In this video, I'm showing you how to train a Hugging Face Transformer model capable of identifying 102 languages with 99%+ accuracy. I also use the Optimum Int..." name="twitter:description"/><link href="https://www.julien.org/youtube/2023/20230210_Fast_and_accurate_language_identification_with_Hugging_Face_and_Intel_OpenVINO.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Fast and accurate language identification with Hugging Face and Intel OpenVINO - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Fast and accurate language identification with Hugging Face and Intel OpenVINO</h1>
+<div class="date">February 10, 2023</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/uUjcMWKSJtk">
+</iframe>
+</div>
+<div class="description">In this video, I'm showing you how to train a Hugging Face Transformer model capable of identifying 102 languages with 99%+ accuracy. I also use the Optimum Intel library and Intel OpenVINO to reduce latency by 3X :) 
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" rel="noopener noreferrer" target="_blank">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+- Model and code: <a href="https://huggingface.co/juliensimon/xlm-v-base-language-id" rel="noopener noreferrer" target="_blank">https://huggingface.co/juliensimon/xlm-v-base-language-id</a>
+- Space: <a href="https://huggingface.co/spaces/juliensimon/xlm-v-base-language-id" rel="noopener noreferrer" target="_blank">https://huggingface.co/spaces/juliensimon/xlm-v-base-language-id</a>
+- Base model: <a href="https://huggingface.co/facebook/xlm-v-base" rel="noopener noreferrer" target="_blank">https://huggingface.co/facebook/xlm-v-base</a>
+- Dataset: <a href="https://huggingface.co/datasets/google/fleurs" rel="noopener noreferrer" target="_blank">https://huggingface.co/datasets/google/fleurs</a>
+- Optimum Intel: <a href="https://github.com/huggingface/optimum-intel" rel="noopener noreferrer" target="_blank">https://github.com/huggingface/optimum-intel</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. Language identification is a common task in many natural language processing workflows. We need to figure out which language a piece of text is written in so that we can then translate it to another language or apply some language-specific models for entity extraction or other tasks. In this video, I'm going to show you how to train a language ID model. We're going to start from a dataset containing text in 102 languages, and we're going to fine-tune a new model that was just released a week ago. We're going to get really good results, as you will see. Once we have a model, we'll build a Hugging Face space to showcase it. I will also add Optimum Intel and OpenVINO for good measure. We'll see how easy it is to use those tools to reduce the prediction latency of the model. We'll look at some numbers. Lots of stuff to cover today. Let's get started.
+
+Obviously, we need a model to get started. This is the one we're going to use. It's a Facebook model called XLM VBase, a variant of the well-known XLM Roberta model. The main difference is that this XLM V model has been trained on a really large vocabulary, around 1 million token vocabulary, on quite a few languages, probably 100 languages at least. This looks like a good starting point because if we have such a large vocabulary and a model pre-trained on different languages, we should easily be able to perform language ID on many languages. Reading this, I thought, "Hey, this looks like a good candidate. Why don't we give it a shot?"
+
+The next step is to grab a dataset, and I went for this one. It's a Google dataset called FLIR. It's actually a speech-to-text dataset. As you can see, it has a ton of audio clips and, of course, the transcriptions. We have 102 languages in there, and we have the list below, covering Western Europe, Eastern Europe, Asia, Africa, China, Korea, and many more, some of which I have never heard of. That's going to be interesting. We have audio, which we won't use in this example, but we also have the transcriptions and the language code. That's the dataset we're going to start from.
+
+Let's switch to our code and look at how we're going to do this. As usual, I like to keep things simple. I'm going to stick to the Trainer API, which is all we need here. No need to go deep into PyTorch or anything. Here's the code. Import a whole bunch of objects, define the dataset, and the model we want to use. We'll go for an accuracy metric. There are lots of columns in this dataset that we're going to drop. We're really only going to keep the transcription, so the text, and the language ID, which is an integer value that we can use as a label. Fortunately, they start at zero and are continuous, so we don't have to renumber those labels. If you want to work with a subset of those languages, that's fine. You could stick to 20 languages, but keep in mind you will have to renumber the labels. We're going to download all of it. It's very big because it's audio, about 390 gigabytes. Make sure you have lots of storage space. Once this is done, we're going to build the label to ID and ID to label mappings. The simple way to do this is just to look at every sample in the validation set and build those two dictionaries. Find a language name and an ID and create those dictionaries. I'm sorting them just in case I want to print them out. It's easier if they're sorted by ID or by label. Not strictly necessary, just for convenience.
+
+Then we drop all the columns we don't need. We're left with the transcription, which we renamed to text, and the lang ID column, which we renamed to label. I'm shuffling the datasets with a seed so that I can reproduce this training every time I need to. Then the tokenizer, which we use to preprocess the datasets. At this point, we have our training set, our validation set, the original text and labels, and of course, the tokens and the attention mask, which the model needs. The rest is really vanilla transformers. We want a model for sequence classification. We pass the name of the model, the number of labels, so 102 in this case, the two label and ID dictionaries. We ignore mismatch sizes because the classification layer for this model is not 102, so it will complain if I don't do that. The training arguments are the usual stuff: learning rate, etc. We'll evaluate after each epoch and push the result to the hub, keeping only the best model. I'm going for five epochs. I thought that'd be a decent number. We use FP16 for fine-tuning to speed things up. Finally, we evaluate the model on that metric, put everything together, and train. This is going to run for hours. I'm using a large AWS instance here, a P3DN24XL, which has eight V100 GPUs. Let's fire up the training job to get a sense of how long it takes. We're not going to wait because I waited long enough already.
+
+Downloading the dataset was quite a story. We have 271,000 samples and about 34,000 samples for validation. That's reasonably big. Let's see how long this takes. It took about four or five hours, I think. So it's going to say 13, but let's wait for a few seconds. If you're looking at about five hours of training for five epochs, it's about an hour per epoch if you need an estimate. A little less than five. We're not going to wait. Once that training is complete, the model has been pushed to the Hugging Face Hub. This is my model page. I added some information. After five epochs, we get a really cool accuracy of 99.3%, which I think is good. The sentences in the dataset are not so long. A lot of them are 10 to 20 words. The audio clips are around 15 seconds, so about 15 words. It's pretty good results. I have a feeling I could probably have squeezed a little more training, maybe up to 10 epochs. But maybe we can get a little more performance here. I include some examples. We have the evaluation result, all the cool stuff that's automatically created on the model page when you use Push to Hub. You should absolutely do that.
+
+We could test the model here, but I did create a space. Let's look at the space and the code. The flow is very simple. Enter some text in any of those 102 languages and get the results. To make things more interesting, I added Optimum Intel and OpenVINO to optimize latency. We get to pick which model to predict with: the vanilla model or the optimized model. It's all very simple. I just create the vanilla pipeline with the pipeline object from the transformers library. I load the same model using the Optimum Intel OpenVINO API, which will automatically convert the model to OpenVINO representation. Then, of course, I can create an OpenVINO pipeline. Now I've got those two pipelines. I'm going to warm up the OpenVINO pipeline to ensure great performance immediately. The user interface is very simple. Enter some text, decide if we want the vanilla or the OpenVINO model, call the process function, select the appropriate pipeline based on the model selection, time the prediction, and return the scores and the prediction latency. I have two outputs to show that stuff. And of course, we have some examples.
+
+Now let's look at our space. We have some examples here. This first example is Swahili, and we can see the confidence level is extremely high. The widget is rounding floating point values to integers, but it's very high. We could print out the actual values if we wanted, but this tells us it's Swahili. The prediction is in 40 milliseconds or something. If we try the vanilla model, we are about three times slower. OpenVINO, just this one line of code, speeds up inference by a factor of three in this case. I am running on CPU here, 8 vCPUs. Even on a reasonably small machine, you would get even better performance on larger CPU machines. Let's quickly try the other ones. This one is Filipino or Tagalog, 48 milliseconds, and about less than 3x that with the vanilla model. This is Czech, 36 milliseconds, again, three times slower here. This one is Wolof, an African language I never knew about. 55 milliseconds, and if we submit it again, about 179, which is more than 3x. This is all dependent on sequence length. If I just went for a shorter sequence, I would see faster prediction. 88 for the vanilla model and 28 for the optimized. These are really good times, especially since I am not using a super powerful instance here. I am really just using 8 vCPUs. There you go. I think this is an interesting example. It shows that if you pick the right model and the right dataset that match your use case, you can very easily get amazing performance. 99 plus percent is just unexpected. The training code is very generic. There's nothing complicated. Building a space is very simple. If you add Optimum Intel and OpenVINO, you can just accelerate the model 3x doing nothing, just loading it with the OpenVINO object, which I find amazing.
+
+That's really what I wanted to show you today, just how quickly and simply you can build a state-of-the-art model, deploy it, and make it fast. This only took a couple of hours, so you can certainly do it much faster. That's it for today. I hope this was fun, and I'll see you next time with more content. Until then, keep rocking!
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">LanguageIdentification</span><span class="tag">ModelTraining</span><span class="tag">HuggingFace</span><span class="tag">Optimization</span><span class="tag">OpenVINO</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

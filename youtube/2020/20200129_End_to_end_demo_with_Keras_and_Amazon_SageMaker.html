@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="End to end demo with Keras and Amazon SageMaker - In this video, we walk through an end to end demo where we first build an image classification model using Keras. We first train it locally, and then on a manag..." name="description"/><meta content="End to end demo with Keras and Amazon SageMaker - Julien Simon" property="og:title"/><meta content="End to end demo with Keras and Amazon SageMaker - In this video, we walk through an end to end demo where we first build an image classification model using Keras. We first train it locally, and then on a manag..." property="og:description"/><meta content="https://www.julien.org/youtube/2020/20200129_End_to_end_demo_with_Keras_and_Amazon_SageMaker.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="End to end demo with Keras and Amazon SageMaker - Julien Simon" name="twitter:title"/><meta content="End to end demo with Keras and Amazon SageMaker - In this video, we walk through an end to end demo where we first build an image classification model using Keras. We first train it locally, and then on a manag..." name="twitter:description"/><link href="https://www.julien.org/youtube/2020/20200129_End_to_end_demo_with_Keras_and_Amazon_SageMaker.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>End to end demo with Keras and Amazon SageMaker - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>End to end demo with Keras and Amazon SageMaker</h1>
+<div class="date">January 29, 2020</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/2_z2kgkt5AM">
+</iframe>
+</div>
+<div class="description">In this video, we walk through an end to end demo where we first build an image classification model using Keras. We first train it locally, and then on a managed GPU instance. In the process, we use Amazon SageMaker Debugger to identify possible training issues. Next, we use hyperparameter optimization to improve model accuracy. Finally, we deploy the top model to a real time endpoint, and we configure data capture with Amazon SageMaker Model Monitor.
+
+⭐️⭐️⭐️ Don't forget to subscribe and to enable notifications ⭐️⭐️⭐️
+
+* My notebook: <a href="https://gitlab.com/juliensimon/aim410" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/aim410</a> (TF1.15 and TF2.0)
+* SageMaker Model Monitor notebooks: <a href="https://github.com/awslabs/amazon-sagemaker-examples/tree/master/sagemaker_model_monitor" rel="noopener noreferrer" target="_blank">https://github.com/awslabs/amazon-sagemaker-examples/tree/master/sagemaker_model_monitor</a>
+* Script mode in detail: <a href="https://youtu.be/x94hpOmKtXM" rel="noopener noreferrer" target="_blank">https://youtu.be/x94hpOmKtXM</a>
+
+For more content, follow me on:
+* Medium: <a href="https://medium.com/@julsimon" rel="noopener noreferrer" target="_blank">https://medium.com/@julsimon</a>
+* Twitter: <a href="https://twitter.com/julsimon" rel="noopener noreferrer" target="_blank">https://twitter.com/julsimon</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In this video, I want to take you through an end-to-end demo of using Keras with Amazon SageMaker, and I will use some of the latest features that were announced at Amazon re:Invent, like SageMaker Model Debugger, SageMaker Model Monitor, and a few more things. Let's get started.
+
+The first step would be to grab the code for this demo, which is on GitLab. Just grab it from this repo here. Open a terminal and clone the repo. I'm using a notebook instance, and I've already cloned the repo. You can go into that directory and open the notebook.
+
+The first step is to ensure we have the latest SDKs, especially the latest SageMaker SDK. We also need to have `smdebug` and `smdebug_rules_config`. Restart the kernel to make sure all the new packages are taken into account, and then import the SageMaker SDK to get started.
+
+The purpose of this Keras script is to train a convolutional neural network (CNN) to classify images from the Fashion MNIST dataset. This dataset has 10 classes and 60,000 samples. The first thing is to download the dataset, which Keras provides a built-in API for. Save the training set and validation set in a local directory.
+
+Next, let's look at the Keras code. It's vanilla Keras code. I'm grabbing hyperparameters from the command line, which is important for script mode. I'll get back to that in a few minutes. SageMaker will pass environment variables to this code to define the location of the training set, validation set, where to save the model, and how many GPUs are on the machine. This is tied to script mode. I have another detailed video on script mode, which I will highlight in the video description.
+
+Extract those parameters, load the dataset, and do basic processing, such as normalizing pixel values to be between 0 and 1 and one-hot encoding the class identifiers. Then, build the convolutional neural network, compile it using the SGD optimizer, and train, evaluate, and save the model in TensorFlow serving format, which SageMaker uses to deploy models.
+
+We can try running this script on the local machine. For me, this means running it on the notebook instance, but it's exactly like running it on your laptop. Training for one epoch to ensure the code runs. The point is to verify that the code works. Then, the next step is to train in local mode using the TensorFlow container. We're still running on the local machine, but this time using the TensorFlow container. SageMaker will pull the TensorFlow container to the local machine, load the Keras script inside it, and train there. This validates that the code runs fine inside the TensorFlow container without training on managed infrastructure, which takes time and incurs costs. Training for one epoch again for validation, and you can see the code being invoked inside the container.
+
+The next step is to train on managed infrastructure. Upload the training set and validation set to S3 and set up the training job. It's the same TensorFlow estimator as before, but now using a proper instance type, such as a GPU instance. I'm even using a spot instance for a discount. Set up model debugging using SageMaker Model Debugger by specifying rules to check the training job against, such as loss not decreasing and overfitting. When training starts, debugging jobs also fire up. The training job saves information in S3, including metrics and tensor data, which the debugging rules inspect on the fly. If a rule is triggered, the debugging job stops, and the training job is halted.
+
+We can describe what's going on and look at the debugging rules. For example, the "loss not decreasing" job has been stopped, indicating the rule was triggered. The "overfit" rule has also been triggered, and the job has stopped. To understand what went wrong, look at the output information for the training job. List the saved tensor information and use the SageMaker Debugger SDK to create a trial from that data. Inspect the loss values and identify specific steps where issues occurred. This helps pinpoint problems during the training job.
+
+Next, run automatic model tuning to explore hyperparameter ranges. Define ranges for parameters like epochs, learning rate, and architectural parameters. Specify the metric to optimize, such as validation accuracy. Define the TensorFlow estimator, use script mode, and spot instances to save money. Set up the tuning job with the defined metric and hyperparameters, and train multiple jobs in parallel. SageMaker applies machine learning optimization to determine the next set of hyperparameters to try.
+
+While the tuning job runs, use SageMaker Experiments to monitor progress. Export the tuning jobs to a Pandas DataFrame to view the data, including hyperparameters tried. Once the tuning job is over, grab the best job, which had a top validation accuracy of a little more than 92%.
+
+For deployment, define the location to capture data using SageMaker Model Monitor. Capture inputs and outputs sent to the endpoint, and deploy the model using the SageMaker SDK. Send 10 random images from the validation set to the endpoint and compare real labels with predicted labels. Keep sending traffic to the endpoint to capture data. Build a confusion matrix to evaluate performance. For example, class 6 has mismatches with class 0, indicating areas for improvement.
+
+The captured data is stored in JSON line files in S3. Open one of these files to see the input data and predicted class. The next step is to train a baseline using the training set and compare real-time data to the baseline to check for data quality issues like data drift.
+
+Once you're done, delete the endpoint to stop incurring costs. That's a complete TensorFlow Keras demo on SageMaker, showing how to train with local mode, managed infrastructure, hyperparameter tuning, model debugging, and model monitoring. I hope it was informative. If you have comments and questions, please ask them. Don't forget to subscribe to be notified of future videos. Until next time, bye-bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Keras</span><span class="tag">SageMaker</span><span class="tag">ModelDebugger</span><span class="tag">HyperparameterTuning</span><span class="tag">ModelMonitor</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

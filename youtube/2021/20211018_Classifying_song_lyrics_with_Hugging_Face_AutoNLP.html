@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Classifying song lyrics with Hugging Face AutoNLP - In this video, I use AutoNLP, an AutoML product designed by Hugging Face, to train a model that classifies song lyrics according to their genre. Then, I use Hug..." name="description"/><meta content="Classifying song lyrics with Hugging Face AutoNLP - Julien Simon" property="og:title"/><meta content="Classifying song lyrics with Hugging Face AutoNLP - In this video, I use AutoNLP, an AutoML product designed by Hugging Face, to train a model that classifies song lyrics according to their genre. Then, I use Hug..." property="og:description"/><meta content="https://www.julien.org/youtube/2021/20211018_Classifying_song_lyrics_with_Hugging_Face_AutoNLP.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Classifying song lyrics with Hugging Face AutoNLP - Julien Simon" name="twitter:title"/><meta content="Classifying song lyrics with Hugging Face AutoNLP - In this video, I use AutoNLP, an AutoML product designed by Hugging Face, to train a model that classifies song lyrics according to their genre. Then, I use Hug..." name="twitter:description"/><link href="https://www.julien.org/youtube/2021/20211018_Classifying_song_lyrics_with_Hugging_Face_AutoNLP.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Classifying song lyrics with Hugging Face AutoNLP - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Classifying song lyrics with Hugging Face AutoNLP</h1>
+<div class="date">October 18, 2021</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/qAn90KEmriI">
+</iframe>
+</div>
+<div class="description">In this video, I use AutoNLP, an AutoML product designed by Hugging Face, to train a model that classifies song lyrics according to their genre. Then, I use Hugging Face Spaces to build and deploy a test web page, where I paste some lyrics and predict them. The page is public and you can try it for yourself :)
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+Dataset and preprocessing notebook: <a href="https://huggingface.co/datasets/juliensimon/autonlp-data-song-lyrics-demo" rel="noopener noreferrer" target="_blank">https://huggingface.co/datasets/juliensimon/autonlp-data-song-lyrics-demo</a>
+
+Spaces page: <a href="https://huggingface.co/spaces/juliensimon/song-lyrics" rel="noopener noreferrer" target="_blank">https://huggingface.co/spaces/juliensimon/song-lyrics</a>
+
+New to Transformers? Check out the Hugging Face course at <a href="https://huggingface.co/course" rel="noopener noreferrer" target="_blank">https://huggingface.co/course</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Hugging Face. In this video, we're going to continue exploring O2NLP, and in this particular example, we're going to train, or I should say fine-tune, a model to predict the genre of song lyrics. We'll start from a dataset I found on Kaggle and clean it up a bit, prepare it, and then feed it to autoNLP. This time, I will use the command line interface to do this. I showed you how to use the user interface in a previous video. Let's see how we can do the same with the CLI. Once we have a model, we will build a small web app using Spaces and deploy it so we can predict some lyrics and see what happens. Let's get started.
+
+Here's the dataset I found on Kaggle, and thank you to the author for uploading it. It consists of two CSV files. The first one includes artist information: artist name, how many songs of that artist are in the dataset, the main genre, and a list of more detailed genres. The second file is the lyrics dataset, where we find the URL the lyrics were scraped from, the actual lyrics, and the language for those lyrics. Let's download this and put it in a notebook to explore and prepare it before feeding it to AutoNLP.
+
+I'm in SageMaker Studio, but you can use any Jupyter environment. I've uploaded the two CSV files: artists data and lyrics data. First, let's open and load the artist file. We see a little more than 3000 artists, with the artist name, main genre, and additional genres. In the lyrics file, we have the song name, URL, actual lyrics, and the language for those lyrics. The first step is to join these two files and drop any row that contains null values. Here's the joined dataset.
+
+Next, I want to figure out what languages are in the dataset. A large number of songs are in English, followed by Portuguese and Spanish. For this example, I'll focus on English only, so I'll drop all songs that are not in English and remove duplicates, as I noticed quite a few songs are duplicated with different main genres. I just want one row per song, so I'll drop any duplicates.
+
+Experimenting with the dataset, I found that the main genre column has very few values, like pop, rock, and one more. The list of genres in the last column is more detailed, so I'll use the first item from this list as the main genre. I'll split this list into sub-columns and keep only the first one. Now, genre zero, the first item in the genre list, is more interesting and diverse than the main genre column, but it still has too many genres for us to work with, especially since some have very few values and some overlap.
+
+I'll simplify this by dropping less frequent genres and bundling a few together. For example, I'll merge pop rock into pop, rap into hip-hop, rock alternativo into indie, and hard rock into heavy metal. After these changes, if I look at the unique values for genres, I still have a lot of rock, more pop, quite a lot of hip-hop, some indie, heavy metal, dance, etc. However, rock is still a bit too dominant. Under-sampling the rock category could be a good idea, but I haven't done it here. Feel free to tweak this as you like.
+
+I'll keep the main genres: rock, pop, hip-hop, indie, heavy metal, and dance. Finally, I'll only keep two columns in the dataset: the lyrics and the genre we just built. I'll drop any null values again, just in case. We end up with a little more than 53,000 songs, with two columns: lyrics and genre. I'll store this in CSV files, as O2NLP works from CSV files. To avoid issues, I'll drop all commas in the lyrics and replace them with spaces. I'll split the dataset into training and validation sets, 90% for training and 10% for validation, and save these splits to CSV.
+
+Now we have our CSV files, so let's open a terminal and use the O2NLP CLI to get a job going. In a previous video, I showed you how to build O2NLP models with the UI, but this time, let's use the CLI. The CLI is an open-source project found on GitHub in the Hugging Face repo, and you can easily install it with `pip install autoNLP`. Once installed, the first thing to do is log in to Hugging Face using your API token, which you can find in your account settings. I've already done this.
+
+Let's create a project using `autoNLP create project`, specifying the project name, language, task, and number of models. The project has been created, and now we need to upload the data. We have our training and validation sets, each with two columns: lyric and genre zero. We need to map these to what the model expects: text and label. First, upload the training split, mapping lyric to text and genre zero to label. Do the same for the validation set. Both splits have now been uploaded.
+
+The last step is to start training. Use the command to launch the training job. It will run for a while and estimate the cost. Once it's running, you can get information using the `project info` command and see the job in the UI. For this video, I've already run 15 jobs with the same dataset, and the best run achieved 66.8% accuracy, which isn't bad for a multi-class classification problem given the genre ambiguity.
+
+We can predict directly from the CLI, and here are the predictions for the genre in the dataset: dance 2%, heavy metal 1.6%, hip-hop 5%, indie 18%, pop 12%, rock 60%. Let's test this further by creating a web page with Spaces. In a previous video, I showed you how to build your own space using Gradio or Streamlit. I used Gradio, which is simple. It's a Git repository where you push your Python code to create the web page. I've already done this, and the URL is public. You can test it yourself.
+
+Here's the code for the app. It loads the best model from my O2NLP job, its tokenizer, and the class labels. The prediction function takes lyrics as input, tokenizes them, predicts the genre, applies a softmax function to make the predictions look like probabilities, and prints the top three genres. The UI is simple: a large input box to paste lyrics and auto-generated buttons to invoke the predictor function and display the output.
+
+Let's test it. I'll grab some lyrics. First, let's try "Boys Don't Cry" by The Cure. Running this in our app, we get 66% rock, 24% pop, and a bit of indie. It's a poppy song for The Cure, but the classification is reasonable. Next, let's try "C.R.E.A.M." by Wu-Tang Clan. Running this, we get 96% hip-hop, which is accurate. Finally, let's try "Master of Puppets" by Metallica. We get about 70% heavy metal and 28% rock, which is close to thrash metal, but heavy metal is the closest genre in my set.
+
+This is a public URL, so you can try it yourself. It's a fun demo showing that you can train NLP models with O2NLP without writing any machine learning code. Last time, we tried a binary classification problem; this one is multi-class. I'll keep exploring and try to build models for other tasks. Spaces is a super easy way to create a web page to test and share your model. Check out all the links in the video description. I hope this was fun and informative. See you soon with more videos. Bye-bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">NLP</span><span class="tag">AutoNLP</span><span class="tag">Song Lyrics Classification</span><span class="tag">Machine Learning</span><span class="tag">Web App Deployment</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

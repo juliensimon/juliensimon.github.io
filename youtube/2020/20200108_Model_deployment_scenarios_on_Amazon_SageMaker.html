@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Model deployment scenarios on Amazon SageMaker - In this whiteboard video, I walk you through three model deployment scenarios on Amazon SageMaker:
+- One model per endpoint,
+- Several model variants per endpoi..." name="description"/><meta content="Model deployment scenarios on Amazon SageMaker - Julien Simon" property="og:title"/><meta content="Model deployment scenarios on Amazon SageMaker - In this whiteboard video, I walk you through three model deployment scenarios on Amazon SageMaker:
+- One model per endpoint,
+- Several model variants per endpoi..." property="og:description"/><meta content="https://www.julien.org/youtube/2020/20200108_Model_deployment_scenarios_on_Amazon_SageMaker.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Model deployment scenarios on Amazon SageMaker - Julien Simon" name="twitter:title"/><meta content="Model deployment scenarios on Amazon SageMaker - In this whiteboard video, I walk you through three model deployment scenarios on Amazon SageMaker:
+- One model per endpoint,
+- Several model variants per endpoi..." name="twitter:description"/><link href="https://www.julien.org/youtube/2020/20200108_Model_deployment_scenarios_on_Amazon_SageMaker.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Model deployment scenarios on Amazon SageMaker - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Model deployment scenarios on Amazon SageMaker</h1>
+<div class="date">January 08, 2020</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/dT8jmdF-ZWw">
+</iframe>
+</div>
+<div class="description">In this whiteboard video, I walk you through three model deployment scenarios on Amazon SageMaker:
+- One model per endpoint,
+- Several model variants per endpoint,
+- Multi-model endpoints.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+Blog posts:
+* Mastering the mystical art of model deployment, part 1 <a href="https://medium.com/@julsimon/mastering-the-mystical-art-of-model-deployment-c0cafe011175" rel="noopener noreferrer" target="_blank">https://medium.com/@julsimon/mastering-the-mystical-art-of-model-deployment-c0cafe011175</a>
+* Mastering the mystical art of model deployment, part 2 <a href="https://medium.com/@julsimon/mastering-the-mystical-art-of-model-deployment-part-2-deploying-amazon-sagemaker-endpoints-with-cf9539dc2579" rel="noopener noreferrer" target="_blank">https://medium.com/@julsimon/mastering-the-mystical-art-of-model-deployment-part-2-deploying-amazon-sagemaker-endpoints-with-cf9539dc2579</a>
+* Multi-model endpoints <a href="https://aws.amazon.com/blogs/machine-learning/save-on-inference-costs-by-using-amazon-sagemaker-multi-model-endpoints/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/blogs/machine-learning/save-on-inference-costs-by-using-amazon-sagemaker-multi-model-endpoints/</a>
+
+Notebooks:
+* Multi-model endpoints examples (scikit-learn, XGBoost, custom container): <a href="https://github.com/awslabs/amazon-sagemaker-examples/tree/master/advanced_functionality" rel="noopener noreferrer" target="_blank">https://github.com/awslabs/amazon-sagemaker-examples/tree/master/advanced_functionality</a>
+
+For more content, follow me on :
+* Medium: <a href="https://medium.com/@julsimon" rel="noopener noreferrer" target="_blank">https://medium.com/@julsimon</a>
+* Twitter: <a href="https://twitter.com/juliensimon" rel="noopener noreferrer" target="_blank">https://twitter.com/juliensimon</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi, this is Julien from Arcee. Don't forget to subscribe to my channel to be notified of future videos. In this video, I'm going to focus on deploying models with Amazon SageMaker. Using the whiteboard, I'm going to walk you through three scenarios. The first scenario is the usual one, deploying a single model on a real-time endpoint. The second scenario is deploying model variants, also called production variants, on the same endpoint. This is useful if you want to gradually introduce a new model in production to check that it works correctly before deploying it 100%. The third scenario is a recent capability called multi-model endpoints where you can dynamically load and unload a large number of models on the same endpoint. This is really useful if you have hundreds or thousands of models, maybe one model per customer, and of course, you don't want to deploy, manage, and pay for thousands of endpoints. Instead, you can use a multi-model endpoint and load and unload models automatically as they are required by incoming traffic.
+
+Let's start with the first scenario, deploying a single model on an endpoint. We start from a SageMaker estimator and call the Fit API to train a model. Once the model has been trained, we find a model artifact in S3. The model artifact is a gzip.tar file called model.tar.gz. Now we want to deploy, so we call the deploy API, and this will do three things. The first is to create the model, which means registering the model in SageMaker, defining a name for the model, and associating it with the S3 location. The second thing is to create an endpoint config. The endpoint config is a list of production variants, at least one. In this case, let's stick to one. We'll see what happens when we have multiple ones in the next example. A production variant is a model name, corresponding to the name used when creating the model, an instance type, which will be used to create the managed infrastructure to serve traffic for the model, and an instance count. How many instances do you want for that endpoint? Once we have the endpoint config, Deploy will create the endpoint itself, creating the managed infrastructure serving predictions using HTTPS. So let's say we have a single production variant and we created three instances for that production variant. Each instance will host the model we trained, and the endpoint will automatically load balance traffic across the three instances.
+
+That's the basic scenario. Train, deploy, and serve traffic using HTTPS, using a single production variant. Deploy will do all of that. If you want to do these individual operations, it's possible too. For example, you could use a model that has already been trained and create a new endpoint config for it and deploy it. These lower-level APIs, create model, create endpoint config, and create endpoint, are available in the AWS SDK. If you use Python, you'll find those APIs in Boto, and if you use other languages, you'll find them in the language SDKs. The SageMaker SDK makes it a little easier, which is called fit and deploy, and everything else happens. But keep in mind, you can do those things on their own if that's useful.
+
+Now let's look at the second scenario where we deploy multiple model variants on the same endpoint. We start from several models that we already trained, using either the SageMaker SDK or maybe the low-level API. In this case, we'd use a create training job in Boto3. Let's say we have two models. Maybe we have last week's model and today's model, and we want to see if today's model is performing the way it should. But you could train three, four, five models if you wanted. So, here we have two, and once again, they'll be stored in S3. Then we need to create both models. We need to do this twice, of course, because we have two models. Next, we create the endpoint config, and this is where things start to change. Here we are going to define two production variants. So, production variant one for model one with a certain instance count, instance type, and weight. I'll come back to weight in a second, and production variant 2 with model 2, instance count, instance type, and a weight. We do this only once because we want to have a single endpoint at the end.
+
+What are those weights? Those weights will dictate which fraction of traffic a certain production variant will receive. So, let me flip the board and show you. When we're creating the endpoint, the production variants get created separately. Let's say production variant one is backed by three instances and production variant two is backed by one instance. I assign different weights to the production variants because maybe production variant one is the model that I already know, and production variant 2 is the new model that I trained and want to see how it's doing in production. Production variant 1 will get a fraction of traffic represented by its weight divided by the sum of all weights. Accordingly, production variant 2 will get a fraction of traffic represented by its weight divided by the sum of weights. So, let's say W1 is 9 and W2 is 1. Then production variant 1 will get 90% of traffic, 9 divided by 10, and production variant 2 will get 10% of traffic, 1 divided by 10.
+
+This is how you would set up a Canary deployment and introduce a new model that you've trained, looking at its metrics and your KPIs to see how well it's doing. You can update the endpoint configuration to change the weights. You could start with 90% and 10%, then 80% and 20%, and then 50% and 50%, etc., and this can be done without any disruption to the service. So, this is how you would use production variants to introduce different models on a live endpoint and potentially remove production variant one altogether by setting its weight to zero and removing it from the endpoint configuration.
+
+Finally, let me show you how to use multi-model endpoints that load and unload models dynamically as needed. First, you would train all your different models. So, business as usual, and you would have plenty of models in S3. The next step, and this is really different from the previous ones, would be to create a single model in multi-model mode. Let's say all these are XGBoost models. You would create your model pointing at the XGBoost container, the container that contains the code that will be used to serve predictions for the models. You would define where in S3, under which prefix, these models live. So, whatever prefix hosts all the models is the root. There's a parameter for the mode, and you should absolutely use multi-models. This is what actually triggers the multi-model setup for this. When you create the model, remember to pass this parameter. Otherwise, you're just creating a single model just like we've seen before.
+
+Next, you create an endpoint configuration and an endpoint, and there's no change here. You use the exact same API and syntax. Remember, you're creating an endpoint configuration, so let's say you're creating maybe a single production variant for this model, but this model is really multiple models served by the same container. Sometimes people are confused here; yes, you only create one model, and most of the time, you'll create only one endpoint configuration and one endpoint. When the endpoint is up, let's say you have a single production variant backed by three instances. Now, when you send traffic to this endpoint, you are not just sending input data; you're also sending the model name. So, using the root and the name, we can find which model to use for that input data. If the model is not on the endpoint, the endpoint will load it dynamically from S3. The first hit will be slow because we need to fetch the model from S3 and load it, so the first prediction will be slow, but then the next ones will be fast.
+
+You also need to implement a shortlist of APIs to load, unload, list available models, etc. You'll find the list in the documentation. If you're using XGBoost or scikit-learn, we actually provide sample code for this, so chances are you won't have much to write. If you have a custom container, something completely different, then you will have to implement those APIs so that SageMaker can invoke them to load, unload, list models, etc. But these are really pretty straightforward, and you'll figure it out with examples.
+
+That's the multi-model thing. Remember the big difference: we treat this collection of models in S3 as a single model. So, this is why we create only one model from an API perspective. We tell SageMaker what root prefix they live in, we want multi-model mode, then create an endpoint configuration and endpoint just as we've done before. When we predict, we need to send the input data we want to predict and the model name. Then SageMaker will automatically load and unload models as you need them. Pretty cool.
+
+That's it for multi-model. I hope it was useful. Again, don't forget to subscribe to my channel. Happy to answer questions as well. I will share additional resources in the video description, notebooks, blog posts, etc. And I'll see you soon with more content. Until then, keep rocking!
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Amazon SageMaker</span><span class="tag">Model Deployment</span><span class="tag">Multi-Model Endpoints</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="NLP models   from the Hugging Face hub to Amazon SageMaker... and back - In this video, I start from a pre-trained model and a dataset hosted on the Hugging Face hub. Running a Jupyter notebook in SageMaker Studio, I pre-process the ..." name="description"/><meta content="NLP models   from the Hugging Face hub to Amazon SageMaker... and back - Julien Simon" property="og:title"/><meta content="NLP models   from the Hugging Face hub to Amazon SageMaker... and back - In this video, I start from a pre-trained model and a dataset hosted on the Hugging Face hub. Running a Jupyter notebook in SageMaker Studio, I pre-process the ..." property="og:description"/><meta content="https://www.julien.org/youtube/2021/20211029_NLP_models_-_from_the_Hugging_Face_hub_to_Amazon_SageMaker..._and_back.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="NLP models   from the Hugging Face hub to Amazon SageMaker... and back - Julien Simon" name="twitter:title"/><meta content="NLP models   from the Hugging Face hub to Amazon SageMaker... and back - In this video, I start from a pre-trained model and a dataset hosted on the Hugging Face hub. Running a Jupyter notebook in SageMaker Studio, I pre-process the ..." name="twitter:description"/><link href="https://www.julien.org/youtube/2021/20211029_NLP_models_-_from_the_Hugging_Face_hub_to_Amazon_SageMaker..._and_back.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NLP models   from the Hugging Face hub to Amazon SageMaker... and back - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>NLP models   from the Hugging Face hub to Amazon SageMaker... and back</h1>
+<div class="date">October 29, 2021</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/aiJaAWFGL7k">
+</iframe>
+</div>
+<div class="description">In this video, I start from a pre-trained model and a dataset hosted on the Hugging Face hub. Running a Jupyter notebook in SageMaker Studio, I pre-process the data, and I fine-tune a sentiment analysis model on SageMaker infrastructure. Then, I deploy the model on a SageMaker endpoint and predict with it.
+Next, I retrieve the trained model in S3 and I use the Hugging Face CLI to push the model to the Hugging Face hub. From there, I use the open source Transformers library to work with the model, just like I would do with any Hugging Face model. 
+Finally, using the SageMaker SDK, I redeploy the model directly from the Hugging Face hub to a SageMaker endpoint.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+Dataset and notebook: <a href="https://huggingface.co/juliensimon/reviews-sentiment-analysis/tree/main" rel="noopener noreferrer" target="_blank">https://huggingface.co/juliensimon/reviews-sentiment-analysis/tree/main</a>
+
+New to Transformers? Check out the Hugging Face course at <a href="https://huggingface.co/course" rel="noopener noreferrer" target="_blank">https://huggingface.co/course</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In this video, I would like to show you how to easily train and deploy Hugging Face models on Amazon SageMaker. We're going to go full circle. We'll start from a pre-trained model and a dataset that I take from the Hugging Face hub. We'll fine-tune the model on SageMaker, deploy it, and test it on SageMaker as well. Then, I'll push the trained model back to the model hub. Using the Transformers library, I will download it again to show you how easily you can go through that whole process. Finally, I'll show you how to deploy a model from the hub directly to SageMaker without training. So, just training models, pushing them back to the hub, downloading them again, deploying them—the full story. Let's get started.
+
+First, we need to install some packages. Of course, we need the SageMaker SDK, the Transformers library, and the Datasets library from Hugging Face. We also need some widgets for progress indicators and the Hugging Face Hub package, which adds API and CLI to interact with the Hugging Face Hub. We'll definitely need that. Next, I need to install Git LFS for large file support in Git, as all models and datasets are stored in Git repos on the Hugging Face hub and there are large files. Git LFS is not available in the standard repo that Studio can access, so I need to download and install it myself. Simple enough. I can quickly check that I have the latest versions for everything, and it looks like we're fine here.
+
+Now, let's talk about the actual problem we want to solve. I'm going to start from a product review dataset hosted on the Hugging Face Hub. I'll download it, process it a bit, and use it to fine-tune a classification model for sentiment analysis, a common NLP task. Preprocessing is pretty simple. First, download the dataset from the hub. If I look at the first example from the training set, I see an English text and a Thai language review, along with a star review from one to five and a field indicating if the English translation is correct for the Thai review. I've decided to train an English language model, so the preprocessing will drop the Thai language and keep the English product review and the star review. To simplify, I'll turn this into a binary classification problem, but you could keep it as a multi-class problem if you wanted. I've decided that four-star and five-star reviews are positive (label 1), and one-star, two-star, and three-star reviews are negative (label 0). Apply this to the training and validation sets. Now, I have a labels feature set to either 0 or 1. To eliminate the nested JSON structure, I flatten the translation feature, which gives me `translation.en` and `translation.th`. I remove the columns I don't need and rename `translation.en` to `text`, which is what the model expects. Now my dataset has a labels feature (0 or 1) and a text feature with the English language review.
+
+The next step is to tokenize the data. I can download a pre-trained tokenizer and tokenize the training and validation sets. If I look at one of the tokenized instances, I see the tokens (input IDs) and the attention mask. The zero token means it's empty, and the attention mask with one tells the model to consider the token, while zero means to ignore it. I still have my labels and text, but I'm deciding to drop the text here, though we could keep it. Now that the data is ready, I need to upload the datasets to S3. I'm using the default bucket for SageMaker and defining paths for the training and validation sets. I use the convenient `save_to_disk` API to upload the datasets to S3. Now I have the input paths for training and validation.
+
+Next, I need a training script. It's pretty simple and uses the Trainer API in the Transformers library. The script loads the model, tokenizer, sets training arguments, creates the trainer instance, and trains the model. This is standard Hugging Face code that you could run on your laptop. The only adaptation for SageMaker is to receive command-line arguments and hyperparameters, which SageMaker will pass to the script. This is called script mode and is how SageMaker runs framework code for TensorFlow, PyTorch, Hugging Face, scikit-learn, etc. The script reads the location of the training and validation datasets from environment variables set by SageMaker. Finally, we need to save the model in a well-known location so SageMaker can upload it to S3. When using the Trainer API, make sure to pass the tokenizer as well to ensure it gets saved with the model.
+
+Hyperparameters are simple: we'll fine-tune for one epoch with a batch size of 30. Now we have everything we need to start the training job. We configure the Hugging Face Estimator in the SageMaker SDK, passing the location of our training script, hyperparameters, versions of Transformers, PyTorch, and Python, and the instance type. I'm using a single GPU instance and enabling Spot Instances to keep costs under control. Spot Instances provide access to extra capacity in EC2 at a deep discount, typically around 70%. We call `Fit`, passing the location of the training and validation sets in S3. The training job runs for a little over 2,800 seconds, but thanks to Spot Instances, we only get billed for 857 seconds, which is about 15 minutes. This job costs around a dollar, which is quite reasonable.
+
+Now we have a trained model saved in S3 and can deploy it on managed infrastructure. We'll use a reasonably sized CPU instance. After a few minutes, we have an HTTPS endpoint that we can invoke using any HTTPS library or the `predict` API in the SageMaker SDK. Let's try a positive product review first. Invoking the endpoint, we see the label is 1, which means positive with a high score. A very negative review is predicted as 0, which means very negative with a low score. When we're done testing, we can delete the endpoint and stop paying for it. This is how simple it is to train and deploy with managed infrastructure on SageMaker.
+
+We can also push the trained model to the Hugging Face Hub to archive it or share it. First, we need to log in to the Hugging Face Hub using the `huggingface-cli login` command. Once logged in, we create a new repository on the Hugging Face Hub and clone it to our Studio instance. We fetch the model artifact from S3, copy it to the repository, and extract it. We add the files to the Git repo, commit them, and push them. Now the model is on the hub, and we can use it in different ways. We can download it again using the Transformers library with `AutoTokenizer` and `AutoModelForSequenceClassification`. We can also use it directly with the pipeline API to create a sentiment analysis pipeline and predict samples locally.
+
+Another way to use the model is to deploy it from the hub directly to a SageMaker endpoint. We point to the model repo and task type, create a Hugging Face model object, and deploy it to an endpoint. This is equivalent to the estimator we used earlier, but instead of training, we grab the model directly from the hub. We can then use the `predict` API to get results and delete the endpoint when done.
+
+We've gone full circle: starting from a pre-trained model and dataset on the hub, we fine-tuned the model on SageMaker, deployed it, pushed it back to the hub, and used it again locally and on a SageMaker endpoint. This cycle is super simple and fits in a notebook. Feel free to grab this notebook, which I'll link in the video description, and reuse it with different models and task types. This code is very generic, so you can experiment with Hugging Face models without managing infrastructure. That's it for today. I hope this was useful. See you soon with more videos, and until then, keep learning and keep rocking. Bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">HuggingFace</span><span class="tag">AmazonSageMaker</span><span class="tag">ModelDeployment</span><span class="tag">FineTuning</span><span class="tag">SentimentAnalysis</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

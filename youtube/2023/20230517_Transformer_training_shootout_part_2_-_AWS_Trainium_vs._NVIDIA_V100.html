@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Transformer training shootout part 2   AWS Trainium vs. NVIDIA V100 - In this video, I compare the cost/performance of AWS Trainium with the NVIDIA V100 GPU.
+
+I first launch a trn1.32xlarge instance (16 Trainium chips) and a p3dn...." name="description"/><meta content="Transformer training shootout part 2   AWS Trainium vs. NVIDIA V100 - Julien Simon" property="og:title"/><meta content="Transformer training shootout part 2   AWS Trainium vs. NVIDIA V100 - In this video, I compare the cost/performance of AWS Trainium with the NVIDIA V100 GPU.
+
+I first launch a trn1.32xlarge instance (16 Trainium chips) and a p3dn...." property="og:description"/><meta content="https://www.julien.org/youtube/2023/20230517_Transformer_training_shootout_part_2_-_AWS_Trainium_vs._NVIDIA_V100.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Transformer training shootout part 2   AWS Trainium vs. NVIDIA V100 - Julien Simon" name="twitter:title"/><meta content="Transformer training shootout part 2   AWS Trainium vs. NVIDIA V100 - In this video, I compare the cost/performance of AWS Trainium with the NVIDIA V100 GPU.
+
+I first launch a trn1.32xlarge instance (16 Trainium chips) and a p3dn...." name="twitter:description"/><link href="https://www.julien.org/youtube/2023/20230517_Transformer_training_shootout_part_2_-_AWS_Trainium_vs._NVIDIA_V100.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Transformer training shootout part 2   AWS Trainium vs. NVIDIA V100 - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Transformer training shootout part 2   AWS Trainium vs. NVIDIA V100</h1>
+<div class="date">May 17, 2023</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/VDKDmKFOJ5M">
+</iframe>
+</div>
+<div class="description">In this video, I compare the cost/performance of AWS Trainium with the NVIDIA V100 GPU.
+
+I first launch a trn1.32xlarge instance (16 Trainium chips) and a p3dn.24xlarge (8 V100s). Then, I run 3 benchmarks: language pretraining with GPT2, token classification with BERT Large, and image classification with the Vision Transformer
+
+The results? Trainium is 2 to 5x faster, and 3 to 8x cheaper!
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+- Amazon EC2 trn1: <a href="https://aws.amazon.com/ec2/instance-types/trn1/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/ec2/instance-types/trn1/</a>
+- Amazon EC2 p3: <a href="https://aws.amazon.com/ec2/instance-types/p3/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/ec2/instance-types/p3/</a>
+- Training commands: <a href="https://gist.github.com/juliensimon/da64fc6d6a2fe39bd8c5af12389a227e" rel="noopener noreferrer" target="_blank">https://gist.github.com/juliensimon/da64fc6d6a2fe39bd8c5af12389a227e</a>
+- Trainium with Optimum Neuron: <a href="https://youtu.be/FmjTWags__Q" rel="noopener noreferrer" target="_blank">https://youtu.be/FmjTWags__Q</a>
+- Trn1 vs G5 benchmark: <a href="https://youtu.be/2SquGhkld7k" rel="noopener noreferrer" target="_blank">https://youtu.be/2SquGhkld7k</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In this video, we're going to run a training benchmark on several transformer models using AWS instances. On the left-hand corner, I'm going to use the P3DN24X large instance, which comes with eight Nvidia V100 GPUs. In many AWS regions, this is still the largest GPU instance you can get. On the right-hand corner, I'm going to use the TRN1 32XLARGE instance, which, as the name implies, comes with the Tranium chip, a custom AI accelerator designed by AWS. This one comes with 16 Tranium chips and is the largest Tranium instance.
+
+I'm going to run three different benchmarks. First, we'll try language pre-training with GPT-2. Then we'll try token classification with BERT-Large. Finally, we'll try image classification with the Vision Transformer. We'll look at training times and costs, and I'll summarize everything at the end of the video. Let's get to work.
+
+On the left, we have the GPU instance with the V100, running PyTorch 2.0. I'll be using Torch Compile and FP16 training, and I'll do all of this with the built-in examples from the Transformers repository on GitHub. On the right side, we have the Tranium instance, and here I'll run the same examples adapted for our Optimum Neuron library, which I featured in a previous video. It's a one-line change to adapt your Transformers code to Optimum Neuron, based on the AWS Neuron SDK, and I'm using PyTorch 1.13.1.
+
+Let's run the first benchmark: GPT-2 training on the WikiText dataset. Let's launch those two jobs on the two instances. As you probably know, on Tranium, we usually need to compile the model, which can take 5-10 minutes. However, in Optimum Neuron, we implemented a model cache. Cached artifacts are saved on the Hugging Face Hub, meaning you compile it once, save it there, and the next time you run the job, we fetch the compiled model automatically, saving you those 10 minutes. Let's wait for a minute for the data to load, and then we'll see the performance of the two instances.
+
+Both jobs have started. The GPUs and neuron cores are busy. For timing, the GPU instance will probably run those 10 epochs in about 5 hours and 20 minutes. Tranium is going to do it in 2 hours and 20-something minutes. We see a very significant difference, more than 2x faster on Tranium. There's a bit of jitter, but generally, it's going to be 5 hours and 20 minutes against 2 hours and 20-something minutes. More than 2x faster, which is very significant.
+
+Now let's try the same thing with token classification. Benchmark number two: fine-tuning BERT-Large on the CONLL 2003 dataset for token classification. Same settings: FP16, model compilation for the GPU, and default settings for Tranium. Let's wait for a minute for those jobs to start, and then we'll look at performance.
+
+Both jobs are running. On the GPU side, we're looking at around 15 minutes. On the Tranium side, we're looking at about 8 minutes and 30 seconds. Probably another under 2x speedup here. We'll see the final numbers at the summary, but still a very good speedup for Tranium.
+
+On to benchmark number three with the Vision Transformer. In this example, we are fine-tuning the Vision Transformer on the Food 101 dataset, which has about 100,000 images, with 70K used for training. Same settings: FP16, Torch Compiler, and everything. Let's launch this and the other one. Let's wait a minute for the jobs to start, and we'll see the numbers.
+
+We are training. On the GPU side, we're looking at something like 55 minutes for those 10 epochs. On the Tranium side, we're looking at less than 10 minutes. The Tranium chip is crunching away, and it looks like we're going to be under 10 minutes. This is very significant, probably 5x faster, maybe more. A very good win for Tranium.
+
+Let's quickly look at the summary and pricing. I ran all those jobs completely, so these are the final times. For Tranium, the cost is $21.5 (US East 1 on-demand prices). For the P3 instance, it's $31.22 an hour. Tranium wins across the board on all three benchmarks for training time and cost. For GPT-2 training, Tranium is twice as fast and almost three times more cost-effective. For BERT, we see a 1.76 speedup and a 2.5 cost improvement. For the Vision Transformer, we see a 5.5x speedup and an 8x cost improvement.
+
+Again, this is just me testing those three models with those particular datasets, so your results may vary. I'll put all the commands in the video description, so feel free to run your own tests and reproduce. I highly encourage you to try out Tranium if it's available in your regions and if the models you work with are supported by the Neuron SDK. The next step would be to do the same benchmark on a P4 instance, which is on my to-do list. That's it for today. I hope this was informative and fun, and that you want to give Tranium a try now. Until next time, keep rocking!
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">AWS</span><span class="tag">Tranium</span><span class="tag">Transformer Models</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

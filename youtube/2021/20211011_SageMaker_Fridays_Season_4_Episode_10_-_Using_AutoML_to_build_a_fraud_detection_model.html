@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="SageMaker Fridays Season 4 Episode 10   Using AutoML to build a fraud detection model - Broadcasted on 08/10/2021. Join us for more episodes at https://pages.awscloud.com/SageMakerFridays
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future v..." name="description"/><meta content="SageMaker Fridays Season 4 Episode 10   Using AutoML to build a fraud detection model - Julien Simon" property="og:title"/><meta content="SageMaker Fridays Season 4 Episode 10   Using AutoML to build a fraud detection model - Broadcasted on 08/10/2021. Join us for more episodes at https://pages.awscloud.com/SageMakerFridays
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future v..." property="og:description"/><meta content="https://www.julien.org/youtube/2021/20211011_SageMaker_Fridays_Season_4_Episode_10_-_Using_AutoML_to_build_a_fraud_detection_model.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="SageMaker Fridays Season 4 Episode 10   Using AutoML to build a fraud detection model - Julien Simon" name="twitter:title"/><meta content="SageMaker Fridays Season 4 Episode 10   Using AutoML to build a fraud detection model - Broadcasted on 08/10/2021. Join us for more episodes at https://pages.awscloud.com/SageMakerFridays
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future v..." name="twitter:description"/><link href="https://www.julien.org/youtube/2021/20211011_SageMaker_Fridays_Season_4_Episode_10_-_Using_AutoML_to_build_a_fraud_detection_model.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SageMaker Fridays Season 4 Episode 10   Using AutoML to build a fraud detection model - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>SageMaker Fridays Season 4 Episode 10   Using AutoML to build a fraud detection model</h1>
+<div class="date">October 11, 2021</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/7NA5aNrye0s">
+</iframe>
+</div>
+<div class="description">Broadcasted on 08/10/2021. Join us for more episodes at <a href="https://pages.awscloud.com/SageMakerFridays" rel="noopener noreferrer" target="_blank">https://pages.awscloud.com/SageMakerFridays</a>
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+In this episode, we use SageMaker Autopilot and AutoGluon to automatically build a fraud detection model for insurance claims.
+
+*** Notebook
+
+<a href="https://gitlab.com/juliensimon/amazon-studio-demos/-/tree/master/sagemaker_fridays/season4/s04e10" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/amazon-studio-demos/-/tree/master/sagemaker_fridays/season4/s04e10</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody and welcome to this new episode of Sage Makeup Friday season 4. This is episode number 10, right? My name is Julien and I'm a dev advocate focusing on AI and machine learning. Once again, please meet my co-presenter. Thank you Julien. Hi everyone, my name is Sigolen and I'm a senior data scientist working with the AWS Machine Learning Solution Lab. My role is to help customers get their ML projects on the right track in order to create business value as fast as possible. Thank you again for being with us.
+
+So, where are we now? Last week we started with our AutoML track. This is episode two, right? We keep exploring episode two of the AutoML part. In fact, we are revisiting a dataset that we used in episode two, on August 13th, where we built a classification model for fraud detection to detect fraud on insurance claims. Way back in August, we worked with the dataset, prepared it, trained the model using SageMaker. This week, we're going to use the same dataset but we are going to use AutoML to build models, not our notebook code, just like we did previously. You'll find the code for this episode in our GitLab repo. Go and grab it, you can run it yourself. If you watched last week's episode, we focused on SageMaker Autopilot, which is the AutoML capability part of Amazon SageMaker. We gave you a quick glimpse at an open-source library called AutoGluon. This week, we're going to take a quick look at Autopilot again. It's the exact same code, which is pretty cool. We're just changing the dataset, but the rest of the code is really the same. We'll spend more time on AutoGluon and discussing those core techniques.
+
+Let's take a look at Autopilot first. This is the insurance claim dataset that we used last time. It's a small dataset, only 5,000 rows. We have mostly categorical features and a few numerical features. Of course, we have a label that tells us yes or no, is this fraud? Zero for no fraud, one for fraud. We have this claims dataset and a customer dataset with additional information on each customer, such as age range, state the policy was signed in, zip code, customer education, and more. To join these two files, we use the policy ID. We join them on the policy ID, and now we have a single dataset with everything, including driver information, claim information, and the label. We could do this with Data Wrangler, but here we're joining with pandas. You could load the dataset in SageMaker Data Wrangler as two different sources and join it there. Someone pointed that out on YouTube, so thank you for the idea. You could do it in Wrangler or any other way, just like with pandas. We showed Data Wrangler in detail already, but at the end of the day, we have this dataset. We save it to a CSV file and upload it to S3.
+
+You can use SageMaker Autopilot in two different ways. You can create an Autopilot experiment directly in the UI, giving it a name, passing the location of your dataset, and then either using the auto type so that Autopilot automatically figures out it's a binary classification problem, or you can specify it's a binary classification problem and choose a particular metric. You can also decide if you want to deploy the best model at the end. Just click on create and off it goes for a little while. We've done this before; it's not super difficult. Once you've done that, you end up with an AutoML job, which you can find here. This is the one I ran previously. If you right-click and describe it, you get all the information. Here it's complete, but if you had just started it, you would see blinking lights and information on the current phase of the job. After maybe an hour, we get lots of tuning jobs, and the best one highlighted with a star has reached an area under the curve of 0.69, which is quite good for a small dataset. It's a promising start, and it tells us there is predictive power in this data. If a data scientist starts looking at this and keeps tweaking, we will find something better. AutoML is a good way to fire up jobs for many problems or datasets and focus on the most promising ones. If you had 100 problems, you wouldn't click 100 times. Instead, you would fire up jobs using the SageMaker SDK, which is as simple as passing a role, an IAM role, the name of the column you want to predict, and the problem type. You could pass auto, or specify binary classification and use AUC. You can also set the number of tuning jobs, which is 250 by default. If you decrease this number, you give fewer optimization opportunities, and performance tends to drop. If you increase it, you can go up to 500, but I wouldn't go much higher.
+
+After passing the location of your data, the job starts, and you see blinking lights and models. This is a quick summary of what we did last week. If that was too fast, please watch last week's episode for more detail.
+
+Today, we'd like to show you how to improve on the 0.69 AUC. Last week, we saw the candidate generation notebook that gives access to the feature engineering and training code. With domain knowledge and data science expertise, you can start improving this. Another way is using AutoGluon. AutoGluon is an open-source project by Amazon. You can read the research paper, which is very readable, and find everything on GitHub. It's based on MXNet and the Gluon API. We can do AutoML for tabular data, NLP, and computer vision. We have many different algorithms and assembling techniques, which we'll discuss today.
+
+First, make sure you have MXNet installed. Here, I'm using the CPU version. If you have a GPU instance, install the GPU version of MXNet. We need auto-based, widgets for progress indicators, and S3FS to read objects directly from S3. Import pandas, load the claim CSV and customer CSV, join them, save to CSV, and upload to S3. We import the dataset using S3FS. We create a predictor, specifying the column to predict is called fraud and the metric is roc_auc. We call fit, passing the training data and setting a time limit of two hours. Gluon allocates this time across different algorithms, trying to maximize the chances of getting good models. We set the training mode to best quality and can exclude some algorithms if needed.
+
+What happens next? First, problem discovery. Since the label column, fraud, has two values (0, 1), it's detected as a binary classification problem. We map the labels to classes and perform data prep. AutoGluon detects column types automatically, fills missing values, and handles categorical features. It's important to check the detected types, especially for categorical features encoded as integers. If a categorical feature is detected as an integer, it can create a false sense of scale. You can force the schema to ensure categories are treated correctly. I've noticed large increases in accuracy when moving integer columns to category columns.
+
+After data prep, we start training. AutoGluon uses boosting, bagging, and stacking techniques. Boosting involves training a sequence of models that try to fix each other's mistakes. Bagging trains different models on different subsets of the data and combines their predictions. Stacking combines independent models by training a meta-model on their predictions. In AutoGluon, we fit two stack levels. We train many L1 models, take the best, and use their predictions as input for L2 models. Finally, we build a weighted ensemble of the best L2 models.
+
+In the log, we see feature preparation, then AutoGluon fits two stack levels. We train 10 L1 models using different algorithms and apply bagging. We see the metric for each job, and the best model in this round is CADBoost, which performs well on categorical data. We repeat this 20 times, and the AUC improves. We move to level two, train 10 L2 models using the concatenated outputs from L1, and apply bagging again. The best L2 bag is a neural network, and the best L1 is light GBM. The final L3 model, a weighted ensemble of the best L2 models, achieves an AUC of 0.8, which is a significant improvement over Autopilot's 0.69.
+
+You can print the leaderboard to see the total training time, prediction time, and model performance. The best L2 bag was a neural network, and the best L1 was light GBM. If you need low latency, you can control the number of L1 and L2 models or exclude some algorithms. You can also use presets to balance accuracy and prediction time.
+
+If you call the fit summary API, you see more details, including performance versus latency. The L3 model is the best but has higher latency. If latency is a concern, you can choose a model with slightly lower accuracy but better latency, such as GBM bag L2.
+
+Next week, we'll look at how to run AutoGluon in SageMaker processing, which is useful for scaling and managing jobs. Thank you, Sigolen. Looking forward to diving into Ensembling a little more and different use cases. I hope you learned a few things, and we'll see you next week with more episodes. Have a great week. See you soon. Bye-bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">AutoML</span><span class="tag">SageMaker</span><span class="tag">FraudDetection</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Introducing Amazon SageMaker JumpStart part 2   Model zoos   AWS re  Invent 2020 - Following up on part 1 (https://youtu.be/dyhKBax4Bxw), I show how you to deploy state of the art natural language processing and computer vision models from pop..." name="description"/><meta content="Introducing Amazon SageMaker JumpStart part 2   Model zoos   AWS re  Invent 2020 - Julien Simon" property="og:title"/><meta content="Introducing Amazon SageMaker JumpStart part 2   Model zoos   AWS re  Invent 2020 - Following up on part 1 (https://youtu.be/dyhKBax4Bxw), I show how you to deploy state of the art natural language processing and computer vision models from pop..." property="og:description"/><meta content="https://www.julien.org/youtube/2020/20201208_Introducing_Amazon_SageMaker_JumpStart_part_2_-_Model_zoos_-_AWS_re_-Invent_2020.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Introducing Amazon SageMaker JumpStart part 2   Model zoos   AWS re  Invent 2020 - Julien Simon" name="twitter:title"/><meta content="Introducing Amazon SageMaker JumpStart part 2   Model zoos   AWS re  Invent 2020 - Following up on part 1 (https://youtu.be/dyhKBax4Bxw), I show how you to deploy state of the art natural language processing and computer vision models from pop..." name="twitter:description"/><link href="https://www.julien.org/youtube/2020/20201208_Introducing_Amazon_SageMaker_JumpStart_part_2_-_Model_zoos_-_AWS_re_-Invent_2020.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Introducing Amazon SageMaker JumpStart part 2   Model zoos   AWS re  Invent 2020 - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Introducing Amazon SageMaker JumpStart part 2   Model zoos   AWS re  Invent 2020</h1>
+<div class="date">December 08, 2020</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/_dQiM9gSO6Y">
+</iframe>
+</div>
+<div class="description">Following up on part 1 (<a href="https://youtu.be/dyhKBax4Bxw)," rel="noopener noreferrer" target="_blank">https://youtu.be/dyhKBax4Bxw),</a> I show how you to deploy state of the art natural language processing and computer vision models from popular models zoos (TensorFlow Hub, PyTorch Hub). All it takes is a single click, and you can immediately use the models using a sample notebook that includes prediction code.
+
+<a href="https://aws.amazon.com/sagemaker/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/sagemaker/</a>
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future episodes ⭐️⭐️⭐️
+
+For more content:
+* AWS blog: <a href="https://aws.amazon.com/blogs/aws/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/blogs/aws/</a>
+* Medium blog: <a href="https://julsimon.medium.com/" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com/</a>
+* YouTube: <a href="https://youtube.com/juliensimonfr" rel="noopener noreferrer" target="_blank">https://youtube.com/juliensimonfr</a> 
+* Podcast: <a href="http://julsimon.buzzsprout.com" rel="noopener noreferrer" target="_blank">http://julsimon.buzzsprout.com</a> 
+* Twitter <a href="https://twitter.com/@julsimon" rel="noopener noreferrer" target="_blank">https://twitter.com/@julsimon</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi, everybody. This is Julien from Arcee. In this video, I'd like to show you how you can easily deploy machine learning models using Amazon SageMaker Jumpstart, a new capability that we just launched. Jumpstart is integrated with SageMaker Studio. So open your Studio console, and you'll see this run open source model with one click. 
+
+So let's see if this is actually true. Let's start exploring models. We can see we have natural language processing models. We have quite a list, lots of BERT models trained on different tasks. And we also see some computer vision models, a lot of them, image classification, object detection, etc. We're going to deploy one of each. 
+
+Let's start with NLP. Why not? And we could try this one. So what is this model? If we scroll down a bit, maybe zoom in a bit, we can see this is a sentence pair classification model. It takes a pair of sentences as input and classifies the input pair to entailment or no entailment. So what this means is, is the second sentence a consequence of the first sentence? And we'll see these are questions and answers. So this model will tell us if a certain sentence is an appropriate answer to the question or if it's an unrelated sentence. 
+
+We can deploy a pre-trained version or we can fine-tune on our own model and we have information on the format for the fine-tuning data set. So here we're just going to deploy the model. Maybe we'll look at fine-tuning in another video. So simply click on the deploy button. Maybe we can look at the deployment configuration. That's the instance type and we could give a custom name. That's fine for now. Let's just go and click deploy. 
+
+Okay, so it's going to take a few minutes. Let's do the same for our computer vision model. So this is an inception model. It's an image classifier. Again, we can see some information here. We have a pre-trained model on the ImageNet dataset or we can fine-tune again, right? Passing our own image classes. Okay, so we're going to deploy, do the same, and we're going to wait for that endpoint to come up. So I'll pause the video and I'll see you in a little bit.
+
+After a few minutes, my BERT endpoint is ready and we can try and use it. So at this point, we would probably scramble for prediction code and try to figure out how we can invoke the real-time endpoint. But we don't need to do any of this here because we can simply a notebook that contains samples as well as prediction code. And no need to change anything in here. We can just run the notebook and get some predictions. 
+
+So let's see how this works. Run the cell. We see some examples here. So the first sentence pair is actually a column pair with question and answer, although I wouldn't really know about Beyonce's vocal range. I'm more of a metal guy. Anyway, the second sentence pair is not a correct question and answer pair. We have a question here, but the second sentence isn't really an answer for this, okay? Although it does have interesting context, right? It's definitely about a singer, a vocal acrobat, so not totally unrelated, but not an answer. 
+
+So let's see how the model works. Now we have our prediction code here. And, well, I'm very happy I didn't have to write any of this. I have the correct name for the endpoint inserted. So all I need to do is run this cell and get an answer for this. Okay, so we see the first example actually shows entailment. So the second sentence entails the first one. And in the second example, the second sentence does not entail the first one. So it's not a valid answer for that question. It's not even an answer at all. 
+
+Job done. I don't think deploying and testing BERT was ever this easy, honestly, compared to my previous attempts. So this is very, very easy. And of course, you can try your own samples and reuse the prediction code, copy paste this prediction code into your own notebooks, so on. This is a great, great way to get started with the models and save lots of time. 
+
+And since we're done with this, of course, we should delete the endpoint. Otherwise, we're going to be charged even though we don't use it. So now it's going away. Let's take a look at the computer vision model now. So we can see the endpoint is in service. Just like in the previous example, we have a notebook. So let's open it. And let's see what we have here. We're downloading some images and predicting them. 
+
+So let's run this code. All right, what do we have? A cat and a dog. So we open these. Load them in memory. And again, we invoke the endpoint using that code, right? The endpoint name is already in there. No need to change anything. So let's run this. And what do we see? We see the top five predictions for the cat. So yeah, a tabby cat sounds about right. And we see the top five predictions for the dog and Labrador retriever, yeah, that's how you say it. Labrador retriever looks good, right? Or is that a golden retriever? I confuse them a lot, but anyway, it is a retriever, so that's close enough. Maybe you can leave me a comment in the video and tell me whether what kind of dog this actually is. 
+
+So this was very easy too. Again, you can reuse the sample code for this model. No need to write it. And once again, once you're done, do not forget to delete the endpoint and away it goes, right? So as you can see, this is really super simple. You can deploy state-of-the-art NLP models, state-of-the-art computer vision models from the TensorFlow hub, the PyTorch hub, and we didn't write a single line of code, which is great because that prediction code always tends to make my life miserable, especially with the more advanced models. They're really not easy to work with. No such problem here, okay? 
+
+So go and try it out. Happy to answer questions. Happy to hear your feedback. And I'll be back soon with more videos. Thank you.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Amazon SageMaker</span><span class="tag">Machine Learning Deployment</span><span class="tag">BERT Model</span><span class="tag">Inception Model</span><span class="tag">SageMaker Jumpstart</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

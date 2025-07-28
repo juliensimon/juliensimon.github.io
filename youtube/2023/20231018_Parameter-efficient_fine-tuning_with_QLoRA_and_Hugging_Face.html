@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Parameter efficient fine tuning with QLoRA and Hugging Face - In this sequel to my previous video (https://youtu.be/tc87-ZKWm78), I delve into optimizing the fine-tuning of a Google FLAN-T5 model for legal text summarizati..." name="description"/><meta content="Parameter efficient fine tuning with QLoRA and Hugging Face - Julien Simon" property="og:title"/><meta content="Parameter efficient fine tuning with QLoRA and Hugging Face - In this sequel to my previous video (https://youtu.be/tc87-ZKWm78), I delve into optimizing the fine-tuning of a Google FLAN-T5 model for legal text summarizati..." property="og:description"/><meta content="https://www.julien.org/youtube/2023/20231018_Parameter-efficient_fine-tuning_with_QLoRA_and_Hugging_Face.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Parameter efficient fine tuning with QLoRA and Hugging Face - Julien Simon" name="twitter:title"/><meta content="Parameter efficient fine tuning with QLoRA and Hugging Face - In this sequel to my previous video (https://youtu.be/tc87-ZKWm78), I delve into optimizing the fine-tuning of a Google FLAN-T5 model for legal text summarizati..." name="twitter:description"/><link href="https://www.julien.org/youtube/2023/20231018_Parameter-efficient_fine-tuning_with_QLoRA_and_Hugging_Face.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Parameter efficient fine tuning with QLoRA and Hugging Face - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Parameter efficient fine tuning with QLoRA and Hugging Face</h1>
+<div class="date">October 18, 2023</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/ebQ2wyn8RGM">
+</iframe>
+</div>
+<div class="description">In this sequel to my previous video (<a href="https://youtu.be/tc87-ZKWm78)," rel="noopener noreferrer" target="_blank">https://youtu.be/tc87-ZKWm78),</a> I delve into optimizing the fine-tuning of a Google FLAN-T5 model for legal text summarization.  The focus is on employing QLoRA for parameter-efficient fine-tuning. All it takes is a few extra lines of simple code in your existing script.
+
+This methodology allows us to train the model with remarkable cost efficiency, utilizing even modest GPU instances, which I demonstrate on AWS with Amazon SageMaker. Tune in for a detailed exploration of the technical nuances behind this process.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+- Original model: <a href="https://huggingface.co/google/flan-t5-large" rel="noopener noreferrer" target="_blank">https://huggingface.co/google/flan-t5-large</a>
+- LoRA model: <a href="https://huggingface.co/juliensimon/flan-t5-large-billsum-qlora" rel="noopener noreferrer" target="_blank">https://huggingface.co/juliensimon/flan-t5-large-billsum-qlora</a>
+- Dataset: <a href="https://huggingface.co/datasets/billsum" rel="noopener noreferrer" target="_blank">https://huggingface.co/datasets/billsum</a>
+- Notebook: <a href="https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/summarization-t5-qlora" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/summarization-t5-qlora</a>
+
+Follow me on Medium at <a href="https://julsimon.medium.com" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com</a> or Substack at <a href="https://julsimon.substack.com." rel="noopener noreferrer" target="_blank">https://julsimon.substack.com.</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Hugging Face. In the last few videos, I showed you the benefits of training models using techniques like LoRa and Q LoRa, reducing the GPU RAM memory requirements and making it possible to fine-tune those models on rather small GPUs. In this video, we're going to dive a little deeper, and I will show you how you can actually adapt your existing code for LoRa and Q LoRa. So I'll start from a previous example where I showed you how to fine-tune a summarization model, and we'll just add a few lines of code to enable LoRa, and we'll see how that goes, right? Let's get to work.
+
+A while ago, we ran this example where I showed you how to fine-tune FLAN T5 Large for summarization on a corpus of legal documents. I used the FLAN T5 model from the Hub and the BuildSum dataset from the Hugging Face Hub, which contains US law, California law, etc. This was reasonably easy. We're not going to go through the full code again. I just want to show you quickly the fine-tuning script. Obviously, I'll put the link to that previous video in the description. So, we had a metrics function. We just loaded the model from the hub as well as the tokenizer, prepared our training arguments, our trainer, and Coltrain. Okay, so pretty simple vanilla Hugging Face code. And we trained this on a P4D instance, which is a really large AWS instance, with multiple A100 GPUs, because I could get one. That took about a little less than half an hour. So that's the starting point.
+
+Now, let's say we want to take that same training code and apply LoRa and Q LoRa to it in order to be able to train on smaller GPUs. How do we do this? Here's the updated code. Alright, so let's take a look. Obviously, you will need the PEFT library from Hugging Face. Remember, PEFT means parameter-efficient fine-tuning. We need to import a few objects from that. We have a cool function to print the actual number of trainable parameters, but I'll get back to that. Start from PEFT, the metrics function is unchanged, receiving the hyperparameters in SageMaker is unchanged, and loading the data from S3 is unchanged. Okay. And in fact, we just need to add a few lines before we load the model. You can see we're loading the model here. So first, we need to define our quantization configuration. Quantization is implemented through the bits and bytes library, which is integrated into the transformers library. Here, I kept it super simple. I'm just quantizing the model to 8-bit. But feel free to read more about the quantization options. You can do 4-bit, double quantization, etc. You can take things pretty far. But for now, let's stay simple and hopefully maintain decent accuracy with 8-bit quantization. Define that object, enable 8-bit, and just pass that quantization configuration from the pre-trained API where we load the model. That's all you need to do to load and quantize the model.
+
+Then, we need to prepare the model for k-bit training, meaning either 4-bit or 8-bit. So prepare the model for quantized training. Just call that function. And next, and last, we need to enable the LoRa config. First and foremost, the task type. Here, we're doing sequence-to-sequence. You can look at the doc to see what other task types are supported. We don't care about inference; we're just doing training here. So let's set inference mode to false. And we set that all-important R parameter to 16. If you watched my previous videos on LoRa, you may remember that R is the rank of the two update matrices that we're training. If you don't understand what I just said, please go watch the two previous videos where I'm fine-tuning Stable Diffusion and LAMA2 using LoRa. But to keep things short, R is the dimension of the update matrices that we'll be training instead of training the full model. The lower you go, the smaller those matrices will be, and the fewer trainable parameters will have. But obviously, the lower you go, the more chances you have of degrading accuracy. You need to experiment. I think 8 or 16 are a good place to start. If the model is small enough to fit in GPU memory, then fine. My intuition would be to try to find the largest R value that still makes it possible to fine-tune on whatever small or mid-sized GPU you have. There's no need to go super low; you risk hurting accuracy. Again, if you want more theoretical details, please watch the previous videos.
+
+Alright, so once we have that config, we can just apply the config to our original model, and we can print the number of trainable parameters. This is where that cool function comes into play. I borrowed this from another notebook, so thank you to whoever wrote this. This will print the total number of parameters from the model and the actual number of trainable parameters that we'll learn during the LoRa process and the ratio. We'll see in the log how far we actually shrunk the fine-tuning job. The rest is strictly identical. Training arguments, trainer, training, and saving. Okay, so updating your code for LoRa or Q LoRa, whether you use SageMaker or not, is irrelevant. You'll need to import the library, define your quantization configuration if you want to apply quantization, make sure you set it here, prepare the model for quantized training, and then define your LoRa config. You got a little bit about that R parameter. Applying the config to the model, and you're good to go. As you can see, this is extremely easy. LoRa and Q LoRa are complicated things, but applying those techniques, experimenting with those techniques in your own code, is really simple.
+
+How does that work then? Well, there is zero change to the SageMaker notebook I'm running here because all the updates are contained in that training script that you saw. I changed absolutely nothing here. The only thing I changed is the instance I'm training in. I like to work with the smallest possible GPUs to prove my point. These are probably a little too small for practical use, although you will see that training time is not as bad as you would think. The reason I want to use this is because they are dirt cheap. We'll talk about cost again. In this particular example, I did not enable spot instances because I didn't have enough quota for spot instances on G5, oddly enough. But okay, this is how you would do it. Set spot instances to true. The max runtime needs to be set to something, so why not 24 hours? And that's it. Then I ran this. The requirements are important because, of course, we need to install PEFT and upgrade the Transformers library in our deep learning containers. I think I had a dependency on using a more recent Accelerate version. So make sure you inject those requirements into your training job. All the code will be available, so no need to take notes.
+
+I ran this, and it ran for about five hours. You could say, oh, that's way too slow. But again, it's not that slow if you ask me because you could run this thing overnight, in parallel, or try a hundred different combinations of datasets and parameters and R values because you can absolutely get 100 G5 instances and probably not 100 P4s, let alone P5s. It's a trade-off between the availability of those GPUs, the cost, and the fact that if you want to scale out your fine-tuning jobs, it's much easier to scale out from a tech and cost perspective using the tiniest GPUs you can find. If you're doing interactive work or exploring, then yeah, five hours is too long. But if you want to run this at scale, at a very reasonable cost, this is a really good option.
+
+Okay, so I think I have the training log here in CloudWatch. Let's see how that goes. We're installing our dependencies. There's a ton of stuff here. I'm looking for that parameter ratio. Here it is. So we can see that originally the model has something like 787 million parameters. In fact, we're only going to be training 4.7 million. So we're only training 0.6% of the model. If you increase R, that percentage will increase. If you decrease R, that percentage will decrease. That influences the size of the update matrices in the lower algo. But that's a huge win. That's how you end up being able to load those rather large models on tiny instances. I ran some experiments with the larger Flan T5s, the XL and XXL, and they do fit on that G5 XL instance, which I didn't expect. So feel free to try. I didn't go all the way and experiment with all the model sizes, but you can definitely fit the larger T5 models, which are multi-billion models. The XL is 3 billion, and the XXL is 11 billion. So this will fit on that G5 xlarge instance, which has an A10G GPU. So definitely not something huge. So feel free to experiment.
+
+This ran for something like five hours. Once the job is complete, we get our model artifact in S3, and I copied it, extracted it, and pushed it to the hub. You can see it here. So 8-bit quantization, and we can see the files. The adapter model is just 19 megabytes, so it's super tiny. Now, how do we use this? I'm importing PEFT and transformers and datasets. I'm defining the model ID of the original model, so the base model, and my own fine-tuned model. So, the adapter weights, and I'm training a PEFT config from my LoRa model. I'm downloading the base model and merging the two. I'm literally adding the adapter weights to the weights of the original model. Then I'm setting my model in evaluation mode because I don't want to train it. So now what I have is a model that has the same size as the original model, except I added my update weights to it. It will predict at the same speed because the merge has been done once, and there's no extra latency.
+
+Now I can load my dataset from the hub. Again, that BuildSum dataset, take a rather random example here. Print the text for that document. This act may be cited as the Venezuelan Refugee Assistance Act. Okay, very hard to read. And let's try and summarize this. I'm using the tokenizer from the original model, tokenizing the text above, truncating it if needed, returning the input IDs, and then generating the summary, passing the input IDs. I want to get up to 64 tokens. I'm setting up sampling to help the model be more creative. Low top p-values make the model very safe and conservative. High values make it a little more creative. And that's what we want because we want descriptive summaries. Then I'm getting my output tokens and just decoding those, and printing out the results. The summary says to amend the Immigration and Nationality Act of 1986 to provide for the adjustment of the status of certain Venezuelan nationals, which looks like a pretty good summary. I didn't extract just one sentence from the text, so it is a proper summary. I didn't try to optimize the model here, so if you try other examples, it might be horrible. I really focused on the machine learning engineering part, which is using LoRa to train those large models on small GPUs, but I didn't really try to optimize the machine learning metrics. So this is just a lucky example here.
+
+Let's take a look at the cost now. This is the cost for SageMaker training instances. Let's see if we can find P4D. So P4D24XL is around 37 something. Okay. I trained for about 1500 seconds. So let's say 15 bucks. And now we need to look at maybe G5. G5 is 1.4. Okay, so let's be precise here. And let's say six hours because it was a little more. Yeah, it was between five and six hours. So let's say $8. So, we're already twice as cheap, which is important because if you want to train lots of different models and combinations, a 2x cost improvement is great. Plus, it's much easier to get spot availability and spot discounts on G5 versus P4. Grabbing P4s is challenging, so spot P4 is a little too much to ask for. G5 spot shouldn't be a problem. So let's say we can take maybe even 50% off. So we can easily shrink this to $4 instead of $15 or $16. So that would be 4x cheaper. You could probably go even lower than that. Cost is never really discussed, but with enterprise customers, cost is one of the top concerns. Especially when they run tons of different models and have large teams, a 4x cheaper solution at the end of the month means thousands, maybe tens of thousands of dollars in savings, which is very important.
+
+Okay, well, I think that's what I wanted to tell you. So again, I'll put all the resources in the video description. LoRa and Q LoRa are amazing. Give them a try, grab the notebook, start tweaking, and I'll see you soon with more videos. Until then, keep rocking!
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">LoRa</span><span class="tag">Q LoRa</span><span class="tag">Parameter-Efficient Fine-Tuning</span><span class="tag">Hugging Face</span><span class="tag">GPU Optimization</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Introducing model profiling in Amazon SageMaker Debugger   AWS re  Invent 2020 - In this video, I show how you to use the new model profiling capability in Amazon SageMaker Debugger. Training a PyTorch model, I see profiling information in r..." name="description"/><meta content="Introducing model profiling in Amazon SageMaker Debugger   AWS re  Invent 2020 - Julien Simon" property="og:title"/><meta content="Introducing model profiling in Amazon SageMaker Debugger   AWS re  Invent 2020 - In this video, I show how you to use the new model profiling capability in Amazon SageMaker Debugger. Training a PyTorch model, I see profiling information in r..." property="og:description"/><meta content="https://www.julien.org/youtube/2020/20201208_Introducing_model_profiling_in_Amazon_SageMaker_Debugger_-_AWS_re_-Invent_2020.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Introducing model profiling in Amazon SageMaker Debugger   AWS re  Invent 2020 - Julien Simon" name="twitter:title"/><meta content="Introducing model profiling in Amazon SageMaker Debugger   AWS re  Invent 2020 - In this video, I show how you to use the new model profiling capability in Amazon SageMaker Debugger. Training a PyTorch model, I see profiling information in r..." name="twitter:description"/><link href="https://www.julien.org/youtube/2020/20201208_Introducing_model_profiling_in_Amazon_SageMaker_Debugger_-_AWS_re_-Invent_2020.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Introducing model profiling in Amazon SageMaker Debugger   AWS re  Invent 2020 - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Introducing model profiling in Amazon SageMaker Debugger   AWS re  Invent 2020</h1>
+<div class="date">December 08, 2020</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/8ol982FiyHM">
+</iframe>
+</div>
+<div class="description">In this video, I show how you to use the new model profiling capability in Amazon SageMaker Debugger. Training a PyTorch model, I see profiling information in real-time, and I also get a full report once training is complete.
+
+<a href="https://aws.amazon.com/sagemaker/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/sagemaker/</a>
+<a href="https://aws.amazon.com/blogs/aws/profile-your-machine-learning-training-jobs-with-amazon-sagemaker-debugger/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/blogs/aws/profile-your-machine-learning-training-jobs-with-amazon-sagemaker-debugger/</a>
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future episodes ⭐️⭐️⭐️
+
+For more content:
+* AWS blog: <a href="https://aws.amazon.com/blogs/aws/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/blogs/aws/</a>
+* Medium blog: <a href="https://julsimon.medium.com/" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com/</a>
+* YouTube: <a href="https://youtube.com/juliensimonfr" rel="noopener noreferrer" target="_blank">https://youtube.com/juliensimonfr</a> 
+* Podcast: <a href="http://julsimon.buzzsprout.com" rel="noopener noreferrer" target="_blank">http://julsimon.buzzsprout.com</a> 
+* Twitter <a href="https://twitter.com/@julsimon" rel="noopener noreferrer" target="_blank">https://twitter.com/@julsimon</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In this video, I would like to introduce a new model profiling capability available in Amazon SageMaker Debugger, and we just announced it at AWS Reinvent. This profiling capability makes it super easy to profile your training jobs without any change required to your training code. Let me show you how this works using a PyTorch training job. Just like when you use SageMaker Debugger for debugging purposes, the only thing you need to do for model profiling is to pass a profiling configuration to your estimator. So again, you don't need to change your code. You could add specific API calls in your training code if you wanted to enable or disable profiling at certain points in your code. Here's a simple profiling configuration where I just enable profiling and capture events every second. You could list specific steps between which you want to capture information if you want to focus on a specific part of the process. Here we're just going to capture everything. Okay, so let's run that cell and the next. And then the rest is just a SageMaker training job. We select PyTorch image. We're going to train for 20 epochs. So that should be long enough to see real-time events in SageMaker Studio. And then we just fire up the training job. Okay. Passing the profiling config right, nothing weird. Okay, just run this, and off it goes. So let's just wait for a few minutes, and we should start seeing real-time events. My training job has started, and I can see it obviously in the experiments view. If you click on open debugger for insights, you're going to jump into this view here. Okay, so it has an overview which will be displayed once the job is over. If you want to see real-time information, you should go to nodes. Here this isn't a distributed training job, so I only see one node, but obviously SageMaker Debugger supports distributed training, so you would see graphs for each node in the training cluster. Okay, so what do we see here? We see CPU utilization over time, network utilization over time, and we see the GPU hasn't really started working yet, so let's give it a minute or two. We see a heat map, which is pretty cool. So we see the different CPUs here and the GPU, right? And it's not working yet. We're going to see a few more things as the training job actually starts. Okay, so let's wait for a couple of minutes, and we'll see more. Now we can see the GPU is actually working. We see GPU utilization is about 40%, and GPU memory is about 30%. We can also see on the heat map that the GPU has started to work. If we had a multi-GPU instance, of course, we would see multiple rows for the different GPUs. We also start to see additional metrics. For example, we see framework metrics. So these would be, in this case, PyTorch metrics showing us how much time is spent in the different phases of the training job, right? Forward propagation, data loading, backward propagation, etc. We can also see individual data points for each training step. So for example, we can see here forward propagation for step 101 lasted 31 milliseconds, and this took 17 milliseconds, and backward propagation lasted 38, etc. So you can see how much time and the respective amount of time that each phase in your training job takes. And that could help you pinpoint problems. If one of those really takes a long time and slows training down, then you know where to look. I think that's pretty useful. Okay, and we can see this is moving along, right? And that GPU is not crazy busy, so let's see if we can learn more about this. Let's wait for the training job to complete, and we'll look at those graphs one last time, and then we'll look at the profiling report and insights that SageMaker Debugger provides.
+
+So once the training job is complete, you should go up there and click on Download Report. And this will download an HTML report of the training job. We'll take a look at it in a second. This is also available in S3 at the output location for your job. And you'll see a Profiler Output folder with the HTML report and a Python notebook. So let's look at those. And of course, you get additional information in those extra folders. So if you want to go and parse your profiling events and build your own analysis, of course, they're available. So let's look at the HTML report. So what do we see here? We see a training job summary, so my job lasted for quite a while, and of course, most of the time was spent training, as you would expect, right, 92%. I see some system usage statistics here again. This wasn't a distributed job, so I only have one node, but you would get per node stats. Okay. So CPU, GPU usage, CPU memory, etc. I see some framework metrics, how much time was spent in training and evaluation phases. How much time was spent forward propagating and backward propagating, and what's the ratio between CPU and GPU operators. Then metrics on the framework steps which we saw in the real-time graphs, so data loading, forward propagating, backward propagating, etc. And then you can see the most expensive CPU operators. And that's useful because if you want to optimize your code, you need to know which operations are the most costly from a performance perspective. And we see the same for GPU, right? So no surprise, this is the convolution stuff that's taking the most time, and particularly backward propagation for convolution. So that's good to know. And we also see rules. So just like SageMaker Debugger, when you're working with debugging, the profiling capabilities also include built-in rules that are triggered if certain conditions are detected in your training process. So this one tells us there has been a large increase in GPU memory consumption, and we need to keep an eye on that because, of course, if we get close to the maximum usage, then obviously we want to pick a larger instance. Here I don't think that was the case. We can check. GPU memory... No, GPU memory did increase brutally, but yeah, that's the start, and then it kind of stayed there, right? So no, I think this one's good. We don't need to worry about this. Low GPU utilization was triggered a few times. And yeah, let's take a look at the graphs. Yeah, it never really exceeded 40%, which I think is too low, right? So as we see this thing in real-time, we could decide after five minutes or 10 minutes that this isn't a really good job. And of course, we could stop the training job if we wanted to. And the rules are actually connected to CloudWatch events, so you could automate that as well. You could capture the low GPU memory usage event and trigger maybe a Lambda function that would stop the low-performing training job. That's possible. You can do that kind of thing. Okay? So sure, we would need to work on increasing GPU memory usage. And well, the other one that was triggered was batch size. And these are kind of linked because if you have a small batch size, then you don't feed a lot of data to the GPU in one go. So well, that doesn't fill GPU memory for one, and the second problem is, of course, as there isn't a large amount of data to work on, you don't put a lot of GPU cores to work. Good practice would be to increase batch size until you fill up GPU memory completely. Here I think we trained with 512 as the batch size, and GPU memory is only, let's say, a third full. So we can certainly double it or triple it. The dataset is large enough that we could work with a large batch size and without hitting training problems. So increasing this is a good idea for sure. And it would solve, or at least improve, the low GPU utilization. And we have a few rules here being triggered, a few occurrences of the data loader rules, which says that maybe we can increase the number of cores working on data loading. Again, just to keep a steady flow of data between the instance and its GPU, basically. And the other rules are okay. No CPU bottleneck, no I/O bottleneck. So these are built-in rules, and you'll be able to add your own, just like in SageMaker Debugger. So that's the HTML report. Now what about the notebook report? Well, it is the same thing except it's a notebook. So you can run those cells and you can actually reproduce the graphs that you see here. This notebook will let you build this report and customize it. So you can understand exactly how the graphs were built. You can zoom in on specific periods of time or specific events. You can copy and paste the code, add that to your own reports, monitoring system, etc. So this is pretty cool, full visibility into the report. Okay, so that's SageMaker Debugger in profiling mode. I think it's a really great tool. No code changes at all. Just run this with your existing training code with a simple profiling configuration, and you get a real-time view on your job, letting you stop manually or automatically with CloudWatch events, low-performance, low-performing jobs, right, with low GPU usage and whatnot. And in any case, you get lots of information on framework metrics and training metrics and infrastructure metrics. And these are really precious in making sure you make optimal use of the SageMaker infrastructure. Okay. Well, that's pretty cool, right? And there's more stuff here. I didn't look into that. Well, you can see there's always more in this report to explore. Right, I think that's enough for today. I'm sure we'll come back to SageMaker Debugger in future YouTube videos. Until then, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Amazon SageMaker Debugger</span><span class="tag">Model Profiling</span><span class="tag">PyTorch Training</span><span class="tag">GPU Utilization</span><span class="tag">CloudWatch Events</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

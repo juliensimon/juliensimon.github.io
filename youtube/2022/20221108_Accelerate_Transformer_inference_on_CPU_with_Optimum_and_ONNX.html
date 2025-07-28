@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Accelerate Transformer inference on CPU with Optimum and ONNX - In this video, I show you how to accelerate Transformer inference with Optimum, an open source library by Hugging Face, and ONNX.
+
+I start from a DistilBERT mod..." name="description"/><meta content="Accelerate Transformer inference on CPU with Optimum and ONNX - Julien Simon" property="og:title"/><meta content="Accelerate Transformer inference on CPU with Optimum and ONNX - In this video, I show you how to accelerate Transformer inference with Optimum, an open source library by Hugging Face, and ONNX.
+
+I start from a DistilBERT mod..." property="og:description"/><meta content="https://www.julien.org/youtube/2022/20221108_Accelerate_Transformer_inference_on_CPU_with_Optimum_and_ONNX.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Accelerate Transformer inference on CPU with Optimum and ONNX - Julien Simon" name="twitter:title"/><meta content="Accelerate Transformer inference on CPU with Optimum and ONNX - In this video, I show you how to accelerate Transformer inference with Optimum, an open source library by Hugging Face, and ONNX.
+
+I start from a DistilBERT mod..." name="twitter:description"/><link href="https://www.julien.org/youtube/2022/20221108_Accelerate_Transformer_inference_on_CPU_with_Optimum_and_ONNX.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Accelerate Transformer inference on CPU with Optimum and ONNX - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Accelerate Transformer inference on CPU with Optimum and ONNX</h1>
+<div class="date">November 08, 2022</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/_AKFDOnrZz8">
+</iframe>
+</div>
+<div class="description">In this video, I show you how to accelerate Transformer inference with Optimum, an open source library by Hugging Face, and ONNX.
+
+I start from a DistilBERT model fine-tuned for text classification, export it to ONNX format, then optimize it, and finally quantize it. Running benchmarks on an AWS c6i instance (Intel Ice Lake architecture), we speed up the original model more than 2.5x and divide its size by two, with just a few lines of simple Python code and without any accuracy drop! 
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" rel="noopener noreferrer" target="_blank">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+- Optimum: <a href="https://github.com/huggingface/optimum" rel="noopener noreferrer" target="_blank">https://github.com/huggingface/optimum</a>
+- Optimum docs: <a href="https://huggingface.co/docs/optimum/onnxruntime/overview" rel="noopener noreferrer" target="_blank">https://huggingface.co/docs/optimum/onnxruntime/overview</a>
+- ONNX: <a href="https://onnx.ai/" rel="noopener noreferrer" target="_blank">https://onnx.ai/</a>
+- Original model: <a href="https://huggingface.co/juliensimon/distilbert-amazon-shoe-reviews" rel="noopener noreferrer" target="_blank">https://huggingface.co/juliensimon/distilbert-amazon-shoe-reviews</a>
+- Code: <a href="https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/optimum/onnx" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/optimum/onnx</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. Transformer models are big models, and sometimes we don't get the prediction speed that we want from them. To make it simpler to accelerate those models, we've built an open-source library called Optimum. In previous videos, I've shown you how to use Optimum to accelerate training, and in this video, I'll show you how to accelerate inference with Optimum and the ONNX tools. Starting from a pre-trained model, we'll apply different levels of ONNX optimization and quantization to it, and we'll measure how fast the model goes. We'll look at detailed numbers, and you'll probably be surprised how little code we write—it's really just a few lines of code to get pretty good results. So let's get started.
+
+Before we dive into the code, let's take a look at the building blocks we're going to use today. If you've never looked at ONNX or if you need to dive deeper, I highly recommend that you check out the ONNX website. In a nutshell, ONNX brings two things. First, model interoperability: we can export models from one framework to the next and load them with the ONNX runtime, which provides hardware acceleration and optimization. It's a very well-supported project, as you can see, with many companies contributing to ONNX. Here's Hugging Face, and you can go and read all about that. What we're going to use instead of ONNX directly is the integration of ONNX inside the Optimum library, which you can find on GitHub. As mentioned, Optimum supports different hardware partners and acceleration partners for training and inference. Today, we'll focus on the ONNX runtime. We'll look at alternatives like the Intel Neural Compressor and OpenVINO in future videos.
+
+Okay, so we'll use that library, and that's really the only code we're going to write. Let's take a quick look at the model that we'll start from. This is a model that I've trained previously. It's a DistilBERT model that I fine-tuned for text classification on shoe reviews from the Amazon reviews dataset. We'll start from this model, benchmark the baseline, then export it to the ONNX format and benchmark again. We'll see some gain already. Then we'll apply ONNX optimization and benchmark, and finally, we'll apply ONNX quantization and benchmark. We'll look at all those numbers.
+
+To run these tests on the most recent platform possible, I'm using an AWS instance, specifically a C6i.2xlarge instance. This instance has an Intel Xeon CPU with the Ice Lake architecture, which is the most recent you can get. The reason I'm using this is because it has all the bells and whistles for acceleration, and ONNX and Optimum know how to leverage that to make the models faster. You can obviously try on any Intel CPU and get good results, but with the latest chips, the Skylake and Ice Lake chips, you should see even better results.
+
+This instance runs Amazon Linux 2 and comes with Python 3.8, which I've upgraded to 3.10.8, though that's not strictly necessary. I've created a virtual environment called ONNX, and I need a few requirements. I'm going to use PyTorch because this is a PyTorch model. I'm using a CPU version of Torch, the latest version available, 1.13. Transformers, the ONNX flavor of Optimum, 1.4.1, which is the latest at the time of recording, and I'm installing the evaluate library for benchmarking. This will let me easily evaluate the different models on my test set, and I need scikit-learn for metrics. These requirements have been installed, so we can dive in and look at the code.
+
+The code is pretty simple. We import `evaluate` and `transformers`, define the model ID and dataset ID, which is a subset of the Amazon reviews dataset. The labels column is called `labels` in this dataset, and the label mapping is as follows: the zero label means it's a one-star review, and the four label means it's a five-star review. Next, I download the test set of this dataset, which has 10,000 reviews. Then I create the accuracy metric with the evaluate library and an evaluator to benchmark the models on this test set. I have a very simple function where, given an input pipeline (which will be a basic transformers pipeline or an ONNX pipeline), I compute the accuracy metric over my dataset with that pipeline.
+
+First, we need to do this on the original model. So I create a vanilla pipeline in Transformers with my model and evaluate it. Let's run this and see how long it takes. As you can see, predicting those 10,000 reviews took 174 seconds. That is our baseline, and with 10,000 reviews, the latency is 17.4 milliseconds. Now let's move on to the second step, which is exporting the model to ONNX. This is pretty simple to do. We import a couple of objects, including the pipeline object from Optimum, which works exactly the same as the Transformers pipeline. We load the original model but this time with the ORT ONNX runtime model for sequence classification and the tokenizer. We save the model to ONNX format and the tokenizer in the same place. The reason for this is practical: we want to have the model, the optimized model, and the tokenizer in the same folder so that we can load everything locally. The tokenizer isn't changed; only the model is converted.
+
+Now the model is converted to ONNX, and we can create an ONNX pipeline and evaluate it just like we've done before. Let's run those numbers and see what happens. The original model predicted the dataset in 174 seconds, and the ONNX version of the model predicted it in 125 seconds. That's almost a 30% improvement just by exporting the model to ONNX. This shows how optimized the ONNX runtime is, and we can see the accuracy is the same, so we didn't lose anything.
+
+Now let's go one step further and optimize the model with ONNX. We start by creating an ORT optimizer object, which we use to load the ONNX model. Then we run the optimization process using the configuration. Here, we define the optimization level. Level 99 means everything, including some of the more aggressive optimizations. Levels 1 and 2 are more conservative. You can find details in the documentation. We save the optimized model to the same directory and, just like before, create a pipeline with the optimized model to evaluate the test set. This process is really simple; we don't need to go into any particular hardware complexity. We just set the optimization level and let Optimum do its job.
+
+Let's run this and see how much more performance we can squeeze out of the model. The ONNX model predicted in 127 seconds, and the optimized model predicts in 108 or 109 seconds. That's another 10% gain by just applying optimization. We started at 173 seconds and are now down to 108 seconds, which is already very nice. Again, we see the accuracy hasn't changed at all, so the model is just as good.
+
+The last step is to apply quantization. This is equally simple. We import the ORT quantizer object, use it to load the ONNX model, and define the quantization configuration. Here, we're optimizing for the Intel Xeon family, so we have a config for AVX512, the vectorized instruction set for Xeon CPUs. We have some additional parameters, but I won't go into those today. You can read the code and tweak it to get more speedup. We just quantize the model, save it to the folder, and, just like before, load the model, build a pipeline, and evaluate.
+
+With quantization, we're down to 66 seconds, which is a huge improvement over the initial 173 seconds. The accuracy is still the same. Let's also look at the models themselves. The ONNX and ONNX optimized models are just about the same size as the original model, but the quantized model is about half the size. So quantization has shrunk the model by about 50%, meaning less memory to load it and potentially the ability to load it on smaller devices.
+
+One last thing I want to show you is the runtime configuration. If you need all the details on the model, you can see here that we quantized with int8 values for activations and weights. You can see all your advanced parameters here if you want to.
+
+Let's sum things up and look at all those numbers. We started with an initial DistilBERT model that clocked in at 268 MB and predicted with a latency of 17.4 milliseconds. We converted it to ONNX and saved 28% on latency and a little bit on model size. We optimized it at level 99, saving another 10%, so about 37-38% in total. Then we quantized it with int8 values and gained a total of 62% over the initial prediction time. We also divided the model size by two. This is super significant, and accuracy didn't change at all. You might want to check the distribution of those predicted values, as the accuracy value doesn't tell the whole story, but if accuracy doesn't change at all, it's a good sign that the model is performing as it should.
+
+This brings us to about 6.6 or 7 milliseconds, which is a great number. Sub-10 milliseconds is very good for text, and it means you don't need to use GPUs for many workloads. CPU instances or generally CPU machines will be much more cost-effective than GPU machines, so this is a great way to get the best cost-performance ratio for your applications. As you saw, the code is super simple, and you'll find everything in the video description. That's it for today—optimizing transformer inference with Optimum and ONNX. I'll do other videos on the Intel Neural Compressor and OpenVINO, and we can compare the results. Until next time, hope this was fun and interesting. I'll see you soon. Keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Optimum</span><span class="tag">ONNX</span><span class="tag">Transformer-Inference-Optimization</span><span class="tag">Quantization</span><span class="tag">Model-Acceleration</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

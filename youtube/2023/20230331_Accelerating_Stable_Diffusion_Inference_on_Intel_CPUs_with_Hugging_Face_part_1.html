@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Accelerating Stable Diffusion Inference on Intel CPUs with Hugging Face part 1 - In this video, you will learn how to accelerate image generation with an Intel Sapphire Rapids server. Using Stable Diffusion models, the Hugging Face Optimum I..." name="description"/><meta content="Accelerating Stable Diffusion Inference on Intel CPUs with Hugging Face part 1 - Julien Simon" property="og:title"/><meta content="Accelerating Stable Diffusion Inference on Intel CPUs with Hugging Face part 1 - In this video, you will learn how to accelerate image generation with an Intel Sapphire Rapids server. Using Stable Diffusion models, the Hugging Face Optimum I..." property="og:description"/><meta content="https://www.julien.org/youtube/2023/20230331_Accelerating_Stable_Diffusion_Inference_on_Intel_CPUs_with_Hugging_Face_part_1.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Accelerating Stable Diffusion Inference on Intel CPUs with Hugging Face part 1 - Julien Simon" name="twitter:title"/><meta content="Accelerating Stable Diffusion Inference on Intel CPUs with Hugging Face part 1 - In this video, you will learn how to accelerate image generation with an Intel Sapphire Rapids server. Using Stable Diffusion models, the Hugging Face Optimum I..." name="twitter:description"/><link href="https://www.julien.org/youtube/2023/20230331_Accelerating_Stable_Diffusion_Inference_on_Intel_CPUs_with_Hugging_Face_part_1.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Accelerating Stable Diffusion Inference on Intel CPUs with Hugging Face part 1 - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Accelerating Stable Diffusion Inference on Intel CPUs with Hugging Face part 1</h1>
+<div class="date">March 31, 2023</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/KJDCGyZ2fPw">
+</iframe>
+</div>
+<div class="description">In this video, you will learn how to accelerate image generation with an Intel Sapphire Rapids server. Using Stable Diffusion models, the Hugging Face Optimum Intel library and Intel OpenVINO, we're going to cut inference latency from 36+ seconds to 4.5 seconds!
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" rel="noopener noreferrer" target="_blank">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+- Blog post: <a href="https://huggingface.co/blog/stable-diffusion-inference-intel" rel="noopener noreferrer" target="_blank">https://huggingface.co/blog/stable-diffusion-inference-intel</a>
+- Code: <a href="https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/optimum/stable_diffusion_intel" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/optimum/stable_diffusion_intel</a>
+- Optimum Intel: <a href="https://github.com/huggingface/optimum-intel" rel="noopener noreferrer" target="_blank">https://github.com/huggingface/optimum-intel</a>
+- Intel Sapphire Rapids: <a href="https://en.wikipedia.org/wiki/Sapphire_Rapids" rel="noopener noreferrer" target="_blank">https://en.wikipedia.org/wiki/Sapphire_Rapids</a>
+- Intel Advanced Matrix Extensions: <a href="https://en.wikipedia.org/wiki/Advanced_Matrix_Extensions" rel="noopener noreferrer" target="_blank">https://en.wikipedia.org/wiki/Advanced_Matrix_Extensions</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In just a few months, text-to-image models have become extremely popular, and you can use them for use cases like content creation, synthetic data generation, and all kinds of different things. These models, particularly the stable diffusion models, are really large. So far, to get good performance, the only option was to use GPUs for inference. But thanks to work we've been doing with Intel recently, in this video, I'm going to show you how you can use Intel CPUs to generate images with stable diffusion models in under five seconds. Don't believe me? Let's get started.
+
+Before we start accelerating, we need to know what the baseline is. So let's start by running a vanilla stable diffusion pipeline on an AWS instance powered by a new generation Xeon CPU with the Sapphire Rapids architecture. I've mentioned these CPUs already 10 times, so go and watch the previous videos if you want to know why they are really cool. Here, we're creating a simple stable diffusion pipeline with the diffusers library and a model from the hub. We're just generating images a few times and averaging the latency. We print out the average latency. So nothing complicated. Let's just run this. I'm using a vanilla PyTorch environment here, so I'll just go and run this and we'll see what the baseline is.
+
+Okay, all right, let's give it a second. I'm running a couple of warm-up iterations just to have meaningful numbers when running the actual predictions. Okay, let's see what the number is. It should be around 30 seconds. Okay, so that's the warm-up iteration, and here's the first real iteration. Yes, it's going to be around 35 seconds. We've run our five iterations, averaged out the values, and we can see the average latency here is 36 seconds. That's quite faster than on previous generation Xeons, but it's probably still a bit too slow for production. So now we can start accelerating.
+
+There are different ways to do this, but in this video, I'm going to show you first how to accelerate inference using OpenVINO, which is an Intel tool that optimizes models, and we've integrated it into our Optimum Intel library. Starting from this code here, with the stable diffusion pipeline, we're just going to install Optimum Intel and OpenVINO. I'll put all the setup steps in the video description. It's really just a pip install command. We're going to switch to this code. What we're going to do here is replace our stable diffusion pipeline with an OV, OpenVINO, stable diffusion pipeline. That comes from the Optimum Intel library. So that's about it.
+
+We're going to run a few warm-up iterations and see what happens. So let's just run the OpenVINO version and see what happens. Remember, we started from 36 seconds. We're going to do the same, load the model with the OpenVINO pipeline. It's going to get automatically optimized by the OpenVINO runtime. Then we're going to run a couple of warm-ups and start predicting. Okay. Just switching to the OpenVINO pipeline takes us down to 16 seconds. From 36 to 16, in one line of code. That's pretty good and that's really easy to do. But 16 is probably still a bit too slow. If you want to generate thousands and thousands of images a day or if you need to generate a whole maybe 10,000 or 100,000 images for a dataset, that's still a bit too slow. So what can we do next?
+
+Starting from the same code, as I mentioned, we can actually apply a static shape to the pipeline. When you create a pipeline like this one, there's no assumption on the size of the images that you're going to generate, such as 256 by 256 or 512 by 512 or any kind of size that the model supports. But in practice, it's quite likely you're going to be generating just a few sizes or maybe just one. So if you know that all your images are going to be, let's say, 512 by 512, giving this information to OpenVINO is going to help optimize the model further because now you can use statically sized tensors for all the layers and apply more optimizations. So that's what we're doing here. If you need just, let's say, 256 by 256 and 512 by 512, you can create two pipelines and optimize them and use either one or the other depending. So it's a great trick to really accelerate those models.
+
+Let's run that thing again with the static shape and we can compare. So let's just save this and run it again. It's going to take a few more seconds and then we can see the results. Okay. We've run again the baseline OpenVINO pipeline and we see we get 16 seconds again. Now we're actually predicting with a statically shaped pipeline, and it is much, much faster. In fact, we're even under 4.5 seconds. So this is a good run. We started at 36 plus, took it down to about 16 with OpenVINO, and slashed it down to 4.5 seconds, which is definitely fast enough for a lot of real-life use cases. This shows that you don't have to use GPUs all the time. There are some use cases where GPUs are required, but in this particular case, you could very well run your stable diffusion inference on CPU and scale out to as many servers as you need.
+
+So I think this is a really great collaboration again between Intel and Arcee. If you want to learn more about this, I would encourage you to go check out the Optimum Intel library. We have examples and docs, etc. I actually wrote a blog post on this with my colleague Ella, who's the lead developer for Optimum Intel. So great job, Ella. You can find the actual blog post on this. And last but not least, I would encourage you to go check out the Intel.org page on the Arcee Hub where you'll find some developer resources, examples, and a great space where they compare stable diffusion inference on the brand-new Xeons and the older ones, and we can see the speedup there. They also have lots of very interesting models, quantized models, etc. So go and check that out if you're interested in performance optimization.
+
+Okay, well, that's really what I wanted to tell you today. Thank you for watching. I hope this was useful. I'll be back very quickly with more videos and definitely more Stability Fusion videos. Okay, see you and until next time, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">StableDiffusion</span><span class="tag">IntelCPUs</span><span class="tag">OpenVINO</span><span class="tag">OptimumIntel</span><span class="tag">PerformanceOptimization</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

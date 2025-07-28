@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Retrieval Augmented Generation chatbot part 2   LangChain Hugging Face OpenSearch AWS - We'll walk you through the creation of a Retrieval-Augmented Generation (RAG) chatbot using open-source tools and AWS services like LangChain, Hugging Face, Ama..." name="description"/><meta content="Retrieval Augmented Generation chatbot part 2   LangChain Hugging Face OpenSearch AWS - Julien Simon" property="og:title"/><meta content="Retrieval Augmented Generation chatbot part 2   LangChain Hugging Face OpenSearch AWS - We'll walk you through the creation of a Retrieval-Augmented Generation (RAG) chatbot using open-source tools and AWS services like LangChain, Hugging Face, Ama..." property="og:description"/><meta content="https://www.julien.org/youtube/2023/20231102_Retrieval-Augmented_Generation_chatbot_part_2_-_LangChain_Hugging_Face_OpenSearch_AWS.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Retrieval Augmented Generation chatbot part 2   LangChain Hugging Face OpenSearch AWS - Julien Simon" name="twitter:title"/><meta content="Retrieval Augmented Generation chatbot part 2   LangChain Hugging Face OpenSearch AWS - We'll walk you through the creation of a Retrieval-Augmented Generation (RAG) chatbot using open-source tools and AWS services like LangChain, Hugging Face, Ama..." name="twitter:description"/><link href="https://www.julien.org/youtube/2023/20231102_Retrieval-Augmented_Generation_chatbot_part_2_-_LangChain_Hugging_Face_OpenSearch_AWS.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Retrieval Augmented Generation chatbot part 2   LangChain Hugging Face OpenSearch AWS - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Retrieval Augmented Generation chatbot part 2   LangChain Hugging Face OpenSearch AWS</h1>
+<div class="date">November 02, 2023</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/x5SYNpfK4H0">
+</iframe>
+</div>
+<div class="description">We'll walk you through the creation of a Retrieval-Augmented Generation (RAG) chatbot using open-source tools and AWS services like LangChain, Hugging Face, Amazon SageMaker, and Amazon OpenSearch Serverless. 
+
+Part 1: <a href="https://youtu.be/7kDaMz3Xnkw" rel="noopener noreferrer" target="_blank">https://youtu.be/7kDaMz3Xnkw</a> - LangChain, Hugging Face, FAISS, Amazon SageMaker, and Amazon TextTract. 
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. Follow me on Medium at <a href="https://julsimon.medium.com" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com</a> or Substack at <a href="https://julsimon.substack.com." rel="noopener noreferrer" target="_blank">https://julsimon.substack.com.</a> ⭐️⭐️⭐️
+
+We start by deploying Mistral 7B, a cutting-edge open-source LLM, onto a SageMaker endpoint. Following this, we work with the Reuters dataset, a Hugging Face dataset comprising 20,000 news articles. We break down these articles into smaller sections and apply bge-small, a compact open-source embedding model, to them.
+
+Next, we proceed to index these sections into an Amazon OpenSearch Serverless vector index, which we then query through LangChain.
+
+Additionally, aside from the RAG demonstration, we delve into some vital yet often overlooked steps related to authentication and security for OpenSearch Serverless.
+
+- Notebook: <a href="https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/langchain/rag-demo-sagemaker-opensearch" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/langchain/rag-demo-sagemaker-opensearch</a>
+- LangChain: <a href="https://www.langchain.com/" rel="noopener noreferrer" target="_blank">https://www.langchain.com/</a>
+- Amazon OpenSearch Serverless: <a href="https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless.html" rel="noopener noreferrer" target="_blank">https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless.html</a>
+- Embedding leaderboard: <a href="https://huggingface.co/spaces/mteb/leaderboard" rel="noopener noreferrer" target="_blank">https://huggingface.co/spaces/mteb/leaderboard</a>
+- Embedding model: <a href="https://huggingface.co/BAAI/bge-small-en-v1.5" rel="noopener noreferrer" target="_blank">https://huggingface.co/BAAI/bge-small-en-v1.5</a>
+- LLM: <a href="https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1" rel="noopener noreferrer" target="_blank">https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In a previous video, I showed you how to build a simple retrieval augmented generation chatbot using open source libraries. In this video, we're going to scale things up a bit and instead of using the Facebook face library for embeddings, we're going to use Amazon OpenSearch Serverless. A managed service that should help us scale our solution, and we'll work with a slightly bigger dataset instead of just indexing three PDF files like in the previous video. Let's get to work.
+
+The high-level architecture is still the same. We have an ingestion process, and this time we'll ingest a Hugging Face dataset containing news articles. We'll use an embedding model, store embeddings into Amazon OpenSearch Serverless, and query those embeddings to retrieve useful content. We'll put everything into a prompt and feed that to our LLM. I will still use the Mistral 7B model hosted on SageMaker. The high-level architecture is the same, but our search infrastructure is now much more scalable, managed, and resilient instead of just using Facebook face inside a notebook.
+
+Let's start with the OpenSearch cluster. In the interest of time, I've already created the OpenSearch infrastructure. Good news is it is super simple to create a collection, which I have done here. It is really as simple as clicking on create collection. Once you have a collection, all you have to do is create an index. OpenSearch now supports vector indexes, which is exactly what we want. We want to store those embeddings, so high-dimension vectors, and query them. If you click on this, you just give your index a name, add a vector field. I recommend using the default name for that field, which is `vector_index`, because that's what LangChain seems to use by default. If you use fancier names, you have to tell LangChain where to query. So `vector_index` is simple. Just leave everything default. One thing you don't want to get wrong is the number of dimensions. The actual size of that vector will depend on the embedding model you use. For me, it's 384, and that's the number you need to enter there. Enter all that stuff, click on Confirm. You will have your collection, your vector index, and that stuff is ready in no time.
+
+The bad news is, if somebody on the OpenSearch team is listening, I'm happy to provide more detailed feedback privately. I had a very hard time figuring out permissions. I'll show you my final setup that just works for me. I'm not claiming it's great; it's certainly not secure enough and is probably plain wrong. But in the end, this is the only thing that ended up working for me. An end-to-end example would be super valuable. This felt way too hard for me.
+
+So, I am running my code on a SageMaker instance, a managed EC2 instance. It needs to invoke OpenSearch APIs, so it needs IAM permissions for this. The role attached to that instance needs to include this stuff. I created an inline IAM policy that gives me full access to all the Amazon OpenSearch serverless AOSS APIs on all resources. Again, this is way too permissive for production, but I decided to take a shortcut and just make it work. You will need those APIs to be allowed on maybe your Lambda function or on your EC2 instance, etc. So you'll need that. TextTrack is not needed this time. I have TextTrack here because in the previous video, we used TextTrack from the notebook instance. You definitely need to have this, but it is not enough. You also need to add your principal to the data access control section for your collection. The role attached to the notebook instance running the code needs to be added to that policy. By default, it has a policy for my user, my console user, which allows me to run the OpenSearch operation in the AWS console. If I want to run stuff programmatically, I have to have the role here. I couldn't find good documentation on why and how to do this, so I just started trying things, and this ended up working. Long story short, make sure the role of the AWS resource running the code includes the OpenSearch API permissions as a policy and enable that role as a principal for your OpenSearch collection.
+
+Now we have our OpenSearch cluster set up. I will still be using LangChain and HuggingFace. I'm using the same LLM and the same embedding model as before. I will still deploy my LLM to SageMaker and run my embeddings as part of the ingestion process in LangChain. Of course, I will be using OpenSearch Serverless instead of Facebook Face. Let's zoom in a bit. Install the dependencies we need, import a bunch of objects. No changes on the SageMaker side. I am not ingesting PDF files this time; I'll be ingesting text from a Hugging Face dataset. So I have a Hugging Face dataset loader, and I need the OpenSearch object for querying and a couple of OpenSearch objects for authentication.
+
+First step, same as before, deploy the LLM on a SageMaker endpoint, exact same code as in the previous video. Deploy Mistral 7B to a G5 instance using our Hugging Face LLM inference container. If you go to the Mistral model page on the Hugging Face hub, we generate the code for you. Just click on deploy SageMaker if you want to try another model. I deploy the model but don't wait for it to be deployed because this takes a few minutes. We have `wait=False`, so this will return immediately. We'll have to check later that the model is deployed before we start invoking it. This is a good tip to keep going with our process while the model is deployed.
+
+Just like in the previous video, we need to adapt the input and output for length change. The input function just adds the Mistral prompt. If you use a different model, you will have to change the prompt format. The output function filters the instructions included in the answer, so I will just show the answer and not the chunks coming from the RAG system. We take that endpoint and make it a LangChain LLM that we can feed into a chain. The LLM side of things is taken care of. It's deploying, configured, and will be ready to go.
+
+Let's fetch some data. In the previous video, I showed you PDF files, but this time, I thought I'd show you something else. LangChain has a nice data loader for Hugging Face datasets, and I chose the Reuters dataset. It includes news articles, and the article itself is in the `text` column. We have about 20,000 news articles. I've loaded my 20,000 articles and will split them into smaller chunks using the recursive splitter from LangChain. The articles are rather short, so I want tiny sentences and precise facts. I split those, and it takes a few seconds. I end up with 150k chunks. Here's the first one, which is pretty much the first sentence from the first article, along with metadata.
+
+Now my data has been loaded and chunked. The next step is to embed it. We'll use the same embedding model, BGE small v1.5. Check the leaderboard we've built for embeddings on the MTEB embedding benchmark. At the time of recording, this is number eight, which is still better than the OpenAI embedding model. This is a good one, it's small, and it's fast. Feel free to try something bigger, though embedding time will go up. Remember, when we create the OpenSearch collection, we need to know how many dimensions we have. You can check the model page or retrieve that value from the model configuration. This will be 384. Add this to LangChain as a HuggingFace embeddings model, and we're good to go.
+
+LLM deploying, data ready, embedding model ready. Now it's almost time to embed and ingest. We still need to define the credentials for our indexing operation. You need the name of your OpenSearch host, which you will find in the OpenSearch console. Do not include HTTP, HTTPS, or port numbers; just the name. The name of the index you created, the region you're running in, and grab your credentials from Boto3 to create an AWS v4 signature for that region and service. It must be Amazon OpenSearch Serverless, AOSS. If you don't know what an AWS v4 signature is, just trust me that you need one. It's how we sign HTTP queries to AWS services.
+
+Now we're done and can start embedding and storing stuff. We have 150k documents or chunks to embed. To make sure things were happening, I decided to embed and index them 100 at a time. I broke down my list of documents into sublists containing 100 docs. I wanted to see some progress. I'm taking 100 docs and using the LangChain OpenSearch object to ingest those 100 docs, which will be embedded automatically and stored in my OpenSearch cluster using HTTPS and the signature. The index name is also required. Not too complicated, but you need to get all the security details right. If you have a good DevOps engineer, they'll figure this out, make it safe, and lock down the configuration. I actually spent more time on IAM and AWS v4 than on anything else, which is a bit frustrating.
+
+Ingestion is complete. Let's take a quick look at the OpenSearch index. We have 150k documents, which is close to what I had in my collection. The index is 1.4 gigs, and we have metrics showing data rate, success rate, etc. Everything seems ready, so we can continue.
+
+Now we can start asking questions. We just need to set our OpenSearch collection as the retriever, which will return 10 chunks. The prompt template is straightforward. This time, I'm asking the agent to cite the title of the article it used. The prompt template, retrieval chain, and LLM are set up. We'll use the stuff type to pack all the chunks together. We just need to make sure the LLM has been deployed. Given the ingestion time, I'm pretty sure it was deployed. There's a simple way to do this: we just use a waiter to ask the SageMaker client to wait until the endpoint is up. And now we can ask questions.
+
+Let's try this: "What are the worst storms in recent news?" We just had a very bad storm in Western Europe or in France, heading out to the UK. Let's ask that. We'll embed that query with our embedding model, look for relevant documents in our vector index, return them, add them to the prompt, and let the LLM generate. We get two Reuters articles, so we get the sources. That worked. We could go and check those documents and fact-check the answer. The Reuters dataset includes pretty old stuff, so it's fun to ask questions about the USSR and so on. You can explore history with this.
+
+This is a nice upgrade to our previous attempt at retrieval-augmented generation. I like the OpenSearch managed service and its scalability, but I didn't like the permissions much. Now it's working fine, and I'll continue exploring. As usual, everything will be available in the video description. Let's see where we take this next. Until then, keep rocking!
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">OpenSearch Serverless</span><span class="tag">Retrieval Augmented Generation</span><span class="tag">Hugging Face Dataset</span><span class="tag">AWS SageMaker</span><span class="tag">Vector Indexing</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

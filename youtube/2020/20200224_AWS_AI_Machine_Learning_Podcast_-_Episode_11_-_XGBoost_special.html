@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="AWS AI Machine Learning Podcast   Episode 11   XGBoost special - In this episode, I talk about XGBoost 1.0, a major milestone for this very popular algorithm. Then, I discuss the three options you have for running XGBoost on ..." name="description"/><meta content="AWS AI Machine Learning Podcast   Episode 11   XGBoost special - Julien Simon" property="og:title"/><meta content="AWS AI Machine Learning Podcast   Episode 11   XGBoost special - In this episode, I talk about XGBoost 1.0, a major milestone for this very popular algorithm. Then, I discuss the three options you have for running XGBoost on ..." property="og:description"/><meta content="https://www.julien.org/youtube/2020/20200224_AWS_AI_Machine_Learning_Podcast_-_Episode_11_-_XGBoost_special.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="AWS AI Machine Learning Podcast   Episode 11   XGBoost special - Julien Simon" name="twitter:title"/><meta content="AWS AI Machine Learning Podcast   Episode 11   XGBoost special - In this episode, I talk about XGBoost 1.0, a major milestone for this very popular algorithm. Then, I discuss the three options you have for running XGBoost on ..." name="twitter:description"/><link href="https://www.julien.org/youtube/2020/20200224_AWS_AI_Machine_Learning_Podcast_-_Episode_11_-_XGBoost_special.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AWS AI Machine Learning Podcast   Episode 11   XGBoost special - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>AWS AI Machine Learning Podcast   Episode 11   XGBoost special</h1>
+<div class="date">February 24, 2020</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/w0F4z0dMdzI">
+</iframe>
+</div>
+<div class="description">In this episode, I talk about XGBoost 1.0, a major milestone for this very popular algorithm. Then, I discuss the three options you have for running XGBoost on Amazon SageMaker: built-in algo, built-in framework, and bring your own container. Code included, of course!
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future episodes ⭐️⭐️⭐️
+
+Additional resources mentioned in the podcast:
+* XGBoost built-in algo: <a href="https://gitlab.com/juliensimon/ent321" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/ent321</a>
+* XGBoost built-in framework: <a href="https://gitlab.com/juliensimon/dlnotebooks/-/blob/master/sagemaker/09-XGBoost-script-mode.ipynb" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/dlnotebooks/-/blob/master/sagemaker/09-XGBoost-script-mode.ipynb</a> 
+* BYO with Scikit-learn: <a href="https://github.com/awslabs/amazon-sagemaker-examples/blob/master/advanced_functionality/scikit_bring_your_own/scikit_bring_your_own.ipynb" rel="noopener noreferrer" target="_blank">https://github.com/awslabs/amazon-sagemaker-examples/blob/master/advanced_functionality/scikit_bring_your_own/scikit_bring_your_own.ipynb</a> 
+* Deploying XGBoost with mlflow: <a href="https://youtu.be/jpZSp9O8_ew" rel="noopener noreferrer" target="_blank">https://youtu.be/jpZSp9O8_ew</a> 
+* New model format: <a href="https://xgboost.readthedocs.io/en/latest/tutorials/saving_model.html" rel="noopener noreferrer" target="_blank">https://xgboost.readthedocs.io/en/latest/tutorials/saving_model.html</a>
+* Converting pickled models: <a href="https://github.com/dmlc/xgboost/blob/master/doc/python/convert_090to100.py" rel="noopener noreferrer" target="_blank">https://github.com/dmlc/xgboost/blob/master/doc/python/convert_090to100.py</a> 
+
+This podcast is also available in audio at <a href="https://julsimon.buzzsprout.com." rel="noopener noreferrer" target="_blank">https://julsimon.buzzsprout.com.</a> 
+
+For more content, follow me on:
+* Medium <a href="https://medium.com/@julsimon" rel="noopener noreferrer" target="_blank">https://medium.com/@julsimon</a>
+* Twitter <a href="https://twitter.com/@julsimon" rel="noopener noreferrer" target="_blank">https://twitter.com/@julsimon</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi, this is Julien from AWS. Welcome to episode 11 of my podcast. This episode is an XJBoost special. As you probably know, XJBoost 1.0 came out just a few days ago, and I thought this would be a good opportunity to show you the different ways in which you can train and deploy XJBoost models on SageMaker. So don't forget to subscribe to my channel for future videos, and let's dive into XJBoost.
+
+Let's take a look at the new features in XJBoost 1.0. The first one is better performance scaling on multi-core CPUs, with claims of up to 5x speed up on Intel CPUs with many cores. This is significant because on AWS, you can definitely use Intel CPUs with many cores, and you have a wide choice of training instances. Whether you run XJBoost on EC2 directly or on a managed service like SageMaker, this should make a difference. It's definitely worth benchmarking soon.
+
+The next feature is good news for everyone using macOS; it's now easier to install XJBoost on macOS, which is not a minor improvement. There's also distributed XJBoost on Kubernetes, complete with a tutorial, so you might want to check that out. Running this on EKS could be interesting and is something I can add to my to-do list.
+
+Ruby bindings for XGBoost are now available for Ruby developers. A Dask interface has been added, which is a very cool framework for distributed computing. XGBoost can now natively use Dask with multiple GPUs, which is quite interesting. Dask is becoming increasingly popular, so this is another item for the to-do list.
+
+First-class support for QDF data frames and CuPy arrays has been added, further integrating XGBoost with NVIDIA GPUs. This is a strong theme in XGBoost 1.0, and it's interesting because, while most customers I meet run XGBoost on CPU and are quite happy, the appeal of GPUs becomes more important as they train on larger datasets. It's good to see XGBoost supporting and integrating more with GPUs, which is definitely worth testing.
+
+Other notable features include ranking on GPUs and external memory for GPU training. This is useful if your dataset is larger than what your GPU can accommodate. XJBoost can now manage this, similar to how it handled larger-than-memory datasets on CPUs. Improvements to the scikit-learn interface are also good news. There are also updates to XGBoost4J Spark for those interested.
+
+One of the last features I want to mention is the new format for saving models. Previously, most of us used pickle to serialize XGBoost models in Python, but this created several issues. XGBoost is moving to a more open and portable format, which is JSON-based, and they have new APIs for this. If you have pickle models, you will need to retrain them and save them using the new format. Loading pickle models in XGBoost 1.0 and later might be problematic, so retraining is recommended.
+
+There are also bug fixes and other improvements, making this a major release. There's already a 1.0.1 patch release, addressing a minor issue that slipped past validation in 1.0.0.
+
+Now, let's look at how to run XJBoost on SageMaker. The first way is to use it as a built-in algorithm. SageMaker has a collection of built-in algorithms, and XJBoost is one of them. This means you have a built-in XJBoost container that you can use directly. Just set hyperparameters, define the location of your data, and train. You can select the version you want to use, and I recommend using the latest version, 0.90-2, which supports SageMaker Debugger. This service allows you to configure debugging rules and inspect your training jobs as they go. If you use an older version, SageMaker Debugger won't be available.
+
+The second way to use XJBoost on SageMaker is to treat it as a built-in framework, similar to TensorFlow, PyTorch, and MXNet. The container for this is open-sourced, and you can find the links in the video description. You can build and customize this container on your local machine. The process is similar to using other frameworks. You use the `XGBoost` object from the SageMaker SDK, pass a script, define infrastructure requirements, set hyperparameters, and specify the framework version.
+
+Here's a simple example where I train a classifier on the direct marketing dataset using script mode. Script mode is a way to interface existing framework code with SageMaker. It involves receiving hyperparameters from the command line, environment variables for the location of the training script, training set, validation set, and where to save the model. If you have existing XGBoost code, converting it to script mode is straightforward.
+
+In the script, I import XGBoost, receive a single hyperparameter (max depth), and grab environment variables for the training set, validation set, and model save location. I load the dataset, which is already split into training and validation sets, using pandas. The labels are in the "yes" column, and the samples are the remaining columns. I create an XGBoost classifier with binary logistic as the objective and use the area under the curve (AUC) metric. I train the model, score it on the validation set, print the AUC, and save the model using the new JSON-based format.
+
+To use this script, I have a vanilla XGBoost script mode notebook. I download the dataset, one-hot encode it, drop the "yes" column, split the dataset into training and validation sets, and save them as CSV files. I define the location to save the model and use the XGBoost estimator to pass my script. I can train locally for quick debugging, set the framework version, and see the model training and AUC printed out.
+
+Once the model is trained, I can deploy it using the `deploy` API. After a few minutes, I can predict using a sample from the validation set. I convert the sample to CSV and use the `InvokeEndpoint` API from Boto3 to send the payload to the model and read the probability between 0 and 1.
+
+If you want to use a different format, such as NumPy arrays, you need to write an `input_fn` function to convert the input. The `model_fn` function, which loads the model, is mandatory and must be provided by you.
+
+Regarding loading and saving models, XGBoost is moving to a new JSON-based format. If you have models from XGBoost 0.90, you can try loading them with the new version, but it might be problematic. The XGBoost repo provides a script to convert pickle models to the new format, but it's advised not to use it for stability-critical applications. Retraining is generally a better approach.
+
+Finally, you can use a completely custom container. Last week, I showed how to do this with MLflow, where I trained a local model on my Mac and deployed it using a custom container on SageMaker. MLflow built the container for me, making it a hands-off operation. Alternatively, you can build your own SageMaker container if you have specific requirements.
+
+These are the three main options: use the built-in algorithm for a straightforward setup, use the framework mode for more control over your code, or bring your own container for full customization. That's it for episode 11. I hope you learned a few things. Thank you for watching, don't forget to subscribe to my channel for future videos, and until next time, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">XJBoost</span><span class="tag">SageMaker</span><span class="tag">AWS</span><span class="tag">MachineLearning</span><span class="tag">ModelDeployment</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

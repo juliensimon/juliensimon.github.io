@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Using the Git workflow in Amazon SageMaker Pipelines   AWS re  Invent 2020 - Following up on https://youtu.be/Hvz2GGU3Z8g, I show you how to train and deploy automatically different versions of your machine learning models using Amazon S..." name="description"/><meta content="Using the Git workflow in Amazon SageMaker Pipelines   AWS re  Invent 2020 - Julien Simon" property="og:title"/><meta content="Using the Git workflow in Amazon SageMaker Pipelines   AWS re  Invent 2020 - Following up on https://youtu.be/Hvz2GGU3Z8g, I show you how to train and deploy automatically different versions of your machine learning models using Amazon S..." property="og:description"/><meta content="https://www.julien.org/youtube/2020/20201203_Using_the_Git_workflow_in_Amazon_SageMaker_Pipelines_-_AWS_re_-Invent_2020.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Using the Git workflow in Amazon SageMaker Pipelines   AWS re  Invent 2020 - Julien Simon" name="twitter:title"/><meta content="Using the Git workflow in Amazon SageMaker Pipelines   AWS re  Invent 2020 - Following up on https://youtu.be/Hvz2GGU3Z8g, I show you how to train and deploy automatically different versions of your machine learning models using Amazon S..." name="twitter:description"/><link href="https://www.julien.org/youtube/2020/20201203_Using_the_Git_workflow_in_Amazon_SageMaker_Pipelines_-_AWS_re_-Invent_2020.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Using the Git workflow in Amazon SageMaker Pipelines   AWS re  Invent 2020 - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Using the Git workflow in Amazon SageMaker Pipelines   AWS re  Invent 2020</h1>
+<div class="date">December 03, 2020</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/2CF-LBZjTn0">
+</iframe>
+</div>
+<div class="description">Following up on <a href="https://youtu.be/Hvz2GGU3Z8g," rel="noopener noreferrer" target="_blank">https://youtu.be/Hvz2GGU3Z8g,</a> I show you how to train and deploy automatically different versions of your machine learning models using Amazon SageMaker Studio, Amazon SageMaker Pipelines, and a familiar Git workflow. This video focuses on the data science angle, not on MLOps.
+
+<a href="https://aws.amazon.com/sagemaker/pipelines/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/sagemaker/pipelines/</a>
+<a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-pipelines-brings-devops-to-machine-learning-projects/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/blogs/aws/amazon-sagemaker-pipelines-brings-devops-to-machine-learning-projects/</a>
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future episodes ⭐️⭐️⭐️
+
+For more content:
+* AWS blog: <a href="https://aws.amazon.com/blogs/aws/author/julsimon/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/blogs/aws/author/julsimon/</a>
+* Medium blog: <a href="https://julsimon.medium.com/" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com/</a>
+* YouTube: <a href="https://youtube.com/juliensimonfr" rel="noopener noreferrer" target="_blank">https://youtube.com/juliensimonfr</a> 
+* Podcast: <a href="http://julsimon.buzzsprout.com" rel="noopener noreferrer" target="_blank">http://julsimon.buzzsprout.com</a> 
+* Twitter <a href="https://twitter.com/@julsimon" rel="noopener noreferrer" target="_blank">https://twitter.com/@julsimon</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi, everybody. This is Julien from Arcee, and I'm back with another video on SageMaker Pipelines. This is a follow-up to yesterday's video, so please feel free to watch this one first, as this one assumes you run the pipeline from that video. Okay? So here, what I want to show you is the Git workflow for SageMaker Pipelines. In the previous video, we created the pipeline, we deployed it, we saw how we could move the model from staging to prod, etc. And now I'd like to show you how you could work and modify your training code and deploy again using pipelines. Okay, so let's get started.
+
+The starting point is the pipeline that we deployed yesterday. So no change here. And we see we have a model. Just recapping quickly. And if we see the history here, remember what we did. First, we trained it with a status of pending manual approval. Then using the update status button, we approved it, and it was deployed for staging. And then wearing our ops hat, we actually promoted the model to production and deployed another endpoint for that. Okay, so this is the model that we have. So now let's go back to our code. Okay, so that's going to be in the model build directory. Pipelines, Abalone, remember we used that data set. Okay, and here's our code.
+
+Okay, so let's say we want to train a model with different hyperparameters maybe. Okay, so we see the estimator here that's used in the training step. Okay, and we see the hyperparameters here. So let's say I want to try training with a different depth. This is XJBoost, it's a tree-based algo, so we can set the maximum depth for the tree. And let's say, all right, why not try 10. So let's try and do this. So we can just save this and then we can go to Git. And we can see we have a change here. So let's stage the change. We can view the diff. That's the correct thing here. And let's add some message here. So update max depth to 10. And then we can commit. Okay, and yeah, sure. We want to know who did this. Okay, so I committed the changes. Now I'm going to push them. And of course, this is going to update the Git repository. And remember, this one is hosted in CodeCommit. So as this repository is the source for our pipeline, committing a change to it should trigger the pipeline. So if we check the status of our pipeline, we see there is a new execution here. Okay. And we see the different steps being executed. After a few minutes, pre-processing is complete and we are now training the model. OK, and yeah, let's wait for a few more minutes and then it's going to move on to evaluation. After a few more minutes, training is complete and we are now moving to evaluation. And depending on the mean square error for this, we are going to register the model or not. OK, so let's see if that max depth parameter helped or not. The pipeline is now complete, and the model has been registered, so probably accuracy was, or the MSE value was lower than the threshold specified in the conditional step. Okay, and I don't think it's really any better than yesterday's attempt. So the model was registered, as we can see here. Yeah, so it should be visible if we go back to the pipeline view and we check out the model group, yep, we see a new version. And of course it's pending because remember by default we set approval status to pending manual approval. So we would run some more testing on this model and maybe we realize we actually overfit with this model because depth is too high and we're not happy with this and we definitely don't want to deploy it. So we could say, well, no, okay, that's not a good model. So we could update the status and say this is rejected. So we could say something like this model already overfits, don't deploy. And the pipeline will just not deploy this model. So whether it's for staging or prod, it's not going to happen. So that's a surefire way to say, no, this model should never make it into production. We can only deploy approved versions.
+
+So we could investigate and say, all right, we probably need to revert to a prior setting, so maybe max depth 4 is what you really want. And yeah, we could probably use a more recent version of XJBoost, right? At the time of recording, 1.1 is the latest one. Okay, so save this. And then, again, go back to Git stage. Okay, we can update the commit message. All right, so update tree depth. Upgrade to XJBoost 1.1. Commit, push. And here we go again. So we should see another execution. It takes a few, maybe a minute to kick off. And so we should see a third execution. Should see a third model. So let's run this once again just to see the full workflow and we'll call it a day. Well, what do you know? The pipeline failed. So I wasn't expecting this. So it's a good opportunity to try and debug this. Let's see what happens actually. So let's click on this. Open execution detail. Okay, so training failed. And extraneous hyperparameter found silent. Okay, so it looks like this hyperparameter actually isn't supported or has been removed from the latest version of XJBoost. Okay, so let's fix it. Here we go. We'll just go and comment this out. Okay. And stage remove hyper parameter. Commit. Push. Okay, so now we have to wait a little more for the new pipeline to execute. Wow, suspense is killing me. Okay, so this worked. Just removing that old hyperparameter just fixed it. Okay, so execution succeeded. And if I go to my pipeline model groups, I should see version 3, okay, which is pending as usual. And well, how is this better so we can select this. So here's the trick, click on this one and then, okay, on the Mac it's command click on the other one, right, and for non-Mac machines, go and figure it out. And you can right-click and say, Compare model versions. And we can see the MSE is much, much better. So the new XJBoost version has probably helped, right? And STD is better as well. So this is a good model, and again, I can just go and say, yes, this is good. Nice MSE improvement. Deploy this. Okay. And then we'll follow exactly the same process as yesterday. And so the model is approved and this is going to trigger a staging deployment, and then I can go and ask the ops team to promote this through prod. So exact same thing as yesterday.
+
+All right, so this is what I wanted to show you today, the Git workflow, the day-to-day workflow when working with SageMaker pipelines. And you can see we can do all of it in studio. We really don't need to go and look at code pipelines and CloudFormation, which is what the ops team would need. But for the day-to-day machine learning work, this is enough. We can get the job done. I hope this was useful. Stay tuned for more in the next few days. Bye-bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">SageMaker Pipelines</span><span class="tag">Git Workflow</span><span class="tag">Model Deployment</span><span class="tag">Hyperparameter Tuning</span><span class="tag">Version Control</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

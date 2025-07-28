@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="SageMaker Fridays Season 3 Episode 5   NLP at scale with Hugging Face and distributed training - Broadcasted live on 16/04/2021. Join us for more episodes at https://amazonsagemakerfridays.splashthat.com/
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of ..." name="description"/><meta content="SageMaker Fridays Season 3 Episode 5   NLP at scale with Hugging Face and distributed training - Julien Simon" property="og:title"/><meta content="SageMaker Fridays Season 3 Episode 5   NLP at scale with Hugging Face and distributed training - Broadcasted live on 16/04/2021. Join us for more episodes at https://amazonsagemakerfridays.splashthat.com/
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of ..." property="og:description"/><meta content="https://www.julien.org/youtube/2021/20210417_SageMaker_Fridays_Season_3_Episode_5_-_NLP_at_scale_with_Hugging_Face_and_distributed_training.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="SageMaker Fridays Season 3 Episode 5   NLP at scale with Hugging Face and distributed training - Julien Simon" name="twitter:title"/><meta content="SageMaker Fridays Season 3 Episode 5   NLP at scale with Hugging Face and distributed training - Broadcasted live on 16/04/2021. Join us for more episodes at https://amazonsagemakerfridays.splashthat.com/
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of ..." name="twitter:description"/><link href="https://www.julien.org/youtube/2021/20210417_SageMaker_Fridays_Season_3_Episode_5_-_NLP_at_scale_with_Hugging_Face_and_distributed_training.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SageMaker Fridays Season 3 Episode 5   NLP at scale with Hugging Face and distributed training - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>SageMaker Fridays Season 3 Episode 5   NLP at scale with Hugging Face and distributed training</h1>
+<div class="date">April 17, 2021</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/vcu4lqcfiR0">
+</iframe>
+</div>
+<div class="description">Broadcasted live on 16/04/2021. Join us for more episodes at <a href="https://amazonsagemakerfridays.splashthat.com/" rel="noopener noreferrer" target="_blank">https://amazonsagemakerfridays.splashthat.com/</a>
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+In the last episode, we automated an end to end machine learning workflow using the Python SDK available in SageMaker Pipelines, and Amazon CloudFormation. In this episode, we'll use state of the art models for natural language processing available in the Hugging Face collection. Then, you'll see how to fine-tune a BERT model on your own dataset with SageMaker, and how to scale your training jobs with data parallelism and model parallelism.
+
+<a href="https://aws.amazon.com/blogs/machine-learning/aws-and-hugging-face-collaborate-to-simplify-and-accelerate-adoption-of-natural-language-processing-models/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/blogs/machine-learning/aws-and-hugging-face-collaborate-to-simplify-and-accelerate-adoption-of-natural-language-processing-models/</a>
+<a href="https://aws.amazon.com/blogs/aws/managed-data-parallelism-in-amazon-sagemaker-simplifies-training-on-large-datasets/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/blogs/aws/managed-data-parallelism-in-amazon-sagemaker-simplifies-training-on-large-datasets/</a>
+<a href="https://aws.amazon.com/blogs/aws/amazon-sagemaker-simplifies-training-deep-learning-models-with-billions-of-parameters/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/blogs/aws/amazon-sagemaker-simplifies-training-deep-learning-models-with-billions-of-parameters/</a>
+<a href="https://gitlab.com/juliensimon/amazon-studio-demos/-/tree/master/sagemaker_fridays/s03e05" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/amazon-studio-demos/-/tree/master/sagemaker_fridays/s03e05</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Good morning, everybody, or good afternoon, depending on where you are. Welcome to this new episode of Sage Makeup Friday, Season 3. My name is Julien. I'm a dev advocate focusing on AI and machine learning. And once again, please meet my co-presenter. Hi, everyone. My name is Seagolen, and I'm a senior data scientist working with AWS Machine Learning Solutions Lab. My role is to help customers get their ML project on the right track in order to create business value as fast as possible. 
+
+Great. Thank you again for being with us. As you know by now, we meet twice a month, and we discuss real-life machine learning use cases and try to solve them using Amazon SageMaker. We focus on the latest capabilities that were launched a few months ago at ReInvent. We are 100% live, still in the Paris office. We won't use any slides. Once again, just one recap slide at the end with resources. We'll spend lots of time writing code. We have friendly moderators and expert moderators today. Once again, thank you for helping us. They're here to answer all your questions. So start right now. Keep them busy. Ask your questions. Don't be shy. There are no silly questions.
+
+So what are we going to do today, Seagolen? So, Julien, if you remember well, in the last episode, we automated an end-to-end machine learning workflow with SageMaker Pipelines. That's a super good episode. I like that. And this week, we are going to change topics. We will show you how to train natural language processing models at scale, thanks to the Hugging Face open-source libraries and the new distributed training techniques available in SageMaker. 
+
+Okay, yeah, it seems that this season we have a bit of an NLP obsession, right? But, you know, computer vision, we've done that. We'll come back to Computer Vision and show. So we're just obsessed with NLP right now. Yeah, and Hugging Face too. It's pretty cool, as you will see. 
+
+So let's start nice. Can you just explain what NLP is and what kind of business problems can customers solve using NLP? 
+
+So NLP first means natural language processing. So plain text. And it is really one of the very promising fields in machine learning. Not a month goes by without a new breakthrough. Yeah, it's a very active community. And indeed, thanks to the increasing computational capabilities, researchers now train complex deep learning models on very large text data sets and can extract context from unstructured data. As a result, applications such as search, sentiment analysis, sentence comparison, text summarization, chatbots, and of course translation are now commonplace. 
+
+Yeah, and those use cases are really super popular, and lots of companies and organizations need to do that. So yeah, there's really a lot of research going on and trying to build always new models and more sophisticated models, right? Definitely. And in this respect, the recent transformer deep learning architecture has proven very successful and has spawned several state-of-the-art model families such as the text-to-text transfer transformer, the famous T5, Generative Pre-trained Transformer, GPT, and of course the bidirectional encoder representations from transformers, the BERT one. 
+
+Ah, the famous BERT, yes, and of course we're going to talk about BERT today. So I know because I read the articles and the blog posts and so on. Transformers are definitely state of the art for NLP. Can we try and give our friends today a reasonably simple explanation of transformers and how they work? 
+
+Yes, of course. In the seminal paper entitled "Attention is All You Need," published in 2017, the inventors of the transformer architecture highlighted the fact that until recently, the dominant sequence models were based on complex recurrent or convolutional neural networks, such as RNN, LSTM, or the gated recurrent unit. And then these have been around for a long time. Yeah, they work well. But to get around the sequential nature of RNN architecture and to improve computational efficiency, the authors propose a new type of attention-based network. 
+
+Attention is a mechanism that forces the model to learn to focus or attend to specific parts of the input sequences. Self-attention is a mechanism where every word in the input sequence is analyzed within the context of all other input words. So what's the main benefit? For instance, one of the main benefits is the ability to solve the polysemy problem, where the same word can have a different meaning based on context. For example, the word "tie" can be a verb to attach or a noun, like the tie you wear. 
+
+When you go to a job, you look at the context of a word next to all, not just with respect to the next or the previous words, but all words. So you kind of expand the attention given to each word in the full sentence. And when you take into account this full context, one of the benefits of the attention mechanism is the ability to understand long-term dependencies, the relationship between words that are far apart. 
+
+LSTMs would look at neighboring words, a few words before or after. But if you have a word at the beginning of the sentence that is related to a word 200 positions later, then LSTM will not. I think I get it. Thank you for the reasonable explanation. So this thing is the basic building block of transformers. 
+
+Exactly. And the transformer architecture relies entirely on a self-attention mechanism to compute representations of these inputs and outputs without using sequence-aligned RNN or convolution. So you use only self-attention mechanisms. And thanks to this new architecture, transformer models have evolved to achieve top results. And as it is usually the case, this new architecture inspires other models such as the famous BERT. 
+
+So again, BERT means bidirectional encoder representation for transformers and is a variant of the transformer architecture using only the encoder part. You can have a look at the paper if you want to know more. But BERT can now be used for many NLP tasks. It has many flavors optimized for particular tasks, like RoBERTa, DistilBERT, XLM, and even CamemBERT, the French flavor. CamemBERT, if you've never tried it, is the best French cheese. It's not a cheesy model, but that's a cheesy joke. I had to make it. 
+
+So these are super nice models, super efficient. I mean, we've all read the blog posts, we've seen the demos, but every time I try to use them, I find them very intimidating and a little bit difficult to work with. So how can we use them? Do we have to train them from scratch? 
+
+Yes, you could. However, this will be quite a challenging task. First, we are talking about large models. BERT has 340 million parameters, and you will need a very large data set to train them with a good level of accuracy. The original BERT model was trained on the entire English Wikipedia and the Book Corpus Datasets. 
+
+Okay, so how big is that? 3 billion words if I remember. English Wikipedia is probably more than 3 billion words. So that's pretty big. So you understand that cleaning and preparing that much data is a project in itself. Then you will need quite a bit of infrastructure to train the model in a reasonable amount of time. Even with eight powerful GPUs, it can take about one week to train BERT. 
+
+We have all seen benchmarks on training BERT in an hour, but the amount of infrastructure required is staggering and completely out of reach for the majority. Benchmarks are only good if you can reproduce them yourself. If you put 2000 GPUs and train BERT in X minutes, that's great, but can I do it? No. Can customers do it? So fine. It's a benchmark that doesn't help. 
+
+And if you think BERT is problematic, then what about the T5 model with 10 billion parameters or the GPT model with its 175 billion parameters? Let's stick with BERT today; we have enough problems already. So what do we do? We just fire up a training job and wait for a week while playing video games? Absolutely not. The majority of ML teams don't train from scratch. Instead, they use transfer learning and fine-tune pre-trained models on their own data sets. 
+
+This has two main benefits. First, the parameters have already been trained, so you don't need a lot of data. Just enough to specialize the model on your own business problem. Second, you don't need to train for very long. Typically, just a handful of epochs. Thanks to this, your training times will be hours at most, definitely not weeks. 
+
+Transfer learning is a great technique. It's similar to what we've been doing for years on computer vision, grabbing pre-trained models on ImageNet and fine-tuning them. It's the same thing we're doing for NLP. Wikipedia is very popular, large, and available in almost every language. 
+
+So what would the workflow look like? Very simple. First, we would download a pre-trained model. Then we would prepare our own data according to the input format. Then we would write a short fine-tuning script. Finally, we would get the fine-tuned model and use it in our app. 
+
+So where can we find those state-of-the-art pre-trained models? They are available in the usual models such as TensorFlow Hub or PyTorch Hub and, of course, in SageMaker. However, the number one place to find them is the Hugging Face Model Hub, a huge and most up-to-date collection of NLP models. 
+
+So I'm sure you've heard that name many times. Let's dive in. I'm going to share my screen, please. Let's look at the collection of models. You should see the collection of models here, and it's really big. It's over 8,000. Let's try and find a summarization model trained on the English language. 
+
+Okay, and we see there are quite a few. Which one do we want to try? This one? Yep. So we see here, of course, there's information on the model, where it comes from, and metrics. The really cool thing about this Hugging Face collection is you can try it out right there. You can run a sample here. Is this about the Eiffel Tower? Yeah. See, you can't escape us. 
+
+It's a lucky accident. You can run, you know, you can try and summarize and answer questions, etc. You can try them out just like that. So you can explore. Let's try maybe question answering. In French, why not? English. Oh, CamemBERT. 
+
+Question answering, as you know, is where you ask a question, provide a piece of text that contains the answer, and the model finds the exact part of that document. You see how easy it is to use this. Over 8,000 models, and the Hugging Face folks are adding models, but importantly, the community, the open-source community, is contributing lots of models. 
+
+You can filter everything by the use case you want. What else can we do with Hugging Face? There is a lot we can do because Hugging Face is developing a super popular open-source library that makes it easy to download, train, and predict with the models, and you can find them on GitHub. 
+
+We see the libraries and they have plenty of repos, but the most important ones we're going to use today are Transformers, Datasets, and Tokenizers. Should we do a hello world example? Okay, let's go. 
+
+So let's go and open SageMaker and let's zoom in a bit. The code is on GitLab. This is the one. This is a really simple one, but just to give you a sense of what Hugging Face is, and then of course, we'll do slightly bigger things. 
+
+First, we need to install the Transformers library, which gives us access to all those models and datasets. So here, in just one, two, three lines of code, we can download a state-of-the-art pre-trained model for sentiment analysis. And of course, here there's a default model that we don't load. We don't even give the model name. And we can predict with it. 
+
+As you can see, we don't even prepare data. We don't have to do any processing because this is part of that pipeline, where input data is transformed and predicted. So I don't think you can be any simpler than this. Now, of course, you can go and grab a particular model, and you can say, "I want this particular model here." 
+
+This is easy. And this is the one you want. Great. How do you use that? Well, you just give the model name. And this is actually multilingual sentiment analysis. With the same model, we can do sentiment analysis on French text and English text. 
+
+So you can do this with any one of the 8,000 models in just two or three lines of code. For a lot of people, it works just like that, and they don't need anything else. But probably you want to fine-tune those on your own data. And then there's a bit of an infrastructure problem because these are very complex, very large deep learning models. 
+
+We need GPUs to train them, even if it's just fine-tuning. And of course, you may have quite a bit of data to fine-tune on. So maybe SageMaker can help. Can we easily use Hugging Face on SageMaker? Absolutely. We recently added a Hugging Face estimator to SageMaker, and now it makes it very easy to train and fine-tune models at any scale using on-demand instances. 
+
+The way this works is extremely similar to other frameworks available on SageMaker. If you've seen a previous episode where we train with TensorFlow, PyTorch, or scikit-learn, you will be very familiar with what we're doing today. We're going to talk about the Hugging Face estimator, script mode, etc. 
+
+The prerequisite for this is to understand how you can fine-tune one of those models. There's a very good example of that in the Hugging Face documentation, which I have on my screen here. This is part of the Transformers library, and this code snippet is really what it takes. 
+
+You would import the model you want to fine-tune. Here, we want to use BERT for sequence classification. This will download it and initialize it with those weights. The Trainer API lets us fine-tune that. We pass the model training arguments, such as how many epochs, batch size, technical parameters, and the training and test sets. 
+
+This is a very friendly, easy API. As you will see, you can run this stuff exactly as is on SageMaker. Let's jump to a notebook and see how we can do this. Taking existing code that runs on your laptop or office machine and running it on SageMaker is not a lot of work. 
+
+Okay, so here we're going to work on sentiment analysis on product reviews. We've already used the Amazon customer reviews dataset, so I figured, let's change it and show you how to use datasets in Hugging Face. We're going to use one of the datasets in Hugging Face and use DistilBERT. 
+
+Let's get started. Install dependencies, import SageMaker, the usual stuff. First, we need data in the format that BERT expects. Here, I'm going to work with this dataset called "generated_reviews_enth," which means English-Thai. It's an interesting one. We can download it, and it's already split for training, test, and validation. 
+
+The training set is about 141,000 samples, which is medium size. We'll use the validation dataset but not the test set. This is what the data looks like. The purpose of this dataset is for sentiment analysis, where we see the review and the star rating. 
+
+But you can also use it for translation or bilingual work on English and Thai because the "correct" feature tells us if this English translation is a correct translation for the Thai language. We could certainly use this, but here we're just going to use the English part. 
+
+The format that BERT expects is two features and a label that says 0 or 1, right? So positive, it's binary classification. The first thing we need to do is apply this modification. If the review is four or five stars, then it's positive. If it's one, two, or three stars, it's negative. 
+
+I apply this change to the training set and the validation set. Now I've got my label, which needs to be called "labels." And then I just want to get rid of the "correct" field and the "translation.th" field. I rename "translation.en" to "text" because that's what BERT expects. 
+
+So it's a simple format. The next step is tokenizing. When we work with the customer reviews, all those models do not want to work with strings. They need tokens. Tokens are integers, so we replace words with a unique integer. 
+
+As those models have been pre-trained, they already have a tokenizer. We can just download the tokenizer and apply it. We apply it to the training set and the validation set. If we look, the training set looks very ugly. We still have the labels and the text, but we see the input tokens. 
+
+Each word has been replaced by a unique token, and the zeros are just padding because BERT takes fixed-length inputs, I think it's 512 tokens. This review is not long enough, so it's padded with zeros. This is the attention mask, telling BERT which words to look at. 
+
+The padding values are ignored. There are certain tasks where you want to mask input words. For example, if you want to train a model on text generation, you might mask the second half of the sentence because you don't want BERT to look at it. 
+
+Then we just upload this stuff to S3. It's fine to do this in the notebook when you experiment, but once you've debugged the code, where do you want to run it? You want to run it in SageMaker Processing. My favorite service. 
+
+Automating your processes is super important. SageMaker Processing makes it very easy to take that code in the notebook, put it in a script, and run it. You can see I'm doing the same thing, just adding command-line arguments and saving the data to a local location in the container. 
+
+When we run this, we get output in S3. If we look there, we see our training set and validation set. If you've never done that exercise of taking notebook code and running it inside SageMaker Processing, I cannot recommend it enough. It's easy and saves you so much time when you want to run those jobs again. 
+
+You don't have to click, click, click in the notebook. Be lazy. My advice. Okay, so I'm actually going to grab the output from S3. Now I am going to use this to fine-tune the model. You need a fine-tuning script. This is pretty much what you saw in the documentation. 
+
+We download, start from a model, define training arguments, create a Trainer instance, train, evaluate on the validation dataset, and save the model. This is vanilla Hugging Face code. The only thing we're doing is using script mode to pass parameters and the location of the datasets and the location where you've seen this if you've been following the series. 
+
+It's not complicated, and you have many examples to look at by now. This is the training script or the fine-tuning script. Now we can run this. First, we're going to run on a very small scale, one epoch just to see what's there. Our batch size is 32, and the model we want to fine-tune on is DistilBERT. 
+
+These hyperparameters are passed to the script using script mode. We need to figure out script mode and SageMaker Processing. I'm always asking the same question, so it's very easy. I don't have a lot of imagination, especially on Friday. 
+
+So what am I going to say now? I'm going to say, "Look at my t-shirt. Can you see my t-shirt? It's Friday, and we have a right to be silly." Actually, Seagolen made me a t-shirt that says, "SageMaker is business as usual," and there's estimator code. 
+
+I'm wearing it, so that tells you how silly I am. It's absolutely okay because we have this new estimator. It's called Hugging Face, as you would expect. We pass the location of the script, our hyperparameters, the version of Transformers we want to use. 
+
+We need 4.4.2 or higher. 4.4.2 is the first version that works with SageMaker. PyTorch 1.6, Python 3, and our infrastructure requirements. We'll just go with one GPU instance with a single GPU. And because I'm cheap, I want to use spot instances. 
+
+We'll try and grab that P3.2xlarge. We're designing the profiler, which is a capability we haven't talked about probably in one of the next episodes because we don't really need it. Then we call fit, passing the location of the training and validation data. 
+
+It trains for about a little less than an hour. So that shows you, one epoch on a small to mid-sized dataset, one hour. But as we use Spot, we only pay for a thousand seconds, which is about 15 minutes. So we have a very nice 70% discount. 
+
+Especially if you work with GPU instances, which are more expensive than CPU instances, but they're the only ones we can use here. You really want to make sure you use this part. About an hour for one epoch. We should look at maybe accuracy. It's in Studio, actually. 
+
+Let's look at Studio. All right, going off script. It's one of those. It's the one. Okay, so I see my cross-entropy because I think that's the only one I logged. But I think the evaluation accuracy is also there. 
+
+So we train this for one epoch. Now, what do we do with it? This is a relatively new feature and doesn't support deployment on SageMaker yet. So at the moment, we cannot call Hugging Face.deploy, but coming soon. 
+
+It's a good opportunity to show you how to grab a model and predict with a model locally, which I don't think we've shown you before. We can copy the model from S3. Let me show you what this looks like. It's a model.tar.gz file. 
+
+If you extract it, you have the model here and checkpoints automatically. This is the one thing we're interested in. We have the model configuration, which is important because it helps us load it. 
+
+So now I'm working locally, quote-unquote, right? I'm actually working in Studio, but here, I'm in my Studio environment. So this is exactly the same as my, from a loading perspective. I can load the model just like that, grabbing the config and the parameter weights. 
+
+If I print the configuration, I'll see some parameters on the number of dimensions, the max size of the sequence, 512, and other parameters. Vocabulary size. And then we see the actual architecture. If you read the research paper and compare it to this, we see the self-attention layers and the blocks connected to one another. 
+
+At the end of BERT, in this variant of BERT, we add an output layer that reduces to output features. We want binary classification, so this is where we'll get our probability. We can try it. 
+
+Using the same tokenizer that we downloaded earlier, we can tokenize this review and predict locally with those tokens. We print the output. These two values don't look like probabilities because they are raw activation values. If we apply a softmax function, which transforms a vector into probabilities, we see the highest probability is class number one, which is positive. 
+
+Let's try another one. Predict this thing, apply softmax again. Now, the top probability is class zero, so this is a very negative review. "I want my money back." 
+
+So this is how you would do it. It's simple because we've already seen these things so many times. The only thing we're missing is deploy, but hopefully, it's coming soon. 
+
+Obviously, we trained on a small dataset for one epoch, and it still took one hour on one GPU. What if we want to train on larger datasets or fine-tune for a longer period? What should we do? 
+
+SageMaker has included distributed training using native capabilities in open-source deep learning frameworks. But at a recent event, we launched new major capabilities that greatly improve distributed training. The first one, data parallelism, where we automatically split data across the different GPUs of the training cluster. 
+
+The second one is model parallelism, where we automatically split very large models that would not fit on a single GPU. These are really good, and it's a good opportunity to revisit distributed training. Let's start with data parallelism and explain what it is and see how we can add it. 
+
+Distributed training was available in SageMaker from day one using native capabilities. If you train with built-in algorithms, mostly implemented with Apache MXNet, you use the distributed feature training in MXNet with a parameter server. If you train with TensorFlow, there's a native parameter server in TensorFlow, and you can use Horovod as well. 
+
+The issue some customers have is they hit the scalability limit on those parameter servers. Parameter servers are dedicated instances or sometimes one of the training instances and are in charge of splitting the dataset into as many pieces as you have training instances. 
+
+For example, if you have 16 GPUs in your cluster, the parameter server will round-robin the training batches across the 16 GPUs. Each GPU gets 1/16th of the training set. This accelerates things because you don't train all GPUs on the same data. Each GPU sends results back to the parameter server, which consolidates everything and distributes results to everyone, and then the parameter server sends the next batch. 
+
+The problem is that as you grow the number of GPUs in your training cluster, the parameter server becomes a bottleneck. This is why we worked on a new distributed training technique where we still split the dataset but remove the need for that parameter server. 
+
+This is called SageMaker Data Parallelism. We distribute the model training on the GPUs and the consolidation and sharing of updates across the CPUs of those instances. On your training instances, all CPUs collaborate in distributing updates, and all GPUs collaborate in training. 
+
+So you don't need that one instance that gets bombed with gigabytes of updates coming from 64, 128 GPUs. It's pretty clever. This is quickly what SageMaker Data Parallelism is. GPUs send their updates to all the CPUs in the training cluster, and CPUs consolidate and send updates to the GPUs. 
+
+You share the workload, training workload, and communication workload. This is pretty cool. You can read all the details in the blog post I wrote, where I explain data parallelism and the different generations of data parallelism and what this new algorithm is. 
+
+Remember how we did distributed training in the past? We would just say, "Hey, train on two P3.16xlarge instances." As soon as the instance count would be higher than one, we enable distributed training. This still works. You can absolutely still do this. 
+
+Now, if you want to use data parallelism, you need that one line saying, "Please enable data parallelism." Isn't this beautiful? It's very cool. Under the hood, this distribution of computation and communication automatically works. You don't have to worry about it. 
+
+We train again. If you want to read the log, you'll see the two instances being set up. Here we have two hosts, two instances, and we use MPI, the message passing interface, to let them communicate. We are actually training for longer, eight epochs. 
+
+We have 16 GPUs. Each one of these has eight times two. 16 GPUs running for eight epochs. At the end of this extremely long training log, we see we trained for an hour and five minutes or something like that. 
+
+We trained for a little longer than we trained in the initial job, but remember, we trained on eight epochs. So we trained for eight times longer on 16 GPUs. It's not perfect scaling because ideally, we should see half the time of that very first job. 
+
+Here we see approximately the same time. I haven't optimized this yet. I'm guessing if I started to improve batch size and tweak a bit, I could get much better results. Out of the box, we get a pretty nice speedup already without even tweaking things. 
+
+Of course, we can always tweak. We'll spend an episode tweaking with the SageMaker Profiler. We'll certainly do that. And we still get a 70% discount. This dataset is not huge, so training on eight epochs is a bit of a waste of time. We actually don't improve the accuracy much. 
+
+But if you had a really big dataset, big enough that you would need to train on 16, 64 GPUs, whatever, you would get a very nice speedup. This is not the best example. We only have an hour, and I can't go into all the tweaking details. 
+
+If you want it as an exercise, you can run this using native distributed training and compare. Trust me, this new data parallelism library is much faster. The speedup compared to the previous version of distributed training is very impressive. You can experiment and let me know what you think. 
+
+We have one more thing. You mentioned model parallelism. Let's talk about that. Data parallelism is where my model fits on the GPU, but my data is so big that I want to send different chunks of data to different GPUs. 
+
+Now, there's another problem where the model is so big that it doesn't fit in the GPU. BERT is how large? 340 million parameters. It's about 300 megabytes, quoting from memory. So it will definitely fit. But those billion-scale models will not fit or hardly fit. 
+
+You will have to work with a very small batch size, and then training is slow. You can't increase the parallelism. That's what model parallelism is. We chunk the model into different parts. The layers of BERT we saw will be split into different chunks and trained on different GPUs. 
+
+This looks a little bit crazy because slicing data is easy to understand, but slicing the model creates a problem. How do those different slices talk to one another? If I slice BERT into four, part zero needs to be linked to part one, and so on. 
+
+This is not something we want to do manually, which is what people do these days. We use model parallelism again. Let me show you quickly. This is my blog post. Here, we have two GPUs, and we slice the model into partition one and partition two. 
+
+We add an extra layer of parallelism by splitting the training batches into micro-batches. We have two copies of each partition. What this means is that on the same partition, you can run forward propagation and backward propagation at the same time. 
+
+So you can have different micro-batches at different stages of that pipeline. For example, micro-batch n could already be almost done, n plus one could be still backward propagating on another partition, etc. This is super efficient because you can split the model, but this doesn't come at the cost of running your data in sequence. 
+
+You would solve the model size problem, but here we parallelize everything because all GPUs are busy running micro-batches forward and backward on those partitions. This is really cool. Again, lots of details here if you want to zoom in on this thing. 
+
+The way this works is very simple. We run for one epoch. You need to set up those options, which look a little intimidating, but the main ones you need to worry about are how many partitions do you want? Here, we're going to slice BERT into four chunks. 
+
+How many micro-batches do you want? How many copies of each partition? Here we have four partitions, two copies of each, and we have eight GPUs. That means each GPU is going to run two copies of one of those four partitions. 
+
+We have multiple copies of the same partitions on two GPUs because we have eight GPUs and four partitions. Right? Makes sense? And there are other parameters on how to allocate partitions to particular views and a few more things. 
+
+But generally, these are the ones we want to decide. This is a bit of a theoretical exercise because BERT does fit on a single GPU. Maybe we'll come back on another episode with GPT or T5. If someone convinces me to spend the time to do this, why not? 
+
+Then the SageMaker business as usual. This time we just need to enable model parallelism. And yeah, MPI again, which is the basic passing that is used. Fire up that job, and it goes on happily. 
+
+We did one epoch in 1000 seconds. So that's almost four times faster than our initial job. We used eight GPUs. But this shows you by splitting the model into different bits and replicating those bits across our training cluster, we keep the GPUs extremely busy. 
+
+We would need to zoom in on how busy they are, but you can see this is very efficient. This is a nice speedup. So then you know, it's up to you to decide what your budget is, how long you need to train to get the accuracy you want, and then you can either use a single instance to train or use data parallelism to train if you have a huge dataset problem. 
+
+Or if you work with large models, and BERT is not huge, but we can already see good benefits here, you could try model parallelism to try and split. And to make things even more confusing, of course, you can combine model parallelism and data parallelism. 
+
+Here, I could have enabled the PyTorch data distribution mechanism, which is native to PyTorch, but that would be a little too much, right? And we are almost out of time. So there you go. That's the end for today. You have a couple of minutes for questions, so don't wait. 
+
+It's time to wrap up. So say no. Quick recap, what did we see today? Screenshot time. Yes, yes. Screenshot time, of course. So today, we saw how to use the new Hugging Face capabilities of SageMaker, plus how to do some model parallelism and data parallelism. 
+
+Go and learn everything you can learn about Hugging Face. Go and try the models. The code we ran today is on GitLab as usual. SageMaker docs to understand model parallelism and data parallelism, and the two blog posts I referred to. 
+
+That's it for today. I'm not quite sure what we'll be doing two weeks from now. Let's see. Oh, is it cost optimization? Yes, I think it is. Yes, we'll talk about saving money because I'm cheap, and we will have a special guest to tell us about a super cool machine learning project that is team-built. 
+
+We'll talk about all the cost optimization features in SageMaker, so that's going to be pretty fun. We'll start from a big, expensive training job and try to make it very cost-effective. It's going to be very fun. Join us in two weeks. Thank you very much, Seagolen, for being with us today. 
+
+Thank you to all our colleagues who helped us organize this and answer your questions. And of course, thank you very much for joining us. I hope you learned a lot. Until we see you, keep rocking with machine learning. That's another t-shirt. See you soon. Bye-bye.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">MachineLearning</span><span class="tag">NaturalLanguageProcessing</span><span class="tag">SageMaker</span><span class="tag">HuggingFace</span><span class="tag">DistributedTraining</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

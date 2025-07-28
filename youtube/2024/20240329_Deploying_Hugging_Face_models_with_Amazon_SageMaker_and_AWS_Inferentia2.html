@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Deploying Hugging Face models with Amazon SageMaker and AWS Inferentia2 - In this video, I walk you through the simple process of deploying a Hugging Face large language model on AWS,  with Amazon SageMaker and the AWS Inferentia2 acc..." name="description"/><meta content="Deploying Hugging Face models with Amazon SageMaker and AWS Inferentia2 - Julien Simon" property="og:title"/><meta content="Deploying Hugging Face models with Amazon SageMaker and AWS Inferentia2 - In this video, I walk you through the simple process of deploying a Hugging Face large language model on AWS,  with Amazon SageMaker and the AWS Inferentia2 acc..." property="og:description"/><meta content="https://www.julien.org/youtube/2024/20240329_Deploying_Hugging_Face_models_with_Amazon_SageMaker_and_AWS_Inferentia2.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Deploying Hugging Face models with Amazon SageMaker and AWS Inferentia2 - Julien Simon" name="twitter:title"/><meta content="Deploying Hugging Face models with Amazon SageMaker and AWS Inferentia2 - In this video, I walk you through the simple process of deploying a Hugging Face large language model on AWS,  with Amazon SageMaker and the AWS Inferentia2 acc..." name="twitter:description"/><link href="https://www.julien.org/youtube/2024/20240329_Deploying_Hugging_Face_models_with_Amazon_SageMaker_and_AWS_Inferentia2.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deploying Hugging Face models with Amazon SageMaker and AWS Inferentia2 - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Deploying Hugging Face models with Amazon SageMaker and AWS Inferentia2</h1>
+<div class="date">March 29, 2024</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/GRWa1Hkc-VE">
+</iframe>
+</div>
+<div class="description">In this video, I walk you through the simple process of deploying a Hugging Face large language model on AWS,  with Amazon SageMaker and the AWS Inferentia2 accelerator.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. Follow me on Medium at <a href="https://julsimon.medium.com" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com</a> or Substack at <a href="https://julsimon.substack.com." rel="noopener noreferrer" target="_blank">https://julsimon.substack.com.</a> ⭐️⭐️⭐️
+
+Notebook: 
+<a href="https://gitlab.com/juliensimon/huggingface-demos/-/blob/main/inferentia2/llm/deploy_zephyr_inf2.ipynb" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/huggingface-demos/-/blob/main/inferentia2/llm/deploy_zephyr_inf2.ipynb</a>
+
+Deep Dive: Hugging Face models on AWS AI Accelerators
+<a href="https://youtu.be/66JUlAA8nOU" rel="noopener noreferrer" target="_blank">https://youtu.be/66JUlAA8nOU</a>
+
+Blog posts:
+<a href="https://huggingface.co/blog/how-to-generate" rel="noopener noreferrer" target="_blank">https://huggingface.co/blog/how-to-generate</a>
+<a href="https://aws.amazon.com/blogs/machine-learning/elevating-the-generative-ai-experience-introducing-streaming-support-in-amazon-sagemaker-hosting/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/blogs/machine-learning/elevating-the-generative-ai-experience-introducing-streaming-support-in-amazon-sagemaker-hosting/</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Hugging Face. A while ago, I did a video on accelerating Hugging Face models on AWS accelerators, Tranium, and Inferentia 2. We recently introduced a new feature on the Hub that makes it even simpler to deploy Hugging Face models on AWS on Inferentia 2 instances. In this video, I'm going to start from the Hugging Face Hub, pick one of our LLMs, and show you the simplest way to deploy it to AWS on Amazon SageMaker with Inferentia2-powered instances. You'll see we won't write a line of code, which is great. Let's get started.
+
+If you enjoyed this video, please give it a thumbs up and consider joining my YouTube channel. If you do, don't forget to enable notifications so you won't miss a thing in the future. You could also share this video on your social networks or with your colleagues because if you enjoyed it, it's likely someone else will. Thank you very much for your support.
+
+How can we deploy Hugging Face models on AWS in the simplest possible way? Well, this is how. Starting from the model page, I've selected our own Zephyr 7 billion model. Click on deploy, and you can see a number of deployment options. Select Amazon SageMaker. SageMaker is the machine learning service on AWS, and this is the one we work on together with AWS to build the compute environments needed for training and inference. Select this, and immediately you see a code snippet using the SageMaker SDK. If we run this in a Jupyter notebook with AWS credentials, we will deploy the model on SageMaker. As simple as that. So you don't need to write a single line of code. In this example, the model will be deployed on a G5 instance, which comes with an NVIDIA A10G GPU, pretty cost-effective. We could do this, and feel free to try. But there's also an option to try this on Inferentia 2, and let's do this because Inferentia 2 is a very cost-effective solution for LLM inference. Let's pick this. We see another code snippet, which is fairly similar. We just have a few extra parameters. We'll use a different container, but we'll get to that. This time we're going to deploy on an Inferentia2 instance.
+
+If you're completely new to Inferentia2, pause the video now, go and check out the deep dive video I did on Inferentia 2 and Tranium. I will put the link in the video description. Everything else will make more sense if you do that. If you know what INF2 is, go ahead. We could just copy this and paste it, and we would be able to deploy it. Let's jump to a Jupyter notebook. I'm using SageMaker Studio here, but it's not important. You could run this anywhere, even locally, as long as you have your AWS credentials filled in.
+
+What do we do? Well, import the necessary dependencies, get the IAM role, the execution role for SageMaker, which will allow us to perform SageMaker API calls. Then, straight from that code snippet, we have the model information. We're using the Zephyr 7 billion model. We have a few more parameters, such as batch size, max sequence length, etc. There's one that's really important: `HF_number_of_cores=2`. That's the number of Inferentia 2 cores we will use to run the models. Each Inferentia 2 device comes with two neuron cores. When we say two cores, we mean one device. The more cores you use, the more opportunities you give for tensor parallelism. But we'll stick to two cores and batch size one for simplicity.
+
+Next, we build a Hugging Face model object in the SageMaker SDK using the information here on the model itself and the name of the Docker container that we will use on SageMaker. You don't need to build it yourself; we've already done that. All you have to say is, "I want to use this container. I want the LLM image. And I want the NeuronX flavor." Neuron is the name of the AWS SDK for Inferentia2. Just grab the container, pre-installed, pre-optimized, nothing to worry about here. Then we just call `deploy`. I'm actually using an even smaller instance than what comes in the code snippet. I'm shrinking to 8XL, which comes with one single Inferentia 2 device, so two cores, and a little more host memory, which helps run PyTorch and everything else, but just one Inferentia device. Run this. It deploys for about 10 to 12 minutes. When it's done, you should see an endpoint in service. You can take a look. All right, lots of information. We can see the logs. Let's go down a little bit, find the actual log file. No errors, that's good. This has been correctly deployed. If it doesn't deploy correctly, you would see something here that tells you why something went wrong. If we go down here, we can see our instance type, `inf2.8xl`, and some monitoring, although this isn't really busy.
+
+The endpoint is good to go. Now let's go back to our notebook and run inference. We could run inference just like this, but I've expanded a little bit on the code snippet because I wanted to show you how to do it right. This is how you would apply the chat template. As you know, models like Llama, Mistral, Zephyr expect a certain prompt for the chat interaction to work correctly. Unfortunately, all those formats are different, but the tokenizer library makes it quite simple. You can just define your chat template in this format, which is the OpenAI format. The system prompt and then the actual question. Apply that template to your inference query. Under the hood, this will be translated into the exact format that the model expects. Then some parameters. If you're not too sure what top P, temperature, and top K are, there's a super cool blog post that explains everything. I will put all those links and a link to the notebook in the video description.
+
+Now we can just go and predict. Ignore those two lines; I added a comment there because as I predict back and forth between normal inference and streaming inference, I need to reset everything back to default. But you could just run this out of the box, and that's how it will work. What was the question again? As a friendly AI engineer, please answer the following question: Why are Transformers better models than LSTMs? Let's give it a shot. Here we'll get the answer in one go. Streaming is not enabled, so we're sending the query to the model. It will generate the complete answer and send everything back to us. And that's what we see here. It's a good answer, right? Bullet points: Transformers can handle longer sequences, are more efficient, better capture content, and handle parallelism better.
+
+But, of course, we'd like to see some streaming, just like a typical chatbot does. I found a super nice blog post from AWS that introduces streaming support in SageMaker, and that's still fairly recent. Until maybe a couple of months ago, we couldn't do this. So this is a really new feature. They provide some very nice examples and utility code to make it straightforward to handle streaming. In a nutshell, we just need to iterate over the output to read line by line and display things as they come instead of waiting until the end. Just a bit of utility code. Using the exact same endpoint, I will just change deserialization because now we're not just deserializing that big chunk of JSON in one go. We are streaming. So we need to set the stream deserializer. And we just need to add an extra parameter to the body saying `stream=True`. Everything else is the same. The generation parameters are the same. The prompt is the same, etc. Now we can invoke the endpoint again. I am using the Boto3 API, not the SageMaker SDK. As far as I know, there is no way to do this with the SageMaker SDK, or maybe I just missed a recent release. If someone has figured it out, just post a comment. But certainly, this should be possible.
+
+So invoking the endpoint. Then I will just iterate using my utility class. Iterate on the answer and hopefully display it little by little. Let's try this. Okay, so now invoke the endpoint. Okay, and now we can start reading the streaming response. It's fast. Yes. Okay, let's do that again. Maybe let me scroll up a little bit. Okay, yes. Ah, there we go. Slightly different answer because that's what LLMs are. Very creative, but still good, right? Talking about self-attention, parallel computation, no vanishing gradients, fewer parameters, better performance, etc. And we get the cool, progressive streaming user experience. As you can see, it's really easy to deploy those models. What did we do? We copied and pasted the code from the code snippet. I just reused that streaming utility function from a blog post. That's all there is to it. Obviously, infrastructure is managed completely by SageMaker. The inference container is provided. The only missing thing is just building a nice little user interface on top of this, and you have your POC chatbot running inside your AWS account, fully private, it could be in a private VPC, and it's really nice.
+
+Those of you who know a little more about Inf2 or maybe who watched that deep dive video could be wondering, "Hey, wait a second, we're supposed to compile models for INF2, right? We need to compile the vanilla PyTorch model for the Inferentia chip." Did we do this here? Excellent question. And no, we didn't. If we come up a little bit, what did we actually do? We started from the vanilla model, and there is no compilation, and you can say, "Well, it did happen under the hood or something." It could have, and we have this weird message saying your model is not compiled. Ignore it; it shouldn't be here. It's really just a bug. What happened under the hood is we actually pre-compile a lot of models for you and cache them on the Hugging Face Hub so that when you ask for this particular model, the container first checks if there is a compiled version in the cache that lives on the Hugging Face Hub. If there is, it downloads this and deploys directly. If there isn't, it will say, "Well, you need to compile the model first." Makes sense.
+
+So where's that cache? Go back to the Hub and look for AWS Neuron, which is the organization where we store all the resources for Tranium and Inferentia models. If you look at this list, you will see many existing models. You may see different variants, and we have different variants compiled for a different number of cores, etc. Llama, Code Llama, etc. Llama 2, 7B, 30B, and we keep adding more all the time. That's actually what happens under the hood. We grab those pre-compiled models. Here, let's look at this. We can see JSON config files and NEF files, which are neuron executable file format files, basically ready to go, ready to be loaded. We maintain the cache and populate it again and again. So when you deploy from one of those models, there is no compilation step. You can take a look at the repos, take a look at the cache, and use the Optimum Neuron Library CLI. There's actually a way to query the cache programmatically and see if a model is already cached or not. That's how you do it. Here I'm deploying from one of ours, but you could do the same. You could take one of the models from your organization and either populate your own cache or deploy straight from the compiled repository. That works too.
+
+That's what I wanted to show you today. You can see how we keep simplifying model deployment and model inference. Just go to the model page, find the code snippet for SageMaker, copy and paste it to a notebook, run it, and you can use GPU and Inferentia. All the infrastructure is managed. The inference containers are provided. You can steal all those good code samples from the AWS blogs as well. You can run streaming inference and really build your prototype in no time and start testing it and scaling it all the way to production. A lot of work has already been done for you, and we hope you like it. I'll see you soon with more content. Until next time, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">HuggingFace</span><span class="tag">AWS</span><span class="tag">Inferentia2</span><span class="tag">SageMaker</span><span class="tag">LLM Deployment</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

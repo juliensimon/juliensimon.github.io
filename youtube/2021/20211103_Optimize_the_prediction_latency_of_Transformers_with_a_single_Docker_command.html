@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Optimize the prediction latency of Transformers with a single Docker command - Transformer models are great. Still, they're large models, and prediction latency can be a problem. This is the problem that Hugging Face Infinity solves with a..." name="description"/><meta content="Optimize the prediction latency of Transformers with a single Docker command - Julien Simon" property="og:title"/><meta content="Optimize the prediction latency of Transformers with a single Docker command - Transformer models are great. Still, they're large models, and prediction latency can be a problem. This is the problem that Hugging Face Infinity solves with a..." property="og:description"/><meta content="https://www.julien.org/youtube/2021/20211103_Optimize_the_prediction_latency_of_Transformers_with_a_single_Docker_command.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Optimize the prediction latency of Transformers with a single Docker command - Julien Simon" name="twitter:title"/><meta content="Optimize the prediction latency of Transformers with a single Docker command - Transformer models are great. Still, they're large models, and prediction latency can be a problem. This is the problem that Hugging Face Infinity solves with a..." name="twitter:description"/><link href="https://www.julien.org/youtube/2021/20211103_Optimize_the_prediction_latency_of_Transformers_with_a_single_Docker_command.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Optimize the prediction latency of Transformers with a single Docker command - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Optimize the prediction latency of Transformers with a single Docker command</h1>
+<div class="date">November 03, 2021</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/ngB8VBbVRd4">
+</iframe>
+</div>
+<div class="description">Transformer models are great. Still, they're large models, and prediction latency can be a problem. This is the problem that Hugging Face Infinity solves with a single Docker command.
+
+ ⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+
+In this video, I start from a pre-trained model hosted on the Hugging Face hub. Using an AWS CPU instance based on the Intel Ice Lake architecture (c6i.xlarge), I optimize my model using the Infinity Multiverse Docker container. Then, I push the model back to the Hugging Face hub, and  I deploy it on a prediction API running in an Infinity container on my AWS instance. Finally, I predict with the optimized model and get a 5x speedup compared to the original model.
+
+Original model: <a href="https://huggingface.co/juliensimon/autonlp-imdb-demo-hf-16622767" rel="noopener noreferrer" target="_blank">https://huggingface.co/juliensimon/autonlp-imdb-demo-hf-16622767</a>
+Code: <a href="https://huggingface.co/juliensimon/imdb-demo-infinity/tree/main/code" rel="noopener noreferrer" target="_blank">https://huggingface.co/juliensimon/imdb-demo-infinity/tree/main/code</a>
+
+Join the Infinity trial at <a href="https://huggingface.co/infinity" rel="noopener noreferrer" target="_blank">https://huggingface.co/infinity</a>
+New to Transformers? Check out the Hugging Face course at <a href="https://huggingface.co/course" rel="noopener noreferrer" target="_blank">https://huggingface.co/course</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Hugging Face. In this video, I would like to show you how you can easily optimize the prediction latency of transformer models. Transformer models are great. They can increasingly solve a wide area of machine learning problems, but they tend to be big models, and that often translates to rather slow prediction in production. So how can we solve this? Well, Hugging Face has designed a product called Infinity, which is a dockerized solution that you can run anywhere in the cloud or on-premises. With one simple Docker command, you can optimize the model for the underlying architecture. And with a second Docker command, you can deploy the optimized model to a prediction API that you can invoke. Customers tell us they see up to 10x speedup, which is very significant. So let's get to it.
+
+In this demo, I'm going to use one of my own models that I actually trained using AutoNLP. You can see this in another video. This is a sentiment analysis model that I fine-tuned on a movie review dataset, the IMDb movie review dataset. The model is available on the Hub and is public, so you could actually go and try it. The Phantom Menace was a waste of my life. This is a negative review. That's the model I have. As you can see, it's based on the Roberta architecture and, of course, it's a text classification model. This is a good candidate for Infinity because both the task type and the model architecture are supported by Infinity.
+
+In the rest of this demo, I'm going to grab this model, optimize it with Infinity, push it back to the model hub just to show you the workflow, and then deploy it on Infinity straight from the hub. We'll run some benchmarks to compare how the new model performs compared to the base model. Infinity supports optimizing models for CPU and GPU architectures. In this demo, I'm going to use a CPU instance running on AWS, but you could try it somewhere else. I'm going to use a C6I instance, which is a brand new family that came out a few days ago. I'm going to use a 2.0 with eight virtual CPUs and 16 gigs of memory. I've created this instance already. Here it is. I've logged into it. Do we need to install anything here? Obviously, we need to install Docker, and that's the only deployment you need for Infinity. I'll add a few more things because I'm going to run some Python code and Transformers code. Let's quickly install all those dependencies and then we can start optimizing the model. We're going to need Git and Docker. Super easy. One command installs them like this. Next, I need to install Git LFS, large file support, because I'm going to push the model back to the hub and the models are stored as large files. First, I need to download the Git LFS package. It's a shame it's not in the standard repos. Then I can install the package and finally initialize it. We're done with the native dependencies. Now we can install a few Python packages. Here, I'm installing the Transformers library because I'm going to run some local code to test the model. I need PyTorch, the HuggingFace CLI to interact with the HuggingFace hub, and the requests library, which I'll use to invoke my local code prediction endpoint. Let's go and install those. All right, we're done with dependencies, so now we can get to work.
+
+The first thing I want to do is get a sense of how fast the original model is because I need to know what the baseline is before optimizing. I wrote just a short bit of code here, and as you can see, this creates a sentiment analysis pipeline using my original model. I'm going to use it to predict this short movie review here. Yes, June is a very good movie. I recommend it. Then I'm going to run this prediction 100 times and average all those prediction times. We'll see the time in milliseconds. Let's run this and see how fast this model is. Should take just a few seconds. Okay, 23, 27. Let's run it just a few times to see if that's a good stable value. Yeah, so a little bit more than 23 milliseconds per prediction. That's the baseline, and now we can try to see how to optimize this model and speed things up.
+
+I mentioned it was one single Docker command, so here it is. Docker run with the Infinity Multiverse image. We're optimizing for an Intel target, which is a CPU. The task type is sequence classification. Sentiment analysis is classification. The model architecture is Roberta. The original model to pull from the hub is this one. That container will optimize the model, save it to a path inside the container, which I map to this local path, which is in fact the repo I just created. So the optimized model will be in a repo already, and all I have to do is commit and push. Let's run this command. It's going to take a few seconds, and then we can see the new model. After maybe 20 seconds, the model is ready. Now I can see my output, the Infinity model, and of course the tokenizer and the config. I can just go and commit that to my repo. Done. Now if I go back here, I should see the model. So now that model can be deployed in the Infinity container. How do we do that? Well, it's pretty simple. We need to run another container. Let me show you the command. Here's the command: docker run, opening port 8080, passing the name of the Infinity container and the location of the model to deploy. We have different storage options. We could deploy from S3 or different locations. Here, I've decided to deploy straight from the hub, which makes sense. Let's just go and launch this. It's going to download the model, start the container, and create the endpoint. While it's doing that, let me open a second terminal because this is where I'm going to run my code. We can see that container has started. It's using two threads for OpenMPI and two threads for Intel MKL, which is a hardware acceleration library by Intel. These values are tweakable if you want. Now I've got this endpoint. I should be able to see it. Perfect. So now we can run our prediction code. What do we have here? It's reasonably simple. We're using the same movie review. This is the local URL of our endpoint. I'm going to run a thousand predictions and average the times. There's a convenient header that gives me the compute time inside the container, so I can know exactly how much time was spent predicting this. Let's try this. We see the requests on the left. Let's see what the time is. Let's run it a few times. Yes, pretty stable. Let's say 4.5 milliseconds. We went from 23 something, yeah? Let's check that number. 20, yeah, 22, 23, depending. So that's about more than five times faster, yeah, 5x. That's pretty typical. Depending on models, task types, and architectures, you can see up to 10x improvements, which is really significant because, of course, your prediction is faster. For latency-sensitive use cases like search, personalization, or conversational apps, this is super important. Speed does matter. But you can also increase throughput. With the same amount of infrastructure, you can predict more traffic. Or you could predict the same traffic with much less infrastructure, which would save you time and money because you would just run fewer prediction servers. This is what we hear from our customers.
+
+How do you get started with Infinity? Well, it's pretty simple. You just go to huggingface.co/infinity and request a trial. Fill in a few fields, and we'll get back to you and give you access. We can discuss pricing. But as you saw, this is a super simple way to accelerate transformer workloads. Two Docker commands, and you're done. That's what I wanted to show you today. I'm sure there'll be more Infinity videos in the future where we keep adding stuff to this. Until then, have a good week, have a good time. Keep learning. See you soon.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Transformer Optimization</span><span class="tag">Hugging Face Infinity</span><span class="tag">Model Deployment</span><span class="tag">Latency Reduction</span><span class="tag">Dockerized Solutions</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

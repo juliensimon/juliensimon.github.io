@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Retrieval Augmented Generation chatbot part 1   LangChain Hugging Face FAISS AWS - In this video, I'll guide you through the process of creating a Retrieval-Augmented Generation (RAG) chatbot using open-source tools and AWS services, such as L..." name="description"/><meta content="Retrieval Augmented Generation chatbot part 1   LangChain Hugging Face FAISS AWS - Julien Simon" property="og:title"/><meta content="Retrieval Augmented Generation chatbot part 1   LangChain Hugging Face FAISS AWS - In this video, I'll guide you through the process of creating a Retrieval-Augmented Generation (RAG) chatbot using open-source tools and AWS services, such as L..." property="og:description"/><meta content="https://www.julien.org/youtube/2023/20231024_Retrieval-Augmented_Generation_chatbot_part_1_-_LangChain_Hugging_Face_FAISS_AWS.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Retrieval Augmented Generation chatbot part 1   LangChain Hugging Face FAISS AWS - Julien Simon" name="twitter:title"/><meta content="Retrieval Augmented Generation chatbot part 1   LangChain Hugging Face FAISS AWS - In this video, I'll guide you through the process of creating a Retrieval-Augmented Generation (RAG) chatbot using open-source tools and AWS services, such as L..." name="twitter:description"/><link href="https://www.julien.org/youtube/2023/20231024_Retrieval-Augmented_Generation_chatbot_part_1_-_LangChain_Hugging_Face_FAISS_AWS.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Retrieval Augmented Generation chatbot part 1   LangChain Hugging Face FAISS AWS - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Retrieval Augmented Generation chatbot part 1   LangChain Hugging Face FAISS AWS</h1>
+<div class="date">October 24, 2023</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/7kDaMz3Xnkw">
+</iframe>
+</div>
+<div class="description">In this video, I'll guide you through the process of creating a Retrieval-Augmented Generation (RAG) chatbot using open-source tools and AWS services, such as LangChain, Hugging Face, FAISS, Amazon SageMaker, and Amazon TextTract.
+
+Part 2: <a href="https://youtu.be/x5SYNpfK4H0" rel="noopener noreferrer" target="_blank">https://youtu.be/x5SYNpfK4H0</a> - scaling indexing and search with Amazon OpenSearch Serverless!
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. Follow me on Medium at <a href="https://julsimon.medium.com" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com</a> or Substack at <a href="https://julsimon.substack.com." rel="noopener noreferrer" target="_blank">https://julsimon.substack.com.</a> ⭐️⭐️⭐️
+
+We begin by working with PDF files in the Energy domain. Our first step involves leveraging Amazon TextTract to extract valuable information from these PDFs. Following the extraction, we break down the text into smaller, more manageable chunks. These chunks are then enriched using a Hugging Face feature extraction model before being organized and stored within a FAISS index for efficient retrieval.
+
+To ensure a seamless workflow, we employ LangChain to orchestrate the entire process. With LangChain as our backbone, we query a Mistral Large Language Model (LLM) deployed on Amazon SageMaker. These queries include semantically relevant context retrieved from our FAISS index, enabling our chatbot to provide accurate and context-aware responses.
+
+- Notebook: <a href="https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/langchain/rag-demo-sagemaker-textract" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/langchain/rag-demo-sagemaker-textract</a>
+- LangChain: <a href="https://www.langchain.com/" rel="noopener noreferrer" target="_blank">https://www.langchain.com/</a>
+- FAISS: <a href="https://github.com/facebookresearch/faiss" rel="noopener noreferrer" target="_blank">https://github.com/facebookresearch/faiss</a>
+- Embedding leaderboard: <a href="https://huggingface.co/spaces/mteb/leaderboard" rel="noopener noreferrer" target="_blank">https://huggingface.co/spaces/mteb/leaderboard</a>
+- Embedding model: <a href="https://huggingface.co/BAAI/bge-small-en-v1.5" rel="noopener noreferrer" target="_blank">https://huggingface.co/BAAI/bge-small-en-v1.5</a>
+- LLM: <a href="https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1" rel="noopener noreferrer" target="_blank">https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. Retrieval augmented generation, also known as RAG, is a popular technique to build more efficient chatbots. In this video, I'm going to show you how to build a RAG chatbot using a combination of open source libraries and AWS services. We'll use Langchain, Hugging Face, the Face library from Facebook, Amazon SageMaker, and Amazon Textract. So quite a lot of tools to play with. Let's get to work.
+
+Before we jump into the code, let's take a look at the typical chatbot architectures. The simplest one is where we start from a user query, wrap it in a system prompt, send the query to a large language model, and generate an answer. This is a good way to start. There's nothing wrong with this. However, there are limitations. Knowledge only comes from the initial training process, which means recent events are not taken into account, the so-called cut-off-date problem. Domain and company knowledge could be too shallow because the LLM wasn't trained on your internal company data. So, if you ask deep domain questions, you might get shallow answers. If you take the model out of domain, it's likely the model will hallucinate. You could fine-tune the LLM on your internal data to mitigate these problems, but how often are you willing to run it? If you need very fresh answers, fine-tuning is not a great option because you don't want to fine-tune every single day. This is where retrieval augmented generation steps in.
+
+We look at two different workflows here. The first is an ingestion workflow where we start from internal documents, which could be text, images, or anything. We embed them using an embedding model, turning those documents or document chunks into high-dimensional vectors, which we store in a database that allows querying. The workflow then looks like this: we start from the user query, embed the query, run vector proximity search or semantic search against our embeddings database, and return the top five or ten documents closely related to the query. We wrap everything in a system prompt, which goes something like, "Hey, helpful assistant, please answer the following query using context found in these documents." Then we generate the answer. The benefits are that if we have fresh knowledge, it can be discovered and added to the generation process as soon as it's embedded and available in the database. If we trust our search mechanism, we're always bringing relevant context to the generation, ensuring the model generates a good answer instead of hallucinating.
+
+That's what RAG is all about, and that's what we're going to build. Let's switch to the notebook and start running some code. In a nutshell, we're going to build a chatbot that can retrieve information extracted from PDF files. We'll start from a few PDF files containing information about energy trends and the energy market. We'll process those documents, embed them, store the embeddings in a Face database, and deploy an LLM on SageMaker. We'll query that LLM using relevant context extracted from our embeddings.
+
+First, we need to install some dependencies: SageMaker SDK, Langchain to orchestrate everything, and additional packages for Amazon Textract and PDF processing. We need to import all these objects. The first step is to deploy our LLM on SageMaker. As you can see, I am deploying the Mistral 7B model, a variant fine-tuned for instruction following. This is a 7 billion parameter model. We just need to keep an eye on the prompting format. Deploying this model is super simple. I just clicked on deploy, SageMaker, and copied the code here. This is one of the reasons why using SageMaker is a simple option—you can just copy, paste, and deploy. We run this, pointing at the model on the hub, using the built-in container for LLM inference on SageMaker, and deploying on a small G5 instance with a single A10G GPU. This instance is not expensive, probably just about a dollar an hour.
+
+We wait for a few minutes and then have our endpoint. We need to grab the endpoint name because Langchain will need it. Now we have our endpoint running in SageMaker. The next step is to configure that endpoint in Langchain. We can set some model parameters here, such as the number of tokens to generate, the maximum number of tokens, and top P and temperature, which control how creative you want the answer to be. We need to provide input and output transforms, which are crucial because they adapt the model input and output for Langchain. JSON will be our input format, and we need to define the prompt format. The model wants to be prompted in a specific way, and this is exactly what I've implemented here. For the output, we decode the answer, filtering out the instructions for a cleaner result. We can return the full response if we want to see everything, including the RAG chunks.
+
+Now we have our preprocessing and post-processing functions and can define our SageMaker endpoint as a Langchain LLM. We provide the endpoint name, model parameters, content handler, and a SageMaker client for AWS credentials. Before we go into RAG, we can try a basic question with no context. Here's my system prompt: "As a helpful energy specialist, please answer the question focusing on numerical data. Don't invent facts. If you can't provide a factual answer, say you don't know." This is my prompt template, system prompt plus the actual query. I define my Langchain chain with the LLM and the prompt, and then I can ask a question. My question is, "What is the latest trend for solar investments in China?" The answer I get is based on a report from the International Energy Agency, stating that China was the world's largest solar market in 2020, and it's expected to grow, but the report doesn't provide specific information on the latest solar investments in China. This answer is factually correct but outdated, as it doesn't go beyond 2020. It's honest about its limitations, but we can do better with RAG.
+
+Let's add fresh context. If you've already run the notebook, you can load the saved database. Otherwise, we'll start from three PDF files from the International Energy Agency. We'll extract information from these files using Amazon Textract. These are multi-page documents and need to be in S3. I've copied my three PDF files to an S3 bucket and prefix. We can see them here. Now I have a list of S3 URIs for the three PDF files. We'll analyze these documents using Textract, extracting information from complex documents with tables and graphs. We'll use a Textract client from AWS and a splitter to split the extracted documents into chunks. I decided on 256-byte chunks without overlap. We loop over the three URIs, load each document into Textract, extract the document, split it into chunks, and merge all the chunks. The first document was 137 pages, the second 181 pages, and the last 355 pages, totaling about 700 pages and resulting in around 10,000 chunks. This process took about five minutes, which is fast enough for the demo.
+
+Next, we embed these chunks and store them in our backend. We use a leaderboard for embedding models, based on the Massive Text Embedding Benchmark, available in three languages. For English, I chose a smaller model, 130 megabytes, with fewer dimensions but still very good benchmarks. It should be fast and accurate enough for this demo. We define this model as an embeddings model in Langchain and create a new Face index, embedding all the chunks. This takes about six minutes on a T3 instance, which is fine for the demo. Six minutes later, we have our Face index and can save it. Now we're ready to query.
+
+We configure our Face index as the retriever, fetching 10 documents to fit in the context. My template starts with the same prompt: "As a helpful energy specialist, please answer the question, focusing on numerical data." The question is here, and I inject the context into the prompt. The 10 chunks retrieved through Langchain are available in the prompt, pointing the model to useful context. I use this template to build the actual prompt, injecting the context and the question when we run the query. We build the chain using a retrieval QA chain type, the LLM, the stuff policy, the Face index, and the prompt. Asking the same question again, the model is more definitive, providing numbers for 2022. This is a better answer, more documented with numbers. We can ask what "steps" means, and the model provides a clear answer: "steps" refers to the stated policy scenario in the context of energy-related information.
+
+Feel free to ask all kinds of questions and try other PDF files. Once you're done, don't forget to delete the model and endpoint to avoid unnecessary charges. This is a simple way to build a RAG chatbot. We have everything in a single notebook, including embeddings, the LLM, document extraction, embedding, and querying. This is a good place to start your own experiments. All the links, including the code, are in the video description. I'll see you soon with more videos. If you have questions, please ask, and I'll try to answer as many as I can. Until next time, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">RAG</span><span class="tag">Chatbot</span><span class="tag">AWS</span><span class="tag">Langchain</span><span class="tag">SageMaker</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

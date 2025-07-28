@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Introducing Amazon SageMaker Clarify part 1   Bias detection   AWS re  Invent 2020 - In this video, I show how you to use the bias detection capability in Amazon SageMaker Clarify, using bias metrics computed on a credit dataset, and on a classi..." name="description"/><meta content="Introducing Amazon SageMaker Clarify part 1   Bias detection   AWS re  Invent 2020 - Julien Simon" property="og:title"/><meta content="Introducing Amazon SageMaker Clarify part 1   Bias detection   AWS re  Invent 2020 - In this video, I show how you to use the bias detection capability in Amazon SageMaker Clarify, using bias metrics computed on a credit dataset, and on a classi..." property="og:description"/><meta content="https://www.julien.org/youtube/2020/20201208_Introducing_Amazon_SageMaker_Clarify_part_1_-_Bias_detection_-_AWS_re_-Invent_2020.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Introducing Amazon SageMaker Clarify part 1   Bias detection   AWS re  Invent 2020 - Julien Simon" name="twitter:title"/><meta content="Introducing Amazon SageMaker Clarify part 1   Bias detection   AWS re  Invent 2020 - In this video, I show how you to use the bias detection capability in Amazon SageMaker Clarify, using bias metrics computed on a credit dataset, and on a classi..." name="twitter:description"/><link href="https://www.julien.org/youtube/2020/20201208_Introducing_Amazon_SageMaker_Clarify_part_1_-_Bias_detection_-_AWS_re_-Invent_2020.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Introducing Amazon SageMaker Clarify part 1   Bias detection   AWS re  Invent 2020 - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Introducing Amazon SageMaker Clarify part 1   Bias detection   AWS re  Invent 2020</h1>
+<div class="date">December 08, 2020</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/jvcPZmnXaxo">
+</iframe>
+</div>
+<div class="description">In this video, I show how you to use the bias detection capability in Amazon SageMaker Clarify, using bias metrics computed on a credit dataset, and on a classification model trained on this dataset.
+
+<a href="https://aws.amazon.com/sagemaker/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/sagemaker/</a>
+<a href="https://aws.amazon.com/blogs/aws/new-amazon-sagemaker-clarify-detects-bias-and-increases-the-transparency-of-machine-learning-models/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/blogs/aws/new-amazon-sagemaker-clarify-detects-bias-and-increases-the-transparency-of-machine-learning-models/</a>
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future episodes ⭐️⭐️⭐️
+
+For more content:
+* AWS blog: <a href="https://aws.amazon.com/blogs/aws/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/blogs/aws/</a>
+* Medium blog: <a href="https://julsimon.medium.com/" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com/</a>
+* YouTube: <a href="https://youtube.com/juliensimonfr" rel="noopener noreferrer" target="_blank">https://youtube.com/juliensimonfr</a> 
+* Podcast: <a href="http://julsimon.buzzsprout.com" rel="noopener noreferrer" target="_blank">http://julsimon.buzzsprout.com</a> 
+* Twitter <a href="https://twitter.com/@julsimon" rel="noopener noreferrer" target="_blank">https://twitter.com/@julsimon</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In this video, I would like to introduce Amazon SageMaker Clarify, a new capability that was just announced at AWS re:Invent. SageMaker Clarify helps you understand if there's any bias in your datasets and models, and it also helps you understand how your models predict using SHAP values. Let's see how this works.
+
+We're going to run an example based on the German credit data set. It's a binary classification problem where we start from customer features and build a model deciding whether a certain customer gets their credit approved or not. We're going to train a model on this data set using the XGBoost algorithm. Then we will use SageMaker Clarify to analyze both the dataset and the trained model for bias using a number of bias metrics. Finally, we'll use SHAP values to understand how the model predicts which features are the most important and so on. Pretty cool stuff.
+
+You could use SageMaker Clarify to analyze the dataset only, and you would get pre-training bias metrics. Instead, here, I'm going to train a model so that we can run the bias analysis both on the dataset for pre-training metrics and on the trained model for post-training metrics. This will let us see if the algorithm actually reduced bias. 
+
+Training the model itself is straightforward. We download the dataset, and it looks like this: the German credit dataset. It's anonymized and encoded. If you want to know what those A values mean, you can go to the dataset repo. For example, Attribute 3 is credit history. So A30 means no credits taken, A31 means all credits paid back, etc. Attribute 4 is the credit purpose. Attribute 5 is a numerical attribute, the amount, etc. We give names to those columns, and the last column is the label column, a one or zero value indicating if a certain credit has been approved or not. We use one-hot encoding for the categorical columns, separate samples and labels, and then split the data set for training, validation, and testing. We save these three datasets to CSV files, upload them to Amazon S3, and train the model as usual. We grab the container for XGBoost, configure the estimator, set the hyperparameters, define the location of the datasets, and train.
+
+We train a model, deploy it to an endpoint, and run some predictions, plotting the ROC curve. The purpose here is just to train a model that we can analyze. Nothing specific to SageMaker Clarify at all. Now we can move on to the next step, which is running the analysis. Obviously, we need to know which model we're going to analyze. The way you run this analysis is very simple. You run it as an analysis batch job using a built-in image for SageMaker Clarify. First, we need to grab the dataset we want to analyze for bias, and then we want to run the analysis. We use this processor object from the SageMaker SDK, passing the name of the SageMaker Clarify image and infrastructure requirements.
+
+On top of this, we need to pass an analysis configuration, where we ask for certain metrics and provide some information. Here's what the file looks like. Dataset type is CSV, and column headers are defined. We name the two features we want to look for and the value we should test for. For example, we're building bias metrics for data instances that are not foreign workers and for data instances where 40 is the threshold for age. These are the facets we're interested in, and we need to pass the label value we're interested in. Remember, this is the label column name, and getting your credit approved means this label is set to one. This configuration tells SageMaker Clarify the facets, values, and label we're interested in.
+
+There's also a SHAP baseline here, which is optional. If you pass it, it will compute SHAP information as well. We'll probably zoom in on this in a future video, but it's the baseline you can compute on your golden dataset. We want all pre-training bias metrics and all post-training bias metrics. To compute this, we deploy a temporary endpoint automatically, so the analyzer job will do that, deploy an endpoint, predict with it, and measure the bias metrics. It then takes down the endpoint automatically. So you don't have to do it. Just pass an A for that.
+
+The key thing is the label that says, "Yes, your credit is approved," and the two facets we want to compute metrics for, along with the values or thresholds we're interested in. This JSON file is defined as an input for our processing job, and the dataset itself is another input. The output will be a report. We just run this, passing the inputs and the output, and it runs to completion. It analyzes the dataset, deploys the model on a temporary endpoint, computes the post-training metrics, and takes down the endpoint.
+
+Once complete, I have information in S3, and I also see information in SageMaker Studio. If you find your job in the experiment and click on "Open in Trial Details," you'll see two new views: Bias Report and Model Insights, which is model explainability. Let's look at the Bias Report first. We were interested in figuring out credit approval with a value of 1 for foreign workers with a value of 0. Now we can see with these metrics if being a domestic worker helps or hurts your chances. If you want to understand these metrics in detail, you can click on any of them for additional information. You can also read the technical paper and white paper written by Amazon teams, which go into great detail on how these metrics are computed and what they mean.
+
+The first one is class imbalance. We have much fewer domestic workers than foreign workers. This could be a problem because we only have a thousand samples here. With a 92% imbalance, it means we only have a handful of domestic workers. This might not be enough for the algorithm to successfully pick up the statistical patterns. Class imbalance is always something to look for. The next one is the difference in positive proportions in labels. This tells you whether one group has a significant advantage or disadvantage when it comes to positive labels. Domestic workers have a smaller proportion of positive labels, which could indicate bias. However, it's too early to say. We need to look at the data instances in detail to see if there's a good reason this group gets more negative answers.
+
+We also get post-training metrics, such as the difference in positive proportions in predicted labels. This measures if the model predicts different proportions of positive labels for different groups. The metric is still negative, indicating that domestic workers get a smaller proportion of positive labels. Again, this needs investigation to determine if it's legitimate or biased.
+
+Looking at age, we see a group of customers aged 40 to 75. There's a slight class imbalance, but it's not as bad as the domestic versus foreign worker situation. The difference in positive proportions is slightly negative, indicating a slight difference. The DPPL is about the same, suggesting no big difference here. The metrics show that the difference between this age group and the other group is not as large as between the domestic worker and foreign worker groups.
+
+As you can see, it's pretty easy to compute bias metrics on datasets and models and visualize results. Interpreting these metrics requires more work because only you can do it. You understand your business context and the dataset, so you have to figure out what these numbers mean in your context and if they reveal bias in the dataset or model.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Amazon SageMaker Clarify</span><span class="tag">Bias Analysis</span><span class="tag">Machine Learning Model Evaluation</span><span class="tag">SHAP Values</span><span class="tag">German Credit Dataset</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

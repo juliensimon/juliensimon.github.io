@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Comparing SLMs and LLMs with similarity metrics - In this video, we build a model-testing web application with Arcee Conductor (https://www.arcee.ai/product/arcee-conductor) and Gradio. We also implement severa..." name="description"/><meta content="Comparing SLMs and LLMs with similarity metrics - Julien Simon" property="og:title"/><meta content="Comparing SLMs and LLMs with similarity metrics - In this video, we build a model-testing web application with Arcee Conductor (https://www.arcee.ai/product/arcee-conductor) and Gradio. We also implement severa..." property="og:description"/><meta content="https://www.julien.org/youtube/2025/20250408_Comparing_SLMs_and_LLMs_with_similarity_metrics.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Comparing SLMs and LLMs with similarity metrics - Julien Simon" name="twitter:title"/><meta content="Comparing SLMs and LLMs with similarity metrics - In this video, we build a model-testing web application with Arcee Conductor (https://www.arcee.ai/product/arcee-conductor) and Gradio. We also implement severa..." name="twitter:description"/><link href="https://www.julien.org/youtube/2025/20250408_Comparing_SLMs_and_LLMs_with_similarity_metrics.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Comparing SLMs and LLMs with similarity metrics - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Comparing SLMs and LLMs with similarity metrics</h1>
+<div class="date">April 08, 2025</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/79iuy2uKLpc">
+</iframe>
+</div>
+<div class="description">In this video, we build a model-testing web application with Arcee Conductor (<a href="https://www.arcee.ai/product/arcee-conductor)" rel="noopener noreferrer" target="_blank">https://www.arcee.ai/product/arcee-conductor)</a> and Gradio. We also implement several similarity metrics (Jaccard, Cosine Similarity, Levenshtein, and Semantic Similarity), as well as a user feedback mechanism. Then, we run a few examples with SLMs and LLMs, showing how small models can generate answers that are extremely similar to those of much larger models.
+
+Arcee Conductor (<a href="https://www.arcee.ai/product/arcee-conductor)" rel="noopener noreferrer" target="_blank">https://www.arcee.ai/product/arcee-conductor)</a> is an inference platform that intelligently routes any query to the best model, efficiently delivering precise and cost-effective results for any task. 
+
+If you’d like to understand how Arcee AI can help your organization build scalable and cost-efficient AI solutions, don't hesitate to contact sales@arcee.ai or book a demo at <a href="https://www.arcee.ai/book-a-demo." rel="noopener noreferrer" target="_blank">https://www.arcee.ai/book-a-demo.</a> 
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. You can also follow me on Medium at <a href="https://julsimon.medium.com" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com</a> or Substack at <a href="https://julsimon.substack.com." rel="noopener noreferrer" target="_blank">https://julsimon.substack.com.</a> ⭐️⭐️⭐️
+
+* Arcee Conductor: <a href="https://conductor.arcee.ai" rel="noopener noreferrer" target="_blank">https://conductor.arcee.ai</a>
+* Arcee Conductor product page: <a href="https://www.arcee.ai/product/arcee-conductor" rel="noopener noreferrer" target="_blank">https://www.arcee.ai/product/arcee-conductor</a>
+* Code: <a href="https://gitlab.com/juliensimon/arcee-demos/-/tree/main/conductor-ab-testing" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/arcee-demos/-/tree/main/conductor-ab-testing</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. Model A-B testing and human preference testing are really important parts of your model evaluation process. In this video, I'm going to show you how you can easily build a small Python app to A-B test models present in Arcee Maestro. We'll run parallel generation, be able to vote for the generation we prefer, and compute some similarity metrics. Let's get started.
+
+Okay, let's run a quick example and then we'll start looking at the app itself. We can pick from all the models that are available on Arcee Maestro. We have our own SLMs plus LLMs. So why not try Blitz versus O3 Mini. You can type a query here or I have a few hundred prompts that we can use. Why not this? Click on submit. Now we're sending queries to the two models, generating an answer, and when they're done, we'll see the output. We'll see similarity metrics, helping us understand how close or how far those two answers are. Here are the answers. One is a bit longer. We see the similarity metrics: Jacquard, cosine similarity, Levenstein, and semantic similarity, which is computed with an embedding model, a sentence transformer model. And then I'm using the metrics and a prompt to write a text-based summary here. I could vote for one of those. Let's say I prefer this one. I'm going to save everything to a local JSON file. So model names, the prompt, the two responses, the metrics. I can use that for further analytics down the line.
+
+Okay, so that's the app. Now let's see how it works. You'll find the link to the repository in the video description. And obviously, you recognized the user interface. I'm using Gradio, which is pretty convenient, especially for folks like me who are incapable of writing any UI code. So this makes it pretty simple. I won't cover the UI in too much detail; you saw it—some text box and buttons. There's nothing particularly clever about this. That's where the UI code lives. I have some CSS to try and make this thing look a little nicer, at least colors, etc., code boxes. Again, thank you, Cursor, for this. So that's the UI, nothing particularly interesting. The core of the app is the function called `a_b_test`. As the name implies, that's where we send queries to Model A and Model B as selected by the user, so two parallel queries. Once they complete, we retrieve the time, the number of tokens generated, and of course, the content. Then we compute the similarity metrics, generate the little summary you saw on the side. For some models, I have to sanitize the output. There are some tags in there that don't play nice with the markdown box in Gradio. So there's a little bit of cleanup to make sure we can display this properly. The rest is just creating the clients to send the requests and loading the embeddings model. There's a fair chunk of utility code plus some functions to save the feedback to the file, display it, reset it, etc.
+
+Let's take a look at how we compute the metrics and maybe how we generate the summary. We take the two texts as input, and for models with reasoning capabilities like DeepSeek, I'm actually excluding all the reasoning. I'm just comparing the final text that's generated, so anything enclosed in `<think>` and `</think>` tags is just excluded because it's not relevant. Then I just call the four functions here, which are implemented in this file. The first similarity metric is the Jacquard similarity. Here we compare the intersection of the two texts to the union of the two texts. If the two texts are exactly identical, their intersection is the full text and their union is the full text. So the Jacquard similarity value will be one. One is perfect similarity, and zero is completely different. This is a common metric, but it says nothing about meaning. It is only about whether we are using the same words in the two texts, not even in the right order.
+
+The next one is cosine similarity using a bag of words. We find words that are present in the two texts, build word vectors, and compute their frequencies. We find the same words present in the two texts, count them, and build vectors. This gives us two vectors, one for each text, and we compute the dot product and eventually the cosine similarity. This is a measure of whether we are using the same words, but there is no strong sense of meaning or sequence. It's a popular way to compare text, so it's worth having.
+
+The next one is a little more exotic: Levenstein similarity. Here, we compute how many edits are needed to go from text one to text two. Edits could be removing a character, inserting a character, or substituting a character. This is a metric of how much effort is needed to edit text one into text two. The last one is semantic similarity. Here, I'm using an embedding model, a sentence transformer model, to encode the two texts into vectors and then compare the similarity of those two vectors. Model.encode(text1, text2), and then cosine similarity between those two text vectors. All the metrics have the same range: zero is completely different, and one is exactly the same.
+
+I added some examples if you want to play around. You can just run the similarity script to get some inline examples. So that's it for the similarities. Once we've generated the metrics, you can use them to write a short text description of those metrics, which is what I'm doing here. Passing the metrics and a prompt, I ask Virtuoso Large to write a one-paragraph summary explaining what these metrics indicate about the similarity, etc. Feel free to tweak that. I'm also passing the two texts just in case.
+
+If you want to add your own prompts, you can add them to `test_prompts.json`, one prompt per line. These are the ones that get randomly selected when you click on the button. So you can just add whatever makes sense to you.
+
+Now let's run another example and maybe discuss the similarities. Let's keep Blitz here and maybe Virtuoso Large. Let's do not code generation. Why not this: "How is AI being used in the insurance industry for risk assessment?" So let's run this. Note that here I am running Gradio locally, but I'll show you how I deployed this on Hugging Face as well if you want to do that. Here are the two responses, pretty similar. Virtuoso Large is a little chattier. Let's take a look at the metrics. Jacquard and Levenstein are fairly low, while cosine and semantic are fairly high, with semantic being very high. The summary says the similarity metrics reveal a nuanced picture of their relationship. The Jacquard similarity of 0.27 and Levenstein of 0.30 indicate a relatively low overlap in the exact words and phrases used. However, the cosine similarity of 0.84 and the semantic similarity of 0.95 suggest a high degree of conceptual and thematic alignment. The two models talk about the same concepts, using different words and sentence structures but conveying very similar ideas and covering the same key points. The core message and context of both texts are very closely aligned despite the differences in wording. This is common, especially with models from different families. They do answer the question correctly, use the right context, concepts, and relationships. If we saw very low values, it would mean one of the models did not understand the question or talked about something else, possibly hallucinated. Generally, you should see very high values here.
+
+Now let's try something different. Let's try Blitz and Sony. Why not this? Here we have a small model, Blitz with 24 billion parameters, and a huge model, Sony A3.7. I've already covered the differences in cost, so I won't get back to that. We know Blitz is way more cost-efficient. But now we should be able to see if the output from Blitz is that different from the Sony output. Given a simple prompt like this, the number of tokens is fairly similar. Blitz was faster, although it did generate a little more. Let's take a look at the similarity. Semantic similarity is still almost 93%, very high. Yes, the models use different words, but they still talk about the same thing. One way to put it is that Blitz, a 24B model, is able to answer this question very closely to the Sony output. If you consider Sony as the golden standard, Blitz gets very close semantically to that golden standard in a much more cost-efficient way. This is interesting. It's not just about cost; the model also writes about the same things and uses the same concepts. So that's pretty cool. Maybe I want to use Blitz. Maybe Blitz is all I need here.
+
+I think that's one way to use this tool. Obviously, you can tweak it a little more and even use it for human preference testing. Have your users save their responses and then run some analytics, maybe fine-tuning, leveraging that data. As you can see, it's not difficult. If you want to host this on Hugging Face, you absolutely can. Here's my private space where I put the same code, and it's running fine. Let's run it right now. This can be an easy way to expose a private space to your user community, get them to test and enter feedback in a safe way. That's really what I wanted to show you today—a nice little tool for model A-B testing, similarity metrics, and collecting user feedback.
+
+The code is available. Add whatever makes sense to you. Have fun with it. Thanks a lot for watching. There's more content coming as always. Until next time, my friends, you know what to do. Keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Model-A-B-Testing</span><span class="tag">Similarity-Metrics</span><span class="tag">Python-App-Development</span><span class="tag">Gradio-UI</span><span class="tag">Machine-Learning-Evaluation</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

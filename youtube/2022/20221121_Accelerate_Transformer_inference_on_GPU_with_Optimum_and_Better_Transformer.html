@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Accelerate Transformer inference on GPU with Optimum and Better Transformer - In this video, I show you how to accelerate Transformer inference with Optimum, an open-source library by Hugging Face, and Better Transformer, a PyTorch extens..." name="description"/><meta content="Accelerate Transformer inference on GPU with Optimum and Better Transformer - Julien Simon" property="og:title"/><meta content="Accelerate Transformer inference on GPU with Optimum and Better Transformer - In this video, I show you how to accelerate Transformer inference with Optimum, an open-source library by Hugging Face, and Better Transformer, a PyTorch extens..." property="og:description"/><meta content="https://www.julien.org/youtube/2022/20221121_Accelerate_Transformer_inference_on_GPU_with_Optimum_and_Better_Transformer.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Accelerate Transformer inference on GPU with Optimum and Better Transformer - Julien Simon" name="twitter:title"/><meta content="Accelerate Transformer inference on GPU with Optimum and Better Transformer - In this video, I show you how to accelerate Transformer inference with Optimum, an open-source library by Hugging Face, and Better Transformer, a PyTorch extens..." name="twitter:description"/><link href="https://www.julien.org/youtube/2022/20221121_Accelerate_Transformer_inference_on_GPU_with_Optimum_and_Better_Transformer.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Accelerate Transformer inference on GPU with Optimum and Better Transformer - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Accelerate Transformer inference on GPU with Optimum and Better Transformer</h1>
+<div class="date">November 21, 2022</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/APok0qcWYyY">
+</iframe>
+</div>
+<div class="description">In this video, I show you how to accelerate Transformer inference with Optimum, an open-source library by Hugging Face, and Better Transformer, a PyTorch extension available since PyTorch 1.12. 
+
+Using an AWS instance equipped with an NVIDIA V100 GPU, I start from a couple of models that I previously fine-tuned: a DistilBERT model for text classification and a Vision Transformer model for image classification. I first benchmark the original models, then I use Optimum and Better Transformer to optimize them with a single line of code, and I benchmark them again. This simple process delivers a 20-30% percent speedup with no accuracy drop!  
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️ 
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" rel="noopener noreferrer" target="_blank">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+- Optimum v1.5.0 : <a href="https://github.com/huggingface/optimum/releases/tag/v1.5.0" rel="noopener noreferrer" target="_blank">https://github.com/huggingface/optimum/releases/tag/v1.5.0</a>
+- Optimum docs: <a href="https://huggingface.co/docs/optimum/onnxruntime/overview" rel="noopener noreferrer" target="_blank">https://huggingface.co/docs/optimum/onnxruntime/overview</a>  
+- Better Transformer blog post: <a href="https://pytorch.org/blog/a-better-transformer-for-fast-transformer-encoder-inference/" rel="noopener noreferrer" target="_blank">https://pytorch.org/blog/a-better-transformer-for-fast-transformer-encoder-inference/</a> 
+- DistilBERT model: <a href="https://huggingface.co/juliensimon/distilbert-amazon-shoe-reviews" rel="noopener noreferrer" target="_blank">https://huggingface.co/juliensimon/distilbert-amazon-shoe-reviews</a> 
+- Vision Transformer model: <a href="https://huggingface.co/juliensimon/autotrain-food101-1471154050" rel="noopener noreferrer" target="_blank">https://huggingface.co/juliensimon/autotrain-food101-1471154050</a>  
+- Code: <a href="https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/optimum/bettertransformer" rel="noopener noreferrer" target="_blank">https://gitlab.com/juliensimon/huggingface-demos/-/tree/main/optimum/bettertransformer</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In the previous video, we discussed how to accelerate inference for transformers on CPU platforms. In this video, I'm going to show you how to do the same on GPU platforms thanks to the integration of BetterTransformer, a really cool PyTorch extension, into our Optimum library. We'll try an NLP model and a computer vision model, and you'll see we get pretty interesting speedups in just one line of code, so let's get to work.
+
+BetterTransformer is a PyTorch extension available since PyTorch 1.12, and you can read the blog post here for details on how BetterTransformer works and what to expect from it. Of course, I'll put the link in the video description. This is now supported in Hugging Face Optimum, which you should be familiar with by now, our open-source library dedicated to hardware acceleration. As of version 1.5, which was released just four days ago, you can use BetterTransformer with just one line of code for models from the HuggingFace hub. So this is super simple. There are some other really cool features in that release, by the way. Whisper is supported with ONNX and so on. So go check it out. There's a lot of stuff happening in the Optimum library these days. But for now, let's focus on BetterTransformer.
+
+Let's take a look at the code. First, of course, we need to do a little bit of setup. As usual, nothing really complicated. Here, I'm using a GPU instance on AWS, a P3 instance with an NVIDIA GPU. This is running on Ubuntu, and I'm just doing a very simple setup, creating a virtual environment, and installing my requirements. Super nice and simple. The requirements are PyTorch 1.12 or newer, Optimum 1.5 or newer, and then some extra libraries needed to evaluate our models. Okay, so very simple setup, nothing complicated. You can replicate this in seconds.
+
+Let's look at our first example. This is actually an example I already used with ONNX. I'm starting from a DistilBERT model that I fine-tuned for text classification. This is multi-class classification for Amazon Shoe Reviews, predicting the star rate from one to five stars for English language shoe reviews. The model is on the hub, and this is the dataset I used to fine-tune it. First, I'm going to compute a baseline over the test set just to get a sense of the speed for the original model. I'm using the evaluate library to do this, computing how long it takes for this model and this pipeline to go over the test set. I'm using the accuracy metric. So I'm doing this for the original model.
+
+Then, of course, I'm going to do the same for the BetterTransformer model. How complicated is it to build a BetterTransformer model with Optimum? It's simple and I don't think it could be simpler. This is really what it takes. We're using the pipeline object from the Optimum library, the task type, the model ID as usual. We define an accelerator, and this will be a BetterTransformer, of course. I want to make sure this runs on my first GPU, so using `device=0`. But this is the important parameter. Then, of course, we're evaluating the pipeline again and printing the results.
+
+If you don't want to use the pipeline and want to load the model and the tokenizer for more control, you can do that as well. This is equally simple. You just use a BetterTransformer object, pass it to a model, and it returns an optimized version of that model. So you don't have to use the pipeline. I'm just using this because it's so simple. But you could work with the model object itself. Why don't we run this and see how it goes?
+
+After a couple of minutes, we've predicted the test set with the original model and the optimized model. The original model did it in 70 seconds, and the optimized model did it in 57 seconds. That's about 20%. Let's round those numbers up just to make it simpler. Yes, 71 seconds. So 20%. That one line of code just speeds up the model by 20%. And as you can see, there is no change in accuracy. So 20% just like that is very good, right? As easy as it gets.
+
+How about we do the same for our Vision Transformer model? This is the example I've already used in the OpenVINO video. This is the Google Vision Transformer model that I fine-tuned on AutoTrain for image classification on the Food 101 dataset. If you want to see the list of architectures supported by BetterTransformer, you can find this in the docs. You'll find all the popular ones for NLP, the Vision Transformer, and some speech models like Wav2Vec2 and Whisper. So a good selection of models for your different use cases.
+
+Back to our Vision Transformer. We're going to download the original model and score it on 25% of the test set. We'll optimize the model with a one-liner and run it again. This is exactly the same: creating a pipeline with the accelerator. Nothing complicated. Let's run this. There we go. We can see in a minute how fast we're going. The original model did it in 104, 105 seconds, and the BetterTransformer model did it in 72 seconds. That's about 30%, even better. So there you go. You can speed up your Vision Transformer just like that. Zero accuracy drop, 30%. And again, these are just a couple of models I used here. But feel free to try out different architectures, and you may see even better results.
+
+That's it. That's really what I wanted to show you today. A bit of a shorter video, but I don't think you'll mind. That one line of code is magic. I encourage you to go and try it out. I'll put all the links in the video description as usual. And I'll see you soon with more content, maybe more acceleration. I'm just obsessed with this thing. Until then, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">GPU Acceleration</span><span class="tag">BetterTransformer</span><span class="tag">Optimum Library</span><span class="tag">Model Optimization</span><span class="tag">PyTorch Extensions</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

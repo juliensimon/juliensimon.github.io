@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Deploying Arcee SuperNova on AWS - In this video, you will learn about Arcee-SuperNova, a new 70B model built by Arcee.ai.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. Follo..." name="description"/><meta content="Deploying Arcee SuperNova on AWS - Julien Simon" property="og:title"/><meta content="Deploying Arcee SuperNova on AWS - In this video, you will learn about Arcee-SuperNova, a new 70B model built by Arcee.ai.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. Follo..." property="og:description"/><meta content="https://www.julien.org/youtube/2024/20240912_Deploying_Arcee_SuperNova_on_AWS.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Deploying Arcee SuperNova on AWS - Julien Simon" name="twitter:title"/><meta content="Deploying Arcee SuperNova on AWS - In this video, you will learn about Arcee-SuperNova, a new 70B model built by Arcee.ai.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. Follo..." name="twitter:description"/><link href="https://www.julien.org/youtube/2024/20240912_Deploying_Arcee_SuperNova_on_AWS.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deploying Arcee SuperNova on AWS - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Deploying Arcee SuperNova on AWS</h1>
+<div class="date">September 12, 2024</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/uNGh5ptqfW0">
+</iframe>
+</div>
+<div class="description">In this video, you will learn about Arcee-SuperNova, a new 70B model built by Arcee.ai.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. Follow me on Medium at <a href="https://julsimon.medium.com" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com</a> or Substack at <a href="https://julsimon.substack.com." rel="noopener noreferrer" target="_blank">https://julsimon.substack.com.</a> ⭐️⭐️⭐️
+
+SuperNova excels in instruction following and human preference scores, outperforming Llama 70B-Instruct, as well as Llama 405B, Claude Sonnet 3.5, and GPT-4o in many general benchmarks. 
+
+I'll show you how to subscribe to SuperNova on the AWS Marketplace. Then, I'll show how to deploy the model to a SageMaker endpoint running in your AWS account, and how to run inference using the Open Messages API.
+
+* Blog post: <a href="https://blog.arcee.ai/meet-arcee-supernova-our-flagship-70b-model-alternative-to-openai/" rel="noopener noreferrer" target="_blank">https://blog.arcee.ai/meet-arcee-supernova-our-flagship-70b-model-alternative-to-openai/</a>
+* Marketplace listing: <a href="https://aws.amazon.com/marketplace/pp/prodview-sb2ndlhwmzbhi" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/marketplace/pp/prodview-sb2ndlhwmzbhi</a>
+* Sample notebook: <a href="https://github.com/arcee-ai/aws-samples/blob/main/model_package_notebooks/sample-notebook-arcee-supernova-on-sagemaker.ipynb" rel="noopener noreferrer" target="_blank">https://github.com/arcee-ai/aws-samples/blob/main/model_package_notebooks/sample-notebook-arcee-supernova-on-sagemaker.ipynb</a>
+
+#ai #aws #slm #llm #openai #chatgpt #opensource #huggingface</div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. In this video, I would like to tell you about our latest release, an amazing model called Arcee Supernova. It's a 70 billion parameter model and, at the time of recording, it outperforms much larger models, both open source and closed. I'll show you a little bit about the model and then how you can very easily deploy this on Amazon SageMaker in just a few clicks through the AWS Marketplace. Let's get started.
+
+This is the launch blog post for Arcee Supernova. As you can see, this is just a couple of days old, and I'll put all the links in the video description. So, what is Supernova? It's a 70 billion parameter model based on the LAMA 3.1 architecture. In fact, it's a distilled version of LAMA 3.1, 405 billion. Using our own internal tools and open source projects like DistillKids and MergeKit, we were able to build a 70 billion parameter model. Here, you can see some benchmark scores comparing Supernova to LLM3-1, 405 billion, LLM3-1, 70 billion, as well as Cloud 3-5, SON-A, and GPT-4-0. Supernova performs quite well. Benchmarks are benchmarks, and I encourage you to try the model on your own prompts and data. It's a real model, unlike some of the recent issues in the AI community.
+
+How can you deploy Supernova? Start from the marketplace listing for Supernova. I'll put the link in the description. Read about the model and its capabilities. This is a paid model, not open source. Pricing is currently set at $1.5 an hour across instance families, but this may change by the time you watch this. You will need one of three instance types: P4D 24x, which is widely available across AWS regions, or P5 instances if you have quota for them. P5 is a better option if available, but few regions have P5 instances.
+
+Click on "Continue to Subscribe" and follow through. You'll receive an email confirming your subscription. The marketplace has built-in deployment options through CloudFormation and SageMaker, but for a 70 billion parameter model, you might encounter timeouts. I recommend using my sample notebook, as I've ensured all parameters are correct to avoid timeouts. Once subscribed, go to the AWS samples repo and use the notebook highlighted there: the RC Supernova on SageMaker sample notebook. Clone the repo in your IDE with AWS credentials, or use SageMaker Studio.
+
+I've already subscribed, so let's switch to SageMaker Studio and run the notebook. If you've deployed the model differently and have an existing endpoint, there's a dedicated notebook for existing endpoints. Just enter the endpoint name and start predicting. Assuming you've just subscribed, run this notebook. It will automatically select the model package for Supernova in your AWS region. By default, it deploys on P4D 24XL, but you can change the instance type to P4DE or P5 if you have the quota.
+
+We'll import the necessary packages and grab the SageMaker client. The notebook will deploy on P4D 24XL by default, but you can change it to P5 if you prefer. We'll select the model package and deploy it, using parameters not included in the vanilla CloudFormation templates. The model artifact download will take 25-30 minutes, so be patient. You can monitor the deployment in the SageMaker console.
+
+After a while, the endpoint will be in service, and we can start running inference. The model supports the OpenAI format, making it easy to reuse OpenAI prompts and output processing code. Let's generate names for pet food stores. Here's the output, and it was fast. We can also generate a friendly marketing pitch for a salesperson using a SaaS AI platform called Arcee Cloud. The model does well with creative writing, even using emojis.
+
+For a technical question, we can use synchronous inference, which waits for the full answer. SageMaker endpoints also support streaming inference. Let's generate a personalized customer email. The output is impressive and detailed. You can see how simple it is to use the OpenAI format and integrate with existing OpenAI-compatible code.
+
+Feel free to keep running the notebook and try your own prompts. Remember, this is running in your AWS account, so you can tweak the notebook and use your data from S3. When you're done, don't forget to delete the endpoint to avoid unnecessary charges.
+
+That's it for today. Supernova is our latest and greatest model. You can read the blog post, look at the benchmarks, and deploy it easily from the AWS Marketplace to your own account. There's much more coming, so until next time, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Arcee Supernova</span><span class="tag">AWS Marketplace</span><span class="tag">SageMaker Deployment</span><span class="tag">70 Billion Parameter Model</span><span class="tag">AI Model Performance</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

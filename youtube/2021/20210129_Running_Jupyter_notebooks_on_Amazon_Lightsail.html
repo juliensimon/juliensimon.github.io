@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Running Jupyter notebooks on Amazon Lightsail - In this video, you'll learn how to install Jupyter on an Amazon Lightsail virtual server. Super simple, and pricing starts at $3.5 per month. Definitely worth a..." name="description"/><meta content="Running Jupyter notebooks on Amazon Lightsail - Julien Simon" property="og:title"/><meta content="Running Jupyter notebooks on Amazon Lightsail - In this video, you'll learn how to install Jupyter on an Amazon Lightsail virtual server. Super simple, and pricing starts at $3.5 per month. Definitely worth a..." property="og:description"/><meta content="https://www.julien.org/youtube/2021/20210129_Running_Jupyter_notebooks_on_Amazon_Lightsail.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Running Jupyter notebooks on Amazon Lightsail - Julien Simon" name="twitter:title"/><meta content="Running Jupyter notebooks on Amazon Lightsail - In this video, you'll learn how to install Jupyter on an Amazon Lightsail virtual server. Super simple, and pricing starts at $3.5 per month. Definitely worth a..." name="twitter:description"/><link href="https://www.julien.org/youtube/2021/20210129_Running_Jupyter_notebooks_on_Amazon_Lightsail.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Running Jupyter notebooks on Amazon Lightsail - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Running Jupyter notebooks on Amazon Lightsail</h1>
+<div class="date">January 29, 2021</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/vHjjuBJ5BoM">
+</iframe>
+</div>
+<div class="description">In this video, you'll learn how to install Jupyter on an Amazon Lightsail virtual server. Super simple, and pricing starts at $3.5 per month. Definitely worth a try :)
+
+<a href="https://aws.amazon.com/lightsail/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/lightsail/</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi, everybody. This is Julien from Arcee. In previous videos, we've run our Jupyter Notebooks on SageMaker Studio, SageMaker Notebook instances, EC2 instances, and on our local machine. Believe it or not, there's an option we haven't looked at yet: Amazon LightSail. Amazon LightSail is an AWS service that makes it extremely easy to create a virtual server and start using it in minutes. And I really want to say seconds because it's so easy. Let's see how with just a couple of clicks and a couple of command lines, we can fire up a Jupyter Notebook on an Amazon LightSail server. We'll see that this is possibly the most cost-effective option we can find. Let's do it.
+
+Starting from the AWS console, we open LightSail. I'm using the Ireland region here, but you can use any region where LightSail is available, of course. It says good afternoon. That's a polite service. I like that. We can then proceed and create an instance. I'm going to stick to Linux. I don't need any of those apps. I'm just going to install the OS, and I'm going to use Amazon Linux 2. You can add a launch script, which is basically a shell script that will be executed as the instance starts. So I'm just going to update packages, install Python 3 and GCC C++ because one of the dependencies we're going to need for Jupyter requires a compiler. I'm also going to add git because you always need git. Let's not use the default SSH key pair. I'll show you how to use your own. Just click on "Create," name it "Jupyter demo," generate the key pair, and download it. Then I need to move this to the proper SSH directory and set access rights for it, making it readable by me only. Otherwise, it won't work.
+
+Now let's see what instance type you can pick. Here, you can select from different criteria, but price is the most important for me now. I'm trying to find the least expensive option. This is the one: $3.5 per month, first month free. For this, I get half a gig of RAM, one vCPU, and 20 gigs of SSD storage, which should be enough for Jupyter notebooks. Let's see if we can fit all of that stuff in half a gig. Okay, so we go with this. Let's give a name to this instance, call it "Jupyter," and create it.
+
+The instance is running, so now we just need to grab its IP address. We could connect using this browser-based thing, but I'm old-fashioned. I'd rather have a proper terminal. So we'll just grab the public IP and use the key we created. The username is ec2-user. And voilà! Let's check if Python 3 is installed. Yes. So we should have pip3 as well. Now we can just go and install Jupyter. Let's also install scikit-learn, NumPy, and Pandas, which I'm guessing we want to use. This only takes a few seconds. Now everything's installed, and we should be able to fire up our Jupyter notebook.
+
+The default port is 8888, which means we need to open it. But don't worry, this is really simple. No need to worry about security groups and everything else. The LightSail console makes it very easy. We can simply add a rule and say, "I want to access 8888." By default, this will be accessible by everybody, which is probably not a great idea. I'll keep it that way for the demo, but you definitely want to restrict it to your own IP address or your company IP address range. Okay, create it. I could delete this HTTP port. I don't need it. I'll just keep SSH and my Jupyter port.
+
+Now if I just grab the IP address and connect to port 8888, yep, I get to the Jupyter screen. I can just get the token and connect. Yep. Now we can create a notebook and check if we can import everything. Yep, this works. And obviously, we can open a terminal, use git, bring our code, and we're good. How much memory do we have left here? Oh, we have quite a lot. So yeah, we have enough memory to work definitely. We can see those 512 MB, and most of them are just in the buffer, but we can definitely work. You shouldn't have any problem running Jupyter on these tiny instances, so long as you're not loading gigabytes of data in your notebook. But for quick experimentation with a fraction of the dataset, it should be fine. And this is only going to be $3.5 a month.
+
+So once we're done, of course, we could stop Jupyter. If we go back to LightSail, we can stop instances and, of course, delete them just like a normal EC2 instance. That's what I wanted to show you today. If you want a no-frills environment, very easy to set up, and if you don't want to work with SageMaker for whatever reason or think EC2 instances are too complicated, this is really the simplest way. Let me know what you think. See you next time. And until then, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Amazon LightSail</span><span class="tag">Jupyter Notebook</span><span class="tag">AWS Cost-Effective Solutions</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

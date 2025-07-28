@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Deploy Hugging Face models on Google Cloud   from the hub to Inference Endpoints - In this series of three videos, I walk you through the deployment of Hugging Face models on Google Cloud, in three different ways:
+
+- Deployment from the hub mo..." name="description"/><meta content="Deploy Hugging Face models on Google Cloud   from the hub to Inference Endpoints - Julien Simon" property="og:title"/><meta content="Deploy Hugging Face models on Google Cloud   from the hub to Inference Endpoints - In this series of three videos, I walk you through the deployment of Hugging Face models on Google Cloud, in three different ways:
+
+- Deployment from the hub mo..." property="og:description"/><meta content="https://www.julien.org/youtube/2024/20240409_Deploy_Hugging_Face_models_on_Google_Cloud_-_from_the_hub_to_Inference_Endpoints.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Deploy Hugging Face models on Google Cloud   from the hub to Inference Endpoints - Julien Simon" name="twitter:title"/><meta content="Deploy Hugging Face models on Google Cloud   from the hub to Inference Endpoints - In this series of three videos, I walk you through the deployment of Hugging Face models on Google Cloud, in three different ways:
+
+- Deployment from the hub mo..." name="twitter:description"/><link href="https://www.julien.org/youtube/2024/20240409_Deploy_Hugging_Face_models_on_Google_Cloud_-_from_the_hub_to_Inference_Endpoints.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deploy Hugging Face models on Google Cloud   from the hub to Inference Endpoints - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Deploy Hugging Face models on Google Cloud   from the hub to Inference Endpoints</h1>
+<div class="date">April 09, 2024</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/mlU-2QYx4a0">
+</iframe>
+</div>
+<div class="description">In this series of three videos, I walk you through the deployment of Hugging Face models on Google Cloud, in three different ways:
+
+- Deployment from the hub model page to Inference endpoints (this video), with the Google Gemma 7B model,
+- Deployment from the hub model page to Vertex AI (<a href="https://youtu.be/cBdLw5BnGrk)," rel="noopener noreferrer" target="_blank">https://youtu.be/cBdLw5BnGrk),</a> with the Microsoft Phi-2 2.7B model,
+- Deployment directly from within Vertex AI (<a href="https://youtu.be/PFHzfzyY2iY)," rel="noopener noreferrer" target="_blank">https://youtu.be/PFHzfzyY2iY),</a> with the TinyLlama 1.1B model.
+
+Get started at <a href="https://huggingface.co" rel="noopener noreferrer" target="_blank">https://huggingface.co</a> :)
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. Follow me on Medium at <a href="https://julsimon.medium.com" rel="noopener noreferrer" target="_blank">https://julsimon.medium.com</a> or Substack at <a href="https://julsimon.substack.com." rel="noopener noreferrer" target="_blank">https://julsimon.substack.com.</a> ⭐️⭐️⭐️</div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. As you can see, I'm on the road right now, but that's not an excuse not to do any videos. As you probably know, we've recently announced a partnership with Google Cloud. In this video and the following videos, I will show you how to quickly and easily deploy Hugging Face models on Google Cloud. There are different ways to do this, which is why I'm going to do several videos. In the first one, I'm going to show you how to use our own deployment service called Inference Endpoints, and we'll see how we can deploy one-click models from the hub to Google Cloud. As simple as that. Let's get started. If you enjoy this video, please give it a thumbs up and consider subscribing to my YouTube channel. And if you do, please don't forget to enable notifications so that you won't miss anything in the future. Also, why not share this video on your social networks or with your colleagues? Because if you enjoyed it, it's very likely someone else will. Thank you very much for your support.
+
+Starting from the hub, let's find a good model to deploy on Google Cloud. How about we try Gemma, this new version of the Gemma model from Google. Let's just click on this. If this is the first time you open this model page, you'll have to ask for access. This is a gated model, but just enter your email and confirm, and you should have access in seconds. OK, so don't let that stop you. As always, I would encourage you to read about the model. Why not maybe test it locally, etc. Right, lots of good information there. But for now, we want to deploy it on inference endpoints. So let's just click on deploy inference endpoints. You can see we have a new option for Google Cloud, right next to AWS and Azure. So why don't we select Google? At the moment, we have a single US region, but I'm pretty sure we will add more. And we automatically select what we think is the best configuration for this model. So here we're going to deploy on this particular instance. As you can see, we are deploying with our TGI serving container. By the way, just yesterday, we announced that TGI is now back to the Apache 2 license, which I think is good news for everyone.
+
+We can decide what the security level should be. Remember, public means public, so wide open to the public Internet, no authentication. I wouldn't recommend it. Protected means accessible from the internet with token authentication. We don't have a private option for now, which we have on other clouds. So let's go with protected. We could always take a look at the configuration. Do we want auto-scaling? Do we want a particular revision of the model? I guess we'll go with TGI. We could enable quantization if we wanted, etc. But I will stick with all those defaults. Okay, so very simple. Just select Google and that's pretty much it. Yeah, at the security level, of course. Okay, let's click on create endpoint. And so now it will take a few minutes. We'll launch automatically this GCP instance in our own account and prepare the endpoint, etc. So I'll pause the video and wait for the endpoint to come up, and of course, we'll test it afterwards.
+
+After a few minutes, the endpoint is up. I can see it says running here, so why don't we test it? We could test it with the playground. We just need to select a token, obviously, because we're using the protected security, right? So let's just try this. Challenging question. Trust me, all right, let's see what that says. All right, what did I tell you? Starbucks horrible coffee. So hopefully, there's something more interesting in Seattle than Starbucks. Anyway, playground, let's try the API. So again, I don't need my token; I could change some of the generation parameters, increase temperature, etc. Let's just include the token. Don't worry, I will invalidate it afterwards. I just need to copy this. Okay. And let's just switch to a notebook. So let's just paste the code. Maybe I'll change the question. Let's try that again. Okay, just run this, invoking the endpoints, passing the token. Okay, and I guess we need to print the output. Okay, let's just print the output. All right, the Seattle fire of 1907 was one of the more destructive in American history. Okay, well, that's clearly more interesting than Starbucks. Okay, so as you can see, super, super nice and simple. Just one click to deploy, and then copy-paste the code, and you can test in minutes.
+
+When you're done, don't forget to delete the endpoint. Let me show you. So when you're done testing, just go to settings, scroll all the way down. You need to type or paste the endpoint name, click on delete, and it goes away, and you're stopped being charged. Right? Perfect. Okay, so that's the first way to deploy Hugging Face models on Google Cloud using inference endpoints. I hope this was interesting. I've got two more ways to show you, so keep an eye out for the next two videos. Okay? Keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Hugging Face Models</span><span class="tag">Google Cloud Deployment</span><span class="tag">Inference Endpoints</span><span class="tag">Machine Learning</span><span class="tag">Model Deployment</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>

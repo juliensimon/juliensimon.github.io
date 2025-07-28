@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="Classify image datasets with AutoML and Hugging Face AutoTrain - In this video, I show you how to train image classification models with AutoTrain, our AutoML service, and how to test them both on the model page and in a Jupy..." name="description"/><meta content="Classify image datasets with AutoML and Hugging Face AutoTrain - Julien Simon" property="og:title"/><meta content="Classify image datasets with AutoML and Hugging Face AutoTrain - In this video, I show you how to train image classification models with AutoTrain, our AutoML service, and how to test them both on the model page and in a Jupy..." property="og:description"/><meta content="https://www.julien.org/youtube/2022/20221006_Classify_image_datasets_with_AutoML_and_Hugging_Face_AutoTrain.html" property="og:url"/><meta content="video" property="og:type"/><meta content="summary_large_image" name="twitter:card"/><meta content="Classify image datasets with AutoML and Hugging Face AutoTrain - Julien Simon" name="twitter:title"/><meta content="Classify image datasets with AutoML and Hugging Face AutoTrain - In this video, I show you how to train image classification models with AutoTrain, our AutoML service, and how to test them both on the model page and in a Jupy..." name="twitter:description"/><link href="https://www.julien.org/youtube/2022/20221006_Classify_image_datasets_with_AutoML_and_Hugging_Face_AutoTrain.html" rel="canonical"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Classify image datasets with AutoML and Hugging Face AutoTrain - Julien Simon</title>
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Classify image datasets with AutoML and Hugging Face AutoTrain</h1>
+<div class="date">October 06, 2022</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/uFxtl7QuUvo">
+</iframe>
+</div>
+<div class="description">In this video, I show you how to train image classification models with AutoTrain, our AutoML service, and how to test them both on the model page and in a Jupyter notebook. We look at different datasets available on Kaggle and on the Hugging Face hub.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" rel="noopener noreferrer" target="_blank">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+Resources:
+- Chest x-ray dataset (Kaggle): <a href="https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia" rel="noopener noreferrer" target="_blank">https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia</a>
+- Chest x-ray dataset (hub): <a href="https://huggingface.co/datasets/juliensimon/autotrain-data-chest-xray-demo" rel="noopener noreferrer" target="_blank">https://huggingface.co/datasets/juliensimon/autotrain-data-chest-xray-demo</a>
+- Chest x-ray model: <a href="https://huggingface.co/juliensimon/autotrain-chest-xray-demo-1677859324" rel="noopener noreferrer" target="_blank">https://huggingface.co/juliensimon/autotrain-chest-xray-demo-1677859324</a>
+
+- Alzheimer dataset (Kaggle): <a href="https://www.kaggle.com/datasets/tourist55/alzheimers-dataset-4-class-of-images" rel="noopener noreferrer" target="_blank">https://www.kaggle.com/datasets/tourist55/alzheimers-dataset-4-class-of-images</a>
+- Alzheimer dataset (hub): <a href="https://huggingface.co/datasets/juliensimon/autotrain-data-alzheimer-demo" rel="noopener noreferrer" target="_blank">https://huggingface.co/datasets/juliensimon/autotrain-data-alzheimer-demo</a>
+
+- Food 101 dataset (hub): <a href="https://huggingface.co/datasets/food101" rel="noopener noreferrer" target="_blank">https://huggingface.co/datasets/food101</a>
+- Food 101 model: <a href="https://huggingface.co/juliensimon/autotrain-food101-1471154053" rel="noopener noreferrer" target="_blank">https://huggingface.co/juliensimon/autotrain-food101-1471154053</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Hugging Face. In this video, we're going to use Auto-Train, our AutoML service, to classify images without writing a single line of code. Auto-Train has been around for a little while, and you could already do natural language processing and tabular data with it. We recently added image classification. So I found a few interesting datasets on Kaggle and, of course, on the Hugging Face Hub, and we're going to see how we can use those datasets to train high-performance models. Okay, let's get started.
+
+Image classification is a simple problem to understand. We start from a collection of images organized in different classes and labeled with class labels. Our purpose here is to train a model that can automatically recognize which class an image belongs to, hopefully with a high degree of accuracy. So first things first, we need a dataset. For convenience, we're going to use existing datasets, but you could very easily use your own data. We'll look at the data format that Auto-Train expects: a simple CSV file with the image path and the image label. We'll take a look at that. But for now, let's try some existing datasets.
+
+I took a look on Kaggle and found a few that I thought were really interesting. There's this one, which is called the Chest X-Ray Images dataset, a collection of chest X-rays showing either a normal X-ray or a pneumonia X-ray. We can learn how to classify that. So we'll try this one. Alternatively, there's an Alzheimer's dataset, which is equally interesting, with four classes showing different states of the disease. Feel free to try this one as well. We'll look at another one, which is a little more lighthearted: the Food 101 dataset. This one is actually present on the Hugging Face Hub, so it's a good opportunity to show you both how to use a dataset that you prepared outside of the Hub and a dataset that's already on the web. We're going to do both. Okay? So we'll start with the chest X-ray dataset.
+
+Obviously, I downloaded it, and we can take a quick look at this dataset. It's a zip file, as you would expect, and it has three folders. Let's look at the tree. The training folder has a normal folder for images without pneumonia and a pneumonia folder for images with pneumonia. We can see there are two different types of pneumonia here: bacterial and viral. So, we could even split this into two classes for a finer-grained model, but we'll stick with the vanilla dataset here. Okay, so we have two classes, and let's see how we can feed this dataset into Auto-Train.
+
+I logged into the Hub, went to the Auto-Train page, and clicked on New Project. Let's give this one a name: Chest X-Ray Demo. We'll select the Vision task. As mentioned before, you can do NLP and Tabular, so we'll stick to vision and image classification for now. We'll let Auto-Train pick the best models, so that's the automatic choice here. If we wanted to fine-tune a single model, we could use manual and select a model from the hub. For example, we could fine-tune the Google Vision Transformer or another model. But here, we'll just let Auto-Train pick everything. Okay, create the project.
+
+Now we can add our data. We have different ways of doing this. We have the prearranged folder technique, which is the one we're going to use. So upload data from my machine. The data is already organized in the appropriate folder: one folder per class, as we saw. We can pass a CSV or JSON lines file as well. Or we could use a Hugging Face dataset, and we'll do this one later. So for now, let's just upload the data. Let's click here and select our dataset, the chest X-ray dataset. Let's try the training set first. Yes, I want to send it. It displays some thumbnails, so I can see this is the training set, and I see the number of files in my two folders. This one will be used for training, and I can add it to the project. It's going to upload the data and build it into a Hugging Face dataset, which is private. You could make the dataset public if you wanted, but by default, it will stay private. This will take a few minutes, depending on your network connection. So let me pause the video and I'll be back once the data has been uploaded.
+
+OK. So after a few minutes, we see we're done uploading the training set. I'm going to do exactly the same for the test set now. Exact same process. So datasets X-ray test. Send it. Yes. This one is for validation. Add to project. And here we go again. This is a much smaller one, so it should be faster. See you in a few minutes.
+
+OK. So now the test set has been uploaded as well. We could keep adding datasets, but that's all we need for now. So let's just go to trainings. The data we uploaded has been created as a Hugging Face dataset. If we go to the Hub, here's the list of my datasets, and I can see this new dataset, which is private. We can check that here. So no worries. I could make it public if I wanted. If I look at the files, I'll see my image folders right there. So now I have this data on the hub, which means if I want to work with this dataset again, I don't have to upload it. Whether I'm using it for Auto-Train or directly with a model in a notebook, it's already there. Just upload it initially, and then you can save time and just reuse this dataset, which is a proper dataset. We can use the datasets library to download it, etc. Let's wait for Auto-Train to clone this into my job, and then we'll see our training jobs starting.
+
+After a few minutes, I can see some metrics appearing here. The leaderboard will change, but this is what we have for now: 92.3% accuracy for the top model. Let's see if we can do a little better. Oh yeah, 93.43%. Great. So let's wait for the job to complete and then we'll see the final results. After about 16 minutes total, the job is complete, and 93.43% accuracy is our top score. Let's take a look at this model. It's been automatically pushed to the hub. We see we have a model card created automatically, with our metrics, detailed metrics, F1, 94.8. That's pretty good. And of course, we have full visibility. If you look at the model, we can see it's SWIN, one of the top transformers for image classification. We see the hyperparameters, so you can see exactly what this job is about. You could restart the job from those parameters, etc. No surprise. Let's close this.
+
+While the job was training, I made the dataset public if you want to try it out. I updated the model card with more information, a link back to the original dataset, and now the dataset is public, so we have the preview as well, which is super convenient. You can go and grab this one directly if you don't want to download the Kaggle version and go through the process of uploading it. Just load it this way. Much simpler.
+
+By the way, we could now use this in Auto-Train as well. Let me quickly show you how to do this. It's very easy. So let's just go back to Auto-Train, create a project real quick. Okay, vision, automatic, create. Now what we would do is just select a dataset from the hub. So we can just browse, and of course, I need to remember the name. Just type this here. So it's going to say auto-train data. Yeah, that's the one. We can select the training split, for example. We see the same. We can just add the image here and the label and add to project. Now it fetches it directly from the hub, which is much simpler.
+
+How do we try this new model? Well, that's pretty easy because this is on the hub already. Let me make it public so you can try it as well. Yep, make it public. And I'll try not to delete it. Let's just grab the name. Okay, just like that. We can try to add an image here. So let's take an image from the test set. It's loading the model, and we should see the prediction. Okay, and we see the result. This is an image that is scored very high. Great.
+
+Don't worry, I'll put the name of the model, the links, and everything into the video description so you can do the same. Let's do the same in the notebook. I'll just copy the name of the models, move to my notebook, and maybe zoom in a bit here. So very simple: Transformers, creating a pipeline. Let's make sure this is the right name. Yes. Here's a test image. So let's just run the cells. We'll download the model to create the pipeline and then predict the test image. You could try different images, of course. And if you wanted, you could load this as a model from pre-trained in the Transformers library and have more control over the prediction. But the pipeline is just the easiest way to do this.
+
+Feel free to replicate the demo. You can try the X-Ray dataset, which I made public. You can try the Alzheimer dataset, which I showed you here. I'm running it right now. Let's see where this lands. There's the Food 101 dataset, which is what you think. It has 101 classes of food images, but this one is already on the hub. I actually ran a job a while back, and it scored 91.45%, which is very good. I compared it to some other image classification services and made some friends on LinkedIn. But still, I think this is a good score, a really good score.
+
+So this was a quick run through Auto-Train for image classification. Feel free to try it. Again, all the links will be in the video description. And if you have any questions, you can ask your questions here or anywhere you find me. Happy to help. I hope you like this. I hope this was fun. I'll see you next time. Keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">Auto-Train</span><span class="tag">Image Classification</span><span class="tag">Hugging Face Hub</span><span class="tag">AutoML</span><span class="tag">Chest X-Ray Images Dataset</span>
+</div>
+<div class="links"><a class="link" href="../../youtube.html">← Back to YouTube Overview</a></div>
+</div>
+</body>
+</html>
