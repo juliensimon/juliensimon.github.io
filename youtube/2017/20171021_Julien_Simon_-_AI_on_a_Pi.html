@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julien Simon   AI on a Pi</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Julien Simon   AI on a Pi</h1>
+        <div class="date">October 21, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/Uh0-pZlvPxs" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">"AI on a Pi
+[EuroPython 2017 - Talk - 2017-07-13 - Anfiteatro 1]
+[Rimini, Italy]
+
+In recent months, Artificial Intelligence has become the hottest topic in the IT industry. In this session, we’ll first explain how Deep Learning — a subset of AI — differs from traditional Machine Learning and how it can help you solve complex problems such as computer vision or natural language processing. Then, we’ll show you how to start writing Deep Learning applications in Python thanks to MXNet, a popular library for Deep Learning for both CPUs and GPUs. We'll also see how to use pre-trained models and we'll load one on a Raspberry Pi equipped with a camera. Finally, we’ll show random objects to the Pi…and listen to what it thinks the objects are, thanks to the text-to-speech capabilities of Amazon Polly.
+
+License: This video is licensed under the CC BY-NC-SA 3.0 license: <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="noopener noreferrer">https://creativecommons.org/licenses/by-nc-sa/3.0/</a>
+Please see our speaker release agreement for details: <a href="https://ep2017.europython.eu/en/speaker-release-agreement/" target="_blank" rel="noopener noreferrer">https://ep2017.europython.eu/en/speaker-release-agreement/</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Can you hear me fine? Yes, sounds like it. Okay, well, it's been a long day for you and for me. I flew in very early this morning from Paris, but it's good to be here. I hope you have some energy left, as it's a longer session, and we will have plenty of time. I suggest if you have any questions during the session, please ask them. Raise your hand, and we have a microphone you can grab to ask your question. I'd rather have a more interactive session than wait until the end to answer questions about stuff I talked about 34 minutes ago. Okay? So please raise your hand and ask all your questions. My name is Julien, or Julian or Juliano, or whatever you want to use, that's fine. I'm a tech evangelist for AWS, based in the Paris office, though I'm often traveling and talking to developers like today. I've been with AWS for about a year and a half, and before that, I spent the last 10 years as a CTO and VP Engineering in web startups in Paris.
+
+Today, we're going to talk about artificial intelligence, and I'll take you on a journey that started in the 1950s. If everything goes well, we'll end up running some stuff on my Raspberry Pi robot, which is waiting in the shadows, maybe to exterminate us all, who knows. We'll see what we can do with this. I'll start with a quick introduction to AI and why it's been mostly frustrating so far. Then we'll talk about Amazon AI, what we do at Amazon and AWS, and some recent developments. Most of the presentation will focus on an Apache project called MXNet. Who has already heard of MXNet? All right, well, okay. I'm making progress. Usually, it's zero people, which is why I'm talking about it. MXNet is a deep learning library that is extremely developer-friendly, designed for quick experimentation by developers and non-experts. You don't need a PhD to use MXNet, and that's exactly what we want to do. We'll talk about MXNet's high-level features and then dive into some demos using Python code. Of course, I'll point you to more tools and resources to get started.
+
+So, who has no idea what this is? It's okay if you raise your hand. All right. Thank you for making me feel very old. I keep thinking some people in the room are older than me, but as time goes by, this becomes less true. This is from the Stanley Kubrick movie, 2001: A Space Odyssey. If you haven't seen it, you should. It's a masterpiece. The computer in the movie is inside a spaceship, running the ship, and the astronauts are there, which is probably why the computer decides to kill them eventually. You should still see the movie, even if you know the ending. Many geeks, computer scientists, and researchers have been obsessed with this. When we first saw the movie, this is what we were trying to build—ultimate artificial intelligence that can understand natural language, speak, and handle very complex tasks like driving a spaceship. Have we succeeded? No. In 2001, the real year, Marvin Minsky, one of the fathers of artificial intelligence and an advisor to Kubrick, wrote a paper titled, "It's 2001, Where Is HAL?" He explained why artificial intelligence had not made much progress in 40 or 50 years and thought we were still very far from achieving AI. However, in the mid-2000s, machine learning started to explode, and now, everyone in the room is doing machine learning, or at least has it on their resume. It's a commodity; you can use open-source libraries, cloud-based services, and build machine learning models in just a few lines of code.
+
+Why did machine learning become so successful starting in 2000 and 2010, and why did AI not make as much progress in the same years? In machine learning, it's all about the features. It's fairly easy to build a prediction model if you have clear features. Most of the work in data science is finding useful features in the dataset, engineering them, and preparing them to deliver an efficient model. For example, if you have a web log and want to predict user activity, such as what link they will click, the features are available in the log, like time, date, URL, user agent, and more. You just need to figure out which ones are most relevant for your model and tweak them until you have a working model.
+
+Now, let's take a different problem. Suppose I take a picture of this room, a thousand pixels by a thousand pixels, and want to know what's in the room or if it's even a room. It's a million pixels, and if it's a color picture, it's three million pixels. Should I take those three million features, flatten them, and send them into a prediction model? Probably not. It doesn't make sense; not every pixel is useful information. Look at the seat you're sitting on—it's all gray and the same color. Do I need all those individual pixels to figure out it's a seat and it's gray? Common sense tells me no. But that's the difficulty in building smart applications. Common sense, human common sense, tells us the answer immediately. If we brought a five-year-old kid into this room and asked, "What do you see?" they would say, "I see people sitting in a room. It looks like a classroom." If you show animal pictures to the kid and ask, "Is that a cat? Is that a tiger? Is this a dog?" they would know instantly. If you ask how they know it's a lion or a cat, it becomes more complicated. They would give you some answers, but how do you fit that into data a computer can understand? This is the number one problem with deep learning, and it's trying to teach computers to understand informal things that we know from being four years old and older. If you try to do it the machine learning way, it doesn't work because there are too many features and too much information to feed into a model and get a decent result.
+
+The answer is neural networks, which are not new. The early work goes back to the late 1940s, but the first major applications came in the 1950s. Neural networks are 60 years old technology. A neural network is a universal approximation machine. The theorem states that if a network is large enough and given enough data, it will learn anything perfectly. It's a learning machine that you design, show data repeatedly, and it learns to predict outputs from inputs. It can predict anything, and you don't have to understand exactly what happens inside, which is nice. Mathematically and theoretically, they are great, but until recently, they didn't work well. They didn't work well because of scale. In the 1990s, if you studied neural networks and AI, your teacher probably told you that while AI and neural networks are cool on paper, they are pretty much useless outside the lab because we couldn't solve bigger problems with them. Data was not available, and computing power was limited.
+
+But it changed for three reasons. First, data sets are everywhere. Digital data is literally everywhere—audio, text, pictures, and more. Public data sets are available on the internet, and you can grab them, mine them, and participate in machine learning and deep learning competitions. Second, computing power is less of a problem now. GPUs, which were initially used for 3D games, were found to be useful for scientific work. Now, GPUs are everywhere, fairly cheap, and deliver massive computing power. Third, the elasticity and scalability provided by the cloud have helped deep learning explode. Instead of buying 50 GPUs to train for a few hours a week, you can go to the cloud, grab a few GPUs for a few hours, train your model, and pay only for those hours.
+
+Every year, there's a competition called ILSVRC where research teams predict categories for images in the ImageNet dataset. They predict five categories for each image, and if the correct category is in the top five, it's considered a win. The error rate has dropped from 28% in 2010 to 3% last year. The neural networks have become deeper, from one layer to 269 layers. What would be the score for humans? If I gave you the ImageNet dataset and lots of coffee, what would be your average error? The answer is 5.51%. Computers are now better at recognizing stuff than us, given that they have been trained on it. If you show them something they've never seen, they won't know, but they can do it faster, longer, and without getting tired.
+
+A layer in a neural network is a set of neurons connected to the previous and next layers, working in parallel to do computations. The input layer is your input data, and the output layer is the number of categories. Hidden layers extract features from the input layer and gradually learn to activate the correct output neuron. Different architectures exist, and the computation is heavy because of the many connections and optimizations required.
+
+Amazon has been doing AI for a long time. Early on, Amazon used AI for recommendations and content personalization. Today, AI is used in fulfillment centers with over 40,000 robots moving around autonomously. On the website, each user sees a different experience. The Amazon Echo family of devices uses deep learning for natural language processing, text-to-speech, and more. AWS offers a full stack of AI and machine learning solutions, from infrastructure to managed services like EMR, Amazon Machine Learning, and higher-level services like Lex, Polly, and Rekognition.
+
+Polly is a text-to-speech service with 24 languages and 48 voices. Lex is a chatbot service for designing conversational interfaces, and Rekognition is an image recognition service that can detect objects, faces, and more. These services are API-based and easy to use. For example, Rekognition can analyze a complex image and provide labels, confidence scores, and face information, including gender, age range, and emotions.
+
+However, these services require a cloud connection, which is not always feasible for devices like robots. We need something that can work locally. MXNet is a developer-friendly deep learning library that supports multiple languages and is open-source. It's high-performance and can run on small devices like a Raspberry Pi. AWS supports MXNet because it scales well, both for cloud-based applications and smaller devices. We can build deep learning applications using MXNet and embed them on devices like this Raspberry Pi robot, which has a 1 GHz clock speed and 1 GB of memory, to run local AI without a cloud connection. And again, as we scale on multiple servers, we see almost linear scalability, which you will not see in other frameworks. Most other frameworks can either not do GPU at all or can do maybe one GPU or, if you tweak your code like a maniac, you can get it to run on multiple GPUs in the same machine. In MXNet, it's just one line of code. Training on multiple hosts becomes a real project if you want to do this with other libraries. For MXNet, it's almost as simple as sharing SSH keys across the nodes so that they can connect to one another, and that's about it. The data set will be split automatically and so on. It's really nice. That's one of the reasons why we like MXNet. Scalability is very important for our customers and thus very important for us. We want to make sure we build services that scale to the max.
+
+Let's do some demos. Let's start with something simple. Let's do some training for a second. So here I'm going to use a GPU instance to train an image recognition model on the data set called MNIST. Most of you have seen this before. MNIST is very popular. It's 70,000 handwritten digits from zero to nine. The goal is to show an image and get the proper result at the end. So let's do this. Here is my instance. I'm running on a smaller GPU instance with only one GPU, but that's more than enough for what I need. I'm running an Amazon machine image called the Deep Learning AMI, which is built by us and you can use it at no cost. The cool thing with this is that it comes pre-installed with everything, so whatever framework you use—Caffe, MXNet, TensorFlow, etc.—it's already in there. You can just boot up your GPU instance with this image, and everything is ready for you to work. You don't need to install all the CUDA drivers and Nvidia stuff, which can be tricky.
+
+Here, I designed a very simple model. It's about 30 lines of code to do everything. When I say it's developer-friendly, it really is. It's very high-level, so you don't have to go into the details of every single neuron; you just define layers and connect them. That's it. I've got a series of blog articles on this with every single detail explained, so I'll go a little faster here. Basically, you just load the data set, so you load those images. There's a training set for training and a validation set to evaluate the quality of the model, just like in machine learning. This is the network definition: an input layer, a first hidden layer fully connected with 128 neurons, a second fully connected layer with 64 neurons, and then the output layer with 10 neurons, corresponding to the 10 categories from 0 to 9. That's all it takes to define my network. Define the layers, how they're connected, and how many neurons are in each layer. We have multiple types of networks, but this is the simplest one, and as you can see, it's only six or seven lines of code.
+
+Then I bind my data to that model, the data I loaded, and I just say, "Okay, this is what you're going to train on," and now you train. I save the results, so I save all the weights for all the layers because I want to reuse them afterward. Then I use my validation set to measure the accuracy of the model. Not a lot of code, right? So let's do this. How do I train it? Just like this. It's going to load the data and run for 10 epochs. An epoch is learning the full data set once. So here I'm taking that data set and sending it 10 times into my model, batch by batch. The full set goes 10 times in a row into the network. I can see my training accuracy going up. If I let it run for a little more, let's give it maybe 30 epochs, you will see it gets to one. That's the universal approximation theorem I mentioned. It's going to learn that data set perfectly. But when I take the validation set and run it, of course, I get a lower score because these are images the network has never seen before. So training accuracy almost gets to one, and validation accuracy is 97%. I could use some handmade digits that you can see here. I did them myself, and I can try running them through the network. I'll load each image, load the model I trained, and just run it through. You can see 10 probabilities because we have 10 categories. They're pretty close to one. They're not perfect, but they're pretty close. The first image is a zero, and the second, and all these are pretty good. The nine is not so great. The probability is lower, but we're still okay with the fact that it's a nine. I could have a better network, train for longer, and improve everything, but that's just a very simple model here.
+
+Now I want to do something more complex. I want to do the ImageNet thing I mentioned earlier. I want to use a pre-trained network. Training on ImageNet takes a while, so I cannot do it here. I want to take that model, train it in the cloud using the cloud scalability, save it, and then copy it in there and use it locally. So let's go back to my robot here. The model I'm talking about is the Inception model. It's 44 megabytes, so it's not huge, but it's a fairly advanced model trained on ImageNet. I'm going to do pretty much the same thing you saw here. I'll load the model and ask the robot to recognize images. To make it a little more fun, I'm going to have the robot take a picture of objects using the camera and recognize them. It's all in Python, fairly easy to do, and we just have to start that server. Hopefully, it still works. The loudspeaker is on. Can that thing move or not? Just to make it a little more difficult to set up. I've got this thing here. It's an Arduino, which is Italian, or something. It's an Arduino with a PlayStation joystick connected to it. This has nothing to do with deep learning but it's pretty funny, so why not. It's an IoT thing. I'm using the IoT service of AWS through WiFi here to send messages back and forth to the cloud, from here to the cloud, to the robot, etc. So I can drive that thing. Can you see it? Yeah. I'm making sure it's not falling off. That's why it's stopping. Let's have an object somewhere. I'll take my lucky object, the one that should work. And then if you want, we can try something else. I need to cheat. It's not, yeah, okay. Yeah, I keep saying, it's a running, I mean, it's an old joke now, but sorry, I have to do it again. Some people think robots are going to kill us all, but we're quite safe. This one is very friendly. It's got a Twitter page. You can follow him on Twitter. I'll try something else that's probably not going to work either, but okay, fine. Have you seen this before? It's the IoT button. You just click it and it sends an IoT message to AWS IoT. This one, if it gets through, if not, I will fake it. That's right. We'll send a message to the robot asking it to take a picture. Oh, yes, it is working. I'm 98% sure that this is a baseball. All right. It's 31 centimeters away. Okay, thanks. Thank you. Bring me your object now. I click here, sends an IoT message to AWS IoT in Dublin. The robot gets it, so it's back and forth to Ireland. As you can see, it's pretty fast. The robot takes a picture with the camera and uses the local MXNet model to detect it. This button has been giving me trouble, so I should try something else. Oh come on. Okay, I can fake it, that's okay, no worries. Works only once, come on. Just use violence. Yeah, see that works. I'm 69% sure that this is a water bottle. The object is 51 centimeters away. Okay, pretty good, right? It's all fun and everything, and of course, we're going to try those and it's going to fail. Because this is a really small object. I don't know what the distance is. Distance should be maybe here. So once again, what happens is, there's the IoT thing going on. And there's Polly, right, the voice comes from Polly, as you can imagine. I really need to hit it, right? Come on. Okay, I'll fake it. I can send the message from here as well. And so it takes a picture. All right, that's my complex protocol. Oh, now it's quite dead, is it? Come on. Oh yeah, here it goes. I'm 13% sure that this is a pole. The object is 22 centimeters away. What did you see? Oh yeah. Oh, lighter is in there. Hey, I get five, remember? I get five categories, so I won. Now this is not going to work at all. I'm quite sure because it has a picture and it's, you know, if you show it a picture of something, it gets it wrong. If you have some other objects, do you have a laptop or something? Laptops usually work. We can try that and then conclude before they kick me off the stage. Do you want to try it? I don't have much in here. Okay, we can try this. All right, last one. That's a tough one. No, that's never going to work. Come on. Yeah, I'm very dependent on my phone here and it's not working. I'm 67% sure that this is a thimble. The object is 20. What? Okay. Peel bottle, man, it's in there. Come on. Hey, I still win. All right, they're going to kick me off the stage. All right, so Julien one, Rimini zero. Okay, all right, so, oh no, I don't need this, thanks. I'm getting to the end. I mentioned the Deep Learning AMI already. Again, I went very fast because there's so much stuff I wanted to show you today. You know, keep you hopefully interested. You will find all this stuff in detail on my Medium blog. So just go to medium.com, Julien Simon. It's easy to find. And you will find all the tutorials to get started with MXNet, to do training, etc. How to do the Raspberry Pi thing, etc. There are plenty more resources. There's one I want to mention. I recorded an AWS podcast a couple of weeks ago with an introduction to MXNet. So just look for AWS Podcasts MXNet. There's only one and it's mine. You can listen to that and get some additional information. Okay? I want to say, thank you, and I'll stop there. I cannot do the 24 voices. Thank you very much, EuroPython, for having me. Thanks for listening, and if you have questions, I'm here.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">ArtificialIntelligence</span><span class="tag">MachineLearning</span><span class="tag">MXNet</span><span class="tag">DeepLearning</span><span class="tag">AWS</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning on AWS. Julien Simon</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Machine Learning on AWS. Julien Simon</h1>
+        <div class="date">March 19, 2019</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/t_Rgx4QizBE" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Lviv Innovation in AWS Cloud Solutions MeetUP
+Julien Simon. Amazon Global Artificial Intelligence & Machine Learning.</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            So, my name is Julien. I work for AWS and have been with them for three and a half years now. I travel a lot, meeting developers, data scientists, machine learning engineers, and anyone else in tech. I'll start with a presentation on what we call high-level services. These are super easy to use, so who here has never done machine learning before? It's okay, no judgment. You're in the right place. These services are high-level and very user-friendly. The second talk will dive deeper into machine learning training with your own datasets and algorithms. By that point, you'll probably need coffee, so feel free to grab some calories and caffeine. As a quick bonus, I'll introduce the container services available on AWS, and we have a deeper dive on containers afterward. It's going to be a long evening, so I hope you had a good night's sleep and some coffee. Let's get started.
+
+As you can imagine, Amazon has been doing machine learning for a long time. It all started with the early days of amazon.com. Very early on, it was clear that the online shopping experience had to be personalized, much like going into a bookstore. Jeff Bezos, selling books from his garage, realized he needed to offer more than just competitive prices; he needed to provide a personal experience. So, they began with book recommendations and quickly expanded to personalizing the entire shopping experience. If you visit Amazon.com today or any of their retail websites, you'll see items tailored to your interests. My page will look quite different from yours unless you're into extreme metal and GPUs. But for most people, the experience is quite personalized.
+
+Machine learning has found its way into every corner of the company, from the back office to the fulfillment centers. You might have seen those Amazon robots moving autonomously in the fulfillment centers on YouTube. They're based on machine learning. We're also experimenting with drone deliveries, which use machine learning for route planning and computer vision. The Alexa family of devices, including the Echo, relies on machine learning for speech processing, text-to-speech, and NLP. The latest addition is Amazon Go, a series of grocery stores in Seattle that are open to the public. Just download the mobile app, use your QR code to enter, pick up what you need, and leave. No cashiers, no queues. The system uses cameras to track what you pick up and charges you accordingly. It's highly accurate, and there are plenty of YouTube videos showing people trying to beat the system, but it's tough. There's even an internal challenge at Amazon to see who can get in and out the fastest, usually involving two people. My colleagues play these games, but I'm too busy—or maybe too old—for that.
+
+I work for AWS, and my goal is to ensure everyone has a chance to use machine learning, whether you're just starting or an expert. We aim to make it simple to run machine learning workloads and deploy models. We've been building these services for a few years now, and we have over 10,000 customers using machine learning on AWS every day. Some big names include Netflix, Intel, and Tinder. We have millions of customers globally, and machine learning is helping businesses of all kinds, not just banks or retail companies. We've built a stack of services, and when I joined AWS, you could fit all the services on one slide. Now, it's challenging to fit all the machine learning services on one slide. Last year, we released 200 machine learning features, almost one every day. The pace of innovation is very fast, with new features coming out every week.
+
+We have three layers of services. The first session will focus on AI or application services. These are based on machine learning, but you don't need to know anything about machine learning to use them. You just call an API and get the job done. These are great for beginners. If your concern is finding objects in images or doing text-to-speech, you can achieve this with a single API call. Any junior developer can use these services in 15 minutes. If they can't, they might consider a career change. The second layer involves ML services where you can train with your own data and code. The third layer includes tools to make it simple to use popular machine learning and deep learning libraries, along with EC2 instances for training and deploying jobs. We'll cover these as we go along. Let's start with the high-level services.
+
+The first service I want to talk about is called Rekognition. This service is about understanding visual context, specifically images. It was released over two years ago and has several features, each corresponding to an API. For example, object and scene detection: you pass an image or read one from S3, call the detect object API, and get a JSON document with the information. The JSON includes coordinates for each detected object, labels, and confidence scores. You can also do facial analysis, which provides the bounding box, location, and attributes such as gender, age range, emotion, glasses, beard, and mustache. The confidence scores are probabilities, and anything above 99 is a strong match. The context of your use case will determine how you interpret these scores.
+
+Rekognition can detect up to 100 faces in an image, which is a practical limit for latency reasons. It can also do face search or comparison, matching faces in one image to another. For example, you can build a face collection and use it for authentication. A FinTech company in Africa uses Rekognition for biometric authentication, allowing people to access financial services even if the nearest bank is hours away. Another example is Marinus Analytics, a US company that uses Rekognition to help law enforcement find missing children by matching their images against those found on the internet. This shows how AI can be used for significant, real-world problems.
+
+Rekognition can also moderate content, which is useful if you're uploading user-generated content to a website. It can detect inappropriate images and provide a score to help you decide if the content is suitable. It can recognize celebrities, providing their names and links to Wikipedia or IMDB pages. Another feature is text in images, such as license plates. Rekognition can extract the text and provide the bounding box. This is pre-trained and works out of the box, but it's designed for common scenarios like license plates and road signs.
+
+We also have Rekognition for video, which can process video files in batch mode or live streams. It can detect activities and track objects across multiple frames. For example, Sky News used Rekognition Video to do real-time recognition of guests at a royal wedding in the UK. This shows the depth of the celebrity detection feature.
+
+Next, we have Polly, the text-to-speech service. You provide a text string, select one of 57 voices in 28 languages, call an API, and get a sound file back. It's fast enough for interactive conversations or saving the file for later use. Polly supports SSML, a markup language that allows you to control the speech, such as slowing down or adding breathing pauses. Duolingo, a language learning app, uses Polly because it found that the quality of the voice significantly impacts how well students learn. Polly outperformed six other providers in A-B tests, making it the best choice for their platform.
+
+Amazon Translate is a translation service that can handle real-time translation and automatically detect the source language. It supports a wide range of languages and can translate between most pairs. For example, a customer uses Amazon Translate to build a cloud-based translation service, focusing on the workflow and user experience rather than the translation models themselves.
+
+Amazon Transcribe is a speech-to-text service that can handle real-time transcription and supports multiple languages. It outputs text, punctuation, and timestamps, making it useful for call centers. Amazon Lex, the chatbot service, also includes speech-to-text, but it's better to use Transcribe if you need the raw text string.
+
+Comprehend is a natural language processing service that can extract entities, key phrases, detect language, and perform sentiment analysis. It can also handle custom entities and classification, making it versatile for various business needs. For example, it can help in analyzing customer feedback or processing legal documents.
+
+Let's move on to the next part of the presentation. For example, it can understand that a certain text is the name of a medication, the dosage, the route (e.g., PO means orally), and the frequency. This structured information is easier to query than full-text searches. What was the dosage for that patient last week? What medication did that patient get and what was the dosage? These are questions you can answer more easily with this structured information. Comprehend Medical is useful if you have healthcare customers.
+
+The other way you can use Comprehend is called topic modeling. Topic modeling is unsupervised learning. You start with a large collection of documents and want to group them into a number of topics. For example, if you work for a newspaper and have one million articles, you can group them into 8 topics. You put the documents in S3, ask Comprehend to build 8 topics, and it will output a list of topics. Each topic is a list of interrelated words with respective weights. If you have lots of stock market articles, the topic might include words like revenue, earnings, CFO, etc. If you have lots of US politics articles, the topic might include words like White House, Congress, and Donald Trump. If you have lots of machine learning articles, the topic might include words like algorithm, model, dataset, etc. For each document, you get a score for each topic. A document might score 0.52 on the stock market and 0.02 on machine learning. This information can be stored in a database for fast queries, such as finding recent articles that talk about Washington and score at least 70% on Washington and 20% on the stock market. This is more efficient than full-text searches. You decide how many topics you want. If you know you have finance, sports, and entertainment, use that. If you're unsure, you can experiment. Each document will be scored on all the topics, giving a probability for each topic.
+
+For example, if you have a storm in Australia, each document will have a score for each of the eight topics. If you're a data scientist and usually work with Python libraries and custom models, you might wonder how to improve the model. With Amazon Comprehend, you can set up a baseline in 15 minutes. If the baseline isn't enough, you can work with SageMaker to build your own model. Comprehend entity extraction is the only spot where you can train custom models. People ask if they can train a custom recognition model, and we're looking into it.
+
+Comprehend Medical, which I showed you, is another specialized version. The final three services are still in preview. Textract is OCR++, something people have been asking for a long time. It extracts information, text, tables, and forms from printed documents, providing a JSON answer with the exact structure of the document. Textract uses neural networks, specifically LSTM. Unlike Tesseract, which doesn't output table representation, Textract provides a structured output.
+
+Regarding security, some companies, like banks, might have concerns about sending documents to the cloud. However, we have many banks and governments running on AWS. If you think your business has tighter security requirements than NASA, the US government, or top 10 banks, we can have that discussion. We're confident we have the security measures you need.
+
+Here's a real example: my phone bill from December. You can see my name. Let's run Textract on it. You can either do single-page or multi-page documents, uploading images or PDFs. For now, it handles printed text. Many AWS customers have been asking for this for two years. The minute we released it, they wanted more, like handwriting recognition. Handwriting is very complicated. During a presentation in Scotland, a gentleman from the National Archives of Scotland asked if we could build a service to read ancient Scottish. We said, "Just give us labeled data."
+
+What do we see here? The raw text, with a visual representation of the table. You get a JSON document with the actual structure of the table, including columns and lines. This is a significant improvement over just extracting text. Textract has been a long time coming, and we're excited to bring it to customers.
+
+The next preview service is Forecast, which deals with time series data, such as sales or Bitcoin prices. Forecast makes it easy to predict product sales, inventory, and supply chain. You bring your data in a CSV file, upload it to S3, create a dataset, and select business recipes. For example, if you want to predict sales, you use a specific recipe. The process is fully automated, and you can build a good model with minimal machine learning knowledge.
+
+Personalize is another preview service for building recommendation models. Recommendation is a challenging task in machine learning, especially at scale. Personalize simplifies this with a few API calls. You upload the data, create a dataset group, train a model, deploy it, and generate recommendations. This was previously complicated, but now it's accessible to anyone.
+
+We've covered a marathon of AI services. I didn't talk about Lex, the chatbot service, because it's been out for a while and demonstrating it properly takes more time. If you're interested in chatbots, read about Lex. We'll have a break now. If you're exhausted and want to run away, that's fine. Keep an eye on the resources. The most important one shows you how to use AWS for free. Go to the URL, create an account, and use the services listed in the free tier for the next 12 months. If you're curious about Rekognition, Polly, and other services, go to the free tier page, create an account, read the usage limits, and try them out.
+
+ML.aws is the high-level page for all things machine learning at AWS. It includes service pages, customer stories, pricing, documentation, and more. We recently launched the Machine Learning University, which offers about 40-45 hours of free online classes. If you're new to machine learning or want to learn more, this is a great resource. The machine learning blog is more technical and shows examples of what customers are building. I also have a blog on Medium with a lot of content on SageMaker. I have silly videos on YouTube from previous talks, which might be useful.
+
+Thank you. We have time for questions. If you want to stay in touch, follow me on Twitter. If you try a service and it doesn't work, feel free to yell at me. I'll pass your feedback to the Seattle team. Stay in touch for updates on new machine learning services. Let's take more questions and have a break for coffee and calories. The next session is going to be intense. This one was good. Thank you.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS</span><span class="tag">MachineLearning</span><span class="tag">Rekognition</span><span class="tag">Polly</span><span class="tag">Comprehend</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

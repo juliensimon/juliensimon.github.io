@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julien Simon Hugging Face Hyperproductive Machine Learning with Transformers and Hugging Face</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Julien Simon Hugging Face Hyperproductive Machine Learning with Transformers and Hugging Face</h1>
+        <div class="date">December 16, 2022</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/i1wm5msyYdg" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Julien Simon - <a href="https://codiax.co/speakers/julien-simon/" target="_blank" rel="noopener noreferrer">https://codiax.co/speakers/julien-simon/</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Okay, you should hear me and I can see you, so we're good to go. And we have slides. Perfect. So good morning, everyone. It's a pleasure to be back in Romania, finally, after all this time. My name is Julien, I work for a company called Hugging Face. You may have heard about us, and in the next 30 minutes, I'll try to give you an overview of what Hugging Face is all about, what we stand for, and more importantly, what you can do pretty quickly with our tools. When I say pretty quickly, I mean hours, sometimes minutes, definitely not weeks or months or years, which unfortunately seems to be the standard for many machine learning projects. We like to go fast, we want you to go fast, and this is how we do it.
+
+Before we try to accelerate things, we should understand what we're starting from. Deep learning really started when neural networks, a very old technology, was resurrected around 2010-2012 and finally made useful thanks to the availability of cheap compute. I studied this stuff at university a century ago, literally, and I was all excited about it. At the end of the class, the teacher said, "Well, yeah, it's pretty cool, but you can't really do anything useful with it," because back then we had tiny CPUs and could train only four or five neuron networks. So, totally useless. Now, not the case.
+
+Unfortunately, these models are super data-hungry, and we need super large data sets. We spend a lot of time building those data sets, curating them, labeling them, cleaning them, and instead of doing actual machine learning work, we spend our time writing SQL queries, Spark jobs, or Pandas code. Which is fun up to a point, but that's not really what we wanted to do, right? We wanted to do machine learning. Cheap compute, GPUs, massively parallel chips, used for something other than 3D gaming, made deep learning possible. But for a long time, it was difficult to get those chips. They were expensive, not produced in sufficient numbers, and so it was difficult to have the amount of power needed. Thanks to the crypto crash, you can buy those things by the metric ton right now. We have to thank the Crypto Bros for that. I hope you didn't lose too much money.
+
+The main problem is that the tools needed to do all of that stuff are just way too complicated. They were complicated back then, and they're still too complicated. Going into the guts of PyTorch and TensorFlow and similar tools is just too much for a lot of folks. If you're a trained machine learning engineer or data scientist, that's okay. But if you're an average developer like me, it's too much. I don't care about tensors, channels first or channels last. I couldn't care less. I don't even want to know. What I want to do is get the job done. I have a business problem and I want to get to a solution that works in production. Everything in between is just boring, and I don't want to take care of it. I want to move fast, and I'm told machine learning can do it. But given that complexity, a lot of the time you don't get to the end.
+
+In recent years, we've seen an upgrade of deep learning to what I call Deep Learning 2.0. The main change is the standardization of deep learning architectures to transformers, which we'll talk about more. Transformers emerged around 2018 with Google BERT, and not a week goes by without a new transformer model improving state-of-the-art on text, speech, images, videos, protein structure prediction, and more. It's pretty crazy. Transformers can do pretty much everything. The even better news is that it looks like the days of building and curating those huge data sets are coming to an end thanks to transfer learning. You can start from pre-trained models, use them as is, with a couple of lines of code, and use them to predict your own data. Sometimes they're just good enough, and that's it. Two lines of code. Great. Move on.
+
+Sometimes you have very specific domain data. Maybe you do chemical engineering, genomics, investment trading, etc., and the vocabulary is not necessarily perfectly picked up by the model. So you can train just a little bit more, but the amount of time and data and computing power you have to dedicate to that is generally 10x or 100x less than doing initial training. We just move faster. GPUs are still around, but we see a new category of machine learning hardware popping up. Companies like Graphcore, Habana Labs, Intel, and many others are building hardware accelerators for training and inference. Now it's not just GPUs; we see very effective cost-performance ratios out there. My good friend Cyrus can tell you about the stuff AWS is working on, like Inferentia and Tranium, which you can also use with transformers. The most important thing is that this can be done with developer tools, not expert tools. Anyone in the room can write three lines of Python to do all of this. You don't need to know what's happening under the hood. You can get to POC stage in hours and do some demos instead of weeks and weeks of data preparation, training, and retraining. We just accelerate the whole cycle.
+
+Zooming in on transformers, we saw it coming for a couple of years, but now we have confirmation that transformers are totally eating deep learning. Traditional architectures like CNNs, LSTMs, RNNs, and all their variations are slowly going away. They're being displaced and replaced by new transformer models for natural language processing, computer vision, speech, and everything else. This is not just us saying it; industry reports like the State of AI report and the Kaggle data science survey from 2021 confirm it. In the latest State of AI report from 2022, we see confirmation that the scope of use cases transformer models can tackle is growing very quickly. Two years ago, 81% of transformer use cases described in research papers were NLP-related, and almost no computer vision (2%). Two years later, NLP is still the largest chunk but is less than 50%, and you can see the explosion of computer vision and other use cases. This is due to the availability of very efficient computer vision transformer models. If you thought transformer models and Hugging Face generally are just about NLP, think again. You can solve a lot of different problems with these models.
+
+Hugging Face, who are we? We're a company started in 2016, and we strongly believe in open source. We steward a number of projects, the most popular being the Transformers library, which lets you work with all these cool models in just a few lines of code. It's one of the most popular projects in open source history. The community says it, and you can see on this graph the blue line with the steep slope climbing like crazy for a few years now, not stopping. We grow faster than PyTorch, Keras, and Kubernetes. We're close to 75k stars and trying to get to 100k, so we could use your help. We also built a website called the Hugging Face Hub, where we host models and data sets that you can download for free. All that stuff is open source. People call it the GitHub of machine learning, which is an okay analogy. You go to GitHub to find code and share code for your projects; you can go to the Hugging Face Hub to find models and data sets and share them as well. It's what everyone does.
+
+I've totally lost hope that this slide would be up to date. It says 72,000 models, but I updated it a couple of days ago to 85,000 models, and checking just minutes before this, it looks like we're close to 87,000 models. We're adding over 500 models every day. We have over 13,000 data sets ready to go, formatted, and downloadable in one line of code. We have over 10,000 organizations, from Google to Meta to NVIDIA, Microsoft, OpenAI, open source projects, university labs, and lots of developers and machine learning engineers sharing models on the hub. Day in and day out, we have over 100,000 users, and we have way more than one million downloads every single day. Working on this, scaling this, is an interesting story in itself.
+
+If you've never looked at Hugging Face code, this is your first introduction to it. It's very underwhelming, which is how I like it. You're not going to see any virtuoso code because virtuoso code is difficult and stands in the way of getting the job done. Here, I want to classify some text in a simple way. Simple doesn't mean inaccurate or stupid. I want to do state-of-the-art text classification in the simplest possible way. Starting from the Transformers library, I create a text classification pipeline. I'm actually using zero-shot classification, which lets me provide an arbitrary list of labels. I can score that sentence against any label, not just text labels that are part of the training set. Here, I'm using a model called BART. I pass a pretty complex sentence from Wikipedia and want to score it against a bunch of labels. Just pass that stuff to the pipeline, and get my results. This runs on CPU in milliseconds. If you need to add text classification to your application, that's it. You don't need a machine learning team, and you don't even need to be a machine learning engineer yourself.
+
+The pipeline object works for all task types. You can classify images, do text-to-speech, speech-to-text, and more. In many cases, this is as much machine learning as you need. Of course, this is the NLP world, still the biggest chunk of use cases, but the world has evolved. The rage these days is text-to-image stuff, like diffusion models. This afternoon, we have the CTO from Stability AI showing up, so don't miss that. We built a dedicated library for that called Diffusers, which lets us work with those super complex models just like that. Creating a pipeline, prompting the model to generate an image based on this. This is a real example I ran, and this is what I got. Everyone thinks you generated a thousand images and picked the one that looks okay, but I ran this code a few times and took this one because I thought it looked cool. The others were pretty good too. If you need image generation for whatever purpose, it doesn't need to be more complex than that.
+
+We can do fun things, like inpainting, which means replacing something in the original image with something else. Here, I'm using a space, a web app that hosts a model on Hugging Face. This is my face, and I want to replace the sweater with a Hawaiian shirt. Three or four seconds of GPU time, and this is what I get. Imagine the possibilities if you work in e-commerce and need to generate product images or images for your website. Five seconds, no photographer, no model, no lighting, no nothing. Five seconds.
+
+We're also embarking on significant collaboration projects. One you may have heard about is called Big Science. Big Science started because the machine learning community was frustrated by OpenAI closing GPT-3 and slowing down innovation. We thought, why don't we try and train an alternative? This led to the Bloom model, which you can use on Hugging Face for free. It was trained on 1.5 terabytes of text, 350 billion tokens, 43 languages, and 16 programming languages. You can use this for generation and fine-tune it for different things, all for free. We're pretty proud of that.
+
+We launched another project called BigCode, where we're trying to train a large-scale model for code generation. We built the data set, called the Stack, which is 3 terabytes and includes 30 languages and comments in 41 natural languages. Go and try that. Let's see where we land with this and maybe build a free, open alternative to those code generation models.
+
+Hugging Face in one slide looks like this. On the right-hand side, we start from models and data sets hosted on the hub. You can use them as is, using the pipeline object, very simple. Or you can train them, fine-tune them using transfer learning on your own data sets. You can use our AutoTrain service for no-code auto ML, zero programming, just a few clicks. You can do NLP, computer vision, and tabular data. If you want to write code, you can use the Transformers library, our main library. You can use Accelerate to control the training loop in more detail and still make it easy to do distributed training, multi-GPU, multi-TPU, etc. Diffusers for stable diffusion models, Evaluate to score any model on any data set in one line of code, and Optimum, a hardware acceleration library for training and inference that supports chips and products from different vendors. Spaces is a simple way to host your model and showcase it. Do cool demos for your non-technical users or the community instead of running Jupyter notebooks. Once you have a model you like, you can deploy it anywhere. All that stuff is open source, so go build your containers, use your model server, or use our inference API, which is completely free for dev and test. If you want a production-grade solution, you can use the inference endpoints to deploy any model from the hub in just a few clicks, either on AWS or Azure, with auto-scaling and security from public models to completely private models.
+
+We have partnerships with our good friends at AWS on Amazon SageMaker, so Hugging Face is a first-party framework on SageMaker, just like PyTorch or TensorFlow. You can bring your code, train, and deploy. We also made it easy to deploy Hugging Face models on Azure with Hugging Face endpoints. There's someone missing from that slide, and I'm tired of asking them to call me, but anyone from Google listening, your users are asking us to work with you, so answer the phone, please.
+
+Demos. I don't have a lot of time, so I'll show you one thing. I worked six years for AWS, so I tend to go to the Amazon stuff pretty easily because it saves me time. I thought, how can I train a model to score product reviews according to star ratings? You all know the Amazon star ratings: one star for an ugly product, five stars for an amazing product. Let's start from an Amazon reviews data set and train a model to score star ratings for shoe reviews. I'll share the link to the actual code at the end, so don't worry, you can replay everything. I'm taking a few shortcuts. I started from this data set, which has God knows how many reviews. It's huge, 31 gigabytes. It has shoes, so that's a good starting point. If you're a retailer, instead of spending six months writing Spark jobs to clean your own data, start with this. For POC, this is perfectly fine. This is the English language version. There's a multilingual data set with French, German, and a few more languages. I'm afraid there's no Romanian, but we may have Romanian product reviews somewhere on the hub. I didn't check.
+
+Starting from this, I extracted two reviews and pushed this dataset back to the hub, so this is my own subset. I removed the columns I didn't want, so I just kept labels and the actual reviews. That's five lines of Python, not super interesting, so I'm not showing that code. Then I trained a model on this. You could use the AutoTrain service or, if you really want to write code, you could use the Transformers library. This is the model I came up with. I trained it just for one epoch and pushed it back to the hub. I can use it and test it right there. It loads the model on demand and predicts. This is based on the inference API, and everything I'm showing here is completely free. We should see a prediction. That's probably a three-star, four-star review. I have this model, and all that training, cleaning the data, training the model, took maybe 30 minutes. So that was pretty fast. Label three means it's a four-star review. Labels need to start at zero, so label zero means one star, and label four means five stars. I can score the model like that, or if I want to make it a little simpler, I could write a space for it. I'm a terrible UI developer, but you can certainly build much better-looking spaces on this. That's a four-star review with 70% confidence. How much code is this? It's 15 lines of code, and most of the code is actually extracting the label and printing the stuff. The prediction is one line, the interface is one line, the prediction function is just one line. Everything is one line. That's the way I like it. I wish we could make zero lines, but we're working on that.
+
+This stuff uses Gradio, and you can use Trimlet as well. Test it on your local machine, create a space repository on the hub, push it there, and it fires up a container, and you can just run this. We see the model I use here. You could also host it for real. Let's say we want to create a production endpoint. We'll just grab the model from the hub, give it a name, decide where we want to host it, how we want to host it (CPU, GPU), and the bigger GPUs are coming soon, so you'll be able to host on multiple A100s. That will be a little more expensive than a small CPU, but that can't be helped. You can do scaling if you want, etc. You can decide if this needs to be public, which means open to the world, or protected, which means public with token authentication, or private, which means it's not open to the world and you can only call it from your own AWS or Azure account. We set up private connectivity between your account and our account, so you can call the model without going through the public internet. If you have strong compliance needs, if you work for a bank, etc., that's the kind of stuff you need. It takes a few minutes to set up, so I've already done this. Unless my colleagues deleted it, I should have it here. Yes, I should have it here. They do that sometimes.
+
+We could test it here, but let's try it for real. I'm on my local machine here, so here's the endpoint URL, my authentication token, and the rest is just HTTP requests. Deploying models is generally very difficult, but not here. This will auto-scale and be secured, etc. I have a few minutes left, and there's one more thing I want to show you. These models are generally pretty big. If we look at this model, it's a distilled BERT model, so it's already a smaller model, but as you can see, it's 268 megabytes, which is not big for a transformer model. You have multi-gigabyte models, so prediction latency and generally model size can be an issue. That's why we work a lot to optimize these models, shrink them, and make them faster.
+
+This is an example of doing this with ONNX. Starting from the same model and loading the same data set I showed you before, first, we evaluate the baseline model using the Evaluate library to score the accuracy of this model on this data set. I copied the output to a terminal to make it a little simpler to read. The accuracy is this, and it takes 153 seconds to score those 10,000 reviews. This is running on a CPU instance on AWS, so 153 seconds is my baseline. Then I can export the model to ONNX, which is really what it takes. Load the model, save it as an ONNX model, job done. Then I can evaluate it again, and now I'm down from 153 seconds to 110 seconds. That's already just to show you that ONNX runtime is a better runtime than using vanilla PyTorch. Just exporting the model saves you about 20%.
+
+Then we can go one step further. We can apply ONNX optimization, which is as difficult as this. Just optimizing the model and saving it. This will do all kinds of weird things, which I don't have time to discuss, but you can dive into the ONNX optimizer. If I evaluate that again, now I'm down to 98 seconds, so I gained another 10%. You can see accuracy doesn't move. I'm not hurting accuracy. Finally, I can go all in and do quantization, replacing all the 32-bit parameters in the model with 8-bit integers. This is as difficult as this. Now I'm down to 58 seconds. Accuracy didn't move. We reduced latency by 2.6 times with simple Python code, and the model has gone from 268 megabytes to 230 megabytes. Just apply the code and enjoy the results. That's what I like. Get results.
+
+That's a really quick tour of the Hugging Face family. If you want to get started, I recommend checking out the tasks page to understand all those different task types you can do with Transformers. The Hugging Face course takes you from knowing nothing to doing all of this and more. Of course, our repos on GitHub, my own repos where you'll find all that code and more on GitLab. If you want to stay in touch, find me on Twitter while Twitter is still there. I'm on Medium, YouTube, LinkedIn. Happy to connect. Elon said yesterday they might die in six months, so we'll see. It's going to be a fun thing to watch.
+
+If your company needs help with transformers and all of this, ping me. We can help you with engineering support, private deployments, and bring you into production in weeks. We'll go as fast as you can. Generally, you're the limiting factor, and we try to help you get there. That's really it for me. Thank you so much to Kodiaks for inviting me, Vlad, and everyone else. It's an amazing team. Thank you so much for showing up this morning, and I wish you a very good conference today. Thank you very much.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Hugging Face</span><span class="tag">Transformers</span><span class="tag">Machine Learning Acceleration</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

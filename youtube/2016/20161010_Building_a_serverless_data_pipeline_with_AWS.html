@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a serverless data pipeline with AWS</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Building a serverless data pipeline with AWS</h1>
+        <div class="date">October 10, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/CrPGssKi6t8" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Technical talk @ Devops Day Istanbul, 03/06/2016</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Good morning. It looks like there's a huge storm out there. Hopefully, that's not bad news. My name is Julian. I work for AWS and am based in the Paris office. I'm a technical consultant, which means I spend a lot of time on trains, planes, and taxis, especially here, to come and see you and talk about cool use cases and technology. Today, I'm going to discuss something relatively new, though it's been around for maybe a year or so. It's probably something you've heard a lot about: serverless. I'll show you a few slides to give you some background, and then we'll jump into a demo. I'll need all of you for the demo, so make sure you have Wi-Fi or your phone ready to connect to the internet, OK? We're going to do some load testing at the end, and it hasn't crashed yet. Let's see if Istanbul can actually crash my demo.
+
+Has anyone seen that slide or sentence before? "No server is easier to manage than no server." I can't translate that to Turkish, but it means the easiest server to manage is one you don't have. Werner Vogels, the CTO of Amazon, knows a thing or two about servers. Who here is responsible for operations, managing servers and data centers, and working nights and weekends? A few people, right? You know what I'm talking about—waking up in the middle of the night because a MongoDB server is down. They all go down, right? I'm not picking on MongoDB specifically.
+
+So, what is serverless? Serverless means getting rid of servers, and in the context of cloud infrastructure, it means getting rid of EC2 instances and virtual machines. Serverless architectures combine managed services. If you use AWS, you might use managed services like S3 for storage, RDS for relational databases, or DynamoDB for NoSQL. These services require no system administration because AWS manages the servers. The architecture also includes a technology called Lambda. Who has heard of Lambda? Who has tried Lambda? Thanks.
+
+Before diving into the details, let's quickly look at what Lambda is. If we were to do a brief history of servers, we'd go from physical servers to virtual machines to containers, and then to platform as a service (PaaS). You might use Heroku or Elastic Beanstalk. Containers are more recent, but they still require management. Even for a small application in a container, you need to build the image, manage it, update it, and patch it. The next step is getting rid of everything except the application code. This is what Lambda is about. You can call it code as a service or function as a service. The idea is to deploy only the code that implements your application. You can deploy Java, Python, or Node.js code, and AWS handles the environment. The good thing about Lambda is its seamless integration with other managed services. It's easy to get events from S3, process them, and push data elsewhere. It's like Lego infrastructure—very little code, mostly configuration.
+
+Lambda is great for event-driven applications. For example, if you have an image processing app where users upload images to S3, you can trigger a Lambda function to resize or change the color of the images and store them elsewhere. You only write the code that does that. Another popular use case is building APIs. We write a lot of APIs for mobile backends and web apps. You can easily combine the API Gateway in AWS with Lambda functions to build serverless backends.
+
+How much does it cost? Lambda only costs you when it's used. Unlike EC2 instances, which cost money as soon as they start, Lambda charges per invocation. If your functions are called, you pay a tiny amount. If there's no traffic, you pay nothing. The cost is calculated in 100-millisecond slots. If your code runs in 120 milliseconds, you pay for two slots. If you optimize it to run in 95 milliseconds, you pay for one slot, effectively halving the cost. This incentivizes developers to write efficient code.
+
+Lambda is about getting rid of servers and deploying small pieces of code that react to events or are invoked by APIs. To simplify, let's look at an example from a customer application. AdRoll, an ad tech company, buys online ad space using real-time bidding. Every time a user visits a website connected to AdRoll, they bid in real time. They process 60 billion events daily, using Lambda functions to handle these events and store data in DynamoDB. Lambda is not a toy; it's in production with many customer references.
+
+Today, we'll build an API that logs data in real time to a system for web applications. The data will be logged to DynamoDB and then moved to another storage system for batch processing. Normally, you'd have a web app logging to syslog or log files, and then moving those files for batch processing. For real-time processing, it becomes a complex project. We'll simplify this with serverless.
+
+My API is public, exposed by the API Gateway, which plugs into a Lambda function. The Lambda function writes to Kinesis, a highly scalable messaging system. Another Lambda function listens to Kinesis, writes to DynamoDB, and triggers a third Lambda function to write to Kinesis Firehose, which delivers data to S3. Let's look at the AWS console to see how this is set up.
+
+First, I create a DynamoDB table with a single line of code, defining the sharding key and capacity. Next, I create a Lambda function, upload the code in a zip file, and connect it as a trigger to DynamoDB. I create a Kinesis Firehose stream, specifying the name, S3 destination, compression, and encryption settings. This is all done with simple API calls.
+
+Now, let's look at the code. The first Lambda function, written in Python, posts data to Kinesis. It adds a timestamp to the JSON document and writes it to the Kinesis stream. The second Lambda function reads events from Kinesis and writes them to DynamoDB in batches. The third Lambda function, triggered by DynamoDB updates, writes the data to Kinesis Firehose. The entire pipeline is managed with about 15 lines of Python code.
+
+For error handling, every Lambda function creates logs in CloudWatch. You can inspect these logs visually or fetch them with the API. Timeouts and other issues are logged and can trigger alerts. For automated testing, you can use tools like the Serverless Framework or the AWS Eclipse plugin to run Lambda functions locally and perform unit tests.
+
+You can trigger Lambda functions from outside AWS using APIs, web sockets, or other methods, ensuring security with authorization and tokens. AWS has limits on the size of Lambda deployment packages, but you can request increases if needed. For CI/CD, there are many open-source projects like the Serverless Framework and Apex. For state management, Lambda functions are stateless, so you store state in DynamoDB or another external service. You can chain Lambda functions using the AWS SDK, and pass configuration parameters through environment variables or DynamoDB.
+
+Let's test the demo. I have a small web app running on an EC2 instance that calls the API. When you load the page, it calls the API, passing random data to create volume. The data is written to Kinesis, then DynamoDB, and finally to S3 via Firehose. We should see a file in S3 every minute. If you click faster, the files will be delivered more frequently.
+
+In summary, we wrote about 15 lines of code, managed zero servers, and built a highly scalable, cost-effective system. If we had 1 million hits per second, we'd need to scale Kinesis and raise service limits, but no code changes would be required. If there's no traffic, the cost is minimal, with only a small charge for the API Gateway and S3 storage.
+
+For more information, check out Danilo's book on AWS Lambda, the AWS documentation, the AWS Compute Blog, and the AWS User Group in Turkey. You can also try Quick Labs for online training and the Serverless Framework for managing Lambda functions.
+
+Thank you very much for your attention. I appreciate the invitation to speak here, and I hope to see you soon. Thank you.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Serverless</span><span class="tag">AWS Lambda</span><span class="tag">Cloud Computing</span><span class="tag">Event-Driven Architecture</span><span class="tag">Cost Optimization</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

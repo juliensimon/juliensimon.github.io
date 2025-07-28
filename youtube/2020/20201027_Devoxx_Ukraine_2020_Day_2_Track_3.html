@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devoxx Ukraine 2020 Day 2 Track 3</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Devoxx Ukraine 2020 Day 2 Track 3</h1>
+        <div class="date">October 27, 2020</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/1LhZjiYHEHI" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description"></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            I'm really happy to speak to all of you this morning. I wish I could be in Ukraine. I've been there many times. It's a place that I really like. Unfortunately, we have to stick to online videos, but I really hope we can soon be in the same room and have a great conversation. The sooner the better. Yes, I hope. Let's do it next year. Let's imagine. And what topic have you prepared for us today? Well, this morning we're going to start the day in style. It's an introduction to machine learning, what machine learning is, how you can easily get started with your machine learning project, sharing some best practices, and then walking through and demoing some of the services that AWS has built for people who are just beginning with machine learning or people who already have a bit of experience. So, lots of real-life advice and, of course, lots of demos and code, right? Which is what we like. The stage is yours. I'll come back after you finish. All right. Thank you very much.
+
+OK. So let me share my screen, full screen, and we can get started. So again, good morning, everybody. Thank you very much for joining me this morning. We have a long session with lots of stuff to cover. My name is Julien. I'm a tech evangelist working with AWS. I've been working with them for about five years now. My role is to help developers and customers understand how to build quickly and easily with AWS services. Like I said, we're going to start with a primer on machine learning because I'm guessing most of you have never really practiced machine learning. So we've got to get our definitions right, understand what this bizarre thing is, and what are some of the technical issues and challenges that we need to focus on. We'll start with that. Then we'll talk about starting your machine learning project, figuring out which tools to use and how to organize the projects, which is, I think, a really important topic if you want to be successful. And then we'll start looking at services.
+
+So let's start with a few basic definitions. Whoops. All right. Okay, so the first thing is we hear constantly about AI and machine learning. Is there a problem with the screen? Oh, you don't see the full screen. Okay. Let me try screen sharing again then. Okay. So now, now you should see it. Yes. Oh, I see. Okay. Okay. All right. All right. Yeah, OK. All right. No, no, that's OK. Looks like I just not sure which screen it's sharing. OK, it's kind of weird because I'm sharing the right one. But OK, anyway. All right, we'll figure it out. No worries. OK, here we are. OK, so here we are now. Fine.
+
+So the first thing we need to get clear is AI versus machine learning versus deep learning. You hear those words thrown around constantly, and not everybody's super clear on what they mean. So really quickly, just to set the scene, AI is the high-level domain, right? AI is a 60-plus-year-old domain. It focuses on building and designing software applications that exhibit human-like behavior, right? So building apps that can use and understand speech, recognize images or videos, use natural language, and show some kind of reasoning, intuition, and the ability to solve complex problems. Inside AI, you have tons of different domains over time, such as expert systems, computer vision, and speech synthesis. But as it turns out, one of those domains, which is machine learning, got very successful because it proved to be very effective at solving hard problems.
+
+Machine learning is a capability for machines to learn from datasets using statistical algorithms, without being explicitly programmed. When you write business rules in your business applications, you explicitly state what you want to achieve. You manipulate data, process it, and get some kind of output, which is your answer. Machine learning is different. It starts from datasets where features, such as columns or variables, are clearly visible. Imagine something that looks like an Excel sheet or CSV file. You use off-the-shelf algorithms to learn how to predict a certain value in this dataset. Instead of writing your application code, you use existing algorithms to extract patterns and insights from datasets.
+
+Deep learning is a subset of machine learning that focuses on neural networks. It uses various neural network architectures to extract information from complex datasets where features cannot usually be easily expressed. Think about images, videos, and speech. It's not easy to put that stuff in an Excel sheet. Neural networks are great at figuring out automatically what the useful information is inside those datasets. They're very mysterious and complex, but they're great at this. So, artificial intelligence is the high-level topic, inside of that is machine learning, and inside machine learning is deep learning. Now that we're clear, let's talk about the main two ways you can do machine learning.
+
+The most common way is supervised learning. As the name suggests, you show the algorithm what the correct answer is on your dataset, and the algorithm learns how to correctly predict this answer. The model will generalize to other data, data it has never seen before. The key thing here is that you need to label the dataset. For example, if you're building a fraud detection model for credit card transactions, you'll label transactions as legitimate or fraudulent. The model will learn how to correctly predict the right answer. Building and labeling the dataset is a lot of work and very time-consuming. Classification is a popular use case for supervised learning. It could be binary classification, such as yes or no, true or false, legitimate or fraudulent. You can have multi-class classification, where you classify images into 50 different categories. You can also have regression, which is predicting a numerical value, like the price of a house or the number of traffic jam kilometers in Paris tomorrow.
+
+Unsupervised learning, on the other hand, doesn't require a labeled dataset. You start from the raw dataset, and the model finds patterns and organizes samples without any information. A good example is clustering, where the model groups samples according to their statistical properties. For instance, you might build a dataset from customer attributes and group customers into three categories, like bronze, silver, and gold. Topic modeling is a similar technique to group documents based on the same words. Both techniques are really useful. When would you use these? Supervised learning lets you build very sophisticated models, such as advanced computer vision and natural language processing. These models require lots of data and labeled data, so building the datasets is a lot of work. Unsupervised learning lets you achieve less sophisticated tasks, like grouping or simplifying datasets, but it doesn't require any labeling and usually doesn't require as much data because you're working with just the statistical properties.
+
+There's another technique called reinforcement learning, which I won't discuss today. It works even in the absence of data and is based on letting an algorithm explore a simulated reality and figure out how to do the right thing. It's used in robotics, the stock market, energy management, and other dynamic, chaotic problems where building a dataset is not an option. Just to give you a sense of what these algorithms are, this is a list of algorithms available in the popular machine learning library called scikit-learn. We can see different topics here: classification, regression, clustering, and dimensionality reduction. This is a really cool map because it shows that there are so many algorithms you can pick, depending on what you're trying to do. You can go left or right and even try different algorithms for the same problem.
+
+Just a quick example, decision trees are a popular family of algorithms. They are supervised learning algorithms that build a decision tree to go left or right based on certain feature values, eventually getting to the right answer. We're used to working with decision trees and flowcharts, and this is pretty much the same thing. We start from a dataset with features and a target attribute, such as the identifier for the class we want to predict. We look at feature value thresholds. If a feature is lower than a certain value, go left; if it's higher, go right. We continue until we reach the bottom of the tree and get our answer. They're popular because they're easy to understand, and it's easy to see how the models predict. There are lots of variants, like XGBoost, which is a very popular algorithm.
+
+When we say machine learning, the goal is to figure out all those parameters automatically. Which features do we use to split? Which thresholds do we use to split left or right? The training process is about getting to those parameters. If we step back, the machine learning cycle looks something like this. We start with the business problem. It sounds obvious, but some people want to jump to neural networks within five minutes. I always advise stepping back, having a cup of coffee, and thinking about what you're really trying to solve. Maybe you're trying to classify images, detect fraudulent transactions, or translate French to Ukrainian. Then you can start framing the problem, understanding how it could be a machine learning problem, what kind of data you need, what kind of algorithm you might need, and how much accuracy you could expect. Not all problems are machine learning problems. Sometimes you'll figure out that data can't really help, so you need to find something else.
+
+Assuming it is a machine learning problem, there are tasks related to collecting, cleaning, preparing, and sharing data, putting everything in the same place so that data scientists and machine learning engineers can start experimenting. This step is 50 to 80% of the time in machine learning. Then you can start experimenting, visualizing, computing statistics, building features, and moving on to training and tuning models and measuring accuracy. You will usually iterate quite a few times until you get to where you want to be. At some point, you have a model you like and can deploy it for predictions. That's where the real problems start because you're in production. Monitoring, scaling, debugging, and logging become really important. You will have to retrain to account for new data. This is the machine learning cycle, and you will iterate constantly. You need tools and infrastructure to do this.
+
+This is probably more complex than you thought. It's not as simple as clicking a few buttons and training a model. Let's move on to how you can actually get started. The first thing is to set expectations. People have crazy ideas about machine learning, and it's crucial to know the target. What's the business question you're trying to answer? It should be simple, one sentence on the whiteboard, quantifiable, and clear. For example, we want to detect fraudulent transactions with an accuracy higher than 99%, or we want to forecast our monthly revenue within plus or minus 1% of error. Then, do you actually have data to do this? Machine learning needs data. If you have zero data, that's something to think hard about. Do you have that data? Can you collect it? Can you find a partner who has that data?
+
+You need to involve a lot of people. It's not just data scientists; it's a business problem. You need business people to understand the implications, IT people to manage your models, and ops people. You need data engineers and maybe DBAs. It's a group effort. These are red flags to look for. If someone says, "We want to see what this technology can do for us," that's not a business question. It's not quantifiable. Another red flag is, "We have tons of relational data. Surely we can do something with it." And the worst is, "I read this super cool article about FUBAR ML. We've got to try it." That's hype-driven technology syndrome, and it's awful. Just don't do that. Find a real problem to solve.
+
+The second thing is to define clear metrics. What's the business metric showing success? At the end of the day, if you're solving a business problem, it must have a positive impact. Think about the baseline. Maybe you're trying to automate a human workflow or replace a legacy IT system with machine learning. What's the baseline here? What's a significant but reasonable improvement? Machine learning is iterative, so define what would be considered successful but be reasonable. Maybe you could say, "We want to reduce fraud detection errors by 5% every quarter or semester." It's a long-term thing. Machine learning is full of jargon, and it's difficult for experts to express progress. If a data scientist tells you the confusion matrix for a support ticket classifier has significantly improved, and you're not a machine learning person, you might not understand. With more conversation, you'll get to the impact, such as misclassified emails going down by 5% or 3% using the latest model. The business metric you want to see progress on is customer satisfaction. If a survey shows very happy customers are up 9.2%, that's good. That's something you can show to the CTO or CEO.
+
+The third thing is to assess what you really need and not what you want, considering your skills. Can you build a dataset that describes the problem? Can you clean, prepare, and curate it over the long run? Do you have the tools and skills? Can you write and tweak machine learning algorithms, or is that out of scope? Can you manage ML infrastructure, and is that really needed? There's a wide range of services, from fully managed to do-it-yourself. You need to figure out where you stand in that spectrum. What do you need? What's the shortest path to success? Once you have an idea, pick the best tool for the job. There's no silver bullet. If you have to pick between cost, time, and accuracy, you only get to pick two. You can have an expensive solution and bring it quickly to market, but it will be less accurate. Conversely, if you want a very accurate solution and are ready to spend money, time to market will be longer. You only get to pick two things, so pick the right ones.
+
+The least expensive and fastest option is probably not the most accurate, but it's enough to get started, understand the problem, build a POC, demonstrate initial business value, and get buy-in for a deeper ML project. Improving accuracy will increasingly take more time and money. It's not too hard to get to 90%, but it's hard to get to 95%, and it's crazy hard to get to 99%. It's unbelievably hard to get from 99% to 99.5% or 99.6%. The more you want, the harder it gets. It's diminishing returns, so know when to stop. At some point, it doesn't make sense to chase extra digits because you have good enough accuracy, and the cost-benefit ratio is not there.
+
+There's a lot of talk about state-of-the-art models, and it's easy to get excited. Be pragmatic and reasonable. Anything actionable based on your skills and resources could be interesting. Techniques like transfer learning and AutoML need to be looked at, but be careful. A fantastic new model designed by a technology leader might be extremely complicated to use and might not work for you. Hype-driven machine learning is dangerous and usually disappointing. Stay pragmatic.
+
+You need to use best practices. AI and machine learning are software engineering. We're still working with software tools, data, and infrastructure. We're still trying to deploy stuff in production that works. How is that different from everything we've been doing in the last 30 or 50 years? Using development tools, development environments, QA, documentation, agile techniques, versioning, etc., still applies to machine learning. Some person in a dungeon with six months and tools no one understands and can't replicate in production is not going to lead you anywhere. We need experts, but we need solid industrial processes that can yield quality models in production. The truth is in production. Get there fast and as often as needed. Sandbox is nice, but production is better. If you think about CI/CD automation and DevOps for machine learning, that's what I mean. Otherwise, you're experimenting in production, and that doesn't usually end well.
+
+Iterate, iterate, iterate. The machine learning cycle is an iterative process. Start small, with simple ideas, simple datasets, and simple algorithms. Learn and iterate. Try the simple things first. Don't go for the crazy deep learning architecture that supposedly solves everything. Why not try linear regression or decision trees? They might not be accurate enough at first, but they give you a baseline. They give you a reference accuracy to see if other things you try actually help improve it. Go to production quickly or at least to your production environment with production data. Run tests, observe prediction errors, and figure out why predictions are wrong. Is your dataset wrong or incomplete? Do you need more data? Should you tweak or experiment with another algorithm? Repeat until accuracy gains become irrelevant to your business problem and move on to the next project.
+
+As you can see, machine learning can be complex and a bit mysterious, but there are proven effective ways to get started, provided you focus on the business problem, your skills, and your objectives. Then it becomes clearer which tools you should use. Let's see how we can help you do this. As you probably know, machine learning is a big deal at Amazon. Here are some examples over the years. Everyone is familiar with product recommendations and personalization on the Amazon websites, which are based on machine learning. But there's also tons of machine learning running under the hood. All the back-office tasks at Amazon, from logistics to delivery to customer support, are heavily run by machine learning. The secret at Amazon is customer obsession, but the technical secret is probably machine learning, automating and making everything super efficient. We use machine learning to invent new product families like the Echo devices and Kindle, and we have more use cases like the Amazon Go grocery stores in the US, where you just walk in and out without going to the cashier because we automatically figure out which products you pick in the store. Drone delivery is being worked on as well, and all this is based on ML. We have very cool stuff happening inside Amazon.
+
+My job at AWS is to help you do the same, to help you use the services we build, listen to your needs, and show you how to use those services and get started. It doesn't matter if you're brand new to this or already doing it; we think we can help you deliver more interesting, smarter, and more innovative applications and services to your own customers. We see all kinds of customers, from large enterprises to startups and public sector and universities in all industry segments. People keep talking about financial services, but it's also manufacturing, life sciences, education, and sports, literally everything. If you want to explore some of these references, you can go to this URL and find customer use cases, quotes, and content showing what AWS customers achieve using machine learning on AWS.
+
+How do they do that? It's time to start diving into the stack a little bit. We've built quite a few services over time. When I joined AWS five years ago, we could fit all the AWS services on one slide. Now, it's difficult to fit the ML services on one slide, and it will be even more difficult after AWS re:Invent, our conference. This is what we've built over the last four years. We've organized these services into three layers. Today, I'll focus on the top and middle layers and say a few words at the end about the bottom layer, which is more specialized and hardcore.
+
+The top layer is called AI services. These are high-level services where, for most of them, you don't need to do any training at all. You just call a cloud API, pass your data, and get an answer. We'll do some fun demos in a few minutes. Things like analyzing images and videos, analyzing speech, or analyzing text are based on pre-trained models that we train and optimize on very large datasets so that you don't have to. Call an API. In this layer, we have services like Amazon Personalize, Forecast, and Fraud Detector, where you can bring your own data in a simple format and train a model with just a few simple APIs, without needing any machine learning knowledge because the knowledge is built in. I'll show you Amazon Personalize, which lets you build recommendation models. We also have a machine learning-powered search engine called Kendra and a chatbot service called Lex. For the development part of the software engineering process, this is a pretty cool service.
+
+If you're completely new to AI services or machine learning, AI services is probably where you want to go. Now, ML services are one level down. The rationale for this set of capabilities, which are part of a very important service called Amazon SageMaker, is that we want to give you full control over the machine learning process. You can bring your own data sets in whatever format, your own machine learning code based on whatever open-source library you use, or maybe your own custom code. Full control, full flexibility, but without having to manage any infrastructure. Infrastructure becomes completely transparent, so you don't have to spend a minute on it and can focus on the machine learning problem. On top of that, we bring high-value machine learning capabilities that help you solve and go quickly through that machine learning cycle. Training, debugging, data preparation, data labeling, and pretty much all the boxes in that cycle are covered. These are very high-productivity tools that help you go faster from experimentation to production.
+
+Frameworks and infrastructure is exactly what the name says. You'll find all the Amazon EC2 instances, CPU, GPU, FPGA, and a custom chip called Inferential. I'll say a few words about that. All the infrastructure you need to build your own ML platform inside AWS, if that's your goal. We also have software tools, pre-packaged popular machine learning libraries inside Amazon machine images for virtual machines and containers, so you can just pick those tools and fire up whatever infrastructure you want to build, saving you time and getting to work quicker.
+
+Let's start exploring those services. I'm going to do some demos. We're not going to go through all of them, but I've picked a few that I like and think you should like. Let's try recognition first. Recognition is about analyzing visual content, images, and videos. I'm using the AWS console, a web app that lets you easily use AWS services. It's great for experimentation, learning, and demos. Everything I'm doing here is based on API calls, which you can make using your favorite SDK in any language.
+
+Let's try phase detection. I'll pick an image and upload it to the service. I could also pick an image hosted in Amazon S3 and call the detect faces API. We can see the request here. We pass the image and get a JSON response with bounding boxes and attributes. Every time I do something here, I'm calling a service API, which you can call in Python, Java, PHP, or any of our SDKs. We can see all the faces have been correctly detected, along with attributes. This is clearly a machine learning-powered solution based on deep learning models.
+
+We can also try celebrity detection. We detect faces and match them to known people, such as sports players, artists, politicians, business people, and movie stars. Very simple. We have a different API for this, the detect celebrities API. You can compare faces, detect text in images, and even detect personal protective equipment. For example, you can detect face cover, hand cover, and head cover to ensure workers and staff are properly protected. All these features are available for video analysis as well.
+
+Let's try Polly, which is text-to-speech. I'll switch to my speech so you can hear it. Hi, my name is Joanna. I will read any text you type here. This is the synthesized text API. Hi, I'm Liv. Write something here. You call the API, specifying the voice, and either save the output to an MP3 file or get a byte stream to play immediately. We have different engines, the standard engine and the neural engine, which generates a more natural and precise waveform using deep learning. Let's try a longer piece of text with the neural engine. Barcelona presidential hopeful Tony Freixa has admitted that club captain Lionel Messi will have to lower his current wage at the club to renew his contract. The neural engine sounds more fluid and human-like.
+
+We can also pass SSML, a markup language that specializes how the speech is spoken. For example, we can use the newscaster style. Barcelona presidential hopeful Tony Freixa has admitted that club captain Lionel Messi will have to lower his current wage at the club to renew his contract. The newscaster style sounds like a news broadcast. You can do all kinds of things with SSML, like speeding up, slowing down, and inserting breathing pauses to make the voice more lifelike.
+
+Now, let's look at speech-to-text with Transcribe. Transcribe has real-time transcription. We can run batch jobs by putting sound files in S3 and getting transcriptions, but we can also do it in real time. I'll stick to English for this demo. Hey, good morning, everyone. My name is Julien. I'm very happy to talk to you this morning and introduce you to machine learning. I hope you learned a lot and can start your own projects very soon. This is pretty accurate. From an API perspective, we're streaming audio and using natural language processing for live transcription. You can imagine the applications, such as live captioning, live transcriptions for audio and video content, and generating transcriptions for classes or meetings.
+
+Translate is pretty straightforward. It's translation, and we can do batch and real-time translation. Translate will automatically detect the input language. Let's try translating to Ukrainian. Oh, okay. Let's check what I said and translate it to Ukrainian. This is a super simple service with real-time or batch translation in many languages, including some less common ones. We have good coverage, including European, Asian, and African languages, with variants like Canadian French and Mexican Spanish.
+
+TextTrack is an OCR service with a twist. It can extract text from scanned documents and PDF files, as well as forms and tables. Let's upload a document and call the appropriate API. It's a research article with illustrations and tables. The text is detected correctly, and the table structure is preserved in the JSON response. This is useful for processing documents and keeping the data structure intact. Let's try a form. The text and form fields are detected and associated correctly, making it easy to insert the data into a database.
+
+Now, let's look at Amazon Personalize. The problem I'm trying to solve is building a movie recommendation model using the MovieLens dataset. This dataset shows user-item interactions, such as user 298 liking item 474. I want to build a recommendation model, which is a complex problem. Amazon Personalize simplifies this by allowing you to upload data to S3, call APIs to train a model, deploy it, and predict. The service includes best practices for data preparation, algorithm selection, and tuning. You can upload historical data or stream data from mobile or web apps, create a solution, launch a campaign, and get recommendations via an API. For example, I can get recommendations for user ID 123 and see the top 10 movies with scores. This is a powerful way to generate recommendations without machine learning expertise.
+
+Forecast and Fraud Detector work similarly for time series forecasting and fraud detection, respectively. These services provide a quick way to get your models into production.
+
+Now, let's look at machine learning services, primarily Amazon SageMaker. SageMaker was launched at reInvent three years ago and has added many capabilities. Today, I'll focus on the simple capabilities. We need to prepare data, build datasets, train models, debug them, optimize accuracy, and manage deployment and operations. SageMaker covers the full spectrum, from data labeling to data preparation, development environments, training environments, and advanced capabilities for model debugging, tuning, and tracking. It also handles deploying and scaling models automatically and detecting prediction quality issues.
+
+Some customers need only specific parts of the end-to-end experience. For example, you might train in the cloud and deploy on-premises, or import an existing model to SageMaker for cloud deployment. SageMaker supports both end-to-end workflows and modular use cases.
+
+Let's look at the modeling options available. The first option is to use pre-trained models from the AWS Marketplace. You can find a model, deploy it in SageMaker, and experiment with it. Most models are free to test, and you pay a fee if you deploy them. The second option is SageMaker Autopilot, which is AutoML for SageMaker. You bring your data to S3, define the target value, and Autopilot builds a model for you, providing auto-generated notebooks for transparency.
+
+The third option is to use built-in algorithms. SageMaker has 17 algorithms covering typical problems, and you don't need to write machine learning code. The fourth option is to bring your own code, such as TensorFlow, PyTorch, or XGBoost, and train and deploy models on SageMaker. The fifth option is full customizability, where you can use custom containers with your dependencies.
+
+Training and deployment are fully managed, so you don't worry about infrastructure. You can use spot instances for training to reduce costs by up to 75-80%. Let's see a demo using SageMaker Studio, a web-based IDE for machine learning based on Jupyter. I'll run an example using XGBoost to predict house prices based on the Boston Housing dataset. The dataset includes features like crime rate, pollution, and distance to the city center. The target is the median value of the house in thousands of dollars.
+
+I'll move the target column to the front, split the data into training and validation sets, and save them as CSV files. Now, we can start the SageMaker workflow, which is very simple. An M5 large instance is chosen, which is sufficient for this task. SageMaker handles the infrastructure setup, so there is no need to manage EC2 instances or VPC configurations.
+
+The output location for the trained model is set in S3. I then configure the training job parameters, setting the objective to regression and the number of training rounds to 200. Early stopping is enabled to halt training if accuracy does not improve after 10 rounds. These parameters are well-documented, and default values are generally sufficient. I define the training and validation channels, specifying the S3 locations and data format (CSV). The fit method is called on the estimator to start the training job.
+
+From a machine learning perspective, the process is simple: CSV files are uploaded to S3, XGBoost is selected, and the data is provided in CSV format. The training job starts, and the M5 large instance is provisioned. Data is copied from S3 to local storage, the XGBoost container is pulled, and training begins. The training log is visible in Amazon CloudWatch, showing the root mean square error metric. Early stopping occurs after 37 rounds, and the model is saved in S3. The instance shuts down automatically, and we only pay for the actual usage time.
+
+After training, the model can be deployed using the deploy API. A simple instance is provisioned, and an HTTPS endpoint is created. This endpoint can be invoked using any language or tool to get predictions. For example, calling the predict API with test data yields a predicted house price of 23.95 K dollars. When done, the endpoint is deleted to stop incurring costs.
+
+The same process can be applied using a scikit-learn script. The dataset remains the same, but a linear regression model is trained using scikit-learn code. The sklearn estimator is used, and the training code is passed. The process of training, deploying, and predicting is similar to the XGBoost example. The scikit-learn code is standard, with minimal changes to read data and save the model using environment variables.
+
+For those who prefer to build and manage their own infrastructure, AWS offers a variety of instance types, including CPU, GPU, and FPGA. The Inferentia chip is available for high-throughput, low-cost predictions. Amazon EC2 and container services (ECS, EKS) can be used to build training and deployment clusters. Amazon machine images and deep learning containers are provided to simplify setup and optimize performance.
+
+For further resources, visit ml.aws for comprehensive information. The SageMaker service page, GitHub repos for the SDK and notebook examples, and my YouTube channel and blog offer detailed content. My book on SageMaker, recently published, is available with discount links for the Pepper Edition and a 20% discount code for the e-book on the publisher's website. These resources are valuable for diving deeper into SageMaker. We have a few more minutes for questions.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">MachineLearning</span><span class="tag">AWS</span><span class="tag">IntroductionToML</span><span class="tag">SupervisedLearning</span><span class="tag">UnsupervisedLearning</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

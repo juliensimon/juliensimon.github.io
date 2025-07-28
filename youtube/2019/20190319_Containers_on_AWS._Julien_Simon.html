@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Containers on AWS. Julien Simon</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Containers on AWS. Julien Simon</h1>
+        <div class="date">March 19, 2019</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/EFaf8ybWDRo" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Lviv Innovation in AWS Cloud Solutions MeetUP
+Julien Simon. Amazon Global Artificial Intelligence & Machine Learning.</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            So this one is different. No more machine learning. This one is about containers. It's a short overview of container services. Just for awareness, I really won't go into a lot of technical details. I guess it ties into SageMaker since it's container-based as well.
+
+We have four services for containers: ECS, EKS, Fargate to actually run containers, deploy containers, and ECR, which I already mentioned, which is the repository where we push containers. So who's already using containers? OK, quite a few people. The reasons why we like containers is that they help you package applications. It makes it easy to separate your app from any dependency on the host. You can move them around from environment to environment. You can even exchange them with other people. It's just a cool way to package and distribute apps. And they help you build what is called immutable infrastructure, where you never modify production infrastructure. If you need to change something, you tear that thing down and deploy something new, but you never change configurations. You just deploy new versions, so you always know in what stage your infrastructure is. Immutable infrastructure is a significant progress in managing platforms, so we've been building containers for a while now.
+
+The first service that we built is called Amazon ECS, dating back to late 2015. ECS was the first service, and we released it with a companion service called ECS. ECS simply lets you create Docker clusters on AWS. It's based on EC2. So you create Docker clusters from EC2 instances. And as it's based on EC2, it will feel very familiar. If you know about EC2, VPC, load balancing, security groups, auto scaling, CloudWatch, all that stuff, ECS will use that as well. We provide a backend that will schedule your Docker containers, ensuring you have enough resources on the cluster, etc. It's just a simpler way to build and deploy clusters. ECR is needed because, of course, you need your containers to be close to your clusters to deploy quickly.
+
+ECS has been successful and has grown a lot. We have millions of EC2 instances that are actually used for containers, used by ECS. That's the scale. People are always curious about the scale of AWS. Well, there you go. ECS is millions of instances. That's a crazy number. We have tons of customers. Containers have grown a lot in popularity. If you're curious about those, you can go to our website and look at all those stories. Everyone is doing microservices these days. Everyone is using Docker to solve deployment problems. If you ask me who's using it, it's literally everybody, from startups to big accounts. Literally everyone is using that stuff.
+
+The initial problem we wanted to solve was to make it easy to create clusters. People don't want to manage clusters; they want to run applications. Having to set up your own Docker cluster and manage it and fix it is the same discussion as SageMaker. You don't want to focus on infrastructure. Infrastructure is a tool that you need to get stuff done. So if that takes as little time as possible, then fine. That's what ECS was built for. But as containers became more important to customers, we worked on making this as efficient as possible. We now have an SLA for ECS, which is 99.99%. So if you deploy on ECS, that's the promise we're making: our backend, our scheduling features will run at 99.99% availability. I think that means a few minutes of downtime per year. But usually, we exceed it.
+
+Over time, we added more features, and an important one was service discovery. For the microservices crowd, this is really important. It's fine to break your applications into 20 pieces and deploy them as independent pieces on the Docker cluster, but they need to talk to each other. Each service needs to be able to figure out the IP address and port number of the other piece it needs to talk to. So we added managed service discovery. Again, something you don't have to build anymore. Just deploy, and your services register to this service discovery feature and can locate one another easily. We also added CI/CD capabilities to automate deployment. We have services called CodeCommit, CodeBuild, CodeDeploy, and CodePipeline, and they fully support Docker containers. You can build fully automated CI/CD pipelines for your Docker clusters. Docker is really a first-class citizen here. You don't need to tweak; it's supported out of the box.
+
+We added Windows containers because some people want to do that. So now you can do Windows containers and get the same features as Linux-based containers, including load balancing and monitoring. So there's no reason not to have those same features for Windows workloads. That was our first service, and it was quite successful. But customers are never happy, and that's great. They keep pushing us. They're like, "OK, it's still based on EC2, right? So we still need to worry a little bit about VPCs, security groups, IAM roles, and load balancing. Can you make it even simpler? What we really want to do is run tasks. Can we just take a container and run it and not worry about anything?" So we built another service called Fargate, launched over a year ago. Fargate is fully managed containers. No clusters to create, nothing to worry about. Just bring your container and run it on fully managed infrastructure. It's really just take that thing, run it, and that's it.
+
+The way this works is that ECS looks like a bunch of EC2 instances with tasks. A task is at least one container, one to n containers. So that's what ECS looks like. You see two ECS tasks running on that host, with a Docker agent and ECS agents talking to the ECS backend. Customers said, "No, no, no, we don't want to deal with this stuff. Make it simpler." So we went from this to this. The EC2 part is just gone away completely. You just take your tasks and run them on the Fargate managed infrastructure. It's simpler than ever. The only thing you have to pick is the configuration. So how much processing power do you want to assign to specific tasks? You can pick fractions of a virtual CPU and different memory increments to have the right level of cost and performance for each task. Not having to worry about which instance type to use, etc. So super simple.
+
+Both have been available for a while now. Then someone said, "Yeah, it's OK, but all right. What about Kubernetes? ECS is fine. Fargate is very good. What about Kubernetes?" So we built EKS. EKS stands for Elastic Kubernetes Service. Anyone using Kubernetes? OK, sure. We thought about that. One of the reasons we did it is that we found out 57% of Kubernetes runs on AWS. People were running that on EC2. Does anyone enjoy running Kubernetes masters and fixing Kubernetes masters? Yeah, that's a nervous laugh. It's like, "Oh, yeah. I'd rather jump off a cliff or something." So Kubernetes takes some setup, especially in production, keeping that thing on its legs is not super easy. We said, "Okay, we have so many people running Kubernetes; we need to make it simpler for them." We've taken the pain away of managing the Kubernetes plumbing. So you can just bring your Kubernetes pods and run them on EKS workers that join a cluster. You don't need to worry about masters or all the complex setup, and you can still use your standard Kubernetes tools to manage the cluster. It's kind of similar to ECS, except you can use Kubernetes templates and configuration. Just bring your pods and run them.
+
+If you're wondering whether this is real Kubernetes or fake Kubernetes, this is actually certified Kubernetes. So it's nothing weird. Then nobody asked for anything. I guess at this point, they were like, "OK, all right." And then we said, "Ha ha, what about that one?" Firecracker. It was one of the big surprises at re:Invent. We open-sourced it. In a nutshell, Firecracker is a lightweight hypervisor, and it's the one we use for Lambda and Fargate. You can go and test it, download it, build it, and run it. It lets you create very lightweight VMs. You just start the Firecracker binary, which is a single binary, so it's very easy to deploy. You have a REST API that lets you start VMs, configure VMs. If you want to build your own environment for containers or your own version of AWS Lambda, you could try it. It's very lightweight. We actually have a benchmark where we create 5,000 VMs in a few seconds. It's super lightweight. So go and look at this. It could serve a purpose in your infrastructure if you really want to build on-premise stuff, like on-premise Docker at scale. But anyway, this is what we use, and it's open source now.
+
+If you're curious about all these things, this is the one place to go. This is just a very high-level introduction. Some of these services, if not all, are part of the free tier as well, so you can definitely experiment and let us know what you think. You can come back to us and say, "What about this? What's missing now?" I don't know. I don't know. All right, I'm done. Now I can have a drink or 10. Thank you very much. I hope you learned a lot. And again, if you want to stay in touch, if you have feedback, questions, etc., happy to connect on LinkedIn. Or of course, you can ping me on Twitter. All right, thank you very much.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Containers</span><span class="tag">AWS</span><span class="tag">ECS</span><span class="tag">EKS</span><span class="tag">Fargate</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

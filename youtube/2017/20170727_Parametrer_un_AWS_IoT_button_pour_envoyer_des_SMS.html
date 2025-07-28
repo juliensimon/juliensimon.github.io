@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parametrer un AWS IoT button pour envoyer des SMS</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Parametrer un AWS IoT button pour envoyer des SMS</h1>
+        <div class="date">July 27, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/5-Om8sIAZ4I" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">✚ Inscrivez-vous aux mardis du cloud ! : <a href="http://amzn.to/2lvragO" target="_blank" rel="noopener noreferrer">http://amzn.to/2lvragO</a>
+✚ Rendez-vous sur notre site internet : <a href="http://amzn.to/2ktrf5g" target="_blank" rel="noopener noreferrer">http://amzn.to/2ktrf5g</a>
+✚ Suivez-nous sur Twitter : <a href="https://twitter.com/aws_actus" target="_blank" rel="noopener noreferrer">https://twitter.com/aws_actus</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Comme je vous l'ai montré à l'instant, j'ai configuré ce bouton, j'ai associé une règle qui invoque une fonction Lambda lorsqu'un message est reçu dans le topic du bouton. Cette fonction Lambda va, en fonction du type de message, m'envoyer un SMS. Allons-y, appuyons sur le bouton. Premier clic. Alors, j'ai reçu un SMS. Effectivement. Voilà. Je vois que le dîner est prêt. Mais bon, je suis en train de travailler, probablement. Je suis en train de préparer un webinar ou quelque chose comme ça. On s'impatiente en bas.
+
+Double-clic. Donc deuxième envoi de message. On passe à nouveau dans la fonction Lambda. Et cette fois, c'est un double-clic, donc le message devient un petit peu plus insistant. Mais bon, je ne l'ai pas entendu. Vous voyez, on n'a pas eu la sonnerie. Je ne sais pas pourquoi.
+
+Troisième clic, clic long. Et voilà. Et donc au troisième clic, je reçois le troisième message qui me dit que j'ai cinq secondes pour descendre, sinon je ne mange pas. Voilà un petit exemple d'interaction entre un device IoT, une règle qui est composée d'une ligne de SQL, vous avez vu que c'est simple, et puis une invocation de fonction Lambda qui, en une API, envoie un SMS. Ça marche bien pour les enfants. Initialement, l'application a été faite pour les enfants, mais comme je voulais vous la montrer avec mon téléphone, j'ai évidemment changé mes coordonnées. Voilà pour ce dernier exemple avec le bouton IoT.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">IoT</span><span class="tag">AWS Lambda</span><span class="tag">SMS Notification</span><span class="tag">Button Configuration</span><span class="tag">Event Triggering</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

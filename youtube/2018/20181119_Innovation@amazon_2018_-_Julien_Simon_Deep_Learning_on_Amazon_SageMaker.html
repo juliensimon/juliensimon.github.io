@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innovation@amazon 2018   Julien Simon Deep Learning on Amazon SageMaker</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Innovation@amazon 2018   Julien Simon Deep Learning on Amazon SageMaker</h1>
+        <div class="date">November 19, 2018</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/ZqUtxNe8UlE" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">In this session, we’ll look at the different options available to run Deep Learning on Amazon SageMaker. SageMaker is a managed service that lets developers focus on training and deploying models without having to manage infrastructure. Through a number of code-level demos, we’ll explore different scenarios in detail. First, we’ll run the built-in algorithm for image classification. Then, we’ll run custom code on pre-installed environments for popular libraries such as TensorFlow, PyTorch or Apache MXNet. Finally, we’ll bring our own custom Deep Learning environment to SageMaker.
+
+More: <a href="https://innovation-amazon.com" target="_blank" rel="noopener noreferrer">https://innovation-amazon.com</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Thank you, it's always a pleasure to be back. Thank you, Raphael and the team for inviting me again. So let me switch back to the proper screen for a second. Yeah, it should be okay now. Here we go. Alright. Okay, ready now.
+
+So, my name is Julien. I'm a tech evangelist with AWS. I've been with them for three years now. I focus on AI and machine learning for EMEA. And this morning, I would like to talk about deep learning again. Maybe some of you were there last year and I was probably already talking about deep learning and you may remember my robot on stage and all the silly things that I was doing with it. So I didn't take the robot today; I've got another device, we'll get to that.
+
+And I would like to talk about deep learning and show you how it is actually now quite easier to use with a service that was launched at reInvent at the end of last year, a service called Amazon SageMaker. So let's get to that.
+
+When it comes to our mission, I would say my mission maybe, what I work for every day is really to let all of you use machine learning in your projects. Some of you may be experts, some of you may have machine learning PhDs. No? All right, yeah, don't be afraid. It's okay, right? Congratulations. Yeah, you can, yeah, he worked hard on that. But see, most of us don't do that because we have other interests, right, I guess. And they're perfectly respectable, but still, we would love to use machine learning in our projects, okay? So we need to have tools and services that let us do that and let us use machine learning for real-life projects.
+
+Over the years, we built a machine learning stack, and I'm guessing most of you are familiar with it now. We have a high-level layer of services that we call the application services like Amazon Polly, the local hero. Yeah, so yeah for Polly, right? It's built in here. It's built a couple of kilometers away, right? So it powers Alexa as well, text to speech, etc. We have services like Amazon Recognition, for image recognition, video recognition, etc. And these are great services. They do one thing really well. They don't require any training. They don't require you to bring your data. They don't require you to train, etc. But for other applications, you need to work with your own dataset, right? That's the whole point. You want to train your model. You want to control the algo that is used. You want to tweak all the parameters for the algo, etc. So you have to take it down one layer and work with what we call the platform services. And that's where SageMaker lives.
+
+And we're going to focus on this one today. And I would say it's badly needed because for those of you who already do machine learning today, you know it is not easy. It is very easy to use those high-level services like Polly, Recognition, Transcribe, etc. But the minute you move into using your data, using your algo, etc., you know the real problems start, and you have to clear all these walls, you have to break through those walls to get from your machine learning IDE to your machine learning model in production. Preparing data, selecting an algo, selecting parameters, managing all that complex infrastructure for training, and then managing the infrastructure for deployment and scaling, and waking up in the middle of the night or working on weekends because something broke down and you have to go and fix it and restart it, etc. And a lot of that is really related to infrastructure and deployment and not so much to machine learning.
+
+And what we do is really to focus on machine learning, not on plumbing, not on infrastructure. So that's the single reason why SageMaker was built, to let everybody, experts and beginners, build machine learning into their applications with minimal pain and definitely minimal or almost zero infrastructure trouble. So I'll show you a bunch of demos in a few minutes.
+
+The first step is to help you build, and that means providing you with a development environment. I'm guessing most of you will be familiar with Jupyter notebooks. And that's what we provide here. We provide what we call notebook instances. So it's a special type of instance, of AWS instance, that you can create in one click or one API call. And when you open it a few minutes later, you jump directly into a Jupyter notebook, and all the nice tools that you like are installed. So TensorFlow is in there, and PyTorch is in there. If you use a GPU installer, you have the NVIDIA drivers installed, etc. So it's a time-saver, it's an easy way to create your dev environment in a couple of minutes and get to work.
+
+The next step in helping you is to bring you a collection of built-in algorithms because there are a number of typical machine learning problems like linear regression, clustering, nearest neighbors, etc., classification that, you know, they're well known. We have well-known solutions, well-known algos for those. So unless you really enjoy writing a linear regression algo again, why not? I think it's a better idea to take one of those built-in algos, just set a few parameters, declare where your data lives in Amazon S3, and just get to work.
+
+Today we have 14 built-in algos. Some of them are familiar, like I said, you know, K-Means, PCA, factorization machines, etc. But we also have some state-of-the-art algos that have been invented by Amazon researchers and published as well, like DeepAR for complex time series or BlazingText to compute word embeddings, you know, word2vec on GPU, etc. So it's a good mix of algos, and I would recommend that you look at them first. They could save you a lot of time.
+
+If you want to bring your own code, if you're a TensorFlow user or a PyTorch user, and you already have that code running, it could be running on your server, on your laptop, and that's what you want to use, and of course, it's perfectly okay. So we also provide a number of pre-installed environments for TensorFlow, MXNet, Chainer, PyTorch, and you can just bring your own code. So literally drop your code into SageMaker, and it will train and predict. So you don't need to install those libraries again.
+
+And I guess the last option is you want to use something else. You have your, I would say, Python algo or C++ algo or any library, any tool that you're using for training or prediction. You can also use it on SageMaker. I'll show you that at the very end. It's a short talk, so I don't want to give you too many details, but the way this works is actually it's all based on Docker containers. Okay, so don't worry if you're not familiar with Docker; you don't need to know much about Docker, you need to know nothing about Docker actually unless you want to build your own environment for training, and then you need to build a container. But again, I'll show you an example at the end, and you'll see it's not paying.
+
+Bottom line, notebook instances get you working and tweaking in minutes. Built-in algos and built-in environments save you more time and get you quicker to experimentation and actually training your data. And when it comes to training, that's one of my favorite parts because there's really zero work to do here. Once you've defined the parameters for your training job, the only thing that you tell SageMaker is, "Please train this on five C4.2xlarge instances and just do it." And SageMaker will create that infrastructure, deploy the right container for training to those instances, set up distributed training if you have multiple instances, etc., etc. The training job will run, and then you get your model, your trained model in S3, and you can go and deploy it on SageMaker or you can grab it and deploy it on your laptop or your own server if you want to. So zero infrastructure management.
+
+As a bonus, SageMaker terminates the training infrastructure as soon as the training job is completed. So that means you only pay for the training job. You never leave any servers on for nothing. Which could be a problem if you use EC2, EMR. We tend to leave those things running for too long. Here it shuts down automatically. Another cool feature is hyperparameter optimization. If you do machine learning today, you know that selecting the right parameters for a training job is actually difficult and it's a lot of guessing most of the times. So we have this feature called HPO that, in a nutshell, uses machine learning to select the right hyperparameters for your jobs.
+
+So the way this works is instead of training just once, you will ask SageMaker to train maybe 10, 20, 30 jobs, okay, a small or limited number of jobs, and then by looking at the results, by selecting different values for hyperparameters and looking at the accuracy that you get, SageMaker applies optimization, it's called Bayesian optimization, and it quickly converges to an optimal set of parameters, okay. So literally machine learning to improve machine learning. Pretty cool, I think.
+
+Once you're happy with the model, you can deploy it or not. Like I said, you could grab the model in S3 and use it anywhere else. Or you could go on and deploy it. And again, it's a one-click thing, one API call thing. Please deploy my model to four M4.2xlarge instances. And again, SageMaker creates the infrastructure, deploys the model, creates an HTTPS endpoint to serve predictions, and you get the URL and you can post to that URL. Alternatively, you can do, if you don't want to use HTTPS for prediction, you can do batch transform. I'll show you an example as well.
+
+So batch transform is exactly what the name means. You train a model and then you run predictions in batch mode. For some users, it's the preferred way to do it.
+
+Talking about customers, you know, we have millions of customers on AWS. We have tens of thousands of customers doing machine learning every day, and when it comes to saying here are some examples, it's interesting to see two types of customers here. I'd say really big organizations, GE Healthcare, Dow Jones, Thomson Reuters, Intuit, so medical, financial information, so you can expect lots of data, lots of documents. Digital Globe is a satellite imaging company that has 100 petabytes of image data. Yeah, you heard that right. 100 petabytes. And it's growing every day. And they use SageMaker to do image classification and so on on those images.
+
+Zendesk, it's a help desk support company. So again, lots of data. So you see those companies with lots of enterprise data who need to scale and run lots of complex models. And then I would say on the other side, you see web companies like Hotels.com, Grammarly, Tinder that, of course, no one uses. And I wonder why they would be interested in machine learning anyway. I don't see really the use case here. And of course, these have lots of user-generated data and they can use machine learning for recommendation, personalization, and generally making their websites or mobile apps more engaging and more interesting.
+
+So enough slides. Let's take a look at a couple of demos. So I'm gonna jump straight into SageMaker. So here's the SageMaker console. The first thing you would do is create a notebook instance, and it is not really complicated. You click here, give a few pieces of information, and off you go. And then, yeah, you have your instance, you can open it, and when you open it, you jump directly into a Jupyter notebook. Okay, that's the actual interface. You can also SSH to the instance or you can have shell access to the instance through Jupyter, and you can git clone and do all those good things.
+
+Okay, so let's look at a first notebook. So let's focus on deep learning, of course, because that's the title of my talk. I'm not going to talk about the built-in algorithms, but I'll give you some references at the end. So here, let's say we want to use PyTorch. Anybody using PyTorch? Okay, a few people. So PyTorch is one of those popular deep learning libraries, and here it's a very basic example I'm trying to classify images from the MNIST dataset. So by now I'm thinking all of you are tired with MNIST and you've seen it a million times, but it's a good toy example, of course. It's good for nothing but it's a good toy example.
+
+So that's MNIST, images of black and white digits, 0 to 9, and of course, the game is to classify them correctly in 10 classes because 0 to 9. So here I will use the existing environment that is available for PyTorch on SageMaker, so I'm bringing my own PyTorch code. Of course, I need to import the SageMaker SDK. It's a Python SDK that drives all the training and prediction activity. I won't talk about it today, but if you are using Spark, there is also a SageMaker Spark SDK in Python and Scala that you can use on your Spark cluster to fire up SageMaker training and SageMaker prediction from your Spark app. Great topic but not for today.
+
+I need to have an S3 bucket because that's where all the SageMaker data should be stored, and that's where SageMaker will put the trained model. So then I'm going to download MNIST for the billionth time. So I'm downloading it to the notebook instance. And for a real-world dataset, we would do some transformation and cleaning and clever data science on it. Here, nothing needs to be done, so we can upload the data directly to S3. Okay, again, this is where SageMaker picks the data right.
+
+And then I can just bring my PyTorch script. Okay, so this is a vanilla PyTorch example; it could run exactly the same on your laptop, on your own server. So here I'm just taking this code, I'm uploading it to the notebook instance, and this is what I'm going to run on SageMaker. So if you've never seen PyTorch before, it's a little bit scary because PyTorch is quite low-level, but what we're doing here is we are building a simple convolutional neural network, and should see that somewhere here, yeah. Here it is, okay. Here we are building the network, convolution layers, etc., etc., and we're gonna use that to classify the dataset, okay. But it's not a PyTorch tutorial either, so let's keep that. Just keep in mind this is vanilla PyTorch code; you can take it, dump it in SageMaker, and it will run.
+
+So what we have to do to run this script is this, okay, so it's a one-line thing pretty much. We used a high-level object from the PyTorch from the SageMaker SDK, okay, no surprise it's called PyTorch, good name for it. The script that I showed you is a parameter to that object. So here's my PyTorch code, and the important thing is this. Please train on two P3.2xlarge instances. That's it. That's all it takes. These are GPU instances, and when we call fit, we actually get training going, and SageMaker creates the instances, deploys the PyTorch container, injects your script, injects the hyperparameters that you set, points everything at your data in S3, and it trains. And no infrastructure setup, just tell SageMaker how many instances you need, and off it goes.
+
+So we can see the training log, you can also grab that log in CloudWatch. It is streamed to CloudWatch, and after a while, we're done with our six epochs, and it lasted for 175 seconds. SageMaker terminates everything, so you stop paying for those slightly expensive GPU instances, right? You don't want to leave them on all weekend. And then we can continue and deploy. Okay, and again, deploying is as easy as asking SageMaker to deploy on, in this case, one M4.2xlarge instance. Again, create the instance, deploy the container, deploy the model, create an HTTPS endpoint. Job done. One line.
+
+Compare this to how maybe you're doing it today. Training, taking the model, writing your custom web app that wraps the model, deploying this to an API, and taking care of load balancing, security, high availability, and monitoring. None of that stuff is machine learning work, and yet it needs to be done. Here, SageMaker takes care of all of it. And now we have an endpoint. So we could predict. So let's try to classify some numbers. Oh no, no, that's ugly. Come on, it's never gonna work. Alright, we could try this one. Okay, it's a three. Alright, so here I'm using the predict API in the SageMaker SDK, which is just calling HTTPS post on the endpoint that I just deployed. Okay, you can use the SDK or again, you can just use curl or your favorite language to HTTP post to that endpoint. Okay. Alright, let's try another one. Let's try... Oh my god. No. Okay, alright, two for two, I'll stop there. Okay, I can draw numbers. Yeah. Okay, and if I wanted to, I could clean up, delete the endpoint, and I would stop paying for the endpoint as well.
+
+Okay, so in a nutshell, this is how you do it with PyTorch. It would be exactly the same with other libraries. I can quickly show you a TensorFlow, is that the TensorFlow? Yes, I can quickly show you the TensorFlow example, right? TensorFlow users. More, okay, good. So same story, right? Downloading MNIST, uploading again to S3, bringing the TensorFlow MNIST CNN example. Okay, and we can see here building the convolution layers for the network. Okay, so again, vanilla TensorFlow code. Okay, this time I'm using the TensorFlow object in the SageMaker SDK, but you can see it's exactly the same story. Okay, pass the script and run distributed training on two C4.2xlarge instances. Okay, call fit, SageMaker does its infrastructure management thing. We see the training log, and we have different colors for different instances.
+
+And yes, I have a feature request to stop using red except for errors. But this seems to be a very very difficult feature to implement because it's still not released. So crossing my fingers for reInvent. I'm sure they have bigger things to deal with, but seriously, this should be a 10-minute thing to fix. Red is for errors. Anyway, we train for 506 seconds. SageMaker terminates the instances, and this time we could go on and deploy again to the endpoint, but I want to show you an example of batch transform. So instead of calling deploy, we create a transformer object saying, okay, you're going to transform in batch mode on one M4.2xlarge instance, okay, and then we can just run our data through that transform object. Okay, it's batch mode, so this time no HTTPS endpoint, and we could then, of course, read our predictions and look at some examples, and the prediction results get written back to S3, and we can check them out. So that's the other way to use it.
+
+The last example I want to show you is something different. So this time, I want to show you another library called Apache MXNet, which AWS contributes to and also uses for our own services. This one is a sentiment analysis example. Okay, so different use case, different type of network; this is an LSTM network, not a CNN. But the whole workflow is the same. So again, download the dataset. It's a movie review dataset. So one-line reviews with a one if it's a positive review and zero if it's a negative review. Okay, simple dataset. Download it again. No cleaning required. No processing required. So we can upload it directly to S3, and we bring our MXNet script.
+
+Okay, and this one is a little more complicated because it's LSTM, but again, you could take this thing and run it on your machine; it would work. So just bring the script, and once again, we use this high-level MXNet object. It's you know, PyTorch, SageMaker, MXNet, and Chainer, same architecture, pass the script as a parameter, train on one C4.2xlarge instance, pass some hyperparameters to the training job, call fit, and of course, it trains. And after a bit, 259 seconds, we have a model in S3, we go on and deploy it again. Okay, and we can predict, right? So we have some examples here.
+
+Okay, so when we see predictions, keep in mind when we call predict, we are really invoking that HTTPS endpoint. And so if you think, anybody thinks Star Wars Episode 1 was not a waste of time? No? Yeah. Alright. So just in case, right? Just in case you're not comfortable with not being comfortable. I got that from the previous talk. Very good. I will remember that. Okay, so if you think Star Wars Episode I is great, then your review gets classified as a positive review. Okay? We could try it. My opinion is it's going to fail because it's a small dataset, but I don't mind failing. Yep, not enough data. But if you say, you have to be more direct. Okay. You have to be French. There you go, right? Just say what you mean, right? Say what you mean, especially this one. It was awful. It was awful. Yeah, exactly. So there you go. Pretty easy to run some predictions.
+
+Maybe as a very, very last example because this is a cool one, I think. What if you want to bring something else? Okay, what if you don't want to use a built-in algo? What if you don't want to use any of the built-in deep learning environments? So let's say you want to use Keras. Okay, anybody using Keras? Okay. All right. Thank you. So Keras is a high-level library that sits on top of different backends like TensorFlow, Theano, and MXNet now. So here I want to use Keras with MXNet, so I need to build my Docker container.
+
+So I won't go into all the details; I just want to show you this, and you can find this on this notebook on GitLab. I'll share the references. I need to build a container that stores obviously Keras, MXNet, and here I decided to keep it simple; I'm also putting my script inside the container, okay, so it's a bit of a lazy way to do it because if I need to change code, I will have to rebuild my container, but okay, I want to keep it simple here. So I'm starting from an Ubuntu image, adding some dependencies for Keras, MXNet, my MNIST CNN script into the container with a well-known name so that script needs to be called train and it needs to be executable because that's the entry point for SageMaker. SageMaker needs to know what to invoke inside the container. Then I'm installing MXNet and Keras, and that's about it.
+
+So when I said if you even if you don't know Docker, you can run the Docker tutorial on Docker.com and know more than enough to build your Docker file to run your fancy PHP deep learning library on SageMaker. No, don't do that. No JS? No? Okay. No. Don't do it either. Okay. Use serious things. Okay. So that's the container. And if I wanted to build a GPU-enabled version, then I would start this time from a CUDA image because it has all the CUDA libraries, the NVIDIA drivers, so I don't even have to install that. The rest is pretty much the same dependencies, copy my script, make sure I have the CUDA-enabled version of MXNet, and that's it. So the Dockerfile is going to be very very short, environment, and your code pretty much.
+
+Then I need to make sure I have... I need to build this container and push it to Amazon ECR, which is our Docker registry. Okay, so I need to make sure I have a repository there, then I can build, and if you know Docker, this is standard Docker stuff. Build the image, push it to ECR, okay, and from then on, it's identical to all the previous examples. We have a container with the right structure inside of ECR, so we can put our data in S3, and this time we're not going to use the MXNet or the PyTorch or the TensorFlow object; we use a more generic object called Estimator, and the only difference is you have to pass the name of the container that you're using.
+
+When you use the TensorFlow object, it knows to pull what container to pull, right? TensorFlow container. Here it's more generic, so we have to pass the image name that we built. And then we call fit, and we can see if you know Keras, we could see the Keras log here, right? And after a while, we get to our model, right, and we save the model, and it ends up in S3, and you can use it. Okay, and we can go on and deploy it. So that's pretty much, you know, the big picture of using SageMaker with deep learning models.
+
+The very last thing I want to talk about in just a few minutes is, of course, okay, it's all good, and it's nice to use those libraries and to have those tools available in SageMaker with zero installation, fully managed infrastructure, etc. But okay, what if we want to build a little more? What if we like to tinker and we're trying to build a real-world app? Well, that's another thing we released in reInvent last year. It's called DeepLens. It's here. Hopefully, it's still running. It looks like it's hot, so it's probably running.
+
+So it's a project with Intel. It runs an Intel Atom board with an Intel HD graphics chip that has a very tiny GPU powerful enough to do video processing. And so again, in a nutshell, the way this works is you train a machine learning model. So SageMaker is probably a nice way to do that. There's an integration between SageMaker and DeepLens. You write a bit of code. So it's going to be a Lambda function. I'm guessing again you heard about Lambda, serverless technology that lets you write and run small pieces of code. So you can write your Lambda function in the cloud and test it there. And then you can deploy it with the model to the camera. And to do this, we use another AWS service called Greengrass. And Greengrass is an IoT service that takes care of deploying code to edge devices like DeepLens, okay, but you could use it on Raspberry Pis and other things as well.
+
+So that's the really the basic ID: train a model, write the prediction Lambda function, deploy all of that easily to the camera, and then point the cameras at stuff and see if it works. So we have some sample projects. I've got one live; I'll show you in a minute. So it literally takes 10 minutes to install this from unboxing to starting doing silly things. 10-15 minutes. So face detection and object detection and dog versus cat and hot dog, not hot dog. And if you don't know why we're obsessed with hot dogs, congratulations, it just means you have a life and you're not watching too much TV, so keep on doing that, please, right? I'm scared when everybody knows about the hot dog, come on, do something useful with your life, okay?
+
+And of course, you could train and create your own projects. We have a number of community projects, you will find them on our website, just look for DeepLens community projects. So these come from hackathons and all kinds of initiatives. And developers have actually built pretty fun applications with DeepLens. There is one to read sign language. So I cannot do sign language, sorry. But if I knew, you could do sign language in front of the camera, and it knows how to read it. So pretty nice.
+
+So let's do a quick demo, and then I'm out of here. So my cam is all configured, of course. Here we go. Is that... No, that's too tiny. Okay. Okay, so I've got a device. It's online. Okay, it's connected through Wi-Fi. I have some projects ready. So like I said, you could create more projects, some of the sample ones but also create a completely new project where you would bring your own image model and Lambda function. Okay, but I don't have time to show you that one today. So we'll just stick to the existing projects. Come on, you're not gonna die on me now. Wi-Fi, come on.
+
+So the one that is actually live... Interesting. I should not have clicked on that tab. Come on. It's going to come back. All right. Okay. Here we go. So I'm using my phone, so that's why it's a little slower than usual. So I have a project here that is an object detection project. Okay, so it's a single shot detector model that knows how to detect 20 classes. Okay, and people are one of the classes, and it can also detect chairs and bottles and oh my goodness. Wow, amazing. Okay, let me get a screenshot. I don't think I got so many people in the picture. All right, I'm gonna tweet that one.
+
+Okay, so well that's what you see, right? So what happens here is, of course, the camera captures the video stream, and it runs the Lambda function that you deployed with Greengrass runs forever. It's an infinite loop, right? So you're actually allowed to write infinite loops here. And what it does is it captures a frame, runs it through the deep learning model. So here it's the object detection model. It will get the output from the model. So here we'll get quite a long list of bounding boxes, coordinates with the class identifier, so mostly persons here, which is good, and a probability.
+
+And then it uses, in this case, it uses the OpenCV library to draw the bounding box, to actually apply this information on the frame that you see here. And then it gives the frame back to the framework. And that's what gets displayed here. So does anybody have a water bottle? Or a beer bottle? That works. Cup, I don't think a cup is going to work. I don't think it's one of the classes. Oh, yeah. Would you mind? Can we try it here? All right. Yeah, just put it here. Okay. Come on, DeepLens. It should see all of it. There we go. Bottle. See? Thank you. So it can also recognize airplanes and bicycles, but I don't think you have a bicycle in your pocket. We'll stick to bottles and people.
+
+Okay, so that's DeepLens. So that's it; it's a pretty fun thing now. The bad news is it's only available in the US at the moment. So you can only be delivered in the US. It's an electronic device, so it needs to pass through all the certifications, etc. But we're working on it. We're working on bringing this to Europe. So you know, I would hope by the end of the year, but it's hard to know exactly, so keep your eyes peeled. Hopefully, you'll be able pretty soon to buy this and work on your own deep learning projects.
+
+So just a few more, a few URLs to get you started. Okay, here we go. So if you want to get started with, I would say, machine learning on AWS in general, oh come on, you can go to ml.aws, that's an easy one to remember. We also have a technical blog, that's the URL, you'll find some code and articles and customer blog posts as well, etc. I also have a blog on Medium where I share some SageMaker content and deep learning content in general, so quite technical, hopefully, you'll like that. By now, I have a pretty good collection of videos of talks and AWS summits, etc., on YouTube, so if you want again to know more about SageMaker, Deep Learning, and the other services, the high-level services, you'll find all of that on, and the references to the notebooks, etc., you'll find all of that on Medium and YouTube.
+
+Alright, if you want to stay in touch, I'm happy to connect on LinkedIn, of course. If you have questions or if you want to share some content, you can ping me on Twitter. It's usually the easiest way to get in touch for me. And I'll be more than happy to share your content and help you out.
+
+Thank you very much again for inviting me. It was great to be in Gdansk again. And please enjoy the rest of the conference. All right. Thank you very much. Thank you, Julien.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS</span><span class="tag">SageMaker</span><span class="tag">DeepLearning</span><span class="tag">MachineLearning</span><span class="tag">DevOps</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

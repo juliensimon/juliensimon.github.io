@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hadoop sur Amazon EMR en demos</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hadoop sur Amazon EMR en demos</h1>
+        <div class="date">December 13, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/m12lUlsjfpo" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Slides : <a href="http://chilp.it/35f111f" target="_blank" rel="noopener noreferrer">http://chilp.it/35f111f</a>
+
+Dans cette session, nous utilisons Amazon EMR pour mettre en pratique certains des outils étudiés précédemment. Nous vous présentons également des mécanismes spécifiques à EMR (connecteurs S3/DynamoDB, utilisation des instances Spot, etc.) qui vous permettront d’optimiser l’utilisation de vos clusters.
+
+✚ Retrouvez tous nos événements : <a href="https://aws.amazon.com/fr/events/" target="_blank" rel="noopener noreferrer">https://aws.amazon.com/fr/events/</a>
+✚ Rendez-vous sur notre site internet : <a href="http://amzn.to/2ktrf5g" target="_blank" rel="noopener noreferrer">http://amzn.to/2ktrf5g</a>
+✚ Suivez-nous sur Twitter : <a href="https://twitter.com/aws_actus" target="_blank" rel="noopener noreferrer">https://twitter.com/aws_actus</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Nous revoici pour le deuxième webinaire de l'après-midi, toujours sur Elastic MapReduce, mais cette fois, après avoir présenté les concepts, nous allons faire des démos. Voilà, donc plus de slides et des démos. De quoi allons-nous parler ? Nous allons regarder rapidement comment démarrer un cluster, et en particulier comment intégrer les flottes spot pour optimiser à la fois les temps de traitement et le coût des clusters. Ensuite, nous allons jeter un œil à comment interfacer Hive et S3, donc comment lancer un traitement de données sur des données externes dans S3. C'est un point important, car nous avons vu tout à l'heure, lors de la discussion sur le cycle global du machine learning, que cette préparation et transformation de données préalable à l'entraînement du modèle est indispensable. On a tendance à la faire avec des jobs MapReduce ou Hive. C'est important de bien comprendre comment faire cela.
+
+Les deux derniers points concernent des sujets de machine learning. Nous allons parler de la librairie Apache Mahout, qui contient de nombreux algorithmes pour le machine learning, notamment des algorithmes de recommandation de produits. Nous sommes à un niveau de machine learning relativement élevé, mais vous verrez que l'utilisation est plutôt simple. Nous explorerons un peu plus la documentation de Mahout pour voir ce que nous pouvons contrôler. Ensuite, nous utiliserons le même cluster, mais cette fois avec un notebook Spark et SparkML en particulier, pour faire de la classification de spam. Nous examinerons un ensemble d'algorithmes de classification. Voilà ce qu'on va faire. Allez, on y va.
+
+Alors, où est mon cluster ? C'est parti ! Ok, nous y voilà. On va vérifier qu'on a une connexion réseau. Oui, magnifique. Bon, pardon, excusez-moi. Ici, j'ai déjà créé un cluster qu'on utilisera tout à l'heure, mais allons-y, créons un nouveau cluster. Je le fais avec la console parce que c'est ce qu'il y a de plus visuel et de plus simple à comprendre, mais tout ce que je fais là, on peut aussi le faire en API, on peut aussi l'automatiser, on peut faire du CloudFormation, etc. Chaque fois que je fais trop de lignes de commande, je reçois des mails d'insultes en disant que c'est trop compliqué. Donc je reste avec la console. Donc on va donner un petit nom à ce cluster. Ici, on voit l'écran de quick start. Si on veut se contenter d'un cluster assez simple, on peut se contenter de cet écran. On peut choisir la distribution EMR et les packages d'applications prédéfinis, comme Core, Hadoop, Hive, HBase, Presto, et Spark. Si on veut Hive et Spark, il faudra aller dans les options avancées, que je vais vous montrer après. Pour faire des tests sur Hive ou Spark, ces configurations vont très bien.
+
+Ici, vous pouvez choisir le type d'instance. On voit les grands classiques, comme les C4, les M4, et les instances GPU. Vous allez choisir la taille des instances, le nombre de nœuds, une paire de clés SSH pour pouvoir vous connecter sur les instances, et créer le cluster. Au minimum, c'est tout. Si vous voulez juste un petit cluster de tests, 3-4 nœuds pour faire un test Spark, c'est tout ce qu'il y a à faire. Évidemment, nous, ce qu'on a envie de faire, c'est plutôt aller dans les options avancées. Ici, on peut choisir la liste des applications. On voit qu'on a toutes les options. On peut cocher ou décocher ce qu'on veut. Si on veut Scoop pour faire de l'import-export de données, si on ne veut pas Pig mais Spark, on peut choisir spécifiquement les applications Hadoop que l'on veut. On peut ajouter des options de configuration spécifiques à Hadoop, pré-configurer son cluster d'une certaine manière.
+
+Ici, on peut ajouter un step, qui est la définition de l'exécution d'une tâche. On pourrait dire au démarrage du cluster qu'on veut démarrer l'exécution d'un programme Hive. On donnerait l'emplacement du script dans S3, l'emplacement des données sources, l'emplacement où écrire les résultats, des paramètres, etc. On pourrait ajouter un step et les combiner. On peut avoir un grand nombre de steps qui s'enchaînent. Par exemple, on pourrait faire un script Scoop qui charge des données depuis SQL Server, puis lancer Hive pour faire une analyse de données, et ensuite lancer un script qui repousse les résultats vers S3. On peut enchaîner tous ces steps. Si on voulait lancer une application Spark, on la déployerait en mode cluster, avec les options et paramètres tels qu'on les lancerait avec Spark Submit. On peut définir ces steps et dire à la fin, lorsque le dernier step s'est terminé, de tuer le cluster. Comme je l'ai dit, on lance des clusters spécifiques pour un job, et on ne paye que pendant le coût d'exécution de ce cluster. Une fois que le job est terminé, on détruit le cluster.
+
+Créer un cluster devient un truc banal, comme créer une instance EC2. Allons voir ce qu'il y a sur l'écran suivant. Sur l'écran suivant, on va choisir la configuration des clusters. Par défaut, on a le choix de types d'instances uniformes. On a trois types d'instances : le master, les nœuds cœur, et les nœuds tâches. On peut tout éditer. Si on veut que le master soit un C4X large, que les cœurs soient des D2 X large avec du stockage SSD, et qu'on en veuille trois ou quatre, et que les nœuds tâches soient des C4 8XL pour du calcul brutal, et qu'on en veuille quatre aussi. Pour chacun, on peut choisir entre on-demand et spot. Pour le master, il vaut mieux le laisser on-demand. Pour les nœuds cœur, on pourrait faire du spot à 60% ou 70% du prix on-demand pour faire des économies sans prendre trop de risques. Pour les nœuds tâches, on pourrait être plus agressif sur les enchères, car ce sont des ressources bonus.
+
+On peut configurer l'autoscaling pour chacun des types de nœuds, avec des politiques de scale out et scale in, comme dans EC2. On peut spécifier pour chaque type de nœud le type d'instance, combien on en veut, si on veut du spot ou du on-demand, et si on veut de l'autoscale. Si on veut faire des flottes d'instances, par exemple sur les nœuds tâches, on pourrait dire qu'on veut des M3X larges, 50 VCPU en spot, et des C4 4XL pour le calcul rapide. On pourrait mettre un maximum spot price de 50% du prix on-demand pour les M3X larges, et 30% pour les C4 4XL. On peut indiquer la durée d'exécution des instances et ce qui se passe si on n'arrive pas à les acheter. Si le prix est trop haut, on pourrait dire de tuer le cluster ou de switcher à on-demand.
+
+On peut aussi dire de choper des C4X larges à 20% du prix on-demand et monter à 100 VCPU. Voilà ce qu'est une flotte d'instances. Pour un type de nœud donné, on définit une liste de types d'instances et combien de VCPU on veut. EMR s'arrange pour fournir cette capacité de calcul en fonction de vos prix. On peut définir des flottes avec 15 familles d'instances, certaines très économiques en spot. On peut consulter les prix spot dans la console et définir des enchères compétitives. On peut ainsi accélérer les temps de traitement tout en restant à des prix très économiques.
+
+Après, il n'y a plus grand chose. On peut configurer la protection contre la terminaison, comme sur les instances EC2, pour éviter que le cluster soit tué par accident. On peut choisir une AMI Custom et des actions de bootstrap pour exécuter des scripts au démarrage, comme installer une librairie complémentaire. On configure les paires de clés, les permissions, et les groupes de sécurité différenciés entre le master et les workers. On clique sur Create Cluster et c'est parti. Le point clé est cet écran, si vous ne l'aviez jamais vu et que vous utilisez EMR, je vous conseille de le découvrir. Vous arriverez à des prix très faibles et à des clusters multipliés par 10, 20, 30, ce qui divise les temps de calcul d'autant. C'est vraiment un mécanisme intéressant.
+
+Passons à la deuxième démo, qui concerne Hive. Ici, je vais utiliser Hue, l'interface graphique de Hive et d'autres applications. Comment se connecter à ces applications web ? On se connecte en HTTP sur un port indiqué dans la doc, ici 8888 pour Hue, mais il faut ouvrir un tunnel SSH. On ouvre un tunnel vers le masternode avec la clé SSH adéquate pour accéder aux applications web. J'en ai ouvert quelques-unes. Là, il y a la connexion sur le resource manager, où on voit la configuration et le nombre de nœuds sur mon cluster. J'ai 4 nœuds, on les voit là. Ici, je suis connecté sur le name node, qui gère le HDFS. Je peux naviguer sur le HDFS ici. Il n'y a pas grand-chose pour l'instant. Ici, j'ai Ganglia, une application de monitoring. Dès qu'on lancera des tâches, on verra les graphes se colorer. Pour l'instant, ça ne fait pas grand-chose. Là, c'est Zeppelin, qu'on verra plus tard.
+
+Ici, ce qu'on va faire, c'est prendre des données qui sont dans un bucket S3 public. C'est un dataset public que j'avais utilisé dans la Big Data Battle. Il y a 1827 fichiers CSV contenant des événements politiques, diplomatiques, etc., tirés de sites de presse. C'est un dataset d'information constitué à partir de tous les titres de news issus des sites web d'information, avec des colonnes indiquant qui a dit quoi sur qui. C'est un dataset appelé GDELT. On va créer une table externe dans Hive qui pointe vers ces données dans S3. Elle a le bon schéma, avec 50 ou 60 colonnes. Je fournis un schéma et je lui dis que cela correspond à la structure des données dans S3, qui sont en TSV. Je crée une table externe, donc je ne fais que créer le schéma sur Hive. Les données restent dans S3.
+
+Supposons que je veuille faire une extraction. On va faire un truc simple. Je n'ai pas besoin de toutes les colonnes, donc je veux extraire l'identifiant d'événements, le jour, le mois, l'année, le nom de l'acteur principal, etc. Je vais créer une table externe qui ne contient que ces cinq ou six champs et stocker ces données dans un de mes buckets S3, dans un répertoire appelé EventShort. Ensuite, je vais remplir cette table avec une requête select sur les champs qui m'intéressent dans la table originale. Ça va prendre un moment. Il va faire un select depuis Hive dans S3 et écrire les données dans cette nouvelle table, également hébergée dans S3. On charge depuis S3, on extrait les colonnes dont on a besoin, et on réécrit dans S3 à un endroit différent. C'est typiquement le genre de chose qu'on fait sur Hadoop et avec Hive. Mon cluster ne sert que de transformation, pas de stockage.
+
+Regardons les jolies couleurs, ça doit commencer à clignoter. Il y a 400 millions de lignes dans ce dataset, donc ça va prendre un moment. On va vérifier que ça a démarré. Ah oui, manifestement. On voit le trafic réseau qui décolle directement, c'est un bon signe. On voit les nœuds qui commencent à travailler. On est vraiment en mode ETL. On devrait voir le job qui tourne ici. Avec un peu de chance, on va recharger la page. Voilà un exemple de job qu'on pourrait faire. On pourrait aussi utiliser Hive pour faire de la conversion de formats. Mes données sont en TSV, qui n'est pas très efficace. Je pourrais les mettre dans un format en colonne, comme Parquet ou ORC. Ces formats sont optimisés pour le big data et écrivent les données en colonnes sur les blocs disques, ce qui permet de lire uniquement les colonnes nécessaires lors des requêtes.
+
+On peut utiliser Hive facilement pour dire de créer une table au format Parquet, avec le même schéma que l'original, et de la remplir avec un insert overwrite en faisant un select de la table originale. On recopie les données initiales dans la nouvelle table, mais en changeant le format. On se retrouve avec un dataset au format Parquet, plus compact, compressé, et plus efficace pour des requêtes de type Analytics. Est-ce que ce job a démarré ? Il prend son temps. On est à 32% après 4 minutes, donc ça risque de prendre 12-13 minutes. Si on jette un coup d'œil au cluster, on voit que ça commence à bosser. Il y a un peu de CPU, mais beaucoup de réseau, car il faut lire depuis S3 et balancer les données entre les nœuds.
+
+Voilà un exemple rapide de ce qu'on pourrait faire avec Hive et S3. Si je regarde HDFS, mon cluster reste vide. J'utilise 2Go pour les logs et les fichiers de config, mais les données ne sont pas écrites, elles ne font que transiter. Si je veux détruire ce cluster, je n'ai rien à sauvegarder. Voilà un exemple concret de Hive plus S3. On va laisser ça se terminer tranquillement. Une fois que le job est terminé, on voit les fichiers générés. Si on essaie d'en récupérer un, on voit les 6 colonnes que j'ai demandé d'extraire. J'ai fait un ETL très simple sur un dataset relativement volumineux, et je pourrais utiliser la step API pour faire ça automatiquement, donc démarrer un cluster, lancer ce job d'ETL, et terminer le cluster automatiquement lorsque le job est fini, pour arrêter de payer.
+
+Passons à Mahout. Mahout est une librairie de machine learning qui a eu son heure de gloire. Elle a été l'une des premières librairies open source disponibles sur Hadoop pour faire du machine learning, de la recommandation, etc. Elle a perdu en popularité avec l'arrivée de Spark, notamment Spark ML, mais elle semble redémarrer depuis un an ou deux. Le rythme de release s'est repris. Initialement, Mahout proposait uniquement des traitements sur MapReduce, donc pas de capacités temps réel ou de streaming. Depuis, Mahout peut fonctionner avec différents back-ends, comme Spark ou Flink. Ils n'ont pas encore tous les algorithmes, mais on voit que progressivement les algos MapReduce sont migrés vers les nouveaux back-ends.
+
+Mahout propose des algorithmes pour la recommandation, comme le collaborative filtering et la factorisation de matrice, qui sont des techniques utilisées par les outils de recommandation. On n'est pas sur des algos bas niveau, juste classification ou régression, mais sur des algos plus complexes qui permettent de construire des recommandeurs. Il y a également des algorithmes mathématiques, comme le PCA (Principal Component Analysis), qui servent à coder des algorithmes de machine learning. Si vous êtes data scientist, chercheur, ou si vous voulez coder votre propre algo, vous trouverez ces briques dans Mahout.
+
+Nous allons faire un exemple simple. J'ai besoin de me connecter sur mon cluster. Ok. En avant. Non, ce n'est pas ça que je voulais. C'est ça. Histoire de tricher et de ne pas taper des âneries. Ce qu'on va faire, c'est une recommandation basée sur un dataset appelé Movielens, qui est un dataset de recommandation de films. Il y a un certain nombre d'utilisateurs qui ont noté des films de 1 à 5. Il y a plusieurs tailles de dataset pour que le traitement soit rapide. J'ai préféré prendre un dataset pas trop gros, avec 1 million de recommandations, 6000 utilisateurs et 4000 films.
+
+Le dataset ressemble à ça : l'identifiant de l'utilisateur, l'identifiant du film, et la note de 1 à 5. Le but est de recommander à chaque utilisateur des films qui pourraient lui plaire, en fonction de ce qu'il a noté et de ce que d'autres ont aimé. Le premier truc que j'ai fait, c'est transformer le fichier en enlevant le timestamp et en remplaçant les deux points par des virgules, car c'est le format que Mahout attend. Donc, l'utilisateur 1 a mis 5 sur 5 au film 1193, 3 sur 5 au film 661, etc. On a les recommandations pour tous les utilisateurs.
+
+Je vais effacer tout ce qui pourrait traîner d'une exécution précédente. C'est bon, ça n'y avait rien. Ensuite, je vais copier mon fichier d'entrée dans HDFS. Il a été copié, très bien. Si j'y vais, je le vois. Ensuite, je vais exécuter cette magnifique commande basée sur un exemple de Mahout. J'utilise un recommandeur d'items. Le fichier est déjà compilé, vous trouverez l'exemple sur le site de Mahout. C'est littéralement 5 lignes de code. On charge le fichier, on calcule les similarités, etc. Il y a 5 lignes de code pour faire ça. On va l'exécuter. On lui dit d'écrire les résultats dans un répertoire recommandation, de fournir 10 recommandations par utilisateur, et d'utiliser une technique de similarité.
+
+Je vais exécuter ce job. On voit les magnifiques logs Hadoop. Mon job a démarré. Si je vais dans le job tracker, je vois les différentes étapes qui vont se dérouler. L'avantage de Mahout, c'est qu'il y a cette classe item recommandeur qui fait tout ça automatiquement, donc en 5 lignes de code, vous générez des recommandations. C'est vraiment une librairie intéressante pour ce genre de problème, car elle encapsule un problème très compliqué en peu de code. Grâce au calcul distribué fourni par Hadoop, on arrive à faire ça dans des temps raisonnables. Ça devrait prendre environ trois minutes. On va regarder ce que raconte mon ami Ganglia. Imaginez que vous avez 100 000 clients qui ont fait 2 millions d'achats, qui ont acheté 2 millions de produits sur votre site web. Vous pourriez générer exactement les mêmes fichiers en entrée. Vous pourriez avoir l'utilisateur 1, il a acheté ça, l'utilisateur 2, il a acheté ça, etc. Et puis vous pourriez générer des recommandations de la même façon. Simplement, avec un plus gros fichier, le temps de calcul serait un peu plus long. À vous de voir si vous voulez calculer ça toutes les 24 heures, toutes les 12 heures, toutes les heures. Et puis vous dimensionnez votre cluster en fonction de ça. Si vous avez besoin de plus de puissance, vous rajoutez des instances spot et vous accélérez vos temps de calcul. On voit le job qui s'exécute gentiment. Là, ça travaille un peu plus que tout à l'heure. Tout à l'heure, c'était vraiment juste de l'exécution pure et dure de requêtes SQL, donc ce n'est pas très intensif. Ici, il y a un peu de travail, un peu de maths. On voit que la charge agrégée du cluster est plus importante. Ça travaille gentiment. On n'est quand même qu'à 30% de CPU. On est sur des instances C4 XL. C'est un peu surdimensionné pour ce genre de problème, mais enfin bon, c'est pas grave. Ça marche. Voilà, on ne devrait pas être long d'avoir fini. Voilà, ça y est. On voit à la fin que ça a pris 3 minutes et demie. Il a écrit les résultats. Il a écrit les résultats quelque part. Ah non, il les a écrit dans HDFS, bien sûr. Si je vais voir ce qui se passe dans HDFS, je vais voir normalement recommandation quelque part. Voilà, ok. Je vois une liste de fichiers. Ils ont été découpés. Si j'en regarde un au hasard, je vois ce que je suis censé voir. C'est-à-dire, je vois des recommandations. Je vois 10 recommandations pour l'utilisateur 31, 10 recommandations pour l'utilisateur 62, etc. On a affiché un peu plus. Selon l'analyse que j'ai faite, je vois que l'utilisateur 124 devrait aimer le film 492, le film 1641, etc. On a des scores où on est très sûr. Tous les scores ne sont pas à 5. Par exemple, pour l'utilisateur 279, ceux-là et celui-là sont à 5. Puis après, celui-là, il devrait l'aimer un peu moins, celui-là un petit peu moins, etc. Évidemment, après, on reprendrait la liste des films avec leurs identifiants, et on se servirait de ça pour dire que l'utilisateur 279 va aimer Star Wars, Bambi, Pretty Woman, etc. Voilà comment faire une recommandation. Ici, je l'ai fait dans HDFS, donc j'ai violé mes propres principes, puisque depuis tout à l'heure je vous dis de tout faire dans S3. On peut aisément faire la même chose dans S3. J'aurais pu copier les recommandations d'HDFS dans S3 et lui demander de stocker le résultat dans S3. Ça ne marche pas puisque ce répertoire existe déjà. Il n'est pas content, je l'ai déjà créé. Il faudrait que je l'efface. Voilà comment simplement, on va chercher les données dans S3 et on va réécrire les résultats dans S3. Voilà un exemple tout simple. On fait du machine learning, on le fait même à l'échelle, puisqu'on est quand même sur un million d'échantillons. Mais avec Mahout, sur ce problème de recommandation, on le fait de manière super simple. Je vous invite à aller consulter la doc de Mahout, vous verrez d'autres outils et vous pourrez tester d'autres choses. Voilà, dernière chose que je voulais vous montrer aujourd'hui. On va quitter tout ça et faire un peu de Spark pour terminer la journée. Je suis sur mon cluster comme tout à l'heure. J'ai un notebook Zeppelin. Zeppelin est installé par défaut dans la distribution EMR, donc rien de spécial à faire. On va construire un classifieur de spam en utilisant différents algos de classification. Vous trouverez tout ça dans la doc de Spark, MLlib. MLlib contient une quantité d'algorithmes, vraiment beaucoup de choses, de la classification, de la régression, du clustering, vous allez vous faire plaisir. Il y a à la fois des algos et la possibilité de construire des workflows avec ce qu'ils appellent les machine learning pipelines, où vous allez pouvoir combiner des transformations et transformer vos données, puis les entraîner, puis faire des prédictions, etc. Il y a à la fois les algos et la plomberie pour construire les applications. Nous, on va se contenter de faire de la classification. On va importer quelques classes. Il nous faut un dataset. J'ai deux types de messages. Des messages que je considère comme valides, même s'ils sont écrits en alphabet SMS. Ce sont des vrais messages, des messages souhaités. Et puis j'ai des messages classés comme du spam. J'ai 4827 messages valables et 747 messages considérés comme du spam. Le but du jeu est de construire un classifieur qui va les détecter. Hier, on a fait des petits exemples de régression logistique sur un petit dataset. Ici, on va le faire sur quelque chose de plus compliqué. On va les définir. Quand je fais ça, en fait, il ne charge rien du tout. Il déclare simplement cette variable comme pointant sur le contenu de ce fichier, mais il va attendre d'avoir réellement besoin des données pour faire le traitement. Si je ne m'en sers pas, en fait, je ne déclenche aucune I/O. La capacité de Spark à créer un graphe d'exécution et à ne parcourir le chemin que lorsqu'il est réellement indispensable est un facteur de performance important. Ensuite, je vais transformer mes datasets pour en extraire les features. Je vais demander à SparkML, via cet objet hashing.tf, de m'identifier les 200 features, donc ici les 200 mots, qui apparaissent le plus fréquemment dans chaque dataset. Il va analyser le dataset, compter les mots et me prendre les 200 mots qui apparaissent le plus fréquemment. On peut considérer que sur la base des mots qui apparaissent le plus fréquemment, on est capable de dire si c'est du spam ou pas du spam. C'est l'hypothèse qu'on fait. On va afficher un exemple. J'ai un premier message. Ce message-là a le mot 25, le mot 55, le mot 99, etc. Il a 8 mots importants parmi les 200 qui apparaissent dans ce message. Et ils apparaissent une fois, ce sont les fréquences. Pour chacun des datasets, on prend les 200 mots les plus fréquents et on regarde dans chacun des messages lesquels de ces 200 mots apparaissent et à quelle fréquence. Pour le message valable, je vois que j'ai les mots 15, 54, 96, etc. Et celui-là, il apparaît même deux fois. C'est sur cette base-là qu'on va entraîner. Il faut que j'étiquette mon dataset. Je vais lui dire que les features spam sont étiquetées à 1, on considère que c'est du spam. Les features qui correspondent au message accepté sont étiquetées à 0. Je fais un classifieur avec deux classes. Voilà deux exemples. Je vois les numéros des mots, leurs fréquences et puis je vois qu'ils ont été étiquetés à 1. Ici pareil, je vois les numéros des mots, les fréquences et je vois qu'ils ont été étiquetés à 0. C'est sur ce dataset que je vais entraîner mon classifiant. On va le splitter entre Training Set et Test Set, donc on le découpe en 80-20. Et puis j'aurai test data. Je mets training data en cache, en mémoire. Je veux qu'il reste en mémoire parce que je vais m'en servir plusieurs fois. On va exécuter toute la suite. On va faire un classifieur avec un algorithme qu'on a vu hier, qui est la régression logistique optimisée par SGD, donc le stochastic logistique. On va prendre un algo, lui faire apprendre le training set, et puis mesurer sa performance. On va prendre le test set, le passer à travers le modèle et afficher le score. On compare la prédiction faite par le modèle au label réel de l'échantillon et on mesure. Avec ma régression logistique SGD, j'ai 87% de précision. On pourrait essayer une régression logistique avec une autre fonction d'optimisation qui est LBFGS, qui est plus poussé. Cette fois, j'ai fait moins bien. Ce n'était pas une bonne idée. Je suis à 86,9. On pourrait essayer un autre modèle, un autre algorithme de machine learning, les support vector machines, qui sont un algorithme fréquemment utilisé pour la classification. On va l'entraîner et la mesurer. 88,20. Un petit peu mieux. On pourrait essayer un arbre de décision. C'est beaucoup mieux. 93,3%. Cet algorithme de decision tree, manifestement, il marche bien. Intuitivement, ça paraît logique parce qu'on pourrait se dire, si le message comporte ce mot-là, ce mot-là, et ce mot-là, c'est du spam. L'arbre de décision, pour classifier du spam, c'est un truc qui doit marcher assez bien. Ça n'est qu'une intuition évidemment. Un autre modèle d'arbre qui s'appelle les Gradient Boosted Trees. Je ne rentre pas dans le détail des algos parce qu'on n'a pas le temps. Je vous ai mis les liens sur les pages de la doc Spark. Vous pourrez aussi bien sûr voir tout ça sur Wikipédia. On peut aisément tester tous ces algos. Spark ML est vraiment très complet. Voilà, donc là j'ai 91,5. Et puis le dernier, la star de la classification, le Naive Bayes. Il est ultra rapide à entraîner et il nous donne 92. On peut tester facilement nos différents algos comme ça. On peut sauver le modèle, etc. Et puis on pourrait essayer des vrais exemples. J'ai écrit un message : "Vous avez gagné un million de dollars. Merci de venir au Nigeria ASAP." Je précise toujours, je n'ai absolument rien contre les gentils habitants du Nigeria, c'est juste qu'on reçoit tous ces mails d'arnaques venant du Nigeria. Et puis un exemple qui paraît pas être du spam. On va voir s'ils sont correctement classifiés. J'affiche mon vecteur. Mon premier message contient pas mal de mots parmi les 200. L'autre aussi, il y a pas mal de mots qui rentrent dans les 200. J'ai un score, une prédiction qui est positive pour le premier message, qui m'indique que c'est bien du spam, et une prédiction qui est négative pour le deuxième message, qui m'indique que ce n'est pas du spam. Voilà un exemple où on combine différentes choses, on utilise Zeppelin, SparkML, on a des datasets dans S3, on teste plein d'algos, etc. C'est vraiment un environnement sympa pour travailler. Bien sûr, si on avait un dataset beaucoup plus gros et beaucoup plus long à traiter, ça marcherait de la même façon. Ici, j'essayais de prendre quelque chose d'assez court. Voilà ce que je pouvais dire sur SparkML avec tous ces exemples qui sont présents sur GitHub. Je ne crois pas l'avoir montré aujourd'hui. Je l'avais montré hier. Voilà, donc dans le repository AWS, ML, vous allez trouver tout ça. Voilà, vous pouvez récupérer. Je le laisse à l'écran quelques instants, que vous puissiez le voir, de toute façon, sinon vous l'aurez dans les vidéos également. Voilà, qu'est-ce que j'avais à dire encore ? Presque plus rien, c'est la bonne nouvelle. Quelques ressources, donc EMR, toujours, le blog Big Data, les white papers comme tout à l'heure. Si vous vous intéressez aux problèmes de recommandation, il y a un article extraordinaire, complexe, mais vraiment intéressant, qui a été publié il y a quelques mois par Amazon qui fait un historique des systèmes de recommandations bâtis par Amazon au fil du temps. Le lien est sur le site de Mahout, le lien sur la page de recommandeurs que je vous ai montré tout à l'heure, MLlib, le lien de GitHub, et puis mon blog sur lequel vous trouverez du contenu Deep Learning, MXNet et tout ça, mais ça c'est plutôt pour demain. Voilà, merci beaucoup, j'espère que tout ça vous a plu. On doit avoir un peu de temps encore pour quelques questions, j'imagine. Si, si, on va faire quelques questions. Hugo ne fait pas les gros yeux, bien sûr qu'on a des questions. Alors, question de Laurent : "Est-ce que Hive est toujours d'actualité avec Spark SQL ?" C'est un bon troll aussi ça. Oui, pensez au sondage pendant que je commence à répondre aux questions. Moi, j'ai envie de dire oui et non. Hive reste d'une utilisation relativement simple. C'est-à-dire qu'on reste sur du SME, pas trop éloigné du SQL standard. C'est un outil qui commence à dater mais qui fait bien ce qu'il a à faire. Pour faire de l'ETL en SQL, ça fonctionne. Le problème, c'est deux choses : les performances. Les performances de Hive par rapport à celles de Spark sont quand même moins bonnes. Et puis, il y a l'expressivité. Si vous arrivez à exprimer les transformations que vous voulez effectuer avec du SQL, pourquoi pas Hive. Si vous avez besoin de faire du filtrage, du MapReduce et des trucs bizarroïdes, vous pouvez combiner du Spark SQL et du Spark natif. Hive reste un bon outil pour des choses de base. À partir du moment où on n'a pas trop de performance. Alors... Qu'est-ce qu'on a d'autre ? Attends, il y a une question sur les task nodes. Pourquoi dans les task nodes, il y a quand même du EBS ? Les task nodes sont des instances, donc les instances EC2 ont toutes du stockage, pas toutes du stockage de base mais pratiquement toutes. Mais simplement ce stockage-là ne va pas être utilisé, il ne va pas rentrer en jeu dans le HDFS. Donc il y a du stockage mais il ne sera pas associé au HDFS. Alors, qu'est-ce qu'on a d'autre ? Attends, celle-là ne me plaît bien là. Bouge pas, bouge pas. Pardon, on est en live. Sur une application web utilisée par un bon nombre d'utilisateurs qui seraient hébergés sur un serveur, est-ce mieux de garder les clusters actifs ou est-ce qu'il faut désactiver les clusters après chaque utilisation ? Le but du jeu est d'éteindre les clusters autant que possible. Si vous avez besoin d'un cluster pour faire du machine learning ou transformer des données, vous utilisez la step API, vous faites votre transformation, vous sauvez vos résultats dans S3 et puis après votre appli web peut aller soit dans S3, soit dans RDS par exemple, dans une base de données traditionnelle, et puis ensuite votre appli web va lire ses données. Il ne faut absolument pas qu'une appli web tape un cluster, ça c'est un cluster EMR, c'est l'anti-pattern absolu, ce n'est pas fait pour, ça ne marche pas, donc par pitié ne faites pas ça. Si vous avez besoin de transformer des données qui sont in fine utilisées par des applis web, vous les transformez avec EMR, vous les écrivez soit dans RDS ou ElasticH, ou n'importe, le backend qui va convenir à ce type de données, puis ensuite votre application web va lire là-dedans. Mais surtout, ne combinez pas les applis web et EMR, c'est une mauvaise idée. Allez, une dernière, Hugo, Hugo, allez, s'il te plaît, ils ont plein de questions. Remonte un peu parce que là, il y a surtout des problèmes de download de slides, je ne sais pas ce que... C'est passé ? J'étais créatif avec le lien. Alors, il y a une question de Vincent qui est rigolote. Est-ce qu'il y a un modèle prédictif pour optimiser l'obtention d'instances spot ? C'est tout à fait possible. Vous pouvez récupérer l'historique des prix spot. Si vous voulez faire de la prédiction de time series spot en deep learning, c'est un sujet rigolo. Vous trouverez, il y a plein de gens qui s'amusent à faire ça sur le bitcoin, j'espère que ça leur réussit, à essayer de prédire le cours du bitcoin. Donc oui, il faut un réseau qui va être capable de prédire des séquences, et voilà. Voilà, je pense qu'on est à court de temps, je vais me faire éjecter. Voilà, merci beaucoup, j'espère que ce webinar vous a intéressé. Je vous donne donc rendez-vous demain pour l'introduction au deep learning demain matin. Introduction à l'IA et au deep learning. Là, on va commencer à rentrer dans le dur. Et puis l'après-midi, je vous parlerai d'une librairie open source qui s'appelle MXNet, qui sert à construire des modèles de deep learning. On commencera à faire du deep learning demain, on approfondira jeudi, on rentrera beaucoup plus dans les problèmes de reconnaissance d'image, j'amènerai mes gadgets, et vendredi sera consacré aux nouveautés de reInvent. Donc le premier webinar fera un panorama de toutes les nouveautés IA et machine learning annoncées à reInvent, et le deuxième webinar sera consacré à un nouveau service qui s'appelle Amazon SageMaker, qui va vite devenir votre environnement préféré pour faire du machine learning et du deep learning sur AWS. Mais on verra tout ça plus tard. Merci beaucoup, bonne soirée et à demain.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Elastic MapReduce</span><span class="tag">Hive-S3-Integration</span><span class="tag">Machine-Learning-Demos</span><span class="tag">Apache-Mahout</span><span class="tag">SparkML-Classification</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

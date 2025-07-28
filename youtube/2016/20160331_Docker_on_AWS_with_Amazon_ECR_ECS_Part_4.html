@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker on AWS with Amazon ECR ECS Part 4</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Docker on AWS with Amazon ECR ECS Part 4</h1>
+        <div class="date">March 31, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/L_IU4YsQKfs" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Slides: <a href="http://www.slideshare.net/JulienSIMON5/amazon-ecs-january-2016" target="_blank" rel="noopener noreferrer">http://www.slideshare.net/JulienSIMON5/amazon-ecs-january-2016</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Okay, let's continue with our demo. We have deployed our PHP web app, with three tasks running and three instances. Now, we want to set up a load balancer in front of those containers. Let's go to the EC2 console and create a load balancer. We'll name it phplb. We'll create it in the VPC because, by default, a new ECS cluster runs inside its own VPC. Port 80 is what we want. I'll select the subnets and create a new security group for the load balancer, opening port 80. I'll set the health check to index.php and reduce the timeouts to the smallest value possible to save time. This is just a demo; please use longer values in production. I'll add my instances here. Remember the rule: tag everything. Otherwise, it's hard to find out what's doing what after a while. My load balancer is created and will ping those instances to bring them into service. They're currently out of service, so it will take a few minutes.
+
+While we wait, let's look at the auto scaling groups. When you create an ECS cluster, EC2 creates an auto scaling group, which is how it controls the number of instances running in the cluster. As you can see, the desired and max are both set to 3, so I have three instances running in multiple availability zones, providing automatic high availability. Let's add the load balancer to this group. If we don't, and we scale the cluster, only the initial three instances will be load balanced, which is not what we want. We want all instances in this group to be load balanced. Let's save this, and now every new instance launched in this auto scaling group will be load balanced.
+
+Let's go back to the load balancer and see if the instances are in service yet. Not yet; it takes a little while. I'll pause the demo for a moment and be back shortly.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">PHP</span><span class="tag">LoadBalancer</span><span class="tag">EC2</span><span class="tag">AutoScaling</span><span class="tag">VPC</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

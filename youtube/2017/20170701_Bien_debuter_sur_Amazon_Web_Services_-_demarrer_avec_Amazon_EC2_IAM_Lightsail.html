@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bien debuter sur Amazon Web Services   demarrer avec Amazon EC2 IAM Lightsail</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bien debuter sur Amazon Web Services   demarrer avec Amazon EC2 IAM Lightsail</h1>
+        <div class="date">July 01, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/gOeFzkiqOF4" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Des vidéos spéciales débutant(e)s plus à jour (2019 et 2020) sont disponibles sur cette playlist : <a href="https://www.youtube.com/playlist?list=PLL_L4MF1Z7JW_-LW4ikJsgF2EIfpOp-IU" target="_blank" rel="noopener noreferrer">https://www.youtube.com/playlist?list=PLL_L4MF1Z7JW_-LW4ikJsgF2EIfpOp-IU</a>
+
+
+Dans ce webinaire dédié aux débutants nous verrons certains des services fondamentaux d'AWS. Amazon S3, Amazon EC2, IAM, Amazon RDS et Amazon Lightsail.
+
+
+Inscrivez-vous aux mardis du cloud, deux webinaires mensuels en français et en direct : <a href="http://amzn.to/2lvragO" target="_blank" rel="noopener noreferrer">http://amzn.to/2lvragO</a>
+Rendez-vous sur notre site internet : <a href="http://amzn.to/2ktrf5g" target="_blank" rel="noopener noreferrer">http://amzn.to/2ktrf5g</a>
+Suivez-nous sur Twitter : <a href="https://twitter.com/aws_actus" target="_blank" rel="noopener noreferrer">https://twitter.com/aws_actus</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Bonjour à tous, bienvenue pour ce nouveau webinar AWS qui est aujourd'hui spécialement consacré aux débutants. Dans les webinars précédents, nous avons exploré des sujets techniques plus ou moins pointus, mais vraiment aujourd'hui c'est la session pour les gens qui débutent. On va vous faire un petit panorama des services, des principaux services. On va parler de LightSail, d'EC2, d'IAM, d'S3, de RDS, de CloudWatch qui sont vraiment les services fondamentaux qui vous permettent de commencer tranquillement sans trop de complexité à utiliser AWS. C'est parti, allons-y.
+
+La première étape consistera bien sûr à créer votre compte. Il suffit de se rendre à cette URL, aws.amazon.com, de cliquer sur le bouton « Créer votre compte », de renseigner les quelques informations et vous êtes prêt. Inutile de le faire, vous n'avez pas besoin de moi pour rentrer votre nom et votre adresse, ça se fait tout seul. J'attire votre attention d'emblée sur l'offre gratuite d'AWS, ce qu'on appelle également le « Free Tier ». C'est un niveau d'usage gratuit sur les principaux services AWS dans les 12 mois qui suivent la création du compte. Donc lorsque vous créez un compte sur AWS, pendant 12 mois, vous pourrez utiliser EC2, S3, RDS, IoT et bien d'autres, Lambda, DynamoDB, etc. gratuitement, à condition de respecter les niveaux d'usage qui sont décrits ici.
+
+Prenons par exemple EC2, qui est le service de machines virtuelles d'AWS. Dans le niveau gratuit d'AWS, vous pouvez utiliser 750 heures par mois d'instance T2 Micro. On verra tout à l'heure ce que ça veut dire que T2 Micro. C'est une petite instance, mais qui suffit largement à expérimenter, à tester, à apprendre, voire même à des petits environnements de travail. 750 heures par mois d'utilisation gratuite tous les mois pendant 12 mois. Idem pour S3, RDS, etc. Je vous incite vraiment à bien lire cette page d'emblée pour deux raisons. La première, c'est de bien voir la liste des services concernés par le niveau d'usage gratuit. Tous n'y figurent pas, les principaux y figurent. Et surtout, pour les services qui vous intéressent, de bien comprendre quel est le niveau d'usage gratuit et à partir de quel moment vous en sortez, afin de ne pas avoir de mauvaises surprises. Tous nos services sont en paiement à l'usage, donc même si vous dépassiez un tout petit peu le niveau d'usage gratuit. Si vous utilisiez 752 heures d'instance T2 Micro pendant un mois, vous ne payeriez que pour ces deux heures. Ces instances sont très peu coûteuses, donc il n'y a pas vraiment de grand risque. Néanmoins, vous avez ces 12 mois d'usage gratuit. Lisez bien la page, regardez bien quels sont les critères d'utilisation et vous pouvez expérimenter et vous former, etc. sans dépenser le moindre sou, ce qui est toujours sympathique.
+
+Bien commençons par notre premier service. Donc, une fois connecté sur la console, vous allez arriver certainement sur cette première page qui liste tous les services d'AWS. Je suis conscient qu'il en existe un grand nombre et nous continuerons à ajouter, donc pas d'inquiétude. Il est évidemment inutile d'utiliser les 90 ou 92 services disponibles aujourd'hui pour construire sa plateforme. On va aujourd'hui regarder les principaux services qui sont vraiment les services fondamentaux d'AWS. Tous les services organisés par catégorie, calcul, stockage, base de données, outils pour développeurs, etc. Sécurité, qui est essentiel. Et si vous voulez commencer tranquillement, vous pouvez aussi exécuter l'ensemble de ces tutoriels qui vous montrent par exemple comment lancer une machine virtuelle, comment déployer une appli web, comment déployer un site web de différentes façons. Voilà, donc des tutos qui sont assez courts, que vous pourrez faire pour la plupart en quelques minutes et qui vous guideront tranquillement dans les premières étapes et qui vous permettront de démarrer avec les premiers services et de commencer à vous former sur AWS. Vraiment, je vous incite à aller suivre.
+
+Un autre point d'information qui sera important, c'est bien évidemment de consulter nos docs. Vous trouverez toute la doc à cette URL, aws.amazon.com/documentation, où vous trouvez les docs de tous les services, les docs des SDK pour les développeurs, ce qui est bien pratique. Et puis, une fois de plus, de la documentation avec des tutoriels. Armé de tout ça, vous pouvez démarrer et commencer à vous former tranquillement. Un dernier point avant de commencer à regarder les services, il n'y a pas de différence chez nous, il n'y a pas de compte de test. Le compte que vous avez donne accès à tous les services. Vous pouvez utiliser tous les services qui sont listés ici dans la console. Vous pouvez les utiliser pour du test, vous pouvez les utiliser pour de la prod. C'est votre compte AWS, vous en faites ce que vous voulez. Vous pouvez facilement basculer du développement à la production. Vous avez accès à tout et tout est en paiement à l'usage et vous trouverez les tarifs de tous les services également sur Internet. Je renonce à retenir les URL. Ce que je vais faire systématiquement quand je cherche les prix, c'est que je vais demander Amazon EC2 tarification. Et je vais tomber à chaque fois sur la page de tarification des services. Donc ça, ce que je fais, ce que je vous montre là est valable pour tous les services. Et là vous allez trouver les prix de tout. Je pense qu'avec ça vous pouvez commencer tranquillement, vous créez votre compte, vous lisez bien la page sur l'offre gratuite, vous commencez à faire quelques tutos et puis vous commencez à regarder la documentation et vous gardez toujours un œil sur la tarification pour vous assurer que si vous n'êtes pas dans le niveau d'usage gratuit, ce que vous êtes en train de faire ne va pas vous coûter cher. Voilà les différents points de départ.
+
+Lançons-nous sur un premier service. Le premier service que je vais vous montrer aujourd'hui, c'est un nouveau service qui a été lancé à notre conférence technique en décembre, qui s'appelle LightSail. C'est la façon la plus simple de démarrer un serveur préinstallé avec une application dans AWS. Je vais commencer par celui-là parce que c'est vraiment le plus simple. Vous allez voir que même un personnel qui n'est pas technique peut tout à fait réussir à se servir de LightSail. Donc, allons-y, créons donc une instance, notre premier serveur. On va commencer par cliquer sur « Create Instance ». Alors, la première chose que LightSail nous propose, c'est l'emplacement dans lequel on va lancer ce serveur. L'infrastructure d'AWS aujourd'hui est organisée en 16 régions à travers le monde. Ici, par défaut, je suis sur la région irlandaise. Je pourrais la changer. Vous voyez qu'en Europe, on a une région en Irlande, une région en Allemagne, une région à Londres, et cette année, une région qui arrivera en France également. Et puis, d'autres régions aux États-Unis et en Asie-Pacifique. Toutes les régions ne sont pas indiquées ici parce que le service n'est pas disponible encore dans toutes les régions. On va rester sur l'Irlande.
+
+Ensuite, on va choisir l'application qu'on souhaite lancer sur ce serveur. Par exemple, WordPress ou une stack Linux, Apache, MySQL, PHP ou un Drupal ou un Nginx, un serveur web, etc. L'idée, c'est de choisir WordPress et de lancer ce serveur et tout sera prévu sans aucune intervention de notre part. C'est la façon la plus simple de lancer un serveur. Dernier paramètre, le plan mensuel que l'on souhaite dépenser pour ce serveur, à partir de 5 dollars jusqu'à 80 dollars. Ce qui diffère, ce sont les ressources matérielles qui sont allouées au serveur et la quantité de données sortantes que vos utilisateurs pourront consommer sur ce serveur. On va donc prendre le plan à 10 dollars, on va nommer notre instance, on va l'appeler mon WordPress, et puis on va cliquer sur Create, et on va attendre que notre serveur soit lancé. Ça devrait être assez bref. Je vais pouvoir m'y connecter. Je copie l'adresse publique de la machine. Je vois la page de configuration, la page par défaut de WordPress. Je peux cliquer sur « Manage » pour commencer à configurer et commencer à configurer mon blog. Voilà comment, en quelques instants, on crée sans la moindre difficulté une application WordPress préconfigurée, prête à servir. Supposons que vous n'ayez plus besoin de cette machine, mais il vous suffit maintenant de l'arrêter, de la détruire, delete. Et cette instance est détruite. Donc si la liste des applications qui sont présentes dans LightSail vous convient, vraiment c'est la solution la plus simple. Aucune considération technique à prendre en compte pour lancer ce serveur. Voilà LightSail, serveur privé virtuel, super simple.
+
+Bien sûr, dans la plupart des cas, LightSail ne suffira pas et ne conviendra pas à vos applications et en aucun cas à vos applications maison. Le deuxième service dont je vais maintenant parler est un service qui s'appelle EC2, qui est le service de machines virtuelles d'AWS. Il va vous permettre de lancer des serveurs et de les administrer, d'avoir la main dessus, d'y installer ce que vous voulez. On va fermer un petit peu tout ça. On va retourner sur la console. Je vais lancer maintenant la console EC2. D'accord ? Donc là, je suis toujours dans la région irlandaise où j'ai déjà quelques instances qui tournent, mais autant vous montrer ça. Je pourrais, si j'avais besoin d'aller lancer des instances, par exemple dans la région de Francfort, il me suffirait ici de changer de région, de retrouver la console AWS pour la région de Francfort. Ici, vous voyez, je n'ai rien qui tourne, donc on va... On va lancer une instance maintenant dans cette région. Alors allons-y, on clique sur lancer une instance. Et le premier choix qu'on va devoir faire, c'est l'image, quelle est l'image que ce serveur va exécuter, quel est le système d'exploitation qui va fonctionner sur ce serveur. Donc sur cette première page ici, vous avez une liste d'images des Amazon Machine Image ou AMI, qui sont des images maintenues par Amazon avec un Linux, le Linux Amazon, Linux Red Hat, SUSE, Ubuntu, etc. Et puis bien sûr des images Windows, Windows Server, Windows Server plus SQL Server, etc. dans différentes versions. Donc ça, ces images-là, nous les maintenons, nous les mettons à jour régulièrement. C'est un bon choix par défaut. Lorsque vous n'avez pas besoin de quelque chose de différent, je vous conseille d'utiliser ces images. Elles seront sans surprise. Si vous avez besoin d'autre chose, vous pouvez aller voir dans la Marketplace. La Marketplace, c'est plus de 3500 logiciels fournis par des éditeurs, pré-packagés dans des images et prêts à lancer. C'est un peu la même idée que LightSail, ce sont des images qui vont contenir là aussi, si je cherche par exemple un WordPress, je vais le trouver. Des choses plus compliquées comme peut-être Tableau pour faire de la visualisation de données, etc. Je vais trouver plein de solutions. Si je cherche des solutions de sécurité, par exemple, je peux chercher une solution de Palo Alto, je vais les trouver, etc. Donc, il y a vraiment un grand nombre de catégories. Vous pouvez également vous balader ici dans les catégories, les outils de développement, etc. Et donc là, vous trouverez vraiment sur étagère des images que vous pouvez sélectionner. Je vais rester sur quelque chose de connu, je vais prendre Amazon Linux.
+
+La deuxième chose que je vais devoir choisir, c'est le type de l'instance. Le type de l'instance, on en a parlé tout à l'heure, avec le fameux T2 micro, c'est finalement la taille de l'instance et le cas d'usage auquel elle est le plus adaptée. Vous voyez qu'on a différentes familles ici, dans la première colonne. Des instances qui conviennent bien dans le cas général, des instances qui sont optimisées pour le calcul avec des processeurs plus puissants, des instances générales, des instances optimisées pour les cas d'usage qui ont besoin de beaucoup de mémoire et des instances optimisées pour les cas d'usage qui ont besoin de beaucoup de stockage ou de stockage très performant avec beaucoup d'IO. On peut déjà choisir parmi ces familles. Souvenez-vous, on a parlé tout à l'heure du niveau d'usage gratuit, le fameux Free Tier, l'offre gratuite. Vous voyez là, on vous dit explicitement si vous voulez rester dans le niveau d'usage gratuit, il faut prendre une T2 Micro. Donc on va faire ça, on va rester sur T2 Micro. Cette colonne-là, c'est le nombre de cœurs dont dispose l'instance. Et là, c'est la taille mémoire de l'instance en giga octet. Donc vous voyez, T2 Micro, c'est petit, c'est un cœur et un giga de RAM. Mais ça suffit très bien à faire tourner des petites applications Linux et à tester et à prototyper. Ça peut aller jusqu'à des choses bien plus imposantes. M4 10XL, c'est 40 coeurs, 160 GB de RAM, etc. Pour l'anecdote, la plus grosse, c'est la X1 32XL, qui a 128 coeurs et quasiment 2 Tera de RAM. À réserver à des cas d'usage particuliers, comme SAP par exemple. Continuons. On va configurer cette instance. Pardon, j'ai cliqué deux fois. Combien d'instances est-ce qu'on veut lancer ? Une. Dans quel réseau est-ce qu'on veut lancer ? On va rester dans le réseau par défaut lorsque vous créez votre compte AWS. On crée dans chaque région ce qu'on appelle un VPC, qui veut dire Virtual Private Cloud, qui est l'enveloppe réseau à l'intérieur de laquelle vos ressources vont être hébergées, donc vos instances, vos bases de données, etc. On peut créer des VPC supplémentaires, on peut faire plein de choses, ça dépasse le cadre de cette présentation. Donc ici on va rester sur le VPC par défaut, on ne va pas toucher aux paramètres réseau. On va passer à la suite, le stockage, donc cette instance par défaut à 8 gigaoctets de stockage. On va rester sur ça. Ensuite on va configurer le groupe de sécurité. Le groupe de sécurité c'est tout simplement les règles de firewall qui vont être appliquées sur cette instance. Vous pouvez autoriser explicitement des connexions sur tel ou tel port. Ici par exemple on autorise la connexion SSH sur le port 22. Je vais l'autoriser uniquement depuis mon adresse IP pour restreindre encore. Et puis je pourrais ajouter par exemple une règle en disant je veux installer un serveur web sur cette instance, donc j'ai besoin d'ouvrir le port 80. Par contre je souhaite que ça soit disponible depuis n'importe quelle adresse IP pour tous mes utilisateurs. Il va donner un nom à ce security group. Très bien, on va le lancer. Là, on a un récapitulatif. On a choisi Amazon Linux sur T2. On a ouvert le port 22 et le port 80. Le reste, on n'y a pas touché. Lançons l'instance. Comme tout à l'heure, je ne suis pas obligé, mais c'est préférable d'assigner une paire de clés SSH à cette instance pour pouvoir m'y connecter. J'ai ouvert le port SSH. Ici, j'ai déjà des clés existantes. J'ai une clé qui s'appelle admin, je vais la réutiliser. Je pourrais également créer une nouvelle paire de clés pour m'en servir. On va lancer cette instance. Elle est lancée. On va patienter une petite minute. Et dès qu'elle est prête, on va s'y connecter. Après quelques minutes, notre instance est disponible. Ici, je suis dans la console EC2. Et lorsque je sélectionne mon instance, je vois qu'elle est dans l'état running. Je vois tout un tas d'informations sur cette instance. Son type, T2 micro, le nom de la paire de clés qui lui est attachée, le groupe de sécurité, le port 80, le port 22, etc. Je vois son IP public, et son nom DNS public. Je vais récupérer ce nom et je vais, en utilisant la clé SSH que j'ai attachée à l'instance, me connecter à ce serveur. Voilà. C'est un serveur tout simple, c'est un serveur Linux, donc si vous savez administrer un serveur Linux. Tout ce que vous savez faire sur ce serveur s'appliquera ici. Je peux mettre à jour, par exemple, les packages de l'instance. C'est recommandé pour des raisons de sécurité, d'avoir les packages à jour. Bref, c'est un serveur Linux. Vous pouvez y installer ce que vous voulez. On va peut-être juste installer un petit serveur web et se connecter pour vérifier rapidement dès qu'on aura fini d'installer les packages. Voilà, on va démarrer le service. Maintenant, si je me connecte sur ce serveur, je vois la page par défaut de mon serveur web qui tourne. On arrive au même résultat que ce qu'on aurait pu faire avec LightSail. On a davantage de flexibilité, de possibilités de configurer l'instance, de configurer ses règles de sécurité, de configurer son stockage, etc. Donc, dans un cas où vous devez déployer quelque chose de plus compliqué qu'un WordPress ou qu'un Joomla, etc., au lieu d'utiliser LightSail, vous allez utiliser EC2. Et vous voyez, en quelques minutes, on arrive à déployer son premier serveur web et à le configurer. OK ? Voilà. Voilà ce qu'on peut dire sur EC2. Il y a encore beaucoup de choses à dire sur EC2, mais c'est une première introduction. Je vous conseille évidemment d'aller vous plonger dans la documentation de EC2 et puis surtout d'essayer de faire les autres tutos pour vous familiariser avec ces concepts qui sont vraiment importants, les AMI, les security group, lancer les serveurs, vous y connecter, les paires de clés, etc. Et surtout, lorsque vous avez fini de travailler avec cette instance, vous pouvez la détruire. Ça a tué ma connexion SSH. Ici, on est en train de travailler avec le niveau d'usage gratuit, mais si vous étiez en train de travailler avec une instance plus puissante, une instance payante, vous cessez de payer. Vous seriez facturé pour le nombre d'heures d'utilisation de cette instance et pas plus. Pensez bien à arrêter vos instances quand vous avez fini de travailler avec elles, sinon vous risquez de dépenser de l'argent inutilement.
+
+On va jeter un petit coup d'œil à un service qui est très important, qui est un service qui s'appelle IAM, qui est le service qui permet de gérer les utilisateurs. IAM signifie Identity and Access Management. Il va servir essentiellement à deux choses. Il va vous servir à gérer les utilisateurs humains, donc les utilisateurs qui ont le droit de se connecter à la console. Vous voyez, mon utilisateur s'appelle Julien, sans surprise, et je l'ai créé, je lui ai donné le droit de se connecter à la console, je lui ai donné un certain nombre de permissions, etc. Donc pour ajouter un utilisateur, vous cliquez sur ce bouton, on va lui donner un nom, on va l'appeler « Webinar User ». On va indiquer s'il a le droit de se connecter à la console, ici oui, et est-ce qu'il a le droit de se connecter aux API AWS, alors on va dire oui aussi. Vous voyez que les deux sont bien dissociés. Donc pour un utilisateur humain, vous voulez donner l'accès à la console. Pour un utilisateur qui sera une application, un service, évidemment il n'y a pas besoin d'accès à la console. Par contre, il y a besoin d'avoir accès aux API qui permettront d'effectuer les mêmes opérations. Et donc il faudra disposer de cette permission. On peut générer un mot de passe ou enregistrer un mot de passe personnalisé, on peut obliger l'utilisateur à changer son mot de passe et puis surtout ensuite on va lui donner des permissions. Les permissions dans IAM sont des groupes. On peut placer les utilisateurs dans des groupes, ce qui permet de factoriser les permissions, tous les développeurs dans le même groupe ou tous les administrateurs système dans le même groupe et puis d'attacher des permissions au groupe, ce qui permet de ne pas avoir à les attacher à chaque utilisateur. Il en existe déjà plusieurs centaines qui sont fournies par AWS et qui vous servent de bons points de départ pour commencer à attribuer des droits à vos utilisateurs. Par exemple, si vous voulez autoriser un utilisateur à lancer des instances EC2, vous allez chercher toutes les stratégies qui concernent EC2. Vous verrez souvent le nom du service suivi de Full Access, ce qui veut dire toutes les permissions. On peut créer des ressources, les détruire, les modifier, etc. Souvent, il y a un read-only access qui permet de décrire les ressources, de lister les instances ou les security groups, mais ni de les créer, ni de les détruire, ni de les modifier. On pourrait donner à cet utilisateur le droit de créer des ressources dans l'EC2. On peut regarder ce qu'il y a dedans. On ne va pas trop s'attarder, ce n'est qu'une introduction, mais ça vous donnera une idée. On va retrouver à l'intérieur de cette policy qui s'appelle EC2 Full Access, on voit l'accès complet à EC2, l'accès complet au load balancing, l'accès complet à d'autres fonctionnalités de EC2. Si on zoom encore un petit peu... On devrait voir la liste des permissions, des API elles-mêmes, l'ensemble des API qui sont autorisées, toutes les API de ces deux, et il y en a un certain nombre. Donc l'approche de sécurité d'AWS, c'est de permettre aux clients d'autoriser ou d'interdire chaque API et d'autoriser ou d'interdire l'accès à chaque ressource. Donc vous pourrez aller très très loin et dire j'autorise un utilisateur à accéder à une seule instance EC2 et pas aux autres. Ou au contraire, on pourrait dire il a le droit de modifier toutes les ressources EC2 sauf celle-là. Donc c'est une espèce de grande matrice avec les API d'un côté, les ressources de l'autre et on peut cocher ou décocher. En pratique, on a tendance à factoriser les permissions en utilisant notamment les permissions qui sont définies ici. Mais si vous voulez aller très loin dans le détail, vous pouvez. C'est plutôt vos administrateurs système et vos administrateurs de sécurité qui vont le faire. Donc, on va choisir EC2 Full Access. Et donc, si on choisit cette policy et qu'on l'attribue à l'utilisateur que j'étais en train de créer, il aura le droit de créer, de modifier, de détruire toutes les ressources EC2, tout simplement. Donc voilà comment on gère les utilisateurs. On les crée, on décide s'ils ont accès ou pas à la console, on décide s'ils ont accès ou pas à l'API, et puis ensuite, on attache soit au groupe de cet utilisateur, soit à l'utilisateur lui-même, un ensemble de permissions qui conviennent finalement à son job. Donc une autre façon de le faire, c'est d'utiliser des... Au lieu d'utiliser les policies par service, on a des policies qui sont par fonction, qui sont là aussi à un bon point de départ, donc par exemple pour un administrateur, pour un administrateur de base de données, pour un administrateur réseau, etc. On a défini un ensemble de policies qui regroupent les permissions sur les services concernés. Alors, c'est pas parfait, c'est pas exactement ce dont vous pouvez avoir besoin, mais c'est un bon point de départ. Donc ça peut être une façon de commencer à restreindre les droits. Libre à vous de spécialiser ces stratégies et de les affiner. Des stratégies par service, des stratégies par fonction. Vous pouvez créer les vôtres et customiser très profondément la gestion de la sécurité sur votre plateforme.
+
+Intéressons-nous maintenant à un service très populaire, un service de stockage qui s'appelle Amazon S3. Alors S3, c'est certainement le service le plus connu d'AWS, tout simplement parce que le stockage de données dans le cloud est un cas d'usage extrêmement fréquent et l'avantage d'S3, c'est qu'il est illimité. Vous pouvez y stocker autant de données que vous voulez en payant à l'usage pour la région irlandaise. Les tarifs commencent à 3 centimes par giga par mois et les tarifs sont dégressifs en fonction du volume. Pour stocker des données dans S3, vous pouvez créer ce qu'on appelle en français des compartiments. Le terme anglais que vous verrez certainement dans la doc, c'est un « bucket ». Un « bucket », c'est simplement un endroit où vous allez pouvoir stocker vos objets. On va lui donner un nom, on va l'appeler « webinar ». On va le créer dans la région de Francfort. Ah, il existe déjà, zut ! On va lui donner un nom. C'est intéressant d'avoir cette erreur parce qu'effectivement les noms de buckets doivent être uniques au sein de S3. Donc il vaut mieux les préfixer avec quelque chose comme ça. J. Julien Webinar AWS. Voilà, je pense que ça devrait aller. Et on va le créer. Voilà. On peut choisir d'activer du versioning et d'autres options, on va les laisser telles quelles. On peut gérer des permissions, on peut gérer les utilisateurs qui sont autorisés à accéder à ce compartiment. On peut décider si ce compartiment est public ou pas. Si vous avez envie par exemple d'y héberger des données qui servent pour un site web, ça peut être utile d'y donner accès, etc. Toujours, un petit peu comme on a vu dans IAM à l'instant, beaucoup de flexibilité sur la sécurité. On vérifie les propriétés et on le crée. Il est créé instantanément. Je vois mon bucket ici qui est prêt. Et pour y copier des données, tout simplement, je vais les uploader. Je vais les uploader comme ça. Donc on va choisir des fichiers à uploader. Tiens, on va uploader un peu de quelques slides. Allez, on va prendre... Voilà, il y a du PDF, on va prendre ça. Tac, tac, voilà. Paf, paf, on va les ouvrir. Suivant. Suivant. Suivant. On peut choisir la classe de stockage, ça mérite d'être expliqué. Il y a plusieurs classes de stockage dans S3. La classe par défaut, c'est ce qu'on appelle la classe standard. Il y a une classe qui s'appelle Infrequent Access, qui est moins chère à condition que vous n'accédiez pas aux fichiers. Pour des fichiers que vous voulez garder en ligne, mais dont vous n'avez pas besoin souvent, peut-être une fois par mois et encore, ça peut valoir la peine d'utiliser ces différentes classes de stockage afin de faire des économies. Vous trouverez tous les détails dans la doc. On va rester sur la classe standard et puis on va charger les fichiers. Voilà, tout simplement. Et on voit l'upload qui se fait. Alors là, je vous le montre avec la ligne de commande. Et bien sûr, on peut faire tout ça avec les API. Je vais juste vous le montrer. Il y a une ligne de commande qui s'appelle AWS. Nos fichiers ont été chargés. Si vous cherchez comment installer la ligne de commande AWS, vous allez trouver ça dans la doc. En fonction de votre OS, Mac ou Windows, etc., la procédure est un peu différente. Une fois que vous l'avez installé, vous pouvez utiliser les API pour les différents services. Par exemple, ici, si j'ai envie de lister les fichiers qui sont dans le bucket que je viens de créer... Voilà, je vais pouvoir voir mes fichiers. Vous pouvez utiliser la console, la ligne de commande et les SDK pour les développeurs. Toutes ces API sont identiques. Certaines personnes seront plus à l'aise avec la console, d'autres plus avec cette ligne de commande et d'autres préfèrent développer et écrire du code pour accéder à AWS. Les trois méthodes sont équivalentes. Sur S3, on pourrait rentrer dans les détails, mais il faut retenir la simplicité d'usage, le côté illimité, le paiement à la volumétrie, et puis la haute disponibilité, 99,99% minimum, et la durabilité d'S3, qui est conçue pour être durable à peu près 11,9, donc 99,9999, etc. Ce qui veut dire, en manière concrète, que si vous aviez 100 milliards d'objets dans S3, peut-être que vous en perdriez un par an. Peut-être. Voilà. Alors, appelez-moi quand vous avez 100 milliards d'objets dans S3, je pense qu'on pourra vous faire gagner un t-shirt ou quelque chose comme ça. Hein, Hugo ? Bon. Voilà. Donc S3, vraiment l'endroit favori pour stocker toutes vos données, tous vos fichiers, vos backups, etc. C'est le point central de stockage dans AWS. OK ?
+
+Alors on a parlé de calcul avec EC2, on a parlé de stockage avec S3. On va parler de base de données maintenant, qui est le troisième grand pilier. Et on va regarder un service qui s'appelle RDS, qui veut dire Relational Database Service, et qui va nous permettre de créer de manière simple des clusters de bases de données managés au sein d'AWS. Commençons. On va avoir le choix entre différents moteurs de bases de données. On voit des moteurs Open Source, comme MySQL, MariaDB et Postgre. On a aussi le choix d'utiliser des bases de données commerciales comme Oracle ou SQL Server. Dans certaines régions, on a un nouveau service qui s'appelle Aurora, qui est une réimplémentation haute performance de MySQL et de Postgre, avec des performances comparables aux bases de données commerciales mais à une fraction du coût. On va rester sur des choses simples pour aujourd'hui, on va se contenter de MySQL, on va choisir le moteur de base de données MySQL, on va choisir un déploiement simple, une seule instance pour un environnement de développement, mais vous voyez on pourrait avoir un déploiement haute disponibilité qui conviendrait bien à de la production. Tout ça simplement en choisissant cette option. Ici, on va rester sur quelque chose de simple. On va choisir la version de MySQL qu'on veut lancer. Vous voyez qu'il y en a un certain nombre. On va lancer la dernière, 5.7.17. OK ? On va choisir un petit peu comme tout à l'heure la taille du serveur. Donc si on choisit une T2 micro ici, on va rester à l'intérieur du niveau d'usage gratuit. Si on prend quelque chose de plus gros, on va sortir du niveau d'usage gratuit. Donc faites toujours bien attention à ces tailles-là. On veut un déploiement avec une seule instance. Il faut choisir « Non » ici. Pas de déploiement multi-zone de disponibilité. Pas de haut de dispo. On veut juste un serveur unique. 5 Go de base de données. Ok. Très bien. Ensuite, on va choisir le nom de cette instance. On va l'appeler « Webinar instance ». Il faut créer un utilisateur. On va créer l'utilisateur Julien, on va donner un mot de passe. Ah, je vais taper une bêtise. Voilà. On va... Ah, il ne veut pas de caractère. Bon, alors on va mettre un mot de passe moins complexe. Voilà. OK, on va le retaper une deuxième fois. Étape suivante. Donc un petit peu comme tout à l'heure avec l'instance EC2, on peut choisir dans quel réseau, dans quel VPC on va lancer l'instance. On va rester dans le VPC par défaut. On va choisir le nom de la base de données. Voilà. On pourrait choisir plein de paramètres MySQL, on ne va pas le faire. On va lui dire, alors ça c'est un des aspects sympathiques d'RDS, du service géré, c'est qu'il va être capable de faire les backups pour nous. Donc on va dire, écoute, tu me gardes les backups pendant 30 jours, et puis tu fais les backups, tous les jours à minuit, tu lances le backup et tu les gardes pendant 30 jours. On pourrait lui demander aussi de faire les mises à jour mineures, donc quand MySQL 5.7.18 va sortir, on pourrait faire cette modification automatiquement, et donc on va lui dire, tu as le droit de le faire le dimanche à 4h du matin. Et comme ça, je n'aurai pas à me soucier d'une mise à jour mineure. Je peux lancer mon instance. On va démarrer une instance préconfigurée avec MySQL. On va la voir démarrer. Voilà, elle est en cours de création. On va patienter quelques minutes et on se retrouve dès qu'elle est prête. Notre serveur de base de données est maintenant prêt. On voit qu'il est disponible. Nous avons ici l'adresse du serveur, le nom de domaine du serveur. Je vais le copier, c'est peut-être un peu petit. On va essayer de zoomer un peu. Voilà. Si j'utilise le client en ligne de commande de MySQL, avec le nom de la machine et l'utilisateur Julien, je vais rentrer mon mot de passe. Et me voilà connecté sur mon serveur. Et donc maintenant je pourrais créer une base de données et puis commencer à créer des tables et commencer à travailler avec mon serveur tout simplement. Donc vous voyez en quelques clics où on ferait l'équivalent en un appel d'API, on arrive à créer un serveur MySQL. Ici, on a choisi de lancer une seule instance. On aurait pu avoir une instance à haute disponibilité. On pourrait redimensionner cette instance. Les éventuelles mises à jour de version mineure vont être faites automatiquement. Voilà l'avantage d'avoir un service géré. On ne s'est pas préoccupé de démarrer un serveur, d'installer MySQL, de gérer la configuration, etc. On a juste créé une instance RDS et on s'y connecte et on travaille directement dessus.
+
+On a fait un petit tour des principaux services. On a vu LightSail, le service de serveurs privés virtuels, qui est vraiment la façon la plus simple de déployer des applications sur AWS. On a fait un petit tour rapide de EC2. On a démarré une instance, configuré le security group, s'est connecté dessus, installé un serveur web, etc. Ensuite, on a parlé de la gestion des utilisateurs et des permissions avec IAM. Ensuite, on a parlé de stockage avec S3. On a vu comment créer un bucket, copier des objets, le faire avec la ligne de commande, etc. Ensuite, on a parlé de bases de données avec RDS et on a vu comment en quelques minutes on peut créer un serveur MySQL, mais on aurait pu faire la même chose avec Oracle, SQL Server, ou PostgreSQL, et comment s'y connecter aisément sans avoir à gérer d'infrastructures. Voilà un petit panorama des services fondamentaux. Si vous voulez aller plus loin, la meilleure solution, c'est de rejouer les tutorials disponibles, de commencer à découvrir la doc, de bien lire la page sur le niveau d'usage gratuit, de bien comprendre jusqu'où vous pouvez aller sans payer. Et puis ensuite, vous pourrez continuer à découvrir les services, regarder nos webinars précédents pour creuser RDS, IAM, et les différents outils que j'ai pu aborder depuis des mois. Et voilà, vous pourrez vous former comme ça, tranquillement et progressivement à AWS.
+
+Très bien, nous voilà arrivés à la fin de ce webinar. Je vous remercie beaucoup de nous avoir écoutés. Je remercie Hugo pour son aide et sa logistique sans faille. Rendez-vous en juillet et en août pour une nouvelle série de webinaires. En juillet, on parlera d'IoT, de l'Internet des objets. Et en août, on parlera de DynamoDB, la base de données NoSQL d'Amazon. Voilà, donc encore pas mal d'aventures en perspective. Merci beaucoup et à très bientôt pour un nouveau webinaire.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS</span><span class="tag">FreeTier</span><span class="tag">Webinar</span><span class="tag">Beginners</span><span class="tag">LightSail</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

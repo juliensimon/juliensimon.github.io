@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An overview of Amazon SageMaker November 2017</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>An overview of Amazon SageMaker November 2017</h1>
+        <div class="date">November 30, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/ym7NEYEx9x4" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Amazon SageMaker is a fully managed end-to-end machine learning service that enables data scientists, developers, and machine learning experts to quickly build, train, and host machine learning models at scale. This drastically accelerates all of your machine learning efforts and allows you to add machine learning to your production applications quickly.
+
+⭐️⭐️⭐️ Don't forget to subscribe and to enable notifications ⭐️⭐️⭐️
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" target="_blank" rel="noopener noreferrer">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+<a href="https://aws.amazon.com/sagemaker/" target="_blank" rel="noopener noreferrer">https://aws.amazon.com/sagemaker/</a>
+<a href="https://github.com/awslabs/amazon-sagemaker-examples" target="_blank" rel="noopener noreferrer">https://github.com/awslabs/amazon-sagemaker-examples</a>
+
+For more content, follow me on :
+* Medium: <a href="https://medium.com/@julsimon" target="_blank" rel="noopener noreferrer">https://medium.com/@julsimon</a>
+* Twitter: <a href="https://twitter.com/julsimon" target="_blank" rel="noopener noreferrer">https://twitter.com/julsimon</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Hey, good morning, everyone. This is Julien here. Today, I want to talk about a brand new service that we announced at reInvent yesterday. It's called Amazon SageMaker. It's a brand new service for machine learning. In a nutshell, it's everything you need to define, train, and deploy machine learning and deep learning models. It's a really great service, and I'm very excited about it. This is the blog post that announced it. Obviously, you can find it on the website. But let me dive directly into the service and walk you through the main features. I'll show you some examples, some simple ones, and some more advanced ones. Just stay with me here.
+
+This is the SageMaker console. As you can see, we have four parts here: the notebook instance, which is a managed AWS instance where you can start running your notebooks. It has a lot of samples for you to look at, and it's great for experimentation. You can start loading data from S3, start training, and experiment with your data and models. The second part is training, where you define training jobs and possibly do distributed training if needed. Once your model is trained, you can host it in SageMaker, and you have a model repository for that. The last step is to deploy the model behind an endpoint that you can invoke from your notebook using the SDK or from an HTTP API in your own application. All these four parts can be combined end-to-end to go from experimentation to production, but they can also be used independently. For example, you could only use the notebook part for experimentation or just the deployment part if you have a pre-trained model.
+
+First, let's look at notebook instances. I have one ready here because we don't want to wait. I'll show you how to create one. Just give it a name, pick an instance type—T2 medium for dev and small datasets, M4 for a bit more power, and a P2 instance with a GPU for larger, more demanding datasets. You need an IAM role, and we can create one here. You can also choose the VPC for deployment, an encryption key if needed, and tags. Click the Create button, wait a few minutes, and your instance is ready. I have a P2XL instance here, and I'll open it. This is a familiar Jupyter environment with plenty of samples. You can create a notebook directly and get to work using environments like Spark, PySpark, MXNet, TensorFlow, and Python. We support Python 2 and Python 3, and we'll add more environments as we go.
+
+These notebooks are written by AWS experts to teach you how to work with SageMaker. Let's start with a simple one. This notebook uses the XGBoost algorithm to do classification on the MNIST dataset. When you work with SageMaker, you don't have to build everything yourself. In this case, we provide an off-the-shelf implementation of XGBoost. Just bring your own data, use the algorithm, and you can train and deploy it. There's no need to mess with MXNet or TensorFlow. You just pick the algorithm, throw data at it, train it, and off you go. This is the simplest way for developers and data scientists to get started and train models.
+
+I won't go through every line of code, but all these examples are available for you to read in detail. All our data lives in S3, so make sure you have an S3 bucket in the same region as your notebook instance. We'll load the MNIST dataset, convert it to the LibSVM format required by the algorithm, and upload it to S3. The XGBoost algorithm is hosted in Docker containers in different regions. You define the parameters for the training job in a JSON document, including the instance type, hyperparameters, and input data location. The SageMaker SDK, a Python SDK, helps you manage all SageMaker activities. You can start a training job, describe it, and monitor its progress in the console. Training might take a few minutes, and you can see the logs in CloudWatch.
+
+After training, you can deploy the model. This involves creating an endpoint configuration and specifying the instance type and model. SageMaker allows you to host multiple models behind the same endpoint for A/B testing and traffic shifting. Once the endpoint is created, you can test the model by making predictions. For example, we predicted that a label is 7, and the image was indeed a 7. We can also do batch predictions and evaluate the model's accuracy.
+
+Now, let's look at a second example. We'll still work with MNIST but use a deep learning model, specifically a multi-layer perceptron (MLP) with our own MXNet script. This is a basic MXNet tutorial for MNIST, defining a multilayer perceptron, loading the training and validation sets, and training the model. The SageMaker SDK has a high-level MXNet object that simplifies the process. You provide your MXNet script, specify the training instance type, and hyperparameters. Training is straightforward, and you can monitor the progress in the console. After training, you can deploy the model to an endpoint and test it. For example, we classified a 3 correctly, but it made a mistake on an 8. This shows the model's performance and the importance of testing.
+
+For the third example, we'll bring a pre-trained model from outside SageMaker. This is a K-means clustering model trained with scikit-learn. We'll convert the model to the format expected by SageMaker, package it, and upload it to S3. We then create a model in SageMaker, inject the pre-trained model into a container, and set up an endpoint. We can compare the predictions from the local model and the SageMaker-hosted model to ensure they perform the same.
+
+Finally, for the most advanced use case, you can bring your own Docker container for custom training and prediction. This involves building a Docker container with a specific structure, pushing it to ECR, and using it with SageMaker. The process is similar to using our pre-built containers, but you have full control over the environment.
+
+In summary, SageMaker provides everything you need for machine learning and deep learning in the cloud. You can use off-the-shelf algorithms, bring your own code with MXNet or TensorFlow, host pre-trained models, or bring your own Docker container. The service is easy to use, with no infrastructure management, and it integrates seamlessly with other AWS services.
+
+Thank you for listening. This was Julien, live from reInvent. Almost time for breakfast, 5:50. Get started on SageMaker and have fun. Talk to you later. Thank you very much.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AmazonSageMaker</span><span class="tag">MachineLearning</span><span class="tag">DeepLearning</span><span class="tag">AWSreInvent</span><span class="tag">ModelDeployment</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

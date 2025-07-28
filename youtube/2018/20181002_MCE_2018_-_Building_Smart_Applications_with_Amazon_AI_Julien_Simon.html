@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCE 2018   Building Smart Applications with Amazon AI Julien Simon</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MCE 2018   Building Smart Applications with Amazon AI Julien Simon</h1>
+        <div class="date">October 02, 2018</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/vSNlAXTUXBk" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">In this session, you will learn how to easily add Amazon AI services to your own applications. Find out how to access image and video analysis, text to speech, speech to text, translation, natural language processing: all of which are just an API call away. Through code-level demos of Amazon SageMaker, Amazon Translate, Amazon Polly, Amazon Transcribe, Amazon Comprehend, Amazon Rekognition, we’ll show you how to quickly get started with these services, with zero AI expertise required.
+
+<a href="https://2018.mceconf.com/" target="_blank" rel="noopener noreferrer">https://2018.mceconf.com/</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Good afternoon, everyone. My name is Julien, and I'm a tech evangelist with AWS, focusing on AI and machine learning. It's great to be back in Poland once again. Today, we're going to discuss a range of services that allow any developer, even those with no machine learning or AI skills, to add sophisticated AI capabilities to their applications. We'll quickly review these services, and I have a lot of demos to show you, so let's get started.
+
+Our mission with machine learning and AI is to make these technologies accessible to everyone in the room. We believe that AI shouldn't be limited to experts with PhDs. It should be available to every developer, including junior developers who can call APIs. The services I'll discuss today are high-level API services designed to get the job done with minimal effort and issues. This approach seems to be working, as we have a wide range of customers running machine learning and AI workloads on AWS, from large companies like Netflix, NASA, and Intel to major banks. These organizations often have dedicated data science and machine learning teams. However, we also serve many smaller companies, startups, and regular businesses that don't want to invest in building AI models but need to solve their business problems efficiently.
+
+The stack we're discussing today includes a high-level layer of application services, which are the API services we'll focus on. These services handle tasks like image recognition, video recognition, translation, text-to-speech, and speech-to-text. They are straightforward and popular. However, sometimes you need more control and the ability to train on your own data. For that, we have a layer of platform services, with SageMaker being the primary one. I won't cover SageMaker today, but I'll share resources at the end. If you have the expertise to train and tweak your own models, SageMaker is likely what you need. At the lowest level, you can always use EC2 instances, whether CPU or GPU, to deploy any machine learning or deep learning algorithms. However, today we'll focus on the high-level services.
+
+The first service I want to introduce is Amazon Rekognition. It launched about a year and a half ago and is designed to understand visual context. Rekognition can perform various tasks, such as object detection, facial analysis, face comparison, unsafe content detection, celebrity recognition, and text recognition in images. Let's look at some of these capabilities.
+
+Object detection is straightforward: you pass an image, call an API, and receive labels that describe the image's context with a confidence score. This example shows 10 labels, but you can get many more. No training is required; just call the API and get the job done. Facial analysis detects faces in images, providing a bounding box with coordinates and attributes such as gender, age range, emotions, and accessories like sunglasses or beards. This example shows a group selfie I took at a workshop in India a couple of months ago. Using Rekognition, it's easy to find all the faces, including their positions and attributes. Most faces were detected correctly, except for one colleague whose face was partially hidden. Rekognition can detect up to 100 people in a single image.
+
+Face comparison involves matching faces between two images. For example, you can compare a reference image with a group photo to find matches. This service works well even with multiple faces in both images. Image moderation is crucial for websites to ensure user-uploaded content is appropriate. The definition of "appropriate" can vary, and Rekognition will identify elements like swimwear, partial nudity, or explicit content, allowing you to decide how to handle the content.
+
+Celebrity recognition identifies famous individuals in images, providing additional information such as Wikipedia or IMDb URLs. Text recognition in images detects and extracts text, returning the bounding box and the actual text. This works well with printed text and text in signs or logos, though it may not handle handwriting as effectively.
+
+One of our customers, Marinus Analytics, uses Rekognition to help law enforcement find missing children on the internet. They build a database of missing children's photos and use Rekognition to match these with images found on the web. This scalable solution is essential for handling the vast amount of data involved.
+
+Let's see a quick demo of Rekognition's face detection using Java. I'll use the AWS SDK to build a client, detect faces in an image stored in S3, and print the results. The image is called "Oktoberfest." Here's the picture. Rekognition detected 22 faces, providing detailed attributes for each, including bounding boxes, age ranges, emotions, and landmarks. The service is extremely fast, even over a slow Wi-Fi connection.
+
+Now, let's try face comparison. I have two images: a reference image and a group photo from an event. I'll load the images, build a compare faces request, and call the API. The service matched my face with 99.99% confidence, while other faces did not match. This demonstrates how easy it is to use Rekognition for face comparison.
+
+Rekognition Video extends these capabilities to video, adding features like tracking and activity detection. For example, Sky News used Rekognition Video during the royal wedding to recognize celebrities entering the church. This service can track individuals and detect activities in real-time, making it valuable for content creators and media organizations.
+
+Let's see a small movie demonstrating Rekognition Video's capabilities. It tracks individuals in a video and can recognize them even if they move around. For example, if a friend named Bob shows up at your door, your smart home system can match Bob's face and notify you. This can be integrated with Kinesis Video Streams, AWS Lambda, and other services to create a seamless experience.
+
+Next, I want to introduce Amazon Polly, a text-to-speech service. Polly supports 25 languages and 50 voices, and you can select a voice based on gender and other attributes. It supports SSML, allowing you to control intonation, speed, and even add a breathing effect for more natural speech. Polly can generate highly realistic speech samples. For example, it can read text in Polish: "Cześć, mam na imię Ewa. Przeczytam każdy tekst, który tutaj wpiszesz." Polly is used by Duolingo to generate spoken messages, and it outperformed other providers in A-B testing.
+
+Now, let's talk about Amazon Translate, a real-time translation service. It automatically detects the source language and supports translations between several languages, including English, Spanish, Portuguese, German, French, Arabic, and simplified Chinese. While it currently supports a limited set of languages, more will be added based on customer demand. A quick demo using the AWS command line shows how to translate text from Chinese to English. The translations are generally accurate, though they may need fine-tuning for perfect results. This service is particularly useful for translating large volumes of content quickly.
+
+Amazon Transcribe is a speech-to-text service that supports high-quality and telephony audio. It provides timestamps and can handle multiple speakers, making it ideal for call center analytics. I recorded a sample audio file and used Transcribe to convert it to text. The transcription was mostly accurate, though it had some issues with my French accent and punctuation. Transcribe is particularly useful for understanding the intent of conversations, even if the transcription isn't perfect.
+
+Finally, let's discuss Amazon Comprehend, a natural language processing service. Comprehend can extract entities, key phrases, and sentiment from text, and it can detect over 100 languages. It also supports topic modeling, which automatically groups documents into topics. This is useful for extracting metadata from large collections of documents.
+
+To demonstrate how these services can be combined, let's build a simple app that reads signs in real-time, detects the language, translates the text, and speaks it. Using Rekognition to detect text, Comprehend to detect the language, Translate to translate the text, and Polly to speak it, we can create an app that reads billboards in any language. This app could be a valuable tool for travelers or anyone needing to understand signs in different countries.
+
+In conclusion, these services make it easy to add sophisticated AI capabilities to applications, even for developers with no machine learning expertise. The code to achieve this is simple, and the cost is minimal. These fully managed services handle scaling and infrastructure, allowing you to focus on solving your business problems. Thank you. If I can write it, anyone can. That's my conclusion.
+
+So this is the family picture, and we talked about most of the services. There's one I didn't talk about, which is Lex or chatbot service, but I had to cut one in the interest of time. Please get in touch if you're interested in chatbots as well. SageMaker, one of the platform services, is the one you need to look at if you need to train on your own data and build your own models. At the lowest level, EC2 instances, the deep learning AMI that provides all of those libraries and the NVIDIA drivers, etc., pre-installed so that you don't have to install anything ever again, which is good news. If you want to keep on learning about this, I would recommend starting here. That's the high-level page for ML and AI at AWS. You'll find pointers to all the services I talked about and case studies, documentation, etc. The AI blog has quite a lot of content, technical articles, etc. And on my own blog, you'll find quite a few posts on machine learning and deep learning in SageMaker, and the latest one was on PyTorch, I think. So quite a few things. If you're really into machine learning and deep learning and want to learn how to do this best on AWS, my blog is a good location to look at. I have also a ton of talks and tutorials on YouTube, so you might like that. The code I showed you today is on GitLab now. So long live GitLab, right? If you want to get in touch later on, Twitter is really the best way, or LinkedIn if you want to. But Twitter is really the best way to get in touch, ask me questions, and ask me to help you out. If you build cool stuff with all of this, please let me know. I'm more than happy to share and retweet all of it. That's it. Thank you very much. Thanks for inviting me. And enjoy the rest of your day. Thank you.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS</span><span class="tag">MachineLearning</span><span class="tag">AI</span><span class="tag">Rekognition</span><span class="tag">Polly</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

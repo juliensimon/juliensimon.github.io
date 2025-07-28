@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning sur Hadoop   concepts et outils</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Machine Learning sur Hadoop   concepts et outils</h1>
+        <div class="date">December 13, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/t339b2Q-u34" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Slides : <a href="http://chilp.it/24d409e" target="_blank" rel="noopener noreferrer">http://chilp.it/24d409e</a>
+
+Au fil du temps, l’écosystème Hadoop s’est enrichi de quantité d'applications utiles aux projets de Machine Learning (Hive, Spark, etc.), aussi bien pour la préparation des données que pour la construction des modèles eux-mêmes. Lors de cette session, découvrez un panorama de ces applications et des cas d’usage les plus courants chez les clients d’AWS.
+
+✚ Retrouvez tous nos événements : <a href="https://aws.amazon.com/fr/events/" target="_blank" rel="noopener noreferrer">https://aws.amazon.com/fr/events/</a>
+✚ Rendez-vous sur notre site internet : <a href="http://amzn.to/2ktrf5g" target="_blank" rel="noopener noreferrer">http://amzn.to/2ktrf5g</a>
+✚ Suivez-nous sur Twitter : <a href="https://twitter.com/aws_actus" target="_blank" rel="noopener noreferrer">https://twitter.com/aws_actus</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Aujourd'hui au programme, nous allons parler d'un service qui s'appelle Amazon Elastic MapReduce, qui est l'environnement managé pour tous les outils de l'écosystème Hadoop. Dans le premier webinar, je vais vous parler du service en tant que tel et en particulier de son intégration sur AWS et de l'intérêt d'exécuter Hadoop et les outils Hadoop sur AWS. Vous allez voir qu'il y a pas mal de choses à voir. Et dans le second webinar, je ferai exclusivement des démos et je vous montrerai quelques mécanismes avancés sur EMR. Puisqu'on doit parler de machine learning cette semaine, on fera une démo de recommandations avec une librairie qui s'appelle Mahout et une démo de classification de spam avec Spark, en étudiant un certain nombre d'algorithmes. Donc, premier webinar, EMR, les concepts ; deuxième webinar, la mise en pratique et les démos. Ok ? Allez, c'est parti, j'espère que vous avez pris un café, il y a beaucoup de choses à voir aujourd'hui.
+
+Dans ce premier webinar, on va définir rapidement ce qu'est EMR, puis on va se concentrer sur ce qui fait qu'AWS est un endroit intéressant pour exécuter des applications Hadoop. Et quand j'utilise Hadoop, c'est vraiment au sens large, puisqu'on va parler de Spark, etc., donc de l'écosystème Hadoop. Je ne vais pas faire un tutoriel sur Hadoop ou sur Spark aujourd'hui. Il y a plein de bons endroits sur le net et plein de bons bouquins qui couvrent déjà tout ça. Je vais vraiment me concentrer sur l'intégration des applications Hadoop sur AWS. Le premier point dont on va parler, c'est l'utilisation d'S3 qui va servir de point de stockage central pour l'ensemble des données utilisées sur les clusters, et vous allez voir pourquoi c'est plus intéressant de faire ça que de le faire sur HDFS. Le deuxième point que je vais aborder, c'est l'utilisation des différents types de nœuds. Dans EMR, on peut créer des Core Nodes, donc des nœuds qui vont avoir à la fois du stockage et du calcul, et des Task Nodes, donc des nœuds qui n'ont que du calcul, et on verra pourquoi c'est intéressant. Ensuite, on parlera d'élasticité, on verra comment on peut facilement sur AWS créer des clusters à la volée, les détruire et les optimiser avec les instances spot. On parlera en particulier d'un mécanisme qui est encore assez récent, qui doit avoir moins d'un an, qui s'appelle les Spot Fleets, donc les flottes d'instances spot. Vous allez voir l'intérêt de ce mécanisme. Ensuite, on parlera de Spark, qui est une technologie qui a quelques années mais qui présente pas mal d'avantages en termes de performance, et on verra comment ça peut fonctionner sur AWS. Et bien sûr, on répondra à vos questions. N'hésitez pas à les envoyer tout au fil de la présentation, Hugo les reçoit, les trie et organise tout ça. Merci à Hugo d'ailleurs pour la logistique, j'ai oublié de le remercier hier, ça le fait marrer, mais il fait un gros boulot, donc merci beaucoup.
+
+Très rapidement, un rappel de Hadoop, sa vie, son œuvre. Je ne vais pas faire un historique d'Hadoop, là aussi vous trouverez ça partout sur le web. Mais si on doit résumer en un slide ce à quoi sert Hadoop et pourquoi Hadoop a été une révolution dans le monde du traitement de données technologique à la fin des années 2000, on peut citer ces différents points. Le premier point, c'est que Hadoop est vraiment bien adapté pour des données qui sont non structurées, par exemple, des logs web ou des données brutes, ou des données semi-structurées, des données JSON, des données de ce style. Contrairement à des données structurées, qui, elles, auraient un intérêt à être stockées et traitées dans des bases de données relationnelles, par exemple. Le problème de ces données semi-structurées ou non-structurées, c'est précisément qu'elles ne rentrent pas dans un schéma bien défini, donc c'est difficile de les faire rentrer efficacement dans une base de données relationnelle. Et a fortiori, quand le volume de ces données est vraiment important, il est déraisonnable et inefficace de les écrire dans une base de données relationnelle. Je me souviens d'un cas où on écrivait pour chaque ligne de log web, pour chaque ligne de log Apache, une ligne dans une table SQL. Bon, jusqu'à une certaine échelle, ça passe encore. L'histoire a mal fini et on a fini par faire du Hadoop. Donc, sur des données comme ça, qui ne sont pas des données fixes, à schéma fixe, etc., Hadoop est très utile.
+
+Ensuite, Hadoop va être capable de travailler avec des jeux de données différents. On va le voir tout à l'heure, dans Hadoop, on a à la fois du calcul et du stockage. Sur ce stockage, on peut placer tout ce qu'on veut. On peut avoir des logs web, on peut avoir des données qui sont un export d'une base de données relationnelle, on peut avoir des logs JSON qui viennent d'une autre application, et puis on va stocker tout ça au même endroit. À la fin, on va faire des traitements et on va réconcilier ces différents types de données. Donc, on peut avoir sur le même système des données avec des formats très différents, des structures très différentes, et ça correspond bien à la problématique du big data où on va vouloir traiter des choses qui viennent d'un peu partout. Le troisième point qui est, à mon avis, aujourd'hui le plus important et qui est vraiment l'usage qui me semble être privilégié chez nos clients pour Hadoop, c'est vraiment pour faire de l'ETL à grande échelle. Donc, pour faire de la transformation de données, de la jointure, de l'agrégation, etc., sur ces fameuses données non structurées et surtout à grande échelle. C'est-à-dire que si vous avez des centaines et des centaines de Tera de logs et que vous voulez les agréger par heure, par jour, par mois, etc., dans toutes les dimensions possibles, aujourd'hui la solution pour faire ça, c'est l'écosystème Hadoop, que vous le fassiez avec du MapReduce ou avec du Spark. Il n'y a pas d'autre système qui va permettre de le faire à très grande échelle. Hadoop reste un outil intéressant, j'appelle ça le bulldozer, c'est-à-dire qu'il y a une montagne de données, il faut la déplacer du point A au point B en la transformant. Probablement, Hadoop reste la bonne solution pour le faire. On peut évidemment faire de l'analyse, on peut générer des données agrégées, des rapports, etc. Cependant, si on le fait de manière traditionnelle, par exemple avec Hive, ça reste du batch, donc avec des temps de réponse qui ne sont pas des temps de réponse interactifs, qui ne sont pas forcément des temps de réponse très prévisibles, qui vont dépendre de la charge du cluster. On va plutôt rester en mode batch. Je sais bien qu'avec Spark et d'autres technologies, on peut aller vers du temps réel, néanmoins, on n'est pas non plus dans des architectures hyper réactives, il faut en être conscient. Un autre grand cas d'usage que j'ai déjà mentionné, c'est le traitement de logs, l'agrégation de logs. Hadoop est né chez les géants du web, il est né chez Google, puis le MapReduce est né chez Google, puis Hadoop a été implémenté par Yahoo, et d'autres ont continué à contribuer, Facebook, etc. La problématique étant évidemment d'agréger et de traiter des volumes invraisemblables de l'ordre web. Donc, voilà, de manière générale, ce qu'on aime faire et ce qu'on peut faire efficacement avec Hadoop.
+
+Le service dont on parle aujourd'hui, c'est un service qui s'appelle EMR, et qui, pour dire les choses très simplement, va fournir les différentes applications de l'écosystème Hadoop. On verra la liste tout à l'heure, il y en aura une petite vingtaine maintenant, donc Hive, Spark, Presto, et puis les outils périphériques, Scoop, Zeppelin, etc. Tout ça va être fourni de manière managée. EMR vous propose de choisir entre deux distributions, soit la distribution Amazon, qui n'est autre que la distribution Apache avec des fixes de sécurité supplémentaires, ou alors vous pouvez choisir une distribution commerciale éditée par MapR. Ensuite, une fois que vous avez choisi ça et que vous avez choisi la liste des applications, on va choisir le nombre de nœuds qu'on a envie de lancer, on va choisir le type de nœuds, etc., et puis on va lancer le cluster, et donc les instances vont démarrer en quelques minutes, et le cluster va être prêt à travailler en quelques minutes. On verra tout à l'heure avec les aspects d'élasticité, les aspects liés aux instances spot, comment rendre ça extrêmement élastique, extrêmement dynamique. Le tout repose sur le socle de l'élasticité, le socle EC2, IAM, etc. On va retrouver S3, etc. On va retrouver toutes les fonctionnalités de sécurité qu'on a l'habitude de retrouver. On va avoir des rôles pour les instances, on va pouvoir chiffrer le file system des instances, on va pouvoir faire du chiffrement dans S3, etc. Vous savez que la sécurité, c'est la priorité zéro pour nous, et donc évidemment, on va disposer directement avec EMR de tous les mécanismes de sécurité liés aux instances, au stockage, etc. Vous le savez sans doute depuis peu, depuis octobre, le paiement des instances EC2 se fait non plus à l'heure mais à la seconde, et ça s'applique également à EMR. Il faudrait que je mette ce slide à jour, désolé. Donc, on peut payer maintenant à la seconde et on peut utiliser Spot. On va voir tout à l'heure quel type d'économie on peut faire avec Spot et pourquoi ça a un immense intérêt. Si la distribution Hadoop qui est fournie et installée sur les instances ne vous convient pas ou si vous voulez y rajouter des outils, des librairies, etc., vous avez la flexibilité de customiser. Vous avez accès aux fichiers de configuration Hadoop, vous pouvez déployer des applis supplémentaires, etc. Donc, c'est un environnement managé, mais sur lequel, si vous le voulez, vous avez encore beaucoup de liberté de customiser, que ce soit autant la configuration que le déploiement des applications.
+
+Si vous étiez là hier, vous avez vu ce schéma qui est la vue générale du processus de machine learning. Ici, j'ai essayé de faire apparaître les points qui me paraissent être les points forts de EMR. De mon point de vue, là où EMR et Hadoop en général sont vraiment les plus utilisés, les plus présents chez nos clients, c'est sur les phases de préparation et de nettoyage des données. Donc, une fois qu'on a ingéré nos différentes données, comment les nettoyer, comment les pré-agréger, comment les convertir au format, etc. Ce côté bulldozer de données est vraiment un des points essentiels pour EMR. Ensuite, les deux points qui me paraissent importants, c'est le feature engineering, donc la création, une fois qu'on a un dataset propre, du dataset qui va servir à entraîner les modèles. Là, on est dans une phase ultérieure de transformation des données où, à partir des données brutes préparées, on va générer les features qui vont servir à l'entraînement. Si on a un gros volume de données, il faut le faire sur Hadoop, puisque seul cet environnement aura le parallélisme nécessaire pour accomplir le boulot dans un temps raisonnable. Une fois qu'on a les données, une fois qu'on a généré les features, qu'on a généré les données prêtes à l'entraînement, on peut faire l'entraînement. Ça dépend un peu du modèle qu'on va construire. On pourra faire des choses en MapReduce, on pourra faire des choses en Spark, on pourra utiliser du code propriétaire si on a envie. Mais l'entraînement à l'échelle est un des points clés de EMR et de Hadoop. Pour les boîtes qui sont en pointillés, je les ai laissées en pointillés parce que ce n'est pas la finalité première d'EMR. Oui, sur EMR, on peut faire l'intégration de données, on a des outils d'import, il y a Scoop, l'application Scoop qui permet d'aller piocher des données dans des bases de données relationnelles, par exemple. Ce n'est pas forcément une solution complète, ce n'est pas forcément une solution prête à l'emploi, il y a quand même un peu de travail. Donc, oui, on peut faire des choses, mais ce n'est pas non plus forcément ultra complet et ultra simple d'emploi. Des solutions comme GLU, le nouveau service AWS GLU qui est un ETL manager, sont certainement plus pointus sur ces sujets pour aller piocher des données venant de n'importe où, les transformer, les préparer, et puis ensuite peut-être les pousser vers EMR. Pour ce qui est de la data visualisation et de l'analyse, oui, on peut faire de la data visualisation sur EMR, on peut démarrer un notebook Jupyter ou Zeppelin et puis on peut visualiser des trucs, mais ce n'est pas la finalité de l'outil. L'évaluation du modèle est pareil, oui, on peut exécuter une application qui va évaluer un modèle sur EMR, mais il n'y a rien de prêt à l'emploi pour ce genre de choses. Ce n'est pas non plus le cœur de l'outil. Donc, vraiment le cœur de l'outil, c'est le bulldozer de données, la transformation, tout mettre dans un format pivot, faire les agrégations, etc., construire les features, et puis ensuite faire l'entraînement. Tout ce qui nécessite vraiment un scaling massif.
+
+Commençons par regarder Amazon S3 et comment on peut l'utiliser de manière la plus efficace possible en conjonction avec EMR. La recommandation vraiment concrète qu'on fait à tous nos clients, c'est, dans la mesure du possible, sauf raison vraiment impérieuse, de ne pas utiliser HDFS. Vous allez me dire, mais c'est paradoxal. On démarre un cluster, ce cluster a des nœuds, les nœuds ont des disques, on a du stockage. Pourquoi est-ce qu'on ne veut pas utiliser ce stockage local ? A priori, il est plus rapide que le stockage S3. Pourquoi est-ce qu'on veut utiliser S3 ? En fait, vous allez voir au fil de la présentation, vraiment le point clé qui mène à vous conseiller d'utiliser S3 comme stockage permanent, c'est que votre stockage S3 va continuer à exister complètement indépendamment de vos clusters. Donc, quel que soit l'état du cluster, en fonctionnement, à l'arrêt, en panne, si vous stockez vos données dans S3, vous découplez le stockage du calcul. D'une part, vous allez avoir une scalabilité qui est supplémentaire, qui est plus élevée, puisque vous pourrez scaler selon les deux axes calcul ou stockage de manière indépendante, et surtout, vous ne perdrez jamais vos données. Même si vous faites une erreur, que vous tuez votre cluster, vous ne perdez pas vos données. Donc, c'est vraiment la recommandation numéro 1, utiliser S3 pour stocker vos données de manière permanente, donc les données brutes et les résultats, etc. Et puis on va utiliser HDFS comme stockage local et temporaire pendant l'exécution des jobs. Mais on va rien laisser de pérenne sur ces clusters, on va tout préférer mettre dans S3. L'avantage évident, c'est qu'en faisant ça, il n'y a pas de chargement de données, vous n'avez pas à copier vos données sur un cluster. Si vous allez les chercher directement dans S3, vous allez les chercher directement dans S3. Donc, vous supprimez les phases de chargement qui peuvent être longues si le dataset est volumineux. Pour bien préciser, ce point est vraiment essentiel, le découplage du stockage et du calcul. Dans le modèle traditionnel, on a un cluster, donc on a un nœud maître et puis on a des nœuds workers, et donc chacun a évidemment un CPU, de la mémoire et du stockage local. Vous savez certainement que dans Hadoop et dans HDFS, il y a de la réplication, donc le réglage par défaut est de répliquer deux fois, ce qui signifie que chaque bloc disque sera présent trois fois sur le cluster. Donc, si vous avez un dataset de 500 Tera, vous devez provisionner un cluster de 1,5 Péta. Donc, ça veut dire rajouter potentiellement beaucoup de nœuds juste pour avoir du stockage, pas forcément du calcul. Et donc, on a ce couplage entre stockage et calcul, et c'est désagréable. C'est désagréable et ça fait plus de nœuds à gérer, plus de nœuds à payer, et intellectuellement, ce n'est pas satisfaisant de se dire qu'on rajoute du CPU alors que ce qu'on veut vraiment, c'est du stockage. Dans le modèle EMR, on va pouvoir travailler avec des nœuds qui auront peu voire pas de stockage local et qui se contenteront d'aller chercher dans S3. La réplication et la haute disponibilité de la donnée sont gérées par S3 et ne sont pas gérées par la réplication de HDFS, ce qui est certainement plus efficace. Donc, on peut ajuster la taille du cluster de manière précise sans avoir à ajouter des nœuds parce qu'on veut rajouter du stockage. Le stockage est dans S3, c'est S3 qui s'en occupe.
+
+On rencontre parfois des clients qui ont envie de faire tourner leur propre Hadoop dans EC2 et de ne pas utiliser EMR, pourquoi pas. Maintenant, si on fait ça, on ne profite pas de tout l'avantage que EMR procure. On va devoir démarrer des instances EC2, on va certainement leur attacher des volumes EBS ou du stockage local, donc un peu comme dans le modèle traditionnel. Donc, ça veut dire qu'on va devoir gérer trois fois plus de stockage que nécessaire à cause de la réplication. Cette réplication va nous protéger contre la chute d'un nœud, c'est son objectif, mais par contre, elle ne va pas nous protéger contre la perte d'une AZ, puisque ces instances-là vont tourner dans le même subnet, et qui dit même subnet dit même AZ. Donc, par défaut, si vous perdez une AZ, vous risquez de perdre tout le cluster. Et puis, en termes de stockage, vous allez payer le stockage au prix EBS, si on utilise EBS, et vous allez devoir en mettre trois fois plus que nécessaire. Et surtout, ce dernier point est le plus important, c'est que comme la donnée est locale sur le cluster, vous ne pouvez pas éteindre le cluster. Sinon, vous perdez la donnée, par définition. Donc, finalement, si vous avez un cluster sur EC2, certes, vous profitez un peu de l'élasticité du cloud, mais vous ne profitez pas de l'élasticité du cluster. Vous êtes prisonnier de votre cluster que vous ne pouvez pas éteindre et qui, en cas d'incident, risque de provoquer des pertes de données, un peu comme dans le modèle traditionnel. Donc, c'est cet entre-deux de faire du Hadoop sur EC2, il faut être conscient de ce que ça veut dire, mais en tout cas, vous ne bénéficiez pas de tout ce que peut apporter EMR. EMR, à contrario, puisque le stockage est dans S3, vous avez de manière automatique et native la réplication des données entre les différentes AZ. Si vous perdez un nœud, vous perdez un nœud. Si vous perdez une AZ, vous pouvez peut-être perdre le cluster, mais vous ne perdez pas vos données. Si vous perdez le maître, peut-être que vous perdez le cluster, mais vous ne perdez pas vos données. Donc, c'est quand même le point clé, c'est que vous ne perdez aucune donnée. Le stockage est dans S3, donc il est à un prix qui est beaucoup plus économique que du stockage dans EBS. Comme les données sont dans S3, vous pouvez démarrer des clusters à la volée, pas besoin de charger des données, pas besoin de décharger des données. Vous démarrez vos clusters, vous lisez dans S3, vous écrivez dans S3, vous pouvez partager le dataset entre plusieurs clusters, ce qui n'était pas le cas de la solution de gauche. Donc, vous voyez, vraiment, ça n'a à mon avis que des avantages, cette utilisation d'S3. Et puis, on rappelle qu'S3 est conçu pour 11,9 de durabilité. Pour expliquer ce que ça veut dire, ça veut dire, si vous avez 100 milliards d'objets dans S3, peut-être que vous en perdrez un par an. Vous m'appelez quand vous avez 100 milliards d'objets dans S3. Je pense qu'on vous fera un prix. L'avantage d'S3, une fois de plus, c'est qu'on peut séparer le stockage de tout le reste, en particulier du calcul. On va pouvoir redimensionner, démarrer, arrêter les clusters sans impact sur les données. On va pouvoir partager les données entre plusieurs clusters et puis on va pouvoir faire évoluer son infrastructure au fur et à mesure. On n'est pas prisonnier d'un cluster qui contient toutes les données. Donc, même si vous avez de très gros clusters et qu'un nouveau type d'instance EC2 arrive et que vous avez envie de l'essayer, vous arrêtez ce cluster, vous démarrez un nouveau cluster avec le nouveau type d'instance, et puis les données sont dans S3, donc c'est toujours la même histoire, il n'y a pas de chargement, il n'y a pas de déchargement, vous pouvez migrer et faire évoluer les clusters de manière beaucoup plus paisible sans avoir à vous dire qu'il faut qu'on backup deux pétaoctets qui sont dans HDFS. S3 sera accessible par les différentes applications, que ce soit Hive, Spark, Presto et toutes les autres. On a un connecteur qui permet aux applications Hadoop d'accéder directement à S3, ce qu'on appelle EMRFS. C'est intégré dans la distribution, il n'y a pas grand chose à faire. Un autre point qui est essentiel, c'est que si vous opérez de nombreux clusters, et que par exemple une zone de disponibilité meurt, vous perdez les clusters qui sont dans cette zone de disponibilité, mais vous ne perdez pas de données. Soit vous travaillez désormais avec des clusters dans une autre AZ, soit vous relancez les clusters qui sont tombés dans une autre AZ. Le cauchemar, c'est de perdre les données. Quand on travaille avec EMR et S3, on n'a plus cette inquiétude. Le cluster devient un objet quasiment jetable qu'on arrête et qu'on redémarre ou qu'on redimensionne à la volée de manière rapide puisqu'il n'y a pas de migration de données à faire. Et puis, si ça pose un problème et qu'il faut tuer le cluster, on tue le cluster et on en redémarre un autre. Vraiment, ce qui pèse lourd dans cette histoire, c'est les données. Donc, vous l'avez compris, c'est vraiment la façon privilégiée de gérer des données sur EMR. Ça résout le problème du scaling d'HDFS. On ne se pose plus la question de combien de capacités il me faut sur HDFS et par conséquent, combien de nœuds il me faut. On règle le problème de la réplication, qui est toujours un compromis. On se dit, si je fais x3, c'est plus prudent mais ça me coûte trois fois le stockage. Si je fais x2, je fais des économies mais je prends des risques. Donc, on élimine ces problèmes-là et on laisse S3 gérer à la fois le capacity planning en stockage, à la fois les performances, et on fait augmenter son dataset de manière plus sereine puisqu'on sait qu'il n'y a plus de corrélation entre ça et la taille du ou des clusters qui vont les analyser. Donc, ça, c'est vraiment ce découplage, ce côté découplage, stockage, calcul, et cette sérénité de se dire, quoi qu'il arrive, je ne perds pas de données, et donc je peux arrêter mes clusters et faire des économies et ne pas payer pour des clusters qui ne font rien. C'est quand même deux avantages énormes. Et puis, ensuite, il y a évidemment tous les avantages d'S3, on peut faire du chiffrement, on peut appliquer du cycle de vie sur les données, par exemple dire que les logs qui ont plus de 365 jours, on les migre vers Glacier, on les efface, etc. On peut faire du versioning, ce qui nous protège contre la corruption de données ou l'effacement accidentel, qui est aussi un cauchemar sur HDFS. Le RM-RF slash sur HDFS est cauchemardesque parce qu'évidemment, on est sur des volumes de données où les backups sont généralement plus possibles. Donc, voilà, avec S3, même si on fait une erreur dans son bucket S3, le versioning nous permet de récupérer des fichiers. Et l'élasticité, donc comme on a découplé le calcul du stockage, on peut aller chercher de l'élasticité de manière très élevée, on peut ajouter des nœuds, on peut enlever des nœuds, tout ça n'est plus un problème, sachant qu'ajouter ou enlever des nœuds sur un cluster Hadoop avec du HDFS local est toujours un peu délicat, en tout cas un peu anxiogène, et ça a un impact de performance parce qu'il faut rebalancer les données d'HDFS entre les nœuds. Donc, ça fait du trafic et ça annule la performance du cluster. Ce problème-là n'existe plus dans S3. Donc, voilà, j'espère que je vous ai convaincu que S3 était la bonne solution pour stocker vos données dans Hadoop et avec EMR. C'est vraiment l'un des avantages d'utiliser EMR. C'est effectivement à côté, il y a son copain S3 qui...
+
+Deuxième sujet, les différents types de nœuds. Dans un cluster EMR, on va avoir un maître. On pourrait configurer un deuxième maître à la main si on avait envie. Par défaut, on en a un. Et on va avoir ce qu'on appelle les instances Cores, qui sont des instances qui vont disposer à la fois de calcul et de stockage, donc des nœuds à part entière. Et donc, ces nœuds-là, ils vont exécuter deux types de tâches au sein d'Hadoop. Ils vont avoir ce qu'on appelle le Task Tracker, qui est l'entité d'Hadoop qui reçoit les ordres du maître et qui exécute les tâches sur le nœud. Et puis, ils exécutent le DataNode, qui est l'application, le module Hadoop qui va interagir avec le HDFS rattaché à ce nœud. Donc, voilà, ça c'est le modèle classique. On peut en rajouter, on peut redimensionner un cluster, on peut lui dire rajoute-moi des nœuds cœur. Donc, ça va rajouter un serveur, du stockage. On va faire le fameux rebalancing, donc on va réétaler les données existantes entre les nœuds existants et les nœuds qu'on a ajoutés. Voilà, ça rajoute du CPU, ça rajoute de la capacité mémoire, très bien. On sait faire ça. Le problème, comme on l'a dit tout à l'heure, c'est que maintenant, si on veut les enlever, donc si on veut gérer l'élasticité comme ça, enlever un nœud, ça va toujours être un peu délicat. On peut le faire, bien sûr, mais ça suppose évidemment qu'il reste suffisamment de place sur les nœuds restants pour récupérer toutes les données du ou des nœuds qu'on enlève. Donc, il faut être vigilant à ça. Et puis, on va refaire le balancing. Donc, on va repartir et reconcentrer les données vers les nœuds restants. Donc, là aussi, en fonction de la charge du cluster, en fonction de la taille des volumes, etc., ça peut prendre un certain temps et avoir un certain impact sur les performances. Donc, on peut le faire, mais ce n'est pas anodin, ce n'est pas gratuit. De mon point de vue, il n'y a pas vraiment de raison de faire ça. Si vous utilisez S3 comme stockage, il n'y a pas besoin de rajouter des nœuds pour avoir du stockage par définition, et si vous voulez juste rajouter de la puissance de calcul, la meilleure solution c'est de rajouter des nœuds Task, qui sont des nœuds qui n'ont pas d'HDFS local. Donc, c'est juste des nœuds qui vont exécuter des jobs et qui vont aller lire les données qui sont soit dans HDFS sur les nœuds HDFS, soit dans S3. Donc, là, on rajoute juste de la capacité de calcul. Donc, évidemment, on peut en ajouter plein, ça, ce n'est pas un problème. Donc, ça va nous ajouter que de la capacité de calcul et de la mémoire. On va pouvoir charger plus de choses en mémoire et travailler davantage en mémoire. Et on va pouvoir exécuter les jobs plus rapidement et avoir les résultats plus rapidement. Donc, bien sûr, il faut un mix parce qu'il y a toujours besoin d'un peu d'HDFS local, il faut que votre job puisse tourner, ils écrivent des trucs localement, ils ont des données temporaires. Il faut un peu d'HDFS, mais on l'a dit tout à l'heure, c'est juste pour les données de manière transitoire. Donc, si vous avez besoin d'ajouter plus de puissance de calcul, il vaut beaucoup mieux ajouter des nœuds Task que des nœuds Core. Ça sera plus scalable et ça sera plus facile à opérer quand vous voudrez les enlever. Donc, quand vous avez fini, vous pouvez tout enlever, et là, il n'y a pas de rebalancing, il n'y a pas de mouvement de données, c'est juste vous allez enlever ces nœuds Task et c'est tout. Donc, ça, c'est une façon de scaler ces clusters, c'est d'avoir un cluster de base, on va dire avec un minimum d'HDFS pour pouvoir travailler, et puis de se dire, bon, là, j'ai envie d'accélérer ce job, je rajoute 20 workers, 30 workers, 50 workers, et puis quand c'est fini, je les enlève. J'arrête évidemment de payer.
+
+Alors, ça, ça nous amène à la discussion de l'élasticité de manière plus générale. Donc, comme on l'a dit à l'instant, on va avoir un cluster de base, on va avoir un cluster de départ, ou on va avoir un maître, quelques nœuds Core, et puis peut-être quelques Task Nodes pour accélérer. Et ça va être notre point de départ. Mais ce qu'on voudrait, un peu comme on le fait sur EC2, c'est être capable de faire de l'auto scaling, c'est-à-dire de dire en fonction de telle ou telle métrique EMR, on va rajouter des nœuds dans le cluster. Donc, ça marche de la même façon qu'avec EC2, vous définissez, vous avez des métriques EMR dans CloudWatch, vous définissez des seuils à la hausse et à la baisse. Si ces seuils sont franchis à la hausse, on a une policy qui ajoute des ressources. Si le seuil est franchi à la baisse, on a une policy qui enlève des ressources. Et voilà. Donc, c'est l'autoscaling tel qu'on le connaît, mais cette fois, on va le faire sur des métriques EMR et pas sur des métriques EC2. Et donc, lorsque ces aléas sont déclenchés, bien sûr, on va ajouter ou enlever des nœuds au cluster, mais ça se fait de manière graceful, donc de manière coordonnée. On va pas juste tuer un nœud dans le cluster comme ça, on va le désenregistrer d'Hadoop, ça va provoquer, s'il avait du stockage, la migration de ces données vers les nœuds restants. Donc, ça veut aussi dire que l'autoscaling de EMR, ce n'est pas un truc qui réagit forcément à la seconde. Parce que si vous utilisez de l'HDFS local et que vous avez 1 Tera ou 2 Tera de données par nœud, et que vous enlevez un nœud, il va falloir que les données de ce nœud, comme je disais tout à l'heure, soient repartagées entre les nœuds restants. Donc, attention à ça, ce n'est pas un autoscaling qui va réagir à la minute si vous avez des volumes de données importants. Donc, attention à bien choisir des tailles de nœuds avec peut-être pas trop de stockage, à vous de faire vos tests et à voir à quel niveau de réactivité vous arrivez avec l'autoscaling. Une autre façon, enfin une façon complémentaire, de scaler son cluster, c'est d'utiliser des instances spot. Alors, ici, on a un cluster de 10 nœuds avec des instances on-demand, donc des instances classiques. Pour simplifier le calcul, on va dire qu'elles coûtent 1 dollar. Donc, vous avez 10 nœuds à 1 dollar qui tournent pendant 14 heures, donc ça fait 140 dollars. Au lieu d'ajouter des instances Spot individuellement, on peut définir une flotte mixte d'instances on-demand et Spot lors de la création du cluster. Cette flotte peut inclure différents types d'instances, ce qui augmente les chances que les enchères soient acceptées. Par exemple, en mélangeant des instances C4.xlarge, M4.xlarge, etc., on maximise la flexibilité et la disponibilité des ressources. Cela permet de scaler le cluster de manière plus efficace et économique.
+
+En combinant le stockage S3 et l'utilisation de flottes Spot, on peut créer des clusters transitoires qui sont lancés à la volée, avec des performances optimisées et des coûts réduits. Les données sont stockées dans S3, le cluster fait son travail, sauve les résultats dans S3, puis se termine automatiquement. Cette approche permet d'obtenir des résultats rapidement et de minimiser les coûts, car on ne paie que pour l'utilisation effective des ressources.
+
+Il existe plusieurs façons de lancer des jobs sur EMR. On peut utiliser la Step API pour démarrer des jobs au lancement du cluster, soit via la console, soit via l'API pour une automatisation. On peut également démarrer des jobs sur des clusters existants, par exemple en utilisant AWS Lambda pour déclencher des jobs EMR en réponse à des événements, ou en utilisant AWS Data Pipeline pour des tâches périodiques. EMR s'intègre également avec AWS Glue pour des workflows ETL, et on peut déployer des ordonnanceurs open source comme Airflow sur EMR pour une gestion personnalisée des workflows.
+
+Spark est une alternative moderne à MapReduce, qui travaille en mémoire pour minimiser les I/O et optimiser les performances. Spark construit un graphe d'exécution pour retarder les opérations jusqu'au dernier moment, ce qui permet d'éviter des opérations inutiles et d'accélérer le traitement des données. Spark offre plusieurs modules, dont Spark SQL pour les requêtes SQL, Spark Streaming pour le traitement en temps réel, Spark ML pour le machine learning, et GraphX pour le traitement de graphes. Bien que Spark puisse être utilisé avec plusieurs langages, l'API Scala est généralement la plus expressive et puissante.
+
+Spark sur EMR est intégré avec les principaux services AWS, permettant d'accéder à des données stockées dans DynamoDB, Redshift, etc., via des connecteurs préconfigurés. Spark utilise des DataFrames, qui sont plus flexibles et performants que les RDD (Resilient Distributed Datasets) de l'ancienne version. Les DataFrames permettent de faire du streaming et de traiter des flux de données en temps réel, ce qui a permis à Spark de devenir une solution de choix pour les applications temps réel.
+
+En résumé, EMR est un service managé qui offre une flexibilité et une élasticité importantes, avec la possibilité d'utiliser des instances Spot pour réduire les coûts. Il est facile à utiliser, sécurisé, et permet une intégration étroite avec les autres services AWS. Le stockage des données dans S3 est fortement recommandé pour maximiser la flexibilité et l'élasticité du cluster.
+
+Pour conclure, voici quelques liens utiles : le blog Big Data d'AWS, qui contient de nombreux articles sur EMR et Spark, et la page des whitepapers AWS, qui propose des guides détaillés sur les solutions Big Data. Merci beaucoup pour votre attention. Nous allons maintenant passer aux questions.
+
+Une question de David sur la performance entre S3 et HDFS : il est vrai que S3 est généralement plus lent que HDFS, mais la flexibilité offerte par S3 permet d'ajouter plus de nœuds et d'instances Spot, ce qui peut compenser cette latence et même améliorer les performances globales. Vincent a raison de noter que les données HDFS sont perdues si le cluster est éteint, ce qui renforce l'importance de stocker les données dans S3.
+
+Sonia demande pourquoi payer pour des instances on-demand alors que les instances Spot sont si peu coûteuses. Les instances Spot sont effectivement beaucoup moins chères, mais elles sont sujettes à des interruptions si le prix de marché dépasse l'enchère. Il est donc recommandé de combiner des instances on-demand pour assurer une capacité minimale et des instances Spot pour augmenter la capacité de manière économique.
+
+Jean-Charles demande si on peut utiliser des GPU sur EMR. Oui, EMR supporte les instances GPU, notamment les instances G3 et P2. Bien que Spark et Hadoop ne les exploitent pas directement, des librairies spécifiques peuvent être utilisées pour le deep learning, permettant d'exécuter des jobs de préparation de données et de deep learning sur le même cluster.
+
+Merci pour votre participation. Nous allons faire une pause de 5 minutes avant de reprendre avec des démos sur EMR, Mahout, SparkML, et peut-être quelques autres démonstrations. À tout de suite.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">EMR</span><span class="tag">Hadoop</span><span class="tag">AWS</span><span class="tag">BigData</span><span class="tag">Spark</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

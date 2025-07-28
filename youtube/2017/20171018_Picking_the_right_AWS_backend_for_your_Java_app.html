@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picking the right AWS backend for your Java app</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Picking the right AWS backend for your Java app</h1>
+        <div class="date">October 18, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/pal4cM-ygjE" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Talk @ JEE Conf, Kiev (May 2017)</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Good afternoon. It's been a long day, so do you have any energy left? Come on, that's not the energy. You didn't start with the beers, right? No, it's not that time. Okay, so you have some energy left? Okay, that's better. All right, so my name is Julien. I'm a tech evangelist with AWS. Sometimes I work in the Paris office, but most of the time I'm traveling, and it's great. It's my first time in Ukraine, and I'm very impressed. Except for the weather today, but it's okay because we're going to talk about clouds anyway, so I don't mind it. I'm very happy to be here. I hope this will be useful for you. If you have questions after the session, I'll be around, so feel free to come up and ask all your questions. I love to answer questions.
+
+Today, we're going to talk about AWS backends, and this seems to be a Java conference, right? I got that part right. We're going to use those backends with Java, and of course, we're going to run some code and do some demos. Maybe they won't work, and that's okay, all right? Who am I? Well, I've been a software engineer for way too long and ended up being a CTO and VP of engineering for a number of startups in Paris. Then I decided it was time to see more of the world, so for the last 18 months or so, I've been working with AWS and traveling all over Europe, especially this month, which is crazy, right?
+
+So, what to expect today? I'm going to talk for a few minutes about writing Java apps on AWS. Let's ask who is using AWS today? Okay, so they didn't lie to me. They told me to remove all the beginner stuff. They don't care. All right. But still, a few of you might not be comfortable with that, so very quickly. We'll start with databases and talk about RDS and DynamoDB. Then we'll move on to analytics with Hive, Athena, and Redshift, and some of the newer stuff we've released. Hopefully, we'll have a conclusion for you guys. All the code I'm going to use today is on GitHub. Feel free to get it and make fun of me because it's really shitty Java code. Hopefully, it's not too bad. If you find a bug, you can send me a pull request. I love those.
+
+Let's start with Java apps. Most of you know about AWS, right? So you know we have four deployment options when it comes to deploying code on AWS. The first one and the oldest one is deploying with virtual machines on Amazon EC2. Just fire up a server and SSH to it, and it's a server. You can do whatever you want with it. The second one is to use Docker containers. We have a service called Amazon ECS, which allows you to manage Docker clusters and schedule containers on those clusters. Anyone using ECS? Okay, right, pretty cool. Lambda, which is the so-called serverless architecture where you don't care about infrastructure anymore. You just deploy code functions and trigger them using APIs or any kind of infrastructure event in your AWS account. You can do Java 8, of course, and there are quite a few open-source frameworks that make it really easy to write and deploy and manage Lambda functions. Anyone using one of those? Serverless or Gordon? Yeah, a few people, okay. I like them very much. The last one is our platform as a service option, which is called Elastic Beanstalk. We have Beanstalk users as well. Yes, thank you. It's a really good one for developers. It's probably the simplest way to deploy code on AWS. You can do very old Java or pretty new Java on different application servers. We have a Java SDK for this, which allows you to invoke all the Java APIs. It goes back to 1.6, so you should be able to use it with all your Java versions.
+
+When it comes to tools, we develop a plugin, a management plugin for Eclipse, which I'm going to show you today. It allows you to have a quick start for your project, run your Lambda functions, and manage a lot of AWS resources directly from Eclipse. But then they told me, come on, none of these guys are using Eclipse. Come on. So don't make me feel so stupid. Who's using Eclipse? All right. You're my brothers. Thank you. And everyone else is using IntelliJ IDEA, right? Oh shit. You make me feel really old. Thank you very much. But hey, at least I've got the excuse that this is only available for Eclipse, right? So they asked me to look at IntelliJ stuff. I did, and we have a couple of third-party plugins that seem to be up to date. I quickly tried them, and they were fine. There's an AWS manager plugin which is similar to what we're actually maintaining for Eclipse. But it's very old, it doesn't work with the latest IntelliJ version, and it looks like the maintainer fell off a cliff or something. So if anybody manages to get those sources and fix them, that's better.
+
+The last thing I want to say about writing apps is how to manage credentials. I'm stating the obvious, but I'm sure some of you still do this because it's simpler. Please never, never hard-code credentials in your application. The API key and the secret key, you know what I'm talking about, right? The things that end up on GitHub, right? You don't want to have that on GitHub. Don't put them on any EC2 instance either because you will end up putting them in that credentials config file on the instance, and this will eventually end up on GitHub as well. You'll end up with something that looks really clever but opens major security holes. Please do not do that. For the record, if your keys end up on GitHub, we're monitoring for that, and support will contact you with a friendly email saying, "Hey, you may have noticed that your AWS account has been suspended. It's because we found your secret keys on GitHub. Please don't do that again, and authenticate, and we'll be happy to resume your account." It's okay because at least if the account is suspended, there's no risk. But please be really careful with this. It will definitely end in tears. If you need to distribute AWS credentials like the API key and the secret key, use IAM roles. If you're not familiar with roles, please look them up. If you need to distribute back-end credentials like MySQL login and password, we have a new service called the EC2 Systems Manager that has a module called the Parameter Store. Anyone using that one? Ha! Got you. Oh, come on. Really? Alright, you're wrong. Thank you. This is the best way to do it. It's a very simple way of storing credentials. They are encrypted with KMS, and you can retrieve them in one API call, so you never have to have any kind of secret stuff in your code. I'm using that in my code, so I'll show you. Alright?
+
+Here's our reference architecture for backends. Data comes in many shapes and sizes and throughputs and granularity, so we need different backends to do different stuff. We have a first line which is really about storing data, like Elasticsearch, Cloud Search, DynamoDB, RDS, and S3, just to adapt to different shapes. Then we have a second line with the analytics services like Lambda, MapReduce, Redshift, etc. Today, I'm going to talk about those two data stores, the relational database RDS and the NoSQL database DynamoDB. I'll also talk about Hive, Redshift, and Athena for analytics. The other ones are pretty interesting too, but there's only so much you can fit in 45 minutes.
+
+Let's get started with databases. The first one, and I'm pretty sure everybody has played with this before, is called RDS. Who's using RDS? Yeah, a lot of people, right? Pretty much every single application needs a relational database. The cool thing about RDS is that it's a managed service. We provide you with a database instance or a database cluster in just a few clicks or one API call, pre-installed with your favorite engine. You can scale it up and down, scale out, create replicas, etc. It's really easy to do. You don't have to be a DBA to do it. Developers can do it. It's very straightforward. Since you can scale up and down, you can adapt to traffic and reduce your costs. So it's really databases made simpler. We support six engines, so three open-source engines: MySQL, MariaDB, and Postgres. This slide is always out of date because we keep adding version numbers every week. As of today, I think this is up to date. Next week, probably not. If you're a commercial user, you can use Oracle and SQL Server. There's also Aurora. Anyone using Aurora already? Okay, a few people. Aurora is a high-performance re-implementation of MySQL and Postgres. The AWS team took MySQL, then Postgres, and increased performance by five to ten times. They made high availability better and scaled storage much higher. You can scale up to 64 terabytes of storage. 64 terabytes for a relational database should be enough for literally everyone. I'm going to use Aurora today. Like you just said, everyone uses Aurora, so I could take thousands of examples. I'm just going to take one. Airbnb has been using RDS from day one. They've been running on AWS from day one and have always managed their databases with RDS. I guess it's scaled pretty well for them. If you own a Lamborghini, I'm not going to ask that question. Well, Lamborghini is using RDS as well, probably on a smaller scale than Airbnb, right?
+
+Let's take a look at Aurora. Aurora is based on MySQL and Postgres, but today I'm going to use the MySQL version. How do you connect to these databases anyway? The good news is you've seen this a million times before. This is vanilla JDBC code, nothing specific to AWS. The only difference is that in some cases, I'm using AWS credentials to do it, so I don't have any login and password. For some other services, I do need a login and password, like MySQL, for example. I need to provide it. How will I grab those? Well, like I told you a minute ago, I'm using the system manager parameter store, and I entered my credentials there. I can just grab them. I build a request and ask for the parameter to be decrypted and grab it. This is how we'll get my login and password for MySQL and Redshift. This is the proper secure way to do it.
+
+Let's look at Aurora. You can use the normal MySQL driver to connect to Aurora. I created a cluster before the talk. That's the endpoint. I'm getting my credentials from the parameter store, connecting to the Aurora database, and then calling an API, a Java API, to describe the database, right, describe the cluster. Then I'm running a query. It doesn't really matter what that is, but it's a large data set. I've got a table with 1 billion lines of fake sales. They're not Amazon sales. I didn't steal that data. That would be my last talk ever. That would be my last everything ever, I think. You would never find my body again. So anyway, they're fake sales, and I'm looking for users called Jones who live in Florida. The way I'm querying for this, again, you've seen this a million times before, I'm using JDBC prepared statements. This is vanilla Java code, right? Nothing specific to AWS. Let's run it. Okay. I need my console. Let's try Aurora. Okay, so I got my credentials from the parameter store, described my cluster, and found 226 people called Jones in Florida. What I just did here, I did a simple select on one table with 1 billion lines. It took about a second because I've got the right indexes. My message here is don't rush to NoSQL. People think NoSQL is always faster, but not necessarily. If you know what the queries are going to be and can optimize for those queries with the right indexes, you can make a relational database faster than anything else. If I run a count, if I run select count last name on this, it's running for 10 minutes because it's a full scan, and a full scan on 1 billion lines is going to hurt. But if you can hit the indexes right, you get really good performance, especially with Aurora. And now you can do this with Postgres as well.
+
+Let's move on to DynamoDB. DynamoDB is a NoSQL database built by Amazon in 2004 and became an AWS service in 2007. It's been around for a while. It's a fully managed service, even more managed than RDS. You don't even have to create clusters or instances. The only thing you do is create a table, call an API, create a table, and get your items. It's a very high-level service. Developers usually love it because the infrastructure is completely hidden and abstracted. Of course, you can scale it up and down, and it's pretty cool. Let's look at this customer, for example, Expedia. Everyone knows Expedia, right? They use DynamoDB to run their analytics, so all the events that come from all the websites and mobile apps go into DynamoDB for real-time processing. It's about 200 million messages a day, a lot of traffic, a lot of data. It works pretty well for them, and since the service is managed, you can be up and running in a couple of days even if you just have to learn DynamoDB from scratch. There's no fuss. Create tables, put and get, and you're on your way. That's why developers love this system.
+
+Let's take a look at it. One thing I should mention is that here I'm going to use the real DynamoDB in the cloud, but there is a local version of DynamoDB that you can download to work locally on your machine. This is great for me when I'm spending my life on planes and trains and don't have a network connection. I can still work. For you, it's great for local testing and development. You don't have to go to the cloud with latency and cost. You can work locally. So you can install that database locally and work with it. But here, I'm going to connect to the real thing. I'm connecting to DynamoDB in the US and creating a table. It looks a little ugly because I made it a bit complicated. It's NoSQL, so I'm not using SQL this time. I'm adding attributes to that table, so it's a movie database. Movies have a title, a rating, and a release date. I can create a secondary index, right? I want to have an index on ratings, why not? Then I'm creating the table, so the sharding key will be the title. The other attributes are ratings and release date. I'm adding that index, and this is an indication of how much data I'm going to read and write to that table. That's an important factor because it drives the cost. The more you provision, the more you will pay. Make sure you only provision what you need. Then I need to wait for a few seconds for that table to be created, and that's it. I'm going to add some movies to that table. Put, put item, nothing complicated. I'm pretty obsessed with Star Wars. I'm going to add, print one of the movies, add a character to "Return of the Jedi" to make sure it's been added correctly. I'm going to print all the movies with a one-star rating, all the movies with a five-star rating between 75 and 82. Then I'm going to print all the movies from the Star Wars series and print all the movies with Yoda. I'm going to delete all the bad movies, etc. These are all examples of the API. So these are examples of put item, get item, update item, query with an index, query with the hash key, and scan the full table if you don't have indexes or a hash key. You can look at that code and see what it looks like. Let's just look at a simple one. Create movie, so that one. Yeah, just this one is very simple. If you need to get an item from the table, that's it. You call `getItem` and provide the hash key and get your item back. If I want to find all the movies with a given character, I don't have an index for that, so I need to scan the table this time. That's not a very fast operation, but sometimes you have no choice. I'm going to say, well, I need to build a scan request, say if the characters contain the character as the parameter here, build the item collection for those items, and then print them. Again, you can do put, get, update, delete, and then query on indexes or the hash key. If everything else fails, you have to scan. That's pretty slow. Let's look at that one. And let's do this. Here's the AWS plugin for Eclipse, so I'm connected to the US. Let's start by creating the table. This takes maybe 10 seconds because it needs to provision a little bit of infrastructure to run the table. Then we're going to roll out all those API calls. I should see my table showing up right here. Whoops. Come on. Okay, so here's my table. My items are here. I did pretty much what I had to do here. Created the table, described it, did my movies, got some information for "Return of the Jedi," and Jabba is not in there. Added Jabba, and now it's in there. Found all the one-star movies. I think we'll agree on that one, yeah? Anyone thinks "The Phantom Menace" deserves more than one star? No. Don't raise your hand, come on, don't do that. Finding the five-star movies for this time range, finding all the Star Wars movies, finding the movies with Yoda, deleting bad movies, and they're gone. It is NoSQL, so it is not SQL. You have to understand how tables work, understand the API, and understand what queries you can do. You can only query on indexes and hash keys and range keys, but not on the rest. If you need to do something on the other columns, then you need to scan.
+
+Here's a summary of some of the backends, and I added some extra information, so don't worry, we're not going to read all of this. I included it for reference. The major difference between Dynamo and RDS is not so much about scale and performance; it's really about whether you have structured data or a schema. This is the main driver. Let's move on to analytics because it's very nice to have all that data in there, but now you want to crunch it. Sure, you could crunch it with Aurora, but Aurora is not a data warehouse. It's not going to scale for SQL requests that last for 15 minutes. The first one we're going to look at is Hive on EMR. EMR is the managed service for the Hadoop ecosystem. Anyone using EMR? A few people. Well, after my talk, you will move on to something else. EMR is Hadoop, Spark, Hive, Presto, Flink, HBase, and everything. It's like RDS. With one API call or a few clicks, you create your cluster, and everything's ready. You don't have to install Hadoop, and you don't have to worry about that. You can resize it and terminate it. It's very flexible, so you're never afraid to start a cluster or kill it to save money. We have tons of customers who use this, but this is probably one of the largest. It's a regulator, a market regulator in the US called FINRA. They have to look at every single stock trade and option trade done during the day. They pile them up, literally billions and billions of transactions every day. Once the market is closed, they run all those transactions into their machine learning systems to figure out if something is suspicious. Sometimes it is. To do that, they use up to 10,000 Hadoop nodes on EMR. They don't need them during the day because they can't do much. They have to wait for the market to be closed. So they really only need that infrastructure at night. It would be silly to buy 10,000 nodes that are idle during the day and just working at night. It's a waste of money. With the elasticity that EMR gives them, they can scale super high when they need it and then kill everything when they don't have to work with it. Your cluster should be short-lived, start them, load the data, crunch it, get the results, kill the cluster, and save money.
+
+Let's look at Hive. Connecting to Hive is... There it is. Connecting to Hive is similar to what you would know. You will use the JDBC driver. The only thing is you don't want to expose your EMR cluster on the public internet. It's running somewhere in a private subnet in your account. The way you authenticate and connect is to open an SSH tunnel to it. So here, I'm not connecting with any login or password. I'm SSHing into the master node and sending my queries. Let me start it because it's Hive, so it's a bit slow. Yes, and I can explain it while it runs. Here, I'm describing my cluster and then running that same SQL query. Hive is not strictly 100% standard SQL, but it's pretty close. In this case, it's fine. It's a simple query. Can I see this thing running? Yeah, it should be running. See? Aurora was one second. Come on. Oh, I see a tiny thing showing up here. Very nice graphs, by the way. I mean, I love the colors. But this is a bit slow. It's a decent-sized cluster. If you're familiar with instance sizing, I'm using 10 C4 2XL instances, so 160 cores total and 300 gigs of memory total. It's not a ridiculous cluster. Oh, it's over now. Okay. So it takes about a minute, to be honest. And I still find those 226 Joneses in Florida. But it's Hive, right? Hadoop tries to promise you that your job will complete but never makes any promise on how long it would take. That's the way it is built. It worked, and we can see crazy network traffic because we have to load the data. We can see the nodes working. I don't want to pick specifically on Hive, but it's been around for a long time now, and there are better options. One of those is Athena. Athena is a new service we announced a few months ago, and it allows you to run read-only queries, selects pretty much, on data stored in S3. You could have petabytes of data in S3 in multiple formats and query that data directly. You don't have to load it anywhere. It's a huge time saver. No data loading, no indexing, nothing. And obviously no infrastructure to manage or scale. This is all done automatically by the service itself. It's based on Presto, an open-source project available on EMR, but we made it even simpler. The only thing you have to do is create your table. You create a table that maps to the layout of the data in S3, so that takes one second. Then you can run standard SQL on that data. The data could be in many formats. It could be unstructured, semi-structured, or structured, especially if you use columnar formats like Parquet or ORC, which are really good for performance. If you use columnar formats, you're going to get very, very good query times. It's highly recommended that you take the time to transform your data from, let's say, CSV or TSV to columnar formats. You can do that pretty easily with Hive, for example. You can also do compression and partitioning, which will increase performance even more. We're going to look at this in a minute. The service is quite new, but we already have a lot of people using it, like DataXoo, an ad tech company in the US. As you probably know, ad tech means lots of data. They're doing real-time bidding, getting billions of data requests, logging everything, crunching it with machine learning, but they also store it in S3 and do some BI and analysis using Athena. It's 180 terabytes a day, so it's pretty big.
+
+Let's look at Athena. Again, you will connect with JDBC using Athena. Here, just to make it a little different, I'm using local credentials, so I'm using credentials running on my laptop to authenticate to Athena. Many ways to do it, that's just one option. I'm building a client and calling one of the Athena APIs to get the last three queries and print them. Then I just connect, no login and password this time, just using AWS credentials, and run the same statement. The only thing is, why the extra quotes? Well, the problem is that for now, prepared statements are not supported, and that's not really Athena's fault; it's because they're not supported in Presto, on which Athena is based. That's the actual issue on GitHub, and they are working on it, but for now, we cannot do prepared statements, so I have to use a normal statement. Pretty soon, I'm sure we'll have it. Listing past queries is just one API call away. Let's try it. Okay, so here are my last three queries. I can see the execution time, how much data I scanned, etc. Then I'm running my select on Athena, and again, 226 rows, and it takes about six or seven seconds. Seven seconds to go through a billion lines of data stored in S3. Loading time zero, management time zero, scaling time zero. I have to say I am madly in love with this service. If you use Hive today and if you use it just for read-only stuff, you load data in HDFS and query it, aggregate it, whatever, and get results, please look at Athena. You're going to save hours. Hours. It's a very, very good service. Even if you do only exploration, you need to go through the logs to do some debugging or any kind of ad-hoc analysis, Athena is perfect. You will be up and running in literally minutes. No infrastructure to manage at all.
+
+The last one I want to talk about today is called Redshift. Anyone using Redshift? Oh yeah, cool. Okay, so Redshift is our data warehouse. It's based on SQL and evolved from Postgres, so it's PostgreSQL basically. If you know SQL, you know how to use Redshift. You don't need to learn some kind of bizarre language. It's completely managed like RDS. Just click or call an API, and after a few minutes, you get your cluster. It's massively parallel. You can scale it up to over 100 nodes working in parallel on the same query. It's going to be blazingly fast, and you can scale it to multi-petabyte scale if you have to. It's very simple to use but very, very scalable. It's pretty inexpensive when it comes to data warehouses. You can get to about $1,000 per terabyte per month, which is a very, very competitive price. If you have a competing data warehouse, just look at the price, and you'll see this is very good. There's an extension now, which is very recent, called Redshift Spectrum, that brings Athena-like capabilities to Redshift. Now Redshift can query data that is stored locally on the nodes but can also go and join query data hosted in S3. You get the best of both worlds. You send a query to the leader node, the master node. It builds the execution plan and splits the query across the compute nodes. Each compute node runs that part of the query on the data that is local and sends back the results to the leader node, and you get the result. You can load data from S3 and Dynamo, etc., and if the data is stored in S3, you can go through Spectrum, and you have a fleet of managed nodes, very scalable, that work on that data. You get both the fast, local, super-optimized queries on your local nodes for reporting or analytics, and the capability to query petabytes of data hosted in S3. You don't have to host it on the cluster itself. Again, you can save tons of money by doing that.
+
+What customers say about Redshift, well, to keep it simple, they say it's super fast. A lot of people left Hive to move to Redshift and reported 20 to 50 times faster. Now with Spectrum, it's even better. If you need data warehousing for BI and reporting and the capability to query tons of data, but you want to do this every once in a while and at a very low price, then Redshift and Spectrum is a great combination. If you don't need BI or a data warehouse, you can use Athena, which will give you the capability to query that data. But you have lots of options actually. Let's look at Redshift now. Last one. Again, Redshift is JDBC. You need a login and a password. So again, I'm grabbing those from the parameter store, connecting to my cluster, describing the cluster, and looking for the Joneses in Florida. It's almost the exact same code as Aurora. Let's do that. Okay, credentials, description of the cluster, query. Boom. Right. And that data here is in S3, right? So it's the exact same data set that I used for Athena. It took Athena seven seconds, right? How much did it take for Redshift Spectrum? We can do it again. One second, 1.5. So those billion lines are not on the Redshift cluster. They're in S3. Spectrum is the Formula 1 of AWS backends. I'm madly in love with Spectrum too. Can you love two backends at the same time? I don't know. I have to choose.
+
+Let's sum things up. Again, very different things. Hive was great for a while. Now I think Athena is literally a better option for most use cases. Redshift was already very good for BI and data warehousing. Now with Spectrum, it's even better. I'll let you guys take a picture. I will post the slides on Twitter tonight, so you'll get everything. But if you love Spark, by all means, run Spark on EMR. Who am I to tell you not to do this? Here's the reference architecture again. As you can see, you can use both data stores that fit the data that comes in and data analytics services to crunch that data, and potentially crunch data coming from S3 and different places as well. It's very flexible. The last thing I want to say is how about migrating your databases to AWS? You could be migrating from on-premise infrastructure or from inside AWS, right? Let's say you have RDS Oracle and want to go to Aurora, for example. Can we help you do that? Yes. We have two tools to do this. The first one is called the schema conversion tool. It's an app that you download on your machine. You connect to your database, say, "Okay, I want to migrate this to there." Here are the tables. Here are the objects I'm interested in. It looks at it and tries to convert the schema and objects automatically. Anything it cannot do, it highlights and gives you pointers and shows you exactly what manual work is needed to transform the schema from one engine to the other. When you're ready to do the migration, you can use the database migration service, which is exactly what the name means. You define a source database, a destination database, select the tables, click, and it starts replicating and handling the schema changes from one engine to the other. It's very popular, very easy to use, and tens of thousands of databases have been migrated like that. You can use it for relational databases and data warehouses like the ones I mentioned on the previous slide.
+
+As a conclusion, you have a very large choice of backends. You can start from stuff you know, like MySQL, Postgres, and save yourself the trouble of managing the infrastructure by relying on RDS. You can use NoSQL and DynamoDB to have super scalable databases as well. You can have big data and analytics that fit pretty much all the use cases. These are really all the tools you would need to build your backend stack, but we try to remove as much infrastructure drama as we can. We know you want to focus on building your app and not on the plumbing. You want to build your product. For most of these services, we bring out-of-the-box high availability, scalability, security, compliance. You don't have to worry about any of those. When you use Athena, Redshift, and the others, all of this is built-in. So you can focus on designing your tables, designing your product, and not on the rest. It's our job to do it. Focus on creativity, build great stuff, build great apps, and leave the plumbing to us. Thank you very much.
+
+Thank you very much to the organizers for having me today. It's a very nice event, and I'm quite impressed. I'm definitely enjoying my stay in Ukraine, and something tells me I will be back this year, but it's too early to tell. And I don't want to talk about competing events, but we might see each other again. So thanks again. Enjoy the rest of the day, and if you have questions, I'll be happy to answer them. Thanks.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS</span><span class="tag">Java</span><span class="tag">Databases</span><span class="tag">Serverless</span><span class="tag">Data Analytics</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

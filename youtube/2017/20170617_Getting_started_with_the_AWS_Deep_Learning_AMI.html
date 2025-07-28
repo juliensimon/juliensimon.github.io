@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting started with the AWS Deep Learning AMI</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Getting started with the AWS Deep Learning AMI</h1>
+        <div class="date">June 17, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/xgeZC0L6_MQ" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Twitter: @julsimon
+Medium: <a href="https://medium.com/@julsimon" target="_blank" rel="noopener noreferrer">https://medium.com/@julsimon</a>
+Slideshare: <a href="https://fr.slideshare.net/JulienSIMON5" target="_blank" rel="noopener noreferrer">https://fr.slideshare.net/JulienSIMON5</a>
+
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" target="_blank" rel="noopener noreferrer">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+- What is the AWS Deep Learning AMI?
+- Running the AWS Deep Learning AMI on a GPU instance
+- Training a Deep Learning model on a GPU with the MNIST dataset</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Hi everyone. Today I want to show you the Deep Learning AMI and how to quickly get started with deep learning on AWS. The Deep Learning AMI is an Amazon-maintained image that includes all the libraries and tools you need to start building your deep learning projects. It includes popular deep learning frameworks such as TensorFlow, Caffe, MXNet, and more. It also includes additional tools like the Anaconda distribution, and everything you need to run code on GPUs, including NVIDIA drivers, which can be tricky to set up. With this AMI, all you have to do is fire up an instance, wait a few minutes, and get to work. As you can see on our website, this AMI has been updated just 10 days ago with all the latest versions. 
+
+Let's start one. It's an AMI, so just go to the AWS console and pay attention to where the AMI is available. It's available in the US and in Ireland. Let's start an instance in Oregon for a change. I'll click on the launch instance button, go to the AWS Marketplace, look for the Deep Learning AMI, and there's an Amazon Linux version and an Ubuntu version. Let's start the Ubuntu version. This AMI is free of charge; you only pay for the instance costs. You can run the deep learning AMI on a CPU-based instance. For example, MXNet and other frameworks will run just fine on CPU. Training models will be a little slower than on GPUs, but it definitely works. Of course, we want to play with GPUs, so we recommend using something in the G2 family or in the P2 family. 
+
+The G2.2xlarge, which I'm going to use, is reasonably cheap. If you want to go big and play with the P2.16xlarge, just make sure you understand the costs. Let's select that one. We don't need to add storage; we have more than we need. We could add a tag here. For the security group, SSH is useful. If you want to use Jupyter notebooks and similar tools, you would have to add the appropriate port for that tool. Let's review and launch it. The fees for the AMI are $0. Key pair and launch it. It's going to launch like any other AMI. I've done this before, so we don't want to wait for the instance to come up. Let's go back to the EC2 console, and I've got an instance running already. 
+
+Let's grab the domain name and connect with SSH. This is an Ubuntu-based AMI, so you have to use the Ubuntu user. Don't try the EC2 user; that's only for Amazon Linux. We should connect. What do we have here? We have a whole bunch of tools, like I said. I can see Anaconda, Caffe, Keras, MXNet, TensorFlow, Theano, Torch, and more. You have all the sources for these, so if you want to pull from their GitHub repo and rebuild, you can do that. This is a GPU instance, so I should be able to see some GPUs here. There's only one on this instance, but it's good for development and not really expensive. 
+
+Let's see if MXNet is actually installed. Let's just import it. That seems to work. Check the version. It's 0.10, which is the latest version. As you can see, everything is already in there. No need to mess with the configuration, just get to work. Let's train something here. Let's go to the example directory and image classification. There are a whole bunch of examples in here using ImageNet, MNIST, and CIFAR-10, which are great for learning how to build and train MXNet models. Let's do a quick training on MNIST. I'm going to use Python and run that script here. I want to do this on a GPU, so I'll use the GPUs flag to train on GPUs. 
+
+As you can see, I'm downloading the dataset, and off it goes. Training pretty fast. This is going for 20 epochs. As you can see, it's all in there. Just fire up the AMI and get to work. We will provide updated versions of the AMI whenever something new shows up, but this is a great time-saver. In less than a minute, I fired up that instance and was able to train a deep learning model on MNIST with decent validation accuracy. You can obviously use it to predict with your own images. 
+
+This was just a short video to show you how easy it is to fire up the Deep Learning AMI. If you want to learn more about MXNet, you can go to my Medium page where I published a number of MXNet articles which seem to be quite popular. Thanks for reading them. They're a good way to get started with MXNet and deep learning. Feel free to get in touch if you have questions. I hope this was informative, and see you next time.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Deep Learning AMI</span><span class="tag">AWS</span><span class="tag">GPU Instances</span><span class="tag">MXNet</span><span class="tag">Jupyter Notebook</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

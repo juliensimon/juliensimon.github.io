@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatisez vos taches d administration courantes sur Amazon EC2</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Automatisez vos taches d administration courantes sur Amazon EC2</h1>
+        <div class="date">March 31, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/8BW7mIEJS3g" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Retrouvez le PDF de cette session ici : <a href="http://bit.ly/2ol13Ml" target="_blank" rel="noopener noreferrer">http://bit.ly/2ol13Ml</a>
+Summit AWS  le 27 juin 2017 à Paris - Inscrivez-vous gratuitement ici : <a href="http://amzn.to/2nYYsaP" target="_blank" rel="noopener noreferrer">http://amzn.to/2nYYsaP</a>
+
+Dans ce webinaire nous nous intéressons à l'automatisation de vos tâches d'administration courantes sur vos instances Amazon EC2 via EC2 Systems Manager.
+
+Le saviez vous ? Ces webinaires sont organisés depuis Amazon WorkSpaces, notre service de bureaux virtuels.
+
+Inscrivez-vous aux mardis du cloud ! : <a href="http://amzn.to/2lvragO" target="_blank" rel="noopener noreferrer">http://amzn.to/2lvragO</a>
+Rendez-vous sur notre site internet : <a href="http://amzn.to/2ktrf5g" target="_blank" rel="noopener noreferrer">http://amzn.to/2ktrf5g</a>
+Suivez-nous sur Twitter : <a href="https://twitter.com/aws_actus" target="_blank" rel="noopener noreferrer">https://twitter.com/aws_actus</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Bonjour à tous, très content de vous retrouver pour une nouvelle après-midi de Webinar AWS. Au programme de cet après-midi, deux sessions sur EC2. La première session portera sur un nouveau service lancé à ReInvent, appelé EC2 System Manager, qui permet de gérer ces flottes d'instances EC2. La deuxième partie de la session sera un deep dive EC2 centré sur les performances et l'optimisation, avec du contenu très technique. Vous verrez un ensemble de solutions et d'astuces pour obtenir les meilleures performances sur vos instances. Mais commençons avec ce premier sujet.
+
+Cette session est une introduction à EC2 System Manager. Je vous donnerai en fin de présentation des liens vers des sessions plus avancées pour approfondir l'usage de Systems Manager. Pour cette session, c'est vraiment une session de découverte. Nous allons commencer par parler du service lui-même, des problèmes qu'il essaie de résoudre, de ses principales fonctionnalités. Ensuite, nous rentrerons un peu dans les détails de la configuration et de l'utilisation de Systems Manager. Et assez vite, j'essaierai de vous amener sur une démo pour vous montrer quelques exemples d'utilisation de Systems Manager. Bien sûr, nous prendrons aussi vos questions. Je profite de ce moment pour remercier Hugo qui m'accompagne comme d'habitude pour organiser ces webinars. Merci beaucoup pour la logistique. Voilà, nous avons une très belle installation.
+
+Le premier point à rappeler avant de parler de Systems Manager, c'est que le cloud est devenu la nouvelle règle, le nouveau standard. Des entreprises de toutes tailles migrent activement vers le cloud aujourd'hui pour profiter des bénéfices que vous connaissez déjà : l'agilité, la capacité à innover rapidement à la même vitesse que les startups, la capacité à optimiser ses coûts d'infrastructure grâce aux instances réservées, à l'auto-scaling, etc., et la capacité à déployer rapidement la même plateforme partout dans le monde, dans les 16 régions AWS. Cette migration rapide des entreprises vers le cloud les amène souvent à déplacer leurs ressources physiques, serveurs, stockage, bases de données, etc., vers le cloud. Et assez souvent, en particulier dans le cas des grandes entreprises, cela se traduit par une phase hybride où, pendant la migration ou plus durablement, on doit gérer des serveurs, des applications, de l'infrastructure qui existent des deux côtés, dans le data center physique et dans le cloud.
+
+Cette situation pose la question de la gestion et du pilotage de cette infrastructure avec des outils historiques qui sont malheureusement la plupart du temps inadaptés aux environnements hybrides. De nombreux clients nous ont remonté que lorsqu'on migre vers le cloud, on ne peut pas ou on ne peut que très rarement continuer à utiliser les mêmes outils. Parfois, c'est impossible, les outils ne le supportent pas, et quand c'est possible, c'est relativement complexe. Le caractère extrêmement dynamique du cloud, l'auto-scaling, rend la vie assez difficile aux administrateurs système et aux équipes Ops. Les outils historiques n'ont pas été conçus pour gérer des flottes d'instances extrêmement dynamiques et ne sont pas adaptés à l'échelle du cloud. Cela rend la gestion globale de l'infrastructure difficile, complique la vue unique de l'infrastructure entre la partie data center et la partie cloud, et augmente la complexité et les coûts.
+
+Nos clients nous ont donc demandé de construire un nouveau service qui leur permettrait de simplifier la gestion de leur infrastructure, d'unifier la gestion de leur infrastructure entre le data center et le cloud. Ce service, c'est EC2 Systems Manager, un ensemble d'outils qui vous permet de gérer, configurer et automatiser le pilotage de vos instances Windows et Linux, qu'elles s'exécutent dans l'environnement AWS ou dans vos data centers. C'est vraiment le premier point important à retenir sur EC2 System Manager : c'est un service AWS, mais il a été conçu pour piloter aussi bien des instances qui s'exécutent dans EC2 que des instances qui s'exécutent dans vos data centers et locaux. Nous verrons plus tard comment configurer tout cela.
+
+Où se positionne le Systems Manager dans le cycle de déploiement de votre infrastructure ? Voici les cinq grandes étapes qu'on peut voir traditionnellement chez nos clients. La première étape est la construction de l'infrastructure à proprement parler, donc le déploiement des instances, des VPC, etc. La façon la plus automatique de le faire est d'utiliser CloudFormation ou Service Catalog pour fournir des stacks applicatifs toutes prêtes. La deuxième étape est de configurer les instances elles-mêmes, donc de déployer des services, des frameworks applicatifs, d'installer des packages, etc. C'est là que Systems Manager va s'installer, au même titre que OpsWorks, qui vous permettrait d'utiliser une architecture chef et des recettes chef pour provisionner vos applications. Systems Manager intervient donc tôt dans la construction de l'infrastructure. Une fois que les instances ont été démarrées et qu'elles sont accessibles, vous pouvez utiliser Systems Manager pour y installer des packages, des patches, etc.
+
+Les étapes suivantes sont le monitoring, la compliance avec Config, dont nous reparlerons plus tard puisque Config est intégré avec Systems Manager, puis l'optimisation des coûts, l'optimisation de la sécurité et d'autres sujets avec, par exemple, Trusted Advisor. Systems Manager est donc un outil qui intervient tôt dans le cycle de déploiement. Pourquoi est-il intéressant ? Il a été conçu pour des architectures hybrides, donc il vous permet de piloter aussi bien des instances qui tournent dans EC2 que des serveurs déployés chez vous. Il est cross-plateforme, il fonctionne avec Linux et Windows dans de nombreuses versions. Il est scalable, vous savez que la scalabilité pour AWS est toujours un point important. Si vous avez des flottes de milliers d'instances, vous pourrez les gérer avec EC2 Systems Manager. Ce n'est pas un gadget destiné à gérer quelques instances, mais un outil conçu pour gérer de très grosses flottes de très grandes entreprises.
+
+C'est un outil sécurisé, nous en reparlerons plus tard. C'est un outil relativement simple à utiliser. Nous verrons plus tard comment l'utiliser dans la console, mais vous verrez que vous pouvez définir des procédures automatisées pour installer des applications, des patches, etc., avec une syntaxe plutôt simple. C'est un outil économique puisque son utilisation ne vous coûte rien. Un peu comme CloudFormation ou d'autres services de ce type, vous ne payez rien lorsque vous utilisez EC2 Systems Manager. Vous payez l'utilisation de vos instances et c'est tout.
+
+Rentrons un peu plus dans le détail. Systems Manager est avant tout un outil qui va vous permettre de déployer, configurer et administrer vos instances au travers de deux mécanismes : Run Command, que vous connaissiez peut-être déjà et qui est maintenant intégré dans Systems Manager, et State Manager, qui va garantir que vos instances maintiennent une configuration connue. La deuxième grande famille de fonctionnalités de Systems Manager concerne le suivi et la visualisation de la configuration de vos instances. Nous avons une fonctionnalité d'inventaire qui est intéressante, que je vous montrerai plus tard, et une fonctionnalité de gestion de patch qui vous permet de gérer de manière très fine les patches installés sur vos instances. Vous pouvez sélectionner ou exclure des patches, et définir des automatisations pour construire en particulier vos AMI. Au milieu de tout cela, nous avons un ensemble de fonctionnalités partagées, comme les fenêtres de maintenance et l'entrepôt de paramètres, que je vous montrerai aussi.
+
+La Run Command est une fonctionnalité qui vous permet d'exécuter des scripts, soit des scripts shell, soit des scripts PowerShell, sur une flotte d'instances. Vous pourriez vous demander pourquoi ne pas utiliser SSH ou RDP. Précisément parce que pour faire cela, il faut gérer des secrets, ce qui est complexe. Imaginez que vous deviez exécuter un script Windows ou Linux sur 200 instances, il faudrait que vous ayez un accès SSH ou RDP sur ces 200 instances, potentiellement avec des clés différentes, etc. Tout cela est relativement délicat. La Run Command est donc un outil d'exécution de script en masse basé sur une procédure décrite dans un document JSON qui liste les étapes que vous voulez effectuer. L'ensemble des automatisations et des opérations que nous effectuerons avec Systems Manager s'appuiera sur la Run Command, mais vous pouvez toujours l'utiliser de manière indépendante si vous le faisiez déjà.
+
+La deuxième fonctionnalité est le State Manager, qui vise à maintenir une configuration cohérente sur vos instances en termes d'OS et d'application. Nous verrons plus tard qu'il existe de nombreuses règles déjà prédéfinies. Vous pouvez veiller à ce que Windows Update soit activé sur les instances, ou à ce qu'une liste de patches précises soit appliquée, etc. Vous pouvez utiliser des politiques déjà définies ou écrire vos propres règles et les appliquer à intervalles périodiques sur un ensemble d'instances que vous aurez définies. C'est une façon d'homogénéiser la configuration de ces OS et applications sur un grand nombre d'instances avec un unique point d'entrée.
+
+Le troisième service est l'Automation Service, qui vise à simplifier la construction d'AMI. C'est un sujet important lorsqu'on fait du déploiement continu et de la livraison en continu. Nous avions parlé de Packer ou d'Aminator dans les webinars précédents, mais ces outils nécessitent la mise en place d'un workflow spécifique. Aujourd'hui, vous pouvez envisager de le remplacer par l'utilisation de l'Automation Service. Il part d'une AMI de base, Linux ou Windows, et applique un ensemble d'étapes, comme des applications de patches ou des installations de packages, pour fabriquer une nouvelle AMI. On peut faire une intégration avec Lambda, etc. C'est une alternative au workflow que vous aviez mis en place et qui peut, dans certains cas, vous simplifier la vie. Si vous avez cette problématique de construction de Golden AMI, d'AMI de référence, qui servent ensuite au déploiement de vos applications, cela vaut la peine d'être regardé.
+
+Les documents sont des fichiers JSON qui listent les différentes étapes et commandes que vous souhaitez appliquer dans vos workflows d'automatisation ou vos règles de gestion d'état. La syntaxe est vraiment simple, pas besoin d'être développeur pour écrire ce genre de choses. Nous en verrons quelques exemples plus tard. Un problème récurrent est la gestion des secrets. On a besoin peut-être d'une clé pour accéder à un serveur, d'une chaîne de connexion de bases de données, etc. Il y a de nombreux paramètres d'infrastructure qu'on peut avoir besoin d'utiliser et de déployer dans des phases d'automatisation. Avec Systems Manager, vous pouvez utiliser l'entrepôt de paramètres, le Parameter Store, pour stocker de manière centralisée et sécurisée tous ces paramètres d'authentification, ces chaînes de connexion, etc. Vous pouvez les chiffrer avec KMS, un service qui vous permet de chiffrer des données sensibles avec des clés que vous avez créées dans votre compte ou que vous avez importées dans KMS.
+
+La notion de fenêtre de maintenance est importante lorsqu'on parle d'installation de patches, de Windows Update, etc. On se pose souvent la question du bon moment pour le faire, généralement dans des périodes creuses pour ne pas perturber l'activité de l'entreprise. Vous pouvez définir des fenêtres de maintenance, des jours, des heures, des durées, et les intégrer avec les commandes et scripts que vous exécuterez via les différents outils de Systems Manager. L'inventaire est aussi un problème récurrent lorsqu'on a des flottes de serveurs de taille croissante. Il s'agit de savoir ce qui est installé, où, ce qui tourne, et d'avoir une vision précise des packages et de leur configuration sur chacune des instances. Via le service d'inventaire, vous verrez qu'il y a une façon très simple de dénombrer les informations sur l'instance, les applications, les packages installés, les patches, la configuration réseau, etc. Cet inventaire est intégré avec AWS Config, qui enregistre toutes les modifications de configuration des ressources AWS, et vous pourrez voir l'historique de l'inventaire au fil du temps.
+
+Le Patch Manager, comme son nom l'indique, vous permet d'appliquer des ensembles de patches. Pour l'instant, cette fonctionnalité est supportée uniquement sur Windows, mais pas sur Linux. Nous verrons plus tard comment faire des mises à jour sur des instances Linux. Le Patch Manager a une granularité extrêmement fine. Vous pouvez choisir des catégories de patch, des sévérités, et définir des périodes de rétention pendant lesquelles les patches ne sont pas appliqués. Par exemple, vous pouvez appliquer les patches de sécurité immédiatement, mais attendre quelques jours pour les patches applicatifs ou de sévérité plus faible.
+
+Voilà pour les principales fonctionnalités que je vais vous montrer très vite. Je rappelle que ce service ne vous coûte rien. Il est disponible dans les quatre régions publiques US, en Amérique du Sud, en Irlande, en Allemagne, et dans quatre régions en Asie-Pacifique. Vous pouvez utiliser EC2 System Manager avec des serveurs physiques déployés dans votre data center en déployant un agent pour que Systems Manager puisse envoyer des requêtes à votre instance ou serveur physique. L'installation de l'agent est simple et rapide, mais il faut que votre instance EC2 possède un rôle avec les permissions nécessaires pour se connecter à EC2 System Manager. Il y a des stratégies IAM prédéfinies pour cela. Pour qu'une instance ou un serveur physique soit pilotable avec Systems Manager, il faut que l'agent soit installé. En termes d'OS supportés, nous supportons les principaux OS Linux, comme Amazon Linux, Ubuntu, Red Hat Linux, et CentOS. Pour Windows, nous supportons toutes les versions de 2003 à 2016, y compris les R2. L'agent est préinstallé sur les images Windows 2016 gérées par Amazon, mais pour les anciennes versions ou vos propres versions, il faut penser à l'installer.
+
+Passons à la démo, qui est la partie la plus intéressante. Je suis dans la console EC2, et Systems Manager se trouve un peu plus bas. Vous avez deux blocs : le premier pour lancer les commandes, et le second pour les ressources partagées, comme les documents, les fenêtres de maintenance, etc. Nous allons regarder un exemple pour concrétiser. La Run Command existait déjà, et vous voyez que j'en ai déjà lancé plusieurs. C'est le pilier de ce service, la capacité de lancer des commandes sur des instances. Nous allons plutôt aller voir le State Manager, qui est plus intéressant, et voir comment créer une association. Une association est un ensemble de commandes exécutées sur un ensemble d'instances. Je vais vous montrer comment créer une association. Je clique sur le bouton bleu, et vous voyez déjà les associations prédéfinies. Par exemple, configurer Windows Update, trouver des nouvelles updates Windows, installer une application, joindre une instance à un Active Directory, faire des inventaires, etc. Nous allons en prendre une au hasard. Cette association applique la liste des commandes dans la procédure sur les instances sélectionnées. Vous pouvez les sélectionner manuellement ou par tag. Par exemple, je pourrais dire que je veux appliquer cette action à toutes les instances EC2 qui ont un tag "platform" avec la valeur "Windows 2016". Ensuite, je choisis la fréquence d'exécution et où écrire le résultat des commandes, par exemple dans un bucket S3.
+
+Je vais regarder quelques-unes des associations que j'ai créées. Par exemple, une association qui vérifie que Windows Update est activé, exécutée toutes les 12 heures, et qui écrit le résultat dans un bucket S3. Si je regarde le document, je vois que la commande vérifie que Windows Update est activé et écrit le résultat dans S3. C'est une bonne pratique pour avoir le résultat des commandes et débugger en cas de problème. Je peux exécuter cette association à la demande. Je vois les instances concernées, et si je fais "Apply Association", elle s'exécute immédiatement. Je vais regarder une autre association qui fait l'inventaire des instances Windows. Elle s'exécute toutes les 12 heures et rafraîchit automatiquement l'inventaire que vous pouvez voir dans la console. Si je regarde une instance Windows, je vois les applications installées, comme l'agent Systems Manager, des outils AWS, et Mozilla. Si je regarde une autre instance, je vois plus de trucs, comme SQL Server et .NET. L'inventaire s'exécute toutes les 12 heures et se rafraîchit automatiquement. Vous pouvez voir l'historique des modifications dans AWS Config.
+
+Une autre association intéressante s'exécute toutes les 8 heures sur mes 5 instances et met à jour l'agent Systems Manager. Elle s'assure que l'agent est bien à jour et démarré. Une autre association fait l'inventaire des logiciels sur toutes les instances, y compris les instances Linux. Par exemple, une association qui exécute un script shell pour appliquer les patches de sécurité sur mes instances Linux toutes les 4 heures. Si je regarde une instance Linux, je vois qu'elle a besoin d'updater 11 packages, mais pas les packages de sécurité qui ont été mis à jour. Manifestement, cela a fonctionné.
+
+Voilà quelques exemples rapides. Le principe est toujours le même : on crée une association, soit prédéfinie, soit personnalisée, on choisit les instances cibles, soit explicitement, soit via un tag, et on définit un planning d'exécution. Regardons quelques documents. Par exemple, "RunShellScript". Si je regarde ce document, je vois les paramètres nécessaires : la commande à exécuter, le répertoire, et le timeout. Cela sera exécuté par la Run Command qui se connecte aux instances et exécute les commandes que vous avez définies. Si vous voulez voir en détail ce que fait une règle prédéfinie, vous pouvez le faire ici, et vous pouvez toujours créer un document vous-même. Le paramètres store vous permettra de donner un nom à vos paramètres, une description et ensuite une valeur. Soit une string, soit une liste de string, soit une string sécurisée et qui sera chiffrée avec KMS. Et vous pourrez vous y référer dans vos différents scripts. Puis les patchs. Donc là, on va avoir la liste finalement de tous les patchs Windows qui sont connus de System Manager. Vous pouvez les filtrer. Si j'ai envie de voir tous les patches Windows 2016, tous les patches de sécurité, par exemple. Tous les patches de sécurité qui sont disponibles pour Windows 2016. Donc les voilà. Ça, c'est une fois de plus le numéro de patch dans la Knowledge Base de Microsoft. Je peux ensuite prendre ces numéros-là et créer une activation qui va aller appliquer spécifiquement ces patches-là, s'assurer qu'ils sont installés. On peut créer une baseline, on peut les appliquer spécifiquement pour m'assurer que tous ces patches-là sont bien présents sur mes instances. Bien sûr, quand on a deux ou trois instances, on le fait à la fin, ce n'est pas un problème. Mais quand on en a des centaines, des milliers, vous vous doutez bien qu'on est obligé d'automatiser ça. Et voilà, pensez bien, comme d'habitude, à aller copier ça, logger ça dans S3. On va aller voir par exemple ce qu'il avait sur les patchs de sécurité Linux. Donc ça, c'est les deux instances où il a travaillé. La référence de l'activation. Voilà, et là on voit les exécutions successives. On va prendre la plus ancienne, c'est sûrement là qu'il a dû appliquer quelque chose. Et on va voir s'il y avait des patchs à appliquer ou pas. On voit là ce qu'on s'attend à voir, c'est-à-dire qu'il fait le yum update sur les packages de sécurité. Là, il y avait 31 packages en attente, mais aucun package de sécurité à appliquer. Vous voyez cette info de debug, ou tout simplement cette info de ce que cette activation a fait. C'est dans S3 que vous la trouverez, donc pensez bien à logger dans S3.
+
+Voilà ce qu'on peut dire de manière rapide sur System Manager. La meilleure solution, c'est évidemment de l'essayer et de le lancer sur quelques instances avec les inventaires, avec l'application des patchs, etc. C'est vraiment simple à utiliser. Je n'ai pas trouvé de piège, en tout cas, s'il y en avait pour l'instant. Donc juste pour résumer, je pense que c'est un outil qui est intéressant pour simplifier l'administration de vos instances. Bien sûr, il est ciblé sur des infrastructures hybrides, mais comme vous le voyez, je l'ai fait uniquement sur des instances EC2. J'aurais bien aimé vous le montrer sur des instances on-premise, mais avec notre configuration réseau au bureau, c'est un peu compliqué. Peut-être une autre fois. Mais voilà, à partir du moment où l'agent est installé sur votre serveur et où il arrive à communiquer avec AWS, vous pourrez faire la même chose sur des serveurs on-premise. Il est cross-plateforme, Linux, Windows, sauf pour la gestion des patches. On espère pouvoir livrer rapidement la gestion des patches sur Linux. Il est scalable, il est sécurisé, vous pouvez stocker vos paramètres sensibles de manière chiffrée. Il est simple à automatiser. Vous avez vu, c'est des petits documents de JSON avec une syntaxe toute simple. Si vous savez scripter, il n'y a aucun problème. Et il est économique puisque son utilisation ne vous coûte rien. Si vous voulez commencer à jouer, n'hésitez pas. Vous avez vu que le service est disponible dans les régions européennes.
+
+Si vous voulez creuser les fonctionnalités avancées de cet outil, je vous recommande ces deux sessions de re-invent, Win 401 et Win 402, qui vont beaucoup plus loin dans l'utilisation de l'outil. Vous pourrez y trouver davantage de détails. Je vous rappelle que vous pouvez également rejoindre nos user groupes. On a récemment passé la barre des 2600 inscrits dans nos user groupes français. Donc si vous en faites partie, merci beaucoup. J'espère vous croiser rapidement dans l'un de ces groupes. Si vous n'en faites pas partie, jetez un œil sur meetup.com à l'activité des groupes. C'est d'une part très sympa et franchement de bon niveau. On a des présentateurs partout en France, des clients qui expliquent leur utilisation d'AWS. C'est vraiment pas mal.
+
+Le programme des webinaires des mois à venir, en avril, deux sessions sur les bases de données. Je ferai un premier deep dive sur RDS, Aurora et compagnie. Et mon collègue Julien Lépine, notre spécialiste Microsoft, fera un webinaire sur SQL Server. Si vous êtes utilisateur SQL Server, ne ratez pas ça. En mai, on parlera de Big Data au sens large et des bons services à utiliser pour construire sa plateforme. Et au mois de juin, on fera une session spéciale pour les débutants ou les gens qui découvrent les services de base et comment bien démarrer avec AWS. Je vous rappelle que vous pouvez retrouver tous les enregistrements de nos webinaires sur YouTube, sur une chaîne qui s'appelle Amazon Web Services France, dont l'URL est là. N'hésitez pas à vous abonner, comme ça vous serez au courant de toutes les nouveautés. Et dès que possible, nous posterons évidemment ces derniers webinaires sur cette chaîne. Tout se trouve là. Voilà, je vous remercie beaucoup. J'espère que vous avez appris deux ou trois trucs sur EC2 System Manager, que vous avez envie de l'essayer pour vous simplifier la vie. Et n'hésitez pas à nous envoyer vos questions. Je pense que Hugo affiche le sondage. Alors, est-ce qu'on passe aux questions ?
+
+Il y a plusieurs questions sur les régions. Alors, soit j'ai pas été clair, soit vous avez été perturbé par l'interruption de services. Ce service est disponible dans de nombreuses régions. Dès que j'aurai trouvé le slide sur lequel j'ai la liste. Le service est disponible dans les régions américaines, en Amérique du Sud, en Irlande, à Frankfurt, et il est disponible dans les quatre régions en Asie-Pacifique. C'est un service fondamental qui est lié à EC2. Je vois des gens qui me demandent quand est-ce qu'il est dispo au Canada, quand est-ce qu'il est dispo à Londres, etc. Je suis assez confiant sur le fait qu'il soit progressivement déployé partout, il est lié à EC2, donc on doit... EC2 est présent partout, donc ce service a vocation à être présent partout. Je réponds toujours à la même chose dans ces cas-là, même un WS a besoin de gérer les priorités, donc je n'ai pas de date à vous communiquer pour les régions manquantes, mais une fois de plus, le service étant lié à EC2, je pense qu'on va le voir arriver un peu partout.
+
+Avec System Manager, est-ce qu'on peut piloter des machines sur d'autres clouds ? Oui, on peut. Il n'y a aucune restriction particulière. À partir du moment où vous exécutez un OS qui est dans la liste des OS supportés, et à partir du moment où l'agent est installé et où il est capable, il a une connectivité internet qui lui permet de communiquer avec le système manager, eh bien vous pourrez gérer vos instances. Donc pas de soucis, oui. C'est vraiment fait pour ça.
+
+Pour l'utilisation en mode hybride, est-ce que l'agent est en mesure de communiquer on-premise vers AWS sans utiliser de VPN ? Oui, il suffit d'avoir une connectivité Internet. Maintenant, je ne conseillerais pas de faire de l'hybride hors VPN. Je pense que c'est absolument vital d'avoir un VPN entre votre infrastructure et le cloud AWS. Mais il n'y a pas de prérequis à l'hiver. Il n'y a pas de prérequis VPN.
+
+Pas de support de Debian. Il y a toujours quelqu'un pour me la faire celle-là. Non, pas de support de Debian. Amazon Linux, CentOS et RHEL. Maintenant, on n'a pas d'opposition philosophique à faire Debian. C'est juste que j'imagine qu'on doit penser et on doit voir chez nos clients que ce n'est pas une distribution qui est en haut de la liste. Mais si suffisamment d'utilisation Debian la réclame, il n'y a pas de raison pour qu'on ne le fasse pas.
+
+Pour le déploiement de patch Windows, est-ce que nous sommes en mesure de pousser des patchs spécifiques ? Tout à fait, je ne l'ai pas montré parce que j'étais un peu à court de temps, mais oui, vous pouvez dans le patch manager, vous pouvez construire une liste de patch que vous voulez appliquer. En fait, vous pouvez même faire mieux que ça, vous pouvez définir une baseline, donc un ensemble de patch qui doivent être appliqués partout et si vous voulez pousser un patch, alors vous pourriez avoir ça une baseline, un truc qui tourne toutes les 12 heures ou toutes les 24 heures et qui vérifie que à chaque fois que les instances qui ont démarré elles aussi ont la baseline, etc. Donc histoire vraiment d'homogénéiser votre parc. Et puis vous pourriez exécuter manuellement, de dire là il y a un hotfix qui vient de sortir sur SQL Server ou Windows, et vous ne voulez pas attendre 12 heures ou 24 heures. Vous pouvez tout à fait créer soit une run commande, soit une association, et dire voilà je veux appliquer KB 1, 2, 3, 4, 5, 6, 7, 8 sur toutes mes instances, taguer windows clic et il va faire le déploiement donc oui vous pouvez à partir du moment où le patch est référencé dans la knowledge base vous pouvez faire comme ça et si c'est un hotfix on va dire si c'est quelque chose hors Microsoft ou un hotfix peut-être d'une application que vous faites tourner sur vos instances là aussi vous pouvez le déployer via une run commande et vous mettez le fichier dans le hotfix dans S3, vous faites une run commande qui va prendre le fichier dans S3, qui le claque sur toutes vos instances, etc. Vous pouvez à la fois faire du programmé, du périodique, et puis vous pouvez faire du ad hoc quand il y a vraiment une urgence.
+
+Est-ce qu'on peut désinstaller un patch ? Je n'ai pas vu dans les associations, je n'ai pas vu de règles, je n'ai pas vu d'associations prédéfinies pour désinstaller. C'est une bonne idée. C'est vrai qu'on devrait le faire. On peut faire des exclusions de patchs quand on fait des Windows updates ou des trucs comme ça. On peut dire, tu n'appliques pas ça, ça, ça, ça. Mais c'est vrai que je n'ai pas vu la désinstallation. Donc ça, il faudrait le faire via une association que vous développez vous-même. Mais on pourrait imaginer qu'on le rajoute aussi. C'est une bonne idée. Merci.
+
+Système manager a-t-il vocation à remplacer complètement les outils de déploiement habituels comme Ansible, Chef, Puppet ? Ah, ça, c'est une bonne question. C'est une question philosophique. Moi, je vais juste donner mon avis là-dessus. Moi, je vais dire non. Non. Parce que je pense qu'on n'a pas... Je pense qu'on n'a pas tout à fait la même flexibilité. Je pense que quand on fait du chef ou d'autres outils, on code... Bon, prenons chef. On code ces recettes, on écrit du code rubis, on a une flexibilité totale. C'est-à-dire que c'est programmatique, on fait ce qu'on veut, on peut faire des cas particuliers, on peut surtout réutiliser tout ce qui a déjà été fait par la communauté chef. Et puis on fait du provisioning. Si on veut déployer un Apache et un MySQL ou un Nginx et je ne sais pas quoi, les recettes sont déjà là, elles évoluent, elles sont supportées sur tous les OS, etc. Donc le provisioning applicatif fin, moi je continuerai à le faire avec mes outils favoris. Maintenant je trouve que la gestion des... Pour la partie purement OS, la gestion des patchs, etc., les inventaires, etc. Je trouve que ces deux systèmes managers en deux clics, ça fait le boulot. Ça tourne sans que je me pose la question de quelle est l'infrastructure dont j'ai besoin pour le faire. J'aime bien le côté manager, j'aime bien le côté le no-brainer. Je veux l'inventaire de toutes mes instances toutes les 24 heures, clic je l'ai. Maintenant je ne suis pas sûr que j'utiliserai System Manager pour faire du déploiement toutes les 5 minutes. Vous voyez ce que je veux dire ? Je pense que je garderai System Manager pour faire l'OS, les patchs, l'inventaire et je garderai mes outils de provisioning habituels pour faire le provisioning des services, le provisioning des applications. Bon maintenant voilà la moitié des gens qui seront pas d'accord avec moi et qui trouveront qu'on peut tout faire avec système manager mais bon je me méfie toujours de le nouvel outil qui remplace tous les autres pour avoir eu la responsabilité de grosse flotte d'instance Windows il y a quelques temps c'était un peu un calvaire de gérer les patchs les Windows Update etc c'est clair que je trouve que cet outil résout davantage de problèmes Microsoft que de problèmes Linux mais on va m'accuser d'être partiel donc voilà avant de vous faire votre idée là-dessus, mais je pense qu'il y a moyen de faire coexister tous ces outils.
+
+Sur le paramètre store, est-ce qu'on peut stocker un fichier ? Manifestement pour l'instant non, on ne peut stocker que des valeurs. C'est vrai que je me suis posé la question aussi en jouant avec, mais non pour l'instant non. Donc je ne sais pas stocker une clé par exemple, un fichier de clé, non. Donc, pas pour l'instant. Ça viendra peut-être après. C'est une bonne idée aussi.
+
+Quel est l'avantage de passer par cet outil par rapport à créer une nouvelle AMI et à remplacer X machines en masse ? Je comprends ce que vous voulez dire Jérôme, je vois bien. Le problème de construire l'AMI, c'est que vous devez construire l'AMI. Vous devez avoir toutes les ressources pour les faire. Ce que je veux dire par là, c'est que, prenons le cas de Windows une fois de plus, est-ce que vous avez vraiment envie, toutes les 24 heures, de reconstruire une AMI Windows avec tous les patchs de sécurité qui sont sortis depuis 24 heures, etc. Et de faire une rolling upgrade sur toute votre plateforme, ça me paraît violent. Parce que soit vous allez faire une rolling upgrade, donc vous allez remplacer et donc d'une certaine manière éteindre vos serveurs un par un et les redémarrer avec une nouvelle AMI. Ou alors vous allez faire du blue green. Je trouve que dans de nombreux cas, c'est un peu le marteau pilon pour écraser une mouche. Je pense que si tout ce que j'ai envie de faire, c'est de m'assurer que Windows Update tourne toutes les 25 heures, j'ai pas besoin de reconstruire des AMI et d'aller perturber mon infra. Je trouve que c'est un peu dur de faire ça. Une fois de plus, dans des logiques de patch, etc., si on peut appliquer les patchs sans rebooter le serveur ou sans remplacer le serveur, ça me parait quand même préférable. Après, oui, si votre politique de déploiement, c'est à chaque fois que vous avez une nouvelle release d'application, vous faites une AMI et vous la déployez, pourquoi pas ? Mais imaginons que vous fassiez ça tous les 24 heures. S'il y a des patchs à appliquer entre les 24 heures, entre deux releases, peut-être que System Manager, ça permet là aussi de dire, si Windows Update est activé, j'applique les patchs, et puis bon, je ne recrée pas la nouvelle AMI tout de suite. Recréer une AMI à chaque fois qu'on change un micro truc, ça me paraît un peu violent, mais pourquoi pas.
+
+On est à court de temps ? Ok. Il va falloir que je choisisse un gagnant et que je me fâche avec tout le monde, c'est ça ? Bon, bon, bon. Eh bien... Allez, on va faire gagner Guillaume. Est-ce que System Manager a vocation à remplacer les outils habituels ? Bravo Guillaume, merci pour la question et merci pour toutes vos questions. Il en restait d'autres, mais malheureusement on est à court de temps. On va reprendre dans cinq minutes. Juste le temps de boire un petit café et surtout restez avec nous pour le Deep Dive EC2. C'est une session vraiment, vraiment techniques, vraiment assez hardcore. Donc si vous vous êtes souvent posé la question de comment on optimise les instances EC2, restez avec nous. Là, on va parler de sujets vraiment, vraiment pointus. Pour les autres qui ne souhaitent pas en entendre parler, pas de souci. On vous rend à vos activités normales. Merci à tous de votre présence. Et donc rendez-vous en 5 minutes pour la suite de ce webinaire. Merci beaucoup. À tout de suite.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">EC2 System Manager</span><span class="tag">Hybrid Cloud Management</span><span class="tag">AWS Webinar</span><span class="tag">Instance Automation</span><span class="tag">Cloud Infrastructure Optimization</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

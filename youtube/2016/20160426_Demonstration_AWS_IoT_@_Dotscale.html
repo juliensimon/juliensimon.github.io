@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demonstration AWS IoT @ Dotscale</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Demonstration AWS IoT @ Dotscale</h1>
+        <div class="date">April 26, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/_QaWCA3K1pY" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Démonstration AWS IoT, Dotscale, 25/04/2016</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Voici le transcript nettoyé et amélioré :
+
+---
+
+Comme cela, pour les gens qui ne voient pas, vous viendrez voir après. Cela permet à des équipements électroniques qui n'ont à peu près rien à voir avec ceux avec lesquels on travaille d'habitude de se connecter à un gateway hébergé dans notre cloud. Ils peuvent communiquer via un SDK que nous installons sur les devices. Nous supportons aujourd'hui Node.js, Arduino et le C, un SDK en C pur, portable. Via un SDK, ils pourront échanger des messages chiffrés avec des certificats, des clés, etc., avec un gateway. Ils pourront publier et s'abonner à des fils de messages, communiquer entre eux, mais surtout remonter des informations vers le cloud. Sur les messages qui arriveront sur le gateway, nous pourrons appliquer des règles pour filtrer ces messages et, le cas échéant, les router vers des services tiers qui peuvent être des services au sein du cloud. Dans ma démo, je vais envoyer des informations dans DynamoDB, mais on pourrait les pousser dans n'importe quel autre backend ou même sur des API tiers, si vous aviez les vôtres. J'ai plein de contenu en ligne sur IoT. Si ça vous intéresse, venez me voir à la fin, je vous montrerai où ça se trouve.
+
+Là, on va regarder directement l'application. J'ai deux Arduino Uno qui sont là, connectés en USB, mais uniquement pour l'alimentation. Il n'y a pas de communication sur la partie USB. Tout se passe en Wi-Fi. J'ai un premier device qui a un capteur de température. Je vais lire la température toutes les secondes. C'est du code Arduino, pas très compliqué. D'abord, je vais me connecter à notre plateforme en quelques lignes. Ensuite, toutes les secondes, je vais construire un message en JSON avec l'identifiant du client et la température mesurée, et je vais le publier sur un topic, c'est-à-dire une file de messages nommée. Cette file de messages s'appelle "température". Ce que fait cet Arduino, c'est uniquement lire la température toutes les secondes et la poster. Si je regarde sa console, je vois ça. C'est le message JSON qui est envoyé par Wi-Fi directement au Gateway toutes les secondes.
+
+J'ai un deuxième Arduino qui va faire l'opération inverse. Il est connecté à notre plateforme avec ses certificats, etc. Toutes les secondes, il va recevoir un message. Il s'est abonné au topic "température" en spécifiant un callback qui sera appelé à chaque fois qu'un message est reçu. Le callback va décortiquer le JSON, lire la température, et si la température est supérieure à 32°C, il va clignoter et faire sonner une petite alarme. Si je regarde sa console, je vois le même message qui est reçu. Avant qu'on fasse sonner, je vous montre la partie cloud. Comment ces données remontent sur le gateway AWS IoT. Là, je suis sur notre console. J'ai une règle définie qui va s'ouvrir. Ce qui est sympa dans ce moteur de règles, c'est qu'il a une syntaxe SQL. On peut faire des selects et appliquer une syntaxe SQL. La règle est simple : je sélectionne dans le topic "température" le champ JSON qui s'appelle "température". Je vais l'insérer dans une table DynamoDB qui s'appelle "IoT Temperature", en ajoutant un timestamp. À chaque fois que le message est reçu, il matchera systématiquement la règle, puisqu'il n'y a pas de critères particuliers. Quand je rafraîchis ma console, vous voyez que tous les messages qui arrivent sur le Gateway matchent la règle et sont automatiquement insérés dans Dynamo. On pourrait faire des règles plus compliquées, pousser dans d'autres back-ends, faire plein de choses. Là, je vous montre quelque chose de simple.
+
+Maintenant, on va vérifier que tout ça fonctionne. On va essayer de faire 32°C. Quelqu'un a les mains plus chaudes que moi ? Ce n'est pas une question piège. Faites ! Vous entendez pas les voix ? C'est une démo en 5 minutes, parce que j'avais 5 minutes. On peut faire des choses infiniment plus compliquées avec IoT. Si ça vous intéresse, venez me voir, j'ai plein de détails à vous communiquer. Ce setup, ce sont des devices que vous achetez partout pour 40-50 dollars. Les capteurs ne valent rien. Vous téléchargez le SDK sur notre site, vous l'installez, et en allant lentement, en une heure, vous reproduisez cette démo. Il n'y a rien de compliqué et cela vous permet en une heure de commencer à mettre vos capteurs en place, de remonter les données dans un cloud, de les mettre dans les bons back-ends, et ensuite de faire du traitement de données. On est plus dans le domaine de l'IoT, après on est dans le domaine de la data traditionnelle. Si vous avez envie de faire du machine learning ou autre chose sur ces données, vous pouvez. C'est une solution simple pour commencer à intégrer des devices. Elle est disponible en Node.js, en Arduino Uno ou en C pour les gens qui font vraiment de l'embarqué.
+
+Je répète, elle est disponible en Node.js, en Arduino Uno ou en C pour les gens qui font vraiment de l'embarqué. Voilà, j'ai respecté mon timing. Merci beaucoup. J'ai un dernier sweatshirt à faire gagner. Comment on fait ? On le jette dans la... Quelqu'un a une question ? Pas de question ? Merci Elisa pour toute ton aide aujourd'hui. Bon, là j'ai fini. Merci beaucoup.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">IoT</span><span class="tag">AWS IoT Gateway</span><span class="tag">Arduino</span><span class="tag">DynamoDB</span><span class="tag">MQT</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

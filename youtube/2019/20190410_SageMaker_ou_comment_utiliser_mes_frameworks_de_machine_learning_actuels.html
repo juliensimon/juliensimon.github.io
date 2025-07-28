@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SageMaker ou comment utiliser mes frameworks de machine learning actuels</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SageMaker ou comment utiliser mes frameworks de machine learning actuels</h1>
+        <div class="date">April 10, 2019</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/4NzKdegwFgs" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Téléchargez la présentation : <a href="https://chilp.it/1dc90a5" target="_blank" rel="noopener noreferrer">https://chilp.it/1dc90a5</a>
+
+Retrouvez l'intégralité des sessions de l'AWS Summit Paris 2019 : <a href="https://aws.amazon.com/fr/events/summits/paris/contenu" target="_blank" rel="noopener noreferrer">https://aws.amazon.com/fr/events/summits/paris/contenu</a>
+
+Inscrivez-vous pour nos prochains évènements : <a href="https://aws.amazon.com/fr/events/" target="_blank" rel="noopener noreferrer">https://aws.amazon.com/fr/events/</a> Retrouvez l'intégralité des sessions de l'AWS Summit Paris 2019 : <a href="https://aws.amazon.com/fr/events/summits/paris/contenu" target="_blank" rel="noopener noreferrer">https://aws.amazon.com/fr/events/summits/paris/contenu</a>
+
+Inscrivez-vous à nos prochains événements : <a href="https://aws.amazon.com/fr/events/" target="_blank" rel="noopener noreferrer">https://aws.amazon.com/fr/events/</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Bonjour à tous. On va commencer, prenez un siège. Bienvenue dans cette session. Je m'appelle Julien, je fais partie de l'équipe d'évangélistes techniques d'AWS. Je me concentre sur l'IA et le machine learning. Je suis accompagné par Sébastien, qui travaille chez Tarket, et qui vous parlera tout à l'heure de leurs cas d'usage sur la reconnaissance d'images.
+
+Dans cette session, on va découvrir ensemble un service de machine learning qui s'appelle Amazon SageMaker, lancé à reInvent 2017, donc il y a un an et demi environ. Je vais vous expliquer les grandes fonctionnalités. Ensuite, Sébastien viendra vous expliquer comment ils l'ont utilisé concrètement, et je reviendrai pour vous faire quelques démos.
+
+Je pense que vous avez certainement déjà vu cette slide, c'est l'ensemble des services d'IA et de Machine Learning disponibles sur AWS. Je dis toujours en plaisantant que quand je suis arrivé chez AWS, on arrivait à faire tenir tous les services AWS sur un slide, et aujourd'hui, il devient difficile de mettre tous les services de machine learning sur un slide. Donc, pas mal de nouveautés. Nous, on va se concentrer sur la couche du milieu, la couche SageMaker, qui vous permet d'entraîner et de déployer vos modèles construits sur vos jeux de données sans gérer d'infrastructures. L'infrastructure devient complètement transparente, quelle que soit l'échelle.
+
+Le but de SageMaker est très simple : vous permettre d'aller de l'expérimentation jusqu'à la production sans avoir à franchir de gouffre. En utilisant le même service, les mêmes API, le même SDK, vous pourrez aller de l'expérimentation initiale avec un notebook, explorer et visualiser vos données, choisir l'algorithme utilisé pour entraîner le modèle. Nous avons des algorithmes prêts à l'emploi et des frameworks de deep learning. Je parlerai plutôt de deep learning dans la session suivante qui aura lieu dans le grand amphi. Il faudra que je me sauve à la fin pour aller à l'autre. Vous pouvez vous sauver avec moi si vous voulez. Il faut remplir l'amphi.
+
+Une fois que vous avez choisi l'algorithme, vous pourrez entraîner votre modèle à l'échelle en utilisant un vaste choix d'instances, sans avoir à les gérer, sans créer de VPC, déployer des clés SSH, etc. De même, lorsque vous voudrez déployer votre modèle en production pour servir des prédictions, vous pourrez le faire à n'importe quelle échelle en choisissant le type d'instance, sans avoir à les gérer. C'est un service assez populaire, utilisé par des milliers de clients chaque jour. Par exemple, Intuit, une société qui construit des produits pour aider les entreprises à gérer leurs comptes, a développé un modèle de machine learning qui analyse les relevés bancaires des clients et trouve automatiquement des dépenses déductibles. En moyenne, ils font économiser environ 4 000 dollars par mois à chaque client. Machine learning pour faire économiser de l'argent, c'est bien.
+
+Tinder, évidemment, on ne voit pas du tout ce que les gens peuvent en faire, et de toute façon, personne ne s'en sert ici, évidemment. Convoy, une société de logistique, utilise des modèles de machine learning pour optimiser le remplissage des camions. Ils ont constaté qu'il y a 40% de la distance parcourue par les poids lourds aux États-Unis qui est parcourue à vide. C'est un énorme gâchis, et ils utilisent des modèles de machine learning pour optimiser les livraisons et le transport.
+
+Le cycle du machine learning, vous l'avez peut-être déjà vu. La partie pure machine learning, l'algorithme, l'entraînement du modèle, etc., est vraiment qu'une petite partie du cycle. Il faut essayer de voir l'ensemble du cycle. Le premier point, c'est qu'il vous faut des données. Lorsque vous travaillez avec des données complexes, des images ou du texte, des données non structurées, la tâche de construction du dataset, la tâche d'annotation du dataset, est particulièrement longue et coûteuse. Par exemple, si vous vouliez entraîner un modèle de reconnaissance d'image pour de la conduite autonome, il faudrait faire de la segmentation, assigner chaque pixel de l'image à un objet donné, et le faire sur des centaines de milliers, voire des millions d'images. Multipliez le temps nécessaire pour une image par un million, et vous vous rendez compte qu'il y a rapidement un problème. Même sur des datasets de plus petite taille, la charge de construction du dataset devient importante.
+
+Nous avons ajouté un service dans SageMaker appelé SageMaker Ground Truth, qui vous permet d'annoter des jeux de données d'images ou de texte, ou même de construire des workflows propriétaires avec vos propres types de données. Il y a des outils graphiques pour faire ça, mais surtout, la capacité de distribuer le travail à différents groupes de travailleurs, qui peuvent être des groupes internes à votre entreprise. Si vous voulez annoter des images médicales, il y a un problème de confidentialité, et vous voulez que des experts, des chercheurs, des médecins fassent cette annotation. Pour des annotations plus simples, vous pouvez les distribuer à des partenaires AWS. Nous avons des partenaires qui fournissent des travailleurs pour faire cette annotation. Vous pouvez également, si vous voulez vraiment passer à l'échelle, les envoyer à Mechanical Turk, un service d'Amazon qui permet de distribuer des tâches à plus de 500 000 personnes. Si vous avez des problématiques de construction de dataset, voilà un service qui peut vous simplifier la vie.
+
+Une fois que vous avez vos données, il y a une grosse tâche de nettoyage, d'agrégation, etc. Vous pouvez utiliser un des services dits Big Data d'AWS, comme Glue, notre service ETL, ou EMR si vous voulez utiliser Hadoop ou Spark, Redshift si vous avez un Data Warehouse, Athena si vous voulez faire de l'analytique serverless. S3 pour stocker et sécuriser l'ensemble, nous ne manquons pas de solutions pour vous aider à préparer les données. Ensuite, une fois que les données sont prêtes, il va falloir s'attaquer au choix de l'algorithme, à l'entraînement du modèle, et c'est vraiment le cœur de SageMaker. Nous avons des notebooks Jupyter managés, une collection d'algorithmes prêts à l'emploi, etc., pour vous simplifier la vie. Vous pourrez ensuite entraîner à l'échelle sur de l'infrastructure managée. Si vous êtes satisfait du modèle et que vous voulez le déployer, soit pour servir des prédictions HTTPS, soit pour faire de la prédiction en mode batch, vous pourrez déployer en une ligne de code votre modèle et obtenir des prédictions. Tout cela est intégré avec notre monitoring, CloudWatch, donc vous avez les métriques du modèle, la performance des instances, etc.
+
+SageMaker est un service qui a un an et demi maintenant. Nous avons ajouté beaucoup de choses depuis. Malheureusement, je n'ai pas le temps de tout couvrir, mais je voulais au moins vous lister les principaux ajouts, en particulier à reInvent. N'hésitez pas à m'attraper plus tard pour me poser des questions. SageMaker est un service particulièrement actif. Rien que l'année dernière, nous avons livré plus de 200 fonctionnalités sur l'ensemble de nos services de machine learning. Nous continuons à ajouter beaucoup de choses. Si vous avez jeté un œil à SageMaker il y a un an, c'est le moment de le revoir. Un point que je veux mentionner, c'est la marketplace pour les modèles. Vous êtes sans doute familier de la marketplace EC2 où on trouve des milliers de logiciels tiers prêts à être déployés. Nous avons construit la même chose pour les modèles de machine learning. Avant de vous embarquer dans un projet de machine learning, allez jeter un œil à la marketplace. Il est possible que vous trouviez un modèle prêt à être déployé qui répond à votre problème. N'importe lequel de ces modèles peut être déployé en deux clics sur SageMaker. Vous pouvez lui envoyer des échantillons, recevoir des prédictions, le tester, vérifier si le modèle convient à votre problématique. Si c'est le cas, voilà, job done. Vous pouvez parfaitement éviter de construire un modèle de machine learning et passer au projet suivant. Le but du jeu, c'est de résoudre un problème métier. Si l'un de ces modèles fait ça, parfait.
+
+Travailler avec SageMaker est relativement simple. Comme avec tout le reste d'AWS, on appelle des API. Nous avons un SDK Python, un SDK de haut niveau qui manipule des objets comme des algorithmes, des modèles, des déploiements, etc. Très peu de code, vous verrez dans les notebooks, on n'écrit pas grand chose. Il y a également un SDK pour Spark, si vous êtes utilisateurs de Spark, vous pouvez appeler des API SageMaker à partir de Spark, pour combiner le meilleur des deux mondes, l'ETL sur Spark et le Machine Learning ou le Deep Learning sur SageMaker. Bien sûr, il y a aussi des API SageMaker bas niveau, accessibles en ligne de commande ou via les SDK de différents langages, Java, Python, C++, etc. Le SDK Python de haut niveau est adapté pour l'expérimentation, les notebooks, etc., tandis que les API SageMaker bas niveau sont plutôt adaptées pour l'automatisation. Dans les notebooks, j'utiliserai le SDK Python de haut niveau.
+
+En termes d'entraînement, nous avons le choix entre trois catégories. Des algorithmes prêts à l'emploi, des algorithmes implémentés par Amazon et AWS. Pas besoin d'écrire du code de machine learning, vous prenez l'algorithme, vous définissez quelques paramètres et vous entraînez. C'est une solution super si vous ne voulez pas ou si vous trouvez difficile d'écrire votre propre code. Ensuite, nous avons des frameworks intégrés, les principales librairies de machine learning et deep learning, donc Scikit-learn, TensorFlow, MXNet, PyTorch, et d'autres, qui sont préinstallés, donc des versions optimisées par AWS. Vous apportez votre code Scikit-learn ou TensorFlow, et vous pouvez l'entraîner et le déployer à l'échelle sans gérer l'infrastructure ni installer ces librairies. Enfin, si vous avez besoin d'autre chose, si vous utilisez R, par exemple, ou si vous avez votre super librairie de prédiction hyper optimisée en C++, vous pouvez construire votre propre container, puisque toute l'activité d'entraînement et de déploiement de SageMaker est basée sur des containers Docker. Vous construisez votre container, vous le poussez dans AWS, et vous pourrez l'utiliser pour entraîner et prédire vos données. Beaucoup de flexibilité, vous pouvez vraiment apporter n'importe quel type de modèle sur SageMaker.
+
+Je voudrais maintenant passer la parole à Sébastien qui va vous expliquer comment Tarket a construit une application basée sur le machine learning et SageMaker. A toi Sébastien.
+
+Mon micro marche super. Merci Julien. Voici la petite slide qui présente Tarket. Peu d'entre vous nous connaissent, en tout cas j'imagine. Société française, répartie dans le monde. Notre métier est de produire et vendre, indirectement, mais de produire et vendre du sol. Tout type de sol, tout type de surface, sauf la partie carrelage, enfin pas encore en tout cas. On vend environ 1,3 millions de mètres carrés de sol par jour. Typiquement, cette moquette pourrait être un sol Tarket, je ne le sais pas, mais ça pourrait être un bon cas d'usage d'ailleurs. Pourquoi pas ?
+
+L'idée de Tarket, comme toute grande société industrielle, est de vendre plus et mieux. Pour y parvenir, c'est avant tout d'écouter les utilisateurs, les consommateurs, et interagir avec eux du mieux possible. L'enjeu derrière ce projet, que nous avons nommé Aladin, était de concilier vendre plus, vendre mieux, être plus à l'écoute et plus dans l'interaction avec les utilisateurs. Comment recommander un produit pour chaque utilisateur, pour chaque contexte ? Nous avons d'abord pensé à créer un chatbot, un bot, pour interagir de manière interactive. Malheureusement, après une étude, nous avons constaté que l'attente de nos utilisateurs était basée sur l'image. Les architectes, les designers, nos premiers consommateurs, se basent avant tout sur des services de recherche d'images, comme Pinterest ou Google Images, pour suggérer ou inventer de nouveaux designs. Ils ont besoin de contenu visuel, ce qui génère de l'inspiration et de la créativité, et évidemment, des commandes de produits. De plus, en tant que société industrielle, nous voulons interagir avec les technologies modernes. Nous avons donc décidé de partir sur du machine learning, voire de l'intelligence artificielle. C'est là que le projet Aladin est né.
+
+Aladin, pourquoi ? Tapis, magique. Plusieurs itérations, plusieurs phases d'apprentissage qui ont commencé l'année dernière, au début de l'année. Nous avons segmenté la recherche d'images en deux critères bien différents : le critère couleur et le critère texture. La première phase était sur la partie couleur, où nous avons éclaté les couleurs dominantes sur des clusters avec une forme de reconnaissance de couleur. La partie texture était la plus intéressante, où nous avons d'abord travaillé sur la reconnaissance pour avoir un dataset le plus pertinent possible et pouvoir suggérer des images en fonction d'une interaction client. Nous allons faire une démo, donc si vous êtes perdus, vous ne le serez plus juste après.
+
+Tout cela a été fait en s'appuyant d'abord sur des instances Amazon EC2 pour l'entraînement, puis de plus en plus sur un service managé comme SageMaker. La première phase a été suivie de plans de modèle, d'une mise en production et d'une intégration à notre application web, puisque nous avons des sites web qui sont la base de tout en ce qui concerne l'outil que nous souhaitons designer.
+
+Pourquoi avons-nous utilisé SageMaker ? Au départ, nous étions partis d'instances chez Amazon, mais de notre propre création. Nous avons rapidement constaté que SageMaker était plus flexible en termes d'opérations et de scalabilité. La partie service managé est beaucoup plus pertinente lorsqu'il s'agit de demander quelque chose à une machine et qu'elle soit gérée, plutôt que de créer des groupes d'autoscaling, des déploiements, des endpoints, etc. De plus, notre modèle et notre façon d'interagir étaient beaucoup plus adaptées, en tout cas étaient natives côté SageMaker, donc pas besoin de réinventer la roue, ce qui était important. La troisième raison, c'est que c'est un service managé, tout est intégré. La partie stockage est intégrée, pas besoin de la gérer nous-mêmes, on s'interface à S3. La partie log pour comprendre ce qui s'est passé, pour débugger éventuellement, pour faire une v-next était plus intéressante aussi, puisque directement on pouvait s'appuyer sur le log de CloudWatch, ou d'autres types de logs directement intégrés dans SageMaker. Et cerise sur le gâteau, le coût associé à l'utilisation et l'interaction avec SageMaker était quasiment identique au coût d'utilisation de notre plateforme à base de GPU, donc sur les instances P. C'était une bonne surprise, car finalement, nous gérions moins, étions plus flexibles, plus dotés d'un point de vue outils et mécaniques, et pour le même coût. Ça a plu à mon DSI.
+
+Ce que je te propose, Julien, c'est de faire une démo. On va aller sur notre site web, merci, ça fait du trafic, vous pouvez évidemment y aller, et pourquoi pas rechercher un sol, celui que tu veux. Pour interagir avec l'outil, on l'a intégré à l'UX du site web. Il est aussi disponible sous un plugin qui est disponible sur Chrome, par exemple. Je te propose de commencer par une moquette rouge, c'est sympa, j'ai la même à la maison. On va voir ce que ça donne. Par rapport à une interaction synchrone, ceci va être confronté à un dataset qui est entraîné tous les jours à intervalles réguliers et va proposer, j'espère, des solutions pertinentes en termes de couleur ou de texture. Ton point d'entrée était une moquette rouge, c'est bien ça ? Rouge, assez vif. Le premier modèle que je vois propose une moquette Bordeaux, donc un produit qui est chez nous, dans notre gamme, et qui propose en premier lieu une moquette rouge, mais aussi une moquette bleue, ocre, jaune, etc. Ça donne un retour plutôt positif. Si tu prenais en photo une moquette rouge chez ta grand-mère, par exemple, tu aurais des résultats pertinents.
+
+Recherchons autre chose, peut-être un peu plus commun qu'une moquette rouge, surtout en France ? Admettons, du parquet. Je m'attends à ce qu'il me sorte quelque chose dans les tons beige, jaune, avec du bois si possible. J'ai l'impression qu'il l'est, coup de chance. Tout ceci n'est pas truqué, c'est au hasard. Je vous invite à y aller, évidemment. L'enjeu n'est pas de vous montrer que la démo marche, mais de vous montrer que ça fonctionne vraiment. Allez-y, ça améliorera notre ranking, ça sera magnifique. Tu as bien du parquet, donc une texture qui s'apparente à du bois. Attention, quand je dis parquet, ça peut être ce qu'on appelle du LVT, donc une solution plastique mais avec une texture parquet. En tout cas, ça m'a l'air d'être plutôt pertinent.
+
+Juste pour avoir quelques chiffres, ce dataset est entraîné avec environ 3000 images, des thumbnails, pour un stockage de l'ordre de 3 mégas. À partir de pas grand-chose en termes de données, on arrive à faire des datasets pertinents. Notre vocation n'est pas d'avoir à chaque coup une solution ou un produit qui correspond, mais d'être pertinent, de générer de la créativité et d'avoir vos feedbacks. Si vous prenez en photo le mur, ça permettra peut-être d'améliorer notre dataset et d'y intégrer des photos de mur, par exemple, voire d'autres choses.
+
+Le plus intéressant, c'est qu'est-ce qu'on va en faire de tout ça ? Aujourd'hui, cet outil et ce plugin sont disponibles sur le site français et d'autres sites, mais pas sur tous les sites de Tarket. C'est de dire qu'on y a goûté, ça a une pertinence intéressante. Quel est le coup d'après ? Trouver une recommandation par rapport à un produit qui n'est plus en stock chez nous. Pour ne pas avoir la feuille blanche, mais plutôt dire : "Le produit n'est pas en stock, mais par rapport à ce que vous avez commandé, ou par rapport à l'input que vous nous avez donné, texture, couleurs, etc., on peut vous recommander ce type de produit." Tout ça basé sur du machine learning, du deep learning et de l'intelligence artificielle. L'autre point intéressant est de s'adapter à une demande particulière. Si demain, le rose fuchsia avec une texture cuir est très à la mode, on pourra réagir rapidement. Si on a une forte demande sur le site web français, ça peut nous donner des idées. Ça peut aussi nous permettre de nous positionner par rapport à des produits des compétiteurs. Peut-être qu'ils ont des gammes, des textures ou des couleurs que nous ne faisons pas, et c'est peut-être le meilleur moyen pour s'en rendre compte. Enfin, l'outil peut générer de nouvelles tendances, grâce à des photos de vos chaussures préférées, de votre mur, de vos chemises, et créer de nouveaux designs.
+
+Merci à tous. Merci beaucoup Sébastien. Rappelle-nous la date de fondation de Tarket. On a plus de 100 ans. Exactement, je ne sais pas. Tarket est une société qui a plus de 100 ans. Je veux juste montrer qu'on peut être une société industrielle traditionnelle et innovante, sans avoir besoin de faire des choses particulièrement compliquées. Donc, bravo, je trouve que c'est un... Et la démo a fonctionné. Pour la moquette rouge, je ne suis pas sûr, mais je te rappelle.
+
+Nous avons mentionné tout à l'heure qu'un des choix possibles dans SageMaker, c'était d'utiliser des algorithmes prêts à l'emploi. Je vais me concentrer sur ça. Je vais vous montrer deux algos différents, et si vous avez plutôt envie de voir du deep learning, je vous invite à me rejoindre dans la session de 16h dans le grand amphi. Regardons la liste des algos prêts à l'emploi. Les algos oranges sont des algos d'apprentissage supervisé. On trouve des problèmes classiques, la régression, la classification, etc. Vous voyez qu'on a aussi bien des algorithmes classiques qui travaillent sur la donnée structurée que des algorithmes de deep learning. On a aussi de la classification, de la détection et de la segmentation dans SageMaker. Les algorithmes jaunes sont des algorithmes d'apprentissage non supervisé, donc des classiques, du clustering, de la réduction de dimension, la détection d'anomalies, des embeddings pour le traitement du langage naturel, et du topic modeling pour la gestion de textes. Tous ces algos sont implémentés par Amazon et AWS, à part XGBoost, qui est l'implémentation open source. Ils sont scalables, et on considère qu'ils sont 10 fois supérieurs à ce que vous pouvez trouver ailleurs, soit 10 fois plus rapides, soit 10 fois moins chers, soit 10 fois plus scalables, etc. Essayez-les, et vous me direz ce que vous en pensez.
+
+Le premier que je voudrais vous montrer, c'est un algorithme qui s'appelle Blazing Text, inventé et publié par Amazon. C'est un algorithme qui sert à calculer des vecteurs de mots, donc des embeddings, souvent une des tâches préliminaires lorsqu'on fait du traitement du langage naturel. Il s'appelle Blazing Text parce qu'il est une amélioration de FastText de Facebook. FastText était à l'état de l'art, mais ne tournait que sur CPU. Cette implémentation d'Amazon fonctionne sur GPU, travaille plus vite et est plus scalable. Je vais vous montrer un mode d'apprentissage supervisé où on fait de la classification de texte. On va sauter dans un notebook. J'utilise ici une instance de notebook de SageMaker. Une fois qu'on a créé une instance, on se retrouve avec une instance Jupyter où on peut commencer à travailler. Je pointe la collection d'exemples SageMaker, qui est sur GitHub et automatiquement clonée sur la Notebook Instance. Il y a une centaine d'exemples maintenant. C'est une ressource précieuse, je vous incite à aller y jeter un œil.
+
+On veut apprendre à classifier des phrases dans différentes catégories. On commence par importer le SDK SageMaker, attraper un bucket S3 pour stocker le dataset et le modèle qu'on aura entraîné. On télécharge le dataset, qui est un dataset DBpedia avec 560 000 phrases dans le dataset d'entraînement, classées dans 14 catégories. Ce n'est pas un dataset énorme, mais il est intéressant pour travailler. Je le télécharge, l'extrais, et je peux jeter un œil à quelques exemples. Le chiffre au début de la ligne est le numéro de la catégorie. On voit les trois premiers échantillons ici. Le dataset est un dataset de référence. On pourrait nettoyer, chercher des fautes d'orthographe, mais le problème principal est l'absence d'espace entre les parenthèses et les mots, et avant la ponctuation. Il faut espacer tous les symboles présents dans le dataset, ce qu'on appelle Space Separated Tokenization, pour s'assurer qu'on a un espace entre chaque mot et chaque symbole de ponctuation, une parenthèse, etc. On ne va pas écrire du code pour faire ça. Ce n'est pas un cours de Python, on s'en fiche un peu de savoir comment marchent les détails, ce qu'on va faire, c'est qu'on va itérer, on a un dataset d'entraînement et un dataset de test, donc on va itérer sur les deux datasets, et phrase par phrase, on va tokeniser le texte et on va écrire ça dans deux documents, donc dbpedia.train, dbpedia.validation, où là, on a le texte parfaitement séparé.
+
+On va regarder si ça a marché. Ok. Là, on voit qu'on a bien séparé les mots des symboles, le point à la fin, il a bien un espace avant, etc. Voilà, donc c'est tout ce qu'on fait. C'est Blazing Text qui attend ça, qui s'attend à avoir des tokens séparés par un espace. Ok.
+
+On upload ça dans S3, dans notre bucket préalablement créé. On définit l'emplacement du jeu d'entraînement, du jeu de validation. Rien de compliqué. On définit où va être stocké le modèle. Donc à quel endroit on sauve le modèle dans S3. Voilà, et c'est tout. Là, on est prêt à entraîner. J'ai dit rapidement tout à l'heure que tout est efficace. Il faut qu'on attrape le nom du container qui contient l'implémentation de Blazing Text dans la région où on se trouve. La région où on se trouve, c'est celle-là. En l'occurrence, c'est la région irlandaise. On veut que le notebook soit générique, donc on récupère le nom de la région. Et puis on a une petite API toute simple qui nous permet d'obtenir le nom du container pour un algo donné dans une région donnée, et on l'affiche. On voit que ce container est stocké dans ECR, qui est notre registry Docker managé. Voilà, c'est tout. On a choisi un algo, parfait.
+
+Maintenant, on va configurer l'entraînement. Ici, on va utiliser un objet qui est vraiment central dans SageMaker, qui s'appelle l'estimator, qui est l'objet qui va nous servir à configurer des jobs. On lui passe le nom de l'algo, on lui passe l'infrastructure sur laquelle on veut entraîner. On dit simplement qu'on entraîne sur une C4 4XL. C'est tout ce qu'on fera comme travail d'infrastructure. On lui dit où on va sauver le modèle. Et en gros, c'est tout. Les autres sont des paramètres génériques qu'on va copier-coller à chaque fois.
+
+C'est un algo de machine learning, donc il faut lui donner des paramètres. Là on a paramétré le job d'entraînement, mais là il faut paramétrer l'algorithme. Si on regardait dans la documentation de l'algorithme, on verrait que pour faire de la classification de texte, le mode à utiliser, c'est le mode supervised, on fait de l'apprentissage supervisé, et c'est le seul paramètre obligatoire. Il y a plein d'autres paramètres de machine learning qui font assez peur. On peut les ignorer en première analyse, on peut juste se contenter de faire ça et voir ce que ça donne. On définit un petit dictionnaire Python avec l'emplacement du training set, du validation set, rien de compliqué, et on entraîne. Sur notre estimator, on l'appelle fit, on lui passe l'emplacement des jeux de données et c'est parti. Ça dure 140 secondes. On arrive à une précision de 96%, ce qui est pas mal dans la mesure où on n'a absolument pas essayé d'optimiser le moindre paramètre. On a vraiment utilisé les réglages par défaut. Donc là, vous payez pour 140 secondes de ces 4 4XL. Je n'ai pas le chiffre en tête, mais ce n'est pas beaucoup. Et donc, quand Sébastien disait tout à l'heure, on économise de l'argent, finalement, en tout cas, avec SageMaker, on ne dépense pas plus d'argent que sur EC2. C'est pour ça, à mon avis. Cette infrastructure d'entraînement est créée à la demande et stoppée dès que le job est terminé. Donc, vous ne laissez aucune instance tourner pour rien. Évidemment, tout le monde éteint ses instances EC2 à la minute où il a fini de travailler. Ouais. Moi non plus, mais je ne paye pas mes factures. C'est ça la différence. C'est vous qui les payez, je pense. Donc, merci, au fait.
+
+Blague à part, c'est quand même important de se dire qu'on ne va jamais laisser des instances allumées tout le week-end pour rien. Ensuite on déploie le modèle, c'est vraiment une ligne de code, avec ici un déploiement sur une instance M4XL. SageMaker va créer cette instance, charger le container BlazingText, charger le modèle, créer un endpoint HTTP, et à partir de ce moment-là, on peut soit s'en servir avec le SDK, comme je fais juste après, soit vous pourriez utiliser n'importe quel langage ou n'importe quel outil pour faire du HTTP POST sur ce endpoint. Ici on peut prendre deux phrases, on les tokenize, pareil, c'est obligatoire. On met ça dans un petit document de JSON et on appelle PREDICT sur le endpoint, ça fait un HTTP POST sur le endpoint. On récupère la réponse et on voit que la première phrase, à 97%, parle d'une compagnie, et la deuxième, à 99%, parle d'une institution d'enseignement. Voilà comment, en quelques lignes de code et en quelques minutes, on se crée un modèle de classification de texte. Ça pourrait être des emails clients, essayez de les classer en fonction du produit mentionné, en fonction de... Je ne sais pas, à vous d'inventer ça. Mais vous pouvez prendre ce notebook et très facilement le customiser pour vos propres besoins.
+
+Il me reste 6 minutes 20, on a le temps de faire un deuxième exemple. C'est un autre algo qui est un algo de classification d'images. J'ai dit tout à l'heure rapidement qu'on avait des algos de deep learning sur étagères, donc c'en est un. Ici, on va prendre un réseau de neurones qui a déjà été préentraîné pour la classification d'images sur un gros dataset. On va télécharger le modèle déjà entraîné et on va juste le réentraîner un tout petit peu sur un deuxième dataset d'images. En bon français, c'est ce qu'on appelle du transfer learning. C'est-à-dire qu'on récupère un entraînement préalable et on le spécialise pour un nouveau jeu de données. L'image que je prends tout le temps pour expliquer, c'est que vous avez fait du décathlon pendant 10 ans et un jour vous décidez de vous spécialiser en lancer du javelot. Vous faites 6 mois de javelot intense et il y a des chances pour que vous soyez un assez bon lanceur de javelot. Ce n'est pas comme si vous partiez de zéro. C'est exactement ça, la même chose ici.
+
+Ça commence de la même façon, on récupère le SDK, on récupère le container pour l'algo de classification d'image, on va télécharger le dataset. Alors le dataset a 256 vraies classes, plus une classe fourre-tout qui sert à compliquer un peu l'entraînement. Donc il est déjà séparé en entraînement et validation, donc c'est parfait. Et il est même compressé dans ce format .rec, donc c'est un format qui s'appelle Record.io, qui est un format à structure d'enregistrement, type record, ce qui permet de trimballer un gros fichier avec toutes les images à l'intérieur et pas des dizaines de milliers d'images. Donc c'est bien plus simple et pour l'entraînement ça nous sera pratique aussi. Il n'y a pas de traitement à faire, on upload directement dans S3, on définit les différents emplacements, où est le training set, où est le validation set, où est-ce qu'on écrit le modèle. On peut vérifier que ça a été copié correctement dans S3. Et puis ensuite, comme tout à l'heure, on va utiliser notre estimator, on lui passe l'algorithme, donc le nom du container. Ici, on va entraîner sur une P3 16xlarge, donc avec 8 GPU Nvidia, parce que quand on fait du deep learning, c'est bien d'avoir des GPU aussi. On va mettre les hyperparamètres pour l'algo de classification.
+
+Déjà, on peut choisir la profondeur du réseau de neurones qu'on veut utiliser. C'est une architecture ResNet, qui est une architecture connue pour ses qualités de classification. On peut choisir différentes tailles. Ici, on va rester à 18 couches. C'est le moins profond. Ça va entraîner assez vite. On veut un modèle préentraîné. On veut un modèle qui sait déjà classifier des images généralistes. Nous, on va juste le spécialiser. Le format d'entrée, c'est toujours la ligne qui fait peur, mais il n'y a pas de raison. C'est simplement pour dire que le format d'entrée du modèle, c'est en gros une matrice à trois dimensions. Donc il y a trois images, rouge, vert, bleu, puisqu'on travaille avec des images couleur, les canaux sont séparés, et chaque canal fait 224 par 224. Le nombre de classes, le nombre d'échantillons d'entraînement, et puis essentiellement ici, on va en déclencher 10 époques, donc on va passer 10 fois le dataset à travers le modèle, ce qui est faible, si vous faites déjà du deep learning, vous savez que quand on entraîne à partir de zéro, généralement on va entraîner 100 époques, 200 époques, 300 époques, parce qu'il faut faire l'apprentissage à partir de zéro. Ici on veut juste spécialiser, affiner le modèle, donc 10, voilà, c'est un nombre qui paraît raisonnable. Le reste est moins important. Pareil, je définis les propriétés de mes datasets, leur emplacement, le format record.io, je mets ça dans un petit dictionnaire, j'appelle fit et c'est parti. SageMaker crée la P3 16xlarge, télécharge l'algo, injecte les paramètres, pointe tout ça au dataset.
+
+Donc on va voir nos 10 époques qui défilent. À la fin, on arrive sur une précision qui est assez médiocre, mais je n'ai pas cherché à optimiser. Bon, 67%. Enfin, pour 6 minutes d'entraînement, 7 minutes, 6-7 minutes, c'est pas mal. Le but, ce n'est pas de chercher la précision ultime, on pourrait aller beaucoup plus haut. Mais voilà, en 6 ou 7 minutes d'entraînement, on arrive à affiner à 76 et quelques pourcents de précision. Ensuite, on déploie le modèle. Cette fois, je le déploie sur une instance C5, parce que je n'ai pas besoin d'une instance GPU pour prédire. Et puis, on va tester une image. Là, c'est une image assez identifiable. On va la prédire. On va simplement préciser le type de l'échantillon, donc on va charger l'image dans un tableau d'octets. On indique le bon type, on appelle predict, et on voit qu'on a à 99% la certitude que c'est effectivement un Bouddha. Si on a fini de travailler, on peut effacer son endpoint et arrêter de payer pour ça aussi. Et puis on pourrait le remonter quand on en a besoin.
+
+Voilà vraiment comment en 20-30 lignes de code, on entraîne un modèle, on déploie. Quand je dis que c'est un SDK de haut niveau, c'est vraiment le cas. Il n'y a pas de complexité, pas de plomberie, pas d'infrastructure. Et quand on bosse avec les algos sur étagère, il n'y a même pas de machine learning à faire. Un développeur qui est capable de lire la doc des algos et de comprendre comment ils s'en servir, même s'il n'a pas d'expérience en machine learning, il va arriver à entraîner son modèle. C'est vraiment ça l'objectif de SageMaker, c'est de vous laisser aller le plus rapidement possible de l'expérimentation sur un notebook, jusqu'à l'entraînement à l'échelle et le déploiement à l'échelle. Et là, bien sûr, on travaille dans des notebooks, mais une fois que vous avez créé vos modèles, vous pouvez vous contenter d'utiliser le SDK programmatiquement et d'inclure ça dans des fonctions lambda, ce qui vous fait plaisir, et d'automatiser tout ça.
+
+Quelques liens pour avancer. SageMaker fait partie du Free Tier, qui est une façon d'utiliser la plupart des services AWS gratuitement pendant 12 mois. Allez voir, vérifiez bien les limites à respecter. ML.aws, c'est la page d'accueil pour tous les services de machine learning, la page de SageMaker, le SDK Python que j'ai utilisé, il est sur GitHub, le SDK SageMaker Spark, dont je n'ai pas du tout parlé, mais vous pouvez aller voir les exemples aussi. La fameuse collection que je vous ai montrée vite fait. Vraiment, c'est une ressource super pour apprendre comment marche SageMaker et toutes les configurations. Et puis surtout, ça vous fait plein d'exemples à partir desquels démarrer pour construire votre propre appli. Ça, c'est un workshop SageMaker que j'ai fait à re:Invent en décembre. Il est basé sur XGBoost et un vrai dataset. Il couvre toute l'API, y compris des features bien plus avancées que ceux dont j'ai parlé aujourd'hui. On prévoyait 3-4 heures, une soirée pluvieuse, un truc comme ça. Mon blog sur Medium où vous trouverez pas mal d'articles Deep Learning et SageMaker. Si vous voulez un peu plus de contenu et d'autres exemples, vous les trouverez là. Et puis également mes notebooks sur GitLab. Merci beaucoup. Je veux remercier encore Sébastien. S'il te plaît, je te rappelle. Merci beaucoup. Vielen Dank.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Amazon SageMaker</span><span class="tag">Machine Learning</span><span class="tag">Deep Learning</span><span class="tag">Image Recognition</span><span class="tag">Data Annotation</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

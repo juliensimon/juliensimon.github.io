@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiffrez vos donnees avec AWS</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chiffrez vos donnees avec AWS</h1>
+        <div class="date">February 10, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/1b-N7iNUYhs" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Notre évangéliste technique revient sur un des fondamentaux de la sécurité - Chiffrez vos données avec AWS
+
+Rendez-vous sur notre site internet : <a href="http://amzn.to/2ktrf5g" target="_blank" rel="noopener noreferrer">http://amzn.to/2ktrf5g</a>
+Suivez-nous sur Twitter : <a href="https://twitter.com/aws_actus" target="_blank" rel="noopener noreferrer">https://twitter.com/aws_actus</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Très bien, rebonjour à tous, pour ceux qui étaient là à la session AIA, mais bonjour aux autres personnes qui nous rejoignent. Deuxième webinaire de la semaine, le chiffrement de données. Quel est l'agenda ? Premièrement, nous allons revenir assez rapidement sur les problématiques de chiffrement et de gestion des clés. Qu'est-ce qui fait que ce genre de problème est compliqué ? Ensuite, on va voir comment protéger vos données en utilisant des services de chiffrement d'AWS. On va passer pas mal de temps à parler d'un service qui s'appelle KMS, qui est un service managé de gestion de clés avec un très haut niveau de sécurité et qui est assez facile à utiliser finalement. On verra quelles sont les alternatives à KMS, en particulier un autre service AWS qui s'appelle Cloud HSM qui permet d'atteindre un niveau maximal de sécurité, puis on évoquera quelques solutions partenaires. Et puis bien sûr, on répondra à vos questions.
+
+Quelle est la problématique du chiffrement ? La première étape, c'est de générer des clés qui vont servir à faire du chiffrement et du déchiffrement. Pour rendre l'explication un peu plus simple, on va se limiter à des clés de chiffrement et de déchiffrement symétriques qui correspondent à la majorité des cas. Donc ces clés, vous allez les générer soit avec du matériel, soit avec du logiciel, vous allez les appliquer à des données en clair et puis ça va produire des données chiffrées. Ces données chiffrées, vous allez les stocker dans un système, dans un back-end quelconque. Et puis ensuite, le problème numéro 2, c'est après la génération de la clé, c'est de se dire comment est-ce que je protège la clé ? Parce qu'on comprend bien que les données chiffrées sont sécurisées, mais quid de la clé ? Si vous perdez la clé, si la clé est compromise, toutes les données qui ont été chiffrées avec cette clé sont évidemment en danger. Généralement, ce qu'on va faire, c'est qu'on va chiffrer la clé de données, la clé qui a servi à chiffrer les données, on va elle-même la chiffrer avec une clé qu'on appelle une clé principale, une master key, etc. Bref, une clé de plus haut niveau, encore plus secrète, qui va servir à chiffrer la clé. Et puis on va stocker cette clé chiffrée quelque part, puisqu'on en aura besoin évidemment lors du déchiffrement. Dans l'opération inverse, on récupérera la clé de données chiffrées, on la déchiffrera avec la clé principale, et une fois qu'on a la clé de données en clair, on pourra déchiffrer les données et on réobtiendra les données en clair.
+
+Quand on a dit ça, on a tout dit, tous les problèmes sont là. C'est-à-dire, comment est-ce qu'on génère et comment est-ce qu'on stocke, comment est-ce qu'on protège la clé principale, la clé maître qui est la plus précieuse de toutes ? Quelle est la hiérarchie de ces clés ? Où est-ce qu'on les stocke ? Est-ce qu'elles sont stockées chez vous ? Est-ce qu'elles sont stockées chez un fournisseur externe ? Quand est-ce qu'on les utilise ? Est-ce qu'on les utilise dans un logiciel client ? Est-ce qu'on les utilise sur un serveur ? Et où est ce serveur ? Qui a le droit d'utiliser les clés ? Comment se passe l'autorisation d'accès aux clés ? Et de manière générale, quels sont les assurances que vous avez sur l'utilisation des clés ? Comment êtes-vous sûr que ces clés sont utilisées uniquement à bon escient et uniquement à votre initiative ? C'est vraiment la problématique générale du chiffrement. Tout le monde se concentre toujours sur les algorithmes. Les algorithmes aujourd'hui, ce n'est pas vraiment le problème. On sait faire des algorithmes robustes. Le problème, c'est qu'est-ce que vous faites des clés, comment vous les protégez, comment vous les auditez. C'est vraiment ça qui est difficile.
+
+Alors, on va commencer par voir deux méthodes de chiffrement complètement gérées par le client. C'est-à-dire, on a certains clients qui souhaitent maîtriser complètement leurs clés, qui disposent de leur propre infrastructure de gestion de clés, et pour ces clients, il y a deux cas d'utilisation possible : un cas où on va faire du chiffrement côté client, un cas où on va faire dans S3 du chiffrement côté serveur, mais toujours dans ces deux cas avec des clés fournies par le client. Examinons déjà ces deux premières méthodes. On commence par le chiffrement côté client avec des clés gérées par le client. Vous aurez compris le mot clé là-dedans c'est client. Dans ce cas-là, le client veut le contrôle total de ses clés. Il dispose d'une infrastructure qui va lui générer des clés, qui va les stocker de manière sécurisée. Là, AWS n'intervient absolument pas sur cette partie-là. Donc localement dans son infrastructure, le code de l'application, le code client, va obtenir une clé de chiffrement, il va utiliser cette clé et ses primitives cryptos locales pour chiffrer les données, et puis il va envoyer les données à AWS. Donc là, vraiment, finalement, il n'utilise absolument pas AWS ni pour générer les clés, ni pour les stocker. Il n'utilise AWS que pour stocker ses données. Voilà, ça ressemble à ça. Ok.
+
+Donc vous voyez finalement, côté client à gauche, on a une infrastructure de gestion de clés qui est en charge de ça, on a une application qui fait du chiffrement, et puis on envoie des données chiffrées à AWS et on va les stocker dans S3, dans DynamoDB, dans tous nos services, dans tous nos back-ends. Bon, ça c'est tout à fait une façon possible de faire les choses. Ça pose quand même un problème qui est de se dire, dans AWS, imaginons que vous ayez des instances EC2 qui tournent, si ces instances à un moment donné doivent accéder aux fameuses données chiffrées qui ont été envoyées par le client de gauche, comment ça se passe ? Il va falloir qu'elles aient elles aussi accès à la clé pour pouvoir déchiffrer les données. Donc ça suppose que finalement, dans les deux côtés, sur site et dans AWS, vous ayez une infrastructure de gestion de clés qui sache communiquer de manière sécurisée, qui sache transmettre les clés. Il y a mille façons de le faire, mais finalement, le problème de gestion des clés est totalement déporté à votre propre infrastructure. Donc c'est une façon tout à fait acceptable de faire les choses. Soyez conscient que là, vous gérez tout et vous êtes responsable de la sécurité de vos propres clés. Première façon de faire les choses.
+
+Deuxième façon de faire les choses, toujours avec des clés fournies par le client, mais cette fois, on va faire du chiffrement côté serveur dans S3. Donc là, on parle du chiffrement des données. Les objets qui sont stockés dans S3 vont être chiffrés par S3 lui-même. Les métadonnées ne sont pas chiffrées. Les métadonnées, ce sont les données qui décrivent vos objets. Ça, ça reste en clair. Mais le contenu de l'objet lui-même est chiffré. Le chiffrement va se faire avec AES256, qui est le standard gouvernemental pour le chiffrement symétrique. Et avec l'objet, une clé qui est fournie par le client. Donc là, vous pouvez le faire programmatiquement avec un SDK. Donc là, de même, localement, vous obtenez vos clés avec votre infrastructure de gestion de clés. Et puis, vous passez la clé à S3 qui va faire le chiffrement. Vous pouvez aussi le faire par API en rajoutant des entêtes HTTP. Donc là, le fonctionnement est le suivant : votre clé, les données, vous échangez ça de manière sécurisée, en HTTPS évidemment, il ne s'agit pas que la clé passe en clair, vous échangez ça avec S3 qui va chiffrer vos données et qui va stocker dans S3 la clé chiffrée et qui va stocker les données chiffrées dans S3. La clé, elle, sera détruite. Évidemment, S3 ne conserve pas la clé. Donc, charge à vous, de votre côté, de conserver cette clé de manière sécurisée. Vous en aurez besoin pour le déchiffrement. Donc là, tout ce que vous faites, c'est que vous passez une clé à S3, S3 fait le chiffrement, et puis jette la clé et ne stocke que les données chiffrées. Ok ? Donc voilà, une autre façon de faire les choses en ayant le contrôle total de ces clés. Donc c'est tout à fait possible, un client AWS peut parfaitement gérer ces clés, mais est-ce qu'on a réellement répondu aux questions tout à l'heure ? Je me permets de vous les réafficher. On n'a pas vraiment répondu à la problématique du stockage des clés, c'est vraiment au client de s'en occuper. Comment est-ce qu'elles sont utilisées ? Elles sont utilisées par vos applications certes, mais est-ce que vous avez en place les mécanismes d'audit suffisants pour protéger et garantir tout ça ? Qui peut utiliser les clés ? Là aussi, vous pouvez vous appuyer sur vos propres primitifs d'authentification, d'autorisation, etc. Et là, vous voyez que finalement, vous n'utilisez pas AWS à votre profit, vous gérez vos clés certes, vous stockez vos données chiffrées ok, mais tout le reste est encore à faire. Et pour être très simple, si on doit expliquer KMS en un slide, l'objectif de KMS c'est de résoudre ces fameux problèmes. Donc tous les problèmes qu'on vient de mentionner vont être résolus par KMS.
+
+Parlons de KMS. KMS c'est un service géré qui va vous permettre de simplifier la création, le contrôle, la rotation et l'utilisation des clés de chiffrement symétriques dans vos applications. Le gros avantage de KMS, c'est qu'il est intégré avec la plupart des services pertinents d'AWS, la plupart des services qui gèrent et stockent des données. Il est intégré avec S3, EBS, RDS, Redshift, etc. Il est intégré également côté client, dans les SDK AWS, vous avez un client de chiffrement S3 et Dynamo qui permet d'utiliser KMS, très simplement, et il est évidemment intégré avec CloudTrail pour l'auditing de l'utilisation des clés. Il est disponible dans toutes les régions, sauf dans la région chinoise, et sachez que si c'est important pour vous, vous pouvez y importer vos clés. Vous pourriez avoir un générateur de clés dans votre infrastructure et vous pouvez importer vos propres clés dans KMS via un échange cryptographique type PKCS1. Plus d'infos sur ce blog.
+
+Comment fonctionne KMS ? Dans KMS, on a une hiérarchie de clés à deux niveaux. On a les clés principales, qui sont stockées dans KMS, qui sont les fameuses clés maîtres. Il peut y en avoir plusieurs, c'est même une bonne pratique d'en avoir plusieurs. On pourrait en avoir une pour S3, une pour Redshift, une pour d'autres services. Donc ça, ces clés-là, elles vont être, comme on l'a vu à l'instant, soit importées par vous, mais je suspecte que dans la majorité des cas, elles vont être générées, créées par KMS, et elles vont servir à chiffrer les clés de données. Les clés de données, ce sont, comme on l'a vu tout à l'heure, les clés qui vont chiffrer les données qui sont contenues dans les différents back-ends. Donc l'avantage de ce système, c'est que vous avez moins de clés à gérer, vous avez moins de clés à protéger. Finalement, le véritable trésor dans l'histoire, ce sont ces fameuses clés principales, puisque les clés de données, elles, elles seront elles-mêmes chiffrées, protégées par l'algorithme de chiffrement. Vous avez moins de clés à gérer, vous avez le fait de pouvoir avoir plusieurs clés principales qui vont elles-mêmes servir à générer tout un tas de clés de données. Ça veut dire que vous avez un grand nombre de clés utilisées concrètement pour faire le chiffrement et que même si l'une des clés de données était perdue, compromise, ça n'ouvrirait qu'au déchiffrement qu'une toute petite partie de vos données. Si vous avez une clé principale S3, une clé principale EBS, une clé principale Redshift, etc. et que vous avez des centaines, des milliers de clés de données pour S3, EBS, si vous compromettez une de ces clés, vous avez compromis vraiment un millième ou un dix millième ou un cent millième de vos données et pas toutes vos données. Et le fait d'avoir un petit nombre de clés principales, évidemment, ça en simplifie grandement l'audit et la surveillance.
+
+Avant qu'on me pose la question, mais je veux bien y répondre tout à l'heure, et on en parlera beaucoup avec Mathieu demain, on sait très bien que c'est un sujet important. Pourquoi est-ce que vous nous confieriez vos clés ? Pourquoi est-ce que, soit vous importeriez des clés générées, pourquoi est-ce que, simplement, pourquoi est-ce que vous feriez confiance à AWS pour chiffrer vos données et stocker vos fameuses clés. Ce qu'il faut bien comprendre, c'est que KMS est conçu de manière à ce que personne ne puisse accéder à vos clés principales. On en parlera demain avec Mathieu, mais sans dévoiler le sujet. Il est impossible aujourd'hui à une seule personne chez AWS d'accéder à vos clés. On a un mécanisme de quorum qui fait que même si on devait accéder à l'une de vos clés, il faut un ensemble de personnes pour le faire. Une seule personne n'a pas les droits suffisants pour le faire. On ne stocke jamais les clés en clair. Les clés KMS, elles sont toujours stockées de manière sécurisée, protégée. Les clés principales ne sont jamais exportées. Elles sont générées dans KMS et elles ne sortent jamais. Il n'y a aucun mécanisme qui permet d'exporter les clés de KMS. De toute façon, il n'y a aucune raison de le faire puisque ces clés ne servent qu'à chiffrer les clés de données. Les clés principales sont dans KMS et elles y restent. KMS ne stocke jamais les clés de données. KMS va créer des clés de données, les sortir, les envoyer aux services ou aux applications qui en ont besoin, mais il ne va jamais les stocker. C'est toujours stocké en RAM, il ne va jamais les écrire sur un stockage persistant. Dès qu'il les a générés et utilisés, il va les détruire. On a une séparation très claire des responsabilités entre les systèmes qui manipulent les clés principales et ceux qui manipulent les clés de données. Donc KMS va manipuler les clés principales et puis les services vont manipuler les clés de données. Donc on a une séparation claire, on sait que c'est en termes de sécurité, c'est une fonctionnalité importante. Donc séparation technique, séparation organisationnelle, séparation des équipes. Donc il est impossible que tout le monde puisse accéder à toute la chaîne. Et puis, je l'ai dit tout à l'heure, mais je vais le répéter, on est utilisé et on est audité par des organisations hyper exigeantes en termes de sécurité. Les plus grandes banques utilisent AWS, les organisations gouvernementales utilisent AWS, et vous imaginez qu'on a dû passer un certain nombre de critères avant que ces clients exigeants nous utilisent. Et pour le démontrer, on a passé un certain nombre d'audits et de certifications, SOC 1.2.3, PCI DSS, différentes normes ISO et on a FIPS 140-2 en cours qui est sans doute une des normes les plus exigeantes pour ce qui est la gestion des clés qui est une norme gouvernementale américaine. Voilà donc ces rapports-là sont accessibles à la partie publique et récupérable directement, la partie privée et des audits est accessible sur Wender. Mais voilà, on tient à démontrer que ces services, tous les points que j'ai mentionnés, ils sont vérifiés, audités, pour que vous n'ayez pas à nous croire sur parole, mais que vous puissiez croire les auditeurs qui ont vérifié que tous ces points étaient corrects.
+
+Un autre point important qu'on a mentionné tout à l'heure, un autre problème c'est ok les clés sont stockées de manière sécurisée c'est très bien mais qui a le droit de s'en servir ? Et bien maintenant si vous avez suivi le webinaire IAM tout à l'heure vous savez que les clés sont comme tout le reste soumises aux permissions IAM et donc vous pouvez restreindre l'accès à une clé, à un groupe d'utilisateurs ou à un groupe d'instances via un rôle adéquat. Vous pourriez dire que telle application a un rôle qui lui donne le droit de chiffrer, une autre application a un rôle qui lui donne le droit de déchiffrer. Vous avez toute la granularité d'IAM, toute la rigueur d'IAM pour limiter au maximum l'utilisation de vos clés. On fait le lien avec la session précédente. La console KMS, rien de spécial à montrer, si ce n'est que ça c'est dans mon compte. Vous voyez que par défaut j'ai déjà plusieurs clés KMS, j'ai une clé principale S3, j'ai une clé CodeCommit, j'ai une clé Certificate Manager, une clé EBS, une clé Lambda. On voit que déjà par défaut, et tout ça se trouve dans la console IAM, on a déjà plusieurs clés qui ont été créées prêtes à servir pour les différents comptes. L'identifiant de clé lui-même n'est pas secret, mais par principe on évite de révéler des choses. Ne révélez pas vos identifiants de clés, ne révélez pas des choses qui ne vont pas être révélées, ça ne sert à rien. KMS peut être utilisé en ligne de commande, il peut être utilisé via l'ADSDK, on a 32 API au total pour créer des clés, chiffrer, déchiffrer, faire tourner les clés, etc. Vous trouverez toutes les API documentées sur ce lien, comme d'habitude.
+
+Comment ça marche concrètement ? On a une application ou un service à nous qui va demander à KMS, qui va passer à KMS la référence d'une clé principale, qui a été créée au préalable. Donc là, ça va être juste un identifiant, on verra quelques exemples ensuite, en lui disant, voilà, je voudrais que tu me génères une clé de données chiffrée avec cette clé principale, s'il te plaît. Donc KMS, on va déjà vérifier avec IAM que cette application a les bonnes permissions pour utiliser cette clé. Si c'est le cas, KMS va générer une clé, une nouvelle clé de données. Elle va l'envoyer au client, donc elle va l'envoyer en clair et en chiffré. Elle envoie les deux, on va voir pourquoi. Donc la clé en clair va être utilisée pour chiffrer les données. Évidemment, ensuite, il est important de la supprimer. Il ne faut absolument pas que votre application garde la clé en clair, ce serait un gros risque. Par contre, elle va conserver la clé de données chiffrée, elle va la stocker. Pourquoi est-ce qu'on a besoin de faire ça ? Parce que pour le déchiffrement, on va faire l'opération inverse. L'application passera à KMS l'identifiant de la clé principale, la clé de données chiffrée, en lui disant « tiens, est-ce que tu peux me déchiffrer cette clé s'il te plaît ? » KMS retournera la clé de données en clair pour que l'application puisse déchiffrer les données. Donc là, le point de vigilance, c'est attention, dans votre application, vous devez jeter la clé de données en clair, vous ne devez absolument pas la conserver, ne l'écrivez jamais sur disque, il n'y a aucune raison. Vous la récupérez, vous chiffrez, vous déchiffrez vos données et puis après vous effacez le buffer et on n'en parle plus. Et voilà, ça se passe comme ça, de manière assez simple.
+
+Comment est-ce qu'on audite l'utilisation des clés ? Alors on verra tout ça dans CloudTrail plus tard dans la semaine. Mais voilà, un événement CloudTrail sur une API KMS, donc ici c'est un déchiffrement, donc on voit le nom de l'événement, on voit l'heure et le jour de l'action. On voit quelle clé a été utilisée pour faire cette action. On voit quelle ressource AWS, ici c'est un volume EBS, sur quelle ressource est-ce qu'on a appliqué l'API, à partir de quelle adresse IP et quelle était l'identité de l'utilisateur. Donc là on voit le nom et les références de l'utilisateur IAM qui a fait cette action. Donc tout ça, ça va se retrouver dans CloudTrail. Et donc lorsque par la suite vous devez auditer et démontrer soit à des fins internes, soit à des auditeurs que telle clé n'est utilisée que dans tel contexte, pour telle application, etc. Ce genre d'informations va combien coûte KMS ? KMS, ça coûte 1$ par clé par mois. C'est facile à retenir. Et ça coûte 3 cents pour 10 000 appels d'API. Sachant que vous avez un niveau d'usage gratuit qui est de 20 000 appels par mois. Ça ne paraît pas exorbitant. Des clés, on parle de clés principales. Vous n'en aurez pas des milliers. Quant aux appels, il faudrait vraiment faire un immense nombre d'appels KMS pour que la facture devienne importante. Il me semble que pour la fonctionnalité, c'est un service économique.
+
+Maintenant qu'on a vu KMS, on peut voir comment utiliser KMS cette fois, côté client et côté serveur, pour ne plus avoir à gérer sa propre infrastructure de clé. Donc finalement, les deux cas qu'on va voir maintenant sont un peu le cas miroir des deux cas qu'on a vu tout à l'heure, où malheureusement le client était obligé de gérer sa propre infrastructure de clé. Alors, on commence par le chiffrement côté client, mais avec des clés KMS. Donc cette fois, le code client va appeler KMS via le SDK AWS. Par exemple, on a un client pour S3 qui s'appelle Amazon S3 Encryption Client. On va lui passer l'identifiant d'une clé KMS, donc d'une clé maître. Et c'est vraiment juste un identifiant, j'insiste, ce n'est pas la clé. La clé elle-même, elle ne sort jamais de KMS. Donc ça va être l'identifiant de la clé. Ce qu'on fait, on n'a pas vu dans la console tout à l'heure parce que je l'ai masqué, mais c'est de cette information-là que je parle. On passe l'identifiant de la clé. Ensuite, le SDK, lui, va dialoguer avec KMS pour recevoir une clé de données. Donc il va recevoir cette fameuse clé de données en clair et chiffrée. Avec la clé en clair, il va chiffrer les données. Et puis ensuite, il jette la clé, donc ça c'est le SDK qui garantit que cette clé n'est jamais stockée, et puis il va envoyer les données chiffrées à AWS, et il va envoyer aussi la clé chiffrée qui va être stockée avec les données. Par exemple dans S3, on va stocker l'objet chiffré et côte à côte, si on peut dire, la clé chiffrée. Et cette clé sera récupérée pour le déchiffrement de manière symétrique, le client passera l'identifiant d'une clé en disant « tiens, je voudrais déchiffrer tel objet dans tel bucket S3, puis le SDK récupérera la clé chiffrée, la fera déchiffrer par KMS et ensuite déchiffrera les données. » Donc voilà, l'avantage c'est que là, le client, une application peut toujours contrôler est-ce qu'un objet est chiffré, pas chiffré, etc. Mais il se décharge finalement du stockage des clés, qui est entièrement délégué à KMS et aux opérations qui sont gérées par le SDK. Donc voilà, une façon assez sympa de le faire. Sur l'URL que vous voyez en bas, il y a un petit bout de code en Java qui montre comment faire ça. Ça vous donnera un exemple concret, mais vous verrez, c'est très simple et très court.
+
+Côté serveur maintenant. Cette fois, on va utiliser KMS au maximum de ses possibilités. On va laisser KMS discuter avec les services AWS pour chiffrer les données. Voilà un exemple concret d'utilisation dans EBS pour le chiffrement des volumes. Là, que ce soit dans la console ou que ce soit en ligne de commande, vous voyez il y a les deux seules informations que vous devez fournir c'est est-ce que vous voulez chiffrer ou pas le volume, ok, soit vous cochez la petite boîte dans la console soit vous passez moins moins en cryptie dans la ligne de commande et puis vous passez l'identifiant de la clé, voilà c'est tout, c'est tout ce que vous avez à faire, je trouve que c'est vraiment une façon, quand je dis aux gens chiffrez, chiffrez, chiffrez c'est super simple, tout ce que vous avez à faire, vous créez une clé dans le KMS, c'est un appel d'API, et puis ensuite, avec l'identifiant de cette clé, vous dites simplement à EBS, ici en l'occurrence, d'encrypter, et la clé avec laquelle vous l'écrivez. C'est tout. C'est tout ce qu'il y a à faire. Franchement, ça ne pourrait pas être plus simple. Donc, de mon point de vue, aucune raison de ne pas le faire. Voilà. Donc, chiffrez toutes vos données. Deuxième exemple, dans Redshift, notre Data Warehouse, c'est la même chose, quand vous créez une base de données, quand vous créez un cluster, vous allez pouvoir lui passer l'identifiant d'une clé KMS, en lui disant, voilà la clé qui doit te servir à générer des clés de données pour chiffrer mon cluster Redshift. C'est tout. Et le simple fait de faire ça, ça va chiffrer toutes vos données dans Redshift, en AES 256. Voilà, terminé. Aucun souci, aucune complexité. Donc là aussi, vraiment, je ne vois pas une raison de ne pas le faire. Si vous avez créé une clé, ça vous coûte 1$ par mois et quelques appels d'API, pour une tranquillité d'esprit importante.
+
+Alors pour S3, là on a vu EBS, on a vu Redshift, pour S3, il y a une solution qui est encore plus simple. On se demande comment ça peut être plus simple. Vous allez voir. C'est cette troisième méthode que j'ajoute, qu'on appelle SSE, donc Server-Side Encryption S3. Comment est-ce qu'elle fonctionne ? Là, c'est toujours du chiffrement côté serveur, spécifiquement pour S3. Et donc là, comme tout à l'heure, on va chiffrer les données, mais pas les métadonnées. Ok ? Et là, chaque objet est chiffré avec une clé unique. Donc là, vous voyez le niveau de sécurité. C'est-à-dire que quand je disais qu'on va créer plein de clés de données, là, c'est même une par objet. Donc si une clé de données était compromise, vous compromettez un objet dans S3, un seul. Pas tout votre bucket, pas tout votre compte, juste un objet. C'est un risque de sécurité très très faible. Et donc ces clés-là, elles vont être générées automatiquement par S3, avec l'aide de KMS, sur la base d'une clé principale qui va tourner régulièrement. Et donc ça, on peut le faire dans la console, on peut le faire évidemment en SDK, et on peut le faire aussi par API. Voilà l'exemple dans la console, ça vous pouvez le tester tout à l'heure. Vous prenez n'importe quel bucket S3, vous uploadez, via la console, vous uploadez un fichier quelconque, et vous cliquez cette petite case, utiliser le chiffrement côté serveur, et puis vous sélectionnez, utiliser la clé principale de service Amazon S3, qui existe déjà, vous l'avez vu dans ma console tout à l'heure, S3 a déjà une clé principale créée dans votre compte, et c'est tout. Et donc, à chaque fois que vous faites ça, S3 va créer une clé de données uniquement pour cet objet, avec KMS, va chiffrer l'objet et puis va stocker l'objet et la clé chiffrée dans le bucket en question. Donc là, on le fait en console, mais vous pouvez aussi le faire en ligne de commande ou en API. Donc là, à chaque objet, vous avez une clé différente. Sans rien gérer. Moi, je trouve que c'est sans doute la façon la plus simple de faire dans S3. Voilà comment le faire en Java ? Vous voyez, là aussi, c'est vraiment tout simple. On crée une request, on va faire un put dans S3, donc on crée une put request. On y attache finalement une seule propriété, qui est de dire, s'il te plaît, tu vas chiffrer server-side avec AES256. Et puis on fait S3 client.put object. Et c'est tout. Et ça, ça suffit à chiffrer l'objet en question en AES 256, à stocker la clé chiffrée. Donc vous voyez, vous avez un niveau de sécurité maximum et sans rien gérer de votre côté. Donc voilà pour KMS. Vous voyez, on fera un résumé à la fin, mais je respecte parfaitement que... Certaines entreprises souhaitent gérer leur infrastructure de clé, souhaitent faire tout ça. Et bien sûr, il y a plein d'entreprises qui savent le faire de manière extrêmement sécurisée. Maintenant, gérer une infrastructure de clé, c'est relativement lourd. Pour l'avoir vécu, c'est relativement lourd. Et dans la majorité des cas, pour l'immense majorité des entreprises, ce n'est pas nécessaire de faire ça. Et KMS vous décharge vraiment de... Et vous voyez, l'utilisation de KMS, c'est un appel de création de clés. Et puis ensuite, soit du chiffrement côté client, avec les SDK, pourquoi pas, soit du chiffrement côté serveur en laissant KMS discuter avec les services. Et tout ce que vous avez à dire dans ces cas-là, c'est « je veux chiffrer et voilà la clé principale avec laquelle tu vas générer des clés de données. » En termes d'efforts et en termes de coûts, c'est relativement faible. Néanmoins, pour certaines entreprises soumises à des niveaux de régulation très très importants, on peut penser à la finance, mais ce ne sont pas les seuls, on a besoin d'un niveau encore plus élevé. Et pour avoir ce niveau encore plus élevé, on a conçu un autre service qui s'appelle Cloud HSM. Alors HSM veut dire Hardware Security Modules. Le mot important là-dedans c'est hardware puisque c'est un équipement matériel qui est un équipement CFNET, non, j'aime alto, qui va être hébergé dans notre data center, qu'on va configurer et installer dans votre VPC et dont vous aurez l'usage exclusif. Donc on aura un administrateur AWS mais qui va uniquement gérer l'équipement physique qui va juste vérifier que l'équipement est alimenté électriquement, connecté au réseau, etc. qui va juste gérer le fait que l'équipement est allumé et qu'il fonctionne. Et en revanche, tout le reste, l'utilisation, le côté administration, sécurité de l'équipement, c'est vous. C'est pour ça que je parle d'usage exclusif. Bien sûr, il y a quand même un admin qui vérifie que le HSM fonctionne, mais l'usage cryptographique du HSM, c'est uniquement le client. Donc là vous pourrez faire du chiffrement symétrique ou asymétrique, donc de la PKI si c'est nécessaire, et j'insiste, vous êtes absolument le seul à avoir accès aux clés et aux actions effectuées sur les clés. Donc là on arrive, et c'est un équipement qui est dédié, c'est-à-dire que vous êtes le seul à utiliser ce HSM, c'est un HSM par client, par exemple. Là, ils ne sont pas du tout mutualisés. Donc cet équipement-là, il est disponible dans 11 régions aujourd'hui, donc dans les deux régions européennes, pas encore à Londres. Vous avez vu qu'on a lancé une région à Londres, en fait. On pense que... Oui, Hugo se marre. Bon, les Français, Paris est la prochaine sur la liste quand même, j'espère. Ça va être à nous bientôt, en 2017, on y croit. Et c'est un équipement qui est conforme là aussi aux normes les plus strictes, donc PCI DSS, SOC, FIPS et les critères communs EL4+, qui est un niveau assez élevé pour les critères communs, avec une évaluation formelle de la sécurité de ces équipements.
+
+Alors à quoi sert, pourquoi avoir un HSM ? Il peut y avoir des raisons, purement de conformité, de dire voilà j'ai besoin d'avoir un équipement dédié, voilà, point. Donc ça pour un certain nombre de clients c'est la raison d'avoir un HSM. Après il peut y avoir des raisons plus techniques qui sont la nécessité d'intégrer un HSM dans une architecture plus large avec une application, avec un logiciel tiers et puis peut-être la nécessité d'avoir du chiffrement sur Oracle. Vous savez qu'on peut faire du chiffrement sur RDS en chiffrant les volumes EBS sous-jacents, comme on l'a vu tout à l'heure par exemple avec KMS. Mais en particulier, dans Oracle, on a un mécanisme qui s'appelle TDE, donc Transparent Data Encryption, qui peut fonctionner avec le HSM. Donc voilà, ça peut être des cas d'utilisation comme ça, des cas un petit peu plus complexes. Alors, la question qui fâche, combien ça coûte ? On a un équipement matériel dédié, donc ça coûte cher. C'est 5000 dollars à la mise en œuvre, à l'installation de l'équipement. Et puis ensuite, c'est un paiement à l'heure, 1,88$ pour l'Europe, mais ça varie un petit peu en fonction des régions. Ça veut dire... la première année, en gros, vous payez 21 500 dollars et les années suivantes, vous ne payez que l'usage et donc ça descend à 16 500 si on peut dire. Donc c'est un chiffre qui est élevé, vous voyez par rapport à KMS, KMS quand on dit 1 dollar par mois par clé, si vous avez 100 clés, ce qui est important déjà, ça va vous coûter 100 dollars par mois, 1200, plus les appels d'API, bon vous voyez, 2 000 dollars au grand maximum par an pour avoir une sécurité de haut niveau. Là, on est sur des niveaux beaucoup plus élevés de prix. Mais une fois de plus, gardez en tête que les entreprises ou les institutions qui ont besoin de ce niveau de sécurité, généralement, attribuent un prix, ne pensent que la sécurité n'a pas de prix. Vous pouvez l'intégrer avec vos solutions propriétaires et logiciels. KMS a un niveau de sécurité légèrement inférieur, mais il est extrêmement simple à utiliser et facilement intégrable avec les services AWS. Avec IAM, vous pouvez définir des stratégies qui contrôlent finement ce qui se passe, et avec CloudTrail, vous pouvez auditer. Les approches sont différentes, mais les tarifs sont très différents. Dans les deux cas, les niveaux de sécurité sont élevés.
+
+Nous avons également des solutions partenaires disponibles sur la marketplace AWS, qui sont des solutions de gestion de clés ou de chiffrement qui complètent ou étendent ce que nous proposons. La marketplace vous permet de tester ces services pendant quelques heures ou jours, et ils sont faciles à intégrer avec AWS, HSM, et KMS. Elles peuvent ajouter des fonctionnalités et offrir une console unifiée entre votre infrastructure sur site et votre infrastructure cloud. Il y a de nombreuses raisons de regarder nos partenaires.
+
+Si on compare et résume ces options, commençons par l'emplacement, la génération et le stockage des clés. Dans KMS, c'est dans l'infrastructure de KMS. Pour le HSM, c'est dans un HSM matériel dédié que vous contrôlez. Si vous utilisez une solution partenaire, ça peut être sur votre réseau interne ou dans AWS. Si vous le faites vous-même, votre infrastructure de clé est probablement étalée entre votre propre site et AWS.
+
+Où utilise-t-on les clés ? Dans KMS et dans le HSM, ce sont les services AWS ou les applications AWS qui utilisent vos clés. Dans le cas des partenaires ou du DIY, ça peut être des deux côtés, puisque vous pouvez faire du chiffrement chez vous ou dans des instances EC2.
+
+Comment contrôlez-vous qui utilise vos clés ? Dans KMS, tout se passe avec IAM. Avec le HSM, c'est dans votre code client, en utilisant l'API de SafeNet. Dans une solution partenaire, ça dépend du partenaire. Dans la solution DIY, c'est à vous de vérifier que les clés ne sont utilisées qu'à bon escient. C'est un problème assez compliqué.
+
+Qui est responsable des bonnes performances et de l'évolution du système ? KMS est un service géré, donc AWS s'en occupe. Pour le HSM, si vous dépassez les capacités de l'HSM avec votre application, vous devrez peut-être ajouter un deuxième HSM. Vous contrôlez votre propre code pour utiliser le HSM efficacement. Idem pour les solutions partenaires et maison.
+
+Quelle est l'intégration avec les services AWS ? KMS est très bien intégré avec presque tous les back-ends contenant des données. Avec le HSM, c'est différent : on peut faire du Redshift et un peu de RDS avec Oracle, mais ce n'est pas intégré avec les autres services. Idem pour les solutions partenaires et DIY.
+
+En termes de prix, KMS est au paiement à l'usage : 1$ par mois par clé, plus des fractions de cents pour les API. Le HSM est facturé à l'heure, avec 5000$ de frais d'installation. Pour les solutions partenaires, ça dépend du modèle de licensing, qui peut être par heure, par mois, ou par an. Pour le DIY, ça dépend de ce que vous faites, avec des licences à payer pour votre déploiement sur site et peut-être dans AWS.
+
+Quelques ressources complémentaires : le lien sur KMS et HSM, le blog sécurité d'AWS, une session récente de re:Invent sur pourquoi le chiffrement est un problème compliqué, et un white paper sur les détails cryptographiques de KMS. Voilà, j'en ai terminé pour ce deuxième webinar de la Security Week. Je vous remercie de m'avoir écouté. N'hésitez pas à noter ce webinar de 1 à 5. 1, pas content du tout, et 5, super content. On apprécie beaucoup votre feedback. Vous êtes nombreux à voter, merci beaucoup. Ça va vite, ça marche super bien. Et puis, on va passer à vos questions. Je vous laisse encore un peu de temps pour voter. Il n'y a rien à gagner, je suis désolé. N'envoyez pas de SMS. Ce n'est pas l'élection de Miss France. Alors, commençons à regarder les questions.
+
+On a plusieurs questions. Je vais en lire une, mais j'en vois plusieurs du même tonneau. En gros, comment protège-t-on la master key qui chiffre la clé de données ? Comment protège-t-on les clés principales dans KMS ? Il y a plusieurs questions qui tournent autour de ça. On en parlera plus en détail demain avec Mathieu, mais on ne détaillera pas ici les mécanismes techniques de KMS. Je vous renvoie vraiment au white paper sur les détails cryptographiques de KMS qui explique certaines des mesures mises en œuvre. Le point clé est que tous les mécanismes sont couverts par les audits SOC, ISO, PCI DSS, etc. Si vous avez confiance dans ces normes, vous devez avoir confiance dans le fait que tous les mécanismes ont été vérifiés par des experts.
+
+Alors, on a une question de Sébastien : est-ce que ce sont les données qui sont chiffrées ou bien les volumes sur lesquels ces données sont stockées ? Ça dépend des services. Par exemple, dans S3, on chiffre objet par objet. Si on parle d'EBS, ce sont les volumes disques qui sont attachés aux instances qui sont chiffrés. Si vous voulez aller plus loin, vous pouvez chiffrer le système de fichiers une fois les volumes EBS attachés à vos instances. Ça dépend. Dans certains cas, on chiffre les données elles-mêmes, dans d'autres, on chiffre les volumes qui contiennent les données. Vous pouvez ajouter une couche de chiffrement File System ou Applicative si c'est important pour vous.
+
+On a une question intéressante d'Aldric : il n'y a pas de persistance pour les clés de données. Quel mécanisme de récupération en cas de panne générale ? Prenons le cas de S3. Dans S3, on chiffre les objets et on stocke la clé de données chiffrée. S3 est conçu pour être hautement disponible, avec une durabilité de 99,9999%. Le risque de perte est faible. Si vous perdez une clé de données, vous ne pourrez pas récupérer l'objet, mais S3 est conçu pour minimiser ce risque. Si une clé est corrompue, perdue, ou compromise, ça n'impacte qu'un seul objet. C'est une bonne raison d'avoir un grand nombre de clés.
+
+Question de Jean-Pierre : le chiffrement S3 par objet multiplie-t-il les coûts de chiffrement ? Si vous chiffrez chaque objet, vous aurez un appel d'API pour chaque objet. Si vous avez des centaines de millions d'objets et que vous y accédez tous les jours, ça finit par faire un certain nombre d'appels d'API. Si vous faites des centaines de millions d'appels aux API par jour, ça finit par faire un petit chiffre. À vous de réfléchir sur ce qui mérite d'être chiffré. Généralement, tout ne mérite pas d'être chiffré. Il y a des fichiers temporaires, des fichiers d'entrée. À vous de voir !
+
+Question sur comment gérer le stockage des clés de données chiffrées par l'application cliente. C'est à vous de le faire. Si vous voulez gérer complètement vos clés, vous devez avoir un serveur de clés ou concevoir un moyen de stocker les clés chiffrées pour ne pas les perdre. Si vous perdez une clé, vous ne pourrez pas déchiffrer le contenu. Si vous n'avez pas de chiffrement en place, je vous implore de ne pas vous lancer dans la construction d'une infrastructure de clé, c'est particulièrement compliqué. Dans la majorité des cas, laissez KMS travailler côté serveur et déchargez-vous de ces soucis.
+
+Peut-on révoquer une clé ? Oui, on peut révoquer une clé principale, la supprimer, et faire tourner ces clés. Il y a des API KMS qui vous aident à le faire. C'est une bonne pratique.
+
+KMS est un service qui est propriétaire des clés ? KMS est un service géré, mais ce sont vos clés. Vous les créez, les utilisez, faites tourner, révoquez, et effacez. Ce sont vos clés. Vous ne pouvez pas lire la valeur de la clé, mais personne ne peut. C'est un mécanisme de sécurité.
+
+Quels sont les impacts du chiffrement sur les performances ? Les appels KMS sont rapides. Les appels d'API eux-mêmes ne sont pas un overhead significatif. Pour le chiffrement des volumes EBS, l'impact est négligeable car c'est le hardware d'EBS qui fait le chiffrement. Pour RDS, il n'y a pas de problème non plus. Pour le chiffrement TDE, il peut y avoir un petit impact, mais ça dépend des tailles d'instance. Dans la grande majorité des cas, pas d'impact significatif.
+
+Quel niveau de confiance peut-on avoir sur le fait que S3 supprime la clé de chiffrement ? C'est typiquement le genre de chose qui fait partie des audits. S3 n'écrit jamais la clé en clair sur disque et détruit le buffer qui contient la clé dès que possible. C'est vérifié lors des audits.
+
+Le chiffrement sur S3 fait-il partie du modèle de tarification KMS ? Oui, vous payez le stockage dans S3 et les appels d'API dans KMS. Si vous utilisez la clé par défaut d'S3, il n'y a pas de clé à créer. Si vous créez une clé vous-même, ça coûte 1 dollar par mois, plus les appels d'API.
+
+KMS est-il réellement pertinent si IAM est correctement configuré ? Oui, IAM restreint l'accès aux API, mais le chiffrement est une protection supplémentaire. Si un utilisateur autorisé vole des fichiers, ils sont chiffrés. Les deux sont complémentaires.
+
+Les rapports des audits AWS sont-ils disponibles ? Oui, la partie publique est disponible sur aws.amazon.com/compliance. Pour la partie privée, vous pouvez accéder via le service Artifact, qui nécessite la signature d'un NDA.
+
+Sachant que HTTPS est déjà là, qu'est-ce qu'on protège en plus avec KMS ? HTTPS protège les données en transit, mais KMS protège les données au repos. Les deux sont complémentaires.
+
+Il reste encore des questions, donc rassurez-vous, on les garde. Certaines seront abordées demain avec Mathieu, qui est un de nos spécialistes sécurité. Il sera prévenu et on abordera tous ces points. Merci d'être encore très nombreux. Vous êtes des centaines et des centaines. C'est spectaculaire pour un 19 décembre. Merci beaucoup pour le feedback très positif. On a passé beaucoup de temps à préparer ces webinaires. On garde toutes les questions que vous avez posées et auxquelles on n'a pas répondu. On vous donne rendez-vous demain à 15h30 pour une discussion avec Mathieu, qui sera zéro slide et 100% retour d'expérience et bonne pratique. On enchaînera avec le premier update sur les nouveautés annoncées à re:Invent. Merci beaucoup, allez prendre un bon café ou une bonne bière, et je vous donne rendez-vous demain pour continuer cette Security Week. Très bonne soirée et à demain.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Chiffrement de données</span><span class="tag">Gestion des clés</span><span class="tag">AWS KMS</span><span class="tag">Cloud HSM</span><span class="tag">Sécurité des données</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

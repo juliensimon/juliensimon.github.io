@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps on AWS   Deep Dive on Continuous Delivery</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DevOps on AWS   Deep Dive on Continuous Delivery</h1>
+        <div class="date">October 10, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/Py0DmiIkxHM" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Talk @ AWS Summit Tel Aviv, June 2016
+
+Slides : <a href="http://www.slideshare.net/JulienSIMON5/aws-codecommitdeploypipeline-june-2016" target="_blank" rel="noopener noreferrer">http://www.slideshare.net/JulienSIMON5/aws-codecommitdeploypipeline-june-2016</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            My name is Julien. I'm a technical evangelist with AWS, and sometimes I work in the Paris office, but most of the time, I'm traveling to meet all of you and hopefully talk about cool stuff. My session today will focus on what we call developer tools, and I'll be talking about the CodeStar product, which includes CodeCommit, CodeDeploy, and CodePipeline. We have about 40 minutes, and I'll try to keep to that time. I have a few slides, but I want to get into the demo quickly, as that's where you can actually see these tools in action.
+
+A couple of points before I start: This is definitely not an introduction to DevOps. If you have zero idea what DevOps is and were looking for a tutorial, this isn't it. You can try another session if you want; I won't be offended. Also, I'm assuming you're reasonably familiar with EC2, ELBs, and auto-scaling groups. If you have questions, I'm happy to answer them, especially during the demo. I landed at 4:30 this morning and didn't sleep on the plane, so if I don't make sense, please raise your hand and ask questions.
+
+Let's get started. This should be familiar to everyone. Who is actually practicing this? Who is doing this on a daily basis? And who would love to be doing this on a daily basis? Who would rather release once a year? Only half the time, all of the time, all of them. To make a long story short, this is the DevOps dream. We're trying to move away from monolithic, bulky applications and break them into tiny pieces that different teams can work on in parallel, deliver, release, and maintain independently. It's a nice dream and can be difficult to achieve, but some companies are doing it. One of those companies is Amazon.com.
+
+About 10 years ago, Amazon.com transitioned from a very monolithic application to thousands of services and microservices being built, developed, and deployed independently. Today, Amazon.com has thousands of teams working on a microservice architecture, with thousands of services being released using continuous delivery in multiple environments—development, staging, pre-production, and production. These numbers are from 2014, so they are likely even higher today. Amazon.com does over 50 million deployments every year, which means more than one deployment every second. To achieve this, everything must be fully automated.
+
+The software factory you need to do something like this, even at a smaller scale, will look like this: It starts with your source code, which needs to be safely stored and versioned in a source management system. This is where CodeCommit comes into play. You build that code based on your technology and deploy it on multiple environments. No one deploys directly to production. You deploy to a testing environment, a staging environment, and possibly pre-production for load testing or security testing. Once you're happy with all your test criteria, you release to production. You need to manage multiple deployments over multiple server farms, and this is where CodeDeploy comes in. The key is integrating all these tools easily and ensuring every step is enforced, so you never get to production unless all steps have been performed successfully. This guarantees the quality of your application.
+
+We'll look quickly at the core features and abstractions of CodeCommit, CodeDeploy, and CodePipeline, and then we'll start the demo.
+
+CodeCommit is a managed Git service. You can use standard Git tools, such as the Git command line or your favorite Git GUI tool. It's hosted within AWS, so you get scalability, high availability, and security. You don't have to manage your private Git repo, which is critical infrastructure. If it breaks, you can't deploy. You can also automatically encrypt all your files, so there's no concern about your intellectual property being hosted on AWS.
+
+CodeDeploy is about deploying applications. It's simple to set up; you define your application, the pool of virtual machines or instances you want to deploy it on, and a few other criteria. It scales easily, and you can deploy to EC2 instances, auto-scaling groups, and on-premise servers. CodeDeploy requires an agent, available on GitHub, which checks if a new version is ready to be deployed. It can deploy to EC2 instances, auto-scaling groups, and on-premise servers. You can enable CodeDeploy on an instance using user data, an initialization script passed to a newly launched instance.
+
+Deployment involves three things: what you're deploying, where you're deploying it, and how you're deploying it. What you're deploying is your code and an application specification file (AppSpec) that defines hooks for deployment actions. Where you're deploying it is defined by a deployment group, a set of servers. How you're deploying it involves different rules, such as deploying all instances at once (good for development, not production), half at a time, or one at a time (rolling deployment).
+
+CodePipeline integrates all these steps, defining a sequence of operations that must run successfully before deploying to production. It ensures that you don't go to the next step if something fails, which guarantees the quality of your application. You can build a pipeline visually, integrating steps like source, build, and deployment. CodePipeline supports various tools, including GitHub, Jenkins, and others.
+
+Before we jump into the demo, do we have any questions? Yes, please.
+
+**David:** My name is David. I'm from Proof. My question is why doesn't CodePipeline support CodeCommit?
+
+**Julien:** It does, and it's fairly recent. Given the number of features we release, it's easy to miss some. I'll show you in a second. Does CodePipeline support OpsWorks?
+
+**Julien:** I'll check right away. I don't use it much, but I can take a quick look and answer you after the presentation.
+
+**Julien:** Let's go. I like to do demos that you can replicate. I'll start with a blog post from AWS solution architects and product managers, which uses CloudFormation to build a Jenkins server, some web servers, and a basic pipeline. We'll add auto-scaling and other features. You'll get the slides later.
+
+This blog post is the starting point. CloudFormation is infrastructure as code, described using a JSON document. This template creates a Jenkins server, a VPC, EC2 instances, and the pipeline. Once it's complete, you get a message, and the pipeline looks like this. The source step pulls from GitHub, the build step uses Jenkins, and the deployment step deploys to a beta environment. Transitions between steps can be manual or automatic. You can disable transitions to do manual testing before deploying to production.
+
+Let's look at the source step. It pulls from my GitHub repo, a fork of the official example. The build step uses Jenkins to build a Tomcat application and generate the deployment package. The deployment step deploys to the beta environment. The app spec file provides hooks to start, stop, and check the application. Jenkins runs on an EC2 instance, but you can integrate other solutions.
+
+A deployment group is defined by EC2 tags. For example, instances tagged with "web app Tel Aviv, dev" are in the beta deployment group. You can see this in the EC2 console. CodeDeploy is a regional service, so for multi-region deployment, you need multiple deployment groups. The deployment configuration specifies how instances are deployed, such as one at a time.
+
+Let's try a deployment. Here's the web app, a fancy e-commerce application for dog suits. I'll change a message and push the change to see the pipeline in action. I'll commit the change, and the pipeline should detect the new revision, fetch it, and copy it to S3. Then Jenkins will build the code, and CodeDeploy will deploy it to the beta environment.
+
+Once the beta deployment is complete, I'll enable the transition to the production environment. The production deployment group is similar, but with a different tag. I'll enable the transition, and the pipeline will deploy to the production auto-scaling group. When a new instance joins the auto-scaling group, CodeDeploy will automatically deploy the code.
+
+Let's check the production server. The deployment is complete, and the new version is live. For auto-scaling, you create a launch configuration and an auto-scaling group with a load balancer and CloudWatch alarms. When a new instance joins the auto-scaling group, CodeDeploy will deploy the code automatically.
+
+If you want to learn more, there was a good session on CodeDeploy at re:Invent. There are also user guides and online resources. The best way to learn is to try it yourself in the console. If you have feedback, please share it. Thank you so much.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS</span><span class="tag">CodeStar</span><span class="tag">DevOps</span><span class="tag">CodeCommit</span><span class="tag">CodeDeploy</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

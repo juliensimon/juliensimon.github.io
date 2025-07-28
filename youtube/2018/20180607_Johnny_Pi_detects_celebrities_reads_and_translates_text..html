@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Johnny Pi detects celebrities reads and translates text.</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Johnny Pi detects celebrities reads and translates text.</h1>
+        <div class="date">June 07, 2018</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/L51pST6Mll0" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Johnny Pi detects celebrities, reads and translates text.
+
+For more information: <a href="https://medium.com/@julsimon/johnny-pi-i-am-your-father-part-8-reading-translating-and-more-c22f7b8275cc" target="_blank" rel="noopener noreferrer">https://medium.com/@julsimon/johnny-pi-i-am-your-father-part-8-reading-translating-and-more-c22f7b8275cc</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Now it's time to try our new features on Johnny Pie. Let's start with celebrity detection. The World Cup is coming up, so how about we try this guy here. Alexa, open Johnny Pie. Johnny Pie is at your command. What would you like him to do? Do you see people? Okay. Nice! All right, Olivier Giroud, that's the guy, right? And three faces have been detected, I guess because Johnny picked up multiple pictures. We should be able to see this in the tweet it just sent. You can see the boxes here: one, two, and three. So it picked up Olivier Giroud's face three times and detected him as Giroud twice. That tiny picture over here was just a little bit too small. But that worked.
+
+Next test: language detection. This is the one. Alexa, open Johnny Pie. Johnny Pie is at your command. What would you like him to do? Tell me what language this is. Okay. I believe this is French. Alright, I believe you are right. Let's try another one. Alexa, open Johnny Pie. Johnny Pie, is that your command? What would you like him to do? What language is this? Okay. I believe this is German. It is. Pretty good.
+
+Now let's try to ask Johnny to read this text. Alexa, open Johnny Pie. Read this text. Okay, now I can read. Not bad, right? This is using the recognition text in image feature, and I'm not so sure it's actually been trained on handwriting, so this is actually good.
+
+Let's try translation now. Let's keep this one and try to translate it to German. Alexa, open Johnny Pie. Johnny Pie is at your command. What would you like him to do? Translate this to German. Okay. This is good.
+
+Let's try a final one. Maybe where is that piece of paper? Let's try German to Spanish. As you probably know, Amazon Translate cannot yet do this directly. So we have to translate from German to English and then English to Spanish. Let's try this one out. Alexa, open Johnny Pie. Johnny Pie is at your command. What would you like him to do? Translate this to Spanish. Okay. Hablo Aleman. Hablo Aleman. Right? I don't speak Spanish, but this sounds like Spanish to me. There you go. Thank you, Johnny Pie. And he learned a few more tricks, so he's not a kid anymore. Plenty more coming, I guess. But hey, no vídeo de blog post. Tchau tchau!
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Johnny Pie</span><span class="tag">Celebrity Detection</span><span class="tag">Language Detection</span><span class="tag">Text Recognition</span><span class="tag">Translation</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

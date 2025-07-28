@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running Docker clusters on AWS</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Running Docker clusters on AWS</h1>
+        <div class="date">October 10, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/_fwVuC672Ck" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Cloud Native Computing Foundation meetup, 30/06/2016, Paris
+
+Slides : <a href="http://www.slideshare.net/JulienSIMON5/running-docker-clusters-on-aws-june-2016" target="_blank" rel="noopener noreferrer">http://www.slideshare.net/JulienSIMON5/running-docker-clusters-on-aws-june-2016</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            We're going to do this in English. These are the orders. Sorry about the mess, but it's my first time, as I was saying, since January 1st, I think this is my 77th or 78th talk, which is a lot. It's the first time my laptop has rebooted twice when I plugged it in somewhere. So it's really a sign I should go on holiday, right? Thank you for not being in front of the TV and spending some time to listen to Jonathan and myself. Thank you so much for the invitation. I'm very happy to be present at the first meeting for you guys, and I wish you a lot of success.
+
+My name is Julien, I'm a technical evangelist with AWS, and I think I've been here before. That's a private joke, you don't have to understand it. My presentation tonight, if some of you were at the container day yesterday, you were there, I remember you. Anyone else? Don't worry, this isn't exactly the same talk. I did get some work done today, and I figured some of you would be at both events, and I hate repeating myself. So the beginning of the presentation is similar, but then I have some demos that I didn't have time for yesterday. So there will be some new stuff, so don't fall asleep.
+
+Tonight, I don't want to talk about Docker specifically or containers specifically, because I think we wouldn't be here if we didn't believe that containers are slightly interesting and help us build platforms better. I want to show you the options to run Docker clusters on AWS. The key word here is clusters. I'm not interested at all in running one container. I'm interested in what happens when I'm trying to run thousands of containers on hundreds of nodes, right? That's the kind of problem we're trying to solve here. Before we dive into the actual presentation, it's always good to understand exactly why this is a hard problem. Technology is always fun, but why is this a difficult problem? What are we trying to do here?
+
+Remember when you were three years old, or maybe if you have kids, you have this somewhere in your living room, and they're three years old. You're trying to find the best place to put the yellow circle or the green triangle or whatever, right? When you're trying to orchestrate containers, it's exactly the same problem. You have a grid of hardware resources, mostly CPU and memory, and as fast as possible, in the most scalable fashion, you want to find the right place to put the right container. This is a simple problem when you have a 3x3 grid. If you have one host and nine containers, that's not a big problem. If you have three hosts and three containers, it's not a big problem either. But think about larger platforms, and I will show you some examples where people are running thousands of containers in a very dynamic fashion all day long, possibly millions of containers, and they always want to find the right spot to put it. Imagine if this grid was a thousand by a thousand instead of three by three. Even trying to put some toys like this would be a difficult problem. In the beginning, it would be easy, but as you populate the grid, it gets more difficult, and it's quite likely that it would take you more and more time to find the right spot. The problem is finding space for your container and doing this in linear time. For the algo guys in the room, ECS is pretty good at this.
+
+If you're not super familiar with our Docker technologies, these are the ones I'm talking about. ECS is our container orchestrator. It was launched over a year ago and is available in both European regions and many other regions, but we're still Europeans, I suppose. We have a London region coming up next year, so... Will they call it EU-something or UK-something? We'll see. Just making fun of them, right? And now we have to face Iceland. Come on. Come on. But it's good. It's going to be a good game. Anyway.
+
+The good thing about ECS is that it doesn't cost anything. Using ECS will not cost any money. What will cost money is the servers, the instances that you're going to start, right? But the service itself is as free as it gets when it comes to AWS. Last year we launched another service called ECR, which is a registry, a managed service for a Docker registry hosted in AWS. It's available in Ireland and not yet in the other European region, but it will be in the future. Why would you want to use ECR instead of the Docker Hub? If you have infrastructure in AWS, it makes sense to have your Docker images closer to your instances, right? It reduces loading times and the likelihood of something breaking down between your infrastructure and your images. We all love the Docker Hub, but sometimes it's not in a good mood. ECR is highly available and shouldn't break down. The cost is mostly based on storage: 10 cents per gig per month plus a little bit for outgoing traffic. It's a fairly competitive option. For three times the price of S3, you get a managed Docker Hub. I guess that's a decent deal.
+
+Yesterday morning, as I was preparing for container day and routinely checking my emails, not expecting anything to happen because it's summertime, I saw that EFS is finally available. We've been waiting for about a year and a half, so EFS in a nutshell is a managed NFS service. It's something that literally thousands of people were sending me emails about and probably the most expected service at AWS in a long time. Basically, you're creating volumes with one click or one API call, creating an NFS volume in a region, and you just go to your EC2 instances and mount them using the standard NFS tools. You can share storage across EC2 instances. The really cool thing is that unlike NFS filers from last century, you don't have to provision anything. You just write to your volume, and it will scale up and down as you add and delete files. To me, that's the best news in a long time. It's something that has been painful in my previous life for 10 years, and it's kind of solved because you can just go and have /EFS, and it's unlimited. It costs a third of a dollar per gigabyte per month. That's just a starting price. It's available in EU West 1 and in two US regions as well. If you guys had that kind of issue, it's kind of solved. I don't think it's really good news for the hardware vendors, but oh well.
+
+On top of that, we have a lot of partners. Some of them I will illustrate tonight. I won't read through the whole list, but obviously, Docker and Mesosphere, I will show you. You can run your favorite Docker Linux distribution. Alpine? Alpine. Yeah, Alpine is, yeah sure, it's not a partner, but you can run Alpine, you can run anything. You can run CoreOS. I will show you how to run Rancher, Rancher OS in ECS. Convox is a very cool product. It's a former Heroku engineer who has built a new PaaS platform on top of AWS using Docker only. If you guys like PaaS, if you like Heroku but wanted the Docker version, the next step, you should look at Convox. We have a lot of CI-CD partners where you can integrate your Docker deployments and QA directly with ECS. Datadog for monitoring and Twistlock, which is a company that scans containers for vulnerabilities. I won't talk at all about Docker security, but it's a major concern. Moving containers from the development PC to production without knowing exactly what's inside is a big concern. Twistlock and a few other companies will do that.
+
+Let's look at a few case studies before we dive into the tech because at AWS, we're all about technology, but we like to talk about what our customers do. The best way to illustrate what the technology can do is to let the customers speak about it. The first one is Coursera. It's possibly the largest MOOC platform out there. As you can imagine, they need to run a lot of batch jobs, like reporting and accounting. One specific use case is how they grade programming assignments. You can type code and execute it, and in the background, they will check it and run some unit tests against your code and give you a score. This is highly untrusted code, right? It's code coming from you and me, especially me, highly buggy, highly untrusted, and it could be a very large security risk. They decided to use Docker to isolate the code uploaded by students, which is great, but given the scale they're running at, they have to do this thousands of times a day. They have to automate those jobs and make sure they can always run them almost in real-time because when you're studying and coding, you want to know very quickly if you did a good job or not. You don't want to come back tomorrow to get your grades. They looked at some solutions. You can look at their video testimony from Reinvent last year, a very good video. In the end, they picked ECS, mostly because it's a managed service, it makes life easier, and it's highly customizable. They wrote their own scheduler to make sure that the programming, the grading jobs get higher priority on the cluster than maybe some of the lower priority jobs.
+
+Another one is Remind, a messaging platform for students, teachers, and parents in the US. They're used by half the public schools in the US, have over 30 million users, and about 100 million or 200 million messages per month, so it's fairly large. As you can imagine, these guys have a very bizarre traffic profile. During holidays, nothing happens, and then you have back to school, and they have huge scalability issues. When classes are happening, there's a lot of traffic. It varies wildly and was difficult for them. They have a microservice-based platform and were running on Heroku. The average latency was kind of okay, but the 95th and 99th percentiles were pretty bad. They moved to ECS, dockerized the platform, and migrated during the night of June 5th. As you can see, they divided the average latency by about two. More importantly, the marginal latencies are now extremely close to average and extremely flat, which means almost 100% of their users get a great service. This is because of the scheduling speed and predictability of ECS, where no matter what the load of the cluster is, it can always find a spot in a matter of seconds to start a container and serve traffic.
+
+Another example is a company called Halo, an Uber competitor in the UK. They have a microservice-based architecture and want to schedule some jobs faster than others. When you're calling a taxi, you don't want to wait for 10 minutes. They picked ECS, wrote their scheduler, and have a pretty cool technical presentation online with a lot of details. I encourage you to read that to see how they did it and what the benefits were.
+
+The last one I want to mention is a company called Segment, operating in the analytics sector. They have a microservice architecture and multiple ECS clusters. They use other services like ELBs and Route 53 for DNS. Recently, they published a path based on Terraform for infrastructure as code. In just a few lines of Terraform, they're able to deploy complex stacks on AWS, all based on Docker containers and ECS. It's an interesting approach and shows that customers' initial requirement might be to say, "We need containers, we need Docker," and then they try ECS, enjoy the scalability, and enjoy the managed service side of ECS. They learn how to extend ECS to make it exactly what they want, like writing their own schedulers, and we see a lot of customers doing that.
+
+Let's look at the architecture. It's not really complicated. The bottom part is where the real power of ECS lies. There is a cluster management engine that schedules jobs, makes sure the right number of jobs is running, and ensures the right number of containers is always running. It relies on a key-value store, which is proprietary to Amazon but is based on Paxos. Amazon knows a thing or two about key-value stores, having built DynamoDB. All the distributed state in the cluster is stored here and used by the management engine to make decisions. We have a communication layer that interfaces with the actual instances. Each instance runs an ECS agent, which is itself a Docker container. The agent is responsible for reporting the state of the instance to the backend and receiving orders from the backend to start containers, etc.
+
+What is an ECS cluster actually? An ECS cluster is that tiny dotted line here. Within the cluster, we have multiple instances, which are EC2 instances. All this stuff relies on EC2. An ECS instance is an EC2 instance with Docker installed and the ECS agent. All the good stuff you may know from EC2 in the last 10 years, like auto-scaling groups, monitoring, and security groups, is present here. This is good news because it means ECS is pretty rock solid. EC2 has been there for a while and has been tested for a while. The fact that ECS relies on that is a good sign that ECS is going to be fairly stable from day one and efficient.
+
+We provide an Amazon machine image pre-installed with Docker and the ECS agent. If you look for it, it's called the ECS optimized AMI. But you're welcome to use anything else. The agent itself is open source, written in Go, and you can grab the sources from GitHub, build it, and install it on your own AMIs if you want. You can also run CoreOS if you want, run Rancher if you want, and integrate it, as I will show you later. It's very easy to integrate RancherOS with ECS and use Rancher server on top of that.
+
+Inside Docker, it's business as usual. You will run your containers. We have the task definition, which is the equivalent of a Docker Compose file with a couple of additions for us. Based on the task definition, we start those containers. If you need to put load balancers in front of your tasks and containers, that's fine. The magic is in the scalability and distributed state management. All you need on your instance is to have the agent to report state and apply orders coming from the backend.
+
+I will show you the console tonight and maybe a little bit of command line. If you want to know what the command line for ECS is, that's it. We have a specific command line for ECS called ECS CLI, which is on GitHub. This is just configuring the cluster, saying I'm going to work with a cluster called my cluster running in Ireland. "Up" will create the cluster. I need a key pair to SSH on the instances, and I'm using three nodes. I'm not giving any instance size, so by default, it's going to be T2 micro, but you could use larger instances if you want. This will destroy the cluster. For a developer, it's a convenient way to start clusters, run some jobs, and destroy them. It's the same philosophy as Elastic Beanstalk, another of our services, with a very simple command line.
+
+For starting the cluster, you can reuse your Docker Compose file. You just need to add a couple of variables and call `composeService up` to start your service. By default, it will start one copy of your container. You can use `ps` to list services, scale your services if you want eight copies, and let ECS find where to run those eight copies. You don't have to worry about that. You can stop the service and delete it. From an infrastructure point of view, you can use the traditional AWS command line to list clusters, describe clusters, list your instances, etc. But I would say 90% of the time, you will go up, up, scale, and stop when you're done working. For developers, it's pretty cool not to have to worry about any infrastructure stuff here.
+
+Let me show you quickly how we can deploy stuff on Rancher. Can you read in the back or is it small? What I did here is create a cluster called default. I started three virtual machines based on the Rancher OS AMI and configured them to join the cluster. That's pretty simple. This is the ECS console, which is very basic but is not supposed to be used for production. It's more for testing. Here, I have nothing running. The cluster is empty. If I look at this guy here, which is a really cool console, much better than ours, I can see my three Rancher nodes, and I have no containers here either. The only thing I did is start RancherOS images and ask them to join the cluster called default, which is a configuration file in RancherOS. You can get the scalability of ECS and the scheduling of ECS and the cool tools of Rancher.
+
+Let's start something here. I'm going to show you a silly PHP web app. It doesn't matter; it's just to show you the basics and the way things are uploaded, etc. I have a service called PHP demo. It's going to pull an image from ECR, which is in the US. The rest here is strictly a Docker Compose file. You can use volumes and environment variables. The only difference here is that those two variables are an indication to ECS on how CPU-heavy this task is going to be and how much memory it should get. It's a hint. If you want to make sure a container runs alone on an instance, you could give it all the points for an instance. T2 micro, for example, has 1024 CPU points. The more powerful the instance, the more CPU points it has. If you wanted this container to run alone on an instance, you would give it the maximum number of points. If it doesn't really matter, you can have lower values. It's a hint that you give to ECS to find out how CPU-heavy this thing is going to be and how much ECS instance power you want to give to that container.
+
+Basically, it's a couple of PHP pages on Apache. I'm going to do this, and of course, I forgot this flag. No, sorry, that's not the right command. The cluster is already up, so that's the one I was looking for. What happens here is we take the Docker Compose file, upload it to ECS, and it becomes what we call a task definition. There's a desired count which is one, and a running count which is zero. Pretty soon, the running count is going to be one. If I look at my container here, I can see the task definition. If I look at this, I would see the equivalent of my Compose file, and my container is in a pending state. It's going to be running soon. Come on. Yes, thank you. Now, if I go to ECS CLI, I see my container running. If I connect to this, which is the IP address of the ECS instance, hopefully, I see my PHP page. Woohoo!
+
+If I go back to Rancher, I can see that this instance is running a container. If I want more, I can do `service scale 3`. If I look at my service here, I can see task 3, running task 1, and the scheduler is going to do its job and start some more instances in a second. I'm using very tiny instances, T2 Micro, so it's slower than it should be. If you use proper production instances, it's going to be really fast. I can see my three tasks running, and as you can see, because this is running on port 80 and there's only one port 80 per instance, the scheduler is only going to try to run one container per instance. If I try to run it here, port 80 is already bound, so the container is not going to start. It's going to look for another place to run it. With three containers and three instances, it's a trivial example. Imagine this at scale, thousands of containers and hundreds of nodes, and you're trying to find an instance where port 1234 is available. That's where ECS is going to help you.
+
+If you like Rancher, I have to say I like Rancher a lot. I like the Rancher server a lot. It's great and easy to integrate with ECS. The setup we saw here is kind of similar. We're running containers on fixed ports. Here we have three services, and as you can see, they're running on port 80 internally but on different ports on the instance. That means we can't run two copies of service one on the same ECS instance. If we need a fourth copy of service one, we would have to start a fourth container instance. You could use some load balancers to provide a single point of entry for your users to those services, but in any case, you don't have any service discovery here. If someone else starts service 4, there's no easy way for service 1, 2, and 3 to communicate with service 4. The only way you would do that with this architecture is to use environment variables with the CNames for the ELBs and pass that to all the containers. If you have a simple platform, that's fine, but if you have a more dynamic platform, you need something else.
+
+Here's a different example based on a blog post where we're using CloudWatch and Lambda to register services automatically when they're created. When the create service API is called, CloudWatch sends an event to a Lambda function, which registers the service to Route 53, our managed DNS service. Things are slightly better because people can start new services on the cluster, and an entry will get created automatically in Route 53. It becomes easier for other services to do discovery. All they have to do is a DNS lookup on the service name and get access to the ELB CName or IP and talk to other services. It's more automated, but we still have the problem of everything running on fixed ports, so only one container of a given type per ECS instance. Let's keep moving and improving.
+
+We could do fixed ports, better service discovery using Weave. Weave runs on each instance and detects that containers are starting. It registers the IP address of a given service to other nodes using a gossip protocol. There's no central server like Consul or Zookeeper. It's just collaboration between the nodes. From a code point of view, it's very simple. All you have to do is a DNS lookup in your code on the service name, and you get the IP address of an instance that runs this service. If you want to have internet-facing services, you can put an ELB in front of them. But at least you have a better architecture when it comes to creating services, destroying services, and allowing services to talk to one another.
+
+Let's look at an example of a very simple application on Weave. I have three instances and four tasks. I have a Redis task running and three web tasks that are just counting hits. It's a Python app that resolves the Redis service and increments the counter in Redis. You can do that on all three web servers, and you would see the same value in Redis. Let's look at Weave. I have a Dockerfile here. It's a simple Python app. The first thing it does is get access to a Redis host. Weave intercepts that information, informs all the other nodes, and all the nodes know that the service called Redis is available at this IP address. In my code, I just increment a counter called hits in Redis. It's a clean way of programming things and doing simple stuff.
+
+Weave is pretty cool, and Rancher is pretty cool. Just different ways of doing things, different ways of doing discovery. But we could still go crazier. If we want to go all the way, we could do this. The problem I'm trying to solve is that I want to be able to run as many containers coming from the same image on one node. I don't want to have the restriction that since I'm starting containers with fixed ports, I can only run one on each instance. I don't want to do that. Here, I'm going to show you the application first. It's a web app built from three services. We have a portal service, which is the one I'm accessing from the internet, and in the backend, I have two services: one called stocks, which connects to the Yahoo Finance API to get stock quotes, and one called weather, which connects to the OpenWeather API to get weather information. When I click on this, I'm doing a service discovery to the stock service, and the stock service is calling the API and sending me the result. Let's look at the code again. I have a lookupService function where I'm going to give the service name. We're going to do a DNS resolution, but this time we're getting not only the IP address but also the port number of the service because we're relying on SRV records in DNS, which are designed to record services. So IP address and port numbers. If I want to look up the stock service, I will just do `lookupService stock` and send my HTTP request to that port and IP address and get the result. Stock and weather are just calling HTTP get from Yahoo and OpenWeather. From a programming point of view, it's quite straightforward if you understand what DNS is.
+
+This is running on a third cluster. As you can see, I have four instances and three copies of each service. Let's suppose I have a lot of traffic here and need a lot of containers to process that traffic. The scheduler is a good boy, so immediately, it's going to start some more containers. I already have 11 here. If I reload that page, it's going to run and run and run. It's going to look for a decent place to put those stock and weather services. Pretty soon, I will run out of space. The CPU points that I allocated to my tasks have been exhausted on my four Docker instances. I still have 42 containers to start. I need to wake up at night and do this, but that's a low number. Let's do more. I'm not paying for anything, so I can do stupid stuff like that. Let's see if ECS figured it out or not.
+
+This is my architecture. The white blocks are the services I showed you: the portal, stock, and weather, running anywhere because they are all on random ports. Between P, S, and W, we do a local DNS lookup. Why is it local? Because on each instance, I have a Consul agent, and the portals are resolving locally, so it's really fast, and they get access to one of their little friends. For example, if I'm hitting this portal, it's going to do resolution, maybe use this weather and this stock. If I'm hitting this portal, it might use this one and this one. It's a distributed view. The black stuff is the ECS agent, the Consul agent, and the Consul server. The R guy is a tool called Registrator. It detects containers starting and sends events to Consul. This guy is the one that knows, "Hey, we started a stock service on this instance with this IP address and this port number." This is how you build the distributed state. Registrator is spying on the Docker events, on the Docker startups, and sending that data to Consul.
+
+The F guy is another open-source tool called Fabio. It's a zero-configuration HTTP and HTTPS router. It can spy on the Consul traffic. When a service starts, Registrator detects it, sends that notification to Consul, and Fabio detects it. How does Fabio know where all the P's are running? It's listening to the Consul traffic and builds its routing tables. This is how I can start all the P's on random ports. Registrator is listening, and Fabio is listening too. All my fronts are running on random ports, which means I cannot have an ELB in front of them because one of the ELB limitations today is that an ELB can only balance entities running all on the same ports, which is clearly not the case here. So this is what Fabio is good for. Fabio is the only guy running on a fixed port, 99.99, which is the default for Fabio. I have one Fabio on port 99.99 on each instance, which is why I can have an ELB in front of it. If we look at the whole circle, you're going to come from here, the Internet Gateway, go through the ELB, the ELB is going to pick one of the Fabio instances, let's say that one, and Fabio knows about all the P's. Let's say it picks this one here, and P is going to do two DNS resolutions, one for S and one for W, pointing somewhere else. When a container dies, Registrator will find out, inform Consul, and if a P dies, Fabio will see it and remove it again. If one of the F dies, the ELB sees it and removes it again.
+
+This is a more complex setup. It's kind of painful because I have an external entity managing the state, which could become a single point of failure. You could have high availability on Consul, but it's an external component. All those squares are containers, so if I start a fourth instance, all that stuff comes with it and joins the fun. This setup is as dynamic as you could get on this architecture. Everything is random, everything is discovered automatically. It's a little bit complex, but this setup has been running for six months, and I keep hitting it very hard, creating thousands of containers and instances, and it's still there. It never died, so maybe I'm just lucky or maybe it's kind of stable.
+
+Let's look at my cluster. I have four instances. No auto-scaling? Come on. How could that be? Maybe I'm just impatient. ECS, anything starting here? Oops. Oh, no, I know why. I have an alarm here that says if my cluster runs out of memory or CPU, which is clearly the case here, it's going to send an alarm. The alarm is on, and I'm probably getting some emails right now. The alarm is sent to an auto-scaling group using spot instances. Spot instances are instances that you can buy by bidding. Given the time of the day, I expect my bidding price is too low. When I do this demo in the morning, it always works, but now I guess Netflix is running at full speed, and I'm failing to grab some spot instances. Oh no, they are. They're just initializing. Yes, five instances. That worked. It's already full because I put a crazy number of containers. This is how you can do automatic scaling on your containers. You use the typical EC2 auto-scaling with your alarms, etc. If my spot stuff miserably fails because Netflix is eating all the internet and AWS instances, I have another alarm that triggers after 15 minutes. If after 15 minutes, I'm still in deep shit, I will buy some on-demand instances, but they are more expensive. Spot is extremely cheap, which is why I try to get those before going to on-demand. Just to show you that you can reuse everything you know about EC2 and build clever monitoring and scaling strategies to automatically scale up and down when you need to. Thank you, Spot Instances. Thank you, Netflix as well.
+
+There's another way to do things that has nothing to do with containers at all. I see a lot of presentations where the first bullet point says microservices, and the second says Docker. Okay, fair enough. I agree, it's a good match. But you don't have to use Docker containers to do microservices. There's a really cool series of articles on the developer blog that shows how to build a microservice-based architecture using only the API Gateway and Lambda functions, doing service registration and discovery, and storing everything in DynamoDB. It's a super technical article, and all the code is in there. If you're interested in serverless, it's a clever way of doing it. I'm not saying it's production-ready, but it's a different way of looking at microservices. Maybe a combination of Docker and serverless is interesting to look at.
+
+If you want to know more, we have a series of articles from the CTO of Amazon on ECS, giving you more insight into how things work and why ECS is able to scale in linear time. We have some videos from re:Invent last year, which are still up to date and very interesting. If I remember correctly, this one is from Jerome Petazzoni from Docker, who talked at our conference. It's worth looking at, and the other ones are good too. These are just for reference if you want to look at Weave, Rancher, Consul, and Fabio. Final slide. We have user groups all across France. Obviously, there's one in Paris. I believe you guys are all from Paris, but if you ever move to a different place in France, it's more fun to be in those different locations than Paris anyway. If you have colleagues or friends in different locations, you can share with them the fact that we have user groups all across France now, with more coming. We have a group on Facebook as well, which is growing, and that's the official Twitter account for AWS. I'm done. Thanks a lot. You have my email and Twitter account. If you have any questions now or later, feel free to shoot me an email. If you're organizing other meetups and would like some kind of talk on something related to AWS, I'd be happy to talk about it. Just get in touch. Thanks again for inviting me. It was really cool. I hope you learned a lot of stuff, and thanks a lot.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS</span><span class="tag">ECS</span><span class="tag">ContainerOrchestration</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

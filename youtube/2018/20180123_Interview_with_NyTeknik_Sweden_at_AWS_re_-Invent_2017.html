@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview with NyTeknik Sweden at AWS re  Invent 2017</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interview with NyTeknik Sweden at AWS re  Invent 2017</h1>
+        <div class="date">January 23, 2018</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/rx_8MwE_tFY" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Discussion about AWS and Amazon AI
+
+<a href="https://www.nyteknik.se/play/vi-gor-inte-cool-teknik-vi-gor-teknik-du-behover-6886757" target="_blank" rel="noopener noreferrer">https://www.nyteknik.se/play/vi-gor-inte-cool-teknik-vi-gor-teknik-du-behover-6886757</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Well, I'm waiting for your questions. I've got nothing to say for my defense. Last year was already great, but this year, the amount of new launches is staggering. I didn't count them, but two things stick in my mind. There's all the AI and machine learning services, and I guess we'll get back to that. These are the shiny new things, and they're exciting.
+
+There are also some very fundamental services, like Aurora serverless. That's fantastic—the ability for customers to use a super scalable database without even starting clusters or instances, just on demand, like Lambda. Global tables for DynamoDB sound nice, but the significance is that this is the kind of problem the IT industry and database companies have been trying to solve for decades. Having globally distributed data with multi-master writes is the holy grail of distributed systems.
+
+And, of course, all the container stuff, EKS, so Kubernetes on AWS, is a big deal. According to a CNCF study, 63% of Kubernetes cloud workloads run on AWS. Fargate, fully managed containers, again, no instances, no infrastructure at all, just fire up your containers. This extends the serverless architecture model, allowing you to do in minutes what would have taken weeks before. We're quite proud to deliver all these new capabilities to customers.
+
+On the core infrastructure—compute, storage, databases—we keep innovating. Now you can do serverless compute, serverless storage (S3 has been around for a while), serverless databases, and serverless containers. Our obsession is to simplify things. You need storage, compute, databases, and containers, but we don't think there's any real value in customers building that stuff from scratch. Customers are asking us to free them from doing that. Serverless has evolved from managed services to full serverless propositions, showing exactly what customers want. We start from what customers want. There is no AWS vision; there are just AWS customers, and we listen to millions of them. We don't build technology because it's cool; we build what you need. If you needed one sentence to summarize what AWS is all about, that's it. We should have this on a t-shirt. No, seriously, it's exactly what we stand for. It's what we do every day.
+
+SageMaker will take a while for people to realize its full extent. You could look at it and say, "So what? Notebooks, training, deployment—we could do that before." But the big deal is it's all in one place. You can use one module independently or combine them for an end-to-end solution, from notebook to training to building and hosting the model, to A/B testing, etc. You can go from experimentation to production with the same set of tools.
+
+When it comes to the skills required, you could be a beginner with machine learning, pick off-the-shelf algorithms, and solve classification or clustering problems. You just throw your data at it, clean it, and run it through the algorithm. Job done. At the other end of the spectrum, if you're an expert, you can code everything yourself, use your own training and prediction libraries, and push it all into SageMaker for scalability and deployment. I'm very excited about this product. The ability to use deep learning is core to the product development process. Deep learning is about extracting features from data, which could be enterprise data, customer data, sales data, etc. It's key for improving products, and deep learning is great at finding features in complex, unstructured data, whether it's images, movies, sound, or enterprise data.
+
+AI is essential to pretty much every company. While many focus on chatbots, the real change will come from applying deep learning to enterprise data, realizing the wealth of information you've been sitting on. We provide tools that work for any skill level. If they're experts, they can go low-level; if not, SageMaker helps them. High-level services like Translate, Comprehend, Transcribe, and Recognition are also use-case centric and super easy to use.
+
+Before you even go into training and deep learning, you need the foundation infrastructure. Andy mentioned this, closing his machine learning part with a very pragmatic note. Machine learning is nice, but without the foundation, it's smoke and mirrors. Using S3 for your data lake, Aurora and DynamoDB for storing data, and other specialized backends is crucial. The shiny and exciting AI services will shine, but without the foundation layer we've built over ten years, they would be meaningless. You have to do your homework—collect, organize, secure, and encrypt the data—before you can pull it into AI and ML.
+
+If the question is whether we have 50 guys in a bunker working on this, who knows? I would be the last to know. My gut feeling is we spend a lot of resources on hardware innovation, and we know how to do that. We'll see what happens there.
+
+The last thing I want to say is that I'm not meeting any customer today who tells me this is a big thing for them. Trends are trends, buzzwords are buzzwords, but we focus on the customers. They're more interested in managing their data and doing machine learning and AI at scale with very little fuss. If quantum computing becomes a thing for our customers, we'll be there for them, as always. Thank you. Thank you.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS</span><span class="tag">Serverless</span><span class="tag">MachineLearning</span><span class="tag">SageMaker</span><span class="tag">DataInfrastructure</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

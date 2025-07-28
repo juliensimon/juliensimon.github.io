@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAWS Meetup 1 Lyon AWS Elastic Beanstalk   Julien SIMON</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LAWS Meetup 1 Lyon AWS Elastic Beanstalk   Julien SIMON</h1>
+        <div class="date">March 22, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/fdcuBCoeJ-E" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Julien SIMON, Principal Tech Evangelist nous présente le service Elastic Beanstalk</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Alors, juste avant d'attaquer, je vais repositionner Elastic Beanstalk dans la pléthore des services AWS. En fait, ce n'était pas du tout prévu, mais on va parler de deux services ce soir qui servent un peu à la même chose, et en tout cas à la même finalité. Là, vous avez toutes les grandes catégories des services AWS, je crois qu'il y en a 51 maintenant. Et dans la catégorie compute, on va trouver les services qui servent à déployer des applications. En fait, aujourd'hui, on a quatre façons de déployer des applications sur AWS. La première, que vous connaissez sans doute si vous avez déjà utilisé AWS, c'est EC2. C'est le service historique d'Amazon qui a été lancé en 2006, qui permet de déployer des machines virtuelles. Donc là, vous créez une VM, et puis vous avez la main dessus, vous pouvez installer des packages, configurer l'instance comme vous configureriez un serveur.
+
+Vous avez Beanstalk, qui est un service de type PaaS (Platform as a Service), qui va vous offrir un conteneur d'application. Cette application peut être PHP, Java, Ruby, etc. Vous allez déployer une application, donc si c'est du Java, vous déployez un JAR, si c'est PHP, vous déployez votre application PHP, etc. Le serveur est abstrait, la création du serveur et la vie du serveur sont abstraites par la plateforme. C'est un environnement sympa pour les développeurs et c'est un service très bien pour les débutants. C'est un très bon point d'entrée sur AWS parce qu'il cache un peu de la complexité qu'on peut ressentir quand on commence sur AWS. C'est pour ça que je voulais en parler ce soir.
+
+Donc, Lambda, qui est un service plus récent, permet carrément de déployer uniquement des fonctions, des petits bouts de code qui vont réagir uniquement sur invocation. Et puis ECS, dont j'ai déjà parlé à la terre entière, sauf à Rennes hier soir, j'étais trop malade, je n'ai pas pu y aller, donc il me reste Rennes. C'est le service de gestion de conteneurs Docker sur AWS. J'en ai parlé à Docker, je veux bien refaire une session un jour ici. Mes slides sont prêtes, y'a pas de problème. Je les connais par cœur, j'en rêve la main.
+
+Donc, ce qu'on va faire ce soir, on va vraiment partir de zéro. C'est de la live démo pure, donc on va espérer que les dieux seront avec moi et que mon cerveau fonctionne à peu près. On va faire un tout petit sondage : qui n'a jamais utilisé WDS ? D'accord, ok. Qui n'a jamais utilisé Pinstalk ? Du coup, allez même, ouais, plus. Ok, d'accord, bon. Alors, qui fait de la production sur Beanstalk ? Ah, d'accord, c'est cool. On va faire une application Rails, mais c'est vraiment... Pour ceux qui m'ont déjà vu, tout le monde sait que je suis un dieu du PHP, je suis aussi un dieu du Rails. Donc ça va pas voler très très haut. Ceux qui m'ont vu rigolent, ils savent le coup. Vous allez voir, c'est au moins aussi bien. Qui ne connaît pas du tout Rails ? Ok, c'est vrai. Vous en connaissez plus que plus.
+
+Donc, on va créer une mini-application. Le but du jeu, c'est de créer une mini-application de blog, de la déployer sur un environnement de dev, tout simple. On va montrer comment on déploie, comment on modifie l'application, comment on la redéploie, etc. Ensuite, on va créer un environnement de prod qui sera un peu plus complexe, avec de l'auto scaling, un load balancer, un back-end sur RDS (Relational Data Service, la base de données managée d'AWS) avec PostgreSQL derrière. On va voir comment on fait les deux environnements, on va voir le cycle de développement, tout en live. Je vais essayer de ne pas trop emmerder, et si vous avez des questions, s'il y a quoi que ce soit que vous ne comprenez pas, vous m'arrêtez. Je fais une session pour les 100% débutants, donc il faut que vous sortiez de là en ayant compris et en étant capable de le refaire.
+
+Avant de commencer, ne vous embêtez pas à noter quoi que ce soit, je posterai toutes les slides, toutes les moindres commandes que j'ai tapées, dans le meetup, dans le forum du meetup. Ok, on y va ? C'est parti. Alors, le premier truc qu'on va faire, parce que tant qu'à faire les choses bien, on va se créer un repository Git. Voilà. Je commence par ne pas parler d'Elastic Beanstalk, je commence par parler d'un autre service qui s'appelle CodeCommit. Quelqu'un connaît CodeCommit ? Bon, non, on est tous sur GitHub, mais ça ne se fout pas. Je sais, mais c'est pas grave. Donc, CodeCommit, je vais quand même vous le montrer, il faut que je fasse mon travail. C'est un Git Manager qui est hébergé chez nous, qui est peu connu parce que 1) c'est un service encore relativement récent et surtout 2) il n'est disponible que dans la région US West (Oregon) et US East (North Virginia). C'est pour ça que je suis passé sur North Virginia. Donc là, je suis plus sur la région US. Et donc, le repo que je viens de créer, d'accord ? Pour l'instant, il n'y a rien dedans. Donc, j'ai juste créé un repository que j'appelle "Blog", qui est dans la région US East, avec une description, et je récupère l'URL de clone SSH ou HTTP. Si vous voulez un repo privé simple, c'est bien d'avoir un truc privé aussi. Donc, voilà, on va le cloner.
+
+Alors, pourquoi je fais ça ? Parce qu'un des avantages d'Elastic Beanstalk, c'est qu'il est bien intégré avec Git et qu'il va être capable de gérer les branches et de faire tout ça. On va voir ça au fur et à mesure. On va commencer à faire du Rails. Voilà, donc je crée une application. Parce que ça, il va s'en jeter... Ah oui, on va pas faire ça alors... On va faire ça et on va faire ça... Ça marchera mieux... Ok... Julien ? Oui ? Tu peux remonter ta console s'il te plaît ? Tu vas battre ta console, tu peux la remonter ? Ah oui, tu vas battre ta console... Ah oui, tu vas battre l'écran... Merci ! Voilà... Ok, donc là, pour les gens qui connaissent pas, on a juste déclaré une nouvelle application. On va tester notre...
+
+Ok, bon, donc pour l'instant, on n'a pas fait grand-chose, mais on a posé les bases. On a dit que c'était un blog. On va ajouter une ressource, donc une ressource, c'est, pour faire très simple, un objet Rails, d'accord ? Donc, je crée un objet qui s'appelle post, qui va être un post de blog, ok ? Voilà, tout ça c'est du Rails. Les gens qui connaissent Rails, ils vont connaître ça par cœur. Voilà, je crée les objets dans la base de données. Et normalement, on va tester le repo. Ok. Bon, là, on va pouvoir lancer notre app en local. Voilà, magnifique, je vous avais dit que j'étais fort en Rails. Donc là, je suis en local, normalement je peux poster des trucs. C'est l'innovation. Très bien, pour l'instant, on n'a pas vu grand-chose de Beanstalk. On va commencer. Je vais revenir dans la console. Je vais laisser tourner mon petit serveur comme ça on verra mes modifs au fur et à mesure. Je vais le remettre au bon endroit.
+
+Donc, là, on a une API, c'est du Rails, mais à la limite, peu importe, si vous faisiez du PHP, du Java, du Node, ça serait exactement le même schéma. Le premier truc à faire, c'est de créer un environnement. Donc, créer un environnement, c'est créer une application. Créer une application, c'est simplement dire à Elastic Beanstalk : "Voilà, je vais initialiser une application que j'appelle blog, qui va être en Ruby." –p c'est une plateforme, donc si vous mettiez PHP, Java, c'est l'accessoire. Vous pouvez spécifier la version, par défaut, je crois qu'il prend la dernière version, donc là, ça va être Ruby 2.2, mais si vous voulez une version spécifique de Java, une version spécifique de PHP ou même de Ruby, bien évidemment, c'est là que ça se déclare. Et puis, on va lui dire qu'on veut la mettre dans la région Ouest. Pour l'instant, c'est vraiment juste déclaratif, je vais revenir dans ma région. Et je vois une application de blog, aucun environnement n'existe. Pour l'instant, on n'a rien déployé, on a juste dit qu'on allait avoir une application de blog.
+
+Alors, ça a fait quoi ? Ça a modifié Gitignore. Pourquoi ? Parce qu'il veut exclure les fichiers de configuration. C'est important, parce que c'est souvent dans ces fichiers-là que vous allez mettre des secrets ou des variables que vous n'avez pas envie de retrouver sur Git. Donc, c'est très bien que ce truc-là soit exclu. On va l'exclure. Magnifique. Voilà, on doit être à jour. Et donc, maintenant, on va créer l'environnement. Donc, un environnement, je vous montre la commande, je vais vous l'expliquer. Voilà. Je sens que ce truc-là est sur la figure. Ouais, c'est bon, c'est vrai. Je le gère.
+
+Donc, la commande create, le nom de l'environnement. Un environnement, c'est un ensemble de paramètres qui vont décrire l'environnement d'exécution de l'application. Par exemple, c'est là que vous allez dire si vous voulez que ce soit une single instance, une seule VM, un load balancer, une base de données associée à cette application, etc. On va créer plusieurs environnements, celui-ci est l'environnement de dev, ensuite on va créer l'environnement de prod qui sera plus bas. Donc, là, je dis « – – single », ça veut dire : "Tu me crées un seul serveur." C'est un serveur de dev, j'ai pas besoin d'avoir l'arsenal AWS, je veux un truc tout simple qui démarre après. Je donne le nom de la clé, c'est la clé SSH qui me permettra de me connecter sur l'instance. Et puis, je lui passe une variable d'environnement, c'est un truc de Rails, il a besoin d'avoir une variable qui s'appelle SECRET_KEY_BASE avec un token aléatoire pour chiffrer les cookies et autres. Donc, on va exécuter ce truc-là. Voilà, donc là, il a packagé l'appli, il fait un zip, il le copie dans S3, donc S3 c'est le stockage objet d'AWS, donc il le copie dans S3, et puis ensuite, il va le déployer. Donc, là, qu'est-ce qu'il va faire en gros ? Comme je lui ai demandé une single instance, il va me créer une instance, une machine virtuelle, il va installer dessus ce que je lui ai demandé, je vais avoir un Amazon Linux avec Ruby 2.0, et puis il va déployer mon app. Ok, vas-y.
+
+À quel moment tu as spécifié que cet environnement-là était pour l'appli blog ? Parce que j'ai fait le eb init. Juste avant. Ok, c'est-à-dire que si jamais le eb init, ça n'a pas qu'à créer, ça a aussi à changer d'environnement, de changer d'application. Ouais. Ok, donc là, ok, donc là, voilà, il crée une adresse IP, une élastique IP publique pour l'EB. Bon, voilà, donc j'adore le message "Save to control C" parce que c'est vrai qu'on hésite toujours. Donc, là, effectivement, si on l'arrête, on tue pas le démarrage. Si vous voulez savoir où vous en êtes, vous pouvez faire eb status. Et là, il dit : "Je suis en train de démarrer." Status Launching has Grey. Grey, ça veut dire, c'est moi quoi, c'est moi ce soir. On ne sait pas. Green, c'est tout va bien, Red, c'est non non non. Grey, c'est : "Attends deux minutes, on va te dire." Vous pouvez, quand vous avez plusieurs environnements, passer le nom de l'environnement, vous pouvez faire ça aussi. Il pourrait y avoir un environnement par développeur, et c'est tout. C'est bien, non ? Moi qui fais néant, j'adore.
+
+Donc, là, on voit, si je vois, je vais peut-être rafraîchir un petit coup, on va aller là dedans. Donc, là, sur la console, on a un peu plus de détails. On va aller dans Events, alors on va regarder Configuration pendant qu'il démarre. Donc, on va retrouver grosso modo ce qu'on a rentré, soit les choix par défaut. On voit s'il y a une single instance, la taille de l'instance, je lui ai rien dit, donc par défaut, il m'a mis t2.micro, c'est une petite instance, c'est suffisant, variable d'environnement, on voit le truc que je lui ai demandé de positionner, et puis data tier, je lui en ai pas demandé, donc il y en a pas. Ok ? Donc, ça, ça démarre tranquillement, et dans Events, on voit grosso modo ce qu'on voit dans eb status. Et si je vais voir ce qu'il se passe dans EC2... J'imagine qu'on voit une instance... Voilà, on voit l'instance qui est taguée avec le nom de l'environnement. Donc, il est en train de la démarrer. On va le laisser, on continue un tout petit peu, ça prend 3-4 minutes. Voilà, on va continuer. On va attendre que ça passe green. Quand il a créé la visite, il a pris ce qui était en vocal sur la machine. Alors, par défaut, il prend ce qui est commité. Donc, on va le faire après, on va faire des modifs. Quand on fait eb create ou eb deploy, qu'on va faire dans 30 secondes, il prend la version commitée. Ce qui est rassurant, c'est-à-dire que tu peux être en train de bricoler des trucs, il ne se passe pas grand-chose tant que tu n'as pas commité. Il y a une option qui s'appelle –stage qu'on va voir, qui permet de déployer ce qui est stagé, ce qui a été stagé par git add. On va le tester tout de suite.
+
+Est-ce qu'il y a des green ou pas encore ? On va modifier le fichier. Donc, il utilise la branche commande quand on fait une branche ? Oui, il prend le head, par défaut, il prend le head. Et on peut lui dire de prendre une branche, je pense que oui, mais ça dépasse les annonces à l'heure, donc on va éditer un truc. C'est merveilleux, on va changer le titre. Comme je suis hyper inspirant, voilà. On va vérifier en local, ça marche, on a changé le titre en local, tout va bien. Ah, Launching, Green. C'est pas encore tout à fait ready, mais ça arrive. Bon, ça c'est le temps de démarrage de la VM, en plus c'était t2.micro, c'est pas les plus rapides. Voilà, Running, ça devrait être bien. Alors, Else, OK, ça c'est bien parti. OK. Là, on doit être bien, donc je dois pouvoir le connecter sur ce truc-là. Donc, là, je suis sur mon instance de dev, là, je suis plus en local, on est d'accord. Donc, on va faire exactement ce qu'on disait. Donc, là, j'ai fait une modification de fichier, je l'ai testée en local. Bon, là, si je fais, alors la commande qu'il faudrait faire, c'est eb deploy. Si je la fais, il ne se passera rien, enfin, ça va redéployer la même chose, parce que ma modification n'est pas stagée. Donc, si je fais git add, là, elle est stagée, donc si je fais deploy au moment staged, là, ça passe. Si je fais un deploy tout seul, il ne se passera rien. Bon, on va la coller. Non, pas de vie pour le moment, il déploie des fois à partir de la place à la plus rapide, parce que l'instance est déjà créée. Voilà, ça doit être rapide. Donc, voilà, le cycle de développement. Une fois que l'environnement est créé, vous voyez l'environnement single instance comme ça, ça paraît toujours long quand on le fait comme ça, avec, on regarde l'écran, mais c'est 3-4 minutes, et puis après, le deploy est rapide. Vous pouvez intégrer ça facilement dans l'intégration continue, tout ce que vous voulez. C'est tout ça, j'ai vraiment volontairement voulu tout faire en ligne de commande ce soir pour vous montrer que c'est scriptable. Voilà, donc, si je me reconnecte là-dessus, voilà, mon petit truc en local, vous voyez, c'est bon, on pourrait continuer comme ça des heures.
+
+Au niveau de la zone, c'est pas dans les bras de mans ou qu'est-ce que tu es tant d'entraînés là, ça choisit l'Irlande, c'est parce que c'est déjà configuré. C'est au moment où tu crées la pluie, tu dis : "Je la mets dans cette fenêtre." Oula, il y a du son ! Non, ça ne marche pas. Ok ? Bon, donc, voilà. Donc, franchement, je trouve que... Pour un dev, c'est un service sympa parce qu'on arrive à déployer son appli, on ne se pose pas vraiment de questions d'infrastructure. Alors, il y a une question à laquelle je n'ai pas répondu quand même, c'est si je poste là... Bon, là, je suis sur un truc. J'écris en base, mais laquelle ? Parce que j'écris pas dans RDS là, effectivement. Bon, alors, j'écris dans SQLite, qui est la base par défaut sur Rails. J'écris en local, dans un fichier. Donc, pour ne l'apprendre, on est d'accord que c'est inacceptable. Pour faire du dev ou pour bricoler, c'est bien suffisant. Mais c'est bien. Et ce qu'on a envie de faire, c'est de faire avoir une vraie base. Donc, on va faire ça. Donc, on va se créer une branche de prod. Je vais cocher trois fichiers, je vais expliquer après. Donc, là, j'ai fait trois choses en fait. Dans le Gemfile, je lui ai dit : "Simple. Et voilà, t'es gentil, effectivement, pour le dev, je reste sur SQLite, par contre, pour la production, je veux Postgres." Donc, là, ça te dira à Rails maintenant tu utilises Postgres pour faire tes requêtes. Donc, ça c'est dans le Gemfile, c'est pour qu'il installe la gem Postgres. Ensuite, j'ajoute ça. Ça, ce sont les variables d'environnement pour que l'appli Rails puisse se connecter à la base, donc la base, le username, le password, etc. Ces valeurs-là, elles vont être positionnées automatiquement par Beanstalk. Et quand Beanstalk va créer l'instance RDS, il va automatiquement injecter ses variables d'environnement dans l'application. Et encore, faut-il que je lui donne le nom des variables, et c'est dans ce switch-y-là que je le fais. Et le dernier truc que je suis obligé de faire, c'est d'installer sur l'instance le package Postgres 9.4 qui est le client Postgres. La gem PG, elle s'appuie sur ce package. Donc, entre parenthèses, dans EB Extension, bon, là, j'ai pas le temps d'en parler ce soir, puis c'est des sujets un petit peu plus avancés. EB Extension, c'est ce qui va vous permettre de configurer, d'ajouter dans votre appli et de configurer d'autres services à AWS. Par exemple, si vous voulez intégrer votre app avec ElastiCache ou des choses comme ça, vous allez le faire avec EB Extension. Ça vous permet d'intégrer facilement tout un tas d'autres services autour de votre application. Donc, ça c'est de la config, enfin, la doc est plutôt bien faite là-dessus, il n'y a pas de difficulté. Voilà, donc, là, tout ça c'est juste pour dire, voilà, j'ai modifié mes trois fichiers, c'est juste pour dire maintenant sur l'environnement de Prod, on passe sur Postgres et voilà. Donc, je vais committer ça. Ok.
+
+Voilà, bon, là, maintenant, on va pouvoir créer l'environnement de Prod. Alors, là, je vais créer un environnement le plus riche possible. La commande est assez longue. Un truc dont je vais avoir besoin, c'est mes subnets. Parce que je veux pouvoir créer un environnement avec de la haute dispo pour les instances, pour RDS, etc. Donc, j'ai besoin d'avoir les identifiants de mes subnets. Donc, il y a une commande qui est simple, que vous connaissez peut-être, qui est AWS EC2 describe subnets, ce qui me donne les sous-réseaux qui sont disponibles dans mon VPC, dans mon réseau privé. Donc, là, le champ qui m'intéresse, c'est ça, subnet ID, les trois qui sont là. Ok, donc, histoire de me simplifier la vie, je vais mettre ça dans une petite variable d'environnement. Et voilà, la commande qui pique les yeux. Donc, eb create, blogprod, ok, donc là, je crée mon environnement de prod, la clé toujours la même, l'identifiant du VPC. Donc, l'identifiant du VPC, d'accord ? Donc, le VPC, c'est Virtual Private Cloud, c'est le réseau privé à l'intérieur du cloud d'Amazon dans lequel vous exécutez vos instances. Là, je dis que je veux un load balancer qui va être public. D'accord ? Je veux qu'il ait une adresse IP publique pour avoir un ELB qui ne soit pas public, qui soit un load balancer interne à la plateforme. Et là, l'objectif, c'est de load balancer nos services. Voilà, donc, je veux que les instances aient elles aussi des IP publiques. Là, je vais donner les subnets, d'accord ? Pour le load balancer, pour les instances et pour la base de données. Je lui donne les trois subnets comme ça, il est capable de lancer dans les trois, ce qui me permettra d'avoir de la haute dispo. Je lui donne le type d'instance que je veux pour mon appli Rails. Donc, là, c'est de la prod, donc je mets une plus grosse instance, M4 large, c'est déjà pas mal. Je lui dis qu'il faut me créer une base de données au passage, d'accord, donc DatabaseEngine Postgres, la taille de l'instance, pareil M4 large, la taille de la base, 5 giga, le username de la base, le password, et puis toujours la secret key base pour valider. Donc, ça, voilà, c'est une commande qui est plus compliquée, mais vous voyez qu'on peut avoir, là, il faut bien voir qu'en une commande, on va créer un load balancer, un groupe d'auto scaling pour l'appli Rails. Donc, je crois que par défaut, c'est de 1 à 4 instances, mais c'est paramétrable aussi. Donc, on crée un groupe d'auto scaling et on crée une base de données. D'accord ? En avant.
+
+Alors, là, je vais être obligé de tricher parce que ça, ça prend entre 20 et 25 minutes. D'accord ? Donc, l'environnement tout simple, il prend 5 minutes, là, il prend 25 minutes. Donc, on va le laisser tourner, parce que là, il y a beaucoup de choses à créer. Pour ceux que ça intéresse, évidemment, c'est un template de CloudFormation. J'ai vu dans le résumé de la création, CNAME, ça veut dire qu'on peut aussi dans la commande lui donner l'alias du chemin d'accès ? Non, lui va fixer un CNAME. C'était marqué au nom ? Oui, parce qu'il ne l'a pas créé, il le crée à la fin. Donc, il va créer un CNAME là en l'occurrence pour le load balancer. Et après, évidemment, si c'est de la prod, l'objectif, c'est que tu mettes un CNAME www.monappli.com. Donc, alors, il est là. Donc, si tu as envie de te faire un peu de mal à la tête, oui, il est là. Faut aimer le JSON, hein, faut aimer ça. Mais en plus, là, c'est hyper mal formaté, mais avec un éditeur un peu plus JSON friendly. Mais bon, il n'y a pas de magie quoi. C'est-à-dire que quand tu vas le regarder, tu vas voir ce qu'on fait. On crée une launch configuration, un auto-scaling group, un ELB. Voilà, c'est toujours les mêmes concepts qui sont en dessous. Voilà, donc, là, ça va tourner. Et si je regarde, si je reviens dans mon environnement ici... Voilà, il est en train de le créer, mais là, ça prend un petit peu plus de temps. C'est la création de la base de données qui est longue, d'autant plus qu'à la création de la base de données, il y a un backup. Alors, vous allez me dire, c'est un peu idiot parce qu'elle est vide. C'est comme ça. Il backup tous les objets d'emblée. Ça, ça fait perdre entre guillemets cinq ou six minutes. Alors, je l'avais préparé à l'avance. Alors, je peux vous montrer... Je l'ai fait hier, hier ou avant-hier ou je ne sais plus quand. La notion du temps est un peu perturbée. Ouais, non, mais il manque le jour, non non. J'ai été kidnappé par les extraterrestres. Donc, je l'avais lancé à 15h09 et ça s'est terminé à... 15h32, voilà. 23 minutes. Donc, ce que ça nous donne à la fin... Donc, on a un environnement, regardez la config, voilà, donc, on a un environnement qui est autoscalé de 1 à 4 avec un load balancer, je crois qu'on doit pouvoir voir son petit nom là, on va vérifier que ça marche toujours, ça marche toujours, ok. Voilà, mon instance M4 large, qu'est-ce qu'il y a d'autre ? Et puis ma base de données, ok. Load balancing, voilà, donc, on est load balancé sur le port 331, blablabla, je vois tous mes subnets, ok. Et puis je vois ma base de données. C'est chiant. Donc, bon, la commande est un peu plus compliquée, on est d'accord, en 20 minutes, vous créez un rêve pour les gens du siècle dernier comme moi qui faisait ça à la main. Oui, voilà, alors, après, avec Vagrant, VirtualBox, et ça en faisant 10 minutes aussi, ok, mais bon, provisionner des serveurs scalable, load balancés, avec une base de données redondée, parce que la base de données là, je ne sais pas si je l'ai mise en multi-AZ, bref, je trouve qu'en 20 minutes, on en a pour notre âge.
+
+Alors, j'ai presque terminé, je vais juste vous montrer un vrai petit truc, c'est qu'évidemment, en dessous de tout ça, certes, c'est un service PaaS, mais en dessous de tout ça, on va retrouver les services qu'on a l'habitude de retrouver. Donc, on va retrouver EC2, voilà, mon instance EC2. Voilà, donc, là, je suis bloqué. Bon, si vous n'avez pas envie de le faire, vous ne le faites pas, mais vous avez toujours la main sur vos instances. D'accord ? Donc, là, il vous dit, voilà, cette instance EC2 est managée par Elastic Beanstalk, changes made by SSH will be lost if the instance is replaced by Autoscale. Ok, très bien, merci. Enfin, en attendant, voilà, je vois ce qui se passe là-dessus. Ok, donc, c'est une instance. Magnifique. Je dois même pouvoir me connecter sur ma base de données. Est-ce qu'on a posté des messages sur le blog ? Alors, là... Ah, on a une BDM. Donc, voilà, on retrouve dans la console EC2 tout ce qu'on a l'habitude de voir quand on fait du EC2. Et si on va dans la console RDS, ça va être un peu pareil, on va retrouver l'instance, on va trouver son petit nom, on va se connecter dessus. Alors, ça doit être celle-là. Et donc, la commande de la mort. Si j'arrive à la faire du premier coup, 5432. Non, je ne vais pas t'entendre. Ouais, c'est ça, moins grand-tu. Je pense que c'est bon. Bon, superbe pince. Donc, là, on doit avoir une table post. Magnifique. Ouais, ouais. Donc, vous avez toujours la possibilité d'accéder à votre base, de faire des backups, de faire ce que vous voulez pour injecter des données. Simplement, vous avez aussi la simplicité de déployer sans trop de complexité vos appuis. On va refaire un petit deploy juste pour voir.
+
+Ah oui, RailsBlog, c'est ça. Ok, on est sur la branche de Prod. Ok, on va faire... Ok, et donc, si on fait eb deploy, alors, regardez nos environnements parce qu'il y a plus de routes. Ok. On va tenter le deploy généralement du monde ouais, si on fait assez vite, ça marche parce qu'après, il vous dit non en gros le machin est pending, il faut attendre, merci. Donc, alors, on va voir aborti, mais tant que c'est green, ça va, ça veut dire que le truc répond. C'est vrai, c'est vrai, je ne l'ai pas commité. Et bien, du coup, on va tester le stage, tiens, on va le laisser revenir dans l'état normal, ready green, ok. Ah, et donc, si on le fait vite, ça va. Hop. Voilà, et donc, là, si je fais ça... Normalement... Normalement, ça se fait... Oui, alors, ça aussi, il est toujours en train de créer l'autre environnement, mais quand parfois c'est un peu long, il me dit... Ah... Mais c'est rien, il tourne encore. Voilà, launching. J'ai une autre question. Il y a un petit code deploy, j'imagine. Alors, quand tu déploies, est-ce qu'il y a une couverture de service si tu as plusieurs instances ? Alors, ça, c'est une bonne question. Alors, ça y est, il a fini, on va juste vérifier. Ok, voilà. Donc, le –staged, c'était l'occasion de le montrer. Alors, tu peux contrôler ça, la politique de déploiement, c'est ça. Update and deployments. Bon, alors, quand il n'y a qu'une instance, on se doute qu'il y a un moment quand même où même si ça va très très vite de faire stop start, il peut y avoir une petite coupure. En multi-instance, tu peux lui dire de faire des rolling updates, tu fais un par un ou 30% pas plus, tu peux contrôler ça. Donc, du coup, voilà, tu peux lui dire qu'il doit toujours y avoir au minimum x instances en service. Ça c'est assez cool, parce que ça c'est vraiment quand on fait du déploiement, c'est vraiment pénible à gérer. Le load balancer, il va automatiquement laisser de côté ceux qui sont en train de se mettre à jour ? Ou alors, il va quand même... Est-ce qu'il les sort ? Alors, est-ce qu'il y a le connection draining là-dessus ? Il faut que je vérifie. Je ne veux pas faire appel à mon téléphone. Je ne veux pas faire appel à l'occasion. En tout cas, on peut contrôler ça. Et il y a un autre truc qui est super sympa. C'est ce petit bouton là qui a l'air de rien. Soit QRS. Qui permet de faire du déploiement Blue/Green. C'est ce que fait Netflix en gros, c'est de dire : "Je reconstruis tout, j'ai la version n, je veux tester la version n+1, je reconstruis tout en version n+1, je teste, quand je suis convaincu que ça marche, et bien, je bascule sur n+1 et je tue n." Et donc, avec ça, c'est assez facile à faire, de se dire, vous créez votre nouvel environnement, pour le faire, il suffirait que je fasse un eb create blog-prod-2, je recrée un environnement, tu peux cloner aussi, ouais, on peut cloner. Donc, je recrée un environnement, je déploie ma version code, j'ai mes URL, j'ai mes CNAME, je fais mes tests, et puis quand je suis OK, le CNAME interne, on regarde, mais par contre, dans votre DNS, vous voyez dire, soit vous le changez dans votre DNS, soit vous le changez là, mais hop, vous faites l'échange entre les deux CNAME, et puis vous basculez dans l'environnement sur votre compte. Et ça, pour le coup, ça, c'est instantané. Donc, c'est un moyen assez sympa de faire les déploiements. Bon, il y a plein de trucs, il y a plein de trucs qu'on peut faire sur Beanstalk, mais je pense que je vais m'arrêter là parce que je suis en train de perdre ma voix, c'est bon que je m'arrête. Bon, alors, on va juste regarder où il en est, ça fait bon, voilà, encore en train de tourner, ça ne doit pas tout à fait faire maintenant. Voilà. Je vais juste un tout dernier petit truc à vous dire. Donc, voilà, pour Beanstalk. Je vous encourage à l'essayer, c'est un service qui est vraiment sympa, c'est un bon point d'entrée pour AWS, parce que vous voyez, il n'y a pas besoin de connaître grand-chose en fait pour démarrer. Et puis, quand on regarde ce qui se passe en dessous, on commence à rentrer un petit peu, on commence à rentrer un petit peu dans l'RDS. Donc, c'est un bon prétexte pour commencer à jouer avec AWS et commencer à regarder ce qui se passe. Merci beaucoup, merci de m'avoir supporté, je n'ai pas été brillant ici, mais c'est pas grave, au moins j'ai été là. N'hésitez pas, pour ceux qui ne le feraient pas encore, à nous suivre sur Twitter, si vous voulez être au courant de tous nos événements, c'est vraiment le meilleur moyen de le faire. D'ailleurs, il faudrait qu'on ait un compte en bleu et c'est bon aussi. Voilà, donc, ça c'est les prochains événements où on sera. On ne sait pas encore si on sera à d'autres événements, c'est un peu un suspense. Et aussi à Paris, je vous encourage encore et toujours à venir au summit le 31 mai, qui durera deux jours, ou pas, c'est un suspense. Pour l'instant, c'est un événement gratuit, vous avez juste le TGV éventuellement, mais bon, vous pouvez faire le tour du jour si vous voulez progresser sur AWS. Les user group, on en a déjà parlé. Voilà, merci beaucoup, désolé pour la voix.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">ElasticBeanstalk</span><span class="tag">AWS</span><span class="tag">DevOps</span><span class="tag">RubyOnRails</span><span class="tag">CloudFormation</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

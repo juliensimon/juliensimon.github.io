@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infrastructure as Code avec AWS par Julien Simon</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Infrastructure as Code avec AWS par Julien Simon</h1>
+        <div class="date">May 02, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/4j_KvyLVNfg" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Meetup Toulouse DevOps du 24 février 2016 avec la présence de Julien Simon, Technical Evengelist chez Amazon.
+<a href="http://www.meetup.com/fr-FR/Toulouse-DevOps/events/228608050/" target="_blank" rel="noopener noreferrer">http://www.meetup.com/fr-FR/Toulouse-DevOps/events/228608050/</a>
+
+Les slides de Julien sont disponibles ici:
+<a href="http://www.slideshare.net/JulienSIMON5/aws-cloudformation-february-2016" target="_blank" rel="noopener noreferrer">http://www.slideshare.net/JulienSIMON5/aws-cloudformation-february-2016</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Merci d'être venu. On va attendre les derniers retardataires. On n'est pas en retard, mais pas loin. Julien nous avait contactés avant Noël pour vous proposer de vous parler d'un sujet qui est assez au cœur des problématiques d'evox. Nous avons accepté avec joie. Julien travaille chez Amazon Web Services, il était auparavant CTO chez Viadeo, où il s'est occupé de la migration vers AWS. On va en parler un peu, et aujourd'hui, il va nous parler de CloudFormation. Bien sûr, s'il y a des questions, on en parlera aussi. Merci beaucoup. Je suis très content d'être à Toulouse. Je crois que je n'y suis pas venu depuis 248 ans. Je suis bien content de voir qu'il y a une troupe DevOps, et même des femmes DevOps. Personnellement, je n'avais jamais vu ça. Je vous prendrai en photo à la fin pour montrer à mes collègues que ça existe. Non, mais c'est l'élite. Vous êtes peu nombreuses, mais de très bonne qualité. Voilà, blague à part. Je suis content d'être là.
+
+Alors, effectivement, on va parler de CloudFormation. Avant de commencer, je voudrais faire un petit sondage pour savoir qui est dans la salle. Qui n'a jamais utilisé AWS au-delà d'un mini-tuto ? Qui considère qu'il est ou qu'elle est totalement débutant sur AWS ? Deux tiers. Ok. À l'autre extrémité, qui bosse au quotidien sur AWS ? Qui est client ? Qui fait de la prod ? C'est un petit groupe. Ok, d'accord. Qui a déjà fait de l'automatisation d'infra avec Chef, Puppet, Ansible, Terraform ? D'accord. Ok, donc il y a des gens pour qui l'automatisation… Ok, c'est aussi un nouveau sujet. Pas de problème, très bien.
+
+On va parler de CloudFormation. J'ai quelques slides de présentation pour poser le contexte. Ensuite, on allumera la console et on verra ce qu'on peut faire avec cette technologie. Et quand tout le monde aura mal à la tête avec les fichiers JSON, on arrêtera. L'objectif pour ce soir est que vous sortiez d'ici en ayant compris ce que fait CloudFormation, à quoi ça sert, à quoi ça ne sert pas, et surtout, que ceux qui ne connaissent pas du tout AWS aient une première vision. N'hésitez pas à m'interrompre. Je vais essayer de ne pas faire trop de jargon, de ne pas aller trop vite, et de ne pas vous perdre. Si vous ne comprenez pas un concept, un acronyme, ou quoi que ce soit, arrêtez-moi. Si vous avez des questions, posez-les, ne les gardez pas pour la fin. Il y a une présentation, mais on s'autorise à dévier au fil des questions. Je souhaite que ce soit interactif.
+
+Je mets toujours ce slide pour commencer parce que parfois on me pose la question. Si vous avez envie de prendre des photos, de tweeter, faites-le avec plaisir. Il n'y a rien de secret dans cette présentation. Je posterai les slides sur le groupe du meetup ce soir, si je ne suis pas trop fatigué. Vous aurez toutes les slides et toutes les commandes que je vais taper, dans ce que j'appelle les bonus slides. Donc, si vous n'avez pas eu le temps de recopier ou de prendre des notes, vous aurez tout. Détendez-vous, concentrez-vous sur ce que je raconte, et les notes et les commandes vous les aurez.
+
+Si vous voulez me suivre ou suivre AWS sur Twitter, pourquoi pas ? C'est une façon de savoir ce qui se passe chez nous, sur les annonces produits, et surtout sur les événements. À chaque fois que je prends le métro pour aller à un meetup, vous serez au courant. Ou l'avion, ou le TGV, ou tout autre moyen de transport nécessaire. Si vous voulez rester au courant de ce qui se passe chez nous et des événements auxquels vous pouvez assister, c'est une bonne solution de nous suivre. Si vous vous intéressez à CloudFormation et que vous voulez suivre ce qui se passe, le hashtag est celui-là.
+
+CloudFormation est un service relativement ancien chez AWS, lancé en 2011. Au fil du temps, il s'est imposé pour l'automatisation chez les clients et au sein d'AWS. On verra plus tard que quand vous utilisez d'autres services d'AWS, vous interagissez avec CloudFormation. C'est un service interne à la plateforme et utilisé par les clients. À quoi ça sert ? C'est un service fondamental, au cœur de la plateforme. Le but de CloudFormation est simple : automatiser la création de ressources d'infrastructure. Quand vous utilisez la console AWS, c'est interactif, vous pouvez cliquer partout, lancer des instances, créer des bases de données, utiliser tous les services. Mais c'est manuel. Pour le prototypage, c'est sympa. Pour le développement individuel, pourquoi pas ? Mais pour la production, c'est embêtant. Il est difficile de savoir qui a cliqué sur quoi, quand, et quel est l'état exact de la configuration. Comment la reproduire ?
+
+C'est la même discussion qu'avec Chef ou Puppet pour l'automatisation de services et d'applications. On veut pouvoir décrire de manière structurée la configuration de l'infrastructure, la versionner, l'auditer, la tester, l'archiver, et la rejouer autant de fois que nécessaire. L'entité de base dans CloudFormation, c'est le template, un fichier texte au format JSON. C'est un fichier qui décrit la configuration. On verra plein d'exemples. C'est ça qui va vous donner mal à la tête. Une fois que ce fichier est uploadé sur la plateforme, il est exécuté, même si ce n'est pas un script. C'est un document descriptif, pas une série de commandes comme en Python ou Bash. Ce fichier est interprété par la plateforme, et toutes les ressources décrites sont créées.
+
+Le principe est simple. Vous prenez votre éditeur de texte favori, vous écrivez un template, vous le sauvegardez, vous le versionnez, vous le mettez dans Git. Vous pouvez le sauvegarder localement ou dans S3, le service de stockage objet d'AWS. Ensuite, vous l'envoyez à CloudFormation, soit dans la console, soit avec notre ligne de commande. Vous lui dites d'exécuter ce fichier, et il construit toutes les ressources demandées en quelques minutes, selon la complexité du template.
+
+L'objectif est de passer de ça. J'ai fait ça pendant 10 ans. Le problème, c'est de décrire l'état de cette infrastructure, surtout quand vous voulez en créer plusieurs copies identiques dans différentes régions. L'objectif est d'avoir une description structurée de toutes ces ressources, de pouvoir les rejouer à volonté, de les paramétrer. Cela nous amène au concept d'infrastructure as code, qui consiste à traiter l'infrastructure comme du code. On veut avoir la même agilité sur l'infrastructure que sur le code. On fait tous de l'agile, des sprints, de l'intégration continue, du déploiement continu. Mais à la fin, il faut des serveurs. Avec le cloud et cette technologie, on peut avoir la même agilité.
+
+Ces templates peuvent être archivés, travaillés de manière collaborative. C'est du code, donc tout ce que vous faites sur du code, vous pouvez le faire sur ces templates. Vous pouvez les versionner, archiver, partager, travailler dessus en équipe. Vous pouvez les tester, faire de l'intégration continue et du déploiement continu. À chaque modification d'un template, vous pouvez exécuter des tests unitaires. Vous pouvez vérifier, par exemple, que vous n'avez pas ouvert un port qu'il ne fallait pas. On peut faire de l'intégration continue et du déploiement continu sur l'infrastructure. On verra comment mettre à jour une stack créée. Et surtout, on peut déployer ces templates encore et encore, n'importe où, dans n'importe quelle région AWS.
+
+Combien de fois a-t-on demandé un environnement de développement avec un web, un MySQL, et un cache, puis une pré-prod, une intégration, et finalement deux intégrations ? On se retrouve souvent à construire 4 ou 5 fois la même chose. Avec des serveurs physiques, on fait vraiment 5 fois la même chose. Avec l'automatisation, on ne veut pas refaire 10 fois les choses. On veut un template qui décrit cette infrastructure et qu'on peut rejouer rapidement et autant de fois que nécessaire.
+
+Les grands cas d'usage incluent l'utilisation interne par AWS pour différents produits. Si on a le temps, on lancera une application Elastic Beanstalk, qui s'appuie sur CloudFormation. ECS, le gestionnaire de clusters Docker, utilise aussi CloudFormation. Un autre cas d'usage est la capacité à copier-coller des environnements rapidement. Vous décrivez votre stack LAMP ou autre, avec une architecture toujours la même, et ce qui change entre les environnements, c'est le sizing. Pour le dev, vous aurez peut-être un serveur web et une base, pour la pré-prod, quatre de chaque, et pour la prod, huit de chaque. Tout cela est géré dans un template avec des paramètres, et un unique template permet de créer tous ces environnements.
+
+Il y a les déploiements géographiques. Vous décidez de lancer une stack en Europe, et vous avez besoin de la même infrastructure aux US. En changeant un paramètre dans la commande, vous la lancez aux US. Il y a aussi les déploiements green-blue. Vous connaissez ça ? Pour simplifier, Netflix appelle ça Red Black. Vous avez une plateforme de production qui tourne avec la version N, et la version N+1 arrive. Normalement, on pourrait faire une rolling upgrade, mais si des changements de base de données sont brisants, c'est compliqué. Une autre façon de faire est de dupliquer la prod. On recrée une deuxième prod à côté, on déploie la version N+1, on la teste, et quand on est convaincu, on bascule sur l'autre environnement. Cela permet de minimiser le risque de déploiement.
+
+Il y a aussi le scénario de disaster recovery. Si une catastrophe survient, comme un incident dans une région AWS ou une fausse manipulation sur la prod, vous pouvez relancer vos stacks et recréer votre infrastructure rapidement. Voilà, ce sont les grands scénarios d'utilisation de CloudFormation.
+
+J'ai travaillé chez Viadeo avant de rejoindre AWS, où j'étais CTO et j'ai mené la migration vers AWS en utilisant 100% de CloudFormation. Avec mon collègue Antoine, nous avons présenté cette expérience à Velocity. La vidéo et les slides sont en ligne. Si vous voulez plus de détails, vous pouvez les regarder. Viadeo avait une infrastructure d'environ 250 serveurs, avec beaucoup de back-end, de MySQL, de HBase, de Hadoop, et d'Elasticsearch. Nous avons templatisé presque tous ces services, réécrit des templates HBase, MySQL, etc. La templatisation était terminée quand je suis parti, et la migration était en cours. Si vous voulez plus d'infos, envoyez-moi un mail. Si vous êtes dans du CloudFormation ou des migrations, je peux vous mettre en contact avec Antoine.
+
+Un template est un fichier JSON structuré. La version du template n'est pas très importante. La description est utile pour savoir de quoi il s'agit. Les métadonnées sont moins importantes. Les sections importantes sont les paramètres, les outputs, les mappings, les conditions, et les ressources. Les paramètres sont des champs que vous renseignez au moment de la création de la stack, comme la taille d'instance, le nom de l'environnement, etc. Les outputs sont des résultats, comme l'adresse IP d'un serveur web ou le CNAME d'un load balancer. Les mappings sont des tables de référence pour les types d'instances, les noms des AMI. Les conditions sont des actions qui doivent être satisfaites pour que certaines ressources soient créées. Les ressources sont les infrastructures que vous allez lancer, comme des bases de données, des instances, des règles de firewall, etc.
+
+Il est difficile de dire si 100% des objets AWS sont supportés par CloudFormation, mais on n'est pas loin. Les services de base comme EC2, les bases de données, et S3 sont bien supportés. Il y a une documentation complète qui indique ce qui est supporté. Les templates peuvent devenir volumineux, avec une taille maximale. Pour des infrastructures de taille, vous pouvez imbriquer des templates. Par exemple, une stack de haut niveau peut lancer des stacks imbriqués. Il faut trouver un équilibre entre la maintenabilité et la lisibilité.
+
+Les paramètres, par exemple, peuvent être de type string, avec une valeur par défaut et une description. Pour créer une instance, vous spécifiez l'image ID et le type d'instance, en faisant référence à un paramètre défini. Les mappings sont des clés-valeurs pour les régions et les AMI. Les conditions permettent d'avoir de la dynamicité, comme des règles de firewall différentes selon l'environnement.
+
+Quelques conseils : ne partez pas de zéro, utilisez des templates existants, soyez prudent avec les stacks imbriqués, utilisez des paramètres pour rendre vos templates génériques, et mettez des tags sur vos ressources pour les tracer facilement.
+
+On va passer à la démo. On va commencer par du très simple : créer une stack avec une instance, l'update, et la delete. On verra la ligne de commande et la console. Si on a le temps, on créera un VPC, un réseau privé virtuel, avec des subnets et des tables de routage. On créera aussi une stack LAMP, avec un web, un MySQL, etc. Si on a encore de l'énergie, on fera ce que j'avais dit tout à l'heure. Dites-moi si c'est trop petit. Bon, et la console, ça va ? Oui ?
+
+Alors, voilà la console. J'ai déjà quelques bêtises dedans, mais ignorez-les. On va commencer directement par le template 1, ça me paraît bien. Ok. Ça va ? On va retrouver ce qu'on voyait tout à l'heure. La version, ce n'est pas le plus dur. Une description. Le fameux mappings, que vous verrez systématiquement. Cela sert à définir la référence de l'AMI, donc de la VM Amazon, que je veux lancer en fonction de chaque région. AP pour Asie-Pacifique, EU pour Europe, et US pour les États-Unis. Cette image est spécifique à la région. Donc, en fonction de la région où je vais lancer mon instance, j'ai besoin d'un paramètre avec une valeur différente. Voilà ce tableau. Et donc, pour les ressources, je vais créer une instance EC2. Cette instance a des propriétés. Je devrais peut-être vous montrer la documentation au passage, car tout cela n'est pas inventé. Pour chaque ressource, vous avez toutes les ressources et objets d'infrastructure qui existent dans AWS. En l'occurrence, l'instance aura un tas de propriétés, dont très peu sont obligatoires. C'est pour cela que cela semble énorme, mais en pratique, il y en a deux ou trois qui sont strictement obligatoires. La documentation est votre amie, c'est bien fait. Il y a peu de propriétés requises, et beaucoup de valeurs par défaut.
+
+Quand vous voulez créer un objet, une instance EC2, le premier truc à faire est d'aller voir la documentation pour savoir quelles sont les propriétés que vous devez ajouter à cette ressource, lesquelles sont obligatoires, lesquelles ne le sont pas. Là, j'ai deux propriétés. Je vais chercher la référence de l'AMI en fonction de la région dans laquelle je vais lancer cette instance. Si ma région est eu-west, je vais chercher cette valeur. Et puis, j'ai le type de l'instance et sa taille. Pour ceux qui connaissent un peu AWS, il y a de nombreuses tailles d'instances, chacune avec des caractéristiques CPU, RAM, I/O, etc. Je précise que c'est une instance EC2. C'est vraiment un template tout simple. Il faudrait mettre une clé SSH pour pouvoir se logger dessus. Il manque des trucs, mais l'objectif n'est pas de faire un SSH, c'est de vous montrer un template basique.
+
+On va le faire d'abord avec la console, puis avec la ligne de commande. Donc, on va créer une stack, choisir un template. Si votre template était déjà dans S3, très bien, mais ce n'est pas le cas ici, donc template 1. Next. Stack name, on va l'appeler template1. Je ne suis pas très inspiré. Template1 console. Next. On pourrait mettre des tags, on va en mettre un. Advanced, on pourrait avoir plein d'options, mais on ne va pas le faire. Next, Create. On voit qu'il commence à créer la stack. En dessous, vous voyez des informations plus ou moins intéressantes. Là, vous verriez les paramètres, mais on n'en a pas eu ici. C'est exactement ce que j'écrivais tout à l'heure. Les outputs, il n'y en aura pas dans cette stack. Les ressources créées par la stack, l'instance EC2 en cours de création. Ce qui est intéressant, ce sont les Events, car vous y verrez la chronologie de tout ce qui se passe. On voit que l'utilisateur a initié la création de la stack à 19h53, et qu'il est en train de créer l'instance EC2. C'est une stack toute simple. On peut voir le template, qui est celui qu'on a vu. L'upload est rassurant. Voilà, un tag. C'est terminé. CloudFormation a terminé, c'est-à-dire qu'il a lancé et fini d'exécuter le template, et lancé la création de l'instance. Si je regarde dans la console EC2, mon instance est probablement encore en cours d'initialisation. Voilà, elle est là. Elle est encore en cours d'initialisation. Quand CloudFormation dit que c'est bon, cela signifie qu'il a lancé ce qui devait être lancé. Il peut y avoir encore du temps de création pour certains objets. C'est le mécanisme de base. On peut le faire avec la ligne de commande, ce qui est plus drôle.
+
+Une question ? Vas-y. La fin, on ne l'a pas dans... On pourrait avoir des notifications pour savoir quand tout est vraiment terminé, si tout est OK. Oui, il y a d'autres mécanismes pour cela. Si vous voulez que l'instance vous dise qu'elle est prête, il y a des façons de le faire. Oui, c'est ça. Si on voulait avoir l'adresse IP, on l'aurait vraiment à la fin. D'accord ? Il y a une ligne de commande pour tout dans AWS. Celle de CloudFormation n'est pas méchante. Je vous ai mis quelques exemples dans les slides à la fin. On pourrait faire CreateStack, ça me paraît pas mal. Région. Template body. Il s'appelle quoi ? C'est template1.json. Stack name, on va l'appeler template1, essai2. Voilà. Il vous répond avec un identifiant. Si je regarde dans ma console, voilà, c'est une deuxième instance qui est en train de démarrer. Si j'ai envie de faire le malin, je viens d'en créer une en Oregon. Vous voyez ce que je disais, si vous voulez la même infrastructure à l'autre bout de la planète, ce n'est pas plus compliqué que ça. Exactement la même ? On va voir. Je pense qu'il va râler parce que StackName est déjà utilisé, mais on va faire update stack après. Il ne faudra pas que j'oublie d'éteindre tous ces trucs. J'ai un compte particulier, on est d'accord ? Mais il compte quand même les dollars. J'ai posé la question de savoir à partir de quelle valeur je reçois un mail d'insulte. Les Français m'ont dit que tant que je ne dépasse pas 20 ou 25 000 dollars par mois, il n'y a pas de problème. Donc, ça va, on est tranquille. On pourrait faire list stacks par exemple. Voilà, j'ai la liste des stacks qui tournent en Europe. Je pourrais faire describe stack, par exemple, template. Si je fais moins stack name, voilà. Si, elle est là. C'est parce que c'est ma région par défaut. Mais si je faisais par exemple ça, region USOS 2, je vois celle que j'ai lancée tout à l'heure. Pour ceux qui aiment faire du Python, il y a une librairie AWS appelée Boto qui permet de faire tout ce que fait l'API, mais en Python. C'est encore une troisième façon de faire. Il y a toujours trois façons de faire dans AWS : la ligne de commande, Python avec Boto, ou la console. Un quatrième moyen est de le faire programmatiquement avec un SDK, Java, .NET, ce que vous voulez. Vous avez le choix.
+
+Qu'est-ce que j'ai oublié comme commande ? Ah oui, getTemplate, on peut faire ça aussi. C'est le wifi qui recommence ? Oui, c'est le wifi qui m'embête. Quelqu'un est en train de télécharger des trucs ? Voilà. Vous pouvez récupérer les templates. Ce n'est pas une ligne de commande très compliquée. Ok. Donc maintenant, ce qu'on pourrait faire, c'est... C'est pas exactement la même. Il me semblait que les mappings étaient avant les ressources. C'est bien possible. C'est une bonne remarque. C'est que l'ordre du template n'a pas d'importance. L'ordre des ressources n'a pas d'importance. CloudFormation gère les dépendances. Si vous créez une instance associée à un security group, il faut d'abord créer le security group et ensuite l'instance. CloudFormation fait cela. L'ordre n'a vraiment pas d'importance. Vous pouvez mettre toutes les ressources dans n'importe quel ordre. Il va gérer le graphe de dépendance. Et l'ordre des sections, c'est pareil. Il n'a pas d'importance. Mais merci pour la remarque.
+
+On va updater. On va regarder un peu. J'ai template 1v2, et j'ai changé le type de l'instance. On va garder celle-là telle qu'elle était et en mettre une autre. Voilà, on va mettre une autre taille. On va appeler ça V3. Ok, donc là, je fais des exemples débiles, mais c'est pour vous montrer la dynamique. On pourrait prendre cette stack et faire « update stack » avec le nouveau template. Il va regarder ce qui a changé et recréer les ressources. On va le faire en ligne de commande, c'est plus rigolo. Pourquoi ? Je pense qu'il y a une erreur dans le JSON. On va valider le template, ce que je vous conseille de faire souvent. Template 1, c'est V3 ? Ah zut, c'est pas comme ça. Non, c'est template body. J'ai oublié ce truc-là à chaque fois. Ah, il a l'air de dire que c'est bon. On va le tester pour voir. Je vais enlever cette virgule. Ah, c'est bon. Voilà, là, il n'est pas content. Donc, le Validate Template, je vous conseille de le faire parce que là, on est sur des erreurs triviales. C'est pour ça que je parlais d'intégration continue sur les templates. C'est quand le truc fait 5000 lignes et qu'à la fin, il manque une virgule, que ça fait 10 minutes que ça tourne et que le truc dit « Ah, erreur ! » et il « roll back to », c'est désagréable. C'est un peu plus compliqué. C'est une validation syntaxique. Ça ne garantit pas que ce que vous créez fonctionne. C'est surtout ça. Vous pouvez créer des ressources correctes en termes de JSON, de syntaxe, mais cela ne garantit pas que vous avez une infrastructure qui fonctionne. D'accord ? Ça serait bien. Le mec qui invente ça. Donc, celle-là, elle a l'air bien. On va update stack. On va lui donner le nouveau template. Stack name. J'ai oublié son nom. Template1 console. On va remettre la région par prudence. On va voir ce qui se passe. On voit que l'update est en cours. Il prend le nouveau template, compare avec ce qu'il avait déjà créé, et ce qui manque, il le rajoute. Il faut faire attention, toutes les ressources ne sont pas toujours updatable. Par exemple, si vous voulez changer la taille d'une instance EC2, cela ne se fait pas automatiquement. Si vous avez créé une instance T1 small et que vous la remplacez par T1 large dans le template, cela ne se fera pas automatiquement. Si l'instance a un état, il est perdu. C'est bien expliqué dans la doc. Est-ce que le truc est updatable ? Il n'y a pas 2000 cas comme ça, mais en l'occurrence, les tailles d'instance en font partie.
+
+Donc, il a fait l'update. Ah non, c'est toujours en cours. Non, complètement. Voilà. Si je vais voir dans ma console, je dois voir. On va filtrer un peu. Ah oui, je ne l'ai pas taillée. C'est pour ça. Zut, c'est ma faute. Elle doit être en train de démarrer quelque part. Là, voilà, c'est celle-là. C'est la M1 Small qui est là. OK ? C'est celle qui est en initialization. Ah oui, pardon. Non, c'est ça. Excuse-moi, c'est celle-là. C'est la M1 large. OK. Bon. Si j'avais enlevé une ressource, il me supprimait la small, par exemple. Oui, allons-y. Donc, V3. On enlève la small, ok. On va vérifier quand même. Un peu plus complété. OK. Et on va refaire l'update. Ah, no updates are to be performed. Sur la V3, ils avaient le même ID. Oui, c'est ça. Il n'a pas assez d'infos. Si, il supprime les ressources. Mais sur la V3, il n'a pas créé la V2. Si, si, elle a démarré. Si, elle est là, elle est en haut. Je pense qu'il l'a remplacée parce qu'elles avaient le même Logical ID. Alors, attends, on va regarder. Oui. Ah oui, elles ont le même nom. Non, c'est con ce que j'ai fait. Oui, alors attends. Voilà, c'est parce qu'elles ont le même nom. Il aurait fallu les appeler EC2 instance 1, 2, 3. D'accord. C'est ça l'erreur, c'est qu'elles ont le même nom. J'ai oublié de changer le nom. C'est une bonne question. Le nom est le même, donc ça ne va pas. Non, mais il efface les ressources dont il n'a plus besoin.
+
+On va faire un peu de ménage. On va les supprimer pour voir l'effacement. Ça c'est les commandes à manier avec précaution, mais ça se reprend facilement. Template1 console, ça devrait suffire. Il n'y a pas de confirmation, il n'y a rien. Voilà, delete in progress. Il va effacer, il va détruire les instances. Il peut y avoir des fois où il ne peut pas effacer, par exemple si une ressource est utilisée. Il va vous faire un délai de fail, un message d'erreur. On peut snapshoter les ressources, mais pas une stack. Bon, là, il finit son petit truc. Ok, voilà un premier exemple.
+
+On pourrait faire le stack LAMP. Ça vous tente ? Alors, le stack LAMP. Les mappings, on a compris, il y en a des tonnes. Surtout là, ils ont tout mis, c'est vraiment violent. Bon, la bonne nouvelle, c'est que ça, vous pouvez faire copier-coller et c'est jamais à vous de l'écrire. Mais là, ils se sont lâchés. Il y a vraiment tout, tout, tout. Il y a les AMI, pareil. Il y a des outputs. On va peut-être regarder s'il y a des paramètres d'abord. Donc, dans le stack, il y a un web et un MySQL. On peut regarder les ressources peut-être d'abord. Voilà, donc il y a une web server instance. Il y a plein de configurations. Oh là là, il y avait du... Oh là là là là là. Ah ouais, non, là ils l'ont fait complet là. Il y a un security group, donc ça, ça paraît bien. Port 80 ouvert, ouais. D'accord. Ah ouais, non, ils installent le MySQL sur... Ok, donc il n'y a qu'une instance avec un web et un MySQL. On va voir. On va lancer le truc et puis on va voir ce qu'il se passe. Il y a beaucoup de configurations sur l'instance, on va regarder après. Donc, il y a les paramètres, le nom de la base MySQL, le password, le user, le type d'instance. On va voir à quoi ça ressemble. Et dans les outputs, il y a l'URL, ça paraît bien. Ok, on va le faire comme ça. Voilà les paramètres. On peut aussi le faire en ligne de commande, mais c'est peut-être plus lisible comme ça. Donc, tout ce qu'on trouve dans la section Parameters. On va être inspiré. J'espère qu'il ne va pas m'embêter avec des règles. Voilà. Donc, là, c'est ma fameuse liste. On va prendre les deux médiums. On va prendre une paire de clés. On va essayer de se loguer. SSH location, OK. Et ça y est, j'ai déjà oublié ce que j'ai mis là. Typique. Bon, on va être nul. User Julien. Voilà. C'est ça, c'est single instance, donc c'est une instance EC2 avec une base MySQL locale. Ok, allez, create, puis on va bien voir ce qui se passe.
+
+Pas essayé avant celui-là, donc si ça marche pas, ça fait partie des templates. Voilà, sample template, c'est ça. Je vous ai mis l'URL dans les slides. Alors, il faut payer toutes les 5 minutes pour le Wifi. Je ne sais pas ce que ça va donner. J'ai l'impression que ça va merder. On recommence. Il a fait le time out juste au bon moment. Allez, ce n'est pas grave. On recommence vite fait. Allez, c'est parti. Et les templates, ils sont là. Alors là, vous ne les avez même pas en région. Donc là, vous avez plein. Enfin là, vraiment, il y a plein de choses. C'est sûrement le premier truc à aller essayer. SharePoint ? Non. Non, pardon, excusez-moi. Un moment d'absence. Voilà. LAMP, Ruby. Et surtout, je crois que ce qui est plus intéressant, c'est ça. Voilà. Par exemple, vous voulez créer du DynamoDB, vous aurez déjà des modèles, des blocs tout faits. Ça fait gagner un temps fou. On va regarder un peu là. Donc, là, vous voyez, c'est plus intéressant parce qu'il y a plus de ressources : security group, instance, etc. Et c'est là, quand je disais tout à l'heure, il gère l'ordre, il gère les dépendances. Vous pourriez avoir 50 objets. Il essaie de paralléliser au maximum pour que ça aille le plus vite possible. Les paramètres, c'est ce qu'on a rentré tout à l'heure. Et voilà, on aura nos outputs là normalement quand il aura fini. On va relancer un autre en parallèle. Tiens, on va lancer le VPC.
+
+C'est parti. Le VPC, il y a beaucoup d'objets. Là, ça devrait être le feu d'artifice aussi. Il y a un VPC, quatre subnets, du firewall, une instance NAT pour les subnets privés. Il y a beaucoup de trucs. Il crée tout ça et on va attendre qu'il définisse ce truc-là. Les VPC, ils sont où ? Ils ne sont pas trop ceux-là ? Le VPC est dans une région. Pour tout ce qui est communication entre zones, il faut passer par... Région, oui, attention, zone, oui, région. Si tu veux passer en public, soit en public, soit des liens privés, soit des VPN. Oui. Les scénarios multi-régions sont souvent des scénarios où tu as de l'infra des deux côtés et tu dois échanger des données. Bon, tu fais un VPN. Mais quand c'est servir du trafic public depuis plusieurs régions, c'est plutôt des scénarios de routage, de latency routing, ou de haute disponibilité. Tu peux avoir des utilisateurs aux US, des utilisateurs en Europe, et de l'infra des deux côtés, et tu as envie que les utilisateurs US aillent sur la plateforme US. Ça, tu peux le faire avec Route 53, etc. Au sein d'une région, tu peux faire du peering entre les VPC. D'accord ? Voilà. Donc, échanger du trafic. C'est au sein d'une région. Entre régions, ça, c'est pas possible. Il faut le faire soi-même.
+
+Il a fini la stack LAMP. On va aller voir un peu. Voilà. Donc, j'ai mon output qui devait être dans... qui devait être quelque part. On va juste regarder comment il le sort, c'est intéressant. En fait, c'est quoi ? C'est le nom DNS de l'instance web. C'est une propriété, un attribut de cette instance. Il fait « get attribute » de cette ressource-là. Je veux l'attribut public DNS name de cette ressource-là. Ça retourne une chaîne de caractère. Et devant, je rajoute HTTP 2.//, je fais un join et ça, ça me sort la value. Il y a trois, quatre fonctions comme ça qu'il faut connaître : ref, finding map, get attribute. C'est toujours les mêmes. Là, tu le récupères dans un outil ? Mais si tu faisais une stack un peu plus compliquée où tu as besoin de passer ça, tu pourrais tout à fait... Ou faire un moment dans le stack où... Tout à fait. Ça serait pareil. Au lieu de le faire dans un output, il va gérer le cascading, le fait qu'il va falloir qu'il finisse ça avant de pouvoir passer à l'autre. Absolument, tout à fait. C'est ce que je disais tout à l'heure. Il va gérer cette complexité-là. Il construit le graphe des ressources et il sait dans quel ordre. Si tu lui mets un truc circulaire, à un moment, il va t'insulter. Tu reçois un mail de Werner Vogels qui te dit... Ok ? Bon. On essaie de se connecter dessus pour rire ? Oh, ben voilà. Extraordinaire. C'est beau. Ok ? Bon, donc, il marche. On va essayer de se connecter dessus juste pour voir. C'est possible qu'il date de 2011. Bon, on va quand même aller voir ce truc-là histoire de rigoler. Ok. Et donc, il y a quoi là-dessus ? On ne voit rien. Ah ouais, il y a un MySQL. Bon. Super. Et il y a un Apache ? Oui, ça marche. Je ne rentre pas dans les détails. Il y a toute une partie assez moche dans ce template qui est de la configuration. Je ne sais pas comment l'appeler. De la post-configuration. On va jeter un œil quand même parce que j'ai du mal à en dire. Il y a de l'initialisation sur l'instance. Voilà ça. Ou voilà, il crée le mot de passe, il crée le mot de passe MySQL, etc. Moi, je suis pas fan de ça du tout. Je pense que j'adore CloudFormation, mais il faut savoir où on s'arrête et là, de mon point de vue, on est plutôt dans le domaine de Chef ou Puppet ou d'OpsWorks, qui est le service que je vous ai épargné pour ce soir, mais je reviendrai si vous voulez. Et là, on n'est plus dans la conf d'infrastructure. Là, on est dans la conf de service, on est dans la conf d'appli et là, on n'est plus dans le générique. Donc, OK, ça marche. Il crée des... Je ne conseille pas de faire ça. Moi, je conseille vraiment de dire, j'en discutais avec Lionel tout à l'heure, c'est une des grandes discussions qu'on a eues chez Viadeo, c'est où est-ce qu'on s'arrête ? La discussion, c'était, on construit l'infra avec CloudFormation, donc les VPC, les machins, le S3, il n'y a pas de discussion, on le fait comme ça. Et après, au moment où le nœud de la discussion, c'est est-ce qu'on prend des AMI, est-ce qu'on prend des images génériques ? On dit on ne met que du Amazon Linux et on s'arrête là. Et après, tout le reste, c'est de la post install, c'est du Chef, c'est du Puppet, c'est des trucs comme ça. Est-ce qu'on fait nos AMI custom ? C'est-à-dire notre AMI HBase, notre AMI MySQL, etc. Et jusqu'où on va ? Et c'est une discussion qui n'est pas simple parce qu'à la limite sur un HBase, on peut dire « Ok, on fait une AMI HBase ». Sur des AMI applicatives avec votre code et votre appli, c'est plus compliqué. Ça dépend de combien de fois vous déployez. Si vous faites du déploiement continu et que vous déployez 50 fois par jour, vous avez envie 50 fois par jour de créer une AMI. Il y a plein d'outils super pour faire ça. Il y a Aminator de Netflix, il y a Packer, il y a plein de trucs comme ça où c'est facile de construire des AMI, mais ça prend quand même quelques minutes à chaque fois. Et puis, il faut les redéployer et tout. Donc, il faut trouver... Bon, si vous déployez tous les trois mois, c'est moins grave. Donc, il faut trouver l'endroit où... Et c'est ça qui est compliqué. Ce n'est pas tellement ces histoires de template. Comme toujours, ce qui est compliqué, c'est le processus de déploiement. C'est de dire, voilà, je construis mon infra, ça, c'est à peu près clair. Ensuite, j'utilise des images génériques. Vous voulez faire un serveur DNS ou un serveur FTP, oui, vous prenez l'AMI Linux et puis c'est comme ça qu'on fait et puis c'est simple. Mais voilà, si vous avez des AMI particulières ou vous avez des bouts d'applications compliqués, vous voulez intégrer dans les AMI, etc., etc., là, il faut y réfléchir un petit peu. Il y a plein de façons de le faire. Mais en tout cas, essayez de mettre le curseur au bon endroit entre... Dès que vous êtes plus strictement dans l'infra, dès que vous dites « ah oui, alors maintenant il faut que je démarre mon engine, il faut que, il faut que, il faut que », là à mon avis vous êtes dans Chef Puppet. Et je vous conseille de le faire plutôt comme ça. C'est-à-dire qu'à la limite sur les instances, vous démarrez l'agent Puppet ou l'agent Chef et puis après c'est une autre logique. Il y a quand même une logique de vitesse. C'est un compromis à trouver entre la rapidité de déploiement au sens déploiement applicatif et la rapidité de déploiement au sens infrastructure. C'est parfait. Vous lancez la stack, tout va démarrer, tout est prêt. Mais bon, moi je n'ai pas de réponse absolue. Il y a des services statiques. Oui, mon service DNS, peut-être j'ai envie d'avoir une image custom parce qu'elle ne change pas. Mon service FTP, elle ne change pas. Je n'ai pas envie de faire de la post install sur ces trucs-là. Tout ce qui est vraiment applicatif. Vous pouvez créer des clusters de 50, 1000 nœuds, etc. Mes slides sont partout. Si ça vous intéresse, je vous les partagerai. C'est une présentation qui dure deux heures, donc je ne vais pas la faire ce soir. Ce que je veux vous montrer, c'est que quand vous dites « OK, démarre-moi un cluster », il ne se cache pas. Il vous dit « CloudFormation stack status égale create in progress ». Si on va voir dans CloudFormation, on voit qu'il est en train de créer un VPC. Il lance le cluster dans son propre VPC, donc il fait toute la plomberie. Ensuite, il va lancer les nœuds. On retrouve des paramètres dans le template, comme le nom du cluster, la taille des instances, le port à ouvrir, la paire de clés, etc. Il crée tout ça. Ça prend 4-5 minutes normalement. À un moment, on doit voir une instance arriver, mais il faut qu'il finisse de créer le VPC. C'est un autre exemple d'utilisation. Le service est simple à utiliser car CloudFormation fait toute la plomberie. C'est un service fondamental. Je pense que tous les nouveaux services AWS s'appuient sur CloudFormation pour automatiser la plomberie. Il crée l'auto-scaling group. Si on devait faire tout ça à la main, ça prendrait un quart d'heure. Ça permet d'automatiser toute la création de l'infrastructure, y compris pour ces services. Je ne vois pas mon instance, elle doit être en train de démarrer. Voilà, ECS instance. C'est celle-là qui est en train de démarrer. Il crée une première instance pour le cluster et va déployer des conteneurs. Si on veut 50 instances supplémentaires, c'est facile.
+
+Si vous vous intéressez à Docker, la présentation est sur Slideshare. Si vous voulez, je la posterai dans le Meetup. Voilà, c'est Beanstalk. Redshift. Je ne vais pas vous la faire, mais si vous vous intéressez à Docker, je vous conseille de regarder ça. C'est pas mal pour ce soir. On a vu ce qu'on voulait voir. On n'a pas eu trop de problèmes de démo. On a vu comment créer, mettre à jour et supprimer une stack. Quelques exemples avec la création d'un VPC, une stack LAMP. Et comment ECS utilise CloudFormation pour ses besoins. Si vous voulez en savoir plus, il y a plein d'événements à venir. Awesome Day, c'est une journée de formation pour les développeurs ou les ops sur les technologies AWS. Il y a peut-être des gens qui y sont déjà allés. L'année dernière, on en faisait un par mois. On avait entre 100 et 200 personnes chaque mois à Paris. Cette année, ce sera trimestriel. Les dates pour l'année sont publiées. Le prochain est le 16 mars. Les inscriptions sont ouvertes, c'est à Paris, à côté de Saint-Lazare. C'est central. Pour vous, c'est loin, mais c'est un événement gratuit. Si vous voulez progresser sur les technologies AWS, je vous conseille de le faire. Il y aura deux tracks, donc plus de contenu. Une partie de l'équipe AWS sera sur place pour répondre à vos questions.
+
+Le summit à Paris est le 31 mai. C'est notre conférence technique annuelle. C'est au Carousel du Louvre, donc central. On doit avoir des guest stars, comme Werner, le CTO d'Amazon. On aura des clients et des sessions techniques. Ce sont des événements techniques, pas des événements marketing. Si vous avez vu les vidéos de re:Invent sur YouTube, vous voyez de quoi je parle. On vise 2000 personnes. C'est un bel événement. Il y aura toute l'équipe AWS française. Si vous voulez passer deux heures à discuter avec un solution architecte, c'est le bon endroit. Ensuite, il y a des salons comme le salon du Big Data, IoT World, le Cido, Devox, et DotScale. On est sponsor de Devox et DotScale. On parle aussi à Devox. On a des stands. Si vous voulez rencontrer des gens d'AWS, poser des questions, c'est un bon endroit. On a aussi des user groups. Historiquement, il n'y avait que Paris. Depuis quelques semaines, on a Lyon, Nantes, Lille, Rennes. Je lance un appel solennel. Je veux absolument en faire un à Toulouse. Si quelqu'un est intéressé pour co-animer un user group AWS à Toulouse, je serais super content. Je viendrai à chaque fois. Il y a de l'intérêt ce soir. Parlez-en à Lionel. Organiser un meet-up, c'est trouver une salle, faire un peu de promo, animer un Twitter. Ce n'est pas une charge énorme. Pour le contenu, il y en a plein. J'étais à Lille hier soir, on était une vingtaine et la moitié avait une idée de présentation. Donc, sur le contenu, il n'y a pas de problème. Je veux vraiment en faire un. Toulouse est actif. On a des clients ici. Il y a matière à monter un groupe. L'appel est lancé. Le plus tôt sera le mieux. Je reviens la semaine prochaine si vous voulez. Je rappelle Twitter et j'ai créé un groupe sur Facebook pour rameuter tout le monde. C'est dommage que les groupes Meetup soient séparés. J'essaie d'avoir un lieu où les gens peuvent se mélanger et discuter, y compris des sujets techniques. N'hésitez pas à venir sur Facebook, vous ferez des copains AWS. Il y a des bonus slides, mais vous avez plein de lectures, des vidéos de re:Invent sur CloudFormation. Il y a des sujets très intéressants, du blue-green deployment, du Windows. Je vous ai remis quelques commandes qu'on avait vues. Voilà, c'est fini. Je vous remercie infiniment. J'espère que ça vous a plu. J'espère que ça vous a donné envie d'en savoir plus sur AWS, CloudFormation et le reste. On reste en contact. Merci encore de m'avoir invité. Ce soir est super agréable. Si vous avez des questions ou des remarques, je suis encore là. Voilà. Merci beaucoup.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">CloudFormation</span><span class="tag">AWS</span><span class="tag">Infrastructure as Code</span><span class="tag">DevOps</span><span class="tag">Automated Deployment</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinar Amazon AI</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Webinar Amazon AI</h1>
+        <div class="date">February 08, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/OFUnFnqm6lk" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Webinar du 1er février 2017 dans le cadre du Salon du Big Data : nouveaux services d'intelligence artificielle Amazon Polly, Amazon Lex et Amazon Rekognition.
+
+Plus d'information :
+<a href="http://aws.amazon.com/polly" target="_blank" rel="noopener noreferrer">http://aws.amazon.com/polly</a>
+<a href="http://aws.amazon.com/lex" target="_blank" rel="noopener noreferrer">http://aws.amazon.com/lex</a>
+<a href="http://aws.amazon.com/rekognition" target="_blank" rel="noopener noreferrer">http://aws.amazon.com/rekognition</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Bonjour à tous, ravi de vous retrouver pour un nouveau webinaire. Je suis Julien Simon, évangéliste technique chez AWS, basé à Paris. Et aujourd'hui, j'ai le plaisir de vous parler et surtout de vous faire des démos de nos nouveaux services d'intelligence artificielle annoncés lors de notre conférence technique Re:Invent en 2019, au début décembre à Las Vegas. Ces services sont au nombre de trois : un service qui s'appelle Polly, qui est un service de synthèse vocale ; un service qui s'appelle Lex, qui permet de construire des chatbots ; et enfin un troisième service qui s'appelle Rekognition, qui permet de faire de la reconnaissance d'images, de la détection de scènes et de la reconnaissance de visages.
+
+Je vais commencer par quelques slides pour expliquer les grands principes de ces services, puis nous les testerons et jouerons avec. Le premier service dont je vais parler est Polly. Polly est un service de synthèse vocale qui prend un texte en entrée et le prononce. Aujourd'hui, Polly supporte 24 langues différentes et 47 voix, masculines et féminines. Polly est bien adapté aux applications en temps réel, avec une latence particulièrement faible. La qualité de la voix est évidemment un aspect crucial. J'ai quelques exemples à vous montrer, et nous continuerons à le tester tout à l'heure.
+
+Voici un exemple avec les voix américaines, qui sont d'assez bonne qualité. Voilà un petit extrait d'Alice au Pays des Merveilles. J'espère que vous l'entendrez bien avec mon micro. Vous verrez qu'on a une prononciation de bonne qualité, une intonation et une qualité globale de la voix qui sont, me semble-t-il, assez bonnes.
+
+Une autre notion importante est la capacité à bien prononcer les textes. Par exemple, dans cette phrase : « Aujourd'hui à Las Vegas, N.V., il fait 54 degrés Fahrenheit. » Il ne s'agit pas de prononcer le NV et de dire 54 degrés F. Il faut comprendre le contexte associé à cette phrase et la prononcer correctement. C'est ce que fait Polly. Polly comprend le contexte au-delà du texte pur, car ce n'est pas juste un service de synthèse vocale, mais aussi un service d'intelligence basé sur l'intelligence artificielle et le deep learning. Polly a appris que lorsqu'on voit NV après Las Vegas, il faut prononcer Nevada et non pas NV, et que le F après 54 degrés est une température.
+
+Voici un autre exemple avec des homographes, des mots qui s'écrivent de la même façon mais se prononcent différemment. La prononciation dépend absolument du contexte. Ici, seul le contexte peut indiquer que le premier "live" se prononce "live" et le deuxième "live" se prononce "lives". Toute la phase d'apprentissage de ces nuances a été faite par Amazon et AWS dans le service Polly. Vous n'avez pas à le faire. Vous pouvez bénéficier dès le premier jour d'un service qui sait prononcer correctement les phrases.
+
+La capacité à se faire comprendre, même avec des phrases un peu tordues, est également importante. Voici un exemple particulier. Vous voyez, on comprend la phrase, l'intonation est correcte, même avec des enchaînements compliqués. On n'a pas l'impression d'avoir une voix robotisée qui prononce juste des mots, mais une phrase prononcée de manière compréhensible.
+
+Voici la liste des langues supportées : 24 langues avec 47 voix, hommes et femmes. Il y a toute une palette d'anglais, y compris l'anglais britannique, américain, gallois, australien, et indien. Pour le français, nous avons le français standard et le français canadien avec un accent québécois. Toutes les langues européennes sont également supportées. Vous pouvez localiser la langue de Polly en fonction de la nationalité de vos utilisateurs.
+
+On peut également enrichir l'information passée à Polly en utilisant un langage de markup appelé SSML, qui permet de donner des indications, d'épeler des mots, et de prononcer des mots étrangers. Par exemple, pour épeler un nom de famille : "My name is Kuklinski. It is spelled K-U-K-L-I-N-S-K." On peut aussi enrichir et spécifier la prononciation de certains mots. Par exemple, pour prononcer "Kaja" comme "Kaya", on peut enrichir le vocabulaire de Polly pour qu'elle prononce correctement ces mots.
+
+Avant de parler de Lex, je vais vous montrer rapidement Polly via la console AWS, où vous pouvez choisir et tester différentes voix. Nous allons tester la voix française. Voilà, on a choisi Mathieu. Vous voyez, quand je parlais d'interactivité, à peine j'ai cliqué sur le bouton, la phrase est lue. On peut également sauver le fichier en MP3 et l'utiliser dans d'autres applications. Essayons d'autres voix, comme la voix canadienne. On sent bien l'accent canadien. Essayons l'anglais indien. Il n'y a qu'une voix féminine, mais l'accent est correctement reproduit. Essayons l'allemand. Vous voyez, on a toutes ces langues disponibles.
+
+Bien sûr, nous avons aussi une API. Tous nos services sont disponibles en API, que ce soit via la ligne de commande AWS ou nos SDK. Voici un exemple de code Python qui se connecte au service Polly dans la région irlandaise et prononce diverses phrases. Le code est particulièrement court. Essayons différentes voix : "Hello world. I'm Polly. Or Brian. Or anyone you want, really. Hello world." Voilà, c'est tout. Même de l'islandais. Si quelqu'un comprend et me traduit la phrase, il mériterait de gagner un t-shirt.
+
+Polly est un service extrêmement simple à utiliser, qui est instantané et permet d'apporter à vos applications la capacité de parler, ce qui est assez sympathique. Passons au deuxième service, Lex. Lex est un service qui permet de construire des bots conversationnels, des interfaces conversationnelles, en langage naturel, que ce soit en texte ou en voix. C'est un problème complexe qui combine algorithmique, reconnaissance du langage, et des problèmes d'infrastructure comme la rapidité, la scalabilité, l'intégration mobile, et l'intégration avec des plateformes tierces.
+
+Lex est la technologie sur laquelle repose Alexa d'Amazon, qui a un énorme succès aux États-Unis. En utilisant Lex, vous utilisez les mêmes technologies que celles qui font fonctionner Alexa et les devices Echo. Lex est simple à utiliser, de bonne qualité, se déploie en un clic, scale en un clic, et n'a aucune infrastructure à gérer. L'intégration avec le reste de la plateforme AWS est très simple, et même avec des services externes comme Facebook.
+
+Les cas d'utilisation de Lex sont infinis. Ils simplifient la communication entre l'homme et les machines, plutôt que de parler à des systèmes de compréhension plus ou moins bien faits ou de taper sur des claviers mal fichus. Parler est ce que les humains savent faire, donc les cas d'utilisation sont infinis. Voici un peu de vocabulaire avant de vous montrer un exemple. Quand vous paramétrez un bot, il y a des intents, qui sont les intentions de l'utilisateur, et des slots, qui sont les informations nécessaires pour accomplir l'action.
+
+Par exemple, pour réserver un hôtel, l'intent est "Je veux réserver un hôtel", et les slots sont la ville, la date, et le nombre de nuits. Une fois que la conversation est déclenchée, le bot pose des questions pour remplir les slots, puis passe à la phase de fulfillment, où il exécute l'action, souvent via une fonction Lambda.
+
+Voici la console Lex, où nous avons configuré un bot pour commander des fleurs. Il y a des phrases clés qui déclenchent le bot, et il obtient des informations comme le type de fleur, la couleur, la date de livraison, et le numéro de téléphone pour la confirmation. Une fois que vous avez défini tout cela, vous cliquez sur Build, et le bot est prêt en une minute ou moins. Vous pouvez le tester, vérifier des cas d'erreur, puis le publier. Le bot est alors visible à l'extérieur via une API, que vous pouvez intégrer dans vos applications ou sur des plateformes comme Facebook.
+
+Allons sur Facebook. Voici ma page, où j'ai recréé une page de fleuriste. Je vais m'envoyer un message et interagir avec mon bot. Je vais lui dire que j'ai envie d'acheter des roses. De quelle couleur ? Est-ce qu'on a des roses noires ? Non, noir n'est pas disponible, donc il me repropose une autre couleur. Disons rouge. Il doit maintenant obtenir la date de livraison. Disons mercredi prochain. Il comprend que mercredi prochain est le 8 février. À quelle heure ? Disons 11 heures du matin. Il me demande mon numéro de téléphone. Voilà. Je confirme ma commande. Est-ce que tout est bien ? Oui, des roses à 11h du matin le 8 février, ça me coûte 25$. Il m'envoie un SMS de confirmation. Vous devriez entendre l'arrivée du SMS. Voilà, c'est confirmé.
+
+En déclarant le bot dans Lex et en écrivant la fonction Lambda pour la validation et l'envoi du SMS, on construit facilement une interface conversationnelle et l'intègre sur Facebook. Le seul code que vous avez écrit est le code applicatif du bot. Vous n'avez pas à vous occuper de l'infrastructure, de la haute disponibilité, ou de la scalabilité du système.
+
+Le dernier service dont je voulais vous parler est Rekognition, un service d'analyse d'image et de reconnaissance de visage. Il a quatre fonctionnalités : détection d'objets, reconnaissance faciale, comparaison de visages, et reconnaissance de visages dans une collection. Voici un exemple de détection de scène. Vous passez une image à Rekognition, et il retourne des informations comme "bateau" et "rafting" avec un niveau de confiance de 94%.
+
+Pour la détection de visage, vous lui passez une photo, et il détecte les visages, leur position, les émotions, et les caractéristiques faciales. Pour la comparaison de visages, vous lui passez une image de référence et une autre image, et il compare les visages pour déterminer s'ils correspondent. Pour la reconnaissance de visages dans une collection, vous créez une collection de visages et recherchez un visage spécifique.
+
+Voici quelques exemples dans la console. On va prendre une image et voir ce que Rekognition détecte. Il voit un humain, un ordinateur, un écran LCD. On va essayer une autre image. Il voit des gens, des vélos, et des véhicules. On va en essayer une troisième. Il voit des gens, un maillot de bain, et un pique-nique. Sur des images complexes, il est capable de détecter des éléments comme des supermarchés, de la nourriture, et des snacks.
+
+Si on le fait en ligne de commande, voici un exemple de détection de visage avec un petit bout de Python. On prend une image, la copie dans S3, et on l'envoie à Rekognition. Il détecte 15 visages, même ceux partiellement masqués. Il reconnaît les émotions et les caractéristiques faciales. Par exemple, il détecte une fille qui a l'air joyeuse.
+
+On va essayer une comparaison de visages. On compare une image de référence avec une autre image. Il reconnaît la personne à 82%. Même sur une image de mauvaise qualité, il reconnaît la même personne à 80%.
+
+Voilà, j'en ai terminé. Merci d'avoir participé à ce webinaire. Merci au salon du Big Data pour l'organisation. N'hésitez pas à me suivre sur Twitter pour être au courant des prochains événements, donc @JulienSimon. Prochains événements : notre journée de formation à Paris le 24 février, le salon du Big Data, et le Summit AWS à Paris le 27 juin. Merci beaucoup, M. Simon. On va voir s'il y a des questions. Merci beaucoup, si vous avez des questions, n'hésitez pas à me contacter sur Twitter.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS</span><span class="tag">Polly</span><span class="tag">Lex</span><span class="tag">Rekognition</span><span class="tag">Webinaire</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

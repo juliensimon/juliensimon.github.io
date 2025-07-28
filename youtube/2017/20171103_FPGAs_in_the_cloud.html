@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPGAs in the cloud</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FPGAs in the cloud</h1>
+        <div class="date">November 03, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/SFyW2HVimiU" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">The case for non-CPU architectures
+What is an FPGA?
+Using FPGAs on AWS
+Demo: running an FPGA image on AWS
+FPGAs and Deep Learning
+Resources</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Thank you for having me here and thank you for showing up. Yeah, I guess that's the oddball session of the conference. I'm quite proud of that actually. So my name is Julien. I'm a tech evangelist with AWS. I'm based in the Paris office, but I do travel a lot. And these days I tend to focus on AI and ML topics, which are somehow related to what I'm going to talk about today, and that is FPGA. So here's the agenda. We're going to make a case for FPGAs. Why do we even bother talking about this? Then we're going to talk about what an FPGA is actually. Some of you might not be familiar with this architecture. Then we're going to show how to use FPGAs on AWS. I'll mention some customers of ours. I'll do a really quick demo of loading and using an FPGA image on AWS. Then I'll close with a few thoughts on using FPGAs for deep learning. And I'll share some resources that you may find useful.
+
+Okay, so why do we even think that FPGAs are relevant? I guess we've all seen this a million times. I hope I don't have to explain it. Moore's Law, one of the most important laws in computer science and computer hardware, right? Saying that every 18 months, magically, we tend to double the number of transistors. But not everything is well, right? It worked very well for a while. It started in 1971 with the first Intel chip and for decades it was fine, but now we maybe were reaching the end of that trip. We're still managing to cram transistors on silicon, but we have to actually limit the clock speed because heat dissipation is such an issue right now. We managed to build some insanely powerful chips like this one, which is available in most of our instances. It's an IAAN Xeon chip with 7.1 billion transistors. It is a general-purpose architecture, x64, single instruction, single data with some vector extensions. It still delivers the best single core performance, so if you need one core, one thread to run as fast as it can, that's still the best choice. You get some parallelism; this specific chip has 24 cores and 48 hyper threads, but in the grand scheme of things, it's still a fairly low number. Especially given the fact that we all know how hard it is to write multithreaded apps, how to make them run successfully, and how to make them run actually parallel. There's always some blocking involved, could be in your app, could be in a library that you use, it could be in the operating system. The bottom line is, it's hard, and we never get that full parallelism promise. And yeah, there's the power consumption issue. These beasts tend to burn 160 plus watts, which is a lot. Still, they're very cool. And we published this blog article just maybe a week or so ago. One of our customers, Clemenson University, has run a very large job using NLP on over one million virtual CPUs. They use Spot instances to do that. Otherwise, their budget would have been an issue too. So you can still run very, very large applications, HPC applications, AI applications, using a crazy number of CPU cores. That's possible. It's not because it's possible that it's the absolute best solution.
+
+A lot of people think that Moore's law is actually coming to an end, including Mr. Moore himself. There's a joke that says that the number of people that think Moore's law is coming to an end is also doubling every 18 months. But when Mr. Moore says that, we have to listen. There has to be technology limits, right? The latest Intel architecture is called Skylake. The Skylake transistor is 100 atoms wide. So, okay, we'll get to 50, we'll get to 30, and then something weird is going to happen. Bless Intel and all the hardware designers, but even then, at some point, we have to admit that they cannot go any further. Another issue is that some workloads just require much more parallelism than what you get with CPUs. Yes, you can take 100,000 multi-core CPUs and throw them at the problem, but then what about software, distributed systems, and everything? Core count is just not the single thing. You have to make them run in parallel. Use cases like genomics, financial computing, image, video encoding, and deep learning really require a lot of parallelism to run. And as we know, the age of the GPU has come. Here's a fantastic GPU by NVIDIA. This one has 21 billion transistors. It's a massive chip, 1.36 square inches. Think about it; it's a hell of a mouthful. It has an architecture optimized for floating point, which is good because that's what we need for HPC and all those use cases I mentioned. The architecture is SIMT, so we have a single instruction set run by multiple threads on CUDA cores, etc. This one is massively parallel; we have over 5,000 CUDA cores. This chip introduces a new type of core called tensor cores, so it's able to run actual calculations on 3D arrays. We use the CUDA programming model, which is kind of friendly. These chips have a ton of DRAM off-chip where you can actually run the computation. But each of those chips is going to need 250 watts, which is a lot. These are not optimal for some applications. One obvious problem is power consumption and power efficiency. Think about embedded work. If you do embedded stuff, you will never have 250 watts to spend on computation. Power efficiency is a different metric, and we measure teraops per watt, which is how well spent your power budget is when it comes to computation. Latency requirements are important. GPUs don't necessarily have predictable latency, which is a problem. Plus, the weird stuff: custom data types. You don't want to work on 32-bit floats; you want to work on 14-bit integers because that's what your app uses. It could be even more complicated. Your app could show irregular parallelism, so you could have massively parallel parts and then more sequential parts. GPUs would not be very efficient at that. Divergence is when multiple threads will actually execute different code, and that's something GPUs are not best at.
+
+Some people think it's a good idea to build your own ASIC to solve this. You can go and build a deep learning ASIC, a video encoding ASIC, a genomics ASIC, etc. More power to those guys, but it's a huge effort. It takes time; it's not something you'll get done in less than a year. What if you get it wrong? You have to start from scratch. And what if your application requirements evolve? The AS part means application-specific. So if your application changes, maybe your ASIC is obsolete, and you have to do that all over again. These factors have led a number of people to consider FPGAs. So, what's an FPGA? FPGAs have been around for a while. The first commercial product dates back to 1985 by Exilinks. FPGA means Field-Programmable Gate Array. That's a really cool name because that's really what it is. In tech, we love to give names to things that are confusing and do not actually tell you what that thing does. This is a good name because an FPGA is exactly a field-programmable gate array. It's not a CPU. You could build a CPU with an FPGA. An FPGA is just Lego hardware. It's a bag of logic cells, lookup tables, logic gates, DSPs, I/O connections, etc. It's really just a big bag of everything I just mentioned, unconnected, waiting to be connected. There's a small amount of on-chip memory, so we're not going to get gigabytes; we're going to get something in the range of megabytes. The name of the game will be to build custom logic, to combine all those gates and DSPs and I/O pins to speed up your software application.
+
+Here's a typical example. It's a fabric with all those different types of building blocks and interconnects that are empty at the moment. The name of the game here will be to connect everything. You're going to design a logic and, using software, you're going to select blocks on the FPGA and connect them to achieve what you want. That's basically what you do when you develop FPGA applications. What language do you use? Well, in the good old days, you would use runtime languages, which are domain-specific, called VHDL and Verilog. These are pretty different from the software languages we know. They're really about describing the gates and how they connect to one another, and it's a very specific field. It's really expert work. More recently, there's a new framework called OpenCL, which supports C++. That allows you to build FPGA apps with C++ code in a similar way that you would use CUDA to write GPU apps. Then, using one of those environments and specifically one of those languages, you're going to use a pretty complex software suite to do design and simulation, software simulation, hardware simulation, synthesis, which is figuring out what gates you need to build the app, and routing, which is figuring out where to find those gates on the actual FPGA. You then upload that bitstream file to an emulator or an evaluation board, something that behaves exactly like the FPGA does. In both cases, the software tools and hardware tools are insanely expensive. We're talking tens of thousands of dollars per developer seat. They're hard to scale. You need five more boards for tomorrow to speed up testing or whatever. Well, guess what? They're expensive, so you need to negotiate, buy them, and have them delivered. That's a problem. So usually, those are really precious. You have one or two, except maybe if you work for a very large company, and you literally have to work to timeshare the boards between the teams because they're so expensive. So there has to be a better way to write FPGA apps. And this is the problem we try to solve for our customers.
+
+The first step was to build EC2 instances providing FPGA chips, and that's the F1 family. It comes in two sizes. The smallest one is really for development purposes; it's got one FPGA. The second one is really for production; it's got eight FPGAs, and those eight FPGAs are interconnected by a super-fast bus, 400 gigabits per second, so they can actually exchange data and talk to one another. Imagine the computation speed you can get. These chips are Xilinx chips, very high-end chips, with 64 gigs of memory per chip. The typical GPU would have maybe 10 gigs. You have PCI connections to talk to the host, to the CPU, and we mentioned that there are building blocks on those FPGAs. You get 2.5 million logic elements and almost 7,000 DSP blocks. That's a big Lego box to pick from. The development cycle starts with the tools. We provide an Amazon machine image to boot those instances, which includes all the tools you need, like the Xilinx tools and the Vivado environment. If you've done Xilinx development before, you should be familiar with those names. There's a free license included, so you don't have to pay for those tools. You can do VHDL, Verilog, and OpenCL. The AMI also includes an SDK with tools to manage the FPGA images you're going to build, such as how to load them on the FPGAs, how to remove them, etc. There's a hardware development kit that makes it easier for FPGA developers to interface the FPGA code with external devices, like how to access memory, the PCI bus, and the high-speed ring between the FPGAs. It's called the shell, and you'll see that in the documentation. Just to make your life a little simpler, you don't need to run all of this on an FPGA instance. You could run it on a normal CPU-based instance, which is likely to be less expensive. You can do all the simulation, synthesis, and routing on, for example, a C4 instance, and then you would get the image and load it on an FPGA instance, an F1 instance. So you can have a pretty cheap and easy-to-scale way to do development and testing and then use the F1 instances just for the actual final testing and production.
+
+Here's the cycle. We're going to take that AMI, boot up an F1 instance, load the FPGA image to one of the FPGAs connected to the instance, and run our host application on the CPU. That's pretty similar to what we do with GPUs. We run something on the CPU, load data on the GPU, and get things going. One of the cool things we introduced is that you can actually publish and sell your FPGA images on the AWS Marketplace, just like people have been doing for a while with AMIs. If you're an FPGA developer and you come up with a clever way to do, say, crypto or any kind of FPGA app, you can publish it to the marketplace and make money out of it. That's a totally new way to monetize FPGA apps. Here's an example from a customer called educo genome. They build a protocol called Dragon, which analyzes the human genome. They used to do this on CPUs and traditional architectures, but they rewrote their app to run on FPGA and divided the analysis time by a factor of 10. What took hours now takes minutes, which is important because they can deliver results faster to hospitals and people waiting for medical information. It's all implemented with the FPGA, super fast, and pretty low cost because you can just fire up an F1 instance, run an analysis or a bunch of analyses, and shut down the instance and stop paying. Until two days ago, you would pay by the hour, but starting October 2nd, EC2 billing is per second, which is even better for these cases. Just fire up a few instances, run your batches, get the results, and shut them down. That's pretty efficient.
+
+Here's another example from a company called ngcodec. These guys do Ultra HD video compression, which is one of the cases where parallelism matters. They're over 50 times faster than their previous solution, which ran on CPUs using typical tools. More importantly, they get higher quality, so they can do 60 plus frames per second with the same bitrate and higher quality. Before, you had to choose between very high-quality encoding, which was not real-time, or real-time encoding with lower quality. Now, using this solution, they can encode and broadcast with very low latency. They can optimize costs if they need to scale their encoding capacity. Just fire up more instances, deliver to broadcasters, and then shut down everything. Imagine there's a large event, like a football game, where they need extra capacity. They can get that in minutes and then, once the game is over and they don't need to compress that video anymore, they can just shut it down.
+
+So let's look at a quick demo. Here are the steps. As you will see, I cannot do the full demo because it takes a while. I'm just showing the steps and will do the final operation here. Initially, I put up an F1 instance, set up a whole bunch of environments. You'll find all of this on our GitHub repository, which I'll point you to. Then I ran software simulations, hardware simulations, and everything was fine. I built the final FPGA image. Even with a simple hello world example, which just adds a couple of vectors, synthesis takes about two and a half hours. So I can't do that live, but you can repeat those steps. You learn patience again when you do FPGA stuff. This is the file I got from the routing tool. I need to transfer that into an actual FPGA image using a script that creates an Amazon FPGA image (AFI). It copies that to S3 and registers it into the F1 backend. I have to wait a bit before the image is built because we need to merge it with the hardware development kit, the shell. It takes a few minutes. For a while, you'll see a pending state, and then you get to the state where it's ready, and you can load it and do something useful. That's where I'm taking over. Hopefully, my instance is still up. I'm not paying my AWS bills. I keep saying that's the only reason I joined them. I have a huge sandbox and I'm not paying.
+
+Okay, so I'm connected to my instance here. Let me show you the code very quickly. I've got two parts: the host code running on the CPU and the FPGA code, what we call the kernel, just like for GPUs, that's going to run on the FPGAs. Let's look at the kernel first. It's very straightforward. This is the code we're going to transform into logic gates and run on the FPGA. Anyone could write this. We're adding two vectors. The size is going to be 256 bytes. We have to allocate two arrays and initialize them with the parameters that the kernel will receive. We just sum them up and store the result in a third buffer. No questions, I guess, but see, that's OpenCL. If we tried to do the same thing with VHDL or Verilog, it would be pages and pages, and literally no one could understand it unless they were proper VHDL and Verilog experts, which I am not. Voilà. Thank you, OpenCL.
+
+When it comes to the host, that's normal C++ code. We're going to create two vectors, one full of tens and one full of 32s. This is for results. Then we get access to our FPGA device. We need to do some initialization here, but it's not really important. The important part is allocating buffers on the FPGA, sending write commands to the FPGA to fill those buffers with the vectors I initialized, and putting the results in a specific buffer. Then, literally, I'm running the kernel. If you've done GPU programming, CUDA programming, it's kind of similar. It's different but the same level of abstraction. We run the computation on the host, run the computation on the GPU, and hopefully, we get the same results. Make sense?
+
+Alright. So, I don't want to save some typing, so first, let me check. I'm going to use my SDK here to make sure nothing is loaded. Yep, so nothing is loaded on that FPGA right now, so I'm going to load it. Okay, so I'm using that identifier I got from the describe API. It should take just a few seconds. And then we should be able to, yeah, so here it is. Okay, so what did we do here? We took that image I generated, copied to S3, and loaded it on one of my FPGAs. The FPGA is ready. Now I just need to set some environments again and run my program. Okay, so I run that C++ program you just saw, allocate some vectors, allocate some memory on the FPGAs, copy the data to the FPGAs, and run that kernel on the FPGA. 10 plus 32 is 42, right? If you want to count, there are indeed 256 values. Okay, so this is pretty simple. Of course, you would have to learn OpenCL, but I'm sure you've learned more complicated things. You wouldn't have to learn VHDL or Verilog. With this clever app, I could probably make a lot of money. I could take that FPGA image, put it on the marketplace, and you would only have to do exactly what I did: grab it, load it, run it. I would just give you a little information on how to use it, but that's it. You wouldn't have to code anything, synthesize, or route and wait for hours. You can just grab it and run it, which is very nice and innovative.
+
+Just a few words on FPGAs and deep learning. GPUs rule deep learning as we all know, but maybe there's a chink in the armor. They're great for training because training is all about running tons of matrix operations in parallel. The more you can run in parallel, the faster you'll train. You do that on a large number of samples to get maximum throughput, which is great. But what about inference? What about actually using models? When you do inference, sometimes you're going to classify, say, 200 images in a row, and that's fine. GPUs will work fine. But sometimes you need to classify just one image, one image every second or every once in a while. In this case, GPUs are not great because they're built for throughput. They're crunching machines, and if you want to have large batches of images, you have to wait for enough images to be available. If you're the guy that sent the first image, you have to wait for 31 or 63 additional images. So your latency is going to be degraded compared to just having your image classified. If you actually say, okay, I'm going to run inference on every single image, then you pay the GPU tax of allocating memory, starting the kernels, etc. So again, throughput is not going to be great because you have to pay that tax of setting up everything, running inference, and getting the results. You have to choose between latency or throughput, and obviously, power and memory requirements. If you want to do this on IoT devices or mobile devices, power budget and memory budget are always going to matter.
+
+You can actually implement neural networks on FPGAs. It's been done for a while. Here's an example. This is a very simple network, and the key operation in neural networks is what we call multiply and accumulate, which is for a given neuron. For a given neuron, we take inputs, multiply each by the corresponding weight, and then add everything together. Then we run it through the activation function. This is a basic example, but it shows that you can do this. You take multipliers, adders, and it's very easy to say, well, those four inputs and those four weights, I can build a multiply and accumulate operation. The DSP cells in FPGAs know how to do this perfectly. It's not complicated, but if you have 32-bit floats, you're going to use a lot of FPGA space. You're going to need lots of gates to do floating-point operations. So we should be able to run this efficiently provided that we can use smaller weights and smaller models. There's a ton of research currently to do that. One technique is called quantization. Instead of using 32-bit floats, it has been shown that you can use 8-bit integers. You can even go down to 2-bit integers for weights, and things still work pretty well. This reduces power consumption because int operations are much less power-hungry than float operations and simplify the logic. If you need to multiply 4-bit integers, it's much simpler than multiplying 32-bit floats. So you save gates and power.
+
+Another technique is called pruning, which is about removing unneeded connections. Neural networks have millions of parameters and connections, many of which are not necessary in a trained model. You can find the ones that don't matter and remove them, saving memory. Compression is important once you have quantized. Once you move from 32-bit floats to 4-bit integers, you don't have so many values for your weights. 4-bit gives you 16 possible values, so you can compress them with a dictionary or similar technique, saving memory again. At the end of the day, you end up with much smaller models. You can move your model from hundreds of megabytes to maybe tens of megabytes, and it's possible to load the complete model, all the weights, on the FPGA itself. On-chip memory versus off-chip memory is a huge speed and power advantage because you don't need to access DRAM off-chip to get weights.
+
+There's a lot of research on this. Here are some results. This gentleman, Song Han, is doing most of the work, and it's very impressive. He did some work on optimizing convolutional networks on GPUs, and I'll let you look at the numbers. They're absolutely amazing. He did it again on an LSTM network, and the results are very impressive. Huge speedups, huge power savings, and the ability to run everything on the FPGA itself without external memory. The third paper is using Intel chips, and they get similar results. The last thing I want to talk about quickly is that NVIDIA, very recently, published a new initiative for open architectures to build deep learning accelerators for IoT. It's a bunch of building blocks implemented in Verilog, all on GitHub. You can grab that and build your hardware solution based on that. It's brand new, and I'm mentioning it because you can use F1 instances to test and simulate everything. F1 instances won't be the final device, but if you want to synthesize and test, you can do it with F1 instances. You should definitely check this out; it's very interesting.
+
+As a conclusion, the battle rages on. I don't have a crystal ball, but a few days, a few years ago, it was just about CPUs, then GPUs showed up, and now FPGAs show up, and some people implement ASICs. It's fascinating. There is no single tool that will do everything. Just like for software, we knew that already, but now it's true for hardware as well. Work through your application requirements, your time to market, your skills, etc., and don't forget the marketplace might just have what you need with just a few clicks away. We're happy to give you many options when it comes to hardware and software, so please explore them, test them, and send us feedback. We love feedback, and using that, we can improve our products. Here are all the links I mentioned: F1 instances, the repo on GitHub with all the SDK and HDK stuff and the samples, much more samples than just the one I showed you, and those research papers. I really recommend them; they're extremely well written. Well, that's it for me. I want to thank you very much. Thank you for having me. Thank you for listening, and if you have questions, I'll do my best to answer them. Thank you very much.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">FPGA</span><span class="tag">AWS</span><span class="tag">DeepLearning</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

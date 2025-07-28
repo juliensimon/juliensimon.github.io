@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julien Simon Amazon Machine Learning From notebook to Production with Amazon SageMaker</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Julien Simon Amazon Machine Learning From notebook to Production with Amazon SageMaker</h1>
+        <div class="date">December 18, 2018</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/YYZKZm7uh4Q" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Julien Simon , Principal Technical Evangelist at Amazon - <a href="https://codiax.co/speakers/julien-simon/" target="_blank" rel="noopener noreferrer">https://codiax.co/speakers/julien-simon/</a>
+
+Check out the presentation on Slideshare: <a href="https://www.slideshare.net/Codiax/julien-simon-principal-technical-evangelist-at-amazon-machine-learning-from-notebook-to-production-with-amazon-sagemaker" target="_blank" rel="noopener noreferrer">https://www.slideshare.net/Codiax/julien-simon-principal-technical-evangelist-at-amazon-machine-learning-from-notebook-to-production-with-amazon-sagemaker</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            In this talk, we're going to dive into machine learning, so you might regret not having that extra coffee this morning. There's still time to get one, though. Let's get started right away.
+
+Just as you mentioned, AWS has been making infrastructure simple, scalable, accessible, and elastic for over 10 years, for literally everybody. We're trying to do the same for machine learning. That's my mission right now. That's why I'm living in airplanes, trains, and hotel rooms—just to show you that even if you're not a machine learning expert, you can get started with machine learning today. And if you are an expert and have bigger problems, like running at scale, building complex algorithms, or dealing with crazy data, we can help you too. This is really the target here. This is not a talk for machine learning experts or newbies; it's a talk for everybody.
+
+Over the years, we've built a machine learning stack, which you can look at in three different layers. The top layer is what we call application services. Services like Amazon Rekognition for image and video recognition, Amazon Polly for text-to-speech, Amazon Translate for translation, and so on. These services are, I would say, machine learning black boxes. You take your data, pass it to an API, and get an answer in real time. You can do object detection, face detection, translation, text-to-speech, speech-to-text, and more. No need to train a model or be a machine learning expert. If you can write one line of Python or Java, call that API, and you're done. These are great, and we keep working on them. However, today I'm going to focus on the lower level, where you do have to train a model on your own data, control what the algorithm does, and tweak all the parameters for the training job. The proper machine learning thing.
+
+The last thing you want to do is deal with servers. If you want to focus on building machine learning models, you don't want to worry about starting virtual machines, deploying SSH keys, and all the other tasks that come with it. You want to do machine learning, not DevOps. That's what we're going to focus on today. At the lowest level, if you do want to deploy SSH keys or build everything from scratch because you have a very specific use case, you can fire up EC2 instances and mess with them. But generally, most people I meet live in the middle. They have data and some level of machine learning expertise, so they know what they're doing, but they need to scale and don't want to worry about the infrastructure.
+
+Let's look quickly at the machine learning process. It usually starts with a business problem. The previous speaker made it clear that you might have a ton of gibberish transactions and need to figure out where they are. That's a proper business problem, but yours might be different. You need to have one. If someone comes to you on Monday morning and says, "We need a machine learning strategy," the first question you should ask is, "What are you trying to solve?" If they say, "I don't know, but we need a machine learning strategy," just ignore them. They'll come back eventually, maybe with a question. It's like a Dilbert cartoon sometimes.
+
+Once you have a business problem, you need to frame it. You need to determine if it's a problem that machine learning can solve. Maybe it's a compliance, legal, or organizational problem, and machine learning can't solve it. You need to figure that out. Can I answer that question with data, or should I do something else? Assuming you can, you start collecting data from different sources, ingest it in a central place, clean it, normalize it, and so on. On AWS, you can find all the big data tools to do this. Once the data is clean and ready for analysis, you move into visualization, feature engineering, building higher-level variables, training the first few models, getting some results, and starting to tweak.
+
+The problems start when you initially work with 10 gigabytes of data on your laptop, and then move on to hundreds of gigabytes, terabytes, and need dev infrastructure. If you have a team of 20 data scientists, all of them want that infrastructure. If you're working with complex data like images or video, you suddenly need GPUs. Now you need 20, 40, or 100 GPUs. No one's going to buy them for you, or maybe they'll buy 50 and then see the price and say, "No, that's it, no more." You run into infrastructure problems.
+
+Once you evaluate the model, if it's not good, you go back to the drawing board. If it is good, you need to deploy it, and the real problems start. You're no longer in the machine learning world; you're in the production world, which is much more hostile. In the sandbox, you could break things, and it didn't matter. Now, the model is deployed, and people are using it for real business. It needs to be up 24/7, scale, and be secure. Life is hell. You thought you'd be doing clever algorithms, but you spend half your time cleaning data and the other half fixing things in production. You might want to quit and go to a proper machine learning company. Are you depressed? Okay, job done.
+
+Unfortunately, machine learning is still very complicated if you do it the traditional way. You need to go through all those steps, and if you have no prior machine learning experience, it sounds overwhelming. You might think, "I don't even know where to start." And if you clear those first few steps, you get into setting up your TensorFlow or PyTorch cluster. You don't need one; you need five because you have five people on the team. Then you need to deploy and say, "Yeah, okay, right. We'll just write SQL statements and that's going to be clever enough." No, you need to move forward. This is the problem our customers were facing, and that's why we built SageMaker. Today, I'm going to show you how SageMaker solves this problem end-to-end.
+
+You go from notebook to production using the same tools. You start with notebook instances, managed Jupyter environments, which I'll use today. You can write your code and experiment on a fully managed instance without setting up everything. You can use built-in algorithms implemented by Amazon, which are very scalable and easy to use. You can just go and use them to solve your problem without writing a single line of machine learning code. If you want to go into deep learning, we also have built-in environments for MXNet, PyTorch, TensorFlow, and Chainer, and you can add your own if you want to. We try to provide all the building blocks so you can focus on solving the problem, not managing the plumbing.
+
+When you need to train, it's literally one click or one API call. One API call is enough to fire up a training cluster, no matter the size. You can do hyperparameter optimization, which is a technique to get the best results. Again, it's super easy to set up. When you want to deploy, one line of code deploys to an arbitrary fleet of web servers serving HTTPS predictions, or you can do batch transform if your use case fits that better. If you deploy on web servers, you can do auto-scaling automatically, just like you would on EC2. We're trying to solve all the DevOps stuff, letting you focus on the data, the algorithm, and the parameters.
+
+SageMaker is a popular service, launched at re:Invent last December, so it's not even a year old. We have a few public names using SageMaker, like Hotels.com, Cookpad, Grammarly, Tinder, and some bigger companies like GE and Dow Jones, working with enterprise data. It's not just web data; it's customer data, web logs, anything. It's a service you can use for any kind of data and any kind of algorithm.
+
+SageMaker is API-driven. We have a Python SDK that lets you drive all SageMaker activity. Training, deploying, optimizing, etc. It's straightforward. We have high-level objects that get the job done. There's also a Spark SDK if you're using Spark clusters in Python or Scala. You can use the command line interface, just like for every other service on AWS, and any SDK in any language, like Boto3 in Python, the Java SDK, the Node.js SDK, or even the PHP SDK. Machine learning in PHP? That's the future, I'm sure.
+
+Under the hood, it all works with Docker containers. The deep learning environments and built-in algorithms are Docker containers hosted in AWS. You don't have to build them or write machine learning code. You just write helper code to select the container for a specific algorithm, pull it to your training infrastructure with the right parameters, point at your data in Amazon S3, and train automatically. When training stops, the managed instances shut down, and the model is saved in S3. You can grab it and deploy it on your laptop if you want to, or continue and deploy it on a fleet of managed web servers. SageMaker creates the HTTPS endpoint, sets everything up, and within minutes, you can start predicting.
+
+When it comes to training, we have three options: built-in algorithms, deep learning environments, and custom environments. Built-in algorithms are pre-implemented and scalable. Deep learning environments are "bring your own script" environments. For example, you can take your TensorFlow code, throw it into the pre-existing TensorFlow environment, set some parameters, and train. You'll never install TensorFlow again, worry about NVIDIA drivers, or anything else. Just write your code and train. If you want to use another library not on the list or have a custom environment, like an in-house C++ library, you can build it in a Docker container following a few guidelines, and SageMaker will run it.
+
+We have a list of built-in algorithms. The yellow ones are unsupervised, and the orange ones are supervised. These solve typical machine learning problems, including linear regression, KNN, clustering, PCA, factorization machines, and deep learning algorithms for image classification and single-shot detection. We also have natural language processing algorithms like NTM, LDA, and Blazing Text, which I'll show you. Blazing Text is a natural language processing algorithm that can implement the word2vec algorithm, which is usually the first step when working with text data sets. It builds embeddings for sentences and can also do text classification. It's the first implementation to run on GPU and is the fastest you'll find.
+
+Let's switch to a notebook and see how this works. Don't worry if you don't get all the tiny details. I'm focusing on the big picture. Can you read okay in the back? A little bigger? Okay.
+
+The SageMaker workflow is always the same. You need to grab your data, put it in S3, maybe apply some preprocessing before you put it in S3, configure the training job, train, and then deploy. There's a huge collection of notebooks on GitHub, and they all have the same structure. Initially, I need to import the SDK, have a role to allow SageMaker to read stuff in S3, and have a bucket in S3. Nothing strange. Then I'll download this dataset called DBpedia, which has over 500,000 sentences labeled in 14 categories. I'll download it to my notebook instance, extract the dataset, and look at some samples. I have 500,000 sentences with labels corresponding to one of the 14 classes. The goal is to build a model that can classify sentences into those 14 categories.
+
+I need to put those classes in a dictionary for later use. For preprocessing, the dataset is pretty clean, so there's not much to do. The only thing we'll do is tokenize the sentences using the Natural Language Toolkit (NLTK) to ensure words are separated by spaces and punctuation is correctly split. This is typical preprocessing when working with text. Using this simple function, I'll preprocess the training set and validation set, upload everything to Amazon S3, and define variables pointing at those datasets in S3.
+
+Now we can train. I'm running in the Ireland region, so I need to grab the container name for the Blazing Text algorithm in the Dublin region. The only thing you need to know about Docker is the container name, which is hosted in Amazon ECR. I'm pointing to the right algorithm in the right place. I'll use the estimator object in the SDK, pointing to the algorithm, the amount of infrastructure I want to use, and the hyperparameters. I set parameters for the algorithm, define where the training data is, where the validation data is, and train. This creates the M4 for Excel instance automatically, pulls the right container, points at your data, and trains for 50 seconds. The instance shuts down, and you stop paying. You pay for 50 seconds, depending on the instance type.
+
+Next, we deploy the model. One line of code deploys it to an HTTPS endpoint hosted by an M4XL machine. Wait a few minutes, and you can start using it. You have an endpoint, an HTTPS URL, and you can post sentences to it using your favorite code or the predict API in the SDK. Here, I have two samples that I'm posting to the endpoint, and it predicts the probabilities. The first one is clearly about a company (99.6%), and the other is about an educational institution (99.85%).
+
+How much DevOps did you do here? Zero. What if you had 100 terabytes of data? Same story. You need a little more space in S3, which is unlimited, and maybe a few more instances. If you need more, you can say, "Train on 10 instances, please." No difference. Just tell SageMaker how many instances you need, and it will scale the training job.
+
+The last thing I want to cover is hyperparameter optimization. The part where you set hyperparameters can be challenging. You might not know the right values. Manual search, grid search, and random search are common techniques, but they can be slow and expensive. The best way is to use machine learning to discover the parameters. SageMaker uses techniques like Gaussian process regression and Bayesian optimization to find the optimal hyperparameters.
+
+Let me show you a quick example with a TensorFlow convolutional network trying to learn the MNIST dataset. It starts with importing stuff, downloading stuff, and uploading it to S3. We bring our own TensorFlow script, a simple CNN built in TensorFlow to classify digits into ten categories. The parameter I want to optimize is the learning rate, a key parameter in deep learning. I'm using the TensorFlow object in the SDK, passing our script, and training on one C5 Excel instance. Instead of setting the learning rate as a fixed parameter, I set it as a variable parameter within a range. I want to optimize for the minimal loss, the minimal validation error on this dataset.
+
+I launch the tuning job, and I can see it in the console. I can see the nine jobs and the learning rates selected for each. These values are predicted by Bayesian optimization and are non-intuitive. After a few minutes, the best training job is complete, using a value you would never have tried manually. A very tiny change in the learning rate can have a major influence on accuracy. This is the beauty of hyperparameter optimization. It finds the optimal spot in the parameter space and gives you values you would never have tried.
+
+That's it. Super easy. Here, it's a simple example with one parameter, but you can optimize for four or five hyperparameters if you want to. You'll find more examples in the notebook collection.
+
+Before I forget, re:Invent is 10 days away. I should be working on my sessions, but it's a pleasure to be here. A lot of new stuff is coming out, so watch this space for new services. If you want to get started, the top-level URL is ml.aws, covering high-level services and SageMaker. You'll find the SDK on GitHub, the Spark SDK, and a collection of notebooks. There are probably a hundred notebooks by now, covering all kinds of examples. You can also follow my blog on Medium and grab notebooks on GitLab.
+
+Thank you very much for inviting me. It's a pleasure to be here in Transylvania. No vampires so far, so let's see if I can survive the second night. If you have questions, I'll be around later today. You can follow me and ask all your questions on Twitter. Thank you very much.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">MachineLearning</span><span class="tag">AWS</span><span class="tag">SageMaker</span><span class="tag">DevOps</span><span class="tag">HyperparameterOptimization</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

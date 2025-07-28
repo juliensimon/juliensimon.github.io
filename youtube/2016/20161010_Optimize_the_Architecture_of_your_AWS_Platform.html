@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimize the Architecture of your AWS Platform</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Optimize the Architecture of your AWS Platform</h1>
+        <div class="date">October 10, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/UsdCU8x_i7k" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Talk @ The Family, Paris, April 2016
+
+Slides : <a href="http://www.slideshare.net/JulienSIMON5/scale-baby-scale-61262898" target="_blank" rel="noopener noreferrer">http://www.slideshare.net/JulienSIMON5/scale-baby-scale-61262898</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Thank you for the introduction. I did a lot of different things before joining AWS. But today, I'm here to talk about AWS. My name is Julien, I'm a technical evangelist for AWS, based in the Paris office, but I travel a lot. It's pretty cool to be in Paris and talk to French people. Most of you are French, but I'm doing this in English. It's a fashion thing.
+
+If at any time during the presentation you want to ask a question, if there's something you don't understand, if my English is broken, or if your English is broken, please raise your hand and interrupt me. This is perfectly okay. And of course, I'll be around at the end of the presentation, so if you want to ask questions in French afterwards, that's fine too.
+
+My goal for today is to ensure that you leave this room with a good understanding of all the crazy stuff I'm going to talk about. So please, please ask questions, okay? I changed the title, as we have this little game of changing the title. So I figured, let's change it another time. My title for today is "Scale Baby Scale." This is really what we're going to do.
+
+Let's get started. You guys are building web applications, web platforms. You're going to start in your garage, basement, or your dad's basement, who knows? On day one, it's only going to be you. One user, a new project. You have this nice business idea that you want to grow into a platform. It's quite likely you'll start with a single EC2 instance, a single virtual machine. You'll put everything on it. You won't worry much about scaling because that's not the point. The point is to get to your MVP or prototype. So you'll put everything on that instance: the web application, the database, all your tools, etc. It's a single instance with an IP address accessible from the internet, hopefully with a domain name like mysupercoolstartup.com or mybilliondollarstartup.com.
+
+Day one, this is good. You might launch a first version, a private beta, start building your community, and add users to the platform. As you get more traffic, the obvious choice is to get a bigger server. This is how you've been trained in engineering school or university. You need a bigger server. On AWS, it's very easy to have a bigger server. You stop the existing server, select a bigger one, and start it. It takes about a minute to do that. So you'll scale up, adding a bigger server with a more powerful CPU, more RAM, etc. This is a very natural way to do things, and it's good. AWS has a nice selection of instances, from small to extremely powerful ones with 36 cores and hundreds of gigabytes of RAM.
+
+However, this will end at some point. If your app is successful, you'll get more traffic than a single instance can handle. You'll hit the wall. It's okay in the beginning, but don't wait until you hit the wall to consider a different option. You can still handle a few hundred or a few thousand users with this solution, but you'll face performance issues and no failover capabilities. If that instance dies, your application goes down, which is bad. You have all your eggs in one basket: the web app, the database, all your tools, on one instance. We need to fix that.
+
+Hopefully, by the second day, you realize this isn't a highly available architecture. First, you'll split the web part from the database part. This is good practice in any platform to separate the web tier from the database tier. You'll keep your web instance for the web app and consider where your database will live. You have several options. You could run your own database by starting another EC2 instance and installing MySQL, Postgres, or any other database. You could also use managed services where you don't have to start a virtual machine and install a database. You can access a database service running in AWS, such as RDS (Relational Database Service), which supports MySQL, Postgres, MariaDB, SQL Server, Oracle, and Aurora, a highly scalable newcomer. RDS is very popular, with over 100,000 customers.
+
+If you want NoSQL at this stage, it's unlikely you need it, but you could use DynamoDB, our managed NoSQL service. For analytics, you could use Redshift, a parallel and extremely efficient data warehouse service. Let's keep it simple. We're a small startup building a PHP application with a MySQL server. We'll stick with RDS and MySQL. We're growing slowly, picking up traffic, and have hundreds of users. We have a web instance and a separate RDS instance, a managed service, which is nice because you don't have to worry about backups or other maintenance tasks. You can focus on building your application and growing your business.
+
+If your server goes down and users start to complain, you need to fix the availability issue. You'll start a second web instance, a second web server, and put a load balancer in front of it to ensure transparency for your users. You'll start these instances in different availability zones, which are completely independent from one another. If one availability zone goes down, the infrastructure in other availability zones keeps running. This is backed by multiple data centers, so if one AZ goes down, the others keep running. You need instances, web instances, and database instances in different availability zones to build high availability in your application. This is the foundation of many applications and architectures.
+
+By just growing this way, you could go extremely far. It doesn't need to be more complicated than that. Your business is growing, your mobile app is picking up, and you're in the top five downloads on your favorite app store. You're growing to thousands, maybe hundreds of thousands of users, and you can still rely on the same architecture. The only thing you'd do is add more web servers and maybe more database instances. Just scale out instead of scaling up. Scaling out involves adding lots of small servers working in parallel, versus trying to get bigger and bigger servers until there are no bigger servers. This is a typical scale-out architecture used by thousands of companies. You need load balancing, EC2 instances for your web servers, RDS for your database, and multiple availability zones to guarantee the availability of your application.
+
+I like simple things because they're easier to run, manage, and scale. You could go extremely fancy or extremely simple, but this will scale very, very high. However, can it be improved? Of course. Let's look at how to make this even more scalable and efficient. One issue with this architecture is serving everything from the website, including static content. If you're serving images, JavaScript, CSS, videos, etc., it's a shame to go to the web server to serve that content. The first thing we'll do is offload all static content to CloudFront, our content delivery network (CDN). Instead of storing this content on your instances, you'll store it in S3, our object store, where you put all your files, images, and videos. It's stored off-instance and served to users through CloudFront, which has over 50 edge locations worldwide. If you're hosting your platform in Ireland, your web server and database will run on our servers there. If you have a user in Marseille, and we have a CloudFront point of presence in Marseille, all static content will be served from Marseille. This improves performance, as heavy content like videos and pictures will be downloaded locally from Marseille, while dynamic content will be served from Ireland.
+
+We're offloading all that stuff to CloudFront, potentially using smaller and less expensive web instances. The second thing to offload is session and state management in a web application. All user data and anything you need to store during a user session should be offloaded. Instances come and go, so you don't want too much local storage. It's a good idea to offload this to DynamoDB, which is a good place to store session data, cookie data, and anything else you need to manage. This gives you performance improvements and peace of mind that if an instance dies, you don't lose any data because it's stored off-instance.
+
+CloudFront can also manage some of your dynamic content. You could put CloudFront directly in front of your load balancer and cache some dynamic content in CloudFront. The idea is to offload as much traffic as possible from the web instances. Anything you can handle before the web servers is a good idea. This is a better platform, but we can go even further with auto-scaling. Auto-scaling adds and potentially removes resources on demand based on metrics. You could monitor CPU load, memory usage, and network traffic, and say, for example, if CPU load exceeds 75%, you need more instances. If CPU load goes below 20%, you can remove some web servers. Auto-scaling is easy to deploy and used by thousands of companies. By using auto-scaling with the same architecture, you can scale to hundreds of thousands of users. The only difference is the auto-scaling groups around the instances, where you define metrics and policies to add or remove instances automatically.
+
+Auto-scaling works in the background, and you don't have to worry about adapting your infrastructure to traffic. It will scale up when needed and down when traffic is low, reducing infrastructure costs. Huge companies run with this architecture. For example, WOW, an airline company based in Iceland, runs their whole website and booking system on EC2, RDS, and auto-scaling. They scale like crazy, and it's a very good, easy-to-understand, and easy-to-scale architecture.
+
+However, the world is changing, and you should look at new technologies. No server is easier to manage than no server. This means if you don't have any servers, life is better. This is a quote from Werner Vogels, the CTO of Amazon, who has been there for a long time. He'll be at the AWS Summit in Paris on May 31st, giving the keynote. It's always a good time listening to him, and you should show up.
+
+How could we have no servers? For 15-20 minutes, I've been talking about EC2 servers and RDS instances. How could you have no servers? We use the force. Getting rid of servers means getting rid of EC2, virtual machines, and any service that still uses instances like RDS. We'll use only managed services that are fully distributed and hide the underlying infrastructure. I'll talk about AWS Lambda, which, when combined with managed services, forms a serverless architecture.
+
+To illustrate, let's look at some customer examples. Localetix, an analytics company, processes 100 billion events per month. They get traffic from the internet, send it to SQS (Simple Queue Service), a message queue, and then process the data, pushing it to Kinesis, a real-time message queue. Lambda functions pull data from Kinesis and invoke microservices. Using a managed service that scales automatically and is highly available makes life easier.
+
+Another example is Nordstrom, a US retailer. They built a recommendation engine using Kinesis, Lambda, and DynamoDB. Previously, it took 20 minutes to deliver a recommendation, but now it's immediate and relevant. They've decided to go all-in on AWS, closing their data centers and moving everything to our platform.
+
+AdRoll, an ad tech company, processes 60 billion events daily. From day one, they decided to use only managed services and Lambda to build and scale their platform. They don't have to worry about a single server, which means no monitoring, installing, securing, or fixing. They don't have to worry about a single server.
+
+Let's look at a live demo. I've created a REST API called `/prod/logger` to log events. It goes through the API Gateway, a fully managed service, which calls a Lambda function to write into DynamoDB. A trigger in DynamoDB calls a second Lambda function, which pushes content to Kinesis Firehose, and finally to S3. This is a simple example, but it illustrates what I've mentioned.
+
+I'm calling the API with curl a thousand times, sending a JSON document. I'm calling the API a thousand times, and within a minute, the data should show up in S3. I'll show you the steps, but let's see the result first. I'm calling an API and this should go through the pipeline. The data should be delivered as files to S3 within a minute.
+
+Here's the S3 console. I'm deleting old files. I'm just calling an API, and this should go into the pipeline. The files should appear here. There they are. I can open that file. I get my events. It's a simple application, calling an API and going through some steps to log data into my S3 object store.
+
+How would you do this in the normal world, without cloud services? With classical infrastructure, you might log to syslog or log locally and push logs to a central place. This is fine for one server, but what about 200 servers or 1 million hits per second? How do you get all that data under a minute from the web server to a central location for analytics? One hit per second is easy, but it gets tricky as you scale.
+
+This is working, and I get a file every minute with my content. How does it work? How many servers? Let's look at the different steps. API Gateway is a REST API with a logger resource and a post method. It's just configuration, zero lines of code. Here's my Lambda function, written in Python. It's extremely simple, adding a timestamp to the JSON document and storing the event in DynamoDB. This is really three lines of code.
+
+For DynamoDB, you create a table, give some scaling information, and use the Python SDK to write to it. You don't worry about installing, managing, or patching a database. DynamoDB is a managed service. The only thing you have to do is create a table and configure scaling.
+
+I have a trigger in DynamoDB that calls another Lambda function. This function is a little more complicated because it batches events. It waits for 10 updates before calling the function, making it more efficient. It iterates over the records and sends them to Kinesis Firehose. This is about four lines of code.
+
+Firehose is a scalable pipe where you can write data to different places within AWS. I'm writing to S3, configuring the buffer size and flush interval. If one megabyte of data is written, Kinesis flushes the pipe, or it flushes every 60 seconds. I can compress and encrypt the data automatically. Monitoring shows the data being processed and stored in S3.
+
+How many servers for Firehose? Zero. How many lines of code? Zero. In total, we have zero servers, zero instances, and zero virtual machines. The total lines of code are about 16, but it's really less than 10 lines of code.
+
+Imagine your business is growing like crazy, and you have 1 million hits per second. Do you have to change anything to handle this? Not much, because all these are managed services. Provided you have the right limits, all services are managed by AWS, guaranteeing transparent scalability. If you need a thousand Lambda functions running in parallel to store traffic into DynamoDB, it's all transparent.
+
+The benefit of serverless infrastructure is transparent scalability. You should never go down and never have scalability problems. If there is a problem, it's probably our fault, and we'll fix it. This is a cool architecture, and you can go very high with it. Some pieces of your application can fit well in this model. For example, if you have a mobile app and want to build REST APIs, this is a dream way of doing it.
+
+If you tried something like this, the limit is probably how much you're ready to spend. Some projects can be done completely like this, and some can't, but pieces of the project certainly can. For logging or moving data from A to B in a scalable fashion, this is a good way to do it.
+
+Supercell, the creators of Clash of Clans and Boom Beach, had 100 million active users on the same day. They manage 45 billion events daily, using Kinesis, EMR, DynamoDB, S3, and Glacier. They don't worry about infrastructure, focusing on user experience and quality of service. AWS takes care of the plumbing.
+
+Airbnb is another success story. Their ops team is only five people, running the whole infrastructure. They love their weekends and holidays, and they get great deals on rentals. If five people can run Airbnb, what does that tell you about AWS infrastructure?
+
+If you're thinking about creating a startup, please go and do it. AWS has a free tier for the first 12 months, so it's not expensive to start. You pay only for usage, and if you shut everything down, you stop paying. Try all the services, and if you're interested in Lambda, you should really look at it. A colleague is writing a book on Lambda, available on the Manning website.
+
+We have events like DevOx next week and .scale. More importantly, the AWS Summit is coming up on May 31st in Paris. It's free, with tech and business sessions for beginners and advanced users. If you're looking for training, consider the Awesome Day, a free one-day event in Paris every quarter.
+
+We also have user groups in Paris, Lille, Rennes, Nantes, Bordeaux, Lyon, and Montpellier. You can find these groups on meetup.com. Join us for monthly sessions and a growing community on Facebook. Follow the official AWS Twitter account for updates.
+
+Thank you for listening. You have my email and Twitter account if you want to get in touch. Feel free to take the stickers and business cards. If you have any questions, I'm more than happy to answer them. Thank you so much for listening and to the family for inviting me. It's always a pleasure to be here.
+
+**Q: What metrics should we monitor when running a web server or DB server?**
+
+A: The easy answer is it depends on your application. For a general-purpose web application, CPU load is usually the number one metric. If you're running a B2C website or e-commerce site, your traffic comes from users, and CPU is where you need to look. Start with CPU usage, and if it stays above 50% for a while, consider scaling. Don't wait for CPU to be at 90% to scale, as you'll already have latency and a poor user experience. Scale early. Also, use external monitoring tools like Catchpoint or Eurylick to get a real sense of what users are seeing.
+
+**Q: Can you explain Lambda?**
+
+A: Lambda is a function-as-a-service or code-as-a-service. You deploy one function, which is stateless and terminates after invocation. The idea is to break your application into small, parallel processing steps. Instead of a large monolithic application, you have many microservices that can scale independently. Lambda scales automatically, so if you need a thousand parallel invocations, Lambda will handle it.
+
+**Q: Should I start on AWS or on my own machine?**
+
+A: I recommend starting on AWS. It's cheap, especially with micro instances in the free tier. For parts of your platform that are small processing steps requiring a lot of parallel execution, try building them as Lambda functions with APIs. Try EC2, RDS, and Lambda, and don't believe me blindly. Experiment and see what works for you.
+
+**Q: How do you handle dependencies between Lambda functions?**
+
+A: Lambda functions can call other Lambda functions. You decide how they work together. For example, Lambda A can call Lambda B just before it terminates, or Lambda A can push a message to Kinesis, and Lambda B can wait for that message. The orchestration is up to you, and there are many ways to link Lambda functions.
+
+**Q: What is the difference between Lambda and microservices?**
+
+A: Microservices is a concept and philosophy of breaking monolithic applications into smaller, independent services. Lambda is an implementation block for building microservices, especially with the API Gateway. Microservices are easier to write, test, debug, and scale independently.
+
+**Q: What is Route 53?**
+
+A: Route 53 is our DNS management system. You can host your domain names, CNames, and zones within AWS. It's a managed, highly available service that can assign domain names to your instances or services. Route 53 also provides routing and load balancing policies, such as round-robin or latency-based routing, which can route users to the nearest infrastructure for better performance.
+
+Thank you again. I'm still around for a little while, so please grab the stickers and ask more questions if you have them. Thanks.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS</span><span class="tag">Scaling</span><span class="tag">Serverless</span><span class="tag">EC2</span><span class="tag">Lambda</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

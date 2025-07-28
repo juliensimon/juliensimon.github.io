@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Amazon CloudWatch Events Lambda Spark to Process EC2 Events</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Using Amazon CloudWatch Events Lambda Spark to Process EC2 Events</h1>
+        <div class="date">October 10, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/yBWVN_iaHvQ" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Talk @ AWS Summit Tel Aviv, June 2016
+
+Slides : <a href="http://www.slideshare.net/JulienSIMON5/using-amazon-cloudwatch-events-aws-lambda-and-spark-streaming-to-process-ec2-events-june-2016" target="_blank" rel="noopener noreferrer">http://www.slideshare.net/JulienSIMON5/using-amazon-cloudwatch-events-aws-lambda-and-spark-streaming-to-process-ec2-events-june-2016</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Actually, this is a good session to end the day because, to be honest, it's a little bit silly. It's really just an excuse to play with CloudWatch events, to play with Spark streaming, and obviously, this is not intended to be deployed in real life. Maybe it is, but if you do something smart with this, I'd be really curious to know. So this is really just an example of what you could do by combining a few AWS services. But I think it's still cool. And some of these topics are actually not discussed as much. So I felt, hey, let's combine them and show them to you.
+
+What we're going to do is catch EC2 events—instances starting, instances terminating, instances stopping, etc.—and funnel them from EC2 to a Spark cluster, for literally no good reason other than doing it. First, let's talk about EC2 lifecycle events. Who knows about that? Who's heard about that? A couple of people. It's something that usually you don't really look at. So basically, this means the normal lifecycle of an EC2 instance. Some of the states are well-known; you see them in the console when you start and stop instances. For example, pending, in-service, terminating, and terminated. The vertical ones, the ones in the middle, you're used to seeing them, right? But actually, there are some extra states which are pending-wait, pending-proceed, terminating-wait, and terminating-proceed, which most of the time are not used. However, there's a way to insert some extra processing between those states. And so what that means is before an instance actually goes in service, you're able to execute some processing. We'll see what we can do here. And before an instance actually terminates, you're also able to insert some processing, which is pretty useful.
+
+What can you do with that? Well, if you saw my presentation this morning on CodeDeploy, CodeDeploy uses lifecycle events to deploy code on starting instances. When an instance starts, CodeDeploy gets a notification and deploys the code that needs to go onto that server. So that's an example. You can see on that slide some other examples of what you could want to do when an instance starts or terminates. Register them with DNS, grab some logs before the instance dies. There are many initialization and cleanup tasks that you can automate like that, which are pretty inconvenient to automate if you don't have events such as these. So there are many ideas on what to do here.
+
+What we're going to build is this. And yes, there's Lambda again. You didn't think you could escape it, right? So what we're going to do is start some EC2 activity. For example, we're going to start some instances and stop some instances, basically changing their state. This is going to send an event to CloudWatch automatically. There's a part of CloudWatch where you can define rules on those events and say, OK, when EC2 activity happens, when auto-scaling activity happens, do something. And so what we're going to do in this case is call a Lambda function. Pretty simple. And this Lambda function is going to write those events into Firehose. Firehose is a higher-level abstraction on top of Kinesis. I guess you're familiar with it. It's a very scalable pipe, but in this case, I'm going to point it to S3. So I'm going to write those events to S3 in a bucket, and I will start a Spark cluster that is constantly listening for new files in this bucket. Anytime something happens there, it's going to grab the lines inside the file and print them. So again, this is not doing anything useful; it's just illustrating the path from EC2 to somewhere else, but I'm going to highlight the specific parts where you could insert something useful.
+
+So let's look at the actual console and how these things are configured. Here's the CloudWatch part. You've got CloudWatch alarms and logs, like in the previous presentation, and there's this part called events, which is the part I'm interested in. This is where I can define rules. As of now, you can use different event sources like EC2 instance state changes, auto-scaling, or even AWS API calls. So you could say, when a specific API is called within AWS, do something, which could be really useful as well. And you can add targets, and those targets could be SNS sending a notification, sending a message to an SQS queue, writing to a Kinesis stream, or in my case, calling a Lambda function. So that's what I'm going to do. I have defined two rules here, which are very similar. One for auto-scaling, so basically, anytime something happens in auto-scaling for all events, please call this Lambda function, which I'm going to show you in a minute. The same thing goes for EC2 lifecycle: anytime an EC2 instance changes its state, please call this Lambda function. It's very simple to do. This is how you do it in the console. I'm going to show you how to do it with the command line as well.
+
+Let's look at the Lambda function first. Can you see it in the back, or is it too small? Good. So it's a Python function. What it needs to do is take the event sent by CloudWatch and write it into Firehose. So I need to grab access to Firehose, which I'm doing here. Then, from that event, I'm extracting the instance ID that you see in the EC2 console, I'm extracting the state, and I'm printing this. Just saying, hey, instance X is in this given state, and I'm putting the whole record into my Kinesis stream. Obviously, this isn't doing anything useful, but this is where you would use lifecycle hooks to do something useful when the instance starts or when the instance terminates or when the instance is stopped, for example. You would look at the state and say, okay, if the instance is pending, then I get a chance to do something before it actually starts and becomes in service. If the instance is terminating, it's dying, so maybe I need to get some logs or do some cleanup, and this is where I would do it. A Lambda function is a great way to do that. The only limitation is you need to do it fairly quickly; you cannot hold an instance in the terminating state forever. There's a timeout, and a Lambda function has a maximum timeout of five minutes, so it needs to be fairly fast.
+
+How would you do this with the command line? Just quickly, because no one likes to click in the console. The problem is you don't remember what you've done, and then it's a problem. Scripts are more repeatable. So these are the JSON descriptions for the rules. Once the function exists, you would grab its ARN, which is a resource name, create a rule, define the Lambda function as a target, and grant permission to the Lambda function to write into Firehose. You need a rule and a role for that. Fairly simple. Every time you create a Lambda function, and specifically a new version of a Lambda function, there's a CloudWatch log group that is created automatically. So anything that the function prints ends up in a log. For reference, these are the commands you would use to grab those logs. Again, you probably want to fetch the Lambda logs and parse them to see what's going on.
+
+Then I need a Firehose pointing to S3, so not much to show here. You just create that with one API call or one click. It's going to point to S3 to this bucket and flush every time one megabyte has been written or every 60 seconds. I'm not compressing data because I never found out how to read compressed files in Spark. If someone knows, I'd be happy to know, but it seems to be an unsolved problem for mankind or me, especially.
+
+So at the end of the rainbow, I have the S3 bucket where I should see my files showing up. And obviously, I created a Spark cluster because that takes a few minutes, and we have no time to waste. So shall we try that? First, I should probably connect to my Spark cluster. Yes, ASCII art, fantastic. Launch the Spark shell, which takes way too long to start, but that's fine. And what am I going to do now? Well, I just need to grab my Spark code. This is the Spark code. It's Scala code, actually. Anybody write Scala? Did you tell your family? No. Yeah, you tell them you're a PHP developer, huh? It's safer.
+
+Okay, so it's a simple job. This is just importing some classes, asking Spark to shut up most of the time because it's very verbose. Then this is just giving access to S3 because the Spark job needs to listen to S3. Don't get excited; these are not my master keys. So this is just a very limited account which I will delete after the demo. I'm creating a streaming context which will execute every 10 seconds. And I'm creating a stream from all the new files created in this bucket. So this will run every 10 seconds, and what will it do? It will just print the lines. So I will just grab that and hopefully paste it without error. Yes. Okay, there it goes. So it's going to start in a few seconds. You're going to see this message every 10 seconds. For now, nothing's happening, nothing's being written to S3 because there is no EC2 activity. But let's start some EC2 activity and see if we get some output.
+
+All right, so what could I do? I could restart my Minecraft server, for example, which is obviously for professional purposes. Start. I could stop my machine learning client. I don't think I'll need it today. Stop. And I could launch some silly instances just to create some traffic. Yeah, let's do that. Launch. Okay, so... Remember the architecture? Here it is. Okay, so I created, started an instance, stopped one, and resumed one. That's multiple events. So CloudWatch gets that. It's going to call the Lambda three times. Lambda is going to write into Firehose, Firehose is going to flush into S3, so probably that's going to be in one single file, and the Spark job should see this file, read all the lines from it, and display them. So hopefully, this is running. Do we have a file? Good. We'll look at the events later. Yeah, it worked. And of course, if I look at the file, I'll see the exact same thing.
+
+How real-time could this be? The limiting factor in this case is Firehose, which will not flush more often than 60 seconds. So at most, you're going to wait 60 seconds, maybe 70 if you're really unlucky because of the 10 extra seconds in Spark. But I could lower that to one second, so let's say under a minute at most, and you would get those notifications. Let's do it one more time just to see. I wasn't lucky. Let's kill, all right, let's do it the other way. So I'll start that guy. I'll terminate, no, not this one, yeah. Just terminate this one. All right, man, Minecraft, I don't need it today. Stop. Oh, it is stopped, so I should start. All right. Start. Okay, so same story, more events into S3. So I should see a file in one, maybe less than one minute, and Spark again will grab it. You know, I keep saying this is silly, but okay, you could probably still do some stuff with that. You could do some monitoring, for example, or track API calls. To say, okay, this specific API has been called, and this could trigger automatically a job somewhere using a Lambda function or maybe even Spark.
+
+So, you know, it's just a way to show that when you start using managed services like CloudWatch, Lambda, Firehose, and even EMR, you can build rather complex things with very little code. You've heard the serverless story 29 times since this morning, so I'm not going to repeat it. But this is really the true power of those architectures: you write very little code. It's mostly about configuration, connecting services like Kinesis, Lambda, CloudWatch, S3, EMR, etc. And you probably end up writing more CLI scripts than actual code, which I think is good because you can automate a lot of stuff.
+
+So I think that's it. You will get the slides later on, of course. If you have feedback, happy to read it. And thanks again, Toda Rabah, and thanks for sticking with me until the end of the day.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS</span><span class="tag">CloudWatch</span><span class="tag">SparkStreaming</span><span class="tag">EC2LifecycleEvents</span><span class="tag">LambdaFunctions</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

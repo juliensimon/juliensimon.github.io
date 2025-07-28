@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheduling the training of a SageMaker model with a Lambda function</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scheduling the training of a SageMaker model with a Lambda function</h1>
+        <div class="date">May 18, 2018</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/FJaykbAtGTM" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">In this video, I show you how to quickly build a scheduled Lambda function in charge of retraining a SageMaker model. Then, we deploy it with the Serverless framework.
+
+Blog: <a href="https://medium.com/@julsimon/retraining-sagemaker-models-with-chalice-and-serverless-71a585ddbc7d" target="_blank" rel="noopener noreferrer">https://medium.com/@julsimon/retraining-sagemaker-models-with-chalice-and-serverless-71a585ddbc7d</a>
+
+Code: <a href="https://github.com/juliensimon/aws/tree/master/lambda_frameworks/serverless/sagemakerscheduler" target="_blank" rel="noopener noreferrer">https://github.com/juliensimon/aws/tree/master/lambda_frameworks/serverless/sagemakerscheduler</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Hello, this is Julien from Arcee. In this video, I'm going to show you how to retrain automatically a SageMaker model that you've already trained. The rationale for this is that once you've done experimenting and figured out the right algorithm and parameters for your model, as new data keeps flowing into your platform, you'll want to train the model again and again. This could be every day, every week, or even every hour or two hours to have extremely fresh models. Obviously, no one wants to do this manually, so today we're going to use a Lambda function, schedule it, and have this function run on a schedule to train our model repeatedly.
+
+Of course, we need a model to start from. I took this example from the collection of Amazon SageMaker examples on GitHub. This one trains a built-in image classification model on an image dataset, but feel free to use any of your jobs; the process will be the same. I've trained this model before, and it's even live. I can still see the endpoint for it. So, this model is already trained, and now the goal is to train it again and again.
+
+You can schedule Lambda functions using CloudWatch Events. CloudWatch is the monitoring service in AWS, and it has a feature called CloudWatch Events that lets you schedule activities, including triggering Lambda functions. This sounds like a good idea, so let's try it.
+
+First, let's look at the code for our Lambda function. It's Python and not a lot of code. I'll show nine numbers to make it easier to follow. The idea is that there is an existing job, and we likely don't want to change all its parameters. The S3 location for the training and validation sets will probably remain the same, and we'll keep the same output location and VPC settings if applicable. We might change the instance type and count, especially if we have more data and want to run faster. We also need to provide a prefix for the job names because training job names must be unique.
+
+The function grabs a few things from environment variables. On line 5, we get the name of the training job we want to retrain, the prefix for the new job names, and the instance type and count we want to use. Everything else is copied from the previous job. On line 8, I describe the previous training job and build a new name using the prefix read from the environment variables. I then update the actual training parameters from the job I just described. I can call `sagemaker.create_training_job`, but one parameter, VPC config, is a bit tricky because it doesn't accept an empty value. So, on line 22, we can provide empty hyperparameters and tags, but VPC config must either be set to something valid or not set at all. This is why there's some code duplication here, and I've opened an issue to address this inconsistency in the API.
+
+I'm reusing many training parameters, such as input data config, output data config, and topic condition. The ones I update are resource config and the new name. This is a simple Lambda function that I call. Now, we need to deploy it and create an event source, which should be a CloudWatch event. You could use Boto3 or CloudFormation, but I'm going to use the Serverless Framework to automate this. The Serverless Framework is an open-source project that makes it easy to deploy Lambda functions and event sources like API Gateway and CloudWatch events.
+
+The only thing I need to write in addition to my function is a small configuration file. This is deployed in AWS as a Python function. We need IAM permissions to describe and create training jobs, and to pass the SageMaker role. The stage for the function is `dev`, the region is `us-west-1`, and the handler is the entry point for the function. I'll schedule this function every three minutes, which is too low for production but works well for a demo. I can use the `rate` syntax, but you can also provide a cron expression if you prefer. I'll pass environment variables for the name of the previous training job, the prefix for new jobs, the instance type, and the instance count.
+
+Deploying this is as simple as calling `serverless deploy`. It will package the Lambda function and run a CloudFormation stack to create the Lambda function and the event source. If we jump to CloudFormation, we can see the stack running. It should be a reasonably fast stack. The Lambda function is created, and now it's setting up the CloudWatch event. We can see the function in the Lambda console, but it's missing the trigger, which CloudFormation is building. Once it's done, the function will be triggered by CloudWatch events, output logs to CloudWatch, and have the necessary permissions to call SageMaker and pass the SageMaker role.
+
+After deploying, the function is ready and configured to be triggered by CloudWatch events. Within a few minutes, we should see a new training job in the SageMaker console. This is a simple way to use the Serverless Framework, and it's great for defining event sources. If we wait a few minutes, we'll see the first job firing up. It uses our name prefix, completed with the date and time, and runs on two p3 instances, as expected. The rest of the parameters are the same because we copied them.
+
+Once these jobs are complete, you can deploy the models automatically, update endpoints, or run tests before deployment. You can use a similar technique for moving models to a testing environment. If we wait a bit longer, we'll see another job firing up. However, I don't want this video to be too long, so there you go. Automatic retraining for lazy people like me in just a few lines of Python. The code is on GitHub, and I'll put the GitHub link in the description of the video. I hope you like it, and thank you for listening. Talk to you next time. Bye-bye.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS Lambda</span><span class="tag">Amazon SageMaker</span><span class="tag">CloudWatch Events</span><span class="tag">Serverless Framework</span><span class="tag">Automated Model Retraining</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

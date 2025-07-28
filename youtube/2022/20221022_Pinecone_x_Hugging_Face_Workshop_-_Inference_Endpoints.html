@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinecone x Hugging Face Workshop   Inference Endpoints</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pinecone x Hugging Face Workshop   Inference Endpoints</h1>
+        <div class="date">October 22, 2022</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/78VIBB9ZaR0" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">This workshop teaches how to use Hugging Face Endpoints and Pinecone in real-world applications with Julien Simon, Chief Evangelist at Hugging Face, and Gareth Jones, PM Relevance & Experience at Pinecone.
+
+Hugging Face Inference Endpoints allows access to straightforward model inference. Coupled with Pinecone, we can quickly generate and index high-quality vector embeddings.
+
+Learn more about Pinecone: <a href="https://www.pinecone.io" target="_blank" rel="noopener noreferrer">https://www.pinecone.io</a>
+
+Try Pinecone + Hugging Face: <a href="https://docs.pinecone.io/docs/hugging-face-endpoints" target="_blank" rel="noopener noreferrer">https://docs.pinecone.io/docs/hugging-face-endpoints</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Welcome to today's workshop, where you will learn how to use Hugging Face and Pinecone in real-world applications. I am Amanda Wagner, the senior community manager here at Pinecone. While I assume most of us have a baseline understanding of both Pinecone and Hugging Face, to reiterate, Pinecone is a vector database that makes it easy to build high-performance vector search applications. Gareth will, of course, add additional color to that as we go on. But before I throw it over to our fabulous host, let's do a few housekeeping items.
+
+First, we ask that you use the chat for introductions and general comments. However, if a question comes up, please add it to the Q&A portion of the Zoom, not the chat. We will reserve roughly 15 minutes at the end of this workshop for your questions. This helps us stay organized and answer as much as we possibly can. If you miss something, don't worry. We are recording this session and will share it with you post-event. I also encourage you to follow us on social media, where we share upcoming and past events. If you have a question after the event, perhaps something that came up post-workshop, you can email me personally, and I will serve as your inquiry liaison to our host. You can email me at Amanda@pinecone.io.
+
+Now, without further ado, I want to introduce Julian Simon, chief evangelist at Hugging Face, and Gareth Jones, PM of relevance and experience at Pinecone. Julian, why don't you start us off by telling us a little bit about yourself and Hugging Face?
+
+Thank you very much for inviting me today. It's a pleasure to meet all of you. My name is Julian. I'm based outside Paris, and I am the chief evangelist for Hugging Face, meaning I work on a daily basis with customers and developers to help them understand and adopt Hugging Face tools and services. Let's jump into the presentation, if that's okay. I'll tell you a little bit about Hugging Face and why we think you should pay attention.
+
+So, it's 2022, and one of the things we see happening in machine learning and deep learning is the rise of transformers. For a couple of years, transformers have been on everyone's radar when it comes to training deep learning models. But now, we've moved up a step, and that's why I'm saying transformers are deep learning now. If we look at industry reports, like the State of AI report from last year and the Kaggle data science survey from last year, we see clear statements on transformers becoming a general-purpose architecture for deep learning, displacing traditional architectures like CNNs, LSTMs, and RNNs. Not a week goes by without one of those state-of-the-art transformer models breaking new benchmarks and pushing the envelope on what's possible with deep learning and transformers.
+
+The latest State of AI report just came out a few days ago, and I encourage you to check it out. Slide 42 tells us that there's a generalization process at work for transformers. A few years ago, you would associate transformers with natural language processing, which is where they started with Google BERT and follow-up models. Now, NLP is actually less than 50% of Transformer papers for 2022. Over half of the papers deal with different modalities, such as images, videos, audio, multimodal applications, protein folding, and recommendations.
+
+At Hugging Face, we advocate for a reinvention of deep learning, which we call Deep Learning 2.0. This involves transformers replacing traditional architectures, transfer learning gradually replacing the need to build, curate, and label huge datasets, and instead working with off-the-shelf models pre-trained on a ton of data, sometimes using them as is, and sometimes fine-tuning them on domain-specific data. The third aspect is the rise of machine learning hardware. GPUs are still around, but we work with companies like Graphcore, Habana, Intel, and the ONNX project to build tools that leverage hardware acceleration features, speeding up training and inference for transformer models.
+
+Last but not least, we want to build developer tools that everyone can use, not just trained data scientists and machine learning experts. We need normal developers, application developers, front-end developers, and mobile developers to understand how to easily add state-of-the-art models to their applications in a few lines of code without having to understand the complexity of the models.
+
+Hugging Face is stewarding open-source projects like the Transformers library, which you can find on GitHub. This project is one of the fastest-growing open-source projects ever. The graph of GitHub stars shows the steepest slope, meaning we're growing faster in popularity than almost everything else, including PyTorch, Keras, and even Kubernetes.
+
+On top of the open-source libraries, we have the Hugging Face Hub, our website at huggingface.co, often called the GitHub of machine learning. This is where the machine learning community, from individual developers to large organizations like Meta, Google, and Microsoft, go to share their models and datasets. We have a fast-growing collection of models, and today we're extremely close to 80,000 models, 12,000 datasets, and over 100,000 users. We have more than 1 million model downloads every day, and we're very proud of this adoption.
+
+If you've never seen Hugging Face, here's a simple example. In this example, I'm classifying text using a model from Facebook. Even if you've never worked with Hugging Face or don't know Python, you can figure out what's happening. I'm importing the pipeline object from the Transformers library, building a zero-shot classification pipeline using a Facebook model, passing it some text from Wikipedia, and defining some labels to score the text on. I get a result just like that. These four lines of Python let me predict what the text is about without training anything or writing any machine learning code.
+
+If we want to go a little further, consider the breadth and depth of models available. For example, you can generate images from text descriptions using our open-source library called Diffusers. The code is equally simple, and this is the image I generated this morning by passing a text description to a stable diffusion model. Generative AI is improving every day, and all these models are off the shelf on Hugging Face. You can grab them, and the code is simple, allowing you to get started in minutes.
+
+Before we jump into the demo on how Pinecone is using Hugging Face and inference endpoints, here's the family picture of Hugging Face. On the right-hand side, we have datasets and models. Starting from those, you can train them using either our Transformers library or the Accelerate library for distributed training, multi-GPU, multi-TPU, etc. You can use AutoML with AutoTrain, Optimum for hardware acceleration on training and inference, and our Spaces service to deploy models in simple web applications hosted on Hugging Face. This is useful for showcasing models to stakeholders or the community. If you've been playing with stable diffusion models lately, you might have been using a Hugging Face Space without knowing it.
+
+When it comes to deploying models for production work, you can grab them and deploy them anywhere, build your containers, etc., or you can use our latest service, Inference Endpoints. Inference Endpoints is a managed service that lets you deploy pretty much any model from the Hugging Face Hub in a few clicks to scalable infrastructure on AWS or Azure. It comes with auto-scaling, security, and compliance. Gareth will tell us more about that.
+
+The last thing I want to call out is that we also have cloud partnerships, so you can deploy models from the Hub using Amazon SageMaker on AWS or on Azure using Hugging Face Endpoints. While you can train and deploy models, today we want to focus on inference. It's time for Gareth to introduce himself and tell us about Pinecone and how Pinecone has been using inference endpoints to build amazing applications. I'll give the screen back to Gareth.
+
+Great. Thank you, everyone, for joining. I'm Gareth, a product manager here at Pinecone. Previously, I worked as a machine learning engineer on computer vision and NLP tasks. The teams I'm responsible for focus on delivering an easy way for people to get started with applications like semantic search, question answering, and multimodal image-to-text search. Today, I'll go through what semantic search is and how you can use Hugging Face and Hugging Face Inference Endpoints to deploy these services with Pinecone very easily. We'll end with a short demo of a Colab notebook showing how you can do this in a couple of minutes.
+
+What is semantic search? Many people are familiar with keyword search, which we use every day with Google or other applications. Traditionally, these systems match individual words in queries to words in documents. For example, searching for "bank" could return results about a riverbank, a financial institution, or an action in a game. Semantically, these meanings are completely different. Semantic search aims to understand what people are actually saying or asking for, or what documents are talking about, beyond just keyword matching.
+
+A few years ago, transformers revolutionized search. This technique is now used to power search across Google, Microsoft, and many other platforms. Semantic search using embeddings has similarly transformed the field. In semantic search, both the query and context (like a document or image) are encoded into a single vector space. The nearness of these vectors in the high-dimensional space captures how semantically similar the objects are. When you query, you're looking for document vectors in this space that are close to your query vector, and these are returned to the user.
+
+Handling large datasets efficiently is crucial. You might have millions of documents or images, and you need to encode them as vectors and search through them quickly. A semantic search system has two key components: the embedding models and the vector database. The embedding models, like those from Hugging Face, transform text or images into vectors. The vector database, like Pinecone, powers the vector similarity search, running efficiently and supporting features like filtering and updates.
+
+Hugging Face and Pinecone are working together because both have intricate pieces that need to be solved and offer amazing developer experiences. Together, our solutions shine. For example, you can deploy a transformer model to support both batch transformation (turning documents into embeddings stored in Pinecone) and real-time transformation (transforming user queries into embeddings sent to Pinecone). Managing a vector database can be challenging, but Pinecone simplifies this process, making it accessible to anyone, regardless of their expertise in vector databases or machine learning.
+
+Pinecone offers a free tier with unlimited usage, and setting up a new index is very simple. You can create an account, initialize a Python client, create an index, select it, upsert vectors, and query with new vectors. Pinecone also offers near-instant refresh, real-time updates, and filtering capabilities, making it suitable for a wide range of applications, from semantic search to chatbots and recommendation engines.
+
+Now, I'll go through a quick demo on how to build an end-to-end pipeline for vector search using Pinecone and Hugging Face Inference Endpoints. I'll share my screen.
+
+Here is a notebook you can find in our documentation section under integrations and Hugging Face on the Pinecone website. We'll build a semantic search pipeline for the SNLI dataset, which contains propositions and answers. We'll set up a Hugging Face Inference Endpoint and a Pinecone index.
+
+To create a new inference endpoint, I'll go to the Hugging Face Inference Endpoints page and create a new endpoint. This will give me configuration options to deploy a scalable ML model. We'll use the sentence transformer model, specifically the NPN and NetBase V2 model. Any model available on Hugging Face can be deployed, and they have the most complete set of semantic search models today.
+
+I'll name this endpoint "demo" and choose a cloud provider and region. Since I'm in New York, I'll choose AWS, Northeast Virginia. Under advanced configuration, I can select the type of machine. For low-latency systems, a GPU is ideal, but for cost-effective solutions, a CPU might suffice. I can also enable auto-scaling to handle varying traffic.
+
+The task for semantic search is sentence embeddings, which means sending text to Hugging Face will return numerical embeddings. I can choose the framework and set up authentication. Public endpoints are open to the internet with no authentication, while protected endpoints require an Hugging Face API token. Private endpoints are deployed in a private subnet and can be connected to an AWS account through AWS PrivateLink for strong security and compliance.
+
+Once the endpoint is initialized, I can copy the endpoint URL. If I need an API key, I can get it from my Hugging Face account settings. I'll paste the endpoint URL and API key into the notebook.
+
+I'll make a REST call to the Hugging Face endpoint to get embeddings for two sentences. The embeddings have a dimension of 768. For this example, we'll use the SNLI dataset, which has hundreds of thousands of passages, but we'll work with the first 5,000.
+
+I'll log into Pinecone and create an index called "semantic search" with a dimension of 768 and a cosine similarity metric. I'll choose a cost-effective pod type and create the index. I'll copy my Pinecone API key and connect to the index.
+
+Next, I'll upsert the embeddings using the Hugging Face Inference Endpoint. I'll batch the documents, send them to the endpoint, get the embeddings, and store the text as metadata. Each document in Pinecone needs a primary key and an embedding. I'll zip the metadata, embeddings, and IDs together and upsert them to Pinecone in real time.
+
+Once the indexing is complete, I'll test the system with example queries. Each query is transformed into an embedding using the Hugging Face Inference Endpoint, and the top 5 matching documents are returned. The cosine similarity scores range from 0 to 1, with 1 being the most similar. For example, a query about a horse jumping over a broken-down airplane returns results that are not semantically similar, with a score of 0.57. Another query about a woman walking across the street while a man is falling with a briefcase returns results that capture some elements but not the concrete meaning. A query about people on bicycles waiting at an intersection returns more relevant results with higher similarity scores.
+
+These Hugging Face models perform well across domains, and with a large vector database, you can expect strong matches with cosine similarity scores in the 0.8-0.9 range. Afterward, all you have to do is delete the index and clean it up. We can now go back to answering questions about Hugging Face, Pinecone, and how to build semantic search applications.
+
+We have a question from the Q&A: "We have data in an Elasticsearch DB running on-premises in an AWS Private VPC. How can we use Pinecone to augment our keyword search with semantic search over the documents in the Elasticsearch DB?" Pinecone can deploy in AWS, and depending on security requirements, you can get a more dedicated environment. If you already have Elasticsearch and aren't ready to move to a full semantic search application, a hybrid elastic plus vector search solution is recommended. You can take the queries from your Elasticsearch cluster, run them through a Hugging Face transformer to get embeddings, fetch results from both Pinecone and Elasticsearch, and use the scores from both to come up with a final ranking. We have research on re-ranking techniques that will be published soon, but even simple tricks like doubling the score of semantic search and halving the score of Elasticsearch can yield effective results.
+
+Another question: "What kind of performance metrics do you have in AWS deployed endpoints?" We deploy on AWS and Azure, using the instance type you select. You get auto-scaling, and you can see HTTP status codes (2XX, 4XX) and latency metrics in your endpoint metrics. This gives you visibility into how the model is performing.
+
+For embedding English and multilingual text, sentence transformers are a great place to start. Any NLP model that converts text to high-dimensional vectors can be used, but sentence transformers are specifically built for this purpose and are easy to use. If you need more performance, you can fine-tune on a bit of data, especially for domain-specific data like chemical engineering. Start with smaller models like MiniLM, which are fast and perform well. Larger models like BLOOM can be used for higher accuracy, but they are more resource-intensive.
+
+When the database doesn't have embeddings for certain word examples, newer techniques like hybrid search can help. Pinecone is releasing a hybrid search feature that combines token-based keyword search and semantic search for better performance without fine-tuning. This is particularly useful for rare phrases and context understanding.
+
+Regarding auto-scaling, we rely on the underlying cloud auto-scaling mechanisms (AWS Auto Scale or Azure Auto Scale). Load testing shows that auto-scaling is responsive, scaling up within a minute or so. You can set a minimum instance count if you expect traffic, and warm up the system manually if you anticipate a spike. Autoscaling is crucial for cost efficiency, ensuring you scale down when traffic decreases.
+
+Can Pinecone be used with Elasticsearch without migrating the whole search stack? Many customers use Elasticsearch alongside Pinecone. You can fork queries to both systems and merge the results. Semantic search provides distinct results compared to keyword matching. In the long term, we see a shift towards fully learned search and retrieval systems, similar to how deep learning revolutionized computer vision. For now, using both systems is a practical approach.
+
+Regarding latency, we offer a range of options to balance performance and cost. You can choose the operating points based on your needs. It's important to be frugal and conservative, especially when testing, to save money and resources.
+
+On the topic of security, data privacy is ensured. Your data is not accessible to other users and is securely separated. For extreme security requirements, we can provision dedicated environments. We take data security seriously and ensure that your data is never unnecessarily available to anyone at Pinecone or to other customers. We don't log or store any data, ensuring it remains in memory and is only processed in flight.
+
+For updating the vector index, Pinecone supports create, read, update, and delete operations without significant performance sacrifices. However, when you train a new model, you need to rebuild the vector index from scratch. We are making this process easier with bulk ingestion features and are researching multi-model embeddings in the same space.
+
+A technical question: "Is there a way to use the Python Pinecone client without relying on the global Singleton?" The Singleton API is easier to start with but can be harder to integrate into mature codebases. We are working on providing more guides and making the Python client more async-native. Using the gRPC client can also improve performance.
+
+Finally, we have a question about research links or blogs related to hybrid search. Sign up to our mailing list for updates. We are excited to share this research soon.
+
+Thank you for attending this webinar and sharing your wisdom and experience. Try out the endpoints and Pinecone, and if you have feedback, get in touch. We are excited about this space and look forward to your feedback.
+
+Thank you. Have a good one.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">HuggingFace</span><span class="tag">Pinecone</span><span class="tag">SemanticSearch</span><span class="tag">MachineLearning</span><span class="tag">Transformers</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

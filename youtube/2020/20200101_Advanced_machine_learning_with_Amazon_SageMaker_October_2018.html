@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced machine learning with Amazon SageMaker October 2018</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced machine learning with Amazon SageMaker October 2018</h1>
+        <div class="date">January 01, 2020</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dGn1HAHbLWM" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Talk @ O'Reilly AI, London, October 2018
+
+Amazon SageMaker is a fully managed platform that enables developers and data scientists to quickly and easily build, train, and deploy machine learning models at any scale. Julien Simon offers a quick overview of SageMaker. Then, using Jupyter notebooks, he dives into the more advanced features of this service.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Good morning, everyone. My name is Julien. I'm a tech evangelist with AWS, and I focus on AI and machine learning. This session will focus on my preferred service, Amazon SageMaker. I'll start with a quick recap of what SageMaker does, and then we'll dive into the more advanced and latest features. We'll cover topics like hyper-parameter optimization, and there will be lots of demos and notebooks. If you have questions, we have time for them during the session. I want this to be interactive, so please raise your hand if you don't understand anything.
+
+SageMaker was released at re:Invent last year, so it's just under a year old now. It's a managed service for machine learning and deep learning, designed to make machine learning accessible to all developers, regardless of their skill level, without ever managing a single server. As you probably know, if you do machine learning today, there is a lot of infrastructure and plumbing required—dev environments, training clusters, prediction clusters. This gets worse in large teams and can be a significant barrier. Just like we've done for normal infrastructure, we want to make machine learning infrastructure transparent.
+
+SageMaker has several modules, and I'll go through the basics now. In a nutshell, we have three main blocks. The first is the notebook instance, which is a managed EC2 instance with Jupyter and all the necessary libraries for machine learning and deep learning pre-installed. You can fire up an instance and open a notebook in minutes. We also have a collection of built-in algorithms, which I'll discuss in detail because they are truly innovative and a huge time-saver.
+
+The second big module is the training module. You can train with your dataset without touching a single server. It's a one-click or one API call process. Just ask SageMaker to fire up X instances of type Y, and it handles the rest. This is fully managed. We'll also talk about hyper-parameter optimization (HPO), which is crucial for optimal performance. When it comes to deploying, you can create an endpoint, an HTTPS endpoint backed by one or many web servers, all fully managed. This will auto-scale, just like EC2. Alternatively, you can do batch predictions, which we'll cover as well.
+
+It's important to note that you can try SageMaker for free if you've never used it before. It's part of the free tier. Go to aws.amazon.com/free to see the terms and conditions. You can use the service for free for the first 12 months, up to a certain usage level, which is more than enough to learn about the service.
+
+Under the hood, all training and prediction activities are based on Docker containers. You need to host your containers in Amazon ECR, our Docker repository. You can select the training container corresponding to the algorithm you want to use, whether it's one of the built-in algorithms or something else. Then, you write a few lines of Python code using the SageMaker SDK to get everything going. For example, you specify the algorithm, the location of your data in S3, your parameters, and start training. SageMaker will pull the container, run the training job, and automatically shut down the instances when it's done, so you stop paying. The model gets saved in S3, and you can either use it as is or deploy it further.
+
+For deployment, you write some helper code to specify the number and type of instances, and SageMaker will create the EC2 instances, pull the prediction container, load the model from S3, create the HTTPS endpoint, and you can start serving predictions. Alternatively, you can do batch transform, which we'll discuss.
+
+Everything runs on Docker, but for the most part, you don't need to know anything about Docker to use SageMaker. People often say, "Oh, I thought I was doing machine learning, now I'm doing DevOps." You can do both, and it's actually fun. However, 95% of the time, you don't need to know anything about Docker. You only need to dive into Docker if you want to build your own container.
+
+When it comes to training options, we have a collection of built-in algorithms. I'll talk about these in detail. These are typical machine learning and deep learning algorithms implemented by Amazon. We currently have 14 built-in algorithms that you can use immediately. We have linear learner for regression and classification, factorization machines, KNN, XGBoost, k-means, PCA, random forest for anomaly detection, and more. For deep learning tasks, we have image classification and object detection (SSD). For natural language processing, we have NTM for topic modeling, LDA, and BlazingText, which is an optimized version of fastText that supports GPU. We also have Sequence2Sequence for tasks like machine translation, and DeepAR for time series forecasting.
+
+We keep adding to this list based on customer feedback and the most requested machine learning workloads. For example, we recently added KNN, BlazingText, and Object Detection. Each algorithm has its own research paper, and while they can be dense, they provide valuable insights. BlazingText, for instance, has been extensively documented in a blog post comparing its performance to other implementations.
+
+Before we dive into the demo, I want to highlight that SageMaker is continually evolving. If you looked at it when it first came out, you should look again. We've added more algorithms, features, and improvements. Hyper-parameter optimization (HPO) is now generally available, and we've added new modes and features like multi-level classification and mixed-mode training for image classification. These improvements are especially important for edge deployments where memory and inference speed are critical.
+
+Let's look at an example. I'll show you the SageMaker console and create a notebook instance. From there, we'll jump into a Jupyter notebook. We have a collection of examples available on GitHub, which I'll share the URL for later. These examples cover various ways to use SageMaker with different libraries and built-in algorithms.
+
+The workflow for a SageMaker job is always the same. First, you import the SageMaker SDK, which is a Python SDK. We also have a Spark SDK for Python and Scala, but I won't cover that today. Next, you create an S3 bucket to store your data. We'll download the dataset, tokenize it, and upload it to S3. For this demo, we're using the DBpedia dataset for text classification. The dataset contains sentences with labels, and we have 14 categories.
+
+When working with text, we tokenize the data using NLTK. We split the sentences into words, insert spaces before punctuation, and upload the tokenized dataset to S3. If you're working with production data, it's likely already in S3 or a database. You can have a workflow to extract and upload the data to S3.
+
+Next, we need to grab the name of the container for BlazingText in the region where we're running. We use a helper function to get this. For built-in algorithms, this is as much Docker knowledge as you need. We then configure the training job using the estimator object, specifying the container, the number of instances, and the hyperparameters. We train for 10 epochs with a learning rate of 0.05, using 10 word vectors and early stopping with a patience of four.
+
+We define the location of the training and validation data in S3 and start training by calling the fit method. The log is visible in the notebook and CloudWatch Logs. The training is very fast, even on a C4 instance, and it completes in about 47 seconds. The model is saved in S3, and we can deploy it with one line of code to an M4 instance. We can then serve predictions by tokenizing new sentences and invoking the endpoint.
+
+For hyperparameter optimization, we face the challenge of finding the optimal set of hyperparameters in a high-dimensional space. Manual search, random search, and grid search are common methods, but they can be inefficient and costly. HPO uses machine learning techniques like Gaussian process regression and Bayesian optimization to find a good set of hyperparameters with fewer training runs.
+
+In this notebook, we start with a simple example using Gluon to train the CIFAR-10 dataset with a CNN. We download the dataset, upload it to S3, and use a pre-built ResNet model from the Gluon model zoo. We train once with specific hyperparameters and achieve a disappointing accuracy of 53%. We then use random search to generate random values for the hyperparameters and train 120 times, achieving a top accuracy of 73.6%. This shows the importance of hyperparameter tuning.
+
+Finally, we use SageMaker's HPO feature to optimize the hyperparameters. We define the hyperparameter ranges and the metric to optimize (validation accuracy). We create a hyperparameter tuner object and train 30 jobs, achieving a top accuracy of 74%. This demonstrates that HPO can achieve higher accuracy with fewer training runs, making it more efficient and cost-effective.
+
+SageMaker also offers infrastructure features like pipe mode for streaming large datasets and batch transform for running batch predictions without deploying an endpoint. Pipe mode allows you to train on petabyte-scale data by streaming it to the training instances, ensuring flat memory consumption. Batch transform is useful for predicting large datasets and can handle infinite streams.
+
+Thank you for your attention. I hope this session has been helpful. If you have any questions, feel free to ask. The cost is constant. You just decide how fast you want your results. And this is the result of pipe mode.
+
+Pipe mode in TensorFlow again. The only difference here is that you need to work with record files. If you're familiar with TensorFlow, you need to use tfrecord. You will use record IO file. You need to have your data in a format that can be split. And you need to use that dataset object in TensorFlow that you can overload to say, okay, you're not reading the data from disk. You're receiving the data from the instances. We have a whole notebook in there and we show you how to do this. So pretty much you can fetch those samples batch by batch and train on them. This one does require a bit of code modification because the way you're in your input function, the way the data is actually read is a bit different. But you get a good example. And you can train just like this.
+
+The last feature is PrivateLink. PrivateLink is a general-purpose AWS service or feature that lets you create endpoints for AWS services inside your VPC. So you could access S3, DynamoDB, et cetera, inside your VPC. That means you're not going through the internet to do this. So you're not going through the internet accessing the public endpoint for S3. You access it directly inside of your VPC. So faster, safer, and you can access AWS even in a private subnet that doesn't have internet access. The good news is you can now do this with SageMaker. So if you have applications running inside a private subnet and they need to get access to your endpoints, they can do that with the private link and just setting up that endpoint as a private link. It could be cross-account. So if you have a data science account and you have a web account, you could train and deploy the endpoints in the data science account. And then using PrivateLink, you could share it and make it accessible to the web or the whatever application VPC. It's an easy way to share endpoints without ever going to the internet. Again, faster, safer, generally better.
+
+This is SageMaker. The easiest way to build and train and deploy at any scale with scalable algos, pipe mode if you need to, batch prediction if you need to. You can save all the pain of finding the right parameters with HPO, which is, for a complicated thing like this, I think they made it really simple to use. If you want to dive deeper, ml.aws is the top-level page for everything machine learning. This is the AI blog I was talking about, the SageMaker page, and you'll find documentation, customer stories, the notebook examples on GitHub, the Python SDK, and the Spark SDK on GitHub as well. And if you'd like to learn a little more and dive even deeper on all those things, you're more than welcome to follow me on Medium where I will show you some additional examples as well as YouTube where by now I have way too many videos from events and summits. But it's good to watch that again sometimes. And last but not least, if you have questions later on, I'm more than happy to connect on LinkedIn, of course. But Twitter seems to be the better way to get fast results from me. That's my almost real-time endpoint for Q&A. Thank you very much. If you have questions, of course, I'll hang around. And I hope you learned a few things. And enjoy the rest of your day. Thank you.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AmazonSageMaker</span><span class="tag">MachineLearning</span><span class="tag">HyperParameterOptimization</span><span class="tag">AWS</span><span class="tag">DeepLearning</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

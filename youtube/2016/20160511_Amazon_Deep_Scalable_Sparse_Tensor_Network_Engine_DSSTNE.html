@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Deep Scalable Sparse Tensor Network Engine DSSTNE</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Amazon Deep Scalable Sparse Tensor Network Engine DSSTNE</h1>
+        <div class="date">May 11, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/TjaIKijl-IY" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Quick demo of Amazon DSSTNE (pronounced 'Destiny), an open source software library for training and deploying deep neural networks using GPUs. Amazon engineers built DSSTNE to solve deep learning problems at Amazon's scale. DSSTNE is built for production deployment of real-world deep learning applications, emphasizing speed and scale over experimental flexibility.
+
+<a href="https://github.com/amznlabs/amazon-dsstne" target="_blank" rel="noopener noreferrer">https://github.com/amznlabs/amazon-dsstne</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Hello everyone, this is Julien from Arcee and today I want to run through a quick demo of a very cool library that was open-sourced last night by Amazon. It's called Destiny, and it stands for Deep Scalable Sparse Tensor Network Engine. To make a long story short, it's a neural network deep learning library that Amazon uses for recommendation. I know that's something a lot of people have been waiting for from Amazon. I thought I would just show you how it works really quick. You can set it up locally on your own machine, run it as a Docker container, and of course, run it on AWS within a GPU instance, which is what I'm going to do.
+
+So, you need to start a GPU instance in US East 1 using this AMI. Just go to the EC2 console, launch an instance, select the proper AMI, and you're all set. I've done this already; there's nothing complicated here. Let's SSH to that instance. Actually, I am already logged in. That's perfect. What do we see here? We see some CUDA stuff already installed. The next step is to build the library itself. I'm going to clone the repo, and that's quick. I'll go to the proper source directory, and there's a path setting in there that I need to configure to make sure I have all the CUDA tools to build this library. Then I can just run make, and this runs for a few minutes, so nothing really interesting to watch here. I'm going to pause the video, and we'll be back in a few minutes.
+
+Okay, so we're done building the library and the tools. There's just this path setting to configure as well to make sure I have all the tools ready to train my model. Now, let's grab some data. This example here is using a dataset called MovieLens, which is a set of movie recommendations done by a large number of users. We can grab the raw dataset here, and this demo is going to use the 20 million dataset, which has 20 million ratings and over 138,000 users. Let's get this. It should be pretty fast. The next step will be to generate the input layer, the input data for the neural network. I'm going to do this with the generate net CDF command that is part of the library. That's fairly quick. Then we'll do the same thing for the output data, and then we can train our model. If you want a description of that net CDF format, it's included in the documentation.
+
+So let's do the output layer. Then we're going to train the model. The training is described in a JSON file, like many things in AWS. Specifically, we are describing the layers we're using. So, an input layer and an output layer, and in the middle, a hidden layer with 128 nodes and a sigmoid activation function. Both input and output layers are already set up. Let me grab that config file. Okay, good. Now we can train the model. Right now, model training is only supported on a single GPU instance, but the documentation says that multi-GPU modeling is coming soon. This is an important feature for very large problems, as even powerful GPU instances cannot solve those problems on their own. They're going to be clustered, so I'm looking forward to that, hopefully, another cool demo I can show you very soon.
+
+Alright, so training is pretty fast. Then we can run predictions. While this is running, maybe we could look at some of the data. Oh, yeah, that's the one I wanted to show you. This is actually the file. Each line contains the movie recommendations for a specific user. I'm guessing this is the user ID, this is some kind of timestamp, and this is probably the movie ID. So for each user, we have a specific line with movie recommendations. It looks like our model is done. Now we're going to run our prediction, which is going to recommend movies for our users. That should be pretty fast. Maybe I can just pause the video and show you the end result.
+
+Alright, prediction is done. It took about a couple of minutes, was really fast. Now we have movie recommendations here. How many lines do we have first? Well, the same number as users, so that's a good sign. For each user, we have a list of 10 movies. So movie IDs here, I think it's 10, and we have a score. Based on their ratings, based on the movies they liked, these users are going to like those 10 movies. For example, user number 9 is going to like movie 2858 with a probability of 0.3, which is quite low, and movie 3578 with a probability of 0.29, etc. We have that for all our 130,000 plus users.
+
+Again, this was really fast. It took a few minutes to generate the input and output files, and the training itself lasted for maybe two minutes on that GPU instance. Imagine what you could do with multiple GPU instances; you could run this many times per day and refresh your recommendations, if not on the fly, at least extremely often and make them even more relevant. I think this is really an important announcement for machine learning enthusiasts and people interested in building recommendation models. So there you go, Amazon Destiny. Hope you like it. Hope you build some cool stuff, and hopefully, I can soon show you how to do that with multiple GPUs. Thanks for listening, and we'll be in touch.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Amazon Destiny</span><span class="tag">Deep Learning</span><span class="tag">Recommendation Systems</span><span class="tag">GPU Computing</span><span class="tag">AWS EC2</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker on AWS with Amazon ECR ECS Part 6</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Docker on AWS with Amazon ECR ECS Part 6</h1>
+        <div class="date">March 31, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/HS2lI4LaMS4" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Slides: <a href="http://www.slideshare.net/JulienSIMON5/amazon-ecs-january-2016" target="_blank" rel="noopener noreferrer">http://www.slideshare.net/JulienSIMON5/amazon-ecs-january-2016</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            In the previous video, we saw a diagram showing how we can use multiple components to achieve dynamic registration and service discovery for a simple microservice architecture. Let's quickly go through it again. The flow starts from the Internet Gateway to an ELB, which load balances to Fabio, an HTTP router running on fixed ports to keep the ELB happy. Fabio builds its routing table using console information from the network and selects one of the user-facing services. This user-facing service performs two local DNS resolutions to access a stock service and a weather service, which are globally distributed and managed by the console.
+
+Let's look at the application first. The portal page you see is built using the stock service and the weather service. We have three services in total. Let's look at the stock information. This is live information using the Yahoo API. Let's check Google and Apple. I'm calling the service, which in turn calls the Yahoo API. Now, let's look at the weather. Paris, not great, it's about 1 p.m. right now. Let's look at Tel Aviv, I was there not too long ago. This is nice, 22 degrees. Let's look at Casablanca, 13 degrees. You can play with this on one of my domains, demo.julien.org. Feel free to play with the app; you won't break anything, and it's up most of the time.
+
+Let's take a quick look at the code, specifically at the portal. It's a Ruby app, and the most interesting part is the DNS resolver. We resolve the service name to get back an SRV record, as mentioned in the previous video. This is standard DNS stuff to discover your services, and it would work similarly in different languages.
+
+Now, let's look at the console GUI. Here, I see all the services running on all the containers and the services running on the cluster. I have three nodes, so I see three copies of the ECS agent, three copies of the console agent on port 53, and three copies of Fabio. I also see the service and health checks. I have three copies of the portal, stock price, and weather services. If I go to the ECS console, I see my three services, each deployed as a separate container with a task definition. I have three copies of each service running.
+
+Let's log in to one of the cluster instances. I see my three application containers, the registrator, the ECS agent, the console agent, and Fabio, which is not deployed as a container but is running there. I can see the console events, and not much is going on right now. Let's start more portals to see if Fabio gets the information. I'll update the service definition to six copies of the portal. ECS is starting the containers, and I see Fabio automatically updating its configuration, detecting the new portal containers. Registrator grabs that information, sends it to the console, and Fabio gets it. I now have six copies of the portal to load balance.
+
+Let's move to CloudWatch to see how to scale instances. For ECS, you have four metrics: CPU reservation, CPU utilization, memory reservation, and memory utilization. Reservation is the static value you set in the compose file for CPU shares and max memory. I've defined alarms for when CPU reservation drops below 20% and goes above 75%, and the same for memory. When these thresholds are crossed for one or two minutes, auto-scaling actions are triggered.
+
+Let's look at the memory reservation above 75% alarm. I'll start 200 copies of one service and 500 of another. The ECS scheduler will try to start as many tasks as possible, but my three instances will quickly be full. Both CPU and memory will go above 75%, triggering autoscaling actions. When an ECS cluster is created, an autoscaling group is created to manage instances. I have three instances, but to make it more interesting, I added two more autoscaling groups: one for on-demand instances (0 to 10) and one for spot instances (0 to 70).
+
+The CloudWatch alarms will send signals to these autoscaling groups. If the alarm is triggered for more than two minutes, I'll add two instances. I see two on-demand instances starting and two spot instances requested. Once they initialize and join the cluster, I'll see them in the ECS console. I now have five instances in my cluster, but they will be exhausted quickly due to the high number of containers. CloudWatch will keep triggering autoscaling events until the thresholds are met.
+
+93 tasks are running, and if we wait, we'll eventually get to the requested number of containers. This is a nice and easy way to ensure we have enough capacity. That concludes this presentation. You can get the slides from SlideShare, and I'll put the link in the video description. I'm happy to hear your feedback, so please contact me by email or on Twitter. This was strictly for you, and I hope you enjoyed it. Have fun with Docker and ECS!
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Microservices</span><span class="tag">ServiceDiscovery</span><span class="tag">ECS</span><span class="tag">AutoScaling</span><span class="tag">CloudWatch</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A pragmatic introduction to natural language processing models October 2019</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>A pragmatic introduction to natural language processing models October 2019</h1>
+        <div class="date">January 01, 2020</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/kwHGlTi27LY" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Talk @ O'Reilly AI, London, October 2019.
+
+⭐️⭐️⭐️ Don't forget to subscribe and to enable notifications ⭐️⭐️⭐️
+
+Many natural language processing (NLP) tasks require each word in the input text to be mapped to a vector of real numbers. Julien Simon explores word vectors, why they’re so important, and which are the most popular algorithms to compute them (Word2Vec, GloVe, Elmo, BERT). You'll get to see how to solve typical NLP problems through several demos by either computing embeddings or reusing pretrained ones.</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Thank you very much. Hi everybody. The key word here is pragmatic. My goal today is to give you an overview of the main NLP models and show you a couple of demos that hopefully don't scare you away. These models look friendly, but they can be complex. I want to show you that you can work with these models, including some state-of-the-art ones, without a PhD or being a world expert.
+
+NLP has been around as long as AI itself. There's been a lot of focus on computer vision and CNNs in recent years, and those are nice and fun. However, NLP is at least as important because it enables tasks like text classification, translation, text generation, chatbots, and voice assistants. These tasks involve speech and language, which are central to human communication. If we aim to build AI systems, we must consider how to integrate speech and language.
+
+The problem is that text, characters, and strings are meaningless to computer systems. We need numbers, vectors, and matrices. We need to build a language model that predicts the next word in a sequence. For example, "Later today, I'm going to take the train back to Paris, hopefully if it stays on track." This is the core problem we're trying to solve: predicting what comes next.
+
+The vocabulary is vast, and we need to handle different languages. Most people use around 500 words, but theoretically, we should be able to use hundreds of thousands of words and understand their context in millions of documents. We're talking about large corpora, with billions or even hundreds of billions of words. Think Wikipedia—lots and lots of data. We need a compact mathematical representation of language to help with downstream tasks like sentiment analysis and classification.
+
+You've all seen the quote, "You shall know a word by the company it keeps." This means that to understand a word's context, you need to look at the words used close to it. If words are closely related, the probability of them appearing together is higher. This is the basis for predicting the next word.
+
+The initial idea was co-occurrence counts. We build a big matrix showing how many times a pair of words appears within a certain window. The problem is that this matrix can be enormous. If you have a million words, handling a million-by-million matrix is impractical. We need something denser, which leads to word vectors or embeddings. These are compact representations of co-occurrence counts, typically with 50 to 300 dimensions. The goal is for words with similar meanings or contexts to have similar vectors. For example, the vectors for "car," "automobile," and "sedan" should be close to each other.
+
+The distance between related vectors should also be similar. The distance between the "Paris" vector and the "France" vector should be similar to the distance between the "Berlin" and "Germany" vectors, and the "London" and "UK" vectors. Similarly, the distance between "hot" and "hotter" should be similar to the distance between "cold" and "colder." This reflects the relationships between words used in similar contexts.
+
+The high-level view is to start with a large dataset, preprocess it, and tokenize the text. This involves splitting words and punctuation, inserting beginning and end of sentence markers, and handling multi-word tokens. For example, "Rio de Janeiro" can be treated as a single token. Build the vocabulary, learn vectors, or use existing vectors and fine-tune them. Some tasks are computationally intensive, so using pre-trained vectors can save effort and cost.
+
+Let's look at some algorithms in chronological order. Word2Vec, introduced in 2013, has two modes: Continuous Bag of Words (CBOW) and Skip-gram. CBOW predicts a word based on its surrounding words, but the order doesn't matter. For example, "This afternoon I will take the to Paris, France" would predict "train." Skip-gram predicts surrounding words based on a given word, which can be more challenging but is also useful.
+
+Shortly after, GloVe from Stanford University was introduced. The research paper claims GloVe is better than Word2Vec, but now, with the dust settled, people generally agree that with hyperparameter tuning, both can achieve similar results. GloVe provides pre-trained embeddings, including a large one with 840 billion tokens, 2.2 million vocabulary, and 300 dimensions. It uses matrix factorization to shrink the co-occurrence matrix.
+
+FastText, from Facebook, is an extension of Word2Vec that introduces subwords or n-grams. Instead of creating a vector for a word, it computes vectors for subwords and averages them to get the word vector. This helps handle unknown words and misspellings. FastText is fast, multithreaded, and supports 294 languages. It can be used for unsupervised and supervised learning, and it can also do language detection.
+
+BlazingText, from Amazon, is compatible with FastText but adds GPU capabilities. It's 20 times faster in unsupervised mode and 100 times faster in supervised mode. The models generated are fully compatible with FastText, making it a powerful tool for large corpora.
+
+However, these models have limitations. They struggle with polysemy, where a word has multiple meanings. For example, "play" in "stop throwing rocks" versus "machine learning rocks." They also don't fully consider bidirectional context, focusing only on words within a window.
+
+This led to the development of new models. ELMo, for example, uses deep learning architectures like CNNs and bidirectional LSTMs to capture context more finely. It generates embeddings on the fly based on the surrounding context, making it more context-aware. BERT, introduced later, uses transformers instead of LSTMs and introduces masked learning to prevent cheating. It handles bidirectional context in a single network and is pre-trained on masked word prediction and next sentence prediction.
+
+ExcelNet improves on BERT by using random permutations of words instead of masking, which prevents cheating and eliminates the need for masked words. Ernie 2.0, from Baidu, further improves on BERT and ExcelNet, currently leading the state-of-the-art in many NLP tasks.
+
+These models are powerful, but they come with their own challenges. Word2Vec and similar models are still useful and easy to use, especially for general-purpose tasks. Subword models are beneficial for handling unknown words and niche vocabularies. The newer models, while more accurate, are computationally expensive to train, but fine-tuning is relatively cheap.
+
+The best model is the one that works best for your specific business problem. Don't get caught up in hype-driven development. Try different models and see what fits your needs. Now, let's do a couple of demos.
+
+First, I'll show you how to use word vectors to find similar words and analogies with GloVe embeddings. We'll use MXNet and GluonNLP. We need to understand how to compare vectors using cosine similarity. If vectors are close, the cosine similarity is close to one; if they are opposite, it's close to minus one; if they are orthogonal, it's close to zero.
+
+Let's define a function to compute cosine similarity between two word embeddings. We'll use a small GloVe embedding with 6 billion tokens and 50 dimensions. For example, comparing "burger" and "fries" gives a cosine similarity of 0.8, indicating they are used in similar contexts.
+
+We can find the top k similar words to "burger," such as "fries," "burgers," "KFC," "pizza," "taco," "sandwich," "deli," "hamburgers," "steak," and "out" (likely referring to In-N-Out). We can also find the most different words, which are rarely used in the same context as "burger."
+
+Next, we'll find analogies. For example, "cold" is to "colder" as "warm" is to "warmer." Another example is "king" minus "man" plus "woman" equals "queen." These analogies demonstrate the relationships captured by the embeddings.
+
+Finally, let's look at ELMo. We can download it from TensorFlow Hub or locally. We'll preprocess some text from the ELMo article, tokenize it, and pad the sentences to the same length. We can then pass this to ELMo to get embeddings. For example, "Kevin, stop throwing rocks at my car, it's always stupid. Now let's talk about interesting things. Did you know that machine learning rocks, it's totally awesome." Visit ml.aws for all the good stuff on our services. We also have a collection of off-the-shelf algos and models, including many NLP models. This is called the machine in the e-learning marketplace. Take a look because it might save you from everything I said. You might just pick a model off the shelf and deploy it on AWS in two clicks and live a happy life.
+
+Thank you very much for listening. If you want to stay in touch, ping me on Twitter. My messages are open. Happy to connect on LinkedIn. Let's hope to see more of those fun Sasami characters. If anyone wants to build a fun count model, here you go. This is the right name for it. Thank you very much. Have a good day.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">NLP</span><span class="tag">WordEmbeddings</span><span class="tag">LanguageModels</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

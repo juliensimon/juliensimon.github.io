@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utiliser le client AWS IoT MQTT et l AWS IoT button</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Utiliser le client AWS IoT MQTT et l AWS IoT button</h1>
+        <div class="date">July 27, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/p-FA0hSsIbg" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">✚ Inscrivez-vous aux mardis du cloud ! : <a href="http://amzn.to/2lvragO" target="_blank" rel="noopener noreferrer">http://amzn.to/2lvragO</a>
+✚ Rendez-vous sur notre site internet : <a href="http://amzn.to/2ktrf5g" target="_blank" rel="noopener noreferrer">http://amzn.to/2ktrf5g</a>
+✚ Suivez-nous sur Twitter : <a href="https://twitter.com/aws_actus" target="_blank" rel="noopener noreferrer">https://twitter.com/aws_actus</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Voici le bouton IoT. C'est un petit équipement sympathique pour faire vos premiers tests IoT. Ce bouton va nous permettre d'envoyer trois types de clics différents via le Gateway IoT. Vous pouvez l'acheter sur Amazon, il est disponible en France depuis quelques semaines.
+
+Alors basculons dans la console IoT. Je vous ai montré tout à l'heure comment configurer le bouton avec un certificat, comment lui donner une identité, comment lui assigner une politique IAM, etc. Et donc maintenant, nous allons le tester. Pour cela, je vais basculer dans l'outil de test de la console IoT qui va me permettre de visualiser les messages qui sont envoyés par le bouton. Comme je vous l'expliquais tout à l'heure, MQTT permet à la fois de publier et de recevoir des messages. Ici, ce qu'on veut, c'est recevoir un message. On va s'abonner au topic MQTT de ce bouton. Les noms de topic sont très simples. C'est IoT Button slash le numéro de série du bouton que vous trouvez au dos. Je m'abonne au topic.
+
+Voilà. Ok. Et donc maintenant, je vais pouvoir faire les trois types de clics sur le bouton pour normalement visualiser mes messages. Premier clic, clic simple. Et donc, je vois ici un message JSON qui est envoyé sur le topic du bouton et reçu par l'outil de test de la console puisqu'il est abonné au bon topic. Je vois le numéro de série du bouton, le voltage de la batterie et le type de clic. Ici, un clic simple. Je vais essayer un double clic. Et je vois un deuxième message qui arrive avec un double clic. Et puis dernier clic, le clic long. Voilà, je reçois un troisième message avec le type de clic.
+
+Donc voilà comment on configure un bouton IoT et comment on le teste et comment on fait son premier projet IoT.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">IoT</span><span class="tag">MQTT</span><span class="tag">AWS_IoT_Button</span><span class="tag">French_Tutorial</span><span class="tag">IoT_Projects</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

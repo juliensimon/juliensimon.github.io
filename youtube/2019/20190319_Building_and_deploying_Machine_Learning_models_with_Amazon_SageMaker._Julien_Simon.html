@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building and deploying Machine Learning models with Amazon SageMaker. Julien Simon</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Building and deploying Machine Learning models with Amazon SageMaker. Julien Simon</h1>
+        <div class="date">March 19, 2019</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/YqXr2erfdiw" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Lviv Innovation in AWS Cloud Solutions MeetUP
+Julien Simon. Amazon Global Artificial Intelligence & Machine Learning.</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Let's talk about machine learning. In the previous session, we discussed high-level services that are easy to use and work well for general-purpose problems. However, sometimes you need to train on your own data or build a machine learning model beyond what these services support. Today, we'll focus on the middle layer, covering most of this content, and I'll show you several examples, including running some code.
+
+Before we start, it's useful to look at the typical machine learning process. It begins with a business problem. For instance, someone might show up one morning and say, "We need to go into machine learning." It sounds like a Dilbert cartoon. "We need a machine learning strategy." My first question to customers is, "Why do you want to get into machine learning?" You can live a good, healthy life without it. Getting into machine learning can consume years of your life. So, why do you want to do this? What problem are you trying to solve? Why can't you solve it with traditional IT? Why not write a Java app with a MySQL or PostgreSQL server? If those solutions don't work, it might be a machine learning problem.
+
+For example, if you're trying to detect fraudulent transactions and business rules haven't worked, it's likely a machine learning problem. Another example is predicting which customers are likely to stop using your service in the next 30 days so you can send them marketing offers. If business rules haven't solved this, it's probably a machine learning problem. However, if your question is how to circumvent European laws, that's not a machine learning problem and not a good idea.
+
+You need to frame the problem by understanding how it has been addressed before and why it failed. This involves talking to business experts. For instance, in fraud detection, experts might look at the IP address, time of day, user agent, average basket size, and order history. You need to understand the data points they consider and their thought process. This starts with interviewing business experts and understanding the data they use.
+
+Next, you need to collect, integrate, and clean the data, which is a big data task. This involves handling missing values, removing outliers, and preparing the data. Once the data is ready, you can start building features—high-level variables that are more expressive. For example, if you have customer addresses and want to predict sales based on location, you might combine street name, street number, zip code, and city into a single column. However, this isn't useful for machine learning, which needs numerical data. You could convert the address to latitude and longitude, which is a better feature.
+
+After building features, you can try different machine learning algorithms and parameters, training and measuring accuracy. If accuracy is low, you might need more data, better data cleaning, more features, a new algorithm, or different parameters. Eventually, you reach an acceptable accuracy level to solve your business problem. The required accuracy depends on the problem. For weather forecasting, 80% might be good, but for cancer detection, 80% is not sufficient.
+
+Once you deploy the model, the real challenge begins. You need to monitor, debug, and scale the model, as it now serves predictions to mobile, web, and business apps. You also need to retrain the model periodically with new data to keep it fresh. This involves big data, training infrastructure, and DevOps tasks. Machine learning engineers and data scientists often spend 50-80% of their time on these tasks, rather than on the actual machine learning.
+
+The key to performance is having the right features, the right algorithm, and good training. This should be an automated pipeline with managed infrastructure. This is where SageMaker comes in. Before diving into SageMaker, let's talk about data and building datasets, which is not easy. For example, building an autonomous driving model requires thousands of hours of video, with each image labeled for semantic segmentation—assigning each pixel to a specific object.
+
+Labeling images manually is time-consuming. For instance, labeling a thousand hours of video at 24 frames per second would take an impractical amount of time. To address this, we have a service called Ground Truth, which provides simple tools for labeling and can dispatch work to private or third-party workforces, including Amazon Mechanical Turk. Ground Truth can also train a machine learning model to help with labeling, saving up to 70% of the work.
+
+Let's look at a quick demo. I set up a labeling job with three images for a guitar player detection model. I created a workforce, which is just me, and invited a colleague. I created a labeling job with three images in Amazon S3. The job is assigned to my workforce, and they can connect to a portal to start labeling. I gave instructions to draw a box around guitar players. Quality control is important, so you can send the same sample to multiple people and average the annotations. The model starts learning from the annotations and compares its quality to human quality. Once the model's quality matches human quality, it can label at scale.
+
+Now, let's talk about SageMaker. SageMaker is a combination of different modules for experimenting, finding the right algorithm, and training models. It provides fully managed notebook instances with Jupyter and data science tools, built-in algorithms, and environments for popular machine learning libraries like TensorFlow and PyTorch. You can create a notebook instance, open Jupyter, and start working without any setup.
+
+SageMaker also offers a model marketplace where AWS partners have trained and published models. Before training your own models, check the marketplace to see if a model already solves your problem. You can deploy, test, and run predictions against these models in a few minutes. Most models are free, and you only pay for the underlying instance. The models are validated by AWS teams for security.
+
+Once you find a suitable algorithm and train it, you can deploy it to production. SageMaker handles the infrastructure, providing load balancing and auto-scaling. You get an HTTP endpoint for predictions or can perform batch predictions. SageMaker automatically shuts down training infrastructure when complete, saving costs.
+
+SageMaker supports various training options, including built-in algorithms, bring-your-own-script environments, and custom Docker containers. The built-in algorithms are distributed and can handle large datasets, making them more scalable than libraries like scikit-learn, which trains on a single instance. For very large datasets, SageMaker's distributed algorithms are more efficient and easier to use than setting up a Spark ML cluster.
+
+In summary, SageMaker simplifies the machine learning process, from data labeling to model deployment, with fully managed infrastructure and a high-level SDK. This allows you to focus on the actual machine learning tasks and achieve better performance with less effort. These traditional ones are generally 10x better. They train 10x faster, scale 10x more, or are 10x cheaper, etc. These are state-of-the-art implementations compared to anything else, and they will distribute automatically. You can use something called pipe mode to stream data to the algorithms. If you want to do this on Spark ML, you would have to read the data and probably copy the data to your cluster for it to work. So you would import 100 terabytes of data to your EMR cluster. That's going to take a while. And then you would train. Here, you can actually stream the data to S3. So you can start training immediately and save potentially hours in this case.
+
+This is built for one thing only, and that's machine learning. The only focus is optimizing machine learning. I'm pretty confident these algorithms are better than anything you'll find out there. But if you're interested in the benchmarks, I can give you the presentation. Yeah, sure. I will add the link to the slides. So let's look at the first example. I'm going to use Blazing Text, which was actually written and published by Amazon researchers. Blazing Text is about natural language processing, and you can use it in different ways, but here I'm using it to classify text.
+
+Alright, so SageMaker here we go. I created a notebook instance and opened it. This is Jupyter, nothing new. Come on, Wi-Fi, don't die on me now. These are the examples I was referring to. They're automatically cloned to the new notebook instances and are also available on GitHub. The link is at the end of the talk. It's a collection of, maybe 100 notebooks that show you all the different ways to use SageMaker. If you're just getting started, I would recommend this category, Introduction to Applying Machine Learning. These work with real-life data sets, such as using XGBoost to predict customer churn or forecasting time series.
+
+One more question. Sure. You just showed us that there are a lot of different algorithms, especially for the models. Do you have any models for feature engineering? No, we believe feature engineering is something else, and SageMaker is really about training and deploying. If you need to do feature engineering, you could do it in the notebook if you wanted, but at scale, that's not a good idea. So at scale, you could use Spark, depending on what your data looks like.
+
+Let's take a look at this. We're going to import the SageMaker SDK. We need an S3 bucket because that's where our data will be stored and where we'll save the model. Now we download the dataset, the DBpedia dataset, which has about 500,000 samples in 14 categories. We download it to the notebook instance, extract it, and this is what the samples look like. I've got a category number and the sentence. The categories look like this: 14 categories. I'm loading those into a dictionary because I will need that later. In this case, we don't need to do much preprocessing. The input format for Blazing Text is very simple; it just wants space-separated tokens. So we need to make sure all sentences look like that. We use an open-source library called NLTK (Natural Language Toolkit) to tokenize the sentences. We preprocess the training set and the validation set that we will use to score the algo. The only thing we're doing is tokenizing, so making sure we have a single space separating words and punctuation in all the sentences.
+
+Now I need to upload this to S3 because that's pretty much the only thing SageMaker forces on you. Its data needs to be in S3. I define the location of the training data and the validation data in an S3 bucket. I define the location for the model, where to write the model. So a little bit of preprocessing and then copying the data to S3. All right. This is all based on Docker, but the only thing we need to know is how to grab the name of the Docker container for Blazing Text in the region we're in. We have a utility function to do that. So literally, give me the name of the Blazing Text container in US-East-1, which is the region I'm using. And here's the name. As you can see, it is hosted in ECR. I selected the algo I want to use and now I can set up my training job using the estimator object from the SageMaker SDK. The first parameter is the name of the container. How much training infrastructure do I want? Here I'm going to train on one C4.4xlarge instance. I'm using file mode, meaning I will copy the dataset. It's not trimming the dataset here; it's not big, so it's probably easier just to copy the dataset to that instance. This is where I will save the model.
+
+Then I need to set some parameters for Blazing Text. This notebook is a little too fancy. Most of these are actually optional parameters. The only thing we need to say here is supervised because we're working with a labeled dataset. We want to build a classifier. We're going to train for 10 epochs. Most of these are actually optional parameters, so unless you know what you're doing, I would recommend leaving optional parameters to default values. For each algo, we'll have some parameters to set. Then we just train by calling fit and passing the location of the training set and the validation set. This will create a C4.4xlarge instance, pull the Blazing Text container, inject your parameters, your training set, etc., and start training. This is not happening on this instance anymore; it's happening on a managed instance elsewhere.
+
+So it trains for a bit. We see the log. It trains for 47 seconds. Our training accuracy is 98.69%, and our validation accuracy is 97.2%. Surely we could do better if we tweaked a little bit, but for this example, it was more than enough. It's interesting to see that with 500,000 sentences, you can train a classifier in 47 seconds.
+
+Is it still to estimate what time it's going to take in training, depending on your dataset? No, I think it would be hard to figure out. Anything like a progress bar, so you can stop it if you don't? Oh, yeah. So here I'm working in a notebook, but obviously, you can see those jobs in the SageMaker console. If you realize it's painfully slow and you want to relaunch it with more, bigger instances, you can just go and click and stop it. It will kill it, and you can start something else. The log here is also pushed to CloudWatch, so you don't have to look at your notebook. You could just use the SDK from an application, and the log would still be in CloudWatch.
+
+So here I paid for 47 seconds for that instance type. Let's say I'm more than happy with the accuracy. How do I deploy this? Just like this, one line of code. Deploy that model to one M4.4xlarge instance. It creates it, pulls the container, loads the model, and creates the HTTPS endpoint to predict. If I was deploying to 100 instances, I would just do this, and it would create 100 instances and load balance them, etc. The accuracy here really depends on the quality of the data, but here it's pretty good. Generally, you will see the same thing. If that's not good enough and you need to iterate, you have to dive deeper, start tweaking, and that sounds scary. Wait for 10 minutes, and I'll give you the magic answer to not losing sleep over that.
+
+So we deploy and then we can predict. Take a couple of sentences, tokenize them, and make sure I've got this single space thing. Then I can call the predict API, which will HTTP post to the endpoint I just created. You can use curl or Postman to do this; you can grab the URL for that endpoint. It's an HTTP endpoint, so if you post data, you get back a prediction. You can use your PHP or whatever you want. I can see some responses. The first sentence with very high accuracy is about companies. It's really cheating here because we have the word "company" in there. We should say this and run that cell again. Still pretty high on the fact that it's a company. This is college, so with a high level of accuracy, we know it's an educational institution.
+
+So that's it. Then we can delete the endpoint and shut down that prediction endpoint. As you can see, it's really not machine learning at all. We downloaded the dataset, cleaned it up a bit, set up our training job using the built-in Blazing Text container. The only thing we would need to pay a little bit of attention to is probably the hyperparameters for this algo. But look at the documentation, and my advice is to stick to the required ones and ignore the optional ones. That gives you a baseline. If the baseline is good enough, then fine. Job done. Deploy, move on to the next thing in your to-do list. If the accuracy is not good enough, then as this gentleman said, we need to tweak those to get higher accuracy. But this doesn't look friendly, so I'll give you the answer in five minutes.
+
+Questions? No questions? All right. This will work the same for all the built-in algos. You will see that workflow every time. Use the estimator, set hyperparameters, call fit to train, call deploy to deploy. All those notebooks look the same. Learning the SageMaker SDK will take a process of two hours. The complexity is not there. It shouldn't be. There is no infrastructure at all. Did we worry about infrastructure much? Well, your point was good. If my job is too slow, can I shut it down and try something else? Yes. If you want to do distributed training, there's nothing to set up. Just say, give me five instances, and it takes care of it. The point is you can iterate quickly on training, evaluating, training, evaluating. I tried this; I'll go now; I want to try another one and ignore any plumbing concerns.
+
+What about deep learning? What about TensorFlow? What about everything else? I'm going to show you a TensorFlow example, but before that, someone asked me what's the difference between this TensorFlow and the other TensorFlow. We actually have a dedicated team working on optimizing TensorFlow on AWS. We had a couple of blog posts showing 5x to 7x speedup on training image classifiers. Comparing our optimized version of TensorFlow versus vanilla TensorFlow, as in pip install TensorFlow. This is the more recent one, an 11x speedup on C5 instances, again training. 11 times faster is very significant because it means in a single day, even if you're working with large datasets, you can iterate 11 times more. Same hardware. Vanilla TensorFlow on C5 compared to optimized TensorFlow on C5. If your job took two hours before, so let's say 120 minutes, now it takes about 12 minutes. In the same day and budget, you can run 11 more jobs. You can experiment more, optimize more, and get quicker. Or you could go home 110 minutes earlier. But since all you guys are here, I know you're freaks, so you would just use the time to work more.
+
+So now, let's look at a TensorFlow example. I'm going to show you how to train on TensorFlow and the elastic inference feature, which I think is pretty cool. You will get the slides, so don't worry. I see you taking pictures, so relax and focus on my voice. This is a fun example. The crazy business problem we want to solve is classifying the iris flower because, as it turns out, there are three types of iris flowers. The dataset actually looks like this: four features and a label (0, 1, 2). It has 150 samples, which is really tiny. Do you know where this dataset was actually put together? Let's play the game. Nothing to win, but come on, machine learning, take a risk. No? Who says after 1980? You're suspicious now. The answer is 1936. This is probably the oldest machine learning dataset out there.
+
+So we'll keep 120 samples to train and 30 samples to test. This is a simple classifier, and you could write your... let's look at the... okay, this is the TensorFlow code, a very simple neural network to classify those things. If you don't know TensorFlow, don't worry too much. As you can see, we have three layers in that network. The input layer has four features, and then we have 10 neurons, 20 neurons, and 10 neurons. The output layer will have three neurons because we have three classes. The output layer, three layers in between. It's TensorFlow stuff, and you could copy this code to your laptop and run it as is. This is vanilla TensorFlow. No changes required to train on SageMaker.
+
+So this is my TensorFlow script. What do I do with it? I'm going to use the TensorFlow object in the SageMaker SDK. I'm going to pass the script as a parameter. I can choose the TensorFlow version I want, where to copy the model, and where that script, if we have a custom directory for that script, I can pass it here. Once again, we're going to train on one C4.4xlarge instance for a thousand steps. That's it. Is this model compatible with the Revolta? Oh yeah. Here I'm showing TensorFlow, but if you use PyTorch or something else, it's the same. You can take that code to the bank. If you write ugly TensorFlow code not following the guidelines, it might not work on SageMaker. If you write it well, it's going to work on SageMaker.
+
+So it would be exactly the same for all the built-in environments. It's as complicated as writing this, just taking the object and passing the script and seeing how much infrastructure you want. If someone tells you it's going to be painful to move your on-prem TensorFlow training code to SageMaker, find something heavy and you know what to do with it. Humans are great at finding reasons not to do the work. Heavy objects help.
+
+Then we train, passing the location of the training data. We see stuff going on. Do we have the accuracy somewhere? Yes, 96%. Here it is, 96%. All right, we'll take it. And we trained for 37 seconds. So that didn't cost much. I could deploy just like in the previous example. Dot deploy, blah, blah, blah. Let's say I need GPU acceleration for this model. I actually don't need it, but I can do silly things. If this model actually benefits from GPU acceleration, you can say, no problem. I'm going to look at the SageMaker documentation, find the instance type, maybe it's going to be ml.p3.2xlarge, and deploy to a GPU instance just like that. Life is good; I can go home early.
+
+Now, the problem is, I'm more than happy for you to spend your dollars on AWS, but I really would like you to spend your dollars in the most efficient way possible. Maybe the model benefits from GPU acceleration, but a full GPU instance is a little bit too much. So, I want GPU acceleration, but I don't want a GPU instance. Should I go back to the CPU instance? Well, there's a middle ground, and that's called elastic inference (EIA). You can deploy on a CPU instance but bring some GPU acceleration. You have three sizes: medium, large, and extra large. You attach a fraction of a GPU to this instance. You get good enough performance but save probably 70% of the cost compared to a GPU instance.
+
+From a cost perspective, the only thing to remember tonight is that if you're deploying to GPU instances and you haven't tried elastic inference, you're probably wasting money. Please try this. If performance is not good enough, then move to full GPU instances. How does it work in the background? Is it like some GPU sharing across different instances? Actually, why am I asking this? Will it be guaranteed that the prediction time will be the same? So, we actually give you a performance indication on medium, large, and x-large. We give you how many teraflops you should expect, etc. They will be consistent any time of day or night, and you know how many teraflops that is.
+
+Now I deployed and am running predictions on this instance, but there is some fractional GPU attached to it. This will save you a ton of money. Now I can predict. I can pass the four features, and it tells me the likeliest class. So this is a class 1 iris. If I change something and run that again, it's still a class 1 iris. Simple. And I could delete the endpoint when I'm done. So again, you see the same workflow: configure the job, train, deploy. In this case, optimizing cost with the accelerator.
+
+Okay, a couple more things. I still need to answer your question about not having bad dreams with hyperparameters. So you're convinced. SageMaker is great. You go back to the office, start experimenting, and keep all those optional parameters hidden because they look bad. But still, you train and get to an accuracy level that's kind of OK, but you want more for your AWS dollars. The problem you want to solve is finding the optimal set of hyperparameters. Let's say we have 10 hyperparameters. We need to find the best values for those, the values that will give you the highest accuracy.
+
+The first thing is manually. You're going to start adding those parameters to the notebook and try some values. The dog gives you reasonable ranges, so you're going to explore. This is what I call, "I know what I'm doing." And no offense, but you don't know what you're doing. I don't know what I'm doing, and no one here knows what they're doing, even if they've been doing machine learning for 10 years. It's impossible to figure that out. Have you seen the movie Interstellar? Well, if you haven't, sorry, I'm spoiling the end. You get trapped. You get lost in that multi-dimensional space, trying to find out how that works.
+
+So it's the same here. Let's say we have 10 hyperparameters. That space has 10 dimensions, and we're trying to find the optimal spot in that 10-dimensional space. You could do grid search. You could create 100 combinations for those parameters, run 100 training jobs, hoping that some part of that space yields higher performance models. You say, well, that part of the space here, those nearby data points, they tend to be interesting. So I'm going to restrict the parameter ranges to that part and create 100 more models, zooming in, galaxy, solar system, etc., exactly that same story, zooming in in space. You will end up training hundreds and hundreds of models. If each model takes 15 minutes, it takes a while. It's slow and expensive.
+
+Another technique is random search, which I call "spray and pray." There was a research paper in 2012 that actually shows that random search generally works better than grid search, which is very disappointing if you're an engineer. You just create a few, maybe 100 jobs with pretty wide ranges, and you pick the one that works best. On average, it's faster and cheaper. You save money, get there faster, but it's random. Now imagine going to your boss or customer, 20 people around the table. Mr. Engineer here is in charge of the ML project, and you're going to explain how you came up with that 98.5% accuracy model. Well, I took a hundred different combinations, trained at random, and picked the highest one. If you can pull it off, man, congratulations. Good luck explaining to them that it is actually the better option.
+
+So what's the best option? The best option is to use hyperparameter optimization, which literally uses machine learning to find the best parameters. You will still define parameter ranges and tell SageMaker, "OK, train 30 jobs, three by three." It's going to train three jobs, giving it three data points matching hyperparameter values to accuracy. It will apply machine learning optimization to those three points to predict the next three combinations. They're not choosing at random; they're choosing based on fascinating algos called GPR and Bayesian optimization. It's going to predict the next three sets of parameters, and you're going to train on those three. Now you have six data points and run the same process. Three more data points, you've got nine, etc. Gradually, you will get to high-performance models by doing that. You will end up training probably ten times fewer models. It's a huge difference. Now you have a scientific process to explain to your boss or customer.
+
+So HPO works very well. I'm going to show you quickly how to set it up. It doesn't really matter what we're training on here. I'm using TensorFlow. I set up a TensorFlow training job exactly the same. But this time, I keep it simple. I want to optimize on one hyperparameter, the learning rate. I want to explore values between 0.01 and 0.2. I want to measure loss or prediction error, which I want to minimize. I create this hyperparameter tuner object, passing the job I set up earlier, the name of the metric, the ranges, etc. Here, I'm going to train only nine times, three by three.
+
+If I look at the console, I will see my nine training jobs using different combinations and the actual metric. The best training job is the one with the lowest error. The first few ones are not really looking in the right place. We're not making a lot of progress. Once we have five data points, bam! We hit a spot that is really much lower than the previous ones. The next one is kind of OK, a little bit more. Then we make a totally wrong decision here. The final one is really the jackpot. The best job is the last one, with a learning rate of 0.010206, which I don't think is a value any of us would have tried.
+
+Is there an option to set the cross-validation items? Because otherwise, you might overfit. No, no. All these jobs are different ones. We start from scratch each time. So we don't train the same thing nine times in a row. These are nine different trainings. But the dataset, do you use the cross-validation dataset? No, in this example, no. You could implement it if you wanted. Here, we're just trying nine combinations. But with three, four, five hyperparameters, they train a little longer. This will get to higher accuracy automatically. If you have bigger jobs, maybe you need to train for four hours, six hours, nine hours. You just don't worry about it. You let those things run and pick the best model at the end and deploy that.
+
+If you look in the SageMaker documentation, they point you to the research papers they use, but it's GPR and Bayesian optimization. Can you specify, for example, how many correct answers should be and how many wrong answers should be in the result? The target is the number of jobs. It would be nice to say, "Keep optimizing until you get to this accuracy." Or maybe you train 100 times. That would be nice. Good idea. Feature request. Thank you.
+
+And we'll call this one the Ukrainian way. OK, last thing. Model compilation. You optimize and have a fantastic model that works super well on EC2 instances. Then someone comes and says, "Oh, we're moving into IoT, and we need to deploy to ARM-based platforms. We need to deploy to Raspberry Pis." Oh, yeah, sure. I'm just done, OK? Two minutes.
+
+We trained that model, tried it on the Raspberry Pi, and it's super slow. What do you do? Do you need to train a smaller model that would run better, etc.? We came up with a service called Neo. It's one API call to compile your model for a given hardware platform. It generates hardware-optimized code, so native code, to speed up your predictions. It works for most of the libraries we support. This is how you do it. You write a simple JSON file saying, "OK, here's my model in S3. That's the output of a SageMaker job. This is the input." You can optimize for ARM, Intel, NVIDIA, and we have other platforms coming. This is open source, so you could port it elsewhere.
+
+Resources: The free tier I mentioned before includes SageMaker. Visit ML.AWS for the SageMaker page, the Python SDK I used, some GitHub links, and the Spark SDK I briefly mentioned. All the notebooks you saw are also on GitHub. I did a successful workshop at reInvent, which is a very long scenario using XGBoost, covering everything from training to optimizing. You can find that on GitLab and run it. The Medium blog and some of my own notebooks on GitLab are also available. If you're just starting, please look at the Amazon Algo and Amazon Algo notebooks and run those. You can run them on the free tier; they use small data sets, so you won't exceed the free tier with those. Thank you very much.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">MachineLearning</span><span class="tag">SageMaker</span><span class="tag">DataLabeling</span><span class="tag">HyperparameterOptimization</span><span class="tag">ModelDeployment</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

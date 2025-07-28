@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improving healthcare with AI</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Improving healthcare with AI</h1>
+        <div class="date">December 08, 2018</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/lIJYBfTRb_o" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">- A quick introduction to Artificial Intelligence
+- Healthcare applications of Deep Learning
+- Getting started
+
+Slides: <a href="https://www.slideshare.net/JulienSIMON5/improving-healthcare-with-ai" target="_blank" rel="noopener noreferrer">https://www.slideshare.net/JulienSIMON5/improving-healthcare-with-ai</a>
+
+Follow me on Twitter (@julsimon) or Medium (<a href="https://medium.com/@julsimon)" target="_blank" rel="noopener noreferrer">https://medium.com/@julsimon)</a> for more content.</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Hey, good morning. My name is Julien and I'm a technical evangelist with AWS focusing on AI and machine learning. In this talk, I would like to present how artificial intelligence can help with healthcare. This is not a deeply technical talk. It is mostly for healthcare professionals, doctors, and generally everyone who would like to understand how AI can help deliver better healthcare. Having said that, there will be a few technical things in this presentation, and I will share some resources at the end. I'm guessing a lot of you are not really familiar with artificial intelligence, so I would like to start with a quick overview of that topic to give you some pointers and maybe define some terms that we keep hearing about and that might not be very clear. So let's go through a few slides explaining where AI comes from and what the main techniques are, and then we'll look at how those techniques can be used for healthcare.
+
+The first thing that might surprise you is that AI is over 60 years old. We can date the birth of AI to 1956 when a group of researchers led by John McCarthy met at Dartmouth College in the US for a summer project. They coined the term artificial intelligence and tried to define what that could be about. We'll look at a more formal definition in a minute. Just for the record, John McCarthy is one of the top computer scientists ever and invented tons of things like the Lisp language. He received the Turing Award, which is the equivalent of the Nobel Prize for computer scientists, in 1971. And, interestingly, at about the same time, maybe a few weeks before or after that summer project, the first movie featuring a robot as a major character, "Forbidden Planet," a true sci-fi classic, came out. I would like to believe that those scientists saw the movie and it influenced them in some way, but I'm afraid this is just wishful thinking. Still, an interesting coincidence.
+
+A simple definition for artificial intelligence is trying to design software applications and systems that exhibit human-like behavior. A lot of this involves dealing with human perception, such as speech, computer vision, natural language processing, and the ability to display some sort of reasoning, intuition, and the ability to predict the future by looking at the past. This is a very broad definition of artificial intelligence. In a nutshell, we're trying to build things that behave like humans in a number of capabilities. And, of course, everyone loves to try to predict the future. Scientists thought that within 10 years, digital computers would be the world's chess champion. These gentlemen were no beginners; they were top computer scientists who received Turing Awards and Nobel Prizes. They knew what they were talking about, but those predictions turned out to be horribly wrong.
+
+In 1965, they thought that within 10 years, a machine would be capable of doing anything a human could do. Another top scientist, Marvin Minsky, believed that within a generation, we would be able to solve all kinds of problems with artificial intelligence. He even went as far as saying that by the end of the 70s, we could build a computer with the general intelligence of an average human being. Whatever that means is up for debate, but no system ever came close to that level of intelligence in the late 70s. So, lots of incorrect predictions by a group of extremely bright people. Fast forwarding to 2001, Marvin Minsky wrote an article saying, "It's 2001, where is HAL?" You remember HAL as the murderous computer in Stanley Kubrick's movie, "2001: A Space Odyssey." Marvin Minsky actually helped Kubrick during the making of that movie, designing what HAL would look like. It's funny that 20 years later, Marvin Minsky was frustrated that whatever Kubrick designed and filmed was still not available in real life. In his article, he says something striking: no program today can distinguish a dog from a cat, recognize objects in typical rooms, or answer questions. This is referred to as the common sense issue. Things that are extremely simple for even young children to perform were extremely difficult, even impossible, for any computer systems. Almost 50 years after the inception of artificial intelligence, researchers were extremely frustrated by the state of affairs and felt they were nowhere near delivering the promise of building those smart, human-like systems.
+
+In parallel, a sub-domain of artificial intelligence gained popularity: machine learning. AI is a very wide science, and machine learning is one of its subfields, probably the most popular one. In the 80s and 90s, and in the early 2000s, machine learning became increasingly popular to teach systems how to learn behaviors without being explicitly programmed. When you write software, you explicitly tell the computer what to do by writing instructions in a programming language. These instructions are completely defined and explicit, and the computer is supposed to do exactly what it's told. If it's told to sort text or insert data into a database, that's what it will do. With machine learning, things are different. You use machine learning algorithms, mostly statistical algorithms, that you apply to a dataset. This dataset could be anything, such as information on your patients or any kind of data you want to learn behaviors from. For example, you might try to predict if a certain patient will develop a certain condition within six months by looking at medical exams, blood tests, etc. If there's a pattern in that data, a machine learning algorithm would pick it up and apply it to new data. In a nutshell, this is what machine learning is about: you take standard algorithms, mostly statistical ones, look at existing data, try to learn behavior from that data, and then apply that behavior to new data to predict the future.
+
+In the late 90s and early 2000s, the companies leading the charge on machine learning were the big web companies. These names are all familiar, I suppose. They grew very fast, had tons of users and data, and could buy lots of commodity hardware to run in clusters, making them even more powerful. They had very good engineers, and as private businesses, they had to make money to keep growing and developing their business. It was really gasoline waiting for a match. There was so much data that traditional systems, databases, and IT solutions could not work at that scale for those hyper-growth companies. Something had to happen. At the end of 2004, Google published a really important paper explaining the MapReduce architecture, a new architecture for processing data at very large scale. This was mostly about web traffic, user interaction with websites and mobile apps, and they needed to extract information from that, mostly for advertising purposes. A few months later, about a year and a half later, Yahoo implemented the architecture described in Google's paper and open-sourced it. This really caught on like wildfire, and before you knew it, every company was trying to process their own data using those architectures and open-source solutions. This was the renaissance or the new beginning in data processing needed at that time.
+
+It's interesting to see that this didn't really come from the research angle. Some of the research was stalled for decades, waiting for commodity hardware, lots of data to be available, and open-source tools. All of this came together in the mid-2000s because those web companies built the infrastructure and technology to make it run. Machine learning then moved on to the next step at a very high scale. A few years later, in the 2010s, machine learning was everywhere. All the web companies and software vendors implemented machine learning in some form, but HAL was still nowhere to be seen. We got extremely good at processing data at scale, but we could not build artificial intelligence systems in the original sense of the word. The reason for this is that traditional machine learning, statistical machine learning, does not work well on unstructured data. Unstructured data means anything that doesn't fit in a database, such as images, video, speech, and free-form text. These are highly complex data that are just a blob of data with no visible structure, like you would have in medical exams or patient reports. Machine learning doesn't work with that, and this is really frustrating because identifying objects in images, understanding speech, or translating speech are things that are pretty easy for people to do but very difficult for computers to get right. It's next to impossible to describe these tasks formally. You cannot formally define how to identify specific things in an image or understand words in a sentence. It doesn't fit the computer's mindset. The big question is how to fit informal knowledge into a computer and help it extract, understand, and structure patterns from something that's just a big blob of data. Statistical algorithms don't work here.
+
+The next step of that revolution was the resurrection of neural networks, a technology that had been around since the late 40s, predating artificial intelligence. These neural networks were applied to machine learning, giving birth to a new subdomain called deep learning. Deep learning is a subset of machine learning that focuses on teaching machines to learn from data without being explicitly programmed. This time, neural networks have the capability to understand data that is unstructured, where features and patterns are hidden or cannot be explicitly expressed. Things like images, speech, and free-form text can now be processed using deep learning. The reason it's called deep learning is that we tend to build layers of artificial neurons and stack them up, passing data from one layer to the next. State-of-the-art networks can have hundreds of layers, and this is why it's called deep learning. We learn gradually by passing data through these neural layers. This is a short introduction to artificial intelligence, machine learning, and deep learning. The key thing to remember is that these technologies have been around for a long time. They were somewhat successful in the early decades, but what really made them relevant is the ability to scale, process vast amounts of data on cheap hardware using open-source tools, and use deep learning to understand complex data related to vision, speech, and natural language processing—things that are key to what being human means. Processing unstructured data is what humans do best, and deep learning is a key technology in this area.
+
+Let's look at some applications of deep learning for healthcare. The first one, if we look at things in order, is how to find a doctor. A US company called ZocDoc has a simple idea: take a picture of your health insurance card and extract information from it, such as your name, patient ID, and location. Based on this, it finds a doctor in your area who can see you as soon as possible and optimizes cost in the process. This is particularly useful in the US, where the healthcare system is complicated, fragmented, and expensive. The app, by performing image recognition and text recognition on your insurance card, can find a doctor near you who can see you quickly and hopefully not too expensively. This is a brilliant idea based on deep learning for text recognition and extracting all that information. I'm based in France, and we have similar insurance cards. I'm just waiting for someone to import this idea to France. If anyone's listening, please build the same thing in France. It's so much better than calling 20 doctors to try to get an appointment quickly.
+
+The next step, once you meet the doctor and the doctor has a report, is to apply some kind of processing to your exam. Amazon recently released a service called Amazon Comprehend Medical, which can extract complex information from medical reports. Let's go through a quick demo. I'm switching to the AWS console, the web application that lets you access AWS services. Here, we have some text that is difficult to understand, full of medical jargon and abbreviations. It's about a 40-year-old mother who is a software engineer with sleeping trouble, a rash on her face, and a diagnosis. The only thing it takes is to call an API hosted in the AWS cloud, and in real time, I get an analysis of this report. The first thing we see is entity extraction, which figures out what every word is. For example, "40" is the age, "software engineer" is the profession, "sleeping trouble" is a symptom, and "DX" is the abbreviation for diagnosis. The system can also identify the names of medicines, their dosages, frequencies, and specific instructions, such as "50 milligrams at breakfast, once a day, PO (orally)." This information can be used to update the patient's medical report in a database, ensuring that the next doctor has all the necessary information. This is much better than going through a pile of paper and losing important details. Just extract the information, write it in a database, and nurses and doctors can access it whenever needed. This is an example of using deep learning and artificial intelligence to improve healthcare.
+
+A lot of medical exams require image processing, and many deep learning applications focus on this. For example, a French startup called AZ Med has built an automated system to detect fractures. A non-displaced scaphoid fracture, which is very difficult to detect, is shown on an X-ray. The system not only picks up these tricky fractures but also builds automatic reports, providing human-readable text about the fracture. This is based on image analysis and deep learning. Another example is an American company called Arterys, which builds apps for auto contouring in MRI and CT scans. This involves finding the exact contour of a specific organ, a task that used to take up to an hour to do manually. Using deep learning, Arterys can do this in 15 to 20 seconds, saving valuable time in emergency situations. These systems are a huge improvement for doctors and patients.
+
+A very recent example is a project from the University of California, San Francisco, and Berkeley. By analyzing brain scans, they built a system that can predict whether a patient will develop Alzheimer's disease more than six years before the actual diagnosis. This early warning can make a significant difference in helping and potentially curing patients. There are many more examples like this for heart conditions and skin conditions. Deep learning is extremely good at detecting problems by looking at complex images, often faster and more accurately than human doctors.
+
+These are interesting examples, but many people think AI will never replace doctors. I hear this a lot: AI will never replace [insert job name here]. However, 5.8 billion people on our planet do not have access to an expert physician. The question is not whether AI will replace doctors, but how AI can extend medical capabilities to areas where doctors are not available. For example, cervical cancer kills 270,000 women every year, often due to poor detection and prevention. Even in the US, many counties do not have obstetricians and gynecologists. A company called Mobile ODT, an Israeli startup using AWS, has built a device that lets healthcare professionals perform exams with a smartphone. This lightweight, inexpensive device can be deployed anywhere, allowing trained personnel to perform exams in remote locations. The app sends results to the cloud for expert analysis, significantly improving early detection and saving lives.
+
+Another example is for patients who need constant supervision, such as children with autism and people with Alzheimer's disease. An AWS employee named Troy built a system using AWS services for speech-to-text, natural language processing, and chatbots to help his son, who has autism. The system interacts with his son, giving him instructions and improving his communication. This is a way to provide guidance and supervision without being physically present, which is especially useful for patients who need 24/7 assistance.
+
+I truly believe that AI is a revolution for healthcare professionals. It allows for earlier detection, improved diagnosis, and faster, more accurate decision-making. AI can also help in recommending the best course of action based on historical patient data. By automating document processing and procedures, AI can save time and reduce unnecessary exams, always in the interest of the patient. Healthcare professionals can focus on the most important things, which are humans. Doctors became doctors to help mankind, from birth to death, to ensure we live healthy, happy lives. No artificial intelligence system will ever replace human empathy and touch, even in the most difficult situations. Doctors should focus on spending more time with patients, explaining options, and guiding them through the best resolution for their problems. No AI will ever do that.
+
+For more resources and case studies, please take a look at our healthcare and life sciences companies running on AWS. If you're curious about how to start using these technologies, either directly or through partners, there are plenty of resources available. Thank you very much. This is the end of this presentation. I hope it was informative. You can reach me directly on Twitter. This is my Twitter account. I also have a blog on Medium, which is another way to connect with me. I hope this was useful. Please get in touch if you have questions. Thanks for listening. Until next time, have fun experimenting with AWS.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI in Healthcare</span><span class="tag">Machine Learning Applications</span><span class="tag">Deep Learning for Medical Imaging</span><span class="tag">Healthcare Technology Innovations</span><span class="tag">Artificial Intelligence Ethics in Medicine</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

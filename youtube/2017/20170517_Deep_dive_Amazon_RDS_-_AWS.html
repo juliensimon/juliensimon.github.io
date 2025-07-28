@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep dive Amazon RDS   AWS</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Deep dive Amazon RDS   AWS</h1>
+        <div class="date">May 17, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/9HzT3wxWPT4" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Dans ce webinaire nous passerons en revue Amazon RDS. Sécurité, conformité, passage à l’échelle, etc. Nous verrons comment migrer vos bases sur Amazon RDS et les rendre disponible à une échelle mondiale monde.
+
+✚ Retrouvez le PDF de cette session ici : <a href="http://bit.ly/2q2czQ4" target="_blank" rel="noopener noreferrer">http://bit.ly/2q2czQ4</a>
+
+Le saviez vous ? Ces webinaires sont organisés depuis Amazon WorkSpaces, notre service de bureaux virtuels.
+
+✚ Inscrivez-vous aux mardis du cloud, deux webinaires mensuels en français et en direct : <a href="http://amzn.to/2lvragO" target="_blank" rel="noopener noreferrer">http://amzn.to/2lvragO</a>
+✚ Rendez-vous sur notre site internet : <a href="http://amzn.to/2ktrf5g" target="_blank" rel="noopener noreferrer">http://amzn.to/2ktrf5g</a>
+✚ Suivez-nous sur Twitter : <a href="https://twitter.com/aws_actus" target="_blank" rel="noopener noreferrer">https://twitter.com/aws_actus</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Bonjour à tous, très heureux de vous retrouver pour un nouveau webinar AWS. Au programme cet après-midi, un premier webinar sur Amazon RDS, un deep dive sur Amazon RDS dans lequel on va détailler pas mal de fonctionnalités et rentrer assez en profondeur sur certains mécanismes d'RDS et d'Aurora dont je parlerai également. Et en deuxième partie d'après-midi, nous aurons un deuxième webinar qui sera animé par mon collègue Julien Lépine qui est solution architecte spécialiste des solutions Microsoft et qui vous parlera de SQL Server et vous pourrez en profiter pour lui poser toutes les questions Microsoft auxquelles je n'ai pas pu répondre depuis des années. Il est prévenu. Et bien donc allons-y, commençons avec RDS.
+
+Au programme, un bref rappel sur ce qu'est Amazon RDS. Et ensuite, six sujets. La sécurité, le monitoring, la haute disponibilité, le scaling, les backups et les snapshots, et la migration vers RDS. Un très bref rappel sur Amazon RDS. Amazon RDS est un service managé qui vous permet de gérer des bases de données relationnelles. Service managé égale pas d'infrastructures à gérer, pas de serveurs à installer, pas de moteurs de bases de données à installer, nous construisons et nous fournissons l'infrastructure en un clic ou un appel d'API. RDS supporte des moteurs très connus, vous les verrez dans un instant, qui seront compatibles avec vos applications, donc a priori pas de modifications à faire dans vos applications pour utiliser RDS. Vous pouvez, comme d'habitude sur nos services, créer des clusters et des instances RDS en quelques minutes à la demande en ne payant que l'utilisation que vous en faites, en ayant également la capacité de scaler à la demande le nombre et la taille des instances dont vous avez besoin. Donc en bref, un service de création et de gestion de serveurs de bases de données relationnelles à la demande qui est également disponible au sein du free tier et donc vous pourrez expérimenter avec votre base de données préférée.
+
+Les moteurs qui sont supportés par RDS sont les suivants : deux moteurs commerciaux, Oracle et SQL Server, donc je parlerai très peu puisque Julien couvrira le sujet tout à l'heure, trois moteurs open source, MySQL, PostgreSQL, et MariaDB. Et puis un dernier moteur qui est Amazon Aurora qui est une réimplémentation de MySQL 5.6 faite par les équipes AWS. J'en profite pour ajouter qu'il y a quelques jours nous avons annoncé en preview la disponibilité de PostgreSQL sur Aurora. Vous pouvez vous inscrire à cette preview, et vous pouvez désormais utiliser PostgreSQL au sein d'Aurora avec les mêmes bénéfices que MySQL. Mais on parlera un peu plus d'Aurora tout à l'heure.
+
+Toutes les applications ont besoin d'une base de données relationnelle, donc il n'est pas étonnant de constater qu'RDS est un des services les plus populaires d'AWS. Nous avons un grand nombre de clients sur ce service. Je vais en citer un qui est Airbnb que tout le monde connaît. Airbnb, avec la croissance qu'on leur connaît, opère ses principales bases de données SQL sur RDS, ce qui leur permet de se concentrer sur leurs produits, la scalabilité de leur plateforme et de ne pas se préoccuper de ce que j'appelle toujours la plomberie, c'est-à-dire les opérations au jour le jour, les tâches de DBA à faible valeur ajoutée, etc. Donc voilà, Airbnb avec le parcours extraordinaire qu'on leur connaît, s'appuie sur RDS. On pourrait prendre plein d'autres exemples, vous trouverez pas mal de use cases comme d'habitude sur le site web d'AWS.
+
+RDS est un chouette service. Néanmoins, il faut être conscient des différences qu'il existe entre RDS et l'utilisation d'un MySQL sur EC2. Dans RDS, l'infrastructure est managée, ce qui veut dire que vous n'avez pas accès à l'instance, vous ne pouvez pas vous connecter, vous ne pouvez pas faire de SSH sur l'instance qui exécute votre base de données. Par conséquent, vous avez une capacité limitée à configurer, à modifier, à tuner dans certains cas l'OS de l'hôte pour la base de données. On verra tout à l'heure comment avoir de la visibilité au travers du monitoring. Mais voilà, soyez bien conscients que vous ne pouvez pas vous connecter sur ces instances-là. La deuxième chose qu'il est important de savoir, c'est la capacité maximum de stockage pour les différents types de bases de données. Pour SQL Server, la limite est de 4 Tera. Pour tous les autres, la limite est de 6, sauf Aurora qui peut aller jusqu'à 64, on en parlera tout à l'heure. 64 devrait suffire à tout le monde, j'espère. Néanmoins, si par exemple sur MySQL ou PostgreSQL, vous avez besoin de plus de 6 Tera, vous serez obligé de démarrer plusieurs instances RDS. Ce qui veut dire que vous serez obligé de découper votre base de données, de découper votre schéma, etc. Donc voilà, ça ne se fera pas automatiquement. Jusqu'à 6 Tera, il n'y aura pas de souci. Au-delà de 6 Tera, vous devrez ré-architecturer et faire évoluer votre data selon le découpage qui vous convient.
+
+Rapidement, à quoi ressemble Aurora ? Je l'ai dit, Aurora c'est une base de données compatible avec MySQL 5.6. Elle dispose d'ailleurs de quelques extensions 5.7. Vous trouverez toutes les infos dans la doc. Le stockage croît automatiquement, sans aucune action de votre part, jusqu'à 64 Teraoctets. Les données sont stockées sur une couche de stockage distribuée qui est étalée sur les trois zones de disponibilité d'une région. Et chaque bloc va être copié, répliqué six fois sur les trois zones de disponibilité. Donc ça, c'est une des grosses différences d'Aurora par rapport à MySQL et à PostgreSQL, c'est de séparer le processus de base de données de la couche de stockage. Ce qui veut dire que vous pouvez scaler de manière indépendante le besoin en requêtage du besoin en stockage. Ce qui, on l'a vu à l'instant, n'était pas forcément le cas pour les autres moteurs. Il y a plein d'autres bénéfices en termes de haute disponibilité, etc. J'en reparlerai tout à l'heure, mais pour l'instant, retenez que on a séparé le process de base de données, qu'il tourne sur un master, qu'on peut avoir des reads réplicas, dès que toutes ces instances vont s'appuyer sur la même couche de stockage qui est distribuée entre les AZ. Et que cette couche de stockage backup en continu vers S3. Donc le problème du backup est réglé, vous n'avez pas à programmer le backup ou à gérer le backup, vos données seront backupées en permanence vers S3 et vous pourrez faire les restores sur des points précis, on le verra tout à l'heure.
+
+Un des gros avantages d'Aurora, c'est la performance. Au-delà de ce découpage d'architecture, il y a eu évidemment un gros travail sur les perfs et à l'aide de ce benchmark dont vous trouvez la référence sur le slide et que vous pouvez rejouer, qui est un benchmark totalement public, on a démontré la capacité d'Aurora sur un serveur à atteindre plus de 100 000 écritures par seconde et plus de 500 000 lectures par seconde, ce qui est cinq fois plus que MySQL. Donc vous voyez un niveau de performance hyper élevé qui nous fait dire qu'avec Aurora vous pouvez atteindre les mêmes performances que les bases de données commerciales mais à une fraction du coût. Bien sûr nous avons des clients aussi sur Aurora, je vais citer Expedia, le site de voyage que tout le monde connaît. Expedia utilise Aurora depuis un moment maintenant et ils ont des pics d'écriture à 25 000 écritures par seconde, parfois même jusqu'à 75 000 en moyenne, en moyenne aux alentours de 25 et en pics jusqu'à 75 000. Donc des niveaux d'écriture extrêmement soutenus qui pourraient nécessiter des bases commerciales et des architectures complexes et grâce à Aurora, ils sont capables de gérer cette charge aisément et à un coût bien moindre.
+
+Parlons de sécurité, vous savez que c'est notre obsession donc c'est toujours une bonne chose de commencer par ça. Le premier point important c'est bien sûr vous pourrez démarrer vos instances RDS dans votre VPC. Vous pourrez ainsi les protéger, gérer la connectivité réseau vers ces instances. Si elles doivent communiquer avec des serveurs ou des instances qui sont en dehors du VPC qui les hébergent, vous pourrez utiliser l'arsenal habituel, Direct Connect, une connexion VPN, du peering entre VPC, etc. Le service est managé, mais bien sûr, vous pouvez placer les instances à l'intérieur d'un VPC afin de profiter de la sécurité et de l'isolation que ce VPC vous procure. Également, le concept de Security Group que vous connaissez bien maintenant, qui va s'appliquer lui aussi aux instances RDS. Par exemple, ici, on voudra s'assurer que seules des instances applicatives, par exemple des front-ends web, vont pouvoir accéder à votre instance RDS. Donc vous pourrez, dans le security group de votre instance RDS, dire que seules les serveurs qui sont attachés au groupe Application Security Group ont le droit de se connecter. Puis de même, vous pourriez autoriser la connexion depuis par exemple la VPN ou depuis des machines d'administration via la première règle du Security Group. Donc tout ce que vous connaissez sur les Security Group pour les instances EC2 continue à fonctionner aussi sur RDS.
+
+RDS est conforme aux grands standards de sécurité de l'industrie donc les grands classiques SOC 1, 2, 3, les ISO 27001, PCI DSS évidemment et puis d'autres certifications fédérales aux États-Unis et internationales dans différents pays. On est bien conscient qu'il est essentiel que ce service qui sert à stocker des données soient conformes aux principales régulations. Donc voilà la liste détaillée, je vais pas vous la lire, rassurez-vous, vous trouverez tous les détails sur l'URL qui est en bas de ce slide. Donc vous constatez juste qu'on a une couverture un peu plus large sur MySQL, PostgreSQL et Oracle que sur SQL Server. Mais vous voyez que dans l'ensemble, on a les grands classiques SOC, ISO, PCI DSS, quel que soit le moteur qu'on utilise.
+
+Quid du chiffrement, tous les moteurs de base de données supportés par RDS vont supporter SSL, donc vous pourrez vous connecter et protéger les données en transit vers les instances. On a annoncé très récemment la possibilité maintenant de forcer SSL sur SQL Server, nouvelles fonctionnalités dont peut-être Julien vous parlera tout à l'heure. Pour ce qui est du chiffrement des données au repos, là aussi on supporte le chiffrement de toutes les données de l'instance, qu'il s'agisse des logs, qu'il s'agisse des backups, qu'il s'agisse des snapshots, qu'il s'agisse de la base elle-même, on va supporter le chiffrement en utilisant Amazon KMS dont j'ai eu l'occasion déjà de parler. Donc soit avec des clés qu'on aura créées nous-mêmes, soit avec des clés que vous pourrez créer ou importer. Bref, les mécanismes de chiffrement autour de KMS s'appliquent aussi à RDS. On parlera des reads réplicas tout à l'heure, mais bien sûr si le master est chiffré, il faudra que les reads réplicas soient chiffrés aussi. Donc tout ça c'est disponible pour tous les moteurs, il n'y a pas de coût additionnel. Si vous voulez aller au-delà pour Oracle SQL Server, vous pouvez utiliser un mécanisme qui s'appelle TDE, Transparent Data Encryption, qui va chiffrer lui-même le contenu de la base et qui s'intégrera lui aussi avec KMS. Donc voilà, quel que soit le moteur, plein d'options pour le faire.
+
+Quelques points importants à retenir, vous ne pouvez pas ajouter le chiffrement après coup, il faut que la base soit créée chiffrée, vous ne pouvez pas supprimer le chiffrement, une fois que le chiffrement a été décidé il n'est pas question de faire marche arrière. Comme je disais à l'instant, si vous avez un master chiffré, il faut que les reads réplicas soient chiffrés aussi, ça paraît relativement logique. Et dans la plupart des cas, il est impossible de restaurer des snapshots non encryptés vers des bases de données encryptées. Aurora permet de le faire, c'est une particularité, mais pour les autres moteurs, le cas général veut que vos snapshots doivent être chiffrés si vous voulez les restaurer sur une base chiffrée, ce qui aussi paraît une bonne idée en termes de séparation. Activer le chiffrement sur RDS, c'est très simple et j'encourage tout le monde à le faire. Vous voyez que dans le premier cas, il suffit d'ajouter ce paramètre Storage Encrypted qui va chiffrer le volume de stockage utilisé par l'instance avec la clé par défaut, créée par KMS. Dans le deuxième cas, vous pouvez évidemment spécifier un identifiant de clé spécifique que vous aurez créé ou importé pour protéger ces données. Donc c'est tout, que vous le fassiez en ligne de commande ou que vous le fassiez dans la console, c'est soit un paramètre soit un clic dans la console donc vraiment faites le, c'est gratuit, ça protège vos données, ça donne de la tranquillité à tout le monde et vous voyez, c'est très très simple à mettre en main.
+
+Petite précision sur les droits d'accès aux bases. Il va y avoir deux types d'accès sur les bases. À droite, il va y avoir les accès de type administration, création de clusters, ajout de read replica, création de snapshot, etc. Les appels sur l'API AWS pour gérer votre instance RDS. Et donc ça, comme d'habitude, vous allez le contrôler, le sécuriser avec IAM, dont là aussi on a eu l'occasion de parler beaucoup. Vous allez définir des rôles, vous allez définir des policiers, etc. Et c'est ça qui va s'appliquer pour vos administrateurs système, vos développeurs, etc. À gauche, on a les accès sur le requêtage sur la base elle-même. Donc la création des utilisateurs de la base, la création de droits d'accès pour ses utilisateurs sur telle ou telle table, tel ou tel objet de la base. Et ça, là pour le coup, ça n'a rien à voir avec IAM. Là, vous allez le configurer et le sécuriser avec la commande GRANT et les mécanismes de sécurité du moteur en question. Donc il faut bien séparer les deux sujets. La gestion de l'infrastructure via l'API AWS sécurisée par les permissions IAM et la sécurité du contenu de la base, des objets de la base que vous sécuriserez avec des GRANT et avec des autorisations attribuées par la base elle-même. Voilà pour la sécurité, sujet important, faites-y bien attention.
+
+Deuxième sujet, le monitoring. On l'a dit tout à l'heure, un des compromis qu'on fait lorsqu'on utilise RDS, c'est de ne pas pouvoir accéder à l'hôte. Néanmoins, bien sûr, on va vous fournir tout un tas de métriques et de graphes qui vont vous permettre de voir ce qui se passe. Donc par défaut, on a ce qu'on appelle le monitoring standard qui va vous donner un grand nombre de métriques que vous pouvez consulter pour chaque instance. Comme d'habitude, ces métriques vont être gérées dans CloudWatch, vous pourrez définir des alarmes, envoyer des notifications, etc. Tout ce que vous connaissez là reste valable. À la fin de l'année dernière, on a annoncé un certain nombre de nouveautés, on a baissé les prix sur le monitoring, ce qui est une bonne chose. On a allongé les durées de rétention et on a mis en place le monitoring des percentiles. Donc on n'est plus juste sur des valeurs moyennes. Maintenant, vous pouvez définir des métriques sur le 50e percentile, 90e percentile, etc. pour mesurer des cas un petit peu plus pointus que juste la moyenne. On a ajouté ce qu'on appelle le monitoring avancé qui rajoutent donc une cinquantaine de nouvelles métriques beaucoup plus typées OS justement ce qui pouvait manquer du fait qu'on n'ait pas accès à l'hôte et vous pouvez descendre à des intervalles d'une seconde sur ces métriques donc voilà là on vous donne toujours plus de visibilité toujours plus de compréhension du comportement de l'hôte pour que vous puissiez dimensionner et optimiser votre base.
+
+Un autre mécanisme qui est très utile, c'est le mécanisme des notifications d'événements. Donc là, l'idée, c'est de pouvoir envoyer des notifications SNS lorsque tel ou tel événement se produit sur l'instance ou sur le cluster. Donc là, on parle vraiment d'événements infrastructure, sur le slide c'est un événement de disponibilité, un backup, un failover qui se produit, etc. etc. une panne. Donc des événements vraiment qui impactent l'ensemble de l'instance ou du cluster et donc vous pouvez désormais pareil en quelques clics envoyer des notifications sur ces événements. En plus des métriques OS et bases de données qu'on a vu à l'instant, ça vous permet d'avoir aussi des notifications sur des événements plus globaux qui se produisent sur telle ou telle instance ou telle ou telle cluster. Donc très intéressant et très utile.
+
+Parlons du troisième sujet maintenant, qui est très très important, la disponibilité. Le choix par défaut lorsqu'on déploie RDS, le choix le plus simple, c'est de faire un déploiement dans une seule zone de disponibilité. C'est vraiment le déploiement minimum qu'on peut faire. Donc ça va ressembler à ça, vous allez démarrer l'instance RDS qui va être attachée à un volume de stockage, EBS, et le tout va s'exécuter, va habiter dans un subnet au sein d'un VPC, et donc une seule zone de disponibilité. Donc ça c'est bien, c'est simple, ça démarre rapidement. Pour des environnements de développement c'est bien pratique. Mais ça ne reste que dans une seule zone de disponibilité. Si vous voulez faire un déploiement multi-AZ, a priori pour de la production, vous avez besoin d'avoir un taux de disponibilité accru, vous allez demander à RDS de vous faire ce déploiement, ce qui va se traduire par ceci, donc un master qui va tourner dans une zone de disponibilité et puis automatiquement la création d'un standby qui va tourner dans une autre zone de disponibilité, une instance qui va être du même type, de la même taille, avec évidemment le même moteur de base de données, avec son propre stockage, et on va mettre en place automatiquement une réplication centrale entre le master et le standby. Donc ça vous le verrez si vous jouez dans la console RDS, vous voyez quand vous voulez créer un cluster, on vous demande est-ce que vous voulez un déploiement multi-AZ ou single-AZ. Voilà c'est exactement ce que je viens de décrire.
+
+Dans le cas d'un failover en multi-AZ, qu'est-ce qui va se passer ? Ici on a des utilisateurs et des instances EC2 qui utilisent une chaîne de connexion pour accéder au serveur maître. Imaginons que ce serveur maître ait un problème, qu'il tombe. On va détecter que le serveur est en panne et on va initier la bascule vers le serveur de stand-by automatiquement. Si on rentre un petit peu dans les détails, voilà ce qui va se passer. On va avoir une panne, il faut 15 à 30 secondes pour détecter que le serveur est en panne. L'éternel problème des systèmes, c'est de savoir si le serveur est lent ou s'il est en panne. Est-ce qu'il ne répond pas parce qu'il est en panne ? Est-ce qu'il ne répond pas parce qu'il y a un glitch quelque part ? Il ne répond pas parce qu'il est vraiment mort. Donc il faut quelques dizaines de secondes pour s'en rendre compte. À partir du moment où on s'en rend compte, on va initier la bascule. Donc le standby va prendre la main et il va devoir s'assurer que son stockage est parfaitement à jour. Donc il va devoir, si nécessaire, appliquer les commandes, les requêtes qui étaient encore en vol ou encore dans son log pour se mettre exactement dans l'état où était le master au moment de la panne. De deux choses, une soit la réplication était parfaitement à jour et ça, ça va se passer très vite, soit la réplication était un peu en retard ou en tout cas le système était en forte charge et cette durée de récoverie peut être assez longue. C'est un problème que les utilisateurs de MySQL connaissent bien. Parfois, on peut avoir une mauvaise surprise de ce point de vue-là. Donc le temps qui est là est relativement imprévisible. Et puis il y a un deuxième problème qui est la propagation du DNS. On a fait la bascule du master vers le standby en gardant le même nom de domaine. Donc en fonction de notre configuration DNS, ça peut être soit très lent, soit très rapide. Alors qu'est-ce qui se passe sur Aurora ? Sur Aurora, on est dans une configuration qui est complètement différente. On a des serveurs qui vont à master et puis des nœuds secondaires qui se sont étalés sur plusieurs AZ et du stockage totalement séparé, lui-même étalé sur plusieurs AZ. On peut avoir jusqu'à 15 nœuds secondaires qui peuvent tous servir de stand-by si jamais le nœud primaire se casse la figure. Au passage, si jamais un nœud secondaire lui-même se casse la figure, on va le remplacer automatiquement et le redémarrer. Donc si jamais le master tombe, à ce moment-là il va y avoir un processus d'élection pour choisir un nouveau master, ça ça va aller assez vite et le nouveau master donc lui n'a pas à attendre que sa réplication soit à jour puisqu'il n'y a pas de réplication ici entre les nœuds, les données sont automatiquement disponibles sur tous les nœuds via cette couche de stockage distribué qui est à très très faible latence et qui a une latence typique de quelques dizaines de millisecondes au grand maximum. Donc dès que le nouveau master est élu, il utilise le stockage qu'il utilisait déjà finalement et il a des données à jour. Donc ce mécanisme-là permet d'avoir des délais de failover qui sont bien plus faibles.
+
+Donc on va avoir une panne sur le master, on va avoir un petit délai de détection qui est assez incompressible. Ensuite il va y avoir la phase de recovery elle-même, c'est-à-dire l'élection du master et peut-être l'application de quelques updates sur le stockage mais de manière très très courte. Et donc là on a une bonne certitude d'avoir un délai qui est de l'ordre d'une dizaine de secondes. Et l'application va pouvoir reprendre la main. Alors si en plus on utilise le driver MariaDB, ce driver en fait on a travaillé avec eux pour lui donner la visibilité de tous les nœuds qui tournent dans le cluster Aurora. Ce qui veut dire qu'en fait, si jamais le driver détecte que le master ne répond plus, il va pouvoir aller interroger directement les autres nœuds pour savoir lequel est le nouveau master. Et donc en fait, on ne s'appuie plus sur le DNS finalement pour attendre de savoir qui est le nouveau master. On va pouvoir très vite trouver le nouveau master et l'interroger. On arrive à réduire énormément le temps d'indisponibilité. Donc avec Aurora, on a un failover plus rapide et surtout beaucoup plus prévisible qu'avec MySQL. Néanmoins, on aime bien quand même MySQL, donc si vous utilisez MySQL, pas de panique, il y a quelques conseils pour réduire les temps de failover. Donc surtout n'utilisez pas l'adresse IP pour vous connecter à RDS, utiliser un nom de domaine. Utiliser un nom de domaine avec un TTL le plus faible possible pour que les mises à jour, les propagations se passent bien. Éviter d'avoir trop de tables et de trop grosses tables, parce qu'on sait très bien que ça complique la tâche de la réplication et ça complique la mise à jour des reads réplicas. Éviter les très grosses transactions et assurez-vous que vos instances ont suffisamment de capacités en I.O. et en CPU pour gérer proprement un failover. Si vos instances sont au taquet tout le temps et qu'en plus elles doivent subir un failover qui va nécessiter des lectures, des écritures, du CPU, etc. Vous allez mettre vos instances vraiment dans le rouge et vous allez avoir un temps de failover un peu plus long. Donc voilà quelques conseils pour améliorer la situation.
+
+Un feature qui est exclusif à Aurora, c'est la capacité à simuler les pannes. On a rajouté des commandes qui s'appellent Alter System Crash, Alter System Simulate, qui vous permettent, sur un vrai système, de simuler un crash de nœud, une congestion disque, etc. C'est très bien, ça vous permet de voir ce qui se passe sur votre appli. Faites attention quand même sur vos systèmes de production, je vous conseille de tester plutôt ça sur la pré-prod ou sur un environnement dédié. Mais vous allez pouvoir simuler des ralentissements, des pannes sur votre cluster pour évidemment voir ce qui se passe dans votre application. Donc voilà, pour simuler des problèmes, faire du disaster discovery, etc. C'est super utile. Je vous conseille de tester ça.
+
+Continuons avec le sujet du scaling. Le scaling va passer par deux mécanismes. Un mécanisme qui est de scale-out, où vous allez étaler les requêtes entre plusieurs serveurs, donc les écritures vont être dirigées vers un master, les lectures vont être dirigées vers les fameuses reads-replicas. Donc ça c'est le premier mécanisme dont on va parler. Le deuxième mécanisme c'est le scale-up, donc de mettre de plus grosses instances, on va voir ça tout à l'heure. Donc revenons aux reads-replicas. Les reads-replicas ce sont simplement des instances qui sont en lecture seule, qui reçoivent les informations de réplication venant du master, avec plus ou moins de délais et donc ils vont vous permettre de faire du requêtage en lecture seule en soulageant le master. Ces séries de réplicas, elles peuvent être locales dans la même région ou elles peuvent être dans des régions distantes. Que ce soit sur MySQL, MariaDB, PostgreSQL ou Aurora. On a la capacité à rapprocher ou à éloigner du master et à rapprocher des utilisateurs des reads réplicas. Imaginez là que vous ayez des utilisateurs en Australie, il vaut bien mieux pour eux qu'ils puissent requêter et faire des lectures sur un serveur qui est dans la zone de Sydney plutôt que d'aller chercher le master qui a l'air ici d'être en Oregon. Sur Oracle et SQL Server, il y a des mécanismes pour arriver au même résultat qui sont dans le cas d'Oracle, un produit Oracle qui s'appelle Golden Gate ou alors évidemment toute une palette de produits tiers. Il y a pas mal d'éditeurs logiciels qui fournissent des solutions de réplication sur Oracle. Et puis bien sûr il y a la solution manuelle qui est de faire des snapshots. Si vous n'avez pas besoin d'avoir une synchronisation en permanence entre le maître et les répliques, bien sûr vous pouvez faire un snapshot, copier le snapshot même dans une autre région et puis redémarrer une instance à partir de ce snapshot. C'est un mécanisme un petit peu différent. Donc voilà pour le scale out. Donc le scale out, vous créez des réplicas, vous les mettez dans les régions que vous voulez et ça marche très bien. Si vous avez besoin de plus de puissance de traitement, vous allez pouvoir faire du scale up et bien sûr du scale down si c'est nécessaire. Vous pourriez avoir de plus gros serveurs pendant le pic de trafic ou pendant les fêtes de fin d'année, etc. Et puis ensuite revenir à une infrastructure plus petite pour contrôler vos coûts.
+
+Je vais vous montrer comment le faire dans la console. Évidemment on peut faire aussi ça en API. La taille de l'instance, ici on voit qu'on a une DB M4 Large. On a envie de faire plus petit ou plus grand, donc très bien, on change la taille. On clique sur ce bouton qui s'appelle « Apply immediately » et je rappelle à tout le monde que « immediately » veut dire « immédiatement » et donc ça veut dire que tout de suite la modification va s'appliquer. Donc ce n'est pas plus tard, il va se passer immédiatement la mise à jour de cette taille. Donc ça a évidemment des conséquences. Si vous avez un déploiement en single AZ, donc avec une seule instance, à partir du moment où vous appuyez sur ce bouton, vous allez éteindre l'instance et la remplacer par une plus grosse. Et donc là, vous avez une indisponibilité. C'est pour ça que j'insiste lourdement sur le « Apply immediately ». Si vous êtes en déploiement mono AZ, vous allez avoir une indisponibilité. Ce n'est pas forcément un problème si c'est un système qui n'est pas un système critique. Mais soyez-en bien conscients. Ok, donc là on voit un petit exemple. Donc vous voyez, on l'a fait à 6h53 et à 7h01, donc à peu près 8 minutes, 8 minutes plus tard, on avait un nouveau serveur disponible. Ok, donc potentiellement ici 8 minutes d'indispos. Si vous avez un déploiement multi-AZ, on va d'abord mettre à jour le standby. On va créer un nouveau serveur à partir des données qui sont sur le standby. On va le promouvoir, on va faire un failover, contrôler un failover vers le nouveau master. Et puis ensuite, l'ancien master est devenu standby, on le met à jour à son tour. Et on reste comme ça. On ne revient pas dans la situation initiale. Donc là aussi, potentiellement, vous avez une indisponibilité liée au failover. Donc ici, on voit, on a fait l'application de la modification à 6h20 et on a fini le failover à 6h28. Donc vous voyez, à peu près dans le même délai que tout à l'heure. Et puis ensuite, on fait la mise à jour de l'autre serveur et ça prend encore 6 minutes. Donc évidemment je vous conseille de faire ces manips de manière contrôlée, dans les heures creuses, pas en plein trafic, enfin j'enfonce des portes ouvertes, mais il vaut mieux le faire pour vous éviter des problèmes. Vous pouvez aussi le scheduler, pourquoi pas, on pourrait imaginer qu'on écrit un petit script, ici en haut à gauche, on a un appel d'API, on pourrait... On pourrait avoir une tâche cron qui s'exécute aux heures dites, qui fasse le scale up, le scale down en fonction des changements. On pourrait avoir une petite fonction lambda qui fait la même chose et qu'on schedule avec CloudWatch Events. Voilà, on peut faire tout ça. On pourrait aussi le faire complètement à la demande, en disant j'ai une alarme CloudWatch qui me dit que je suis trop chargé, donc je reçois une notification et je fais un scale-up, etc. Donc là aussi on pourrait faire ça avec une fonction lambda. Donc après, voilà, vous décidez, est-ce que vous voulez le faire complètement manuellement, est-ce que vous voulez le faire sur des horaires bien précis, en le programmant de manière précise, ou est-ce que vous voulez le faire de manière complètement dynamique. Pourquoi pas, voilà, toutes ces possibilités ont un sens. Voilà pour le scaling, donc scale out avec des réplicas, scale up and down avec des appels d'API et plusieurs façons de le faire.
+
+Parlons maintenant du backup et des snapshots. Alors il y a ici une différence entre Aurora et les autres. Commençons par les autres donc MySQL, PostgreSQL, etc. Là vous pouvez définir des backups quotidiens. Vous l'avez certainement vu dans la console si vous utilisez déjà RDS. Ça fait partie des petits bonus que vous offre le service managé. Vous définissez une fenêtre horaire et une durée de rétention jusqu'à 35 jours et donc vous décidez que tous les dimanches à 1h du matin bien vous faites le backup de la base. Donc on fait un backup complet, on fera tous les jours, on fera automatiquement et on les gardera jusqu'à 35 jours. Ces backups sont copiés entre plusieurs AZ donc aucune chance de les perdre. Donc voilà, ça c'est évidemment à configurer, je vous incite très très fortement à le faire. Là aussi c'est un clic, il n'y a aucune raison de ne pas le faire, et le problème des backups est réglé. Je vous incite évidemment de dans un temps à faire des tests de restore, parce qu'on parle toujours de politique de sauvegarde, mais la politique de sauvegarde pose rarement de problèmes, c'est la politique de restauration qui pose problème, donc n'hésitez pas, régulièrement à prendre un backup, à le restaurer, à créer une instance à partir de ce backup, à rejouer vos tests unitaires, à vérifier que ça fonctionne, etc. Avoir des backups c'est bien, on vous promet que les backups seront là et qu'ils seront intègres. Maintenant à vous de vérifier qu'à l'intérieur du backup il y a effectivement les données qui vous permettent de repartir si les choses se passaient mal. You can choose the approximate time you want to restore to. If it's Aurora, it will be very precise. For other database engines, you choose the snapshot closest to the date you want. You can also create snapshots. A snapshot is a complete copy of your database that you trigger on demand, in addition to the backups you have scheduled, such as every Sunday at 2 AM. You can create a snapshot whenever you want, just like you do with EBS snapshots. They will be stored in S3, and they can be used to create a new RDS instance. Remember, they are encrypted if the database itself is encrypted.
+
+What can snapshots be used for? You might think, "We already have backups, why bother?" Snapshots can allow you to back up at intervals less than 24 hours, such as every 12 hours or every 4 hours if that's important to you. This can be a significant point. You can create snapshots before performing important operations. For example, if you're changing the schema, doing a migration, or performing a large insert, you want to ensure you can restore to the exact state if something goes wrong. Creating a snapshot is a good way to do this. Snapshots can also be used to duplicate your production environment. You can create a snapshot of your production database and restore it to a server for developers to test. This ensures your test data is identical to your production data. They can also be used for disaster recovery, as you can restart servers from snapshots, even copying them to another region to restart your infrastructure if needed. There are many uses for snapshots, and I'm sure you'll find more.
+
+The last point to cover is migration. Migration is always a complicated topic, especially for databases, as I've experienced firsthand. We've tried to simplify this with a service called AWS Database Migration Service (DMS), which allows you to migrate from almost any source database to almost any destination, including Redshift, DynamoDB, or S3. The idea is to point DMS to your source table, such as a Postgres or Oracle table, and decide to move it. You could move it to the same engine, for example, from on-premises Oracle to RDS Oracle. This should be relatively simple. Alternatively, you might want to migrate from Oracle to Aurora to save costs. In this case, the schema and objects will differ, and we need to help you with the conversion. We'll see how in a moment, but the principle of DMS is to choose a source and a destination. Almost all combinations are possible, so you could migrate from on-premises to EC2, from EC2 to EC2, from RDS to EC2, or from EC2 to RDS, as long as we have a connection chain to these databases. The migration will be gradual, with initial data migration followed by ongoing replication of changes. This can also be used for disaster recovery replication, where you can switch users to the cloud server at some point or use it just for replication.
+
+For heterogeneous migrations, we have a tool called the Schema Conversion Tool, which connects to your source database, observes the objects, and converts them automatically based on the destination you choose. It will either convert what it can automatically, such as the schema and objects, or indicate where manual work is necessary. We aim to make the conversion tool as automatic as possible, but some things cannot be automated. The tool will tell you what it has converted automatically and what needs manual intervention. This tool is useful for relational database migrations and data warehouse migrations, such as from Teradata or Greenplum to Redshift.
+
+These tools help you understand the complexity of your migration and manage the ongoing replication without much hassle. I wanted to remind you of the upcoming webinars. In May, we'll talk about Big Data. In June, we'll have a special session for beginners, so if you have colleagues who are new to AWS, technical or not, encourage them to join. It will be a great introduction. For the following months, we haven't finalized the topics yet, so if you have suggestions, feel free to send them. The AWS Summit is coming up on June 27th. Registration is open, and it's free. We're finalizing the agenda, which will include technical, business, and partner tracks. We look forward to seeing you there.
+
+Now, let's address some questions. Nori asks if the webinar is still on June 27th, given it's the same day as the Summit. Yes, we'll record it a few days before and release it on the 27th. We don't want to change the date because people have it in their calendars. For those attending the Summit, it's not a problem; you can watch the recording later. We apologize for the date conflict, which was unintentional.
+
+Nassima asks if there are migration tools to Aurora. Yes, the Database Migration Service (DMS) can migrate from various sources to Aurora. For MySQL and PostgreSQL, you can upgrade RDS instances to Aurora, and there might be a shortcut in the console for this. Laurent asks how to access previous webinars. You can find them on our YouTube channel, linked from the events page on aws.amazon.com/fr. All past and future webinars are there, so don't hesitate to subscribe to the channel.
+
+Regarding restoring a backup, a new instance is created, but the original instance is not deleted. If you want to remove the old instance after restoration, you need to do it manually. We won't delete the original instance automatically, especially if you're creating a test environment.
+
+Paul asks how to perform a migration without downtime. A good approach is to create a snapshot of your instance, restore it to a new instance, and test to ensure everything is working. Then, at a suitable time, switch the DNS to point to the new instance. The switch will be quick if it's within a VPC, but it can be more complex if it involves external DNS.
+
+Cédric asks if data updates between the master and standby can be desynchronized. No, you can't do this in RDS. RDS manages the replication between the master and standby, and you don't have access to this mechanism. As for multi-master support in the future, it's possible but not confirmed.
+
+Regarding the impact of encryption on performance, there are two aspects. For RDS instance encryption, there's no impact because EBS handles the encryption, not the instance itself. For Transparent Data Encryption (TDE) on SQL Server or Oracle, there might be a minor impact, but it's generally negligible. If you're concerned, run a benchmark.
+
+A question about the timing of Lambda PHP: I don't have a date for that. Another question: Does upgrading the database engine require downtime? Yes, for single-AZ instances, downtime is necessary. For multi-AZ instances, we upgrade the standby first, then failover to it, minimizing downtime. This should be done during low-traffic periods to ensure the standby is up-to-date and the recovery time is minimal.
+
+Do RDS instances automatically benefit from database engine updates? Yes, minor updates are applied automatically if you allow it. Major updates require manual testing and approval. Aurora uses a MySQL driver, but we recommend using the MariaDB driver for better visibility of cluster nodes and faster failover.
+
+Finally, is increasing the size of an Aurora instance more transparent than an RDS multi-AZ instance? No, the mechanism is the same, involving a controlled failover. The main advantage of Aurora is in storage scaling, which can be increased in 10 GB increments up to 64 TB.
+
+That's all for today. Thank you, and see you next month for Big Data webinars. Stay connected for more updates. Thank you, and see you soon.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Amazon RDS</span><span class="tag">Aurora</span><span class="tag">Database Management</span><span class="tag">High Availability</span><span class="tag">Security and Compliance</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

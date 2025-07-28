@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker on AWS with Amazon ECR ECS Part 2</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Docker on AWS with Amazon ECR ECS Part 2</h1>
+        <div class="date">March 31, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/KZ09rEQ1xSk" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Slides: <a href="http://www.slideshare.net/JulienSIMON5/amazon-ecs-january-2016" target="_blank" rel="noopener noreferrer">http://www.slideshare.net/JulienSIMON5/amazon-ecs-january-2016</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Before we jump into the first demo, I would like to talk about a few case studies for ECS. The first one is Coursera, the education company, which needs no introduction. The URL you see here, and that you will see for the other case studies, is the presentation they gave at AWS re:Invent 2015. If you want the full presentation and the details on those case studies, I suggest you watch those videos. Basically, here I just took one slide from their presentation called "What Else Did We Look At." It's important to understand the technology options out there and why you would pick one over the others. Coursera first tried to build their own tech, to build their own cluster manager. Although the Coursera R&D team is quite brilliant, they had trouble building and running their own cluster manager reliably. They did the right thing and dropped that project, looking at third-party options. They considered Mesos, Kubernetes, and ECS. Mesos and Kubernetes are very nice, with many advantages. However, from an ops point of view, they were too hard to live with and required too much system administration, which is not something Coursera was willing to do. Many AWS customers, including Coursera, want to focus on building their own platform, improving their products, and taking care of their customers. Running, fixing, and scaling clusters is not seen as high value to their business, so they picked ECS, with the managed service aspect being a strong factor in that decision.
+
+The second case study I want to talk about is a company called Meteor, a platform as a service for Node.js applications, mobile, or web. They run at a large scale, with hundreds of thousands of containers, and high availability and service quality are extremely important for them. They looked at several options, including Kubernetes, ECS, Marathon, and others. It's a similar story to Coursera; they want to focus on their own customers and not spend time fixing issues or building tech for the sake of tech. They were already an AWS customer, so they had a positive bias toward using another AWS service. However, they still looked at other options, and the managed service ECS offers was key in their decision. They want to run and scale without problems and focus on their business and customers.
+
+The last one I want to mention is Remind, a messaging platform between teachers and parents. Their traffic varies widely during the year; during the holiday season, there's not much going on, but back-to-school time is very busy, so scalability is crucial. They have a microservice-based architecture and use the 12-factor app design principles, which might be interesting for those into microservices. They were running on Heroku and experienced latency issues, particularly in the 95th and 99th percentile, which were much higher than average. This meant that for some customers, the service quality wasn't good enough. They migrated to ECS around June 5 of last year, and as you can see, not only did they cut average latency, but their 95th and 99th percentile latencies were massively reduced and are now close to average. This means that for almost all their customers, service quality is good, predictable, and scalable, and everyone experiences their service in a reliable and fast way. This is of paramount importance to Remind, as highlighted by their VP of Engineering's quote about improving service performance and customer satisfaction.
+
+Let's jump into the first demo. I will pause, and we'll start to deploy some services in a minute.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">ECS</span><span class="tag">AWS</span><span class="tag">CaseStudies</span><span class="tag">Scalability</span><span class="tag">ManagedServices</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

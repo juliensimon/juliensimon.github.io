@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker on AWS with Amazon ECR ECS Part 1</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Docker on AWS with Amazon ECR ECS Part 1</h1>
+        <div class="date">March 31, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/VhDuoDKiGYU" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Slides: <a href="http://www.slideshare.net/JulienSIMON5/amazon-ecs-january-2016" target="_blank" rel="noopener noreferrer">http://www.slideshare.net/JulienSIMON5/amazon-ecs-january-2016</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Hi everyone, my name is Julien, and I am a technical evangelist with AWS. Today, I'm going to talk about Amazon ECR and ECS, which allow you to deploy and manage Docker containers on AWS. This is a replay of the session I gave at the loft in Tel Aviv a few days ago. Let's get started.
+
+First, let's talk about the problem we're trying to solve. When using Docker on your development machine, you only have to worry about a single server. You only need to consider how much processing power and memory is available on that machine to deploy your containers. There's no question where you're going to deploy those containers; you're going to deploy them on that single machine. Now, imagine we want to have more than one server where we're deploying containers. Imagine we have 10, 20, 50, maybe 100 servers available to deploy Docker containers. It becomes more of a problem to decide where to put a specific container. That's exactly the problem we're trying to solve. Given a certain amount of processing power and memory provided by a cluster of servers and given a number of containers of all sizes and shapes, how can we best deploy them in a minimal amount of time, regardless of the available resources or the load on the cluster? How can we find available resources to deploy a container in a scalable fashion, meaning in linear time?
+
+If you look at the child toy on the right side, that's really what we're trying to do. We have a grid of resources of different sizes and shapes, and we're trying to fit the red circle or the blue square in the right spot. Imagine that grid was a thousand by a thousand places; that's a big problem, even for an adult. That becomes quite a challenge to put the right shape in the right place. That's the problem we're trying to solve, which means managing a cluster of servers running Docker.
+
+Managing clusters is a complex problem, mainly because it's difficult to have a consistent view of the state of the cluster. The first requirement of cluster orchestration should be distributed state management, knowing exactly what resources are on any given node, what container is running where, and having a consistent view of the cluster, no matter what is happening—nodes restarting, nodes failing, containers starting, containers failing, etc.
+
+The second important thing is scalability. Scheduling a few containers on a few servers is relatively easy. Now, imagine you have a thousand servers loaded at 90%, and you suddenly need to deploy a hundred more containers. It should take the same amount of time, regardless of the cluster size or load. It should be linear time scheduling, no matter what is happening on the cluster.
+
+Obviously, the third requirement is built-in high availability. Clustering means multiple servers, and the more servers you have, the more likely it is that one will fail at the worst possible time. High availability should not be something the user has to build; it should be provided by the cluster management system.
+
+In April 2015, AWS launched ECS, EC2 Container Service. It's heavily based on EC2 instances and mechanisms you might already know, like auto scaling. Using ECS does not incur any additional charge. You will only be paying for the resources you create, such as instances and load balancers, but ECS itself does not add to your bill.
+
+Later in 2015, AWS launched Amazon ECR, a Docker registry hosted on AWS. You could use ECS with Docker Hub or your private registry, but having an AWS-hosted registry like ECR is quite convenient. In just a few clicks, you can create your registry, create your repos, push and pull your images, and it's very easy to use. Pricing is competitive, slightly more expensive than S3, but still very reasonable, and it's a nice option to have your Docker images located close to your servers.
+
+Before we go on, I should start an ECS cluster, which takes a few minutes to build. I'll do that right now and continue with the presentation. The first thing I'm going to show you is the ECS command line interface, which is developer-friendly. It's high-level and has just a few commands to create clusters, deploy services, etc. It's the preferred way of doing this. You can also use the traditional AWS command line, AWS ECS, which provides more options and finer-grained operations on the cluster. We'll use some of those as well, but for now, we'll keep it simple and use ECS CLI.
+
+The first thing I'm going to do is configure a new cluster. I'll call it myCluster and start it in EU-West1. This doesn't create the cluster; it just declares that I'm going to work with a cluster called myCluster located in EU-West1. Now, let's actually start the cluster. I'll use the ECS CLI up command, specify a key pair for SSH access, allow ECS to create IAM roles to manage instances, have three instances in the cluster, and use T2 micro instances. So there you go. You see the CloudFormation stack status message appearing, indicating that building an ECS cluster is based on running a CloudFormation stack. We can take a look at that as well.
+
+Amazon ECS CLI set up my cluster, and it's in progress. Lots of stuff is happening now, such as creating a VPC, because the cluster will run in its own VPC, which is quite convenient. If you want to see all the details, you can always look at the template, but that's more detail than we need at this point. We'll let CloudFormation build that and talk a little more about ECS.
+
+Here's the architecture of ECS, which should look familiar if you've worked with EC2 and ELBs. We see three instances, called ECS instances. These are EC2 instances running a specific AMI, the ECS optimized AMI, which is an Amazon Linux image with Docker installed and the ECS agent. An ECS instance is a special kind of EC2 instance configured to run Docker. Each of these instances runs Docker, and inside Docker, we'll store our containers. The role of the ECS agent is to connect the instance to the ECS backend. The ECS backend is mainly about two things: distributed state management, which is the key-value store that knows exactly what's going on with instances and containers, and the cluster management engine, which handles scheduling and cluster management. That yellow block is strictly backend, and you don't need to interact with it. Your focus is on creating new clusters and deploying instances. Once we have deployed containers on our instances, we can use ELBs for load balancing. These instances can be deployed in different availability zones, using EC2 features. If you know EC2, you already know a lot about ECS, and ECS builds on the high availability, scaling, and load balancing features of EC2.
+
+If you're interested in the agent or want to use your own AMI, you can deploy the agent on your instances, and it will connect to the backend. You're not tied to the ECS AMI. The agent is open source, and you can check it out on GitHub. I should probably pause here, and we'll look at a few case studies in a minute.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS</span><span class="tag">ECS</span><span class="tag">ECR</span><span class="tag">Docker</span><span class="tag">ClusterManagement</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

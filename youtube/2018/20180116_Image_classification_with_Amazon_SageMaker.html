@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image classification with Amazon SageMaker</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image classification with Amazon SageMaker</h1>
+        <div class="date">January 16, 2018</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/weYHuyyEtyU" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Using Amazon SageMaker, you will learn how to:
+- train an image classification model on your own image data set,
+- either train from scratch or fine-tune a pre-trained network,
+- access and plot training logs stored in Amazon CloudWatch Logs,
+- use your trained model to classify real-life images.
+
+⭐️⭐️⭐️ Want to buy me a coffee? I can always use more :) <a href="https://www.buymeacoffee.com/julsimon" target="_blank" rel="noopener noreferrer">https://www.buymeacoffee.com/julsimon</a> ⭐️⭐️⭐️ 
+
+Notebooks used in the video: <a href="https://github.com/juliensimon/dlnotebooks/tree/master/sagemaker" target="_blank" rel="noopener noreferrer">https://github.com/juliensimon/dlnotebooks/tree/master/sagemaker</a>
+
+CIFAR-10 on Apache MXNet: <a href="https://medium.com/@julsimon/training-mxnet-part-2-cifar-10-c7b0b729c33c" target="_blank" rel="noopener noreferrer">https://medium.com/@julsimon/training-mxnet-part-2-cifar-10-c7b0b729c33c</a>
+
+Amazon SageMaker overview: <a href="https://www.youtube.com/watch?v=ym7NEYEx9x4" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=ym7NEYEx9x4</a>
+
+Twitter @julsimon
+Blog <a href="http://medium.com/@julsimon" target="_blank" rel="noopener noreferrer">http://medium.com/@julsimon</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. Today we're going to keep exploring Amazon SageMaker, our service for end-to-end machine learning. You might have seen my previous video where I took you on a tour of the different ways you could use SageMaker. One of those ways is to use built-in algorithms, algorithms implemented by the Amazon and AWS teams to make your life easier. All you have to do is provide your own data, fire up the training job, and deploy the model. That's pretty much it. Today, we're going to focus on one specific use case, which is image classification. I'm going to show you how you can use the built-in algorithm for image classification in two different ways. We're going to fine-tune an existing network, a powerful technique where you take a pre-trained network and retrain it just a little bit on your own data. We'll also train from scratch on the same dataset and compare the results.
+
+What you're going to learn today is how to use your own data with the built-in algorithm for image classification. You'll learn how to fine-tune a pre-trained network and how to train from scratch using the built-in algorithm and your own data. We'll cover some other SageMaker stuff as well. So let's get started.
+
+As you probably know, SageMaker comes with a bunch of sample notebooks, which are an excellent learning tool. One of them is based on the built-in algorithm for image classification. What I've done is taken this notebook, modified it, and reused it with a different dataset and a few more additions. If you haven't seen this one before, it's a good idea to run through that notebook and then go back to my examples. So, just a quick run through of that one. This is using the Caltech 256 dataset, an image dataset for classification with 256 classes. The way you use it should be pretty familiar if you've tried other built-in algorithms. You pick the container that corresponds to your region, the container that stores the implementation for the image classification algorithm, then you download the dataset, define some training parameters, and we'll go through all of these. You define the training job, launch it on Managed Infrastructure, and save the trained model in SageMaker. You create an endpoint configuration to serve predictions based on that model, then create the endpoint itself, and you can do inference and prediction. Here's an image of a bathtub, and we invoke the endpoint for the model trained on Caltech 256, and we get an 88% probability that it is a bathtub.
+
+So, this is the notebook provided by SageMaker. Now, let's see how difficult or not it is to take this example and use it with a different dataset. What we're doing here is called transfer learning. We're taking a pre-trained network, a pre-trained MXNet network, and retraining it on a different dataset. The dataset I picked is CIFAR-10, which has 10 categories and 50,000 images for training and 10,000 images for the validation dataset, evenly spread across the 10 categories. The images are very small, 32 by 32 pixels, making it a challenging dataset. It's small and easy to download, so it's a good example.
+
+Let's look at transfer learning first, and then we'll look at training from scratch. We're going to use the built-in algorithm for image classification, which is part of the SageMaker platform. You need to use the Docker container hosted in the region where you're running the training job. Here, I'm running the job in us-east-1, so I'll pick that image. This Python code is generic and will work for all regions. The important thing is to define your bucket where the dataset and everything for the training process will be hosted. Make sure the bucket is in the same region as your notebook instance. As you can see, I'm using us-east-1, and the bucket needs to be in the same region. This is a minor issue that could cause your training job to fail if SageMaker can't access the dataset from the bucket. It's a normal S3 bucket, nothing weird.
+
+The second step is to download the dataset and put it in S3. The image classification model can work with two types of image datasets. You can use a directory tree of images, supported by providing a list file that lists all the files included in the directories. You can also use a record I/O file, which is an MXNet feature. The benefit of using record I/O files is that you pack all the images into one single file, making it easier to move around and ensuring no files are missed or corrupted. The MXNet distribution includes a tool called `im2rec` to create these files. For the CIFAR-10 dataset, the record I/O files are already built and available on the MXNet website, so you don't have to create them. I'm downloading these files and copying them to S3. My validation dataset is under the `validation/cifar-10` directory, and my training set is under the `train/cifar-10` directory. Make sure you have one single `.rec` file in each directory to avoid confusing SageMaker.
+
+Now that the dataset is ready, the next step is to define the training parameters. These are algorithm-specific, so we'll see parameters for image classification. The first thing is to define how many layers we want to use for our deep learning model. You can pick from a number of layer values, which are described in the research paper for the model, likely ResNet. For transfer learning, I'm using 50 layers, one of the recommended values. When training from scratch, I'll use a different value.
+
+The input layer for a convolutional neural network needs to know the shape of the input data. The images are color images with three channels, and although the original dataset is 32 by 32 pixels, they have been resized to 28 by 28 pixels. We have 50,000 training samples in 10 classes, so 5,000 samples per class. I'm using a batch size of 128 and training for 10 epochs, which is a low number but suitable for fine-tuning. The network has already been trained on ImageNet, a large dataset with over a million images. We can benefit from this pre-training, and 10 epochs should be enough to specialize the network using our own images. I'm using a small learning rate to tweak the weights slightly. We can use a different optimizer, but by default, we use SGD. The crucial parameter is to use the existing weights for fine-tuning.
+
+Next, we define the training parameters in a JSON document. We specify the Docker image, the S3 bucket for output, the instance type for training, and the hyperparameters for the algorithm. I'm using a single p2.8xlarge instance. Distributed training is supported, but data sharing across instances is not, so you need to replicate the dataset to all instances. The job name, hyperparameters, and the maximum runtime are also defined. The input data configuration includes the training and validation datasets in the S3 bucket.
+
+We create the training job based on these parameters, and it will run for a bit. We can use additional APIs to describe the job and the `get_waiter` API to block until the training job is complete. This one ran for 17 minutes and completed successfully. You can monitor the training job in CloudWatch logs, which show the progress and any issues. Each epoch took about 36 seconds, and we achieved 77% accuracy.
+
+To visualize the accuracy, we can extract the logs from CloudWatch using Boto3 and plot the training and validation accuracies. The maximum accuracy is 77%, and the training job worked well. The next step is to save the model and create an endpoint configuration to deploy the model on an m4.xlarge instance. We create the endpoint and wait for it to be ready. Once it's ready, we can use the SageMaker SDK to make predictions. I have a few images to test: a bird, a horse, a dog, and a truck. The model correctly identified the truck with 77% probability, the bird with 36% probability, the horse with 97% probability, and the dog with 94% probability.
+
+Now, let's compare this to training from scratch. The only changes are that we're not using the pre-trained model and we're training for 100 epochs. I used 44 layers, a different optimizer, and the same batch size. After 100 epochs, the maximum validation accuracy is 77.4%, slightly higher than with transfer learning. However, it took 10 times longer to train. The training accuracy reached almost 100%, but the validation accuracy was lower, indicating potential overfitting.
+
+We deployed the model and tested it on the same images. The truck was identified with almost 100% probability, the bird with a high score, the horse was misclassified as a dog, and the dog was misclassified as a frog. This shows that while training from scratch can achieve high accuracy on some images, it can also lead to significant errors on others. Fine-tuning is generally faster, less computationally intensive, and easier to do. It reuses the pre-trained weights, which can help generalize better to new images.
+
+In conclusion, fine-tuning is often a better choice, especially when you have a limited dataset. Training from scratch can be more accurate but requires more data and computational resources. The choice depends on your specific use case and business requirements. Training times and the risk of overfitting are important considerations.
+
+If you're interested in how to do this with vanilla MXNet, you can read my article on my blog. I'll include all the links and the links to the notebooks in the video description. Thanks for listening, and if you have questions, feel free to ask in the comment section or find me on Twitter. I hope you enjoyed this, and I'll talk to you later. Bye-bye.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Amazon SageMaker</span><span class="tag">Image Classification</span><span class="tag">Transfer Learning</span><span class="tag">Machine Learning</span><span class="tag">CIFAR-10 Dataset</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

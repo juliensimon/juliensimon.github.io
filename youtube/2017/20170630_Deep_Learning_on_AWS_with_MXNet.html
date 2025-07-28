@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Learning on AWS with MXNet</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Deep Learning on AWS with MXNet</h1>
+        <div class="date">June 30, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/emDxDLI9FRw" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Talk @ Infoshare Poland, May 2017
+Slides: <a href="https://fr.slideshare.net/JulienSIMON5/scalable-deep-learning-on-aws-using-apache-mxnet-may-2017" target="_blank" rel="noopener noreferrer">https://fr.slideshare.net/JulienSIMON5/scalable-deep-learning-on-aws-using-apache-mxnet-may-2017</a>
+Follow me on Twitter @julsimon</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Good afternoon. My name is Julien. It's my first time in Poland. What took me so long, right? So, super happy to be here today. This is a pretty cool subject. Let's get started right away. I'm going to talk about deep learning for a bit, and then we're going to try some demos. If the demo gods are with me, they're going to work. If not, you can throw stuff at me. You know, I'm used to it. Let's go.
+
+Here's the agenda. We're going to talk very quickly about AI and the story so far. Then I'll show you a few applications of deep learning technology. Just a few things you can do. Then we'll dive into the topic of today, which is Apache MXNet, a deep learning library to build neural networks, train them, and use them in your applications. I'll talk about MXNet a little bit, show you some of the key parts of the API, and as fast as possible, I want to show you some code and run some demos, because this is how you really understand how to work with MXNet.
+
+AI, the story so far. Do you remember when that movie came out? Most of you were not born, I'm afraid. It came out in 1969, *2001: A Space Odyssey*. A lot of us have been obsessed with this movie. I've been obsessed with building HAL, that artificial intelligence you can talk to, that can talk back, and do some complicated stuff, and hopefully fail to kill you. That's the part we'd like to forget. For decades, people have been trying to build systems like this. Artificial intelligence is maybe something you studied at university. When I was there a century ago, they would tell us, "Yeah, AI has been around since the 50s, but it's very cool, and you can't really do anything useful with it, so it stays in the lab." That's a sad story.
+
+So, what happened then? In 2001, the actual year, Marvin Minsky, one of the founders and fathers of AI, and an advisor to Kubrick on the movie, wrote an article saying, "Hey, it's 2001, where is HAL?" Fifty years after artificial intelligence was invented, we're still very far from having something remotely as smart as HAL. He listed a number of reasons why this failed to happen. That was 2001. Today, it's 2017, and we still have no HAL, and I'm still wondering why. On the other hand, everyone is doing machine learning today. Most of you are doing machine learning either as a service or building stuff with Spark and open-source libraries. Machine learning has never been so powerful and successful as today. But how could machine learning be so successful and AI be so terrible, to be honest?
+
+Well, it's because traditional machine learning doesn't work when you're trying to solve problems where features cannot be explicitly defined. Let me take an example. If you take web logs and try to use them to predict what page or ad a user will click, you look at what's in the web log, and it's pretty obvious: time, date, user ID, URL, user agent, and tons of things. You have to find the meaningful ones to build your prediction model, but at least you pick your features from a well-defined set inside your log. Now, imagine you're trying to recognize images. I give you an image that's 1,000 pixels by 1,000 pixels. I want to know if it's a dog, a cat, a tiger, or a bottle of wine. That's one million pixels. Is every single pixel a feature? No, only the pixels that really make sense. As you can see, compared to the 10 or 20 features you typically use with machine learning, it's a very different problem to solve. That's why traditional machine learning has not worked and still does not work for problems where features are so many and so complex that they can't be expressed.
+
+So, the problem we have to solve is how to get that knowledge into a computer without explicitly expressing features. To do this, we have to go back to something very old in computer science: neural networks. Neural networks have been around since almost the 1940s, and the first major breakthroughs came in the 50s. It's literally 60 years old. Like I said before, it's been around forever, but until very recently, it did not deliver the goods. Why? Mostly for two reasons. Back in the 50s, 60s, 70s, 80s, and even maybe the 90s, we did not have very large data sets. To train a neural network properly, you need tons of data. The more data, the better. If you don't have lots of data, training won't be very good. The second thing is, even if you had a bit of data, you needed a lot of computing power to train the network. These are very CPU-intensive operations. On CPUs, especially older ones, that wasn't possible at all. Those two problems are why neural networks did not deliver back then.
+
+Now, it's quite different because we have huge data sets. All of us are generating tons of data on mobile phones, the web, video, mobile gaming, and everything. Everything we do now ends up in logs somewhere. There are large public data sets like ImageNet or the YouTube data set. Even on AWS, we host some public data sets for everyone to consume. So, data sets are large and available. Thanks to GPUs, we have a ton of processing power. Recent GPUs have thousands of cores on one chip. When you have multiple GPUs in one server, that's a crazy amount of processing power in just one server. So, computing is not really a problem anymore. Data sets are not really a problem anymore. All we need to train those neural networks and build cool stuff is now possible, and we can do it cost-effectively thanks to the cloud. We can grab all the resources we need in the cloud, all the GPU instances, to compute everything and generate results. When we're done, we can release all those resources and stop paying for them. Scalability and elasticity are very important.
+
+Once you have the model ready, you can use it on something very small. Using a deep learning model, you can do it on a Raspberry Pi. We'll try to do this later. For the last few years, this is why you've been hearing about deep learning and AI every single day. It's not a buzzword. These multiple factors now make deep learning a reality, and people can use it cost-effectively to build very smart applications.
+
+Let's take a few examples. Every year, there's a challenge for research teams called the ImageNet Challenge. It's based on the ImageNet data set I mentioned. They have a lot of images that need to be sorted and identified according to 1,000 categories. Let's take an example. This is an actual image in the data set, two images, actually. Who thinks this is the same breed of dog? Who thinks this is a different breed? Who has no idea even if I gave you 10 minutes to figure it out? The challenge for these deep learning models is to predict five categories for each image, and if the right one is in the five, it's considered a success. For the record, this is not the same breed. I was in Stockholm not long ago, and they're supposed to know about these things, and they couldn't explain it either. So, I don't feel too bad.
+
+Every year from 2010 to this year, we have this competition. The blue line is the error rate. We go from 28% mistakes down to 25%, down to 3% last year. The red bars are the number of layers in the network. We go from one layer to 8, to 19, to 152, to 269. That's why it's called deep learning, right? 269 layers in the network. The error rate for humans? Who says more than 10%? Who says less than 3%? Who says between 5 and 10%? For humans, it's 5.1%. A normal human in a decent state does 5%. So, the good news, or is it good news or bad news, you decide, but computers and models are better now than us at recognizing complex images. They keep improving. Within seconds, they can accurately classify millions of images into a thousand categories. I think that's pretty impressive.
+
+This one here, I'm sure you've heard about it. I met some colleagues here who are contributing technology to this, and some of it is actually built in Poland. Congratulations. That's the Echo device. I love to describe it as a mic and a loudspeaker, and people hate it when I do that. But that's mostly what it is. It's connected to the cloud and can do natural language understanding, speech processing, text-to-speech, and more. The quality of the voice and interaction is very impressive, and all this is based on cloud-based deep learning technology. We use deep learning in everyday life now.
+
+Let's talk about MXNet. MXNet is an open-source library for deep learning. It was accepted into the Apache project, so it belongs to everyone now. It's not driven by a single company. As you will see, it's fairly easy to use. It supports multiple programming languages and is quite scalable. This is one of the reasons we picked it as our preferred library in AWS. This is scaling on multiple GPUs in the same machine, from 1 to 16. The red line is the ideal line, a linear scaling. For some models, we get pretty close to linear scaling. If you go beyond 16 up to 256 GPUs running on many machines, this trend continues. MXNet scales almost linearly up to 256 GPUs. I'm quite sure if someone was willing to spend the money to go to 10,000 GPUs, we would see that trend continue. This is important when you want to train very large models that could last for hours or days. If you want to get things done faster, you can add more GPUs and reduce the time linearly.
+
+Let's look quickly at some important objects in the API, and I'll show you some code. Training models is always about three things: defining data, defining the network, and putting the two together. MXNet has ND arrays for data, symbols for defining networks, and modules for combining the two. ND arrays are N-dimensional arrays where you put your input data. Symbols are how we define the networks, building a graph connecting nodes and layers. The cool thing is we can build graphs without specifying the data. There's a clear separation between the data and the graph. You can build networks that apply to any kind of data. The module object combines the data and the network.
+
+We have tons of functions to help you load data from well-known formats like images. If you want to know more, this URL is a blog article I wrote a few weeks ago as an introduction to the API. Feel free to look at it. On top of this API, you have higher-level APIs to build full networks in just a few lines of code. You don't have to define every single neuron and connect everything. If you want to define a fully connected layer, you use the fully connected API. If you want a convolution layer, you use the convolution API. These helper functions allow you to define networks in just a few lines.
+
+Using this, you can throw images, video, sounds, and text into the right models and do examples like image detection, image segmentation, and machine translation. MXNet provides all the APIs to build the networks to do this. Before I go into the demo, you will get the slides. We have a few more resources to make your life easier. We have a deep learning AMI, an Amazon Machine Image, pre-installed with all the tools and frameworks. You just start the AMI, and you have MXNet, TensorFlow, and others installed. You can start working right away with the CUDA drivers to use GPUs on GPU instances. We have blog articles and additional information on our websites. We help you get started with the AMI and documentation.
+
+Here's the first demo. I'm going to train an MXNet model on the MNIST dataset, a set of 60,000 handwritten digits. Each digit is a 28 by 28 pixel grayscale image. We can translate this easily into a matrix and load it into ND arrays. Let's do this. Can you read in the back? Wave if you can read. Thanks. Let me show you quickly what the code looks like. I'm loading the data from files into an iterator, which serves samples batch by batch as we go into the network. Then we define our network: an input layer, a first fully connected layer, a second fully connected layer, and an output layer. In four lines of code, I can define my network. Then I bind my iterator to the network. When I define the network, I say nothing about the data. It could be 28 by 28 images or something else. We figure it out when we put the two together with the module. This is how I specify training on the GPU. I say, "Give me GPU zero, and I'll work with that." Then I train for a few epochs, running the dataset through the network multiple times. I save a small part of the dataset for validation and to measure accuracy. That's not a lot of code. Let's do it and train it.
+
+I'm loading my images and throwing the 60,000 samples at the network over and over. You can see the training accuracy going up, showing the network is learning how to predict the correct number from a given image. We even get to 1, meaning we perfectly learned the training set. When I take my validation set and run it against the model, I get 97.7% accuracy, not too bad. It took one minute to train a model that can recognize handwritten digits. Let's try it. I drew some numbers with my favorite paintbrush application. Here's my handwriting. We'll try these numbers against the network we just trained. I'm going to load these images into an ND array and run them through the network. For each image, I see a vector of 10 floats, representing the probability for each digit. The network says there's a 99.4% probability that this is a zero. It gets all of them right with a very high probability, except the last one. My ugly nine, the network thinks this is an 8 with a 65.9% probability. Can we build a better network? Yes.
+
+This time, it's a convolutional neural network, known to be very good at recognizing images. It's a little longer but not a million lines of code. I'm defining a slightly different network and running this on three GPUs to make it faster. Let's train this. Same story: loading the data, showing the input data and the correct value to the network, and letting the network learn. This takes a little more time because convolutional networks are more resource-intensive. While it's doing that, I'll check if my little body here is still running. It looks like it's running. I think it wants to say something. Can you switch this one on, please? Thank you. Whatever that means. Blame Google Translate if it makes no sense. That's Polly, one of our AI services, mostly built in Gdansk. We should congratulate your engineers for building this.
+
+Training is done. Validation accuracy is 99% this time. Let's try to predict. Same thing as before, my handwritten images. It gets all of them right. Oh, sorry, I forgot to change my network. That's why we... Okay, so now I'm using the new network I just trained. All right, so that's a zero, that's a one, that's a two, that's a three, and the nine is really a nine, even with my very bad handwriting. You can build better networks, train them again, and improve your accuracy.
+
+I know this is very fast, but it's a short session. If you want to know more, please go to my blog articles. You'll get all the details, and the sources are on GitHub. You can replay all of that. I've got one minute left, which I think is what I need. I'm going to try this with my friend here, and if it doesn't work, I'm going to crush you. Can you see it? Yeah? He's got a Twitter account. I'll put it here, all right? Okay. This is a Raspberry Pi with a pre-computed MXNet model. I trained the model for hours in the cloud and copied it in there. To make it even worse, I've got an Arduino here with a remote control, and these things are talking through AWS IoT. If you want to see this, please come here. Let's try to move it. Hey, you can tell it's moving, right? Yeah? That's fantastic. Thank you.
+
+Can I get that video? Yeah, it can do this, right? You can do a little dance like this. Come on, you're on screen, do something. Okay. I'm going to cheat a little bit. Okay. If I push that button here... I'm 88% sure that this is a baseball. The object is 21 centimeters away. Is it a baseball? Yeah? I'm done. Thank you.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Deep Learning</span><span class="tag">Neural Networks</span><span class="tag">MXNet</span><span class="tag">AI History</span><span class="tag">Machine Learning Demos</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

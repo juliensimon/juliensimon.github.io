@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SageMaker II   demos   Dev Day Paris 2018</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SageMaker II   demos   Dev Day Paris 2018</h1>
+        <div class="date">September 16, 2018</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/7wBbRodNp3w" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Retrouver tous les événements AWS en France sur aws.amazon.com/fr/events/</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Parfait, parfait. Nous revoilà pour la dernière session de l'après-midi qui sera 100% démo, pas de slide. C'est la bonne nouvelle. Et la mauvaise, c'est que j'ai beaucoup de choses à vous montrer. J'espère qu'il vous reste un peu d'énergie. Sinon, vous pouvez courir et aller chercher un café.
+
+Dans cette session, je vais essayer de vous faire quatre démos SageMaker. Une première démo où, sur la base de l'algo built-in pour la classification d'images dans SageMaker, j'ai entraîné un modèle, un modèle de deep learning que j'ai déployé et que je vais invoquer, parce que c'est un sujet dont on ne parle pas forcément beaucoup. On entraîne, on déploie, et après il se passe quoi ? L'objectif, c'est quand même de les invoquer ces modèles. Je vais vous montrer comment on peut le faire assez facilement en utilisant une brique open source développée par AWS qui s'appelle Chalice, et qui est un framework pour déployer des web services en Python. Voilà, bullshit bingo. J'ai gagné. Vous allez voir ça, parce que le but du machine learning, c'est quand même à la fin de faire des prédictions. Donc on va faire ce premier exemple.
+
+Ensuite, dans l'ordre, je vais vous montrer comment utiliser un mécanisme que j'ai réalisé, rapidement mentionné ce matin, qu'Olivier a peut-être mentionné aussi, qui s'appelle Hyper Parameter Optimization, ou HPO, qui est un mécanisme automatique dans SageMaker qui permet de trouver les bons hyperparamètres pour vos jobs de machine learning. On le fera sur la base d'un training XGBoost pour faire de la classification. Vous allez voir comment, finalement sans trop de difficultés, on peut lancer automatiquement une optimisation des hyperparamètres et ne pas passer des semaines à chercher les bonnes valeurs en n'étant jamais vraiment sûr de les avoir trouvées. C'est la deuxième chose.
+
+La troisième chose, je vais vous montrer comment on crée un container custom. Comme ce matin, et je pense que Olivier a dû bien l'expliquer, on a donc une collection dans SageMaker d'algos sur étagère, on a des containers sur étagère pour TensorFlow, MXNet, etc. Mais qu'est-ce qui se passe quand on a envie de déployer son propre algo, son propre code ? Ce que BlueDME a fait, si vous les avez entendus ce matin. Je vais vous montrer comment construire votre propre container de training. On va le faire avec Keras, qui est une librairie que je pense qu'on est nombreux à bien aimer.
+
+Et puis la dernière démo, à la demande générale, je vais vous montrer comment invoquer SageMaker à partir de Spark. Vous allez voir pourquoi c'est intéressant de combiner Spark et le machine learning de SageMaker. Voilà, donc ce sont des sujets qui sont tous plutôt avancés. Rassurez-vous, tous les notebooks que je vais utiliser sont sur GitHub. Je vous remontrerai les bons emplacements à la fin. Je vais aller vite, j'ai beaucoup de choses à voir. Rassurez-vous si vous ne captez pas tous les petits détails, ce n'est pas grave. Concentrez-vous sur le workflow général, les grands principes, et vous pourrez aller lire chaque ligne de code en détail lorsque vous les aurez sous le nez.
+
+Ici, j'ai démarré une notebook instance tout à l'heure qui s'appelle DevDay. C'est une P3 2XL parce que je ne paye pas mes factures. Et donc le premier truc à savoir, c'est que quand vous ouvrez une notebook instance, je pense qu'Olivia a dû en parler, automatiquement vous voyez dans SageMaker Examples une collection de notebooks qui est maintenue par AWS et qui vous montre comment on peut utiliser SageMaker dans tout un tas de configurations. Soit avec les algos built-in, soit avec TensorFlow, MXNet, etc. Soit avec Spark, soit pour le HPO. Cette collection est aussi disponible sur GitHub. Si vous cherchez SageMaker Examples sur GitHub, vous allez le trouver. Et je ne peux que vous encourager à aller lire. C'est le meilleur moyen de comprendre comment marche SageMaker et d'apprendre plein de choses sur le machine learning. Si vous ne connaissez pas XGBoost et que vous dites « Tiens, c'est quoi XGBoost ? » « Tu as l'air populaire, tout le monde en parle, etc. » Qu'est-ce qu'on peut faire avec cet algo ? À mon avis, c'est une bonne idée d'aller voir les exemples qui sont là et de voir comment on l'applique et quel genre de problème on résout. Voilà, cette collection est disponible.
+
+Premier exemple, premier notebook, on va utiliser l'algo, on a un algo built-in pour la classification d'images. C'est basé sur des architectures deep learning, précisément c'est basé sur l'architecture qui s'appelle ResNet, qui est un réseau à convolution populaire. Maintenant, vous savez tout ce que c'est qu'un réseau à convolution grâce à la présentation de Xavier. Et l'avantage ici de cette approche, c'est qu'en fait, vous n'avez pas à définir le réseau de neurones, il existe, et vous n'avez même pas à l'entraîner, il a été pré-entraîné. Si vous voulez vraiment une version vierge du réseau, vous pouvez aussi y accéder. Mais ici, on va réutiliser une version pré-entraînée, qu'on va entraîner juste un petit peu sur un dataset différent. Le réseau pré-entraîné ici a été entraîné avec ImageNet qui est le gros dataset utilisé pour la classification d'image. Et en fait, moi je vais le ré-entraîner pour un autre dataset qui s'appelle Caltech 256, donc il y a 256 classes. Je vais déployer le modèle et ensuite je vais l'invoquer. Une fois de plus, je ne vais pas lire toutes les lignes, ça va vous fatiguer et je n'aurai pas le temps. Je vais vraiment expliquer les grandes étapes.
+
+Première étape, importer le SDK SageMaker, définir un bucket S3 qui va contenir nos données. Tout le training SageMaker s'est fait à partir d'S3. Et puis je vais récupérer le nom du container que je veux utiliser. Donc ici je vais utiliser l'algo qui s'appelle Image Classification. Donc concrètement, je vais récupérer le nom d'un container Docker qui contient le code, le modèle pré-entraîné, etc. C'est tout ce que j'ai à faire en termes de modélisation. Ici je n'écris pas de code de machine learning, je me contente d'accéder à un container qui existe déjà. Ensuite il va falloir que je download mon dataset. Ce n'est pas très compliqué, je vais chercher sur internet le dataset d'entraînement de Caltech, le dataset de validation. Une fois de plus, il y a 256 classes qui sont des objets divers et variés. Chacun des deux datasets est packé dans un fichier qu'on appelle un fichier Record.io qui est un fichier qui permet de regrouper en un seul fichier les milliers d'images du dataset. Ça évite de décharger des milliers et des milliers d'images. C'est plus facile, plus pratique. Donc on les télécharge localement sur la Notebook Instance et ensuite on les upload dans S3. On met le training sous le préfixe train et la validation sous le préfixe validation, ce qui est plutôt raisonnable. Jusque là, rien de bien compliqué.
+
+Puis ensuite, il va falloir que je configure mon job. Dans les algos built-in, je peux sauter là, vous voyez la collection de... Où est-ce qu'on les voit ? Sur la gauche ? Il faut que je me pousse. Donc là, vous voyez la collection d'algos built-in de SageMaker, donc factorization machine, XGBoost, image classification, et puis ça continue et on en rajoute régulièrement. Pour chacun de ces algos, vous allez avoir un ensemble de paramètres à définir, en particulier d'hyperparamètres. Ici, je pourrais aller lire en détail, et je devrais lire en détail, la doc de l'algo, comprendre quels sont les hyperparamètres, etc. Donc concrètement, ici, ce que je vais faire, c'est définir la profondeur du réseau que je veux utiliser. Je vais prendre un ResNet 18 couches. Je vais définir la forme des images qui sont dans le dataset. Donc c'est 3, 224, 224, 3 canaux, rouge, vert, bleu, 224 par 224 pixels. Il y a 15 420 échantillons d'entraînement. Il y a 257 classes. Alors 256 plus une fourre-tout qui sert à Batch size 128. Ici, je vais juste entraîner un tout petit peu. Je vais réentraîner pour deux époques. Je fais ce qu'on appelle du fine tuning. Je prends un modèle déjà entraîné sur un gros dataset d'images et je le spécialise pour un autre dataset. Ce n'est pas la peine de le réentraîner des centaines d'époques. Deux époques vont suffire. Le learning rate, le taux d'apprentissage, est 0,01, qui est une valeur commune et commode. Et puis j'indique que je veux un réseau pré-entraîné. Donc je veux garder l'héritage de l'entraînement précédent.
+
+Voilà. Donc ça, c'est les paramètres que j'ai définis. Ici, je mets tout ça dans un dictionnaire. Voilà, on voit les hyperparamètres en bas, l'emplacement des données, etc. Enfin, dans un dictionnaire, pas un document de JSON. Et donc ça, c'est mes paramètres de training. Où sont les données de training ? Où sont les données de validation ? C'est un petit peu verbeux, mais ça, c'est les API de bas niveau. Et une fois que j'ai tout ça, en gros, j'ai défini quel algo j'utilise, où sont les données, quels sont les hyperparamètres, et on peut commencer à entraîner. Ici, je n'utilise pas le SDK de SageMaker, j'utilise le SDK Python d'AWS, qui permet de faire les mêmes opérations, mais de plus bas niveau. C'est pour ça qu'il y a sans doute plus de lignes de code que ce que vous avez pu voir dans des exemples SageMaker natifs. Sachez qu'on peut aussi faire l'entraînement avec Boto, en l'occurrence ici le SDK Python. Je l'entraîne. Parfait, ça se termine. J'enregistre le modèle dans SageMaker. Je déploie l'endpoint. Toutes ces opérations-là sont assez simples. Et une fois que l'endpoint est in service, qu'est-ce que j'ai fait ? J'ai créé une instance. Quelle configuration j'ai prise ? J'ai pris une M4XLarge, une seule, sur laquelle j'ai déployé mon modèle. Donc à ce stade, si je regarde dans SageMaker, Endpoint, il est là, je vois qu'effectivement j'ai un modèle qui a été déployé, qui tourne sur une instance M4xLarge, comme on voit ici, et là je vois l'URL, à droite là, vous avez vu. Là, je vois l'URL du endpoint. Donc maintenant, je peux faire du HTTP post sur cette URL et recevoir des prédictions, être capable de prédire des images classées par Caltech 256. Et donc, vous voyez, à aucun moment, j'ai géré l'infrastructure. J'ai juste dit « vas-y, entraîne sur une C4 » et vas-y, déploie sur une M4, et à la fin j'ai une URL. Vous trouverez plein d'exemples de training dans les notebooks dont j'ai parlé. Il n'y a aucune difficulté à exécuter ces notebooks.
+
+Maintenant la question c'est, une fois qu'on a fait ça, alors oui effectivement on pourrait aller chercher une image, on prend une image quelconque issue de Caltech, ici c'est une baignoire, pourquoi pas, on l'encode en base 64, on fait Invoke endpoint, on reçoit 257 probabilités, on les trie, et puis on prend la plus élevée, et puis ça nous dit, oui, 92%, c'est une baignoire. Ok, magnifique. Bon, mais là, on le fait dans un notebook. Ça, c'est bien pour tester, c'est bien pour expérimenter. Maintenant, en production, on ne va pas faire comme ça. La question maintenant, c'est comment est-ce qu'on peut créer une appli web qui va invoquer un endpoint ? Donc ma solution à ça, c'est d'utiliser Chalice, qui, comme je l'ai dit tout à l'heure, est un projet open source développé par AWS qui permet de déployer à l'intérieur de fonctions lambda des petits web services Python. Si vous avez développé avec Flask en Python, ça va vous paraître très naturel. On peut dire que Chalice c'est Flask serverless. C'est vraiment l'idée, la syntaxe est quasi identique, donc c'est très facile de définir ici. Je définis une seule route sur laquelle je peux poster et sur cette route, je vais poster une image encodée en base 64. Je vais envoyer ça à mon endpoint, je vais lire les prédictions, et puis je ne vais retourner que les top probabilités. En fonction d'un paramètre que j'aurais passé dans la requête, je ne vais lire que les 2 ou 3 ou 5 top probabilités, je n'ai pas envie d'avoir les 257. Voilà ce que fait ce web service, il prend le body de la requête, il le décode en base 64, et puis il invoque l'endpoint SageMaker, il lit les probabilités, il les trie, et il retourne les top catégories pour cette image. Vous voyez, le code est assez minimal.
+
+Maintenant, la question, c'est comment on le déploie. On le déploie comme ça. Voilà. Et donc ça, ça va prendre le code, ça va le packager sous forme d'une lambda, ça va le pousser dans lambda, et ça va créer dans API Gateway, une API qui va être branchée sur la lambda. Voilà, zéro configuration, une ligne pour déployer, pour les fainéants comme moi c'est très bien. Voilà, donc là ça y est, mon web service est déployé, le code dans une lambda et l'API gateway devant pour servir le trafic via cette URL. Maintenant, il n'y a plus qu'à l'invoquer. J'ai fait un script super compliqué. Je prends une image. C'est une image d'un floppy. Le premier test ce matin pour savoir si vous avez moins de 25 ans est qui est Demis Roussos et le deuxième est-ce que vous savez ce qu'est un floppy. Si vous répondez non aux deux, c'est sûr que vous avez moins de 25 ans, peut-être même moins de 30, mais bon, plus le temps passe, ça m'inquiète tout ça. Et donc, qu'est-ce que je fais ici ? Je lis mon image, je l'encode en base 64, je mets ça dans le body de ma requête et puis je fais un post avec curl sur l'URL de mon endpoint, qui est définie comme variable d'environnement dans ma lambda. Dans la première requête, je passe top k égale à 1, donc théoriquement je devrais avoir que la top catégorie, et puis dans la deuxième je passe top k égale à 3, donc je devrais avoir le top 3. Donc on va essayer de faire ça. Ça a marché tout à l'heure, il faut y croire. Voilà.
+
+Ok, donc je vois, la première requête me répond catégorie 75, probabilité 87%, et la deuxième requête me répond trois catégories, donc 75, et puis après 142 et 171, avec des probabilités beaucoup plus faibles. Alors il faut me croire sur parole, la catégorie 75 c'est vraiment les floppy. Comme j'ai beaucoup de choses à vous montrer aujourd'hui, je ne vais pas vous le prouver, mais si vous regardez, si vous mettez à plat le dataset et vous voyez le numéro des catégories, c'est bien floppy. Donc ça, c'est vraiment le déploiement super facile, comment invoquer un modèle SageMaker, comment faire du pré-processing et du post-processing. Ici, c'est très simple ce que je fais. Je fais un encodage, un décodage, et puis je filtre le nombre de catégories. Mais vous pourriez avoir envie de faire plus de choses, vous pourriez avoir envie d'aller chercher des données qui vont compléter la requête de prédiction. Peut-être que la requête entrante n'a qu'une partie des données de prédiction, peut-être que le reste est dans une base de données ou dans un cache que vous devez aller interroger en temps réel. Vous pourriez faire ça aussi avec un web service au-dessus de l'endpoint. Il y a plein de bonnes raisons de ne pas appeler l'endpoint directement et d'avoir un web service qui va faire, comme je disais, pré-processing, peut-être authentification, etc., post-processing, compléter les valeurs manquantes, etc. Je trouve que le faire comme ça, c'est assez sympa. Et puis quand on a envie de nettoyer, on fait ça et puis c'est terminé. Je ne connais pas de façon plus simple de déployer sur AWS que ça. Lambda est globalement assez simple, mais avec Chalice, c'est vraiment une ligne de déploiement, une ligne d'effacement et vous y tirez complètement.
+
+Voilà un exemple, algo built-in, web service, serverless de prédiction. Une fois de plus, il y a plein de raisons pour lesquelles vous avez envie de faire ce pré-processing et ce post-processing sur vos prédictions. Et vous faites ça à un coût nul, parce que comme c'est déployé dans une lambda, ça ne coûte que lorsque c'est appelé. Il n'y a même pas de raison de l'effacer à la limite, sauf pour la mettre à jour. Vous pourriez le laisser actif ad vitam, ça ne vous coûterait rien. Voilà un premier exemple. La deuxième démo que je voulais vous montrer, c'est le fameux HPO. L'idée, c'est quel que soit le job de machine learning ou de deep learning que vous entraînez, vous allez devoir trouver les hyperparamètres optimaux. Il y a plusieurs façons de faire ça. Il y a la façon habituelle qui est tout à fait scientifique, qui est de dire « on va mettre ces valeurs-là et puis on verra bien, et puis après on va les changer un peu et puis on verra bien. » Donc voilà, la technique du doigt mouillé, la technique ancestrale du doigt mouillé. Bon, quand on joue, ok, quand on veut faire des choses très sérieuses, non, d'accord, ça ne marche pas.
+
+Alors, il y a une deuxième technique qui est ce qu'on appelle le grid search. Donc, on définit, imaginons qu'on ait trois hyperparamètres, on définit un cube, on choisit des bornes pour chaque dimension du cube, on prend 100 valeurs aléatoires, 100 triplés aléatoires à l'intérieur du cube, et puis on regarde la précision, la métrique qu'on atteint pour chacun des 100 trainings. Ça veut quand même dire qu'il faut entraîner une centaine de fois. Et puis, vous allez voir qu'il y a des zones très peu intéressantes et d'autres un peu plus intéressantes. Vous allez dire, à l'intérieur du cube, je vais prendre un sous-cube et je vais refaire 100 trainings à l'intérieur de ce sous-cube-là. L'hypothèse étant qu'à la fin, vous arrivez à trouver la partie de l'espace 3D des paramètres qui correspond bien. C'est pas mal comme technique, mais c'est assez itératif, ça peut être très long. Et puis vous pouvez quand même toujours avoir le doute de « est-ce que j'ai choisi le bon cube de départ ? » C'est-à-dire, soit vous partez d'un cube qui est immense, s'il n'y a que trois paramètres, imaginez qu'il y en ait dix, vous partez d'un hypercube qui est très très grand et puis vous réduisez, vous réduisez, vous réduisez, vous allez peut-être entraîner des milliers de fois. Ou alors, déjà, vous faites une hypothèse sur l'espace et peut-être que vous passez à côté des bonnes valeurs. Pas facile. Long, coûteux, pas parfait.
+
+La troisième technique, qui est celle qu'implémente SageMaker, c'est de faire un petit nombre de trainings, typiquement peut-être 20 trainings, sur la base de range de valeurs que vous définissez, et d'appliquer du machine learning, spécifiquement une technique qui s'appelle l'optimisation bayésienne, qui va sur la base des paramètres du training et de la précision obtenue, découper l'espace des paramètres et vous dire que les meilleurs paramètres sur la base de ces 20 trainings, c'est ça. Ça ne garantit pas l'absolue meilleure combinaison de paramètres, mais au moins c'est une méthode automatique pour recommander les paramètres optimaux en fonction des données qu'on a. Si vous faites 100 trainings, il y a plus de chances que le résultat soit encore meilleur. Mais au moins c'est quelque chose que vous pouvez automatiser et c'est quelque chose qui typiquement va donner des résultats en moins de temps, moins de training. Plus vite, moins cher. Ici, on va appliquer ça sur XGBoost, donc algo open source, built-in dans SageMaker, qui va ici être utilisé en classifier binaire. On peut utiliser XGBoost en régression ou en classification. Ici, on va l'utiliser en classification binaire, sur la base d'un petit dataset de test qui sert à déterminer si un client est susceptible de souscrire à une offre marketing, je crois que c'est une offre de prêt ici en l'occurrence. Donc on va faire ça, on va commencer par charger les données, regarder les données, enfin les trucs que les data scientists font, et puis ensuite on va entraîner le modèle, on va lancer l'optimisation et puis on va observer les résultats.
+
+Le début, c'est pareil, il nous faut un bucket, on se doutait. On va télécharger le dataset sur la Notebook Instance, on le dézippe. On fait un petit coup de panda pour regarder à quoi ça ressemble. Il y a 20 colonnes, un truc comme ça. Vous les voyez. Ce qu'on veut prédire, à la fin, c'est l'attribut Y. Est-ce que oui ou non cette personne-là a réagi favorablement à l'offre. Donc on veut entraîner un modèle. Il n'y a pas non plus des centaines de milliers de lignes, mais c'est suffisant pour jouer. On a 40 000 échantillons et 20 features, j'étais pas loin. Donc un dataset client assez... Alors, ici, on fait un peu de cleaning, on gère les valeurs manquantes, on regarde les doublons, on transforme les catégories en nombre, etc. Donc un peu de nettoyage, rien d'exotique. On drop quelques colonnes qui ne nous paraissent pas utiles, etc. Ensuite, on a splitté le dataset en training et validation, et donc une fois de plus, on upload le dataset de training d'en training, le dataset de validation d'en validation. Jusque là, ça n'a rien à voir avec SageMaker, c'est de la data science de base. Ce qui nous intéresse maintenant, c'est entraîner le modèle et faire le modèle de classification. Donc ici on va récupérer le container qui correspond à XGBoost, donc le nom du container Docker qui contient XGBoost pour cette région-là. On utilise un objet du SDK SageMaker qui s'appelle Estimator, qui est l'objet générique. Vous lui passez le container, le nombre d'instances de training, le type d'instance de training, l'emplacement des données, plus la session, le rôle, etc. Et c'est tout. Donc ça, ça suffit à dire, mon garçon, tu vas entraîner sur une M4X Large, tu te débrouilles, tu prends le container que je viens de te donner et je ne veux pas rien savoir de plus. Et puis, ici, je vais positionner quelques hyperparamètres. Alors, une fois de plus, vous les trouverez tous bien décrits dans la doc, si je reviens sur XGBoost, hyperparamètres, voilà. Alors rassurez-vous, il n'y a pas d'interrogation écrite à la fin. Donc ici, essentiellement, ce qu'on dit, c'est qu'on fait un classifieur binaire, donc on veut savoir si oui ou non un nouveau client, enfin un échantillon de données, va répondre ou pas à l'offre, plus quelques autres hyperparamètres que je vous épargne. Et voilà. Donc ça, c'est les hyperparamètres qu'on a positionnés pour le job. Et dans le cas antérieur, ici, on dirait qu'on lancerait le training. On lancerait le training et il entraînerait une fois ce modèle avec ces paramètres-là. Nous, ce qu'on veut, c'est en entraîner quelques-uns et laisser SageMaker appliquer son optimisation.
+
+Ici, on va même pousser le bouchon un peu plus loin. Ici, on veut optimiser sur quatre autres hyperparamètres. Ce n'est pas un espace à trois dimensions, c'est un espace à quatre dimensions qu'on veut explorer. On lui dit pour le paramètre ETA, min-child-weight, alpha et max-depth, tu vas me chercher la valeur optimale et on lui donne des ranges. On lui donne des ranges qui peuvent être des ranges continues pour des floats ou des ranges entiers pour des entiers, sans surprise. Voilà, ça c'est l'espace qu'il va explorer. Ensuite, il faut qu'on lui indique quelle est la métrique à observer. Quelle est la métrique qui va lui dire que cette combinaison, ce quadruplé de paramètres, est meilleur ou moins bon que les précédents ? Comme il s'agit d'un algo built-in, c'est très simple, on a déjà prédéfini des métriques. Ici, on lui dit que c'est area under curve, c'est ça que tu vas regarder, c'est cette métrique-là de XGB, et c'est ça que tu dois maximiser. Pour les algos built-in, on a prédéfini tout un tas de choses, donc il n'y a à priori rien à faire de plus. Si vous amenez votre propre code, votre propre script, vous pouvez définir à peu près n'importe quelle métrique qui sera mesurée par votre script. Et là, il faudra que vous rajoutiez, en gros, le training log, je pense qu'Olivia a dû le dire, le training log de SageMaker est poussé au fil de l'eau dans CloudWatch Logs, qui est le système de monitoring d'AWS. Vous avez accès aux logs de training, et donc si dans votre script vous loguez clairement actualis 0.82, etc., vous pourrez optimiser sur ça. Mais vous devez fournir une expression régulière qui permet à SageMaker d'aller extraire les lignes qui contiennent l'accuratie dans votre training log. Ça, je précise, c'est uniquement si vous avez un algo custom, du code custom, etc. Si vous utilisez les algos built-in, vous pouvez utiliser les définitions qu'on a déjà faites.
+
+Ensuite, on va définir un objet qui s'appelle Hyperparameter Tuner, où on va lui dire, prend XGBoost, la métrique à optimiser, c'est celle que je t'ai indiquée au-dessus, tu vas m'entraîner 20 jobs et tu vas m'en faire maximum 3 en parallèle. Le setup optimal, c'est de les faire tous séquentiellement. Parce qu'évidemment, si vous les faites séquentiellement, à chaque training job supplémentaire, vous avez un résultat qui peut vous servir à optimiser. Si vous faites en parallèle, ici, on va faire 6 ou 7, 6 ou 7, enfin, oui, 7 en l'occurrence. On va faire 7 batchs, donc 6 de 3 et 1 de 2, si je sais compter, et on appliquera une optimisation à la fin de chaque batch, à la fin de chaque round. Bon, c'est un compromis entre vitesse et précision, on pourrait réessayer de lui dire, tu entraînes 20 jobs, mais par contre, tu en as un seul en parallèle, et puis voir si ça l'aide à trouver de meilleurs résultats ou pas. Ici pour que le truc ne tourne pas trop longtemps, on l'a fait comme ça. Et puis ensuite on fait tuner.fit comme on aurait fait model.fit tout à l'heure. Donc on lance, au lieu de lancer le training sur l'estimator comme on l'a fait tout à l'heure, on lance le training sur le hyperparameter tuner. Et donc ça concrètement ça va exécuter les 20 jobs, 3 par 3, et optimiser au fil de l'eau. Donc à chaque fois qu'on en a exécuté 3, on regarde les résultats, on applique des optimisations, on en déduit des nouveaux quadruplets pour nos hyperparamètres, on en relance 3, on recommence, etc. jusqu'à ce qu'on ait fait les 20. Et donc progressivement, on doit converger vers des valeurs qui paraissent intéressantes. Donc ça, ça tourne. Moi, ça a tourné peut-être une demi-heure, un truc comme ça. Et donc à la fin, on peut regarder ce qui s'est passé. Donc on a un autre notebook où on peut voir l'état du tuning job, etc. On peut voir en cours de route quel est le meilleur modèle qui l'a trouvé. Donc on voit les quatre valeurs, les textes. Quatre valeurs qu'il a trouvées. Alors il se trouve que ça c'est le meilleur parce que j'ai exécuté ce notebook-là à la fin des 20 jobs, mais vous pourriez l'exécuter en cours de route. Donc si vous avez une optimisation qui dure une journée, ou deux journées, vous pourriez regarder au fil de l'eau ce qui se passe, quitte même à un moment à l'interrompre en disant non mais ok, c'est bon, la précision que j'ai obtenue, elle est suffisante et c'est pas la peine de... pas la peine d'aller beaucoup plus loin. Là je vois que ça, ce quadruplet là, il me donne 77,7% de précision. Bon très bien, on pourrait décider que ça suffit et que c'est pas la peine de tourner encore trois jours. Bon on peut récupérer tous les résultats comme ça dans un data frame, ok magnifique. Et puis après ce qui est rigolo c'est de se dire bon voilà ça a donné quoi en fait au fil du temps. Et donc ici je les 20 points, donc les 20 training jobs, et si j'en prends un, je vais prendre le premier, le plus mauvais, en ordonnée c'est la précision. Celui-là, c'est le premier job. Ce n'est pas tout à fait logique. Le premier, avec ses quatre valeurs d'hyperparamètres, on ne voit pas le quatrième il en dessous, ça me donne une précision à peu près à 72,1%. Le premier a donné ça, le deuxième, c'est peut-être celui-là. Ça, c'est le troisième. Ça, c'est peut-être le deuxième. Les trois premiers jobs, ils m'ont donné ces trois valeurs-là. Ensuite, SageMaker prend les valeurs, un petit coup d'optimisation, et bam, il en relance trois. Est-ce que c'est ces trois-là ? Ça serait rigolo. Six, quatre, cinq, voilà. Il a relancé trois, et du coup, ils n'améliorent pas la précision de celui-là qui était le deuxième. Après, il en relance trois, qui sont probablement ces trois-là. Après, il en relance trois, puis après, il en relance trois, puis après, il en relance trois. On voit, en fait, assez vite, on atteint, je ne sais plus quel est le numéro de celui-là, c'est le septième ou non ? Le 8e job était le meilleur. Mes quatre paramètres et finalement après on ne progresse pas beaucoup. Donc on pourrait se dire, manifestement, les jobs suivants ont plutôt tendance à décliner en précision, donc ce n'est peut-être pas la peine d'en lancer 50, ce n'est pas sûr qu'on aille beaucoup plus loin, on n'a pas l'impression d'avoir atteint le cap ici. Et puis après, on pourrait regarder, je vais vous en montrer un, on pourrait regarder l'impact qu'a chaque hyperparamètre par rapport à la précision. Ici, c'est la profondeur. XGBoost, c'est des arbres de décision. Donc la profondeur d'arbres, le nombre de décisions, le nombre de nœuds qu'on a dans l'arbre et un paramètre important. Sans surprise, on voit au début, quand on a des valeurs, des arbres très peu profonds, on n'a pas forcément une bonne précision, ça ne suffit pas pour classifier correctement les données. Quand on augmente, ça va mieux. On atteint, ça c'est le meilleur job, pour des arbres de profondeur 6, on atteint la valeur maximum, celui-là est il faudrait regarder ce point-là, voir ce qui s'est passé. Ça doit être un autre paramètre qui dégrade la précision. Et après, globalement, on voit que ça a plutôt tendance à se casser la figure, parce que plus on met des arbres profonds, plus on risque de faire de l'overfitting, et on en a une fois de plus la preuve. On pourrait faire ça pour tous les paramètres, et voir finalement quels sont les paramètres qui ont un gros impact, quels sont ceux qui n'ont peut-être pas d'impact, quels sont ceux qu'on peut peut-être enlever du processus d'optimisation pour se concentrer sur les autres. Donc évidemment ces notebooks là sont super utiles, vous pouvez les réutiliser vraiment absolument tel quel avec vos jobs et toutes les petites visualisations qui sont là sont assez sympas. Donc voilà le principe d'HPO, vous définissez la liste des hyperparamètres sur lesquels vous les optimisez, vous définissez les ranges, vous définissez combien de jobs vous voulez, vous laissez tourner et puis à la fin vous visualisez pour voir, bon ok, est-ce qu'il faut que je le relance avec plus de jobs, est-ce qu'il faut que je rajoute ou que j'enlève des paramètres, vous avez toutes les informations pour le faire. Et ça, ça se fait complètement automatiquement, vous attendez juste la fin de ce process, ce qui est quand même plus efficace que de jouer à la pêche ou de faire du grid search pendant des semaines et des semaines.
+
+Alors le troisième exemple que je voulais vous montrer, c'est le custom container, comme je l'ai dit tout à l'heure, on peut sur SageMaker utiliser des algos built-in, on vient de voir deux exemples avec la classification d'images et avec XGBoost. On peut amener son code TensorFlow, MXNet, PyTorch, etc. dans des containers correspondants, ou alors on peut amener quelque chose de complètement spécifique et de construire son propre container. Donc c'est ce que j'ai fait ici. Aujourd'hui on n'a pas de container, on n'a pas d'environnement pré-existant pour Keras. On peut utiliser TensorFlow et on peut utiliser TF.Keras, mais si on veut utiliser Keras, bon, c'est pas disponible dans ce container. Et moi c'est ce que j'avais envie de faire. Donc vous allez voir à quel point c'est simple finalement de construire son propre container et d'entraîner avec. Bon, au début rien de bien spécial. J'installe MXNet, qui a tendance à être plus rapide que TensorFlow dans ce schéma-là, et j'installe Keras. C'est tout. Mon container installe Python, Keras et MXNet avec leurs dépendances.
+
+Pour le GPU, c'est presque pareil. La différence est qu'au lieu de partir d'Ubuntu, je pars d'une image fournie par NVIDIA, qui contient les drivers NVIDIA, les librairies CUDA, etc. Et puis j'installe la version d'MXNet buildée pour CUDA. Le reste est identique. Ensuite, je définis quelques constantes. J'ai besoin d'un nom pour mon repo Docker, d'un nom pour mon image. Rien d'essentiel. Ici, on va faire un training sur C5. Je vais prendre une batch size de 128, quelques constantes dont j'aurai besoin après. Je m'assure que j'ai un repository Docker dans ECR. ECR est le service Docker d'AWS. Je vérifie que j'en ai déjà un, si je n'en ai pas, je le crée, et une fois que j'en ai créé un, je me log. Ensuite, je peux builder mon image Docker et la pousser. Je build mon image sur la base du Dockerfile que j'ai écrit. Docker va télécharger les dépendances nécessaires, appliquer les commandes du Dockerfile, tout installer, et je tag mon image. Tout cela est fait sur la Notebook Instance, et ensuite je pousse mon image vers ECR. Le plus dur est fait, maintenant c'est du SageMaker normal. J'ai une image, mais elle est différente car ce n'est pas une image fournie par AWS. C'est celle que je viens de construire. C'est un container avec un point d'entrée qui est mon script de training. Tout est bien installé à l'intérieur. Je peux utiliser `estimator` comme tout à l'heure, en spécifiant le nom de l'image, une instance, où sont les données, où stocker le modèle, et c'est tout. Je mets des hyperparamètres, un learning rate, le nombre d'époques, et j'entraîne le modèle.
+
+Quand je dis qu'on peut vraiment utiliser n'importe quoi sur SageMaker, c'est vrai. Si vous avez du code de training ou de prédiction en C++, voire même en JavaScript ou PHP, c'est tout à fait possible de l'utiliser. L'idée est de créer ce container, d'avoir son point d'entrée, et c'est tout. Ensuite, on voit le log qui se déroule. J'utilise MXNet comme backend de Keras, mais il y a un peu de magie. Les hyperparamètres, où sont-ils passés ? Ce n'est pas très magique, en fait. SageMaker crée des fichiers à l'intérieur du container, comme `hyperparameters.json` et `inputData.json`, qui contiennent les hyperparamètres et les informations sur les données. Dans mon script `mnist_cnn.py`, je lis ces fichiers pour récupérer mes hyperparamètres et mes paramètres d'entrée. C'est tout. Si vous avez du code, par exemple, Scikit-learn, C++, qui tourne déjà, et que vous voulez le mettre dans un container et le faire tourner sur SageMaker, les seuls modifs nécessaires sont d'ajouter une ligne de code pour lire le fichier JSON des hyperparamètres, une ligne pour lire les données, et une ligne pour sauver le modèle dans S3. 99,99% de votre code s'exécutera tel quel, puisqu'il est dans un container avec son environnement. C'est peu coûteux de migrer son code custom vers un container SageMaker.
+
+C'est du Keras sur C5. 10 époques. Au bout de 10 époques, j'atteins une test accuracy de 99,13% et je sauve mon modèle Keras au bon endroit dans le container, et SageMaker le copie dans S3. L'interface entre SageMaker et votre code est très légère : récupérer les paramètres et sauver le modèle. Cela marche pour Keras, mais cela marche aussi pour d'autres technologies. BlueDME, par exemple, utilise Scikit-learn sur SageMaker de la même manière. N'importe quelle techno, si vous voulez faire du Java, du n'importe quoi, cela marche. Il n'y a pas de grosses difficultés. Pour déployer, c'est à peu près du même tonneau. Vous pouvez avoir un container custom pour déployer, ou un petit site web qui charge le modèle et répond aux prédictions. Ce n'est pas beaucoup plus compliqué. Allez voir les différents notebooks que j'ai mentionnés, vous trouverez des exemples.
+
+Le dernier exemple que je voulais vous montrer est comment intégrer SageMaker avec Spark. Pourquoi ? Spark a déjà une librairie de machine learning, Spark MLlib, avec une belle collection d'algos. Pourquoi ajouter SageMaker ? Il y a deux raisons. Premièrement, Spark MLlib n'a pas beaucoup d'algos de deep learning. Deuxièmement, l'implémentation SageMaker peut être plus scalable. Plus important, cela permet de séparer deux problèmes. Spark est utilisé pour la transformation de données, l'ETL, le nettoyage, l'agrégation, etc. Spark est brillant pour cela, surtout à l'échelle. Pour le machine learning, vous avez besoin d'instances avec beaucoup de compute. Si vous faites tout sur Spark, vous faites un compromis. Je préfère avoir la meilleure solution pour chaque problème : des instances avec beaucoup de mémoire pour l'ETL et des instances compute pour le machine learning. Pour le deep learning, j'ai besoin d'instances GPU. On peut faire un cluster EMR avec des instances GPU, mais je préfère séparer les deux problèmes. Un cluster EMR optimisé pour l'Io ou la mémoire, et des clusters SageMaker à la demande pour le compute.
+
+J'ai créé un petit cluster EMR avec 3 ou 4 nœuds. On va utiliser une fonctionnalité de MLlib, le pipeline, qui est une série d'étapes de transformation, entraînement, ou prédiction. L'intégration avec SageMaker garde la sémantique Spark, et SageMaker est assez invisible. On importe des trucs, on travaille en US East One, en Scala. Je charge MNIST à partir de S3, je configure mon pipeline avec une étape PCA pour réduire la dimension du problème, puis un clustering avec K-Means. Je fais le training sur une P2 et le déploiement sur une C4. Je définis mon pipeline, je combine les étapes, et j'appelle `fit`. Spark exécute le stage PCA sur le cluster, construit les 50 features, puis démarre une instance P2 dans SageMaker pour le training. Le modèle est ensuite déployé sur C4. On transforme les données de test avec le pipeline, toujours dans Spark, sans se soucier de la conversion des données. On voit les résultats, les échantillons de test, les labels, les features de départ, les features ingénierées avec PCA, et la distance au cluster le plus proche. Utiliser K-Means pour grouper des images ne marche pas, mais le but est de montrer comment intégrer Spark et SageMaker facilement.
+
+Si vous voulez des exemples, allez sur le repo Amazon SageMaker Examples sur GitHub. Vous trouverez plusieurs dizaines de notebooks. Les notebooks Keras et Spark SageMaker sont dans mon repo sur GitLab, DL Notebooks, sous le nom Julien Simon. Voilà des exemples d'utilisation de SageMaker : algo built-in, classification, classification d'images, container custom, intégration avec Spark. Cela montre l'ampleur des choses qu'on peut faire avec SageMaker. Vous avez beaucoup de liberté et de flexibilité pour utiliser ce service pour vos jobs de machine learning ou de deep learning.
+
+Merci beaucoup de m'avoir écouté. J'espère que vous avez appris plein de choses aujourd'hui. Je vous remercie encore BlueDME d'avoir participé ce matin à la keynote. On a une très courte pause et une session de clôture avec un jeu. Je vous conseille de rester. N'hésitez pas, je suis encore là si vous avez des questions. Merci beaucoup.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">SageMaker</span><span class="tag">DeepLearning</span><span class="tag">HyperParameterOptimization</span><span class="tag">CustomContainer</span><span class="tag">ServerlessDeployment</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction a AWS Greengrass + demos</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Introduction a AWS Greengrass + demos</h1>
+        <div class="date">August 01, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/c6f-8IcU_ek" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">En nous appuyant sur différents équipements (Raspberry Pi, Arduino, bouton AWS IoT), nous illustrerons les principales fonctionnalités d’AWS IoT et d’AWS Greengrass.
+Téléchargez les slides ici : <a href="http://bit.ly/2vffHe9" target="_blank" rel="noopener noreferrer">http://bit.ly/2vffHe9</a>
+
+
+✚ Inscrivez-vous aux mardis du cloud, deux webinaires mensuels en français et en direct : <a href="http://amzn.to/2lvragO" target="_blank" rel="noopener noreferrer">http://amzn.to/2lvragO</a>
+✚ Rendez-vous sur notre site internet : <a href="http://amzn.to/2ktrf5g" target="_blank" rel="noopener noreferrer">http://amzn.to/2ktrf5g</a>
+✚ Suivez-nous sur Twitter : <a href="https://twitter.com/aws_actus" target="_blank" rel="noopener noreferrer">https://twitter.com/aws_actus</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Nous revoici. J'espère que vous avez pris un petit café et que vous avez apprécié ce premier webinar. Dans ce deuxième webinar, plus de slides, c'est la bonne nouvelle, et uniquement des démonstrations. On a enregistré les démos en vidéo hier, non pas qu'on ait eu peur qu'elles ne fonctionnent pas, parce que tout le monde sait que mes démos fonctionnent absolument à chaque fois, n'est-ce pas ? C'est surtout pour pouvoir vous les montrer en gros plan, pour que vous voyiez bien, car il y a un peu de manipulation et les choses intéressantes ne se passent pas toujours sur l'écran. On a voulu pouvoir zoomer sur les démos pour que vous voyiez bien ce qui se passe. On va vous expliquer tout ça. On a quatre démos à vous montrer cet après-midi. Je vais vous expliquer l'objectif de chaque démo, et ensuite Hugo lancera la vidéo pour que vous voyiez la démo se réaliser. J'espère que tout ça va fonctionner. C'est encore une grande première.
+
+La première démonstration qu'on va faire, c'est de vous montrer ce qu'est un IoT Button. Je ne sais pas si vous avez déjà vu cet objet. C'est un petit bouton. Le plus simple serait de vous montrer la page Amazon. Est-ce que je l'ai encore ? J'aurais dû l'ouvrir avant. Ce n'est pas grave, on va le chercher. Donc, l'IoT Button, c'est un petit équipement. C'est la version développeur du fameux Dash Button, dont j'ai parlé tout à l'heure. Voilà le Dash Button. Ça, vous connaissez sûrement. C'est un équipement que vous pouvez acheter sur Amazon et qui vous permet, en un clic, de commander de la lessive, du thé, du dentifrice, et plein d'autres choses. Mais c'est un bouton qui n'est pas programmable. Vous l'achetez, vous appuyez dessus, et ça fait vos courses à votre place. C'est sympa, mais on a conçu une autre version. La voici. Il s'appelle l'AWS IoT Button, qui est un bouton neutre, qui va servir dans vos projets IoT. Vous pouvez le commander sur Amazon. On va le configurer, et lorsqu'on va appuyer sur ce bouton, vous verrez dans la démo dans un instant, on va envoyer différents types de messages.
+
+Comment configure-t-on ce bouton ? C'est super simple. Vous appuyez pendant cinq secondes sur le gros bouton. La petite LED, que vous voyez ici, va se mettre à clignoter en bleu. En fait, ça ouvre un hotspot Wi-Fi sur lequel vous pouvez vous connecter. Vous allez voir une page qui va ressembler à ça. Je ne le fais pas maintenant parce que ce n'est pas le moment de toucher à mes réglages réseau. Vous appuyez cinq secondes sur le bouton, vous voyez un nouveau hotspot apparaître qui va s'appeler quelque chose comme "Confidure.me", etc. Et vous arrivez sur cette page. Il va vous demander quoi ? Le SSID de votre réseau Wi-Fi, un mot de passe si le réseau en nécessite un, et ensuite, il va vous demander un certificat, une clé, le endpoint IoT à utiliser, et la région AWS à laquelle vous voulez vous connecter. Vous allez me dire, mais où trouve-t-on ces quatre trucs-là ? Vous les trouverez dans la console IoT. On va montrer la console IoT un petit instant.
+
+La console IoT a un petit dashboard qui vous montre quelques informations de monitoring, etc. Mais surtout, elle va vous permettre de créer vos devices. Vous vous souvenez, dans le webinar précédent, j'ai parlé de la registry, c'est l'endroit où on crée et définit ces équipements. Vous voyez ici, par exemple, je vais prendre un bouton au hasard, car j'en ai plusieurs. J'ai créé ce bouton, je lui ai associé un certificat, et je peux voir l'état de son shadow et l'endpoint sur lequel ce bouton va se connecter. Voilà les paramètres, voilà le fameux endpoint qu'on voit ici dans l'IoT Button. Le subdomain, c'est ça. La région ici, c'est E-West One. Oups, pardon, c'est là. Et c'est tout. Il suffit, une fois que vous avez votre bouton, de créer un nouvel équipement, de lui créer un certificat, de télécharger le certificat, la clé privée, et la clé publique. On donne ces trois trucs, on active le certificat. Ensuite, on lui attache une policy IAM. Je vais reprendre une policy que j'avais déjà définie. Cette policy va contenir quoi ? Elle va contenir une instruction qui permet au bouton de publier sur son topic via l'API IoT Publish. L'identifiant du topic ici, c'est le numéro de série du bouton que vous trouvez au dos du bouton. Et une deuxième instruction qui va lui permettre de se connecter à IoT. C'est tout, en fait, un bouton, ça fait que ça. Ça se connecte et ça publie. Vous trouverez, rassurez-vous, la policy exacte dans la doc du bouton IoT sur le net. C'est juste pour vous montrer rapidement le truc. On va choisir la policy exacte. On a attaché une policy. Côté IoT, c'est bon. Ensuite, vous appuyez cinq secondes sur votre bouton, vous mettez vos paramètres Wi-Fi, vous téléchargez le certificat, la clé privée, vous vérifiez le subdomaine, vous vérifiez que la région est bonne, vous cliquez sur OK, configure. On télécharge les fichiers sur le bouton, et tout va bien, il est connecté et vous pouvez l'utiliser. Ça prend vraiment deux minutes. Une fois que vous avez fait tout ça, vous pouvez faire la démo. Si Hugo veut bien lancer la première vidéo, on devrait voir ce bouton en action. Voici le bouton IoT, un petit équipement sympa pour faire vos premiers tests IoT. C'est un bouton qui va permettre d'envoyer trois types de clics différents via le gateway IoT. Vous pouvez l'acheter sur Amazon, il est disponible en France depuis quelques semaines.
+
+Passons dans la console IoT. Je vous ai montré tout à l'heure comment configurer le bouton avec un certificat, lui donner une identité, et lui assigner une politique IAM, etc. Maintenant, nous allons tester. Pour cela, je vais basculer dans l'outil de test de la console IoT qui va me permettre de visualiser les messages envoyés par le bouton. Comme je vous l'ai expliqué, MQTT permet à la fois de publier et de recevoir des messages. Ici, ce qu'on veut, c'est recevoir un message. On va s'abonner au topic MQTT de ce bouton. Les noms de topic sont très simples. C'est "iotbutton.com". Je m'abonne au topic. Maintenant, je vais pouvoir faire les trois types de clics sur le bouton pour visualiser mes messages. Premier clic, clic simple. Je vois ici un message JSON qui est envoyé sur le topic du bouton et reçu par l'outil de test de la console puisqu'il s'est abonné au bon topic. Je vois le numéro de série du bouton, le voltage de la batterie, et le type de clic. Ici, un clic simple. Je vais essayer un double clic. Et je vois... un deuxième message qui arrive avec un double clic. Et puis dernier clic, le clic long. Et voilà, je reçois un troisième message avec le type de clic. Voilà comment on configure un bouton IoT et comment on le teste. Voilà comment on fait son premier projet IoT. Manifestement, ça a marché. Bravo ! Vous avez vu la première utilisation de ce bouton et comment on peut utiliser l'outil de test intégré dans la console AWS pour faire des tests. C'est sympa. Maintenant, on n'a pas forcément envie de tester dans la console. On a envie d'avoir un outil de test à proprement parler. Il y a plusieurs outils qui vous permettent de vous connecter en MQTT sur un gateway. Il y en a un que j'aime bien qui s'appelle MQTTFX, un outil en Java que vous pouvez installer. On a enregistré une deuxième vidéo pour vous montrer MQTTFX. Hugo, s'il te plaît, si tu peux lancer la deuxième vidéo, c'est parfait.
+
+Je vous ai montré comment tester le bouton IoT avec l'outil de test intégré dans la console. Maintenant, je voudrais vous montrer comment le faire avec un outil externe qui s'appelle MQTTFX. MQTTFX est un client Java que vous pourrez installer sur votre machine. Vous le téléchargez, vous lui créez une identité. Il faut qu'il soit vu comme un thing, puisqu'il va se connecter au gateway. Vous lui créez une identité, une policy, etc., exactement comme pour un device normal. Une fois que vous l'avez lancé, vous allez dans les paramètres, vous indiquez le nom du gateway IoT, son certificat, sa clé privée, etc., et vous pourrez vous connecter. Je me connecte ici au Gateway. Comme tout à l'heure, je m'abonnerai au topic de mon bouton. Voilà. Et donc maintenant, normalement, si j'appuie sur mon bouton, je dois recevoir ce message. OK ? Donc simple clic, double clic. Voilà le type de message qui a changé. Et puis on va faire le clic long pour la forme. Et je vois mon troisième message qui arrive. L'avantage d'MQTT FX, c'est qu'on peut définir des scripts. Vous pourrez automatiser vos tests MQTT. Vous pouvez travailler localement sans avoir à vous connecter à la console si jamais vous n'avez pas accès à la console. Voilà une bonne alternative. MQTT FX, chaudement recommandé. Pardon, on n'avait pas de son. Excusez-moi, j'avais oublié de remettre le son. J'étais en train de vous dire que vous veniez de voir la deuxième vidéo sur le bouton avec MQTT FX, qui est utile pour faire vos tests.
+
+Mais après avoir fait ça, je me suis dit, qu'est-ce qu'on peut bien faire avec ce bouton ? C'est bien, j'ai acheté ça, c'est rigolo, mais passé ça, est-ce qu'il y a des vraies applications ? Avec le Dash, il y a plein d'applications, mais qu'est-ce que moi je pourrais faire avec ce bouton ? Si vous avez des enfants, je pense que vous allez vous reconnaître. Un de mes grands problèmes dans l'existence, en tout cas à la maison, c'est de faire en sorte que mes enfants viennent manger à table. Je passe ma vie, comme tous les parents de la Terre, à hurler dans l'escalier pour que mes enfants descendent, et ça m'agace. Ce n'est pas la façon dont j'aime passer mes soirées. Je me suis dit, est-ce que la technologie pourrait venir à mon secours pour m'éviter de hurler tous les soirs pour faire venir mes enfants à table ? Et si j'utilisais un bouton IoT ? C'est ce que je vais vous présenter maintenant. Toujours le même bouton que vous avez vu à l'instant, avec trois types de clics différents. Mais cette fois, au lieu d'afficher simplement les messages, je vais appeler une fonction Lambda qui va envoyer un SMS. Comment est-ce qu'on fait ça ? On va utiliser une règle. La configuration du bouton reste la même, mais dans la partie rules de la console IoT, j'ai défini une règle qui s'appelle "Dinner is ready". Cette règle a une description, bien sûr, et une règle proprement dite, écrite en SQL standard. Si vous avez encore en tête le message qui est envoyé par le bouton, il y a trois champs dedans : le numéro de série du bouton, le voltage, et le type de clic. Je vais faire "Select Click Type from" le topic en question, donc "IoT Button slash le numéro de série de mon bouton". J'aurais pu avoir une clause "Where" en disant "Je ne veux que les clics simples, que les clics longs, etc." Mais là, je veux uniquement le type de clic et je le veux dans tous les cas, car en fonction du type de clic, ma fonction va faire des choses différentes. C'est le select que je fais sur les messages qui arrivent dans ce topic. Ensuite, j'appelle une fonction Lambda, que j'ai développée, qui s'appelle elle aussi "Dinner is Ready". On aurait pu avoir d'autres actions, mais ici on n'en a qu'une. Jetons un œil à ma fonction Lambda. C'est une fonction Lambda tout ce qu'il y a de plus normal. Ce n'est pas parce qu'elle est appelée par IoT qu'elle est différente. Voilà ma fonction, donc elle est en Python. Même si vous ne connaissez pas bien Python, vous allez comprendre. On affiche l'événement, ça me remplit des logs. Dans cet événement, j'ai un document JSON qui va contenir une seule variable, un seul élément qui s'appelle clickType, puisque c'est ce que j'ai sélectionné. Je récupère dans mon document JSON le clickType, je le mets dans une variable qui s'appelle clickType, et puis en fonction du type de clic, simple, double ou long, le message change. Simple, c'est "Dinner is ready". Double, je commence à m'agacer, "Dinner is ready" en majuscule. Long, je suis énervé, et ils ont cinq secondes pour descendre. Sinon, je vais utiliser l'ancienne méthode qui consiste à hurler dans l'escalier. Et ils savent ce qui se passe ensuite. Le message est défini. Je me connecte à SNS, donc Simple Notification Service, et je publie un message sur un topic SNS avec un sujet qui est "dinner" et un message qui correspond au type de clic. Pour la démonstration, j'ai remplacé le topic SNS par mon propre numéro de téléphone pour pouvoir faire la démonstration. L'objectif, c'est d'amener mes enfants à table. Hugo, s'il te plaît, tu peux lancer la troisième vidéo. On va voir cette démonstration. J'ai configuré ce bouton, j'ai associé une règle qui invoque une fonction Lambda lorsque un message est reçu dans le topic du bouton. Cette fonction Lambda va, en fonction du type de message, m'envoyer un SMS. Alors, allons-y, appuyons sur le bouton. Premier clic.
+
+J'ai reçu un SMS. Effectivement, je vois que le dîner est prêt. Mais bon, je suis en train de travailler, probablement. Je suis en train de préparer un webinar ou quelque chose comme ça. On s'impatiente en bas. Double-clic. Donc deuxième envoi de message. On passe à nouveau dans la fonction Lambda. Cette fois, c'est un double-clic, donc le message devient un peu plus insistant. Mais bon, je ne l'ai pas entendu. Vous avez un peu entendu la sonnerie. Je ne sais pas pourquoi. Troisième clic. Clic long. Et voilà. Au troisième clic, je reçois le troisième message qui me dit que j'ai cinq secondes pour descendre, sinon je ne mange pas. Voilà un petit exemple d'interaction entre un device IoT, une règle composée d'une ligne de SQL, et une invocation de fonction Lambda qui, en une API, envoie un SMS. Ça marche bien pour les enfants. Initialement, l'application a été faite pour les enfants, mais comme je voulais vous la montrer avec mon téléphone, j'ai évidemment changé mes coordonnées. Voilà pour ce dernier exemple avec le bouton IoT. Je me suis beaucoup amusé avec ça à la maison, je ne vous cache pas, parce que je n'avais rien dit à mes enfants lorsque je l'ai fait. Ils sont arrivés assez paniqués en me disant "Papa, on reçoit du spam, on reçoit des SMS, qu'est-ce que c'est, c'est bizarre." Non, non, c'est moi. Sur le coup, ça ne les a pas fait rire, mais après, ils ont compris. Et je m'en sers vraiment, et ça marche plutôt bien. Voilà, donc vous voyez une utilisation rigolote du bouton, où finalement on se dit, bon, qu'est-ce qu'on peut bien faire avec un bouton, mais le fait qu'on ait trois types d'événements, le fait qu'on puisse avoir peut-être plusieurs boutons, sur lesquels on pourrait appuyer en séquence, ou en parallèle, etc., ça permet de donner des idées. J'ai d'autres idées d'utilisation du bouton. On en reparlera plus tard. Et en tout cas, vous voyez à quel point c'est facile de remonter des données. Ce select-là, bien sûr, on pourrait faire des choses plus sophistiquées, mais vraiment tout le monde est capable d'écrire un select comme ça. La fonction Lambda, que je vous ai montrée, est du Python de débutant. Il n'y a vraiment aucune difficulté. Et j'aime bien, moi, vraiment cette philosophie d'infrastructures légères où on combine les services, on met très peu de code, et on arrive à combiner des services qui sont sur le papier très différents et on arrive à faire des trucs rigolos.
+
+Dernier exemple que je voulais vous montrer aujourd'hui. C'est un exemple plus compliqué, et vous allez le voir en détail dans la vidéo tout à l'heure. Cette fois, je vais utiliser trois équipements. Je vais utiliser un bouton, un Arduino, et mon robot Raspberry Pi. Le but du jeu, c'est via l'Arduino sur lequel j'ai une petite télécommande, un petit joystick, de piloter mon robot, de le faire avancer, reculer, etc. Et via le bouton, de déclencher une action sur ce robot. Je garde le suspense sur l'action pour l'instant. Cette fois, on a trois équipements. Si on retourne dans la console IoT, on va voir les trois équipements. J'ai mon bouton, de mémoire je ne sais plus lequel c'est, mais un de ceux-là. J'ai un Arduino, un petit microcontrôleur qui est suffisamment puissant pour exécuter le SDK IoT et qui a plein de connectiques, donc en l'occurrence ici pour ajouter un petit joystick. J'ai mon robot Raspberry Pi qui s'appelle JohnnyPi et qui lui aussi est connecté sur le gateway AWS. Le bouton, vous avez vu comment ça marche, la configuration du bouton n'est pas différente, ça va poster un message dans un topic. L'Arduino va avoir un peu de code, je vais vous le montrer. Comme ça, vous verrez un autre SDK, joystick IoT. Et puis mon robot a du code aussi que je vais vous montrer un peu. On ne va pas faire un cours Arduino, on programme dans un langage qui est... disons du C. Comment conçoit-on un programme Arduino ? C'est très simple, il y a une fonction setup qui est appelée au démarrage de l'Arduino et une fonction loop qui ensuite est appelée à l'infini, en boucle infinie. Dans le setup, on va calibrer le joystick, mais surtout se connecter au gateway. On va retrouver ce qu'on connaît déjà : l'adresse du host MQTT, le port MQTT, le certificat, la clé, etc. Ce sont les fichiers que j'ai téléchargés via la console IoT et que j'ai copiés sur mon Arduino. Grâce à ce certificat et à cette clé, je peux me connecter, et vous voyez que ce n'est pas du code particulièrement complexe. Une fois qu'on est connecté, on attend un peu, et on commence à exécuter la loop. La loop, qu'est-ce qu'elle fait ? Elle va lire l'état du joystick pour savoir dans quelle direction je l'ai poussé. En fonction de la direction dans laquelle je l'ai poussé, on va construire un message, donc left, right, forward, backward, et on va le publier dans un topic qui s'appelle "JohnnyPi slash move" et qui est évidemment le topic auquel mon robot va s'abonner. Voilà, c'est tout. Vous voyez, mon code Arduino, il y a 10 fois plus de code pour gérer le joystick que pour gérer MQTT. On se connecte, on lit l'état du joystick, en fonction de l'état du joystick, on prépare un message texte, et on envoie ce message texte sur un topic qui s'appelle "JohnnyPi". Sur mon Raspberry, sur mon robot, là aussi j'ai un peu de code qui tourne. J'ai du code en Python, donc j'importe le SDK, etc. Quand on initialise le robot, on se connecte au gateway avec le SDK Python, mais c'est la même chose, donc il a aussi un certificat et une clé, etc. Il va s'abonner à quatre topics : move, speak, see, et scan. Move pour se déplacer, speak pour parler, see pour voir ce qu'il y a devant lui, car il a une caméra, et scan pour déplacer son capteur de distance et mesurer la distance qui le sépare des objets. Ensuite, qu'est-ce qu'il fait ? En boucle infinie, il dort et attend de recevoir. Quand il reçoit un message sur un de ces topics, la fonction correspondante, le callback correspondant, va être appelé. Regardons par exemple le callback pour move qui est là. Sans surprise, il va extraire le texte qui est contenu dans le message qu'il a reçu. En fonction du message qu'il reçoit, il va appeler l'API du robot pour avancer, reculer, tourner à droite, tourner à gauche, etc. Là aussi, vous voyez, c'est du Python de niveau débutant, il n'y a aucune complexité. On s'appuie sur une API toute simple de passage de messages qui permet d'interfacer des équipements et de les faire se parler de manière vraiment simple. Il n'y a aucune complexité MQTT dans cette histoire. Et là, on voit mes différents callbacks. Je ne sais pas combien il y a de lignes, mais vraiment aucune complexité. Alors maintenant, on a envie évidemment de voir la démo, on a envie de voir ce qui se passe. Hugo, s'il te plaît, si tu peux lancer la dernière vidéo...
+
+Vous allez voir cette démo et ce qui se passe quand on appuie sur le bouton. Bien, nous allons maintenant tester l'ensemble des équipements. Ma télécommande Arduino, qui est connectée sur le Gateway IoT en Wi-Fi. Mon robot, donc un Raspberry Pi, lui aussi connecté sur le Gateway IoT en Wi-Fi, avec un petit serveur Python qui tourne et qui reçoit les commandes. On va déjà déplacer le robot. À chaque fois que je vais faire bouger, à chaque fois que je vais agir sur mon joystick, j'envoie un message MQTT qui est publié dans un topic que le robot écoute. Il agit en conséquence, en fonction de avant, arrière, droite, gauche, etc. À chaque fois que j'agis, j'envoie un message au Gateway IoT en Irlande, et ce message est instantanément envoyé au robot pour action. Les actions s'interrompent parce que j'ai peur que le robot tombe de la table. À chaque fois qu'il se déplace, je le stoppe. Mais il n'y a aucune raison, on pourrait le laisser avancer beaucoup plus longtemps. Ce n'est pas du tout une latence liée au cloud, c'est vraiment une sécurité que j'ai ajoutée dans mon code. Vous voyez comment on peut intégrer un Arduino avec un Raspberry Pi en MQTT. Pour finir, on va réutiliser un bouton IoT, le même... à peu près le même que tout à l'heure. Et lorsque je vais appuyer sur ce bouton, mon Raspberry Pi va prendre une photo. J'ai une petite caméra qui est à l'avant, ici, qui va prendre une photo de l'objet, qui va mesurer sa distance aussi avec le capteur qui est là, et qui va utiliser un modèle de deep learning que j'ai installé sur le Pi, via MXNet, une librairie de deep learning open source. Ce modèle de deep learning va tenter de reconnaître l'objet qui est en face de lui, et tout ça en appuyant juste sur ce bouton. On va essayer avec un objet simple, voyons ce que ça donne. En avant. Donc, j'appuie sur le bouton. Ça poste un message MQTT qui va être envoyé au robot. Le robot... Vous l'avez entendu, c'est Polly, le service de text-to-speech d'AWS, qui vous parle. Donc j'ai appuyé sur le bouton, on a envoyé un message MQTT au Gateway, il est reçu par le robot, le robot prend une photo avec sa caméra et localement, avec sa librairie de deep learning, son modèle basé sur la librairie MXNet, reconnaît l'objet avec un niveau de confiance relativement important. Et à partir du texte qui est retourné, de la catégorie de l'objet, on fabrique un message qu'on passe à une API Polly qui nous retourne un fichier son qu'on peut jouer. On va essayer avec un deuxième objet ? Voilà, c'est parti. On appuie sur le bouton. On prend la photo. Voilà, donc une petite démo combinée d'IoT et d'IA, une fois de plus, sujet dont on aura l'occasion de reparler d'ici la fin de l'année puisqu'on va organiser une série de webinaires dédiés au machine learning et à l'intelligence artificielle. Voilà pour cette démo. Très bien, merci Hugo pour ces vidéos, j'espère que ça vous a plu, moi ça m'a bien amusé de faire tout ça, et vous voyez une fois de plus comment on arrive à combiner ces différents sujets. Le sujet purement MXNet et IA, on en reparlera. On est en train de préparer une série de webinars spécial pour Machine Learning, IA pour le mois de décembre. Je prends un peu de patience, mais rassurez-vous, on va continuer à en parler. Je crois que quelques-uns parmi vous ont eu des problèmes pour voir les vidéos. Je ne connais pas les détails. Rassurez-vous, d'une part, évidemment, elles vont être intégrées dans la vidéo du webinar qu'on va publier. Et je pense qu'on va publier les quatre vidéos aussi indépendamment parce qu'elles sont rigolotes. On les mettra sur notre chaîne YouTube. On va essayer de faire ça rapidement, peut-être demain, si Hugo a le temps. Donc, vous pourrez revoir tout ça. Pas de souci. Voilà ce que je voulais vous montrer pour aujourd'hui. Je voulais vous montrer comment combiner différents devices, comment utiliser le moteur de règles, comment faire communiquer ces équipements qui n'étaient pas tout à fait prédestinés à dialoguer avec le cloud au départ, à les faire se parler entre eux, à les faire invoquer du code Lambda dans le cloud. Et vous voyez que tout ça se fait avec assez peu de configuration, assez peu de code, et un niveau de complexité qui est plutôt faible et c'est plutôt rigolo. Donc, j'ai pas le temps aujourd'hui de faire une démo sur Greengrass, ça sera pour la prochaine fois. Il faut pas mal de préparation et pas mal d'équipement, donc j'ai pas assez de matériel pour tout vous dire pour faire une vraie démo intéressante, donc on essaiera de refaire ça une autre fois. Voilà, écoutez, j'ai à peu près fini pour aujourd'hui. Je voulais vous remercier une fois de plus de nous avoir écoutés. Merci beaucoup à Hugo pour la logistique, comme d'habitude. Premier webinar dans nos nouveaux locaux, ça s'est pas trop mal passé. Donc Hugo va peut-être afficher le sondage, et puis on va passer ensuite aux questions. Une fois n'est pas coutume, on a du temps pour les questions, et je vois qu'il y en a eu pas mal. Alors... Première question, quelle est la technologie qu'il faut utiliser pour une application mobile ? Je vais ressortir brièvement mes slides. Pour du mobile, vous pouvez utiliser l'un des SDK qui est disponible. On a un SDK JavaScript. Si vous êtes capable d'exécuter du JS sur votre mobile, il n'y a pas de solution. Et puis on a des SDK spécifiques pour Android et iOS. Donc ils vont vous permettre de faire les mêmes opérations que ce que vous avez vu sur l'Arduino et sur Python. Vous allez vous connecter, publier, vous abonner, etc. Probablement vous aurez envie de le faire en WebSocket, dans le monde du mobile, ça paraît raisonnable. Et voilà, vous avez les deux SDK mobile pour Android et iOS. Alors, qu'est-ce qu'on a d'autre ? Alors on a les habituelles questions sur est-ce qu'on pourra le réécouter ultérieurement, est-ce qu'on aura les slides, est-ce qu'on aura tout ? Donc oui, oui et oui, c'est toujours le même mode de fonctionnement. Les slides, je pense que Hugo a dû les partager dans GoToMeeting. La vidéo, elle sera en ligne rapidement. On mettra un lien sur les slides aussi dans le site. Pour ceux qui ne le sauraient pas encore, on a une chaîne YouTube. J'espère quand même que vous êtes tous au courant de ça maintenant. YouTube, cherchez "Amazon Web Services France" et vous trouverez la chaîne YouTube. Vous pouvez d'ailleurs vous abonner, comme ça vous aurez les notifications, vous serez rapidement prévenus lorsque nous publions nos vidéos, et vous aurez tout notre contenu. Il y a l'histoire de tous les webinars, il y a les vidéos du Summit, la WS, j'ai croisé quelques-uns d'entre vous au Summit qui a eu lieu il y a quelques semaines. Si vous n'avez pas pu y venir, vous le retrouverez. Vous retrouverez les keynotes, la track technique, etc. Ça commence à faire, on a une cinquantaine de vidéos maintenant. Voilà, donc tout ça sera en ligne, pas de soucis. Alors j'avais vu une question sur "et si on n'a pas de Wi-Fi, comment on fait ?" Il y avait une question dans la liste un peu plus haut. Effectivement, ici on fait une démo en Wi-Fi parce que c'est le plus simple dans nos bureaux. Mais c'est une bonne question, parce que l'un des grands sujets de l'IoT, c'est la couverture réseau. Vous posez des équipements au milieu d'un champ ou je ne sais où, ou sur un site industriel, il n'y a peut-être pas de Wi-Fi. Donc comment on fait ? AWS ne répond pas à cette question en tant que tel. Nous fournissons le service cloud et les différents connecteurs MQTT, HTTPS, etc., les différents points d'entrée pour y accéder. Mais AWS n'est pas opérateur de réseau, donc on n'a pas de solution à ça. Soit vous avez une connectivité IP, et c'est simple, comme ce que je vous ai montré aujourd'hui, soit vous n'en avez pas, et auquel cas, vous pouvez passer par un réseau radio, par exemple Sigfox, qui est partenaire d'AWS. Vous pouvez intégrer vos équipements Sigfox sur le gateway de Sigfox, et envoyer le trafic vers AWS IoT via une passerelle développée par Sigfox. Après, on peut imaginer qu'on développe tout un tas de choses, mais le point d'entrée pour nous, ça reste le point d'entrée de notre gateway. Soit vous avez de l'IP, c'est simple, soit vous n'en avez pas et il faut que votre fournisseur de réseau fournisse une intégration via sa passerelle vers le Gateway IoT. Alors, il y a une question intéressante. Comment est-ce qu'on configure des devices de manière industrielle ? Effectivement, là, j'en ai fait un à la fois, mais si vous avez mille devices à provisionner ou 100 000 devices à provisionner, on va pas le faire comme ça. On a un mécanisme qui vous permet en usine de générer et de charger des certificats sur les équipements. Ça pourrait être nos certificats ou les vôtres. Je n'ai pas la page de doc sous les yeux, mais on peut tout à fait faire ça. Allez, je vais essayer de le retrouver rapidement. Histoire de donner une réponse complète. Allez. Quand on a des centaines de devices IoT, comment les intègre-t-on dans la registrie ? Je le fais en console pour que ce soit plus visuel, mais nous avons des API pour faire tout ça, avec notre ligne de commande et nos SDK. Vous avez toutes les API en ligne de commande pour créer des things, des policies, des certificats, etc. Tout chez nous est une API, donc pas d'inquiétude, tout est faisable en API, en ligne de commande AWS et avec les SDK des différents langages que nous supportons.
+
+Une question plus générale : avons-nous des exemples de projets IoT dans le domaine des Smart Cities ? C'est une question intéressante. Hier, lors de la keynote du summit, un client nommé Engie est venu témoigner sur les smart cities. Vous pourrez revoir cette vidéo sur notre chaîne YouTube dans la keynote de Werner. Le responsable de l'activité digitale d'Engie a expliqué comment Engie utilise l'IoT et le Big Data pour des Smart Buildings et l'optimisation de la consommation, en travaillant avec un partenaire appelé C3 IoT, qui propose une plateforme d'analytics dans le monde de l'IoT. Si ce sujet vous intéresse, je vous renvoie à la keynote pour en savoir plus.
+
+Avez-vous une idée de la date de disponibilité de Greengrass pour le Canada ? Non, je suis désolé, je ne peux pas répondre à cette question. L'objectif est d'avoir à terme tous les services dans toutes les régions, mais pour l'instant, pas de Greengrass au Canada. Greengrass est sorti de preview il y a à peine deux semaines, donc un peu de patience, j'espère que ça arrivera prochainement. QoS 2 dans IoT, pareil, je ne sais pas. Ce n'était pas disponible à la sortie, et je n'ai pas de date de disponibilité là-dessus non plus. Faire du « exactly once » n'est pas un problème simple dans le monde de l'informatique, donc il y a probablement de la complexité.
+
+Quand la pile du bouton est HS, peut-on la changer, ou faut-il acheter un nouveau bouton ? C'est une bonne question. Je n'ai pas l'impression qu'on puisse changer la pile. Quand on regarde la page d'Amazon, la pile n'est pas destinée à être changée. Je ferai le test, mais je pense que la pile n'est pas modifiable. Si quelqu'un a réussi à l'ouvrir, je suis curieux de savoir comment.
+
+Une question sur LoRa : est-ce qu'on peut intégrer LoRa sur AWS ? Je n'ai pas connaissance d'un partenariat ou d'un produit sur étagère pour intégrer LoRa sur AWS. Si quelqu'un est au courant de quelque chose, je suis intéressé. Sigfox, je suis sûr, mais LoRa, je n'ai rien vu passer. Cependant, Telenor a fait une intégration de LoRa sur AWS IoT, avec du code disponible. Il y a des ressources, donc c'est jouable, mais sans garantie.
+
+Est-ce qu'Amazon prépare d'autres petits équipements IoT ? Nous avons le Dash Button et le bouton IoT programmable. Pour l'instant, je ne connais rien d'autre. Les Amazon Echo ne sont pas tout à fait des devices IoT, mais des devices que vous pouvez programmer via les skills.
+
+Fred partage un lien de quelqu'un qui a démonté un bouton Dash. Il semble qu'on puisse démonter ces boutons, mais la question est de savoir si on arrive à les remonter ou s'il faut juste mettre du scotch pour que ça tienne. Je pense qu'il n'y a pas de problème pour les démonter.
+
+Pour faire de l'expérimentation, quels sont les kits complets que je peux conseiller ? J'aime beaucoup l'Arduino, en particulier l'Arduino Yún, qui est une bonne plateforme pour commencer. Il y a un kit de capteurs Ultimate que je recommande. Vous pouvez acheter un Arduino classique et un kit de capteurs pour environ 100 euros. Je vous conseille d'acheter deux Arduinos pour qu'ils puissent se parler entre eux. C'est une bonne plateforme pour commencer. Il y avait aussi la plateforme d'Intel, l'Edison, mais Intel a annoncé la fin de vie de cette plateforme. Le Raspberry Pi est une autre option intéressante, surtout pour du Linux et des langages comme Python ou Node.js. Avec un Raspberry Pi et un kit de Dexter Industries, vous pouvez faire des petits robots. Le Raspberry Pi est plus puissant que l'Arduino et reste une plateforme très répandue.
+
+On se retrouve fin août, donc au retour des vacances, pour deux webinars dédiés à DynamoDB, notre service NoSQL. On essaiera d'aller un peu plus en profondeur dans les tripes de DynamoDB. C'est un service particulièrement puissant et intéressant. Vous trouverez toutes ces vidéos sur notre chaîne YouTube. N'hésitez pas à me contacter sur Twitter si vous avez des questions. Merci encore à Hugo pour son soutien sans faille. À très bientôt et bonne fin de journée.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">IoT</span><span class="tag">AWS</span><span class="tag">Webinar</span><span class="tag">Démonstration</span><span class="tag">Arduino</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

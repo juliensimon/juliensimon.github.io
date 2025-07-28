@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to configure an AWS IoT Button</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>How to configure an AWS IoT Button</h1>
+        <div class="date">June 11, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/oIPsQhStbnY" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">@julsimon
+
+- Create a thing, an IAM policy and a certificate in the AWS IoT console
+- Configure the button
+- Test it with the AWS console
+- Test it with MQTT.fx
+
+<a href="https://aws.amazon.com/iotbutton/" target="_blank" rel="noopener noreferrer">https://aws.amazon.com/iotbutton/</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Hey, good morning, everyone. Today I want to show you quickly how to connect an IoT button to AWS IoT. The first step is to go to the AWS IoT console and create a thing for that button. We will also create a certificate and a policy, and then associate all three. Finally, we'll set up the button itself.
+
+First, let's create the button. We'll go to the registry and create a new button. I've got a few already, so this will be number three for me. In the console, you can define types for your things, which is useful if you have different devices. I have Raspberry Pis, Arduinos, etc., so I defined some different types to make it easier to find all those devices. This one is an IoT button, and I could set some attributes, but we won't do that right now. Let's just create that thing.
+
+Next, we need to create a policy for the device. The policy is an IAM policy that specifies the APIs allowed and the resources the button can act on. Let's go to the security console and policies. I have some policies already, so let's see if we can reuse one. This is pretty much what we want, so let me copy it. We'll create a new policy called "IoT Button3 Policy." I'll go to advanced mode to edit the policy directly, but you could stay in easy mode and just enter the statements. There are only two statements here: one allows the button to publish to a specific topic, which is the serial number of the button, found on the back. The second statement allows the button to connect to the IoT gateway. We can leave it as is. Two APIs are allowed: one for publishing to the topic and one for connecting to the gateway. Let's create it.
+
+Now, we need to create a certificate for this device because you need a certificate and key pair to connect to the IoT gateway. Let's create a new one. The easiest way is to create a certificate like this. We need to download these files and upload them to the button. We also need to activate the certificate.
+
+Now we have everything we need. We can go back to the certificate we just created and associate a thing with it. This gives the button an identity. We also need to attach a policy to assign permissions to that identity. Now we have a new thing, which has a certificate and an IAM policy attached to it. We should be able to configure the device and start sending MQTT messages back to the gateway.
+
+Configuring the IoT button is straightforward. Press the button for five seconds until it starts blinking blue. This activates a new Wi-Fi network on the button. Go to your Wi-Fi setup and connect to the "Configure Me" network. The password is the last eight characters of the serial number. Once connected, you should be able to access the button using the IP address 192.168.0.1. Enter the Wi-Fi parameters for the network the button will connect to for sending messages. For this demo, I'm using my phone's access point, which doesn't have a password, but don't do this in a real setup. Upload the certificate and private key you created. Enter the IoT endpoint, found in the IoT console settings, and the region. I'm using EU West 1. Click configure, and your device should be ready to use.
+
+Now, if we push the button, it should start sending messages. To see these messages, you can go to the IoT console, which provides a testing tool. Subscribe to the topic, which is "IoT button/serial number." Subscribe to the topic, and now let's push the button to see what happens. Start with a single click. It will blink a few times, and a green light means the message has been sent. Yes, we get the green light, and I should see a message here. The message includes the serial number, battery voltage, and click type. For a single click, it shows a short press. Let's try a double click and see the different click type. Double click, and now a long press, holding for about two seconds. The green light confirms the message. This is how you can test it. If you don't see events, check the Wi-Fi connection and ensure the certificate and key are uploaded correctly. Reconfiguration is easy: press the button for five to six seconds, connect to the Wi-Fi network, and fix the configuration.
+
+Another way to test is using a tool like MQTT FX. You need to create a certificate and policy for the tool since it connects to the gateway as a device. Once connected, you can subscribe to the topic. Let's do that quickly. Subscribe, and press the button. I like this tool because it's a nice way to test and can connect to multiple topics. MQTT FX is a good recommendation. Did that double click work? Yes, it did.
+
+That's pretty much it. As you can see, you can set this up in five minutes. You can buy these buttons on the Amazon website, and they're a good way to get started with IoT. The next step would be to do something with these events, such as sending them to a Lambda function. Thanks for listening.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS IoT</span><span class="tag">IoT Button</span><span class="tag">MQTT</span><span class="tag">Device Configuration</span><span class="tag">Security Policy</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

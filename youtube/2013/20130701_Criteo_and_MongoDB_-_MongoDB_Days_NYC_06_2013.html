@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criteo and MongoDB   MongoDB Days NYC 06 2013</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Criteo and MongoDB   MongoDB Days NYC 06 2013</h1>
+        <div class="date">July 01, 2013</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/hgngUvre9I0" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">40-mn talk (with slides) at MongoDB Days in NYC, June 21st 2013.</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            This session is from Julien Simon at Criteo. He's going to talk about how Criteo scaled to absolutely massive volumes using MongoDB. So welcome Julien. Thank you. Well, good morning. Can you hear me okay? All right. Thanks. Well, it's just fantastic to be here. Thanks very much for having me here, Tanjen, and everybody involved. I'm French, so anything you don't understand is my broken English or jet lag. But hopefully, we'll have some time for questions and we can clear up anything you didn't get. So let's get started.
+
+First, a few words about us. As I've said, we're a French company, started in 2005, but the current product only goes back to 2008, so we're barely five years old. We're quite big now; we've reached the 700 employee mark, and it's going pretty well. You can see this is just the employee numbers, but the ramp-up of the company in every respect has followed this very crazy curve. Right now, we have offices in 15 countries, most of Europe, several offices in the US, South America, Asia, Australia, and so on. But we're really operating in 30 plus countries, 35 or 37 at least. It keeps changing.
+
+So what do we do? We do performance display. We work in online advertising, but we have a fairly unique twist on it. What's performance display? You could talk about it for days and hours, so let's keep it short. The idea is this: an internet user goes to an e-commerce website and checks out some products. It could be anything—shoes, video games, clothing, travel, anything. We work with many different advertisers. As you know, a large portion of those users, actually something like 97% or 98%, leave that e-commerce website without buying anything because they're just checking out prices and comparing and they're not in the mood to buy anything. Then these users go to the internet and read the news, watch some videos, play some games, go to Facebook, whatever. Most of these websites use advertising because most of the internet is free, and they can make some money with advertising. On those websites, which we call publisher websites, we get the opportunity to show banners. At the time the internet user visits that website, in real time, our platforms get called, and we get the opportunity to show something. We have to make some decisions in real time, and I'll give you more details about that.
+
+So let's say we want to show a banner to that internet user, and we'll show a very highly personalized banner. Not just a random static banner, what I call carpet bombing banners. Every single banner is unique and tailored to the interests of the user. Hopefully, this is a very relevant banner to that user, and he or she will click on that banner and go back to the e-commerce website. That's a good thing in itself because what we want to generate for advertisers are clicks, bringing back their visitors to their websites. But at the end of the day, what advertisers really want is sales. So we're also working on converting those clicks to actual sales. This is what we do. We're a global leader in this field, and we're growing quite fast.
+
+I've mentioned real-time and personalized banners. What do I mean by that? Personalizing banners is not only about picking an advertiser and picking products. It goes way further than that. Banners are built from graphical elements, such as slogans, buttons, colors, background color, foreground color, etc. This graphical set of elements can be personalized and tweaked in real time. From a standard set of elements, we can build pretty much an infinite combination of banners. When we say real-time personalization, we really mean picking the right advertiser, the right products, and the right layout for that given user. If all of you were surfing to the same page of the same website at the exact same time, none of you would be seeing the same banner. Some of you would see one, some wouldn't, and those who would see a banner would see different ones. Some of you like running shoes, some like video games, and some like airplane tickets to Paris. This is all personalized in real time.
+
+When you think about it, we really have to make two decisions anytime we get a chance to display something. First, we have to decide whether we want to display something to that given user. Do we think we can build something that's going to generate a click and hopefully a sale? This is what we call prediction. We're trying to predict the click-through rate or the chance of success for that exact user at this exact time. We balance this against the cost of buying the advertising space for the banner. If we think the chance of success is very low, we won't spend any money and buy that space. If we think we have a good chance of success, it's worth taking the risk and buying that space. Then, once we've done that, we have to recommend the right products. This is what we call recommendation—deciding what are the best products for that user at this very specific time. It could be products you just saw a few minutes ago, similar products, or complementary products. It doesn't have to be exactly what you saw; it could be smarter than that.
+
+Thanks to this, we can deliver a very significant increase in the two key metrics for e-commerce: click-through rate and conversion rate. On the click-through rate, we deliver seven to eight times better than typical banners, which is why our customers like us. I've mentioned very high ramp-up, 30 plus countries, lots of advertisers, more than 3,000 in the world, pretty much all the big names. We have lots and lots of banners displayed. At some point, you need to have some firepower to deliver that. Since we're a global company, we have customers everywhere, internet users everywhere, and so we have to have infrastructure everywhere. As you can see, those greenish-looking stars, although they're orange on my slides, are our data centers. We have three in Europe, two in the US, and two in Japan, serving the APAC region.
+
+Why that many? Well, first of all, why couldn't we serve everything from France and sleep better at night? Well, actually, no, we couldn't because we haven't beaten the speed of light yet. Technically, you could serve banners globally from a single location, but network latency would kill your performance. The slower you are, the fewer clicks you get. There have been a lot of studies on latency impacts on click-through rates, so we don't want that. We need data centers close to our advertisers, publishers, and internet users. But why do we have multiple data centers in each zone? Probably, we couldn't find a single data center big enough to host all our gear. The best reason is that we want to do load balancing, high availability, and disaster recovery. All these data centers are live. We don't have anything on standby. Anything we buy goes live fairly quickly. This creates a lot of interesting problems, and this is where MongoDB will come into play.
+
+As you can see, those European data centers are very close to each other. Europe is small. Our data centers are in Paris, Brussels, and Amsterdam. This is probably smaller than the New York suburbs. There's no big problem there. But in the US, we're on the two coasts, and we have about 70 milliseconds of latency one way between the two sites. This creates a lot of issues, which we'll get to. So, seven data centers. We work with big names, but apart from renting hosting space and buying electricity, we do everything ourselves. We buy our hardware, deploy it, install it, run it, and monitor it. We do all of that centrally from Paris. There are no business hours for us. Business hours are 24/7 because when I'm having breakfast, something is blowing up in Tokyo, and when I'm trying to go to bed, something is burning in New York. Our team is on duty to keep all that stuff running, and we still have very good availability.
+
+Now let's talk about traffic. On any given day, we get 30 billion HTTP requests, give or take. Mondays are bigger than Fridays, but that's the average. So 30 billion HTTP requests hit our data centers. It's always difficult to give a reference because people don't always come on their traffic numbers, but if you compare that to very large websites like eBay, it's a very high number. If all that stuff was one website, it would be a very big website. We serve more than one billion banners every day. Again, that's an average. One billion banners is a respectable number. If you compare that to the number of users of large social websites, it's a very respectable number.
+
+What makes our lives very interesting is peak traffic. For HTTP requests, we consistently peak at 500k requests per second and 25k banners per second. That's a very large number. Compare that to websites and clouds; we're in the same league as those guys. That's traffic. But some websites have very large traffic and handle it without seven data centers, so what are we doing wrong? That's my nighttime question sometimes. The thing is, we're taking that traffic and storing a lot of data. We're pretty much logging every single request we get. If you run a quick calculation, 30 billion requests mean 30 billion lines of log every day, and that's a lot of data. We have to crunch it and use it for prediction, recommendation, and other stuff. As that crazy growth started to happen and quicken, we had to deploy some unconventional technology because pretty much on any given day, we get 20 more terabytes of data. That's 20 additional terabytes, not 20 terabytes total. Every day, we have to store, crunch, and query 20 more terabytes. When you do that with filers and the usual technologies, it becomes a problem. We had to move to something else, and I'm loving HPC. We deployed the complete arsenal of open-source NoSQL technology to handle all of that. MongoDB was one of them, and I'll explain in detail what we do with it. Of course, we were heavy Hadoop users. We have some big clusters. We use Couchbase but are really using Memcache, which is now part of Couchbase. We're not using CouchDB. RabbitMQ is also a home favorite, and now we're using Storm and Kafka to make everything a little bit more real-time, especially when you have to fail those logs from Japan and want results in Europe not 24 hours later.
+
+So, where did MongoDB fit in? It's located very early in the chain. One thing we have to do when we start working with advertisers is to get their catalog because the name of the game is to show products in banners, and we need product information. A catalog is a product feed provided by advertisers to us. Today, we're working with over 3,000 advertisers worldwide, so that's a lot of data we need to get. Catalogs are what you would expect: product IDs, categories, descriptions, prices, a link to the product image, and other data. We have at least one catalog for each advertiser, and some are more exotic. Some catalogs are really small, a few megabytes, while some are huge because we have some classified websites. Some very big catalogs are fairly nasty because 30 to 50% of that data changes every day. You wouldn't expect any advertiser to tweak 50% of their product data every day, but that's what we see. It could be changing the price, fixing a typo in the description, or changing the product URL. We have to import that feed at least once a day into our platform. For some advertisers, we need to do it faster. For example, if they run flash sales, once a day is not enough because products could go out of stock in a matter of hours. We need to do it sometimes more than that.
+
+All our data centers are active. Within a geographical zone, let's say the US, we have two data centers, and we need the same data in both locations. If we fetch a catalog in the New York data center, we're going to import it, but we need that data up to date in California as well. When you need to do that with hundreds of catalogs every day, it amounts to a fairly large quantity of data with a long 70-millisecond delay one way. That was a problem at some point. That product information ends up in banners built and served by our web servers, but we have so much traffic that the web servers can't hit the database servers directly. We're heavy users of cache, and we have a scary amount of Memcache servers between the web servers and the database servers. From day one, Microsoft SQL Server was used, and it runs fine for a while, especially in Europe where latency between data centers is very low. Paris to Amsterdam is probably something like three milliseconds, maybe four. Transactional mechanisms and transactional replication are compatible with that kind of latency. Still, since we have one database, one product database per advertiser, the number of databases grew very quickly. We found out there's a hard limit on the number of databases a SQL Server can handle. It's not a matter of how big those databases are, but if you try to have hundreds of databases on one server, the overhead management is just too high. You have to spread those databases on servers, even if the servers are not overloaded. It's just a number of databases per server limit. You end up deploying lots of servers, and the sizes of databases grow. We fully echo what the Goldman Sachs gentleman said about finding the right ratios. How do you deploy very small databases and very large ones? One size cannot fit all. If you have a 50 gig database, you pretty much need a dedicated server for that if it has heavy traffic. You can put all the smaller ones on a common server, but you end up playing a lot of tricks and moving databases manually, which is very painful. What really drove me nuts is that SQL Server is a black box, and when you have an issue with it, you just wait for that progress indicator to move, and it doesn't. After 24 hours, it still hasn't moved, and you can still ping the server. It's very hard to understand what goes wrong, even though you can talk to Microsoft and get support for tricky replication issues. They're probably as clueless as we were, and it drove us really mad.
+
+In the US, it ran kind of fine until we hit a total dead end in Q1 2011 due to very large catalogs trying to replicate 30, 40, 50 gig catalogs from New York to California and a constant flow of new catalogs. It really stopped dead. One day it worked, the next it didn't. The main issue was transactional replication over high-latency links. There are so many tricks you can try. You can do backups and restore them in California, break the catalogs into smaller pieces, and do a lot of things. But at the end of the day, it was messy, it didn't work, and we didn't even know what we were doing. So, we had a dead end, and some of the impacts were minor. We started to shop for a new DB, and you have to go very fast because the business in the US was about to be impacted, and you don't have six months to decide. Requirement number one was a scale-out architecture running on commodity hardware because this is what we do. We don't have any big iron. To us, all those servers are Intel CPUs in metal boxes. Sometimes it's cardboard boxes, if you ask me. Commodity stuff, nothing fancy. We don't need transactions; we can't have transactions in some cases, and eventual consistency is okay as long as eventual means quite soon—minutes are fine but not more. High availability is crucial; we're a web company, and we never stop—no downtime allowed. We need distributed clusters because we have an active-active setup everywhere and need clusters replicating sometimes with high latency. We need that database to be queryable. There was a strong debate about putting everything in Memcache, but the basic request is to give me information for product ID 1234, which is not even SQL. We could do key-value, but we had some more things that needed to be handled. So, queryability with a SQL-like language was fairly high on the list. Open source was obvious to me because I think this is what scales best. Commercial software couldn't move as fast as we wanted and would be extremely expensive given our scaling needs. We looked at open source but not any kind of one-guy project on SourceForge or GitHub. We needed something we could get support on with a stable organization committed to making it better. No license fees, but still commercial support available at a reasonable cost. Easy to learn because we had no time. We have a large development team, so no way we would spend six months learning anything. Easy to deploy and redeploy. Reinstalling SQL Server clusters is not something you want to do every day. Easy to monitor because we need to know very quickly if something's broken. Easy to upgrade. Migration to SQL Server 2008 took us forever to complete. Low maintenance because I didn't want a custom team to maintain that. Multi-language support, so Java, C#, C++, whatever, was obvious. The ability to export to Hadoop multiple times per day because the product information stored in the clusters is involved in some of our Hadoop processing. That's a long list.
+
+While the slide I didn't write is how we know who we consider and how they looked with that evaluation matrix, I didn't want to do it because we know who the winner is anyway. Any decision we made in Q1 2011 wouldn't be relevant today. I'm not saying we're not happy; we would choose MongoDB again. What I would consider a Cassandra problem or a CouchDB problem two years ago isn't maybe a problem today. MongoDB won, and that was the easy part—picking a new technology. Now, how do you move thousands of databases from SQL Server to MongoDB? You try to keep calm, but it's a daunting task, especially with a small DBA team. Database migrations are not fun. The first step was to remember why we were doing this, and it was to solve the replication issue, especially in the US. We quickly deployed MongoDB clusters only to download and replicate the catalogs between data centers but still pushed the actual content to SQL Server, and web servers would still hit those SQL servers through the caching layers. We had no idea if moving to MongoDB too fast would really work. This took some pressure off us and allowed us to scale very fast in the US. The second step was proving that we could remove SQL Server and that MongoDB could survive our insane web traffic. The first sub-step was to modify the code to have the web apps talk to MongoDB. This was actually very easy. For a number of less critical catalogs, we started to switch them and said, "Okay, now web servers, web queries for those catalogs are going to hit the MongoDB clusters." We did this very carefully and didn't properly inform all the account managers. It worked, and we measured the business KPIs, technical KPIs, monitoring, and did some A-B testing to ensure it worked. We were really careful. Once I was satisfied, I said, "Okay, now you really go for it and start migrating those thousands of catalogs every day, every day, every day, and start killing those SQL servers." We needed to scale the MongoDB clusters accordingly and make sure they handled the load. We added more servers, more shards, and more shards. While doing this, we updated all our ops processes. Monitoring, backups, on-duty procedures, etc., needed to be rewritten for MongoDB. Where did this take us? Well, it took us to 11, maybe even 12.
+
+Today, in Europe, we have 54 servers, 18 three-server shards, one member in each data center. Every shard is spread over three data centers. We have 800 million products stored, which is one terabyte of data. Keep in mind that 30 to 50% of that changes every day, so the amount of writes we have to do is very high. We have about one billion requests per day and peak at 40k per second, with 350 million updates per day, which is 35%. Those are the numbers just before I boarded the flight, but they're fairly typical of what we see. In the US, we have 14 four-server shards, 2 plus 2, 2 on the East Coast, 2 on the West Coast. We have 400 million products, 600 gigs of data. In APAC, we have 12 three-server shards, 2 plus 1, 300 million products, 500 gigs of data. Now you understand why sharding is the name of the game for us. When your data set is one terabyte, unless you want to have one terabyte of RAM in your servers, which your CFO won't allow, you have to shard. We started with MongoDB 2.0 plus a few patches that were never really integrated, so there are a few guys here I need to talk to. We moved to 2.2 and are currently running 2.4.3. That's a big number, and you might want the Times Square to be renamed MongoDB Square, but when you do that, make sure you have a sign that says we have one billion requests in Europe on our cluster.
+
+Two years later, more than that, actually, where do we stand? There's some good stuff. Wayne likes it, and I must say that the 2.4.3 upgrade was very good. We had been running 2.2 for a long time and had some issues, but 2.4.3 magically fixed a lot of problems. If you haven't upgraded, I strongly suggest you do. The upgrade procedure is very easy, and if you're deploying from scratch, make sure you're deploying that. It's easy to install and manage, no big problems there. If your data sets or your sharded data sets are smaller than RAM, you're lucky. Most of what you do will happen in RAM, provided that you don't write too much. But if you have a normal application, unlike ours, it will go fine. Failover and replication work fine, especially between data centers, so no problem there. Just make sure you shard early. It might look like over-provisioning, but rebalancing clusters is a long operation. Don't wait until the clusters are loaded and overloaded to add more shards. You'll suffer. We've done it a few times, and it runs for days. Shard early.
+
+There's some ugly stuff. If you have a huge data set or if your servers don't have enough RAM, your performance is going to be really bad. If you write like crazy, especially if you have not enough RAM, your performance is going to be ugly. If you have multiple applications with different patterns running on the same cluster, forget about it. It doesn't work well, and you need to dedicate your MongoDB instances to a given application. We still have some scalability issues, and I was very happy to hear the Goldman Sachs gentleman, not complain but politely request something better than master-slave. I would add that connections, the way the primary and the mongos are connecting to the primaries, need to be fixed. We have a ticket on that and keep working on the roadmap with MongoDB, but it's still very positive, and we're quite happy with it.
+
+Thank you very much. Again, thank you, Tanjen, for inviting me. It's absolutely fantastic to be in New York and talk to you guys. This is our part of the R&D team, and it's a great team, so I salute them as well. If you have any questions, I'll be happy to answer them. Thank you very much.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">MongoDB</span><span class="tag">Scalability</span><span class="tag">Real-time Personalization</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

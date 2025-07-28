@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piloter un robot a reconnaissance d image via le Cloud AWS</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Piloter un robot a reconnaissance d image via le Cloud AWS</h1>
+        <div class="date">July 27, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/L4wLrs6ugzY" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">✚ Inscrivez-vous aux mardis du cloud ! : <a href="http://amzn.to/2lvragO" target="_blank" rel="noopener noreferrer">http://amzn.to/2lvragO</a>
+✚ Rendez-vous sur notre site internet : <a href="http://amzn.to/2ktrf5g" target="_blank" rel="noopener noreferrer">http://amzn.to/2ktrf5g</a>
+✚ Suivez-nous sur Twitter : <a href="https://twitter.com/aws_actus" target="_blank" rel="noopener noreferrer">https://twitter.com/aws_actus</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Bien, nous allons maintenant tester l'ensemble des équipements. Ma télécommande Arduino est connectée au Gateway IoT en Wi-Fi. Mon robot, un Raspberry Pi, est également connecté au Gateway IoT, avec un petit serveur Python qui tourne et reçoit les commandes. On va déjà déplacer le robot. À chaque fois que j'agis sur mon joystick, j'envoie un message MQTT qui est publié dans un topic que le robot écoute. Il agit en conséquence, en fonction de la direction : avant, arrière, droite, gauche, etc. À chaque fois que j'agis, j'envoie un message au Gateway IoT en Irlande, et ce message est instantanément envoyé au robot pour action. Les actions s'interrompent parce que j'ai peur que le robot tombe de la table. À chaque déplacement, je le stoppe. Il n'y a aucune raison, on pourrait le laisser avancer beaucoup plus longtemps. Ce n'est pas du tout une latence liée au cloud, c'est vraiment une sécurité que j'ai ajoutée.
+
+Vous voyez comment on peut intégrer un Arduino avec un Raspberry Pi en MQTT. Pour finir, on va réutiliser un bouton IoT, le même que tout à l'heure. Lorsque je vais appuyer sur ce bouton, mon Raspberry Pi va prendre une photo. J'ai une petite caméra à l'avant qui va prendre une photo de l'objet, mesurer sa distance avec le capteur, et utiliser un modèle de deep learning que j'ai installé sur le Pi via MXNet, une librairie open source de deep learning. Vaste sujet dont on aura l'occasion de reparler. Ce modèle de deep learning va tenter de reconnaître l'objet qui est en face de lui. Et tout ça en appuyant juste sur ce bouton. On va essayer avec un objet simple. Voyons ce que ça donne.
+
+Alors, en avant. J'appuie sur le bouton. Ça poste un message MQTT qui va être envoyé au robot. Je suis 58% sûr que c'est un mug de café. L'objet est à 17 cm. Vous l'avez entendu, c'est Poly, le service de texte-to-speech d'AWS, qui vous parle. J'ai appuyé sur le bouton, on a envoyé un message MQTT au Gateway, il est reçu par le robot. Le robot prend une photo avec sa caméra et, localement, avec sa librairie de deep learning, son modèle basé sur la librairie MXNet, reconnaît l'objet avec un niveau de confiance relativement important. À partir du texte retourné, de la catégorie de l'objet, on fabrique un message qu'on passe à une API de synthèse vocale qui nous retourne instantanément un fichier son que l'on peut jouer. On va essayer avec un deuxième objet ?
+
+Voilà, c'est parti. On appuie sur le bouton. On prend la photo. Voilà. Une petite démo combinée d'IoT et d'IA. Sujet dont on aura l'occasion de reparler d'ici la fin de l'année puisqu'on va organiser une série de webinaires dédiés au machine learning et à l'intelligence artificielle. Voilà pour cette démo.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">IoT</span><span class="tag">MQTT</span><span class="tag">RaspberryPi</span><span class="tag">Arduino</span><span class="tag">DeepLearning</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>

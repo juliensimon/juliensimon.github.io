@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker on AWS with Amazon ECR ECS Part 3</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Docker on AWS with Amazon ECR ECS Part 3</h1>
+        <div class="date">March 31, 2016</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dI7yFC6P9ak" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Slides: <a href="http://www.slideshare.net/JulienSIMON5/amazon-ecs-january-2016" target="_blank" rel="noopener noreferrer">http://www.slideshare.net/JulienSIMON5/amazon-ecs-january-2016</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Okay, time for the first demo. We're going to build, push, and deploy a container running a PHP application inside Apache. Let's look at the application first. It's super simple, just a couple of PHP pages, nothing fancy. Now, let's look at the Dockerfile. Nothing fancy here either. It's installing Apache, PHP, starting Apache, and serving our pages. Just a vanilla Dockerfile.
+
+First, let's connect to our ECR registry. I'll use the `get-login` command for ECR, and the only option I need to mention is the region because ECR is currently available in US East 1. I need to make sure it's pointing to the right place, but that's not a problem because, although your image will be hosted there, they can be pulled and deployed on clusters running anywhere. My cluster is running in EU-S1, and I'll pull images from the US, which is no big deal.
+
+Here's the command I need to run. It's a standard Docker login command with a large token. Here you have the URL of your registry. Let's run this command. We should be connected. Do we have any repositories already? Let's check. Yes, I already created the repo, but I can show you the command to do that. You would run `create repository <repo-name>`. It's going to complain here because the name already exists, but that's the command you would run.
+
+We have a repository, and now we can build our image and push it. Docker build, tag that content with the `php-simple-app` tag. This is really fast because I've done this a few times. Now, I can look at my image right there. I'm going to tag it with the repo name and call it version 1. Now I can push it. It should be really fast, as I've done this before. It will take a little more time for you if you have to build all the layers, but this is how you do it. Let's show the ECR console for a second. I have to switch to US East for a second, and I should see the repository and my images right there. It's just a nice way to have your private registry with your images hosted on AWS. Let's go back to Ireland.
+
+I've built the image, I've pushed it, and now it's time to deploy it. To do this, I need to write a compose file that ECS will use. The syntax is really close to a Docker Compose file. The first line is the image I need to pull to start my containers. It's the name of the registry and the tag. Let's ignore those two for a second; I'll get back to them. The port I want to open is 80, as it's a web app. The entry point of my container is Apache to serve my PHP pages.
+
+CPU shares indicate how much CPU the container will require. If I go to the ECS console and look at the ECS instances, I can see that these instances have 1024 points of CPU. That's not 1024 CPUs, but 1024 points. The number of points an instance has depends on the size of the instance. Here, we're running a t2.micro, which means 1024 points. I'm telling ECS that this container requires 100 points, meaning the scheduler could run 10 of these containers on a single instance. It's a way to either run many containers on a single instance or dedicate an instance to a container by setting it to require 1024 points.
+
+The memory limit is the maximum amount of memory the container will reserve and use. It's set to 128 MB. If we look at our instance, we see available memory is about 1 GB, which is correct for a t2.micro. This means I could run about 7 of those PHP containers on the instance. That's all you need to provide. There are many more options, but I want to keep this simple. Check the documentation for more about the compose file.
+
+Let's get this container deployed. I'll use the ECS CLI command and say `compose service up`. A lot of stuff is happening here. The compose file is sent to ECS, which becomes a task definition. Once the task definition is created, ECS can create a service. A service is a task definition and a number of running tasks. As we can see, `desiredCount` equals 1, so by default, we're going to run one container. For a while, we ask for one, but none is running. Then the scheduler does its job, and I have one running. I can look at it using the ECS CLI and see that my container is running at this IP address on port 80. Let's check that it's running.
+
+Congratulations! We've just started our first container on ECS. What happens is I'm connecting to an EC2 instance running Docker, and inside this Docker, I have my PHP container running and exposing port 80. Let's look at the ECS console. I should see a service. Yes, I have my PHP service running with a task definition. Desired tasks 1, running tasks 1. That's the definition of a service: a task definition and a number of running tasks.
+
+What is the task definition? It's the ECS equivalent of the compose file we built. We see information about the container itself, the image, CPU units, memory, entry point, port mappings, and if we had specified volumes or environment variables, they would be here. Task definitions are versioned, so anytime I change something in the compose file, ECS will detect it and create a new revision. This is useful for rolling back to an earlier version of your task definition. You can update the service and select an earlier task definition if needed.
+
+What else can we look at? Let's take a quick look at the AWS command line. We can get information on our cluster, such as three instances and one running task. We can also get information on containers running. Oh, three containers. I wonder why. We'll answer that a little later.
+
+Do you want to connect to that instance and see what's happening? Let's do that. I'll run `ssh ec2-user`, but it's not working because port 22 is not open, which is needed for SSH. When I ran the ECS CLI `up` command, I didn't specify any networking options, so only port 80 is open by default. If you need more network settings, there are options to specify a VPC, security group, etc. Let's go back to the EC2 console and filter the instances. Only port 80 is open, so let's fix this. Now, I should be able to SSH into my instance.
+
+The first thing you see is the name of the instance, which is ECS-optimized Amazon Linux, running Docker and the agent. It's a proper EC2 instance. Do we have Docker running here? Yes, we do. Do we have containers? Yes, we do. We see our PHP container, the Amazon ECS agent, and the image we pulled from our repository. You don't have to mess with these instances, but you can SSH into them and run Docker commands if you want.
+
+So far, we have only one container running, but we probably want more. Let's scale it up. `ECS CLI compose service scale 3`. Immediately, I can see the desired count is 3, and the running count is updating. If I go to the ECS console and look at tasks, we see the one that was already running and the other two are pending. The scheduler has received the information that we wanted two more, located an instance with sufficient resources, and is starting the containers. In a second, another one is running, and the third one will be running momentarily. Yes, thank you. I can see my three containers running. If I run the ECS CLI, I should see all three, and I can connect to any of them.
+
+But that's not cool. We want load balancing. Let's pause the video and continue with creating a load balancer.
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Docker</span><span class="tag">AWS ECS</span><span class="tag">PHP Application Deployment</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+</body>
+</html>
