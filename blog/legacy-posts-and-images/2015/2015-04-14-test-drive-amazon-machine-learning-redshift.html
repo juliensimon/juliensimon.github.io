@@ -80,7 +80,7 @@
     <div class="content">
         <div class="separator" style="clear: both; text-align: center;">
 <span id="goog_1759208167"></span><span id="goog_1759208168"></span></div>
-<a href="http://static.guim.co.uk/sys-images/Media/Pix/pictures/2009/1/20/1232459591607/Top-Gear---the-Stig-001.jpg" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" src="http://static.guim.co.uk/sys-images/Media/Pix/pictures/2009/1/20/1232459591607/Top-Gear---the-Stig-001.jpg" height="192" width="320" /></a>Last week, AWS launched their flavor of "Machine Learning as a service", aka <a href="https://aws.amazon.com/fr/machine-learning/" target="_blank">Amazon Machine Learning</a>. It was not a moment too soon, given the number of existing cloud-based ML propositions. To name just a few: BigML, Qubole and yes, Azure Machine Learning (pretty impressive, I'm sorry to admit).<br />
+<a href="http://static.guim.co.uk/sys-images/Media/Pix/pictures/2009/1/20/1232459591607/Top-Gear---the-Stig-001.jpg" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" src="http://static.guim.co.uk/sys-images/Media/Pix/pictures/2009/1/20/1232459591607/Top-Gear---the-Stig-001.jpg" height="192" width="320" / alt="Illustration for Test drive: Amazon Machine Learning + Redshift"></a>Last week, AWS launched their flavor of "Machine Learning as a service", aka <a href="https://aws.amazon.com/fr/machine-learning/" target="_blank">Amazon Machine Learning</a>. It was not a moment too soon, given the number of existing cloud-based ML propositions. To name just a few: BigML, Qubole and yes, Azure Machine Learning (pretty impressive, I'm sorry to admit).<br />
 <br />
 So, here it is finally. Let's take it for a ride.<br />
 <br />
@@ -102,12 +102,12 @@ Lucky me, the only cross-region operation allowed in this scenario is copying da
 <script src="https://gist.github.com/juliensimon/d4fd99c26f5b2ecc79d6.js"></script> For the record, this took just under a minute for 450MB. That's about 100MB per second sustained. Not bad :) <br />
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-11.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-11.webp" height="144" width="640" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-11.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-11.webp" height="144" width="640" / alt="Technical illustration"></a></div>
 <br />
 Let's take a quick look: <b>SELECT * FROM mydata LIMIT 10;</b><br />
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-01.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-01.webp" height="192" width="640" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-01.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-01.webp" height="192" width="640" / alt="Technical illustration"></a></div>
 <br />
 Looks good. Time to fire up Amazon ML. The process is quite simple:<br />
 <ol>
@@ -119,17 +119,17 @@ Looks good. Time to fire up Amazon ML. The process is quite simple:<br />
 &nbsp;Creating the datasource from Redshift is straightforward: cluster id, credentials, table name, SQL statement to build the test data. <br />
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-09.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-09.webp" height="442" width="640" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-09.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-09.webp" height="442" width="640" / alt="Technical illustration"></a></div>
 <br />
 Once connected to Redshift, Amazon ML figures out the schema and data types: <br />
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-13.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-13.webp" height="228" width="640" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-13.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-13.webp" height="228" width="640" / alt="Technical illustration"></a></div>
 <br />
 Now, let's select our target column (the one we want to predict):<br />
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-02.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-02.webp" height="259" width="640" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-02.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-02.webp" height="259" width="640" / alt="Technical illustration"></a></div>
 <br />
 &nbsp;Next, we can customize the model. Since this is a numerical value, Amazon ML will use a
  numerical regression algorithm. If we had picked a boolean value, a 
@@ -141,16 +141,16 @@ As you can see, 70% of data is used to build the model,
 30% to evaluate it.  <br />
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-06.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-06.webp" height="480" width="640" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-06.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-06.webp" height="480" width="640" / alt="Technical illustration"></a></div>
 Next, Amazon ML ingests the data: In our case, this means 10 million lines, which 
 takes a little while. You can see the different tasks: splitting the data, building the model, evaluating it.<br />
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-07.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-07.webp" height="91" width="640" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-07.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-07.webp" height="91" width="640" / alt="Technical illustration"></a></div>
 A few coffees later, all tasks are completed. The longest one was by far building the ML model. The whole process lasted just under a hour (reminder: 10 columns, 10 millions lines).<br />
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-03.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-03.webp" height="116" width="640" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-03.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-03.webp" height="116" width="640" / alt="Technical illustration"></a></div>
 <br />
 <br />
 <br />
@@ -160,7 +160,7 @@ A few coffees later, all tasks are completed. The longest one was by far buildin
 <br />
 So, is this model any good? Amazon ML gives limited information for now, but here it is:<br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-10.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-10.webp" height="164" width="640" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-10.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-10.webp" height="164" width="640" / alt="Technical illustration"></a></div>
 <br />
 <br />
 <br />
@@ -178,26 +178,26 @@ As a sidenote, I think it's pretty interesting to see that a model can be build 
 Now, we're ready to predict! Amazon ML supports batch prediction and real-time prediction through an API. I'll use batch for now. Using a second data set of 10,000 lines missing the '<i>basket</i>' column, let's build a second data source (from S3 this time):<br />
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-05.webp" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-05.webp" height="360" width="400" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-05.webp" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-05.webp" height="360" width="400" / alt="Technical illustration"></a></div>
 <br />
 Two news tasks are created: ingest the data from S3 and predict. After a 3-4 minutes, prediction is complete:<br />
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-12.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-12.webp" height="158" width="640" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-12.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-12.webp" height="158" width="640" / alt="Technical illustration"></a></div>
 <br />
 <br />
 <br />
 <br />
 A nice distribution curve of predicted values is also available.<br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-08.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-08.webp" height="554" width="640" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-08.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-08.webp" height="554" width="640" / alt="Technical illustration"></a></div>
 <br />
 Actual predicted values are available in a gzip'ed text file in S3:<br />
 <br />
 <script src="https://gist.github.com/juliensimon/3d7bfdb9ef7d886513a0.js"></script> Pretty cool... but one last question needs to be answered. How much does it cost? Well, I did push the envelope all afternoon and so...<br />
 <br />
 <div class="separator" style="clear: both; text-align: center;">
-<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-04.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-04.webp" height="288" width="640" /></a></div>
+<a href="2015-04-14-test-drive-amazon-machine-learning-redshift-image-04.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="2015-04-14-test-drive-amazon-machine-learning-redshift-image-04.webp" height="288" width="640" / alt="Technical illustration"></a></div>
 <br />
 Over a thousand bucks. Ouch! Expensive fun indeed. I guess I'll expense that one :D<br />
 <br />
