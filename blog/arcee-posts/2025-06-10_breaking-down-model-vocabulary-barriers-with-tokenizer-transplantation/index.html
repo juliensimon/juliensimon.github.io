@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+  </style>
+ </head>
+ <body>
+  <h1>
+   Breaking Down Model Vocabulary Barriers with Tokenizer Transplantation
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2025-06-10
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://www.arcee.ai/blog/breaking-down-model-vocabulary-barriers-with-tokenizer-transplantation">
+    https://www.arcee.ai/blog/breaking-down-model-vocabulary-barriers-with-tokenizer-transplantation
+   </a>
+  </p>
+  <p>
+   At Arcee AI, we're constantly pushing the boundaries of what's possible with small language models (SLMs). Today, we're excited to share
+   <a href="https://arxiv.org/abs/2506.06607">
+    groundbreaking research
+   </a>
+   that solves one of the most persistent challenges in AI model development: making different language models work together, even when they have different vocabularies.
+  </p>
+  <h2>
+   <strong>
+    When Models Can't Talk to Each Other
+   </strong>
+  </h2>
+  <p>
+   Imagine you have two brilliant translators—one specializes in medical terminology, the other in legal jargon. Both are experts, but they use completely different vocabularies. If you want them to collaborate on a document that requires both medical and legal expertise, they'd struggle to communicate effectively.
+  </p>
+  <p>
+   This is exactly what happens with language models. Each model is trained with its tokenizer—essentially its dictionary that breaks down text into digestible pieces. A model trained in English might split "unhappiness" into "un-happy-ness," while another model might treat it as a single unit. These differences create massive barriers that, until now, could only be solved with expensive retraining—often costing thousands of dollars and weeks of compute time.
+  </p>
+  <h2>
+   <strong>
+    Our Solution: Training-Free Tokenizer Transplantation
+   </strong>
+  </h2>
+  <p>
+   In a newly published research paper, “
+   <a href="https://arxiv.org/abs/2506.06607">
+    Training-Free Tokenizer Transplantation via Orthogonal Matching Pursuit
+   </a>
+   ”, Arcee AI researchers Charles Goddard and Fernando Fernandes Neto introduce a revolutionary approach called "tokenizer transplantation" using a technique called Orthogonal Matching Pursuit (OMP).
+  </p>
+  <p>
+   Think of it as a sophisticated translation system that can convert between different model vocabularies without any retraining. Here's the key insight: even though different models use different vocabularies, the concepts they represent often align in predictable ways. Our method finds these alignments and uses them to transplant one model's vocabulary into another.
+  </p>
+  <h3>
+   <strong>
+    How It Works (The Simple Version)
+   </strong>
+  </h3>
+  <ol role="list">
+   <li>
+    <strong>
+     Find Common Ground
+    </strong>
+    : Identify words that both models understand
+   </li>
+   <li>
+    <strong>
+     Learn the Patterns
+    </strong>
+    : Figure out how the donor model represents new concepts using combinations of familiar ones
+   </li>
+   <li>
+    <strong>
+     Apply the Translation
+    </strong>
+    : Use these same patterns in the target model's vocabulary space
+   </li>
+   <li>
+    <strong>
+     No Training Required
+    </strong>
+    : The entire process happens instantly, without updating model weights
+   </li>
+  </ol>
+  <p>
+   The result? You can take a model trained with one tokenizer and seamlessly switch it to use a completely different vocabulary—all without losing performance or requiring expensive retraining.
+  </p>
+  <p>
+   Our experiments demonstrate remarkable results:
+  </p>
+  <ul role="list">
+   <li>
+    <strong>
+     Llama→Mistral NeMo transplantation
+    </strong>
+    : Preserved 96% of original performance on language understanding tasks
+   </li>
+   <li>
+    <strong>
+     Cross-language compatibility
+    </strong>
+    : Successfully bridged models with only 54% vocabulary overlap
+   </li>
+   <li>
+    <strong>
+     Lightning fast
+    </strong>
+    : Complete transplantation in under 2 minutes vs. hours or days for traditional methods
+   </li>
+   <li>
+    <strong>
+     Cost-effective
+    </strong>
+    : Zero additional training costs vs. thousands of dollars in compute
+   </li>
+  </ul>
+  <p>
+   Most impressively, our method consistently outperformed all existing zero-shot approaches, often by significant margins.
+  </p>
+  <h2>
+   <strong>
+    Use Cases and Applications
+   </strong>
+  </h2>
+  <p>
+   This breakthrough opens up entirely new possibilities for building and deploying language models:
+  </p>
+  <h3>
+   <strong>
+    1. Knowledge Distillation
+   </strong>
+  </h3>
+  <p>
+   <em>
+    Problem
+   </em>
+   : You want to compress a powerful 70B parameter model into a nimble 7B version, but they use different vocabularies.
+  </p>
+  <p>
+   <em>
+    Solution
+   </em>
+   : Transplant the large model's tokenizer onto the small one, then directly transfer knowledge with perfect vocabulary alignment.
+  </p>
+  <p>
+   <em>
+    Impact
+   </em>
+   : Build specialized, efficient models that retain most of their teacher's capabilities.
+  </p>
+  <h3>
+   <strong>
+    2. Speculative Decoding
+   </strong>
+  </h3>
+  <p>
+   <em>
+    Problem
+   </em>
+   : Speed up inference by having a small draft model propose completions for a larger model, but they need matching vocabularies.
+  </p>
+  <p>
+   <em>
+    Solution
+   </em>
+   : Use tokenizer transplantation to align any model pair, regardless of their original training.
+  </p>
+  <p>
+   <em>
+    Impact
+   </em>
+   : 2-3x faster inference with any combination of models—mix and match for optimal speed/quality tradeoffs.
+  </p>
+  <h3>
+   <strong>
+    3. Model Merging
+   </strong>
+  </h3>
+  <p>
+   <em>
+    Problem
+   </em>
+   : Combine multiple specialized models (one for coding, one for math, one for writing) but they can't communicate due to vocabulary mismatches.
+  </p>
+  <p>
+   <em>
+    Solution
+   </em>
+   : Harmonize all vocabularies through transplantation, enabling direct output combination.
+  </p>
+  <p>
+   <em>
+    Impact
+   </em>
+   : Create specialized models that excel across multiple domains simultaneously.
+  </p>
+  <h3>
+   <strong>
+    4. Domain Adaptation
+   </strong>
+  </h3>
+  <p>
+   <em>
+    Problem
+   </em>
+   : Your general-purpose model struggles with medical terminology, legal documents, or code because it wasn't trained on domain-specific vocabularies.
+  </p>
+  <p>
+   <em>
+    Solution
+   </em>
+   : Transplant a domain-specific tokenizer that better handles specialized terminology.
+  </p>
+  <p>
+   <em>
+    Impact
+   </em>
+   : Dramatically improve performance in niche domains without costly retraining.
+  </p>
+  <h3>
+   <strong>
+    5. Cross-Language Model Development
+   </strong>
+  </h3>
+  <p>
+   <em>
+    Problem
+   </em>
+   : Adapting English models for other languages typically requires extensive retraining.
+  </p>
+  <p>
+   <em>
+    Solution
+   </em>
+   : Transplant tokenizers optimized for target languages, preserving learned capabilities while improving linguistic coverage.
+  </p>
+  <p>
+   <em>
+    Impact
+   </em>
+   : Rapidly expand model capabilities to new languages and regions.
+  </p>
+  <h2>
+   <strong>
+    The Arcee AI Advantage
+   </strong>
+  </h2>
+  <p>
+   This research exemplifies Arcee AI's commitment to making advanced AI accessible and practical. We're not just building models—we're creating the tools and techniques that make AI development faster, cheaper, and more effective for everyone.
+  </p>
+  <p>
+   Our tokenizer transplantation method is available in the
+   <a href="https://github.com/arcee-ai/mergekit/blob/main/docs/tokensurgeon.md">
+    mergekit-tokensurgeon
+   </a>
+   tool which is part of our open-source
+   <a href="https://www.arcee.ai/product/mergekit">
+    MergeKit
+   </a>
+   library. Whether you're building specialized domain models, experimenting with model merging or model distillation, or optimizing inference pipelines, these techniques can accelerate your development and improve your results.
+  </p>
+  <p>
+   The future of AI isn't just about building bigger models—it's about building smarter, more collaborative systems where different models can seamlessly work together. Tokenizer transplantation is a crucial step toward that vision.
+  </p>
+  <p>
+   ‍
+  </p>
+  <p>
+   ‍
+  </p>
+ </body>
+</html>

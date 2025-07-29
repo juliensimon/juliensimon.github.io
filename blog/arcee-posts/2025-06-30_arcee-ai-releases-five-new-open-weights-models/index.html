@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+  </style>
+ </head>
+ <body>
+  <h1>
+   Arcee AI Releases Five New Open Weights Models
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2025-06-30
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://www.arcee.ai/blog/releasing-five-new-open-weights-models">
+    https://www.arcee.ai/blog/releasing-five-new-open-weights-models
+   </a>
+  </p>
+  <p>
+   Today, we're happy to announce the open-weights release of five language models, including three enterprise-grade production models that have been powering customer workloads through our SaaS platform and two cutting-edge research models. This release underscores Arcee AI's fundamental commitment to democratizing access to cutting-edge AI technology through open-weight models, even for our most advanced commercial offerings.
+  </p>
+  <p>
+   At Arcee AI, we believe that the future of AI lies in transparency, accessibility, and community-driven innovation. By releasing these production-tested models as open weights, we're enabling developers, researchers, and enterprises to deploy, customize, and build upon our work without restrictions, whether for research, commercial applications, or further model development.
+  </p>
+  <p>
+   This significant release marks our transition to the primary focus on the
+   <a href="https://www.arcee.ai/blog/announcing-the-arcee-foundation-model-family">
+    Arcee Foundation Model (AFM) family
+   </a>
+   , which represents our next-generation approach to building efficient, compliant, and deployable foundation models. With the release of the first AFM model,
+   <a href="https://www.arcee.ai/blog/deep-dive-afm-4-5b-the-first-arcee-foundational-model">
+    AFM-4.5B-Preview
+   </a>
+   , we're confident in opening our previous generation of specialized models to the broader community.
+  </p>
+  <h2>
+   Production Models
+  </h2>
+  <p>
+   Our production models have been battle-tested in real-world enterprise environments, delivering reliable performance across diverse use cases from customer service automation to complex reasoning tasks. These models were previously available exclusively through Arcee Conductor, our
+   <a href="http://conductor.arcee.ai">
+    SaaS platform
+   </a>
+   , and have now been released with full commercial licensing, enabling unrestricted deployment.
+  </p>
+  <h3>
+   Arcee-SuperNova-v1
+  </h3>
+  <p>
+   <a href="https://huggingface.co/arcee-ai/Arcee-SuperNova-v1">
+    Arcee-SuperNova-v1
+   </a>
+   (70B) is a
+   <a href="https://www.arcee.ai/product/mergekit">
+    merged
+   </a>
+   model built from multiple advanced training approaches. At its core is a distilled version of Llama-3.1-405B-Instruct, converted into Llama-3.1-70B-Instruct using our
+   <a href="https://github.com/arcee-ai/DistillKit">
+    DistillKit
+   </a>
+   library, which preserves instruction-following strengths while reducing size. Alongside this, another Llama-3.1-70B model was instruction-tuned using synthetic data from our
+   <a href="http://github.com/arcee-ai/EvolKit">
+    EvolKit
+   </a>
+   library, improving precision and adherence across diverse queries. A third version underwent Direct Preference Optimization (DPO) to better align with human feedback. The model targets general intelligence applications and mathematical reasoning, serving as an effective base for further RLHF training.
+  </p>
+  <p>
+   ‍
+   <strong>
+    Enterprise Applications
+   </strong>
+   : Mathematical problem solving, technical documentation generation, code review and generation, multi-turn customer support conversations.
+  </p>
+  <p>
+   ‍
+   <strong>
+    License
+   </strong>
+   : Llama 3 Community License (commercial use permitted for &lt;700M users).
+  </p>
+  <h3>
+   Caller
+  </h3>
+  <p>
+   <a href="https://huggingface.co/arcee-ai/Caller">
+    Caller
+   </a>
+   represents our specialized 32-billion parameter model optimized specifically for tool use and API orchestration. Based on Qwen-2.5-32B and refined through extensive training on structured interaction patterns, Caller was developed using our proprietary training frameworks to excel in function calling, API integration, and workflow automation scenarios. The model demonstrates precision in parsing complex API specifications, generating appropriate function calls, and managing multi-step automation pipelines.
+  </p>
+  <p>
+   ‍
+   <strong>
+    Enterprise Applications
+   </strong>
+   : Customer support automation, CRM integration workflows, API gateway management, business process orchestration. Enterprise environments requiring reliable tool integration.
+  </p>
+  <p>
+   ‍
+   <strong>
+    License
+   </strong>
+   : Apache 2.0 (unrestricted commercial use).
+  </p>
+  <h3>
+   Virtuoso-Large
+  </h3>
+  <p>
+   <a href="https://huggingface.co/arcee-ai/Virtuoso-Large">
+    Virtuoso-Large
+   </a>
+   is our versatile 72-billion-parameter model, engineered for precision and adaptability across diverse domain-specific applications. Based on Qwen-2.5-72B, the model was built using our comprehensive training pipeline, incorporating both
+   <a href="https://github.com/arcee-ai/DistillKit">
+    DistillKit
+   </a>
+   for knowledge transfer optimization and
+   <a href="https://github.com/arcee-ai/mergekit/">
+    MergeKit
+   </a>
+   for architectural refinements. This model excels in scenarios requiring deep domain expertise, complex multi-step reasoning, and high-fidelity content generation.
+  </p>
+  <p>
+   <strong>
+    Enterprise Applications
+   </strong>
+   : Professional services automation, technical documentation generation, compliance report creation, and sophisticated analytical tasks requiring domain expertise. Demonstrated performance in legal document analysis, financial reporting automation, and engineering specification generation.
+  </p>
+  <p>
+   <strong>
+    License
+   </strong>
+   : Apache 2.0 (unrestricted commercial use).
+  </p>
+  <h2>
+   Research Models
+  </h2>
+  <p>
+   Our research models push the boundaries of what's possible with specialized architectures and training methodologies. These models serve as testbeds for innovative approaches that inform our future foundation model development, offering the community unique insights into advanced training techniques and architectural innovations.
+  </p>
+  <h3>
+   GLM-4-32B-Base-32K
+  </h3>
+  <p>
+   <a href="https://huggingface.co/arcee-ai/GLM-4-32B-Base-32K">
+    GLM-4-32B-Base-32K
+   </a>
+   is an enhanced version of THUDM's GLM-4-32B-Base-0414, specifically engineered to maintain robust performance over an extended 32,000-token context window (compared to the original's 8,192-token effective limit). This model emerged from our
+   <a href="https://www.arcee.ai/blog/extending-afm-4-5b-to-64k-context-length">
+    foundational research on context extension
+   </a>
+   techniques originally developed for AFM-4.5B, where we pioneered methods for maintaining coherence and performance across dramatically extended sequence lengths. The architecture incorporates innovative attention scaling mechanisms and positional encoding strategies that prevent the typical degradation seen in long-context scenarios.
+  </p>
+  <p>
+   <strong>
+    Research Applications
+   </strong>
+   : Long-document analysis, extended conversation modeling, large codebase understanding, and multi-document reasoning tasks. Particularly valuable for research into context extension techniques and efficient long-sequence modeling.
+  </p>
+  <p>
+   <strong>
+    License
+   </strong>
+   : MIT (unrestricted commercial use).
+  </p>
+  <h3>
+   Homunculus
+  </h3>
+  <p>
+   <a href="https://huggingface.co/arcee-ai/Homunculus">
+    Homunculus
+   </a>
+   is a 12-billion parameter instruction model distilled from Qwen3-235B onto the Mistral-Nemo-Base-2407 backbone. The model preserves Qwen's distinctive two-mode interaction style—/think (deliberate chain-of-thought reasoning) and /nothink (concise direct answers)—while running efficiently on consumer hardware, demonstrating that sophisticated reasoning patterns can be preserved across significant parameter reductions. The name "Homunculus" reflects the model's nature as a miniaturized yet complete representation of its much larger teacher model, similar to the alchemical concept of a homunculus as a miniature, fully-formed human being created through artificial means.
+  </p>
+  <p>
+   <strong>
+    Research Applications
+   </strong>
+   : Knowledge distillation research, dual-mode reasoning studies, efficient inference optimization, and consumer-grade AI deployment scenarios.
+  </p>
+  <p>
+   <strong>
+    License
+   </strong>
+   : Apache 2.0 (unrestricted commercial use).
+  </p>
+  <h2>
+   Conclusion
+  </h2>
+  <p>
+   These five model releases represent years of research and development in enterprise-grade AI systems, now made freely available to accelerate innovation across the AI community. From production-tested commercial solutions to cutting-edge research architectures, these models demonstrate our commitment to advancing the field through open collaboration.
+  </p>
+  <div class="w-embed">
+   <table border="1" cellpadding="10" cellspacing="10" style="border-collapse: collapse; font-family: Arial, sans-serif; font-size: 20px;">
+    <thead>
+     <tr>
+      <th>
+       Model
+      </th>
+      <th>
+       Description
+      </th>
+      <th style="text-align: center;">
+       Hugging Face
+      </th>
+      <th style="text-align: center;">
+       Together AI
+      </th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>
+       Arcee-SuperNova-v1
+      </td>
+      <td>
+       70B flagship model with exceptional instruction-following
+      </td>
+      <td style="text-align: center;">
+       <a href="#">
+        Link
+       </a>
+      </td>
+      <td style="text-align: center;">
+       -
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Caller
+      </td>
+      <td>
+       32B specialized model for tool use and API orchestration
+      </td>
+      <td style="text-align: center;">
+       <a href="#">
+        Link
+       </a>
+      </td>
+      <td style="text-align: center;">
+       Available
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Virtuoso-Large
+      </td>
+      <td>
+       72B versatile model for precision domain applications
+      </td>
+      <td style="text-align: center;">
+       <a href="#">
+        Link
+       </a>
+      </td>
+      <td style="text-align: center;">
+       Available
+      </td>
+     </tr>
+     <tr>
+      <td>
+       GLM-4-32B-Base-32K
+      </td>
+      <td>
+       32B research model with extended 32K context window
+      </td>
+      <td style="text-align: center;">
+       <a href="#">
+        Link
+       </a>
+      </td>
+      <td style="text-align: center;">
+       -
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Homunculus
+      </td>
+      <td>
+       12B distilled model preserving dual reasoning modes
+      </td>
+      <td style="text-align: center;">
+       <a href="#">
+        Link
+       </a>
+      </td>
+      <td style="text-align: center;">
+       -
+      </td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+  <p>
+   ‍
+  </p>
+  <p>
+   We invite the community to explore these models, build upon our work, and contribute to the continued advancement of open-source AI. As we focus our efforts on the next generation of
+   <a href="https://www.arcee.ai/blog/announcing-the-arcee-foundation-model-family">
+    AFM models
+   </a>
+   , these releases ensure that the knowledge and capabilities we've developed remain accessible to researchers, developers, and enterprises worldwide.
+  </p>
+  <p>
+   Ready to deploy these models in your environment? Visit our
+   <a href="https://huggingface.co/arcee-ai/">
+    Hugging Face organization
+   </a>
+   to get started, or explore deployment options through
+   <a href="https://api.together.ai/">
+    Together AI
+   </a>
+   for hosted inference.
+  </p>
+ </body>
+</html>

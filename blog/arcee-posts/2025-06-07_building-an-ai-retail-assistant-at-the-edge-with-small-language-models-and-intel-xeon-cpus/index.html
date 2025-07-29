@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+  </style>
+ </head>
+ <body>
+  <h1>
+   Building an AI Retail Assistant at the Edge with Small Language Models and Intel Xeon CPUs
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2025-06-07
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://www.arcee.ai/blog/building-an-ai-retail-assistant-at-the-edge-with-small-language-models-and-intel-xeon-cpus">
+    https://www.arcee.ai/blog/building-an-ai-retail-assistant-at-the-edge-with-small-language-models-and-intel-xeon-cpus
+   </a>
+  </p>
+  <p>
+   <em>
+    We ran a live stream on June 10 from the floor of Cisco Live. You can watch it on
+   </em>
+   <a href="https://youtube.com/live/Gl4Hbfqg-yM">
+    <em>
+     YouTube
+    </em>
+   </a>
+   <em>
+    .
+   </em>
+  </p>
+  <h2>
+   <strong>
+    The Power of AI at the Retail Edge
+   </strong>
+  </h2>
+  <p>
+   The retail landscape is rapidly evolving, with AI-driven solutions reshaping how stores operate and engage with customers. Today's consumers expect personalized, efficient service, while staff need immediate access to accurate information on customer traffic, inventory, sales, and other key metrics. Meeting these demands requires powerful edge computing solutions that can process and deliver insights in real-time.
+  </p>
+  <p>
+   Powered by
+   <a href="https://www.intel.com/content/www/us/en/products/details/processors/xeon.html">
+    Intel Xeon 6
+   </a>
+   CPUs running in a
+   <a href="https://www.cisco.com/site/us/en/products/computing/servers-unified-computing-systems/index.html">
+    Cisco UCS
+   </a>
+   server, the Edge IQ Retail Assistant exemplifies this potential. This technical demonstrator will be featured in the Intel Showcase (#3035) at Cisco Live 2025, taking place in San Diego, CA, from June 8 to 12, 2025. Attendees will get a firsthand experience of how generative AI can transform retail operations without relying on GPUs.
+  </p>
+  <p>
+   Thanks to a chatbot interface powered by open-source small language models and real-time data analytics, store associates can interact naturally through voice or text, receiving immediate information about product availability from
+   <a href="http://chooch.com">
+    Chooch
+   </a>
+   's inventory system or crowd density from
+   <a href="https://www.thewaittimes.com/">
+    WaitTime
+   </a>
+   's analytics platform. The assistant seamlessly translates these inquiries into actionable insights, helping staff make informed decisions that enhance customer experience while optimizing store operations, all powered by CPU processing.
+  </p>
+  <h2>
+   ‍
+   <strong>
+    The Edge Advantage: Why Small Language Models on CPUs Make Sense for Retail
+   </strong>
+  </h2>
+  <p>
+   The Edge IQ Retail Assistant represents a fundamental shift in AI deployment strategy for retail environments. While cloud-based AI services dominated early generative AI implementations, this solution demonstrates why running optimized language models directly on CPU servers at the edge delivers superior results for retail operations.
+  </p>
+  <ul role="list">
+   <li>
+    <strong>
+     Low Latency
+    </strong>
+    : In the fast-paced retail environment, latency is a critical factor. Edge deployment eliminates network round-trips that typically add hundreds of milliseconds to each interaction, thereby enhancing overall performance. When a customer is waiting for information about product availability, this speed difference creates a noticeably more responsive experience. The assistant delivers consistent responses regardless of internet conditions—something cloud alternatives simply cannot match.
+    <br/>
+    <br/>
+   </li>
+   <li>
+    <strong>
+     Resilience
+    </strong>
+    : Continuous operation remains essential for retail technology. Edge-deployed models continue functioning during internet outages, ensuring the assistant remains available during critical business hours. Store operations cannot pause when connectivity issues arise, making local processing a necessity rather than a luxury. A cost-effective CPU-based deployment provides this reliability without requiring specialized hardware.
+    <br/>
+    <br/>
+   </li>
+   <li>
+    <strong>
+     Data Privacy
+    </strong>
+    : Data privacy concerns have grown increasingly important for retailers. By processing queries locally on CPU servers, sensitive business information, including inventory levels, sales data, and staffing details, never leaves the store's infrastructure. This dramatically reduces potential data exposure while maintaining full functionality—a compelling advantage over cloud alternatives that must transmit this information externally.
+    <br/>
+    <br/>
+   </li>
+   <li>
+    <strong>
+     Bandwidth Efficiency
+    </strong>
+    : The bandwidth efficiency of local processing proves particularly valuable when working with high-resolution video streams from inventory and crowd monitoring systems. These data-intensive feeds remain within the local network, eliminating costly and bandwidth-intensive cloud transfers that would otherwise constrain system performance.
+    <br/>
+    <br/>
+   </li>
+   <li>
+    <strong>
+     Cost Predictability
+    </strong>
+    : Perhaps most compelling for retail operations, edge deployment on standard CPU servers provides consistent and predictable operational costs. Unlike cloud services with usage-based pricing that can spike during busy periods, the fixed infrastructure cost provides budget certainty, simplifying financial planning across store networks.
+    <br/>
+   </li>
+  </ul>
+  <h2>
+   <strong>
+    Real-Time Data Integration: Crowd Analytics and Inventory Management
+   </strong>
+  </h2>
+  <p>
+   When a store associate inquires about current customer traffic, the assistant queries
+   <a href="https://www.thewaittimes.com/">
+    WaitTime
+   </a>
+   's API, interpreting the crowd analytics data coming from on-premise cameras to provide meaningful insights about congestion points, checkout wait times, and optimal staffing distribution. This real-time information enables managers to direct employees where they're most needed, thereby enhancing both operational efficiency and customer satisfaction.
+  </p>
+  <p>
+   Similarly, inventory queries trigger connections to
+   <a href="http://chooch.com">
+    Chooch
+   </a>
+   's Vision AI platform, which continuously monitors store shelves through computer vision. The assistant translates Chooch's detailed inventory data into actionable insights, informing staff about current stock levels, identifying low-stock items, and helping prevent potential stockouts before they impact customers.
+  </p>
+  <p>
+   By presenting this information conversationally, the assistant makes sophisticated inventory intelligence accessible to every employee, regardless of technical expertise, all processed locally on the CPU without requiring GPU acceleration.
+  </p>
+  <figure class="w-richtext-align-fullwidth w-richtext-figure-type-image" style="max-width:2454pxpx">
+   <div>
+    <img alt="" loading="lazy" src="image01.webp"/>
+   </div>
+  </figure>
+  <h2>
+   <strong>
+    Harnessing Open Source AI on CPU-Only Infrastructure
+   </strong>
+  </h2>
+  <p>
+   The Edge IQ Retail Assistant demonstrates the impressive capabilities of modern CPU-based AI inference. At its core, the application runs three sophisticated small language models entirely on Intel Xeon processors —no GPUs are present in the system architecture. This CPU-only approach highlights the significant progress in AI optimization and the remarkable capabilities of modern server processors for AI workloads.
+  </p>
+  <ul role="list">
+   <li>
+    <strong>
+     Arcee AI
+    </strong>
+    <a href="https://huggingface.co/arcee-ai/Llama-3.1-SuperNova-Lite">
+     <strong>
+      SuperNova Lite
+     </strong>
+    </a>
+    : Serving as the central intelligence of the system, this 8-billion parameter open-source conversational model is a high-performance distilled version of the larger Llama-3.1-405B-Instruct model. We quantized the model to 4 bits using the Hugging Face
+    <a href="https://huggingface.co/docs/optimum/intel/index">
+     Optimum Intel
+    </a>
+    library, dramatically reducing its computational requirements while maintaining impressive language understanding capabilities.
+    <br/>
+    <br/>
+   </li>
+   <li>
+    <a href="https://huggingface.co/distil-whisper/distil-small.en">
+     <strong>
+      Distil-Whisper Small
+     </strong>
+    </a>
+    : Handling speech recognition with 166 million parameters, we compiled this open-source model using PyTorch's
+    <a href="https://docs.pytorch.org/tutorials/intermediate/torch_compile_tutorial.html">
+     torch.compile
+    </a>
+    functionality to generate highly optimized CPU code that leverages Intel's specialized instruction sets.
+    <br/>
+    <br/>
+   </li>
+   <li>
+    <a href="https://huggingface.co/hexgrad/Kokoro-82M">
+     <strong>
+      Hexgrad Kokoro
+     </strong>
+    </a>
+    : An 82-million parameter text-to-speech open-source model also optimized for CPU execution, producing natural-sounding responses with inflection and appropriate pacing, all generated in real-time on the same Xeon processors handling the other AI workloads.
+   </li>
+  </ul>
+  <p>
+   Last but not least, we built the user interface with Hugging Face
+   <a href="https://www.gradio.app/">
+    Gradio
+   </a>
+   and containerized the entire solution with
+   <a href="https://www.docker.com/">
+    Docker
+   </a>
+   for easy deployment and management.
+  </p>
+  <h2>
+   <strong>
+    OpenVINO: Unlocking Intel CPU Acceleration for AI Inference
+   </strong>
+  </h2>
+  <p>
+   The secret behind the Edge IQ Retail Assistant's impressive CPU-only performance lies in Intel's
+   <a href="https://www.intel.com/content/www/us/en/developer/tools/openvino-toolkit/overview.html">
+    OpenVINO
+   </a>
+   toolkit. This powerful optimization framework transforms resource-intensive models into highly efficient versions specifically tailored for execution on Intel Xeon 6 processors, applying numerous optimizations in the process.
+  </p>
+  <p>
+   Through model quantization, OpenVINO reduces SuperNova Lite's precision from 32-bit to just 4-bit representations, dramatically decreasing memory requirements while maintaining accuracy. Layer fusion combines multiple operations into a single optimized kernel, minimizing memory transfers and accelerating execution. Hardware-aware optimization automatically maps neural network operations to the most efficient instruction sets available on Intel Xeon processors, while memory layout transformations restructure tensors for optimal CPU execution.
+  </p>
+  <p>
+   The toolkit specifically targets Intel's specialized CPU instruction sets found in Intel Xeon processors.
+   <a href="https://www.intel.com/content/www/us/en/architecture-and-technology/avx-512-overview.html">
+    Advanced Vector Extensions
+   </a>
+   (AVX-512) provide Single Instruction, Multiple Data capabilities that significantly accelerate the matrix operations underpinning neural networks. The newer
+   <a href="https://www.intel.com/content/www/us/en/products/docs/accelerator-engines/what-is-intel-amx.html">
+    Advanced Matrix Extensions
+   </a>
+   (AMX) instruction set delivers remarkable performance for the matrix multiply-accumulate operations that dominate language model inference.
+  </p>
+  <p>
+   Our quantized SuperNova-Lite model runs on the
+   <a href="https://docs.openvino.ai/2025/model-server/ovms_what_is_openvino_model_server.html">
+    OpenVINO Model Server,
+   </a>
+   which provides dynamic batching of incoming requests, automatic model management, OpenAI API compatibility, and efficient parallel execution across available CPU cores.
+  </p>
+  <h2>
+   <strong>
+    Conclusion
+   </strong>
+  </h2>
+  <p>
+   The convergence of modern CPU architectures and robust server platforms marks a new era in retail operations. By harnessing the power of AI at the edge, retailers can achieve:
+  </p>
+  <ul role="list">
+   <li>
+    <strong>
+     Enhanced Customer Experience
+    </strong>
+    : Immediate access to information and personalized interactions.
+   </li>
+   <li>
+    <strong>
+     Operational Efficiency
+    </strong>
+    : Real-time insights into inventory and crowd analytics.
+   </li>
+   <li>
+    <strong>
+     Cost Savings
+    </strong>
+    : Reduced reliance on cloud services and GPUs, leading to lower operational costs.
+   </li>
+  </ul>
+  <p>
+   As the retail landscape continues to evolve, embracing edge AI solutions like the Edge IQ Retail Assistant will be crucial in staying competitive and meeting customer expectations.
+  </p>
+  <p>
+   If you’d like to know more about Arcee AI and our solutions, please visit us at
+   <a href="http://www.arcee.ai">
+    www.arcee.ai
+   </a>
+   or
+   <a href="https://www.arcee.ai/book-a-demo">
+    book a demo
+   </a>
+   . We also recommend following us on
+   <a href="https://www.linkedin.com/company/arcee-ai/">
+    LinkedIn
+   </a>
+   or
+   <a href="https://x.com/arcee_ai">
+    X
+   </a>
+   to stay in touch with the latest news on small language models.
+  </p>
+  <p>
+   ‍
+  </p>
+  <p>
+   <strong>
+    Technical resources
+   </strong>
+  </p>
+  <ul role="list">
+   <li>
+    Hugging Face:
+    <a href="https://huggingface.co/arcee-ai">
+     Arcee AI models
+    </a>
+    , the
+    <a href="https://huggingface.co/docs/optimum/intel/index">
+     Optimum Intel
+    </a>
+    library
+   </li>
+   <li>
+    Intel:
+    <a href="https://www.intel.com/content/www/us/en/products/details/processors/xeon.html">
+     Xeon 6
+    </a>
+    , the OpenVINO
+    <a href="https://www.intel.com/content/www/us/en/developer/tools/openvino-toolkit/overview.html">
+     toolkit
+    </a>
+    , and
+    <a href="https://docs.openvino.ai/2025/model-server/ovms_what_is_openvino_model_server.html">
+     model server
+    </a>
+    <a href="https://www.cisco.com/site/us/en/products/computing/servers-unified-computing-systems/index.html">
+     ‍
+    </a>
+   </li>
+   <li>
+    <a href="https://www.cisco.com/site/us/en/products/computing/servers-unified-computing-systems/index.html">
+     Cisco UCS
+    </a>
+   </li>
+  </ul>
+  <p>
+   ‍
+  </p>
+ </body>
+</html>

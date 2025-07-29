@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+  </style>
+ </head>
+ <body>
+  <h1>
+   Announcing Arcee Foundation Models
+  </h1>
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2025-06-18
+  </p>
+  <p style="color: #666; font-style: italic; margin-bottom: 2em;">
+   Originally published at
+   <a href="https://www.arcee.ai/blog/announcing-the-arcee-foundation-model-family">
+    https://www.arcee.ai/blog/announcing-the-arcee-foundation-model-family
+   </a>
+  </p>
+  <p>
+   Today, we’re thrilled to unveil the
+   <strong>
+    Arcee Foundation Models
+   </strong>
+   , a new family of generative AI models built from the ground up for enterprise reality. The first release—
+   <strong>
+    AFM-4.5B
+   </strong>
+   —is a 4.5-billion-parameter frontier model that delivers excellent accuracy, strict compliance, and very high cost-efficiency. In short: enterprise-grade intelligence that can run anywhere—on a smartphone, at the edge, or in the cloud.
+  </p>
+  <p>
+   For a quick taste, you can test AFM-4.5B in our
+   <a href="https://afm.arcee.ai">
+    playground
+   </a>
+   and on
+   <a href="https://api.together.ai/models/arcee-ai/AFM-4.5B-Preview">
+    Together.ai
+   </a>
+   .
+  </p>
+  <p>
+   For a deeper dive into the model’s training pipeline and benchmarks, details are available in our
+   <a href="https://www.arcee.ai/blog/deep-dive-afm-4-5b-the-first-arcee-foundational-model">
+    technical blog post
+   </a>
+   .
+  </p>
+  <h2>
+   Why did we build AFM?
+  </h2>
+  <p>
+   In short, because our customers have told us they need it. Over the last 12 months we have met with more than 150 companies - from the Fortune 100 to AI startups like ourselves - to understand their challenges and evaluate how AI and small language models (SLMs) can solve them. Across hundreds of conversations and active collaborations with our customers, we repeatedly heard similar common roadblocks in their path to adopt generative AI.
+  </p>
+  <p>
+   Many of our enterprise customers adopted large language models (LLMs) from providers such as OpenAI, Anthropic, and DeepSeek due to their ease of use, speed of deployment, and broad general capabilities. However, these models present significant challenges: they are expensive to operate at scale and difficult, or prohibitively costly, to customize for use cases that require in-depth domain knowledge. They also raise substantial concerns around data privacy, IP liability, and regulatory compliance, as most, if not all, LLMs are tainted with copyrighted or paywalled data sources, which may expose the business to legal or reputational risk.
+  </p>
+  <p>
+   In response, some of our customers explored small, open-weight language models (SLMs) like Llama, Mistral, or Qwen. These models offer greater flexibility, lower inference costs, and the potential for fine-tuning on proprietary data, thereby addressing some of the challenges posed by proprietary large language models (LLMs). Unfortunately upon further inspection, these open models came with trade-offs: licensing restrictions, intellectual property concerns, and lingering doubts about safety and sovereignty, especially with models developed in China.
+  </p>
+  <p>
+   Our customers asked us to help them achieve cost efficiency without sacrificing performance, model customizability for their domain and data, and enterprise compliance without compromise. That's why we built Arcee Foundation Model.
+  </p>
+  <h2>
+   Introducing AFM-4.5B
+  </h2>
+  <p>
+   We designed AFM-4.5B from the ground up to be a "no-trade-offs" model. We embedded cost efficiency, customizability, and compliance into the model, rather than adding them on afterward. Because our research team owns the full stack—from data sourcing to training infrastructure to deployment tools—we were able to iterate rapidly and make thoughtful, intentional choices at every stage.
+  </p>
+  <p>
+   The result is a model that delivers business performance comparable to much larger models at vastly lower hosting costs, while being efficient enough to run on low-RAM GPUs or even CPUs.
+  </p>
+  <p>
+   Thanks to its open architecture and open weights, you can deploy AFM-4.5B in any environment (on-prem, cloud, or hybrid), using popular open-source frameworks like Hugging Face Transformers, vLLM, or llama.cpp, and while maintaining full control and ownership.
+  </p>
+  <p>
+   Combined with built-in support for function calling and agentic reasoning, AFM-4.5B is ready to automate complex workflows immediately—no fragile prompt engineering required. From a business perspective, this means faster deployment, lower total cost of ownership (TCO), and measurable returns without compromising on quality, compliance, or sovereignty.
+  </p>
+  <h3>
+   Clean Training Data
+  </h3>
+  <figure class="w-richtext-align-floatright w-richtext-figure-type-image">
+   <div>
+    <img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6884220f7531170a3946b296/6884220f7531170a3946b7cd_data_on_white.svg"/>
+   </div>
+  </figure>
+  <p>
+   AFM-4.5B was trained on almost 7 trillion tokens of clean, rigorously filtered data. Tremendous effort was put towards excluding copyrighted books and material with unclear licensing. To help achieve this, we partnered with DatologyAI—experts in large-scale data curation. Their advanced techniques ensured the dataset was not only high quality but also tailored to support strong real-world performance. The result: fewer hallucinations, better factual accuracy, and a much lower risk of intellectual property issues.
+  </p>
+  <h3>
+   Multilingual Support
+  </h3>
+  <p>
+   AFM-4.5B has been tested across a wide range of languages, including Arabic, English, French, German, Hindi, Italian, Korean, Mandarin, Portuguese, Russian, and Spanish—delivering strong performance in each. Thanks to our modular training and post-training architecture, adding support for additional languages or dialects is straightforward and can be achieved through lightweight customization per customer needs. Whether you're deploying in multilingual markets or building domain-specific solutions, AFM-4.5B is ready to meet you where you operate.
+  </p>
+  <h3>
+   Flexible Licensing
+  </h3>
+  <p>
+   Licensing is transparent and flexible: non-commercial use will be available in the next few weeks on
+   <a href="https://huggingface.co/arcee-ai">
+    Hugging Face
+   </a>
+   under a
+   <a href="https://creativecommons.org/licenses/by-nc/4.0/">
+    CC-BY-NC
+   </a>
+   license, allowing you to test and experiment immediately at no cost. Commercial deployment is supported through direct licensing or white-label options, providing customers with full control, branding flexibility, and model upgrades when they become available. Please contact
+   <a href="mailto:sales@arcee.ai">
+    sales@arcee.ai
+   </a>
+   for more information.
+   <br/>
+  </p>
+  <h2>
+   What’s next?
+  </h2>
+  <p>
+   AFM-4.5B is part of a scalable family of Arcee Foundation Models, with future variants already on the roadmap. All models will share the same DNA and licensing model, enabling enterprises to scale up or down without requiring code rewriting, platform switching, or renegotiation of terms. AI teams will benefit from a consistent deployment and compliance story, whether they’re running ultra-compact models on edge devices or high-capacity versions on GPU clusters.
+  </p>
+  <p>
+   This model family is about time-to-value. Our domain-adaptation pipeline can produce high-quality, industry-specific checkpoints in days, not quarters, helping organizations deploy tailored models for verticals such as legal, life sciences, or industrial automation without lengthy R&amp;D cycles.
+  </p>
+  <p>
+   In summary, the AFM models provide a production-grade foundation with the cost efficiency, compliance, and customizability that enterprises have been seeking. If AI is central to your business, why settle for trade-offs?
+  </p>
+  <p>
+   Give AFM-4.5B a try in our
+   <a href="https://afm.arcee.ai">
+    playground
+   </a>
+   and
+   <a href="https://www.arcee.ai/book-a-demo">
+    let’s talk!
+   </a>
+  </p>
+  <p>
+   ‍
+   <em>
+    Building AFM was a company-wide effort, and we’d like to thank the extended Arcee AI team for their contribution: Fernando Fernandes, Varun Singh, Charles Goddard, Lucas Atkins, Mark McQuade, Maziyar Panahi, Conner Stewart, Colin Kealty, Raghav Ravishankar, Lucas Krauss, Anneketh Vij, Pranav Veldurthi, Abhishek Thakur, Julien Simon, Scott Zembsch, Benjamin Langer, Aleksiej Cecocho and Maitri Patel.
+   </em>
+  </p>
+ </body>
+</html>
