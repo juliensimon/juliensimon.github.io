@@ -25,4 +25,5 @@ https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-04-16_An-intro
 
 https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-04-18_Training-MXNet---part-1--MNIST/index.html
 
+https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-04-24_Training-MXNet---part-2--CIFAR-10/index.html
 
