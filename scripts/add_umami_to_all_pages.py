@@ -37,21 +37,22 @@ def add_umami_to_file(file_path):
         # Extract head content
         head_content = content[head_start:head_end]
         
-        # Check if title exists
-        title_match = re.search(r'<title[^>]*>', head_content, re.IGNORECASE)
-        if not title_match:
-            print(f"  ❌ No <title> tag found in {file_path}")
+        # Check if title exists and find the closing title tag
+        title_close_match = re.search(r'</title>', head_content, re.IGNORECASE)
+        if not title_close_match:
+            print(f"  ❌ No closing </title> tag found in {file_path}")
             return False
         
-        # Add Umami after the title
-        title_end = title_match.end()
+        # Add Umami after the closing title tag
+        title_close_end = title_close_match.end()
         umami_script = '''
+
 <!-- Umami Analytics -->
 <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
 <link rel="dns-prefetch" href="//cloud.umami.is">'''
         
-        # Insert Umami after title
-        new_head_content = head_content[:title_end] + umami_script + head_content[title_end:]
+        # Insert Umami after closing title tag with proper spacing
+        new_head_content = head_content[:title_close_end] + umami_script + head_content[title_close_end:]
         
         # Replace the head section
         new_content = content[:head_start] + new_head_content + content[head_end:]
