@@ -17,8 +17,8 @@ def extract_title_from_filename(filename):
     name = re.sub(r'^\d{4}-\d{2}-\d{2}\s+', '', name)
     
     # Fix common title formatting issues
-    name = name.replace('Ai', 'AI')
-    name = name.replace('Ml', 'ML')
+    name = name.replace('AI', 'AI')
+    name = name.replace('ML', 'ML')
     name = name.replace('Nlp', 'NLP')
     name = name.replace('Cpu', 'CPU')
     name = name.replace('Gpu', 'GPU')

@@ -16,8 +16,8 @@ def format_title_properly(title):
     title = title.title()
     
     # Fix common technical terms
-    title = title.replace('Ai', 'AI')
-    title = title.replace('Ml', 'ML')
+    title = title.replace('AI', 'AI')
+    title = title.replace('ML', 'ML')
     title = title.replace('Nlp', 'NLP')
     title = title.replace('Cpu', 'CPU')
     title = title.replace('Cpus', 'CPUs')

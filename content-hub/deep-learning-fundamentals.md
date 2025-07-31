@@ -27,3 +27,8 @@ https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-04-18_Training
 
 https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-04-24_Training-MXNet---part-2--CIFAR-10/index.html
 
+https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-04-28_Training-MXNet---part-3--CIFAR-10-redux/index.html
+
+https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-05-05_Training-MXNet---part-4--distributed-training/index.html
+
+https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-05-06_Training-MXNet---part-5--distributed-training--EFS-edition/index.html

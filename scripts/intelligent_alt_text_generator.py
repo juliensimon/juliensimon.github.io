@@ -187,7 +187,7 @@ class IntelligentAltGenerator:
         title = title_part.title()
         title = re.sub(r'\b(And|Or|The|A|An|In|On|At|To|For|Of|With|By)\b', 
                       lambda m: m.group().lower(), title)
-        title = title.replace('Ai', 'AI').replace('Ml', 'ML').replace('Aws', 'AWS')
+        title = title.replace('AI', 'AI').replace('ML', 'ML').replace('Aws', 'AWS')
         
         return title if len(title) < 80 else None
     
