@@ -15,3 +15,14 @@ aws-medium-posts-and-images/2017/2017-04-09_An-introduction-to-the-MXNet-API---p
 
 https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-04-10_An-introduction-to-the-MXNet-API---part-2/index.html
 
+https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-04-12_An-introduction-to-the-MXNet-API---part-3/index.html
+
+https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-04-14_An-introduction-to-the-MXNet-API---part-4/index.html
+
+https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-04-15_An-introduction-to-the-MXNet-API---part-5/index.html
+
+https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-04-16_An-introduction-to-the-MXNet-API---part-6/index.html
+
+https://www.julien.org/blog/aws-medium-posts-and-images/2017/2017-04-18_Training-MXNet---part-1--MNIST/index.html
+
+
