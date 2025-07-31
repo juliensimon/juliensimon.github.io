@@ -136,7 +136,7 @@ class ContentSummarizer:
         if not content or len(content.strip()) < 50:
             return "Content too short to summarize."
         
-        prompt = f"""Write a single sentence summary of this {content_type} that explains what it's about and what problem it's solving:
+        prompt = f"""Write a 2-sentence summary of this {content_type} that explains what it's about and what problem it's solving:
 
 {content}
 
@@ -156,9 +156,10 @@ Summary:"""
             summary = re.sub(r'^Summary:\s*', '', summary)
             summary = summary.strip()
             
-            # Ensure it's a single sentence
-            if summary.count('.') > 1:
-                summary = summary.split('.')[0] + '.'
+            # Ensure it's 2 sentences maximum
+            sentences = summary.split('.')
+            if len(sentences) > 3:  # More than 2 sentences
+                summary = '.'.join(sentences[:2]) + '.'
             
             return summary if summary else "Unable to generate summary."
             
