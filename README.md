@@ -1,5 +1,9 @@
 # Julien Simon's Website - Optimized Version
 
+[![GitHub Stars](https://img.shields.io/github/stars/juliensimon/juliensimon.github.io?style=social)](https://github.com/juliensimon/juliensimon.github.io)
+[![Website](https://img.shields.io/badge/Website-julien.org-blue)](https://julien.org)
+[![AI Expert](https://img.shields.io/badge/AI%20Expert-Chief%20Evangelist%20@%20Arcee%20AI-orange)](https://arcee.ai)
+
 A high-performance, SEO-optimized personal website for Julien Simon, Chief Evangelist at Arcee AI.
 
 ## 🚀 Performance Optimizations
@@ -145,6 +149,39 @@ A high-performance, SEO-optimized personal website for Julien Simon, Chief Evang
 - **Image Optimization**: Compressed and lazy-loaded
 - **Caching**: Strategic cache policies
 - **CDN**: Global content delivery
+
+## 📊 Analytics & Performance
+
+### Current Analytics
+- **Umami Analytics**: Privacy-focused analytics tracking
+- **GitHub Pages Traffic**: Basic insights available in repository
+- **AI Crawler Detection**: Enhanced bot tracking implemented
+
+### Potential Badge Options
+While GitHub Pages doesn't provide public badges, you could implement:
+
+#### Option 1: Umami Analytics Badge
+```markdown
+![Page Views](https://img.shields.io/badge/Page%20Views-{umami_count}-blue)
+```
+*Requires: Umami API integration or custom endpoint*
+
+#### Option 2: Custom Analytics Badge
+```markdown
+![Site Analytics](https://img.shields.io/badge/Analytics-{custom_metric}-green)
+```
+*Requires: Custom analytics API endpoint*
+
+#### Option 3: GitHub Stars Badge
+```markdown
+![GitHub Stars](https://img.shields.io/github/stars/juliensimon/juliensimon.github.io)
+```
+
+### Implementation Notes
+- GitHub Pages doesn't expose traffic data via API
+- Custom badges require external analytics service
+- Umami doesn't currently provide badge endpoints
+- Consider using Shields.io for custom badge creation
 
 ## 🚀 Getting Started
 

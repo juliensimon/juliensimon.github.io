@@ -236,14 +236,20 @@ class Navigation {
   }
 
   initAnalytics() {
-    // Track page views
+    // Bot detection
+    const isBot = this.detectBot();
+    
+    // Track page views with bot detection
     if (typeof umami !== 'undefined') {
       umami.track('page_view', {
         page: window.location.pathname,
         title: document.title,
         referrer: document.referrer,
         userAgent: navigator.userAgent,
-        viewport: `${window.innerWidth}x${window.innerHeight}`
+        viewport: `${window.innerWidth}x${window.innerHeight}`,
+        isBot: isBot,
+        botType: isBot ? this.getBotType() : null,
+        timestamp: Date.now()
       });
     }
     
@@ -256,7 +262,8 @@ class Navigation {
             url: link.href,
             text: link.textContent.trim(),
             page: window.location.pathname,
-            target: link.target || '_self'
+            target: link.target || '_self',
+            isBot: isBot
           });
         }
       });
@@ -269,11 +276,47 @@ class Navigation {
         if (typeof umami !== 'undefined') {
           umami.track('form_submit', {
             form: form.id || form.className,
-            page: window.location.pathname
+            page: window.location.pathname,
+            isBot: isBot
           });
         }
       });
     });
+  }
+
+  detectBot() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const botPatterns = [
+      'bot', 'crawler', 'spider', 'scraper', 'gptbot', 'ccbot', 
+      'anthropic-ai', 'claude-web', 'omgilibot', 'google-extended',
+      'bingbot', 'perplexitybot', 'youbot', 'phindbot', 'deepseek-chat',
+      'gemini-pro', 'meta-ai', 'arceebot', 'huggingfacebot', 'aio-bot'
+    ];
+    
+    return botPatterns.some(pattern => userAgent.includes(pattern));
+  }
+
+  getBotType() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    
+    if (userAgent.includes('gptbot')) return 'OpenAI GPTBot';
+    if (userAgent.includes('ccbot')) return 'Common Crawl';
+    if (userAgent.includes('anthropic-ai')) return 'Anthropic Claude';
+    if (userAgent.includes('claude-web')) return 'Claude Web';
+    if (userAgent.includes('omgilibot')) return 'Omgili';
+    if (userAgent.includes('google-extended')) return 'Google AI';
+    if (userAgent.includes('bingbot')) return 'Bing Bot';
+    if (userAgent.includes('perplexitybot')) return 'Perplexity';
+    if (userAgent.includes('youbot')) return 'You.com';
+    if (userAgent.includes('phindbot')) return 'Phind';
+    if (userAgent.includes('deepseek-chat')) return 'DeepSeek';
+    if (userAgent.includes('gemini-pro')) return 'Google Gemini';
+    if (userAgent.includes('meta-ai')) return 'Meta AI';
+    if (userAgent.includes('arceebot')) return 'Arcee Bot';
+    if (userAgent.includes('huggingfacebot')) return 'Hugging Face';
+    if (userAgent.includes('aio-bot')) return 'AIO Bot';
+    
+    return 'Unknown Bot';
   }
 }
 
