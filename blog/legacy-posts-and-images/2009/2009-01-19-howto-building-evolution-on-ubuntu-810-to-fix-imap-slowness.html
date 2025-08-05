@@ -113,75 +113,7 @@
 <!-- Umami Analytics -->
 <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
 <link rel="dns-prefetch" href="//cloud.umami.is">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            color: #333;
-        }
-        img {
-            display: block;
-            margin: 1.5rem auto;
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            clear: both;
-        }
-        
-        /* Override any inline float styles on image links */
-        a[style*="float"] {
-            float: none !important;
-            clear: both !important;
-            display: block !important;
-            text-align: center !important;
-            margin: 1.5rem auto !important;
-        }
-        
-        /* Center image containers */
-        .separator {
-            text-align: center !important;
-            clear: both !important;
-            margin: 1.5rem 0 !important;
-        }
-        code {
-            background-color: #f4f4f4;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', Monaco, monospace;
-            font-size: 0.9em;
-        }
-        pre {
-            background-color: #f4f4f4;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-            font-family: 'Courier New', Monaco, monospace;
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-        }
-        .date {
-            color: #7f8c8d;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-        .content {
-            margin-top: 30px;
-        }
-        a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    
 </head>
 <body>
     <h1>HOWTO: building evolution on Ubuntu 8.10 (to fix IMAP slowness...)</h1>
@@ -189,7 +121,7 @@
     <div class="content">
         [<span style="font-style: italic;">Updated on 2009/01/29: evolution 2.24.3-0ubuntu1 - available in today's package updates - fixes the IMAP issue. I guess people yelled hard enough!</span>]<br /><br />I finally got around to upgrading my Ubuntu laptop this week-end.<br /><br />The 8.04-->8.10 upgrade process went like a breeze. However, if you use the <span style="font-style: italic;">evolution</span> e-mail client with an IMAP account storing large folders, chances are you will face the same issues as I did, namely <span style="font-style: italic;">evolution</span> being completely unresponsive and unbelievably slow...<br /><br />This issue has been around for a while (see <a href="http://bugzilla.gnome.org/show_bug.cgi?id=558883">bug #558883</a> on the Gnome Bugzilla). I'm not quite sure it's really fixed and given the Gnome release schedule, the next <span style="font-style: italic;">evolution</span> release would probably be quite far away...<br /><br />I kind of like <span style="font-style: italic;">evolution</span> and I don't want to switch to another client, so I digged around and found an easy way to rebuild the latest evolution <span style="font-style: italic;">source</span> from the SVN repository, thanks to <a href="http://mad-scientist.us/evolution.html">this fantastic post</a> by Paul Smith (Mr "<span style="font-style: italic;">make</span>", as in GNU <span style="font-style: italic;">make</span>).<br /><br />First of all, let's install a few dependencies:<br /><pre>ubuntu% <span style="font-weight: bold;">sudo apt-get install bison flex libenchant-dev libnss3-dev ccache \</span><br />            <span style="font-weight: bold;">evolution-dev gnome-common gtk-doc-tools libsoup2.4-dev</span><br /></pre>As of now (mid-January 2009), <span style="font-style: italic;">evolution</span> also requires <span style="font-style: italic;">libical</span> 0.43 or higher. If you need to build it from source, here's how:<br /><pre>ubuntu% <tt style="font-weight: bold;">svn co https://freeassociation.svn.sourceforge.net/svnroot/freeassociation/trunk freeassociation</tt><span style="font-weight: bold;"><br /></span>ubuntu% <span style="font-weight: bold;">cd freeassociation/libical</span><br />ubuntu% <span style="font-weight: bold;">cmake .</span><br />ubuntu% <span style="font-weight: bold;">sudo make install</span><br /></pre>Now, let's build <span style="font-style: italic;">evolution</span>. First, let's fetch the <span style="font-style: italic;">Makefile</span>:<br /><code><br />ubuntu% <span style="font-weight: bold;">wget http://mad-scientist.us/Makefile</span><br /></code><br />Then, change the <span style="font-style: italic;">Makefile</span> to remove support for <span style="font-style: italic;">libgweather</span>. I neither need it nor want it, so I didn't waste any time trying to install it. You can either modify the file or apply the patch below:<br /><pre>ubuntu% <span style="font-weight: bold;">diff -u Makefile.old Makefile</span><br />--- Makefile.old 2008-05-29 14:20:42.000000000 +0200<br />+++ Makefile 2009-01-19 13:36:01.000000000 +0100<br />@@ -183,7 +183,8 @@<br />evolution-data-server_PREREQS := glib libsoup libbonobo gtkhtml<br />evolution-data-server_CONFIG_OPTS = \<br />--with-openldap=yes --enable-gnome-keyring=yes --with-e2k-debug \<br />- --with-gconf-source='xml:merged:$(PREFIX)/etc/gconf/gconf.xml.defaults'<br />+ --with-gconf-source='xml:merged:$(PREFIX)/etc/gconf/gconf.xml.defaults'\<br />+ --without-weather<br /><br /># I decided to disable scrollkeeper since otherwise Evolution will try<br /># to register it, and this requires root privileges.<br />@@ -194,7 +195,8 @@<br />--enable-nss=yes --enable-smime=yes --enable-plugins=all \<br />--enable-cairo-calendar=yes --enable-imap4=yes --with-e2k-debug \<br />--disable-scrollkeeper $(CONFIG_exchange-$(ENABLE_exchange)) \<br />- --with-gconf-source='xml:merged:$(PREFIX)/etc/gconf/gconf.xml.defaults'<br />+ --with-gconf-source='xml:merged:$(PREFIX)/etc/gconf/gconf.xml.defaults'\<br />+ --without-weather<br /><br />evolution-exchange_PREREQS := glib libsoup libbonobo evolution-data-server evolution<br />evolution-exchange_CONFIG_OPTS = \</pre>Now you can run '<span style="font-weight: bold;">make</span>'... and wait a while :)<br /><br />Once this is complete, the new evolution has been built and installed. Before you can run it, you need to:<br /><ul><li>modify <span style="font-style: italic;">/etc/bonobo-activation/bonobo-activation-config.xml</span>, by adding <<span style="font-style: italic;">item</span>><span style="font-style: italic;">$PREFIX/lib/bonobo/servers</span></<span style="font-style: italic;">item</span>> in the <<span style="font-style: italic;">searchpath</span>> section,</li><br /><li>kill the <span style="font-style: italic;">bonobo-activation-server</span> process (it will restart automatically).<br /></li></ul>I would also recommend backing up your <span style="font-style: italic;">evolution</span> directory:<br /><code><br />ubuntu% <span style="font-weight: bold;">cd ~</span><br />ubuntu% <span style="font-weight: bold;">mv .evolution .evolution-backup</span><br /></code><br />You can now start <span style="font-style: italic;">/opt/evo/bin/evolution-svn</span> and read your e-mail at last...
     </div>
-            <hr/>
+        <hr/>
   <h3>
    About the Author
   </h3>
@@ -214,5 +146,7 @@
   </p>
   <p>
   </p>
-  <!-- '"` --></body>
+  <!-- '"` -->
+    </div>
+    </body>
 </html>

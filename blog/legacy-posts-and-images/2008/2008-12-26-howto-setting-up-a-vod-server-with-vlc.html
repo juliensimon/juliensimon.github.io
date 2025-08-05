@@ -113,75 +113,7 @@
 <!-- Umami Analytics -->
 <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
 <link rel="dns-prefetch" href="//cloud.umami.is">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            color: #333;
-        }
-        img {
-            display: block;
-            margin: 1.5rem auto;
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            clear: both;
-        }
-        
-        /* Override any inline float styles on image links */
-        a[style*="float"] {
-            float: none !important;
-            clear: both !important;
-            display: block !important;
-            text-align: center !important;
-            margin: 1.5rem auto !important;
-        }
-        
-        /* Center image containers */
-        .separator {
-            text-align: center !important;
-            clear: both !important;
-            margin: 1.5rem 0 !important;
-        }
-        code {
-            background-color: #f4f4f4;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', Monaco, monospace;
-            font-size: 0.9em;
-        }
-        pre {
-            background-color: #f4f4f4;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-            font-family: 'Courier New', Monaco, monospace;
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-        }
-        .date {
-            color: #7f8c8d;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-        .content {
-            margin-top: 30px;
-        }
-        a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    
 </head>
 <body>
     <h1>HOWTO: setting up a VOD server with VLC</h1>
@@ -189,7 +121,7 @@
     <div class="content">
         In a <a href="#image-not-found">previous article</a>, I showed you how to build <span style="font-style: italic;">VLC</span> from source. Since this build included the <span style="font-style: italic;">live555</span> streaming libraries, the resulting <span style="font-style: italic;">VLC</span> is able to serve audio / video streams.<br /><br />Thus, in this article, I'm going to give you a quick overview on how to configure <span style="font-style: italic;">VLC</span> as an on-demand <a href="http://en.wikipedia.org/wiki/Real_Time_Streaming_Protocol">RTSP</a> streaming server, with on-the-fly transcoding thrown in for good measure ;)<br /><br />First of all, we need a<span style="font-style: italic;"></span> machine to run the <span style="font-style: italic;">VLC</span> server on. Here, it will be 192.168.0.2, an Ubuntu 8.04 machine with <span style="font-style: italic;">VLC </span>0.9.8a, <span style="font-style: italic;">ffmpeg </span>SVN-r16245 (built from source) <span style="font-style: italic;"></span><span>and</span><span style="font-style: italic;"> </span><span style="font-style: italic;">x264 </span>0.65.1057 (built from source).<br /><br />Then, we need to copy some media files on the server. I'll use an MP3 file (<span style="font-style: italic;">music.mp3</span>) and an MPEG2 video (<span style="font-style: italic;">video.mpg</span>), both located in <span style="font-style: italic;">/home/julien/media</span>.<br /><br />Now, let's write the <span style="font-style: italic;">VLC</span> configuration file and save it as <span style="font-style: italic;">vlc_vod_config</span>:<br /><code><br /># VLC media player VLM command batch<br /># http://www.videolan.org/vlc/<br /><br />new MyMusic vod enabled<br />setup MyMusic input "file:///home/julien/media/music.mp3"<br /><br />new MyVideo vod enabled<br />setup MyVideo input "file:///home/julien/media/video.mpg"<br /><br />new MyVideoMobile vod enabled<br />setup MyVideoMobile input "file:///home/julien/media/video.mpg" output "#transcode{venc=ffmpeg,vcodec=h264,vb=384,height=120,width=160,fps=20,aenc=ffmpeg,acodec=mp3,ab=64,channels=1}"<br /></code><br />It's fairly self explanatory :) As you can see, we need to create an entry for each media we want to stream:<br /><ul><li>the media identifier (<span style="font-style: italic;">MyMusic</span>, <span style="font-style: italic;">MyVideo</span>) following the <span style="font-style: italic;">new</span> keyword is important because it's going to be part of the URL used by the client to access the media.</li><li><span style="font-style: italic;">vod</span> stands for Video on Demand (VLC can also do broadcast streams)</li><li><span style="font-style: italic;">enabled</span>, well... you get the idea :)</li><li><span style="font-style: italic;">setup...</span><span style="font-style: italic;">input </span>links the identifier to the actual media file we want to stream<br /></li></ul>The last stream, <span style="font-style: italic;">MyVideoMobile</span>, is based on the same MPEG input file as the <span style="font-style: italic;">MyVideo</span> stream. However, this file will be resized and transcoded on the fly into H264 video and MP3 audio. For example, this could be useful for mobile clients, which require a smaller resolution and a much lower bitrate than PC clients.<br /><br />Now let's open a terminal on the server and start <span style="font-style: italic;">VLC</span>. We want it to run as an RTSP server on port 5554. We also want to use the <span style="font-style: italic;">telnet</span> interface to configure it and the <span style="font-style: italic;">telnet</span> password will be '<span style="font-style: italic;">videolan</span>':<br /><code><br />ubuntu% <span style="font-weight: bold;">vlc -I telnet --telnet-password videolan --rtsp-host 0.0.0.0:5554</span><br /><span style="font-style: italic;">output removed</span><br />[00000405] telnet interface: telnet interface started on interface 4212<br /></code><br />That's it for the server. Now, let's configure it from a client using <span style="font-style: italic;">telnet</span>:<br /><code><br />client% <span style="font-weight: bold;">telnet 192.168.0.2 4212</span><br />Trying 192.168.0.2...<br />Connected to 192.168.0.2.<br />Escape character is '^]'.<br />Password:<br />Welcome, Master<br />> <span style="font-weight: bold;">load /home/julien/media/vlc_vod_config</span><br /></code><br />Using the <span style="font-style: italic;">show</span> command, we can check the configuration of a stream:<br /><code><br />> <span style="font-weight: bold;">show MyMusic</span><br />show<br />MyMusic<br />    type : vod<br />    enabled : yes<br />    mux<br />    inputs<br />        1 : file:///home/julien/media/music.mp3<br />    output :<br />    options<br />    instances<br /></code><br />This looks good. Let's start a <span style="font-style: italic;">VLC</span> player on the client and connect to a stream:<br /><code><br />client% <span style="font-weight: bold;">/usr/bin/vlc rtsp://192.168.0.2:5554/MyMusic</span><br />VLC media player 0.8.6e Janus<br /></code><br />This works :) Thanks to RSTP, you can pause or seek anywhere into the stream. Let's try the video stream now:<br /><code><br />client% <span style="font-weight: bold;">/usr/bin/vlc rtsp://192.168.0.2:5554/MyVideo</span><br />VLC media player 0.8.6e Janus<br /></code><br />Same thing: pause, fast forward and rewind all work. In the <span style="font-style: italic;">telnet</span> session, the <span style="font-style: italic;">show</span> command will give you additional info on an active stream:<br /><code><br />> <span style="font-weight: bold;">show MyVideo</span><br />show<br />  MyVideo<br />      type : vod<br />      enabled : yes<br />      mux<br />      inputs<br />          1 : file:///home/julien/media/video.mpg<br />      output :<br />      options<br />      instances<br />          instance<br />              name : 1632621729<br />              state : playing<br />              position : 0.303068<br />              time : 55160000<br />              length : 180556733<br />              rate : 1000<br />              title : 0<br />              chapter : 0<br />              seekable : 1<br />              playlistindex : 1<br /><br /></code>Now, let's try the mobile video stream:<br /><code><br />client% <span style="font-weight: bold;">/usr/bin/vlc rtsp://192.168.0.2:5554/MyVideoMobile </span><br />VLC media player 0.8.6e Janus<br />[00000288] main decoder error: no suitable decoder module for fourcc `h264'.<br />VLC probably does not support this sound or video format.<br />[00000274] main playlist: stopping playback<br /></code><br />Ah #%$£... Now you see why you HAVE to rebuild VLC from source! Let's try again with the latest VLC:<br /><code><br />ubuntu% <span style="font-weight: bold;">/usr/local/bin/vlc rtsp://192.168.0.2:5554/MyVideoMobile</span><br />VLC media player 0.9.8a Grishenko<br /></code><br />Ah, now it works. So do pausing and seeking, even with transcoding.<br /><br />If you run <span style="font-style: italic;">ps</span> or <span style="font-style: italic;">top</span> on the server, you'll notice that an extra <span style="font-style: italic;">VLC</span> process is running to handle transcoding. Also, in the VLC player, under the <span style="font-style: italic;">Tools</span> / <span style="font-style: italic;">Media Information</span> menu, you can look at the <span style="font-style: italic;">Codec Details</span> and <span style="font-style: italic;">Statistics</span> tabs to check that the stream is indeed H264 / MP3 with a low bitrate.<br /><br /><code></code>Anyway, here's what it looks like (click the picture for a larger version):<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="2008-12-26-howto-setting-up-a-vod-server-with-vlc-image-01.webp"><img style="margin: 0px auto 10px; display: block; text-align: center; cursor: pointer; width: 400px; height: 250px;" src="2008-12-26-howto-setting-up-a-vod-server-with-vlc-image-01.webp" alt="Technical illustration" id="BLOGGER_PHOTO_ID_5284089113595514642" border="0" /></a><br />That's it for today. Have fun with streaming!
     </div>
-            <hr/>
+        <hr/>
   <h3>
    About the Author
   </h3>
@@ -214,5 +146,7 @@
   </p>
   <p>
   </p>
-  <!-- '"` --></body>
+  <!-- '"` -->
+    </div>
+    </body>
 </html>

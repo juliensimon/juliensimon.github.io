@@ -113,75 +113,7 @@
 <!-- Umami Analytics -->
 <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
 <link rel="dns-prefetch" href="//cloud.umami.is">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            color: #333;
-        }
-        img {
-            display: block;
-            margin: 1.5rem auto;
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            clear: both;
-        }
-        
-        /* Override any inline float styles on image links */
-        a[style*="float"] {
-            float: none !important;
-            clear: both !important;
-            display: block !important;
-            text-align: center !important;
-            margin: 1.5rem auto !important;
-        }
-        
-        /* Center image containers */
-        .separator {
-            text-align: center !important;
-            clear: both !important;
-            margin: 1.5rem 0 !important;
-        }
-        code {
-            background-color: #f4f4f4;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', Monaco, monospace;
-            font-size: 0.9em;
-        }
-        pre {
-            background-color: #f4f4f4;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-            font-family: 'Courier New', Monaco, monospace;
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-        }
-        .date {
-            color: #7f8c8d;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-        .content {
-            margin-top: 30px;
-        }
-        a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    
 </head>
 <body>
     <h1>VirtualBox 2.1.0 released, with much better network support</h1>
@@ -189,7 +121,7 @@
     <div class="content">
         2.1.0 is a major update for <a style="font-style: italic;" href="http://www.virtualbox.org/">VirtualBox</a>. Here are the main new features:<br /><ul><li>Support for hardware virtualization (VT-x and AMD-V) on Mac OS X hosts </li><li>Support for 64-bit guests on 32-bit host operating systems (experimental)</li><li>Added support for Intel Nehalem virtualization enhancements<br /></li><li>3D acceleration via OpenGL (experimental)<br /></li><li>LsiLogic and BusLogic SCSI controllers (experimental)<br /></li><li>Full support of VMDK (VMware images) and VHD (Microsoft images) including snapshots </li><li>New NAT engine with signiﬁcantly better performance, reliability and ICMP echo (ping) support</li><li>New Host Interface Networking implementations for Windows and Linux hosts with easier setup (replaces TUN/TAP on Linux and manual bridging on Windows) </li></ul>The last item is particularly important, as the default NAT setup in <span style="font-style: italic;">VirtualBox</span> didn't allow guests to act as servers (and rightfully so!).<br /><br />To run a guest as a server, you had to create a complex network configuration involving TUN/TAP devices, a bridge, etc. It kind of worked (not with wireless though) but who enjoys messing with their network setup? Not me.<br /><br />Let's try it! Start <span style="font-style: italic;">VirtualBox</span>, select your favorite guest and edit its network settings: that's <span style="font-style: italic;">Settings</span>, then <span style="font-style: italic;">Network</span> (duh). This brings you to the screen below.<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="2008-12-23-virtualbox-210-released-with-much-better-network-s-image-02.webp"><img style="margin: 0px auto 10px; display: block; text-align: center; cursor: pointer; width: 400px; height: 340px;" src="2008-12-23-virtualbox-210-released-with-much-better-network-s-image-02.webp" alt="Technical illustration" id="BLOGGER_PHOTO_ID_5282962602221725730" border="0" /></a><br />All you need to do is:<br /><ol><li>Set<span style="font-style: italic;"><span style="font-style: italic;"> </span>Attached to</span> to 'Host Interface'<br /></li><li>Select in <span style="font-style: italic;">Host Interfaces</span> the physical interface you want the guest to access (<span style="font-style: italic;">wlan0</span> in my case)<br /></li><li>Click <span style="font-style: italic;">OK</span> and start the guest<br /></li></ol> Here's the network configuration for the CentOS 5.2 guest (<span style="font-style: italic;">/etc/sysconfig/network-scripts/ifcfg-eth0</span>):<br /><code><br />DEVICE=eth0<br />ONBOOT=yes<br />HWADDR=08:00:27:0A:91:29<br /><br /></code>If all goes well, the guest will use DHCP to get its network setup from my wireless router. Let's boot it.<span style="font-family:monospace;"></span><code><br /></code><br /><span style="font-style: italic;">A few seconds later: </span> grrr, this is not working. Why?<br /><br /><span style="font-style: italic;">A few minutes later: </span>ah, silly me :) My wireless router is filtering MAC addresses (it's not because you're paranoid that they're not after you) and obviously it has never heard of the MAC address used by the guest. There are two options:<br /><ol><li>Disable MAC address filtering (no way)</li><li>Add the guest's MAC address to the list of authorized clients (you bet!)<br /></li></ol>OK, let's reboot the guest, log in and run a few network checks....<br /><br />Ha ha, it looks like DHCP worked: I've got an IP address (<span style="font-style: italic;">ifconfig eth0</span>), a default route to the gateway (<span style="font-style: italic;">route -a</span>) and up to date DNS information (<span style="font-style: italic;">/etc/resolv.conf</span>).<br /><br />Let's ping the host:<br /><code><br />[julien@centos ~]$ <span style="font-weight: bold;">ping -c 3 192.168.0.2</span><br />PING 192.168.0.2 (192.168.0.2) 56(84) bytes of data.<br />64 bytes from 192.168.0.2: icmp_seq=1 ttl=64 time=0.340 ms<br />64 bytes from 192.168.0.2: icmp_seq=2 ttl=64 time=0.220 ms<br />64 bytes from 192.168.0.2: icmp_seq=3 ttl=64 time=0.276 ms<br />--- 192.168.0.2 ping statistics ---<br />3 packets transmitted, 3 received, 0% packet loss, time 2006ms<br />rtt min/avg/max/mdev = 0.220/0.278/0.340/0.052 ms<br /></code><br />Good, now let's ping the world :)<br /><code><br />[julien@centos ~]$ <span style="font-weight: bold;">ping -c 3 www.gnu.org</span><br />PING gnu.org (199.232.41.10) 56(84) bytes of data.<br />64 bytes from www.gnu.org (199.232.41.10): icmp_seq=1 ttl=48 time=141 ms<br />64 bytes from www.gnu.org (199.232.41.10): icmp_seq=2 ttl=48 time=141 ms<br />64 bytes from www.gnu.org (199.232.41.10): icmp_seq=3 ttl=48 time=139 ms<br />--- gnu.org ping statistics ---<br />3 packets transmitted, 3 received, 0% packet loss, time 2004ms<br />rtt min/avg/max/mdev = 139.440/140.698/141.344/0.941 ms<br /></code><br />DNS and internet access are up as well. Now, let's try it from the host:<br /><code><br />ubuntu% <span style="font-weight: bold;">ping -c 3 192.168.0.6 </span><br />PING 192.168.0.6 (192.168.0.6) 56(84) bytes of data.<br />64 bytes from 192.168.0.6: icmp_seq=1 ttl=64 time=0.401 ms<br />64 bytes from 192.168.0.6: icmp_seq=2 ttl=64 time=0.221 ms<br />64 bytes from 192.168.0.6: icmp_seq=3 ttl=64 time=0.235 ms<br />--- 192.168.0.6 ping statistics ---<br />3 packets transmitted, 3 received, 0% packet loss, time 1999ms<br />rtt min/avg/max/mdev = 0.221/0.285/0.401/0.084 ms<br /><br />ubuntu% <span style="font-weight: bold;">ssh julien@192.168.0.6</span><br />julien@192.168.0.6's password:<br />Last login: Tue Dec 23 15:00:58 2008 from 192.168.0.2<br />[julien@centos ~]$ <span style="font-weight: bold;">exit</span><br /></code><br />That's <span style="font-style: italic;">really</span> cool: no more messing around with the network configuration. This makes <span style="font-style: italic;">VirtualBox</span> even greater :)
     </div>
-            <hr/>
+        <hr/>
   <h3>
    About the Author
   </h3>
@@ -214,5 +146,7 @@
   </p>
   <p>
   </p>
-  <!-- '"` --></body>
+  <!-- '"` -->
+    </div>
+    </body>
 </html>
