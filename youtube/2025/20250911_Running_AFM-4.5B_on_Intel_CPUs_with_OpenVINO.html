@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running AFM 4.5B on Intel CPUs with OpenVINO</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Running AFM 4.5B on Intel CPUs with OpenVINO</h1>
+        <div class="date">September 11, 2025</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/-yE18itWgNE"
+                    allowfullscreen
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">Unlock the full potential of your Intel CPU server processor! In this demo, we transform an Amazon EC2 r8i instance equipped with the powerful Intel Xeon 6 (Granite Rapids) processor into a local AI powerhouse, running cutting-edge language models like AFM-4.5B by Arcee AI with exceptional performance and efficiency.
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos. You can also follow me on Medium at <a href="https://julsimon.medium.com" target="_blank" rel="noopener noreferrer">https://julsimon.medium.com</a> or Substack at <a href="https://julsimon.substack.com." target="_blank" rel="noopener noreferrer">https://julsimon.substack.com.</a> ⭐️⭐️⭐️ 
+
+First, we optimize the AFM-4.5B model using the OpenVINO toolkit, quantizing it to 4 bits and 8 bits, and then run inference with a simple Python example written using Hugging Face transformers and Optimum-Intel. Next, we install the OpenVINO Model Server to serve the optimized model, invoking it with both curl and the OpenAI Python client.
+
+Intel's Granite Rapids architecture delivers enterprise-grade AI performance with its advanced P-cores and E-cores working in perfect harmony. With OpenVINO's Intel-optimized inference engine, you'll see how to leverage the Xeon 6's substantial compute power for maximum AI performance. 
+
+Resources:
+- Code and commands: <a href="https://github.com/juliensimon/arcee-demos/tree/main/openvino-granite-rapids" target="_blank" rel="noopener noreferrer">https://github.com/juliensimon/arcee-demos/tree/main/openvino-granite-rapids</a>
+- Amazon EC2 r8i: <a href="https://aws.amazon.com/blogs/aws/best-performance-and-fastest-memory-with-the-new-amazon-ec2-r8i-and-r8i-flex-instances/" target="_blank" rel="noopener noreferrer">https://aws.amazon.com/blogs/aws/best-performance-and-fastest-memory-with-the-new-amazon-ec2-r8i-and-r8i-flex-instances/</a>
+- Docker on Ubuntu: <a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener noreferrer">https://docs.docker.com/engine/install/ubuntu/</a>
+- Arcee AI AFM-4.5B
+    * <a href="https://huggingface.co/arcee-ai/AFM-4.5B" target="_blank" rel="noopener noreferrer">https://huggingface.co/arcee-ai/AFM-4.5B</a>
+    * <a href="https://huggingface.co/arcee-ai/AFM-4.5B-ov" target="_blank" rel="noopener noreferrer">https://huggingface.co/arcee-ai/AFM-4.5B-ov</a>
+- Intel OpenVINO:
+    * <a href="https://openvinotoolkit.github.io/openvino.genai/docs/guides/model-preparation/convert-to-openvino/" target="_blank" rel="noopener noreferrer">https://openvinotoolkit.github.io/openvino.genai/docs/guides/model-preparation/convert-to-openvino/</a>
+    * <a href="https://docs.openvino.ai/2025/model-server/ovms_demos_continuous_batching.html" target="_blank" rel="noopener noreferrer">https://docs.openvino.ai/2025/model-server/ovms_demos_continuous_batching.html</a>
+- Hugging Face Optimum Intel: <a href="https://huggingface.co/docs/optimum/intel/index" target="_blank" rel="noopener noreferrer">https://huggingface.co/docs/optimum/intel/index</a></div>
+
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. I'm a big fan of running small language models on CPU, and recently I've been working with Intel to optimize AFM 4.5b, our first foundation model, for Intel platforms. In this video, I'm going to show you how to optimize this model using the Intel OpenVINO toolkit and deploy it on the latest generation of Intel Xeon processors, and I'll use an AWS instance for that. This should be fun. Let's get started.
+
+Before we dive into the demo, let's look at the building blocks we're going to use. We're going to need an Intel server, and I'm going to use the newly launched R8i instances on AWS. Family names get crazier. So what is R8i? R8i is Intel-based and uses the latest generation of Intel chips, Intel Xeons. You can call them Intel Xeon 6, or Granite Rapids. The important thing is it's the latest generation, and that matters a lot, as we will see, because these CPUs have dedicated instruction sets to accelerate AI inference. You can use any Granite Rapids servers. In fact, you could use the previous generation as well. It would work. You can use a real server or a cloud server. It doesn't really matter.
+
+Those Granite Rapids servers on AWS are currently only available in the R family, which means memory-optimized servers, so high memory capacity servers. I remember that because R is probably for RAM. These are way too much memory for our purpose, but that's the only option at the time of recording. I'm guessing we'll see C8i at some point, which are the compute-optimized instances, and these will have less RAM, making them more cost-effective. This would be my go-to option. But for this, we'll use R8i, and I'll put the link to this nice blog post in the video description.
+
+We'll need a model, obviously, and I'll use AFM 4.5b, which we've discussed quite a few times already. This is the model page on Hugging Face. Again, I'll add the link. Just for information, if you want to skip the model optimization process altogether and just deploy it, I've also added OpenVINO versions on Hugging Face. There's a 16-bit, 8-bit, and 4-bit model. You can just clone the repo and load those if you prefer. But in the demo, I will go through the full process. And of course, we'll need the OpenVINO toolkit, which, as you probably know, is an Intel toolkit to optimize models for a wide range of Intel platforms, CPU, GPU, and even NPU for AI PCs. We'll do CPU this time around. And last but not least, we'll use Optimum Intel, which is an open-source library by Hugging Face that makes it really easy to work with Intel tools. Literally a one-liner, as you can see.
+
+These are the building blocks. You'll find all the resources in the video description. Now let's get to work. In the interest of time, I've already launched the AWS instance. I'm running Ubuntu 24, so all the commands here will be for Ubuntu, but if you prefer another Linux variant, that's not a problem. If we run `lscpu`, we'll see we are running this fancy Intel Xeon, which is actually the Granite Rapids generation. If we look at the CPU flags, we'll see a whole collection of flags that are really important for AVX 512 with sub-instruction sets, AMX, which is a matrix multiplication instruction set, and a few more. These are what will speed up AI inference on this instance. This is the R8i 4XL with 32 vCPUs. You can probably go a little lower if you want. I don't think we need 32. We'll see what kind of speed we get. But I'm pretty sure you could go even to maybe 8 vCPUs and still get okay performance. This is a middle-of-the-road option.
+
+In the interest of time, I've already installed Docker. If you don't know how to install Docker on Ubuntu, I'll add the link, but I didn't think it was important to show you that. Just copy-paste from the instructions. Now we're ready to create our environment, start installing our tools, and optimize the model. First, let's install some dependencies. We're not going to need much. I just want to make sure I have git and the virtual environment in Python. I'll put a link to all those commands as well, so you can just copy-paste. Let's create a virtual environment, which is generally good practice. Let's make sure we have the latest pip. And now we can almost install everything with a single command, which is this one: `pip install optimum-intel[openvino]`. Don't forget this one, because if you do, OpenVINO will not get installed, and you'll see some errors. We'll just install directly from the Git repo. This guarantees you have the latest version. Optimum Intel moves fairly quickly, so usually, it's a better option to install from source. After a minute or so, this is installed. We can check. We have what we need here. Optimum and OpenVINO are important. This is the right version. AFM support was added in OpenVINO 2025.3, which just came out last week. So we should be good to go.
+
+The next thing we need to do is make sure we can download the model from Hugging Face. I've already accepted the terms, so you need to accept that and you'll be able to download the model. Make sure you have a token. If you don't have one, you can create it in Access Tokens. A read-only token is all you need. Store that somewhere safe. Now, we should be able to log in to the Hugging Face hub. Just copy your token here. We don't need a Git credential. Now we've logged into Hugging Face and we should be able to download the model. The next step is very simple. We're going to use Optimum and its nice CLI to download AFM and optimize it with OpenVINO. Here, all we have to do is `optimum-cli export openvino <model_repo_name> <weight_format> <local_path>`. Let's first optimize the model for 8-bit precision, so int8, and this is the local path where the optimized model will be saved. Let's run this. We should see the model download. If this fails, it means your token is invalid or you didn't log in or something like that. But if you followed my steps, it should be okay. We downloaded the model. Now we're loading it, and in a few seconds, we'll see OpenVINO optimizing it to 8-bit. There we go. We have 218 layers, and 100% of the layers are quantized to 8-bit precision. We'll just save the model to that local path. We can see the model here. Let's do the same for 4-bit. If you want to do that quickly, it's exactly the same process. Just say int4. If you want to see a 16-bit version, you just say FP16. But I'm not going to do that. We've already downloaded the model, so we can skip that and quantize to 4 bits. Once we've done that, we'll write a small Python program and we'll load the model. Some layers are still in int8 by default, and most of the layers are 4-bit. There are a ton of options for Optimum Intel and OpenVINO in general. We'll look at a few more later. But if you have fancy quantization recipes, you can apply them.
+
+Let's make sure we have our environment. Now we're going to run a very simple test, a test of `v.py`, and we'll use the Optimum Intel API to load the 8-bit model here and use the Transformers library from Hugging Face to project. The really nice thing about Optimum Intel is it is extremely close to the vanilla Transformers API. So if you're familiar with Transformers, you would say `AutoModelForCausalLM`. Here we just turn that into `OVModelForCausalLM`, and the rest of the code is exactly the same. You can use the pipeline, the Hugging Face pipeline, etc. Let's try this. See if it works. Now we're loading the quantized model and we should start predicting. RCAI is an AI research and engineering firm, blah, blah, blah. This works. We could do the same thing with the 4-bit model, but let me bring that code up again. As you can see, that's all there is to it. If you want to integrate your model directly into an app, you don't want to run an inference server, this is how you could do it. If you want the high-level Hugging Face API, you can use the pipeline. There's also an OpenVINO API, which is a little bit different, available in Python and C++. Go to the OpenVINO website, and they have some code snippets and good examples in their repos as well.
+
+So that's the first way we can work with the models. Now, what if we want to deploy the model with a proper inference server? The answer is yes. OpenVINO comes with a proper inference server called OpenVINO Model Server or OVMS. I'm going to show you how to set that up, configure the models for deployment with OVMS, and deploy it. Let me clean things up a little bit and I'll be right back. Let's look at OVMS. OVMS uses OpenVINO under the hood and needs a few config files for the inference server to load models, etc. We could write them manually or use the export script that comes with the OpenVINO model server. We'll re-optimize the model and create the config file in one step. First, let's clone the model server repo. The only reason we need this is for the export script, which lives here. We don't need to add the requirements because we've already installed OpenVINO. Let's just create a directory to store the models and config files, which we'll pass to the inference server. In a very similar way as before, we can run the export script. So `export_model.py text-generation <source_model_on_Hugging_Face> <local_model_name> --quantize int8 --ovms_config_path <model/config.json>`. I'm also adding two performance options: `--enable_prefix_caching` and `--kv_cache_precision int8`. These are to cache prefixes and save RAM, respectively. And of course, I want to convert this for the host CPU. Let's run this. Under the hood, it uses exactly what we've done before. We'll see the model conversion process again. If we look in the models directory, we'll see the model itself and the config file. This is the bare bones config file, which tells you where the model is. If we add the 4-bit model as well, just change the model name and weight format. We'll convert the model, and it will be added to the config file. This means you could have lots of different models available at any time. You can configure several models, which could be completely different. As long as they're defined in the config file, you can request them on demand, and they get loaded on demand.
+
+Now we have two models configured for our model server, which is exactly what we wanted. Next, let's grab the OpenVINO model server, which is a Docker image. It's not big, less than 500 MB. Now we can just run the server. So `docker run -p 8000:8000 -v <models_directory>:/models <docker_image_name> --config_path /models/config.json`. Make sure you have OpenVINO model server 25.3 or higher, and we should see something like this, which is good news. AFM45B int8 is available, so the model is ready to be served. If you see "unavailable" or some kind of error, it means there's something wrong with your config file, the path is wrong, the model doesn't exist, or it's corrupted. But if you see "available," it means it's ready to be served. Now, let's run another example. We can try `curl`, why not? First, `curl ovms` on port 8000. We use the OpenAI format here, which is fully supported by OVMS. We can pass the model name, and this should be the name of the model in the config file. Some additional parameters if you feel like it, and then the prompt. Let's see what happens. We get an answer. As you can see, we can invoke this just like we would invoke any OpenAI model. Now, let's use the OpenAI client with Python. So `pip install openai`. Let me grab my code here. Import the OpenAI client, point to the endpoint, so the OVMS endpoint, no API key needed, and we can do streaming inference this time with the 8-bit model, streaming equal to true, and then a very simple function to decode the streaming answer. Let's try this one. Here we go. This is pretty good. Let's try a slightly more complicated question. How about my favorite question? It keeps me awake at night. Let's go for more tokens here. Off it goes. You can see the speed is more than adequate. We're running on all threads, 32 threads. We're actually using every single thread on the system. Some of them are busy doing something else, so we could try fewer threads. But you can see here, this is already faster than I can read. So there you go.
+
+As you can see, it's really easy to work with small language models in general and AFM-4.5b in particular on Intel instances. Even with a small instance, we get very nice speed. For some use cases, this is everything we need. We can run several models or several model variants even on the same machine. We're not limited by GPU RAM. There's much more host RAM than we'll ever need here. So we can just load models on demand and work with them without the need for GPU instances, which tend to be expensive and a single point of failure in your architecture. Nice little demo. Again, I'll put everything in the video description. I'll put all the commands that I use for setup. I hope you liked it. Until next time, my friends, you know what to do. Keep rocking.
+
+
+        </div>
+
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Intel-Xeon</span><span class="tag">OpenVINO</span><span class="tag">AFM-4.5b</span><span class="tag">Optimum-Intel</span><span class="tag">AWS-R8i</span>
+        </div>
+
+        <div class="links">
+            
+        </div>
+    </div>
+</body>
+</html>
