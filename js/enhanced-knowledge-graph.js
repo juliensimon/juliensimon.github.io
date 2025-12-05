@@ -40,11 +40,11 @@ class KnowledgeGraphEnhancer {
             "@context": "https://schema.org",
             "@type": "Person",
             "name": "Julien Simon",
-            "jobTitle": "Chief Evangelist",
+            "jobTitle": "AI Operating Partner",
             "worksFor": {
                 "@type": "Organization",
-                "name": "Arcee AI",
-                "url": "https://arcee.ai"
+                "name": "Fortino Capital",
+                "url": "https://www.fortinocapital.com"
             },
             "hasOccupation": {
                 "@type": "Occupation",
