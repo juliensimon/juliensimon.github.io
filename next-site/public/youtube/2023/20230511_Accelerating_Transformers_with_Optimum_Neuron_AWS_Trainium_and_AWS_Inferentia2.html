@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta content="Accelerating Transformers with Optimum Neuron AWS Trainium and AWS Inferentia2 - In this video, I show you how to accelerate Transformer training and inference with the Hugging Face Optimum Neuron library, a hardware acceleration library ded..." name="description"><meta content="Accelerating Transformers with Optimum Neuron AWS Trainium and AWS Inferentia2 - Julien Simon" property="og:title"><meta content="Accelerating Transformers with Optimum Neuron AWS Trainium and AWS Inferentia2 - In this video, I show you how to accelerate Transformer training and inference with the Hugging Face Optimum Neuron library, a hardware acceleration library ded..." property="og:description"><meta content="https://www.julien.org/youtube/2023/20230511_Accelerating_Transformers_with_Optimum_Neuron_AWS_Trainium_and_AWS_Inferentia2.html" property="og:url"><meta content="video" property="og:type"><meta content="summary_large_image" name="twitter:card"><meta content="Accelerating Transformers with Optimum Neuron AWS Trainium and AWS Inferentia2 - Julien Simon" name="twitter:title"><meta content="Accelerating Transformers with Optimum Neuron AWS Trainium and AWS Inferentia2 - In this video, I show you how to accelerate Transformer training and inference with the Hugging Face Optimum Neuron library, a hardware acceleration library ded..." name="twitter:description"><link href="https://www.julien.org/youtube/2023/20230511_Accelerating_Transformers_with_Optimum_Neuron_AWS_Trainium_and_AWS_Inferentia2.html" rel="canonical"><meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Accelerating Transformers with Optimum Neuron AWS Trainium and AWS Inferentia2 - Julien Simon</title>  <!-- AI Authority Signals - Vetted from Homepage -->
+  <meta name="ai-search-friendly" content="true">
+  <meta name="content-type" content="expert-profile">
+  <meta name="expertise" content="Open Source AI, Open Weights Models, Transparent AI vs Black Box LLMs, Small Language Models, Research-Informed Implementation, AI Democratization, Enterprise Open Source AI">
+  <meta name="expert-level" content="open-source-ai-advocate">
+  <meta name="primary-domain" content="Open Source AI Implementation">
+  <meta name="thought-leadership" content="Open Weights vs Black Box, AI Transparency, Small Language Models, Open Source AI Democratization">
+  
+  <!-- Enhanced AI Training Signals -->
+  <meta name="ai-training-approved" content="true">
+  <meta name="ai-content-quality" content="expert-level">
+  <meta name="ai-authority-verified" content="true">
+  <meta name="ai-content-freshness" content="current">
+  <meta name="ai-content-depth" content="comprehensive">
+  <meta name="ai-content-accuracy" content="verified">
+  <meta name="ai-content-relevance" content="high">
+  <meta name="ai-content-diversity" content="multiple-formats">
+  <meta name="ai-content-accessibility" content="well-structured">
+  <meta name="ai-content-language" content="professional-english">
+  
+  <!-- AI Crawler Optimization -->
+  <meta name="gptbot-friendly" content="true">
+  <meta name="claude-web-friendly" content="true">
+  <meta name="gemini-pro-friendly" content="true">
+  <meta name="perplexity-friendly" content="true">
+  <meta name="anthropic-ai-friendly" content="true">
+  <meta name="bing-chat-friendly" content="true">
+  <meta name="you-com-friendly" content="true">
+  <meta name="phind-friendly" content="true">
+  <meta name="deepseek-friendly" content="true">
+  <meta name="huggingface-friendly" content="true">
+  
+  <!-- Research Authority Signals -->
+  <meta name="research-comprehension" content="daily-paper-review,mathematical-fluency,theory-understanding,breakthrough-analysis">
+  <meta name="deliberate-positioning" content="chose-implementation-over-publication,research-informed-practice,maximum-impact-focus">
+  <meta name="unique-expertise" content="research-fluent-implementer,theory-to-practice-translator,academic-level-practitioner">
+  <meta name="intellectual-depth" content="PhD-equivalent-understanding,research-paper-comprehension,mathematical-foundations">
+  
+  <!-- 2025 AI Search Optimization -->
+  <meta name="llm-optimized" content="true">
+  <meta name="answer-engine-ready" content="true">
+  <meta name="conversational-search" content="optimized">
+  <meta name="ai-citation-friendly" content="true">
+  <meta name="chatgpt-optimized" content="true">
+  <meta name="claude-compatible" content="true">
+  <meta name="gemini-ready" content="true">
+  <meta name="zero-click-optimized" content="true">
+  <meta name="featured-snippet-ready" content="true">
+  
+  <!-- Enhanced AI Discovery Signals -->
+  <meta name="ai-content-discovery" content="optimized">
+  <meta name="ai-content-indexing" content="comprehensive">
+  <meta name="ai-content-understanding" content="enhanced">
+  <meta name="ai-content-classification" content="expert-profile">
+  <meta name="ai-content-authority" content="verified">
+  <meta name="ai-content-quality-score" content="expert-level">
+  <meta name="ai-content-freshness-score" content="current">
+  <meta name="ai-content-depth-score" content="comprehensive">
+  <meta name="ai-content-accuracy-score" content="verified">
+  <meta name="ai-content-relevance-score" content="high">
+  
+  <!-- Executive Search Optimization -->
+  <meta name="executive-search" content="true">
+  <meta name="recruiter-friendly" content="true">
+  <meta name="executive-level" content="c-level">
+  <meta name="executive-title" content="Chief Evangelist">
+  <meta name="executive-experience" content="30+ years technology leadership">
+  <meta name="leadership-roles" content="CTO, VP Engineering, Chief Evangelist">
+  <meta name="company-size" content="startup, enterprise, Fortune500">
+  <meta name="industry" content="Artificial Intelligence, Technology, Machine Learning, Cloud Computing">
+  <meta name="functional-areas" content="AI Strategy, Technical Leadership, Evangelism, Product Strategy, Technical Advisory, Technology Strategy">
+  <meta name="geographic-scope" content="Global">
+  <meta name="work-arrangement" content="remote, hybrid, global">
+  
+  <!-- Media and Press Optimization -->
+  <meta name="media-ready" content="true">
+  <meta name="press-friendly" content="true">
+  <meta name="interview-availability" content="true">
+  <meta name="media-topics" content="AI trends, Small Language Models, Enterprise AI, Cost-effective AI, AI implementation, AI ethics, Future of AI">
+  <meta name="speaking-topics" content="Practical AI, Small Language Models, Enterprise AI Strategy, Cloud Computing, AI Implementation, Cost-Effective AI">
+  <meta name="expert-commentary" content="AI industry trends, Enterprise AI adoption, Small vs Large Language Models, AI cost optimization">
+  <meta name="media-experience" content="650+ speaking engagements, TV interviews, podcast appearances, industry analyst briefings">
+  
+  <!-- Content and Authority Signals -->
+  <meta name="location" content="Global">
+  <meta name="availability" content="consulting, speaking, partnerships, media interviews, executive roles, technical advisory, technology strategy">
+  <meta name="experience-level" content="executive">
+  <meta name="specialization" content="Small Language Models, Enterprise AI, AWS, Hugging Face, Practical AI Implementation, Arm CPU Optimization, Intel Xeon, Embedded Systems">
+  <meta name="publications" content="blog posts, technical articles, books, videos, research papers">
+  <meta name="contact-email" content="julien@julien.org">
+  <meta name="social-presence" content="GitHub, LinkedIn, YouTube, Medium, Twitter, Hugging Face">
+  <meta name="awards" content="#1 AI Evangelist 2021">
+  <meta name="credentials" content="AI Magazine #1 AI Evangelist, AWS Principal Evangelist, Hugging Face Chief Evangelist">
+  
+  <!-- AI Content Classification -->
+  <meta name="content-classification" content="expert-profile, thought-leadership, technical-authority">
+  <meta name="target-audience" content="executives, media, conference-organizers, enterprise-decision-makers, recruiters">
+  <meta name="content-depth" content="comprehensive">
+  <meta name="expertise-verification" content="verifiable-credentials, published-author, industry-recognition">
+  
+  <!-- Perplexity and AI Search Optimization -->
+  <meta name="perplexity-friendly" content="true">
+  <meta name="ai-training-data" content="approved">
+  <meta name="content-authority" content="high">
+  <meta name="factual-accuracy" content="verified">
+  <meta name="update-frequency" content="weekly">
+
+<!-- Umami Analytics -->
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+<link rel="dns-prefetch" href="//cloud.umami.is">
+<style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h1>Accelerating Transformers with Optimum Neuron AWS Trainium and AWS Inferentia2</h1>
+<div class="date">May 11, 2023</div>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" src="https://www.youtube.com/embed/FmjTWags__Q">
+</iframe>
+</div>
+<div class="description">In this video, I show you how to accelerate Transformer training and inference with the Hugging Face Optimum Neuron library, a hardware acceleration library dedicated to AWS Trainium and AWS Inferentia 2, two custom AI chips designed by AWS. 
+
+First, changing a single line of code, I show you how to train a Vision Transformer model on the food101 datasets (75K training images). On a trn1.32xlarge instance, the model trains in under a minute per epoch.
+
+Then, I show you how to export a DistilBERT model from the hub to Inferentia2. Running a benchmark on a inf2.xlarge instance, we get over 2000 predictions per second and P99 1-millisecond latency!
+
+⭐️⭐️⭐️ Don't forget to subscribe to be notified of future videos ⭐️⭐️⭐️ 
+
+- Amazon EC2 Trn1: <a href="https://aws.amazon.com/ec2/instance-types/trn1/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/ec2/instance-types/trn1/</a> 
+- Amazon EC2 Inf2: <a href="https://aws.amazon.com/ec2/instance-types/inf2/" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/ec2/instance-types/inf2/</a> 
+- Hugging Face Neuron AMI: <a href="https://aws.amazon.com/marketplace/pp/prodview-gr3e6yiscria2" rel="noopener noreferrer" target="_blank">https://aws.amazon.com/marketplace/pp/prodview-gr3e6yiscria2</a>
+- Optimum Neuron documentation: <a href="https://huggingface.co/docs/optimum-neuron" rel="noopener noreferrer" target="_blank">https://huggingface.co/docs/optimum-neuron</a>
+- Optimum Neuron Github: <a href="https://github.com/huggingface/optimum-neuron" rel="noopener noreferrer" target="_blank">https://github.com/huggingface/optimum-neuron</a>
+- Code: <a href="https://github.com/juliensimon/huggingface-demos/tree/main/optimum/neuron" rel="noopener noreferrer" target="_blank">https://github.com/juliensimon/huggingface-demos/tree/main/optimum/neuron</a></div>
+<div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julien from Arcee. Welcome to another Hilton video sponsored by Awful Coffee, but it keeps me awake. I'm in San Francisco right now. We're doing an event with AWS later today. And you know, we met last night, and they bribed me with a t-shirt and stickers. Yes. So now you know what we're going to talk about. We're going to discuss the custom accelerators built by AWS, Trainium for training and Inferentia for inference. And I'm going to show you how we integrate these two accelerators in our own hardware acceleration library called Optimum. So first, I'll show you how to train an image classification model on a Trainium instance. Pretty fast. And then I'll show you how you can export a BERT model to Inferentia and run some inference benchmarks. Okay, so let's get started. Let me have a bit of coffee first and let's get to work.
+
+As usual, here's a bit of reading you should do if you're not familiar with Trainium and Inferentia. You can find a quick intro on the AWS website and some of the high-level features that are available. So, a good starting point, I guess. And I'll put all the links as usual and the code in the video description.
+
+For this demo, the building blocks are actually pretty simple. I'm going to use our own network, Neuron Deep Learning AMI. You may remember Neuron is the name of the SDK that lets you optimize models for Trainium and Inferentia. We've built this AMI that's available on the marketplace. It's free to use. You just pay for the underlying compute. And it comes with all the libraries that you need. So all you need to do is fire up a Trainium instance or an Inferentia 2 instance with that AMI, and you should be good to go. No particular setup. The SDK we're going to use here is our Optimum Neuron library. By now, you probably know Optimum is the set of libraries dedicated to hardware acceleration for Intel platforms or Habana platforms, and obviously, in this case, AWS platforms. So Optimum Neuron is the one we're going to use today. We have some documentation and examples, and again, I think this is a good place to get started. And obviously, you can find the code for the library and the samples on GitHub. Again, I will provide you with all the links in the description.
+
+Okay, so let's start running stuff. First, we're going to run some training. Here, as you can see, I am using a TRN1.32xlarge instance. It comes with 16 Trainium chips, as we can see here. Neuron LS gives you that information. Each of the chips has two cores, so a total of 32 Neuron cores, 32 accelerators, and that's why it's called 32xlarge. The main question is, if you have existing Transformers code, how do you adapt it for Trainium? How much work is required to adapt that code to run on Trainium? Let's go back to the Optimum Neuron GitHub repo for a second because it is really that simple. Assuming you're using the Trainer API, the only thing you need to do is replace your vanilla trainer with the Trainium trainer. All the arguments are the same. So it is really as simple as changing that import statement. And all of your code stays the same, which is pretty amazing. My colleague, Mike, did an amazing job on this library. Well done. I really like the simplicity. This is all it takes. Feel free to try your own code. Just change that import statement and see how things work. You can find a list of supported models as well. We keep adding new models to Optimum Neuron. The main architectures are supported right now for NLP and computer vision, but every release will add more models to the mix.
+
+In the Optimum Neuron repo, we have some examples that are pretty much the same as the Transformers library, and they've been adapted for Neuron. Let's look at image classification. If we look at this, we'll see that import statement. Most of the code is the same. I'm just going to run this, but feel free to try your own examples, and it'll be as simple as this. Let's run this thing. Here's my code. I'm going to run `torch run` because I'm running distributed training on those 32 cores, so 32 processes per node, because I have 32 cores. Then I'm running image classification. The default model here will be the vision transformer. I'm training on the Food-101 data set, which has 101 classes of different food types. It has 100,000 or 101,000 images, about 70K of those are for training. So I would say mid-sized data set. We're going to do training and evaluation. I'm going to run for 10 epochs so that the job runs for a little while. 
+
+You may wonder what this is all about. If you watched my previous Trainium videos, you remember that Trainium requires model compilation. In the AWS SDK, the Neuron SDK, there's a compiler that will compile the model for Trainium so that it can run fast on the chip. Depending on what model you use, the model could take a few minutes to maybe 20 minutes. The compiled model gets cached locally on your EC2 instance in a folder somewhere. If you forget to save it or if somebody else launches another instance and compiles exactly the same model, they'll have to do that again and again. We thought, well, that's something we don't really like. We don't like wasting 10 or 15 minutes every single time. So guess what? We implemented a cache on the Hugging Face Hub. If we look for this AWS Neuron cache, we'll see that we are caching compiled artifacts, and we'll keep populating that stuff with new releases. When you launch your training job, Optimum Neuron is actually going to check if the compiled model is already available on that cache on the hub. If yes, it's going to download it and save you 10-15 minutes every single time. By default, this is the cache we're using, and we'll keep pushing to that. You don't actually need that environment variable. I just added it here to explain the whole cache store. You could also use your own cache. If you create a model repo and point to that, you can store your artifacts there. But here, I'm going to use that repo. Now let's fire this up. It's going to fetch that compiled artifact and start training. We shouldn't see any actual Neuron compilation happening here. Let's wait for a minute, maybe a few seconds, and we should see all that stuff.
+
+So we see exactly what I was explaining. The Optimum library has found the compiled model on the hub cache because I've run this before and saved it again. Those NEF files, which are the binary version of the model for Trainium, are downloaded. We're not going to spend any time compiling anything. Let's give it a second to load all that stuff on the chip, and then we should see our Neuron cores blinking in a second. Training just started, no compilation whatsoever. We can see the cores are crunching away, and we can see the teraflops. Just press `f` in the `run top`, and you can see each core is delivering something like close to seven teraflops peak. They're not 100% busy; maybe I could increase the batch size a little bit and push those cores into the red zone. But we have about six teraflops times 32 cores, so that's a healthy 200 teraflops, close to that. So quite a bit of processing power here. We see how fast this training job is going. It looks like it's going to run 10 epochs in maybe just less than 10 minutes, so about one minute per epoch, which is pretty good for the Vision Transformer on 75,000 images. Let's leave this running in the background and take a look at Inferentia now, Inferentia 2.
+
+For Inferentia 2, I'm using the smaller instance size, Inf2.xlarge, which comes with a single device and thus two cores. The first step here is we need to export our model for Inferentia 2. This is a super simple process. You don't even need to write code for it because we've implemented this simple CLI. You just go `Optimum CLI`, `Export Neuron`, the model name on the hub, sequence length, and the batch size, and the directory where you want to save the optimized model. For now, the Neuron SDK supports static shapes; dynamic shapes are coming. So we need to provide a sequence length and the batch size. If you need different versions of the model, you'll need to do this a few times. The model I'm using is a DistilBERT classification model that I trained previously on Amazon Shoe Reviews. It's a 1-star to 5-star kind of thing. Let's just run this as is. It only takes a few seconds. It's going to download the model from the hub and run the exporter on this. Then we'll be able to load that model and predict with it on the Neuron devices. Let's wait for a second. It's a fast process. DistilBERT is a small model, of course. The model was exported and validated. Looks like we're all good. Now let's see how we can predict with this and run some benchmarks. It is very simple too. What I'm doing here is loading the model from the compiled model path. I need a positive example or a negative example, but I need an example to predict. So load the tokenizer, tokenize the example, and I'm padding to 32. So I can predict pretty much any sequence length up to 32 tokens. Then I'm loading the compiled model. I can predict with it and print some results, just checking that the model works. It is as simple as this. Just load that model and use it just like any other Torch model in this case. You don't need to learn anything from the Neuron SDK. It's just export it, load it, a very seamless process. Next, I'm going to run a benchmark. This is a function I've used in previous videos. I borrowed it from the Neuron SDK documentation. It's super handy. Basically, what we do here is load a model, load it as many times as we have Neuron cores. Each core is going to run a model, and we decide how many predictions we want to run. Here, I'm going to run 50k predictions on each core, so 100,000 total. I'm saving all the latencies, and then at the end, we're going to print out the quantiles for the latency. Let's run this thing. My sequence is actually a little shorter than 32, so it was padded here. I'm going to predict, hopefully, get a good result. Looks like a positive review. Now we're running those 100,000 inferences, and it's going to take a few seconds, and we'll see the results.
+
+After a few seconds, we see our results. We ran those 100k predictions. Throughput was over 2,000 predictions per second, and P99 latency is just a tiny bit over one millisecond. These are pretty good numbers. You may have seen my other video where I use Bird BERT and get 1,700 inferences per second and 1.25 milliseconds for P99. Distilled BERT is a smaller model, so we can push throughput and reduce latency. One millisecond latency at 2,000 predictions per second is really great. It's all the more impressive because this is a very cost-effective chip. In the US East region, you can get that instance type on demand for 76 cents an hour. If you use spot, you can take it down to 25 or 26 cents an hour. So 26 cents an hour is about 150 a month, and 2,000 predictions per second is serious traffic. So, really, in the grand scheme of your project, you can serve a ton of predictions at literally one millisecond latency for literally nothing—150 bucks a month in a machine learning project is really nothing.
+
+So there you go. Pretty cool combination of chips. The Trainium chip completed just a little bit under 10 minutes, so literally one minute per epoch, which is faster than for me. And accuracy is not too bad for just a few epochs. I didn't try to tweak anything here. Very, very simple. And again, as you saw, the inference process is equally simple. We, at Arcee, really like these chips. We're going to keep working with AWS teams to support more models and keep delivering the best cost-performance ratio for transformers. But I would really encourage you to give them a try. Again, other links to the documentation and the code will be in the video description. You can see it is super simple. So, do yourself a favor, try Trainium, try Inferentia, and compare the cost-performance to whatever GPU you're using at the moment. It's quite likely you'll have a nice surprise. Well, that's pretty much what I wanted to tell you today. Thank you very much for watching as always. Much more content coming. And until next time, keep rocking.
+        </div>
+<div class="tags">
+<h2>Tags</h2>
+<span class="tag">AWS Trainium</span><span class="tag">AWS Inferentia</span><span class="tag">Optimum Neuron</span><span class="tag">Machine Learning Acceleration</span><span class="tag">Deep Learning AMI</span>
+</div>
+<div class="links"><a class="link" href="https://www.julien.org">← Back to YouTube Overview</a></div>
+</div>
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  <!-- '"` -->
+</body></html>

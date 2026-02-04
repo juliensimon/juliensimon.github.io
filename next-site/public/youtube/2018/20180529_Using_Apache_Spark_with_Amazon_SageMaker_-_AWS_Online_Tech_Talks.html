@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Apache Spark with Amazon SageMaker   AWS Online Tech Talks</title>  <!-- AI Authority Signals - Vetted from Homepage -->
+  <meta name="ai-search-friendly" content="true">
+  <meta name="content-type" content="expert-profile">
+  <meta name="expertise" content="Open Source AI, Open Weights Models, Transparent AI vs Black Box LLMs, Small Language Models, Research-Informed Implementation, AI Democratization, Enterprise Open Source AI">
+  <meta name="expert-level" content="open-source-ai-advocate">
+  <meta name="primary-domain" content="Open Source AI Implementation">
+  <meta name="thought-leadership" content="Open Weights vs Black Box, AI Transparency, Small Language Models, Open Source AI Democratization">
+  
+  <!-- Enhanced AI Training Signals -->
+  <meta name="ai-training-approved" content="true">
+  <meta name="ai-content-quality" content="expert-level">
+  <meta name="ai-authority-verified" content="true">
+  <meta name="ai-content-freshness" content="current">
+  <meta name="ai-content-depth" content="comprehensive">
+  <meta name="ai-content-accuracy" content="verified">
+  <meta name="ai-content-relevance" content="high">
+  <meta name="ai-content-diversity" content="multiple-formats">
+  <meta name="ai-content-accessibility" content="well-structured">
+  <meta name="ai-content-language" content="professional-english">
+  
+  <!-- AI Crawler Optimization -->
+  <meta name="gptbot-friendly" content="true">
+  <meta name="claude-web-friendly" content="true">
+  <meta name="gemini-pro-friendly" content="true">
+  <meta name="perplexity-friendly" content="true">
+  <meta name="anthropic-ai-friendly" content="true">
+  <meta name="bing-chat-friendly" content="true">
+  <meta name="you-com-friendly" content="true">
+  <meta name="phind-friendly" content="true">
+  <meta name="deepseek-friendly" content="true">
+  <meta name="huggingface-friendly" content="true">
+  
+  <!-- Research Authority Signals -->
+  <meta name="research-comprehension" content="daily-paper-review,mathematical-fluency,theory-understanding,breakthrough-analysis">
+  <meta name="deliberate-positioning" content="chose-implementation-over-publication,research-informed-practice,maximum-impact-focus">
+  <meta name="unique-expertise" content="research-fluent-implementer,theory-to-practice-translator,academic-level-practitioner">
+  <meta name="intellectual-depth" content="PhD-equivalent-understanding,research-paper-comprehension,mathematical-foundations">
+  
+  <!-- 2025 AI Search Optimization -->
+  <meta name="llm-optimized" content="true">
+  <meta name="answer-engine-ready" content="true">
+  <meta name="conversational-search" content="optimized">
+  <meta name="ai-citation-friendly" content="true">
+  <meta name="chatgpt-optimized" content="true">
+  <meta name="claude-compatible" content="true">
+  <meta name="gemini-ready" content="true">
+  <meta name="zero-click-optimized" content="true">
+  <meta name="featured-snippet-ready" content="true">
+  
+  <!-- Enhanced AI Discovery Signals -->
+  <meta name="ai-content-discovery" content="optimized">
+  <meta name="ai-content-indexing" content="comprehensive">
+  <meta name="ai-content-understanding" content="enhanced">
+  <meta name="ai-content-classification" content="expert-profile">
+  <meta name="ai-content-authority" content="verified">
+  <meta name="ai-content-quality-score" content="expert-level">
+  <meta name="ai-content-freshness-score" content="current">
+  <meta name="ai-content-depth-score" content="comprehensive">
+  <meta name="ai-content-accuracy-score" content="verified">
+  <meta name="ai-content-relevance-score" content="high">
+  
+  <!-- Executive Search Optimization -->
+  <meta name="executive-search" content="true">
+  <meta name="recruiter-friendly" content="true">
+  <meta name="executive-level" content="c-level">
+  <meta name="executive-title" content="Chief Evangelist">
+  <meta name="executive-experience" content="30+ years technology leadership">
+  <meta name="leadership-roles" content="CTO, VP Engineering, Chief Evangelist">
+  <meta name="company-size" content="startup, enterprise, Fortune500">
+  <meta name="industry" content="Artificial Intelligence, Technology, Machine Learning, Cloud Computing">
+  <meta name="functional-areas" content="AI Strategy, Technical Leadership, Evangelism, Product Strategy, Technical Advisory, Technology Strategy">
+  <meta name="geographic-scope" content="Global">
+  <meta name="work-arrangement" content="remote, hybrid, global">
+  
+  <!-- Media and Press Optimization -->
+  <meta name="media-ready" content="true">
+  <meta name="press-friendly" content="true">
+  <meta name="interview-availability" content="true">
+  <meta name="media-topics" content="AI trends, Small Language Models, Enterprise AI, Cost-effective AI, AI implementation, AI ethics, Future of AI">
+  <meta name="speaking-topics" content="Practical AI, Small Language Models, Enterprise AI Strategy, Cloud Computing, AI Implementation, Cost-Effective AI">
+  <meta name="expert-commentary" content="AI industry trends, Enterprise AI adoption, Small vs Large Language Models, AI cost optimization">
+  <meta name="media-experience" content="650+ speaking engagements, TV interviews, podcast appearances, industry analyst briefings">
+  
+  <!-- Content and Authority Signals -->
+  <meta name="location" content="Global">
+  <meta name="availability" content="consulting, speaking, partnerships, media interviews, executive roles, technical advisory, technology strategy">
+  <meta name="experience-level" content="executive">
+  <meta name="specialization" content="Small Language Models, Enterprise AI, AWS, Hugging Face, Practical AI Implementation, Arm CPU Optimization, Intel Xeon, Embedded Systems">
+  <meta name="publications" content="blog posts, technical articles, books, videos, research papers">
+  <meta name="contact-email" content="julien@julien.org">
+  <meta name="social-presence" content="GitHub, LinkedIn, YouTube, Medium, Twitter, Hugging Face">
+  <meta name="awards" content="#1 AI Evangelist 2021">
+  <meta name="credentials" content="AI Magazine #1 AI Evangelist, AWS Principal Evangelist, Hugging Face Chief Evangelist">
+  
+  <!-- AI Content Classification -->
+  <meta name="content-classification" content="expert-profile, thought-leadership, technical-authority">
+  <meta name="target-audience" content="executives, media, conference-organizers, enterprise-decision-makers, recruiters">
+  <meta name="content-depth" content="comprehensive">
+  <meta name="expertise-verification" content="verifiable-credentials, published-author, industry-recognition">
+  
+  <!-- Perplexity and AI Search Optimization -->
+  <meta name="perplexity-friendly" content="true">
+  <meta name="ai-training-data" content="approved">
+  <meta name="content-authority" content="high">
+  <meta name="factual-accuracy" content="verified">
+  <meta name="update-frequency" content="weekly">
+
+<!-- Umami Analytics -->
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+<link rel="dns-prefetch" href="//cloud.umami.is">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body><p style="margin-bottom: 1.5em;"><a href="https://www.julien.org" style="color: #6366f1; text-decoration: none;">← julien.org</a></p>
+    <div class="container">
+        <h1>Using Apache Spark with Amazon SageMaker   AWS Online Tech Talks</h1>
+        <div class="date">May 29, 2018</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dada2WzCNPM" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">"Amazon SageMaker is a fully-managed platform that enables developers and data scientists to quickly and easily build, train, and deploy machine learning models at any scale. Amazon SageMaker also provides an Apache Spark library, in both Python and Scala, that you can use to easily train models in Amazon SageMaker from your Spark clusters. Once a model has been trained, you can also deploy it using Amazon SageMaker hosting services. After a brief recap on Amazon SageMaker, this code-level webinar will show you how to integrate your Apache Spark application with Amazon SageMaker: starting training jobs from Spark, integrating training jobs in Spark pipelines, and more.
+
+Learning Objectives:
+ - Learn more about the Apache Spark library that can be used with Amazon SageMaker to train models from your Spark clusters
+ - Get exposed to code that demonstrates how you can integrate your Spark application with Amazon SageMaker
+ - Learn how to start training jobs from Apache Spark and integrate training jobs in Spark pipelines" Subscribe to AWS Online Tech Talks On AWS: 
+<a href="https://www.youtube.com/@AWSOnlineTechTalks?sub_confirmation=1" target="_blank" rel="noopener noreferrer">https://www.youtube.com/@AWSOnlineTechTalks?sub_confirmation=1</a>
+
+Follow Amazon Web Services:
+Official Website: <a href="https://aws.amazon.com/what-is-aws" target="_blank" rel="noopener noreferrer">https://aws.amazon.com/what-is-aws</a> 
+Twitch: <a href="https://twitch.tv/aws" target="_blank" rel="noopener noreferrer">https://twitch.tv/aws</a>
+Twitter: <a href="https://twitter.com/awsdevelopers" target="_blank" rel="noopener noreferrer">https://twitter.com/awsdevelopers</a>
+Facebook: <a href="https://facebook.com/amazonwebservices" target="_blank" rel="noopener noreferrer">https://facebook.com/amazonwebservices</a> 
+Instagram: <a href="https://instagram.com/amazonwebservices" target="_blank" rel="noopener noreferrer">https://instagram.com/amazonwebservices</a>
+
+☁️ AWS Online Tech Talks cover a wide range of topics and expertise levels through technical deep dives, demos, customer examples, and live Q&amp;A with AWS experts. Builders can choose from bite-sized 15-minute sessions, insightful fireside chats, immersive virtual workshops, interactive office hours, or watch on-demand tech talks at your own pace. Join us to fuel your learning journey with AWS.
+
+#AWS</div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Hi, welcome to this new AWS webinar. My name is Julien. I'm a technical evangelist for AI and machine learning. Our topic today is the combination of two very cool services, Apache Spark and Amazon. The agenda for today includes a short reminder on what Apache Spark is and how to run it on AWS. We'll do the same for SageMaker, just a quick reminder of what SageMaker is, and then we'll dive into combining both. As you will see, this is pretty exciting stuff. I'll also run some demos using the SageMaker SDK for Spark to show you how you can actually integrate both. Finally, I will share some resources and links that will help you get started.
+
+Obviously, today the services we will cover are Amazon EMR and Amazon SageMaker. Let's get started. First, let's refresh our memories on Apache Spark. Apache Spark is an open-source project built from the Hadoop ecosystem. Just like Hadoop, Spark is a distributed processing system, but what separates Spark from Hadoop is its speed. Spark does most of its processing in memory, involving a lot of advanced caching techniques. This helps Spark deliver a huge speedup over Hadoop, typically 100 times faster. That sounds like a crazy number, but it's really typical of the speedup you would get with Spark. You can understand why people like it.
+
+What can you do with Spark? You can do all kinds of things. The main scenario is probably batch processing, transforming data, ETL, etc., but you can see more and more developers using Spark for streaming and machine learning. There is a machine learning library in Spark, which we'll talk about in a minute. You can also process graph databases and run SQL queries. When it comes to languages, you can use Java, Scala, Python, R, and SQL. So, Spark gives you a lot of options. I will mostly use Python and Scala for today.
+
+The key abstraction in Spark is called the DataFrame. We need to talk about this for a second because I will use it in my demo. A DataFrame is a data structure where you will store the data that you will process with Spark. A DataFrame is a distributed collection of data, spread across all nodes in the Spark cluster. Spark used to work with an entity called RDD (Resilient Distributed Datasets), but the more up-to-date way of dealing with data is DataFrames. The difference is mostly that DataFrames have named columns, so you can see them as a table in a relational database. You will manipulate and process them similarly to how you would process tables in a database. Under the hood, it works completely differently, all in memory, and it's blazingly fast. You can load data into DataFrames from a wide array of sources, such as structured files, local files, files in S3, and various databases that have connectors for Spark. Chances are, you will be able to load your data into Spark. When it comes to formats, Spark supports text files, CSV, JSON, Avro, and columnar formats like ORC and Parquet, which are popular in the Hadoop ecosystem.
+
+Here's a quick example, probably the simplest thing I could show you today. This is a very simple JSON file with three documents, and you would just load them like this using Spark and a DataFrame. As you can see, the API is very simple and convenient. Spark is actually pretty clever about detecting the organization of your data and mapping it into the proper columns. This example works the same for all formats, and you can tweak it to load the data exactly the way you want it. In a nutshell, this is the DataFrame.
+
+Spark has a machine learning library called MLlib, which has a collection of machine learning algorithms. You will find all the usual suspects: classification, regression, clustering, collaborative filtering, and more. These come in a wide variety of flavors. For classification, you will find all kinds of trees, and it's a very nice library, quite complete. You will also find APIs for feature engineering and feature processing, which is quite convenient to have everything in one place. You can also build what Spark calls pipelines. Pipelines are combinations of stages where you will either transform data (e.g., add, remove, modify columns, filter rows) or predict new values and insert them into columns. A transformer transforms a DataFrame into another, and an estimator trains on data. Once you have transformed data using different transformers, you can use the final DataFrame to train a model using an estimator. This time, you will take a DataFrame and build a model, which you can then use to run predictions. I'll show you an example of integrating SageMaker into an MLlib pipeline in the demos.
+
+Now, how do you run Spark on AWS? For a long time, we've had a service called Amazon EMR (Elastic MapReduce), which supports the Hadoop ecosystem, and Spark is part of that. It's not just providing Spark on managed infrastructure; it also connects Spark to different AWS services. You can efficiently load data from S3 using the EMR file system, and there are connectors for Kinesis, Redshift, and DynamoDB. You can also pull data from RDS using another standard connector, making it easy to pull data from your backends into Spark for ETL. Another recent feature is the integration with Glue, the ETL service in AWS. Inside Glue, you can build a data catalog, and Spark can connect to this catalog to pull data from various sources, eliminating the need to build your own custom catalog.
+
+When it comes to infrastructure, you can auto-scale your EMR cluster based on metrics, just like the usual auto-scaling. You can add and remove instances to accommodate large jobs. You can also integrate with Amazon EC2 Spot Instances, a popular scenario because it allows you to add a large number of instances to your clusters at a very reasonable cost. This helps you get results faster at a very low cost. For example, you might add ten times the number of instances you would normally use, getting your answer ten times faster without costing ten times the usual price.
+
+Here's an example of a customer using Spark. Zillow, a US company and the most popular online real estate website, provides an indicator called the Zestimate, a home valuation tool. Today, they can compute this estimate for over a hundred million homes. They use all kinds of data, including their own price listings, external data from the housing market, and open data like school locations. They ingest everything into Kinesis, which pushes it into Spark clusters running on EMR. They run machine learning models to provide users with almost real-time Zestimates on their homes. This allows users to list their property and see the valuation almost immediately, adjusting their listing accordingly. It's a big-scale and clever use of Spark by Zillow.
+
+Now, let's talk about SageMaker, the other side of the story. In the typical machine learning process, you'd wish to spend most of your time building features, training models, and tweaking models. This is where you create the most value for your company and users, and it's probably the most fun part. However, when working at scale with large datasets and teams, there is a lot of infrastructure work involved. You need training clusters, deployment clusters, and development environments, and infrastructure stands in the way of iterating and trying different combinations and algorithms. These less valuable steps slow down your machine learning workflows and innovation. This is why customers asked us to build a new service, and this is how SageMaker was born.
+
+SageMaker is an end-to-end machine learning service. You can go from experimentation to training, hosting models, and deploying models with the same SDK and APIs. There is no need to build anything extra for training and deployment, as all infrastructure is fully managed by SageMaker. You can scale up with a single API call, and SageMaker deploys everything for you. We also give you a lot of options for training, including built-in algorithms and pre-built environments for MXNet, Gluon, and TensorFlow. You can bring your own script and pre-trained model to SageMaker and deploy it, paying by the second, which is an effective way to manage costs.
+
+The different modules inside SageMaker start with notebook instances, which are pre-built and pre-configured instances with all the libraries and Python tools you need, including the Jupyter notebook environment. You can fire them up in minutes and get to work. For training, you can pick from built-in algorithms for classification, regression, time series, and natural language processing, or use pre-existing environments for MXNet, Gluon, and TensorFlow. One API call or one click in the console, and you can fire up your training infrastructure, fully managed by SageMaker. Currently, we have a cool feature called hyperparameter optimization (HPO) in preview, which applies machine learning to predict the optimal parameters for your machine learning jobs. This reduces the number of training jobs needed and optimizes parameters based on metrics like accuracy or mean squared error.
+
+Once you have a working model, you can deploy it with one API call or one click to a fleet of fully managed web servers that serve HTTP-based predictions to your apps or customers. This supports auto-scaling based on CloudWatch metrics. You can enter and exit the SageMaker workflow at any point. If you don't want to use notebook instances, fine. If you want to train on SageMaker and deploy elsewhere, that's fine too. If you want to bring a pre-trained model and deploy it on SageMaker, that's possible. It's a collection of modules, and you can pick whatever makes sense for your needs.
+
+A customer example using SageMaker is DigitalGlobe, a company that operates satellites taking Earth pictures 24/7. They have 100 petabytes of imagery and use machine learning to extract information from images, such as counting planes. They also built a model using SageMaker to decide where to store their images in AWS, minimizing storage costs. This classification model helps them cut storage costs by 50%, which is significant when you have 100 petabytes to store.
+
+Now, let's combine Spark and SageMaker. Why would you want to do that? First, decouple your data processing/ETL workflows from your machine learning workflows. These are different workloads, and you can use different instance types for them. For example, if you do ETL on Spark, you need a lot of memory, so M4 instances are a good pick. For training on large datasets, you might need GPUs, so P3 instances are a good choice. For deployment, C5 instances might be the best for fast predictions at a reasonable cost. You don't want to compromise by using the same instance type for everything. Use the best instance type for each workload, whether that means the fastest or most cost-effective.
+
+Another concern is scaling. You might have a small training job but a huge ETL job, or vice versa. You don't want to oversize your Spark cluster just because one step requires a lot of capacity. Resizing operations can be slow, especially with a lot of data and nodes. Running ETL once and then training 50 different models sequentially on your Spark cluster can take a while. Running them in parallel can quickly exhaust resources. Splitting these concerns—doing ETL on one part of your infrastructure, training on another, and prediction on yet another—is the most efficient and safest way to build your workflows. SageMaker automatically terminates your training instances, so you stop paying as soon as the job is over.
+
+A second reason to combine Spark and SageMaker is that Spark has a machine learning library called MLlib, which is great, but sometimes you need something else. SageMaker's built-in algorithms can work on huge datasets without the need for large clusters. They can process data of any size, regardless of the cluster size. If you need to run deep learning jobs with TensorFlow, MXNet, or other libraries not in MLlib, and if you need specific setups for training, SageMaker is a better fit. If you have custom code for training, you can run it on specific infrastructure that supports anything.
+
+Deployment is another reason to use SageMaker. Training is one thing, but deploying models in production is complex. You need high availability, scalability, and more. SageMaker handles this, serving predictions 24/7. Using Spark for prediction means keeping a Spark cluster running, which is overhead and extra cost. SageMaker endpoints are dedicated and can be configured for optimal performance, giving you better control over cost and performance.
+
+Some use cases for combining Spark and SageMaker include preparing data and doing feature engineering at scale before training a machine learning model. You can use Spark to clean and prepare data, write it back to S3, and then train with SageMaker. Another use case is transforming data to reuse an existing model. If you have new data and don't want to retrain the model, you can use Spark to build the required features and reuse the model. Spark can also help with data cleaning, outlier detection, and missing value imputation. You can even use models to predict missing values or additional features. If you have large datasets and don't want to build huge clusters with MLlib, SageMaker's built-in algorithms can handle very large datasets.
+
+To combine Spark and SageMaker, you use the SageMaker SDK for Spark. This is a specific Python and Scala SDK that lets you perform SageMaker operations from your Spark cluster. It's pre-installed on EMR 5.11 or later. The SDK lets you train, import, deploy, and predict with SageMaker models directly from your Spark application, using PySpark or Scala code. You can do this in a standalone fashion or add these operations inside a Spark ML pipeline. The SDK works seamlessly with DataFrames, converting them to the required format for SageMaker algorithms and back.
+
+The built-in algorithms in SageMaker include Linear Learner, Factorization Machines, K-means, PCA, LDA, and XGBoost. These are infinitely scalable algorithms because they are streaming algorithms that can process data of any size without loading the entire dataset into memory. They process data points one by one, changing their internal state, and moving on to the next batch. This is a strong incentive to combine SageMaker and Spark.
+
+Now, let's take a look at some demos. We'll run a number of notebooks showing you how to combine Spark and SageMaker. I created a small Spark cluster running on EMR with four nodes. The first example is a notebook that classifies the MNIST dataset using the built-in XGBoost algorithm in SageMaker. MNIST is a well-known image dataset with 60,000 handwritten digits (0-9) in 28x28 pixel images, flattened into 784-byte vectors in libSVM format. I opened a Zeppelin notebook and used PySpark to classify this dataset. First, I imported some classes and defined roles for SageMaker to access S3. I downloaded the MNIST dataset from S3 and loaded the training and test sets. I configured the training job using the XGBoost SageMaker estimator, setting parameters for multi-class classification, outputting probabilities, and training for 25 rounds. I called the fit API to train the model. SageMaker created the required infrastructure, ran the training job, and terminated the training infrastructure. Now, we can predict using the trained model. The left column shows the actual labels (ground truth), and the first sample is a five. We import some classes, define the role and region, and load the dataset from the same location. We configure the training job using K-means, define the training and prediction infrastructure, and set parameters for 10 clusters and 784 features. We call fit, and SageMaker will create the requested P2 instance for training, train, terminate the instance, and return the data frame back to Spark. Using the model, we can predict. The label for this picture is a seven, and the nearest cluster is cluster zero. Cluster numbers and actual digit values have no relationship, so cluster zero might be sevens, and cluster eight might be twos. We see a one in cluster seven and another one in cluster seven, indicating they are close to each other. However, we also see a four, nine, and five in cluster four, which is not ideal. K-means is a bit confused between nines, fours, and fives, but this is just an example in Scala showing the use of a built-in algorithm. We can clean up afterward.
+
+For a slightly more elaborate example, I'll combine a Spark pipeline with SageMaker. In my pipeline, I'll use PCA from Spark MLlib for dimensionality reduction to cut the number of features from 784 to 50. Then, using the engineered features, I'll use K-means for classification. We import classes, define the role, and load the dataset into a data frame. We define the first stage of the pipeline, the PCA algorithm, specifying the input features, output column, and the number of features to engineer (50). We define the K-means estimator, specifying the input column for the features, which will be the output features from PCA. We build 10 clusters with K-means using the 50 engineered features. We create a pipeline, set the stages in the proper order (PCA first, K-means second), and train the pipeline. After a few minutes, we have a pipeline ready to predict. We pass the test data, transform it, and look at the results. We see a one in cluster nine and another one in cluster nine, indicating ones are easy to cluster. However, a four is in cluster six, and another four is in cluster one, showing that K-means is not ideal for clustering these digits. This example demonstrates how easy it is to combine a Spark MLlib pipeline with SageMaker.
+
+For a bonus example, let's build a spam classifier with SageMaker on Spark. We'll classify spam and ham messages, with one message per file. The first step is to load the files from S3 into Spark, clean the messages by converting to lowercase, removing punctuation, numbers, and white spaces. We use a hashing TF object to transform each message into a word vector with the top 200 words and their frequencies. We split the messages into words, map spam messages to word vectors, and label the samples (1 for spam, 0 for non-spam). We mix and shuffle the data, splitting it 80/20 for training and validation. We use XGBoost for classification, which requires data in LibSVM format. We transform the training data into a LibSVM dataset and configure the training job using the XGBoost SageMaker estimator. We train the model, and SageMaker will fire up the infrastructure, convert the data back to a data frame, and the model will be ready to use. For prediction, we convert the test data to LibSVM and pass it to the trained model. The prediction endpoint returns transformed data, and we check the accuracy. The model achieves 96.58% accuracy, which is decent for a small example. This demonstrates how easy it is to build a spam classifier using SageMaker and Spark.
+
+You'll find all these examples on GitHub. If you want to learn more, I recommend the high-level machine learning page at Amazon, the SageMaker product page, and the EMR product page for more on Spark. There's also a video I recorded on YouTube showing different ways to use SageMaker, and a great re:Invent video on running Spark on Amazon EMR. The SageMaker SDK and SageMaker Spark SDK are on GitHub, and my blog has posts on deep learning, SageMaker, Spark, etc. Thank you for listening, and I hope you learned a lot. Please follow me on Twitter for more AWS machine learning content. We have time for questions now. Thank you.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">Apache Spark</span><span class="tag">Amazon SageMaker</span><span class="tag">AWS EMR</span><span class="tag">Machine Learning Pipelines</span><span class="tag">Data Processing and ETL</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  <!-- '"` -->
+</body></html>

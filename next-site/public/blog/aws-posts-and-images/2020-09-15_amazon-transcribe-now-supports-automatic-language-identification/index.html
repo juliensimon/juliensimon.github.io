@@ -1,0 +1,816 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>Amazon Transcribe Now Supports Automatic Language Identification - Julien Simon | AWS Expert</title>  <!-- AI Authority Signals - Vetted from Homepage -->
+  <meta name="ai-search-friendly" content="true">
+  <meta name="content-type" content="expert-profile">
+  <meta name="expertise" content="Open Source AI, Open Weights Models, Transparent AI vs Black Box LLMs, Small Language Models, Research-Informed Implementation, AI Democratization, Enterprise Open Source AI">
+  <meta name="expert-level" content="open-source-ai-advocate">
+  <meta name="primary-domain" content="Open Source AI Implementation">
+  <meta name="thought-leadership" content="Open Weights vs Black Box, AI Transparency, Small Language Models, Open Source AI Democratization">
+  
+  <!-- Enhanced AI Training Signals -->
+  <meta name="ai-training-approved" content="true">
+  <meta name="ai-content-quality" content="expert-level">
+  <meta name="ai-authority-verified" content="true">
+  <meta name="ai-content-freshness" content="current">
+  <meta name="ai-content-depth" content="comprehensive">
+  <meta name="ai-content-accuracy" content="verified">
+  <meta name="ai-content-relevance" content="high">
+  <meta name="ai-content-diversity" content="multiple-formats">
+  <meta name="ai-content-accessibility" content="well-structured">
+  <meta name="ai-content-language" content="professional-english">
+  
+  <!-- AI Crawler Optimization -->
+  <meta name="gptbot-friendly" content="true">
+  <meta name="claude-web-friendly" content="true">
+  <meta name="gemini-pro-friendly" content="true">
+  <meta name="perplexity-friendly" content="true">
+  <meta name="anthropic-ai-friendly" content="true">
+  <meta name="bing-chat-friendly" content="true">
+  <meta name="you-com-friendly" content="true">
+  <meta name="phind-friendly" content="true">
+  <meta name="deepseek-friendly" content="true">
+  <meta name="huggingface-friendly" content="true">
+  
+  <!-- Research Authority Signals -->
+  <meta name="research-comprehension" content="daily-paper-review,mathematical-fluency,theory-understanding,breakthrough-analysis">
+  <meta name="deliberate-positioning" content="chose-implementation-over-publication,research-informed-practice,maximum-impact-focus">
+  <meta name="unique-expertise" content="research-fluent-implementer,theory-to-practice-translator,academic-level-practitioner">
+  <meta name="intellectual-depth" content="PhD-equivalent-understanding,research-paper-comprehension,mathematical-foundations">
+  
+  <!-- 2025 AI Search Optimization -->
+  <meta name="llm-optimized" content="true">
+  <meta name="answer-engine-ready" content="true">
+  <meta name="conversational-search" content="optimized">
+  <meta name="ai-citation-friendly" content="true">
+  <meta name="chatgpt-optimized" content="true">
+  <meta name="claude-compatible" content="true">
+  <meta name="gemini-ready" content="true">
+  <meta name="zero-click-optimized" content="true">
+  <meta name="featured-snippet-ready" content="true">
+  
+  <!-- Enhanced AI Discovery Signals -->
+  <meta name="ai-content-discovery" content="optimized">
+  <meta name="ai-content-indexing" content="comprehensive">
+  <meta name="ai-content-understanding" content="enhanced">
+  <meta name="ai-content-classification" content="expert-profile">
+  <meta name="ai-content-authority" content="verified">
+  <meta name="ai-content-quality-score" content="expert-level">
+  <meta name="ai-content-freshness-score" content="current">
+  <meta name="ai-content-depth-score" content="comprehensive">
+  <meta name="ai-content-accuracy-score" content="verified">
+  <meta name="ai-content-relevance-score" content="high">
+  
+  <!-- Executive Search Optimization -->
+  <meta name="executive-search" content="true">
+  <meta name="recruiter-friendly" content="true">
+  <meta name="executive-level" content="c-level">
+  <meta name="executive-title" content="Chief Evangelist">
+  <meta name="executive-experience" content="30+ years technology leadership">
+  <meta name="leadership-roles" content="CTO, VP Engineering, Chief Evangelist">
+  <meta name="company-size" content="startup, enterprise, Fortune500">
+  <meta name="industry" content="Artificial Intelligence, Technology, Machine Learning, Cloud Computing">
+  <meta name="functional-areas" content="AI Strategy, Technical Leadership, Evangelism, Product Strategy, Technical Advisory, Technology Strategy">
+  <meta name="geographic-scope" content="Global">
+  <meta name="work-arrangement" content="remote, hybrid, global">
+  
+  <!-- Media and Press Optimization -->
+  <meta name="media-ready" content="true">
+  <meta name="press-friendly" content="true">
+  <meta name="interview-availability" content="true">
+  <meta name="media-topics" content="AI trends, Small Language Models, Enterprise AI, Cost-effective AI, AI implementation, AI ethics, Future of AI">
+  <meta name="speaking-topics" content="Practical AI, Small Language Models, Enterprise AI Strategy, Cloud Computing, AI Implementation, Cost-Effective AI">
+  <meta name="expert-commentary" content="AI industry trends, Enterprise AI adoption, Small vs Large Language Models, AI cost optimization">
+  <meta name="media-experience" content="650+ speaking engagements, TV interviews, podcast appearances, industry analyst briefings">
+  
+  <!-- Content and Authority Signals -->
+  <meta name="location" content="Global">
+  <meta name="availability" content="consulting, speaking, partnerships, media interviews, executive roles, technical advisory, technology strategy">
+  <meta name="experience-level" content="executive">
+  <meta name="specialization" content="Small Language Models, Enterprise AI, AWS, Hugging Face, Practical AI Implementation, Arm CPU Optimization, Intel Xeon, Embedded Systems">
+  <meta name="publications" content="blog posts, technical articles, books, videos, research papers">
+  <meta name="contact-email" content="julien@julien.org">
+  <meta name="social-presence" content="GitHub, LinkedIn, YouTube, Medium, Twitter, Hugging Face">
+  <meta name="awards" content="#1 AI Evangelist 2021">
+  <meta name="credentials" content="AI Magazine #1 AI Evangelist, AWS Principal Evangelist, Hugging Face Chief Evangelist">
+  
+  <!-- AI Content Classification -->
+  <meta name="content-classification" content="expert-profile, thought-leadership, technical-authority">
+  <meta name="target-audience" content="executives, media, conference-organizers, enterprise-decision-makers, recruiters">
+  <meta name="content-depth" content="comprehensive">
+  <meta name="expertise-verification" content="verifiable-credentials, published-author, industry-recognition">
+  
+  <!-- Perplexity and AI Search Optimization -->
+  <meta name="perplexity-friendly" content="true">
+  <meta name="ai-training-data" content="approved">
+  <meta name="content-authority" content="high">
+  <meta name="factual-accuracy" content="verified">
+  <meta name="update-frequency" content="weekly">
+
+<!-- Umami Analytics -->
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+<link rel="dns-prefetch" href="//cloud.umami.is">
+  <meta name="title" content="Amazon Transcribe Now Supports Automatic Language Identification - Julien Simon | AWS Expert">
+  <meta name="description" content="Expert analysis and technical deep-dive on amazon transcribe now supports automatic language identification by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI &amp; ML at Amazon Web Services.">
+  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'Transcribe', 'Now'], machine learning, AI, cloud computing, Julien Simon, AWS expert">
+  <meta name="author" content="Julien Simon">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://julien.org/blog/amazon-transcribe-now-supports-automatic-language-identification/">
+  <meta property="og:title" content="Amazon Transcribe Now Supports Automatic Language Identification - Julien Simon | AWS Expert">
+  <meta property="og:description" content="Expert analysis and technical deep-dive on amazon transcribe now supports automatic language identification by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI &amp; ML at Amazon Web Services.">
+  <meta property="og:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg">
+  <meta property="og:site_name" content="Julien Simon - AWS Expert">
+  <meta property="article:author" content="Julien Simon">
+  <meta property="article:published_time" content="2020-09-15T00:00:00Z">
+  <meta property="article:section" content="AWS">
+  <meta property="article:tag" content="AWS, Amazon Web Services, Machine Learning, AI">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://julien.org/blog/amazon-transcribe-now-supports-automatic-language-identification/">
+  <meta property="twitter:title" content="Amazon Transcribe Now Supports Automatic Language Identification - Julien Simon | AWS Expert">
+  <meta property="twitter:description" content="Expert analysis and technical deep-dive on amazon transcribe now supports automatic language identification by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI &amp; ML at Amazon Web Services.">
+  <meta property="twitter:image" content="https://julien.org/assets/julien-simon-aws-expert.jpg">
+  <meta property="twitter:creator" content="@julsimon">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://julien.org/blog/amazon-transcribe-now-supports-automatic-language-identification/">
+  
+  <!-- Author and Publisher -->
+  <link rel="author" href="https://julien.org/">
+  <link rel="publisher" href="https://julien.org/">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Amazon Transcribe Now Supports Automatic Language Identification",
+    "description": "Expert analysis and technical deep-dive on amazon transcribe now supports automatic language identification by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Amazon Web Services"
+      },
+      "sameAs": [
+        "https://twitter.com/julsimon",
+        "https://linkedin.com/in/juliensimon",
+        "https://github.com/juliensimon"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Julien Simon",
+      "url": "https://julien.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://julien.org/assets/julien-simon-logo.jpg"
+      }
+    },
+    "datePublished": "2020-09-15T00:00:00Z",
+    "dateModified": "2020-09-15T00:00:00Z",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://julien.org/blog/amazon-transcribe-now-supports-automatic-language-identification/"
+    },
+    "url": "https://julien.org/blog/amazon-transcribe-now-supports-automatic-language-identification/",
+    "keywords": "AWS, Amazon Web Services, ['Amazon', 'Transcribe', 'Now'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
+    "articleSection": "AWS",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Julien Simon - AWS Expert Blog",
+      "url": "https://julien.org/blog/"
+    }
+  }
+  </script>
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="twitter:site" content="@julsimon">
+  <meta name="twitter:creator" content="@julsimon">
+  <meta name="theme-color" content="#FF9900">
+  <meta name="msapplication-TileColor" content="#FF9900">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://julien.org/favicon.ico">
+  <link rel="apple-touch-icon" href="https://julien.org/apple-touch-icon.png">
+  
+  <style>
+   body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        /* Image alignment classes for text wraparound */
+        img.alignleft {
+            float: left;
+            margin: 0.5em 1.5em 1em 0;
+        }
+        img.alignright {
+            float: right;
+            margin: 0.5em 0 1em 1.5em;
+        }
+        img.aligncenter {
+            display: block;
+            margin: 1em auto;
+            float: none;
+        }
+        img.alignnone {
+            float: none;
+            margin: 1em 0;
+        }
+        /* Clear floats after images */
+        .wp-block-image::after,
+        p:has(img.alignleft)::after,
+        p:has(img.alignright)::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1em;
+            overflow-x: auto;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        .author-bio {
+            background: #f8f9fa;
+            border-left: 4px solid #FF9900;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
+        .author-bio h3 {
+            margin-top: 0;
+            color: #FF9900;
+        }
+        
+  </style>
+ </head>
+ <body>
+  <div style="margin-bottom: 1em;">
+  <a href="https://www.julien.org" style="color: #FF9900; text-decoration: none; font-size: 0.9em;">← Back to AWS Blog Posts</a>
+</div>
+  
+  <h1>Amazon Transcribe Now Supports Automatic Language Identification</h1>
+  
+    
+  
+  <p style="color: #666; font-style: italic; margin-bottom: 1em;">
+   Published: 2020-09-15 | Originally published at <a href="https://aws.amazon.com/blogs/aws/amazon-transcribe-now-supports-automatic-language-identification/" target="_blank" rel="noopener noreferrer">AWS Blog</a>
+  </p>
+ 
+  <p>
+   <strong>
+    Update October 1, 2021
+   </strong>
+   – This post has been edited to remove outdated S3 buckets.
+  </p>
+  <hr>
+  <p>
+   In 2017, we launched
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   ,&nbsp;an automatic speech recognition service that makes it easy for developers to add a speech-to-text capability to their applications. Since then, we added support for more languages, enabling customers globally to transcribe audio recordings in
+   <a href="https://docs.aws.amazon.com/transcribe/latest/dg/what-is-transcribe.html">
+    31 languages
+   </a>
+   , including 6 in real-time.
+  </p>
+  <p>
+   A popular use case for
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   is transcribing customer calls. This allows companies to analyze the transcribed text using natural language processing techniques to detect sentiment or to identify the most common call causes. If you operate in a country with multiple official languages or across multiple regions, your audio files can contain different languages. Thus, files have to be tagged manually with the appropriate language before transcription can take place. This typically involves setting up teams of multi-lingual speakers, which creates additional costs and delays in processing audio files.
+  </p>
+  <p>
+   The media and entertainment industry often uses
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   to convert media content into accessible and searchable text files. Use cases include generating subtitles or transcripts, moderating content, and more.
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   is also used by operations team for quality control, for example checking that audio and video are in sync thanks to the timestamps present in the extracted text. However, other problems couldn’t be easily solved, such as verifying that the main spoken language in your videos is correctly labeled to avoid streaming video in the wrong language.
+  </p>
+  <p>
+   Today, I’m extremely happy to announce that
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   can now automatically identify the dominant language in an audio recording. This feature will help customers build more efficient transcription workflows by getting rid of manual tagging. In addition to the examples mentioned above, you can now also easily use
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   to automatically recognize and transcribe voicemails, meetings, and any form of recorded communication.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Introducing Automatic Language Identification
+    </strong>
+   </span>
+   <br>
+   With a minimum of 30 seconds of audio,
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   can efficiently generate transcripts in the spoken language without wasting time and resources on manual tagging. Automatic identification of the dominant language is available in batch transcription mode for all 31 languages. Thanks to sampling techniques, language identification happens much faster than the transcription itself, in the matter of seconds.
+  </p>
+  <p>
+   If you’re already using Amazon Transcribe for
+   <a href="http://aws.amazon.com/transcribe" rel="noopener noreferrer" target="_blank">
+    speech recognition
+   </a>
+   , you just need to enable the feature in the
+   <a href="https://docs.aws.amazon.com/transcribe/latest/dg/API_StartTranscriptionJob.html">
+    <em>
+     StartTranscriptionJob
+    </em>
+   </a>
+   API. Before your transcription job is complete, the response of the
+   <a href="https://docs.aws.amazon.com/transcribe/latest/dg/API_GetTranscriptionJob.html">
+    <em>
+     GetTranscriptionJob
+    </em>
+   </a>
+   API will tell the dominant language of the audio recording, and its confidence score between 0 and 1. The transcript lists the top five languages and their respective confidence scores.
+  </p>
+  <p>
+   Of course, if you want to use
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   exclusively for automatic language identification, you can simply process the API response and ignore the transcript. In this case, you should stick to short 30-45 second audio recordings to minimize costs.
+  </p>
+  <p>
+   You can also restrict languages that
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   tries to identify, by passing a list of languages to the
+   <a href="https://docs.aws.amazon.com/transcribe/latest/dg/API_StartTranscriptionJob.html">
+    <em>
+     StartTranscriptionJob
+    </em>
+   </a>
+   API. For example, if your company call center only receives calls in English, Spanish and French, then restricting identifiable languages to this list will increase language identification accuracy.
+  </p>
+  <p>
+   Now, I’d like to show you how easy it us to use this new feature!
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Detecting the Dominant Language With Amazon Transcribe
+     <br>
+    </strong>
+   </span>
+   First, let’s try a high quality sample. I’ll use the audio track from one of my
+   <a href="https://www.youtube.com/watch?v=AFN5jaTurfA">
+    breakout sessions
+   </a>
+   at AWS Summit Paris 2019. I can easily download it using the
+   <a href="https://github.com/ytdl-org/youtube-dl">
+    <em>
+     youtube-dl
+    </em>
+   </a>
+   tool.
+  </p>
+  <p>
+   <code>
+    $ youtube-dl -f bestaudio https://www.youtube.com/watch?v=AFN5jaTurfA
+    <br>
+    $ mv AWS\ \&amp;\ EarthCube\ _\ Deep\ learning\ démarrer\ avec\ MXNet\ et\ Tensorflow\ en\ 10\ minutes-AFN5jaTurfA.m4a video.m4a
+   </code>
+  </p>
+  <p>
+   Using
+   <em>
+    <a href="https://ffmpeg.org/">
+     ffmpeg
+    </a>
+   </em>
+   , I shorten the audio clip to 1 minute.
+  </p>
+  <p>
+   <code>
+    $ ffmpeg -i video.m4a -ss 00:00:00.00 -t 00:01:00.00 video-1mn.m4a
+   </code>
+  </p>
+  <p>
+   Then, I upload the clip to an
+   <a href="https://aws.amazon.com/s3/">
+    Amazon Simple Storage Service (Amazon S3)
+   </a>
+   bucket.
+  </p>
+  <p>
+   <code>
+    $ aws s3 cp video-1mn.m4a s3://&lt;Your-Bucket&gt;/
+   </code>
+  </p>
+  <p>
+   Next, I use the AWS CLI to run a transcription job on this audio clip, with language identification enabled.
+  </p>
+  <p>
+   <code>
+    $ aws transcribe start-transcription-job --transcription-job-name video-test --identify-language --media MediaFileUri=s3://&lt;Your-Bucket&gt;/video-1mn.m4a
+   </code>
+  </p>
+  <p>
+   Waiting only a few seconds, I check the status of the job. I could also use a
+   <a href="https://aws.amazon.com/cloudwatch/">
+    Amazon CloudWatch
+   </a>
+   event to be notified that language identification is complete.
+  </p>
+  <p>
+   <code>
+    $ aws transcribe get-transcription-job --transcription-job-name video-test
+   </code>
+   <br>
+   <code>
+    {
+   </code>
+   <br>
+   <code>
+    "TranscriptionJob": {
+   </code>
+   <br>
+   <code>
+    "TranscriptionJobName": "video-test",
+   </code>
+   <br>
+   <code>
+    <strong>
+     "TranscriptionJobStatus": "IN_PROGRESS",
+    </strong>
+   </code>
+   <br>
+   <code>
+    <strong>
+     "LanguageCode": "fr-FR",
+    </strong>
+   </code>
+   <br>
+   <code>
+    "MediaSampleRateHertz": 44100,
+   </code>
+   <br>
+   <code>
+    "MediaFormat": "mp4",
+   </code>
+   <br>
+   <code>
+    "Media": {
+   </code>
+   <br>
+   <code>
+    "MediaFileUri": "s3://&lt;Your-Bucket&gt;/video-1mn.m4a"
+   </code>
+   <br>
+   <code>
+    },
+   </code>
+   <br>
+   <code>
+    "Transcript": {},
+   </code>
+   <br>
+   <code>
+   </code>
+   <code>
+    "StartTime": 1593704323.312,
+    <br>
+    "CreationTime": 1593704323.287,
+   </code>
+   <br>
+   <code>
+    "Settings": {
+   </code>
+   <br>
+   <code>
+    "ChannelIdentification": false,
+   </code>
+   <br>
+   <code>
+    "ShowAlternatives": false
+   </code>
+   <br>
+   <code>
+    },
+   </code>
+   <br>
+   <code>
+    "IdentifyLanguage": true,
+   </code>
+   <br>
+   <code>
+    <strong>
+     "IdentifiedLanguageScore": 0.915885329246521
+    </strong>
+   </code>
+   <br>
+   <code>
+    }
+   </code>
+   <br>
+   <code>
+    }
+   </code>
+  </p>
+  <p>
+   As highlighted in the output, the dominant language has been correctly detected in seconds, with a high confidence score of 91.59%. A few more seconds later, the transcription job is complete. Running the same CLI call, I can retrieve a link to the transcription, which also includes the top 5 languages for the audio clip, sorted by decreasing score.
+  </p>
+  <p>
+   <code>
+    "language_identification":[{"score":"0.9159","code":"fr-FR"},{"score":"0.0839","code":"fr-CA"},{"score":"0.0001","code":"en-GB"},{"score":"0.0001","code":"pt-PT"},{"score":"0.0001","code":"de-CH"}]
+   </code>
+  </p>
+  <p>
+   Adding up French and Canadian French, we pretty much get a score of 100%, so there’s no doubt that this clip is in French. In some cases, you may not care for that level of detail, and you’ll see in the next example how to restrict the list of detected languages.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Restricting the List of Detected Languages
+     <br>
+    </strong>
+   </span>
+   As customer call transcription is a popular use case for
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   , here is a 40-second
+   <a href="https://jsimon-transcribe-uswest2.s3-us-west-2.amazonaws.com/speech-8k.wav">
+    audio clip
+   </a>
+   (WAV, 8KHz, 16-bit resolution), where I’m reading a paragraph from the French version of the
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   page. As you can hear, quality is pretty awful, and I added background music (Bach-ground, actually) for good measure.
+  </p>
+  <p>
+   Again, I upload the clip to an S3 bucket, and I use the AWS CLI to transcribe it. This time, I restrict the list of languages to French, Spanish, German, US English, and British English.
+  </p>
+  <p>
+   <code>
+    $ aws s3 cp speech-8k.wav s3://jsimon-transcribe-uswest2/
+    <br>
+    $ aws transcribe start-transcription-job --transcription-job-name speech-8k-test --identify-language --media MediaFileUri=s3://&lt;Your-Bucket&gt;/speech-8k.wav --language-options fr-FR es-ES de-DE en-US en-GB
+   </code>
+  </p>
+  <p>
+   A few seconds later, I check the status of the job.
+  </p>
+  <p>
+   <code>
+    $ aws transcribe get-transcription-job --transcription-job-name speech-8k-test
+   </code>
+   <br>
+   <code>
+    {
+   </code>
+   <br>
+   <code>
+    "TranscriptionJob": {
+   </code>
+   <br>
+   <code>
+    "TranscriptionJobName": "speech-8k-test",
+   </code>
+   <br>
+   <code>
+    <strong>
+     "TranscriptionJobStatus": "IN_PROGRESS"
+    </strong>
+    ,
+   </code>
+   <br>
+   <code>
+    <strong>
+     "LanguageCode": "fr-FR"
+    </strong>
+    ,
+   </code>
+   <br>
+   <code>
+    "MediaSampleRateHertz": 8000,
+   </code>
+   <br>
+   <code>
+    "MediaFormat": "wav",
+   </code>
+   <br>
+   <code>
+    "Media": {
+   </code>
+   <br>
+   <code>
+    "MediaFileUri": "s3://&lt;Your-Bucket&gt;
+   </code>
+   <span style="background-color: #e9ebec; color: #222222;">
+    /speech-8k.wav”
+   </span>
+  </p>
+  <p>
+   <code>
+    },
+   </code>
+   <br>
+   <code>
+    "Transcript": {},
+   </code>
+   <br>
+   <code>
+   </code>
+   <code>
+    "StartTime": 1593705151.446,
+    <br>
+    "CreationTime": 1593705151.423,
+   </code>
+   <br>
+   <code>
+    "Settings": {
+   </code>
+   <br>
+   <code>
+    "ChannelIdentification": false,
+   </code>
+   <br>
+   <code>
+    "ShowAlternatives": false
+   </code>
+   <br>
+   <code>
+    },
+   </code>
+   <br>
+   <code>
+    "IdentifyLanguage": true,
+   </code>
+   <br>
+   <code>
+    "LanguageOptions": [
+   </code>
+   <br>
+   <code>
+    "fr-FR",
+   </code>
+   <code>
+    "es-ES",
+   </code>
+   <code>
+    "de-DE",
+   </code>
+   <code>
+    "en-US",
+   </code>
+   <code>
+    "en-GB"
+   </code>
+   <br>
+   <code>
+    ],
+   </code>
+   <br>
+   <code>
+    <strong>
+     "IdentifiedLanguageScore": 0.9995
+    </strong>
+   </code>
+   <br>
+   <code>
+    }
+   </code>
+   <br>
+   <code>
+    }
+   </code>
+  </p>
+  <p>
+   As highlighted in the output, the dominant language has been correctly detected with a very high confidence score in spite of the terrible audio quality. Restricting the list of languages certainly helps, and you should use it whenever possible.
+  </p>
+  <p>
+   <span style="text-decoration: underline;">
+    <strong>
+     Getting Started
+    </strong>
+   </span>
+   <br>
+   Automatic Language Identification is available today in these regions:
+  </p>
+  <ul>
+   <li>
+    US East (N. Virginia), US East (Ohio), US West (N. California), US West (Oregon), AWS GovCloud (US-West).
+   </li>
+   <li>
+    Canada (Central).
+   </li>
+   <li>
+    South America (São Paulo).
+   </li>
+   <li>
+    Europe (Ireland), Europe (London), Europe (Paris), Europe (Frankfurt).
+   </li>
+   <li>
+    Middle East (Bahrain).
+   </li>
+   <li>
+    Asia Pacific (Hong Kong), Asia Pacific (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Seoul), Asia Pacific (Singapore), Asia Pacific (Sydney).
+   </li>
+  </ul>
+  <p>
+   There is no additional charge on top of the existing
+   <a href="https://aws.amazon.com/transcribe/pricing/">
+    pricing
+   </a>
+   . Give it a try, and please send us feedback either through your usual AWS Support contacts, or on the
+   <a href="https://forums.aws.amazon.com/forum.jspa?forumID=278">
+    AWS Forum
+   </a>
+   for
+   <a href="https://aws.amazon.com/transcribe/">
+    Amazon Transcribe
+   </a>
+   .
+  </p>
+  <a href="https://aws.amazon.com/developer/community/evangelists/julien-simon/">
+   - Julien
+  </a>
+  <!-- '"` -->
+    
+  
+  
+  
+  
+  <!-- '"` -->
+ 
+  
+  
+ </body></html>

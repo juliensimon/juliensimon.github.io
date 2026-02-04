@@ -1,0 +1,368 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonnes pratiques d authentification avec AWS IAM</title>  <!-- AI Authority Signals - Vetted from Homepage -->
+  <meta name="ai-search-friendly" content="true">
+  <meta name="content-type" content="expert-profile">
+  <meta name="expertise" content="Open Source AI, Open Weights Models, Transparent AI vs Black Box LLMs, Small Language Models, Research-Informed Implementation, AI Democratization, Enterprise Open Source AI">
+  <meta name="expert-level" content="open-source-ai-advocate">
+  <meta name="primary-domain" content="Open Source AI Implementation">
+  <meta name="thought-leadership" content="Open Weights vs Black Box, AI Transparency, Small Language Models, Open Source AI Democratization">
+  
+  <!-- Enhanced AI Training Signals -->
+  <meta name="ai-training-approved" content="true">
+  <meta name="ai-content-quality" content="expert-level">
+  <meta name="ai-authority-verified" content="true">
+  <meta name="ai-content-freshness" content="current">
+  <meta name="ai-content-depth" content="comprehensive">
+  <meta name="ai-content-accuracy" content="verified">
+  <meta name="ai-content-relevance" content="high">
+  <meta name="ai-content-diversity" content="multiple-formats">
+  <meta name="ai-content-accessibility" content="well-structured">
+  <meta name="ai-content-language" content="professional-english">
+  
+  <!-- AI Crawler Optimization -->
+  <meta name="gptbot-friendly" content="true">
+  <meta name="claude-web-friendly" content="true">
+  <meta name="gemini-pro-friendly" content="true">
+  <meta name="perplexity-friendly" content="true">
+  <meta name="anthropic-ai-friendly" content="true">
+  <meta name="bing-chat-friendly" content="true">
+  <meta name="you-com-friendly" content="true">
+  <meta name="phind-friendly" content="true">
+  <meta name="deepseek-friendly" content="true">
+  <meta name="huggingface-friendly" content="true">
+  
+  <!-- Research Authority Signals -->
+  <meta name="research-comprehension" content="daily-paper-review,mathematical-fluency,theory-understanding,breakthrough-analysis">
+  <meta name="deliberate-positioning" content="chose-implementation-over-publication,research-informed-practice,maximum-impact-focus">
+  <meta name="unique-expertise" content="research-fluent-implementer,theory-to-practice-translator,academic-level-practitioner">
+  <meta name="intellectual-depth" content="PhD-equivalent-understanding,research-paper-comprehension,mathematical-foundations">
+  
+  <!-- 2025 AI Search Optimization -->
+  <meta name="llm-optimized" content="true">
+  <meta name="answer-engine-ready" content="true">
+  <meta name="conversational-search" content="optimized">
+  <meta name="ai-citation-friendly" content="true">
+  <meta name="chatgpt-optimized" content="true">
+  <meta name="claude-compatible" content="true">
+  <meta name="gemini-ready" content="true">
+  <meta name="zero-click-optimized" content="true">
+  <meta name="featured-snippet-ready" content="true">
+  
+  <!-- Enhanced AI Discovery Signals -->
+  <meta name="ai-content-discovery" content="optimized">
+  <meta name="ai-content-indexing" content="comprehensive">
+  <meta name="ai-content-understanding" content="enhanced">
+  <meta name="ai-content-classification" content="expert-profile">
+  <meta name="ai-content-authority" content="verified">
+  <meta name="ai-content-quality-score" content="expert-level">
+  <meta name="ai-content-freshness-score" content="current">
+  <meta name="ai-content-depth-score" content="comprehensive">
+  <meta name="ai-content-accuracy-score" content="verified">
+  <meta name="ai-content-relevance-score" content="high">
+  
+  <!-- Executive Search Optimization -->
+  <meta name="executive-search" content="true">
+  <meta name="recruiter-friendly" content="true">
+  <meta name="executive-level" content="c-level">
+  <meta name="executive-title" content="Chief Evangelist">
+  <meta name="executive-experience" content="30+ years technology leadership">
+  <meta name="leadership-roles" content="CTO, VP Engineering, Chief Evangelist">
+  <meta name="company-size" content="startup, enterprise, Fortune500">
+  <meta name="industry" content="Artificial Intelligence, Technology, Machine Learning, Cloud Computing">
+  <meta name="functional-areas" content="AI Strategy, Technical Leadership, Evangelism, Product Strategy, Technical Advisory, Technology Strategy">
+  <meta name="geographic-scope" content="Global">
+  <meta name="work-arrangement" content="remote, hybrid, global">
+  
+  <!-- Media and Press Optimization -->
+  <meta name="media-ready" content="true">
+  <meta name="press-friendly" content="true">
+  <meta name="interview-availability" content="true">
+  <meta name="media-topics" content="AI trends, Small Language Models, Enterprise AI, Cost-effective AI, AI implementation, AI ethics, Future of AI">
+  <meta name="speaking-topics" content="Practical AI, Small Language Models, Enterprise AI Strategy, Cloud Computing, AI Implementation, Cost-Effective AI">
+  <meta name="expert-commentary" content="AI industry trends, Enterprise AI adoption, Small vs Large Language Models, AI cost optimization">
+  <meta name="media-experience" content="650+ speaking engagements, TV interviews, podcast appearances, industry analyst briefings">
+  
+  <!-- Content and Authority Signals -->
+  <meta name="location" content="Global">
+  <meta name="availability" content="consulting, speaking, partnerships, media interviews, executive roles, technical advisory, technology strategy">
+  <meta name="experience-level" content="executive">
+  <meta name="specialization" content="Small Language Models, Enterprise AI, AWS, Hugging Face, Practical AI Implementation, Arm CPU Optimization, Intel Xeon, Embedded Systems">
+  <meta name="publications" content="blog posts, technical articles, books, videos, research papers">
+  <meta name="contact-email" content="julien@julien.org">
+  <meta name="social-presence" content="GitHub, LinkedIn, YouTube, Medium, Twitter, Hugging Face">
+  <meta name="awards" content="#1 AI Evangelist 2021">
+  <meta name="credentials" content="AI Magazine #1 AI Evangelist, AWS Principal Evangelist, Hugging Face Chief Evangelist">
+  
+  <!-- AI Content Classification -->
+  <meta name="content-classification" content="expert-profile, thought-leadership, technical-authority">
+  <meta name="target-audience" content="executives, media, conference-organizers, enterprise-decision-makers, recruiters">
+  <meta name="content-depth" content="comprehensive">
+  <meta name="expertise-verification" content="verifiable-credentials, published-author, industry-recognition">
+  
+  <!-- Perplexity and AI Search Optimization -->
+  <meta name="perplexity-friendly" content="true">
+  <meta name="ai-training-data" content="approved">
+  <meta name="content-authority" content="high">
+  <meta name="factual-accuracy" content="verified">
+  <meta name="update-frequency" content="weekly">
+
+<!-- Umami Analytics -->
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+<link rel="dns-prefetch" href="//cloud.umami.is">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body><p style="margin-bottom: 1.5em;"><a href="https://www.julien.org" style="color: #6366f1; text-decoration: none;">← julien.org</a></p>
+    <div class="container">
+        <h1>Bonnes pratiques d authentification avec AWS IAM</h1>
+        <div class="date">February 10, 2017</div>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/5rbvrQlSD8E" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+        
+        <div class="description">Les Bonnes pratiques d'authentification avec AWS IAM - présenté par Julien Simon, évangéliste AWS.
+
+Rendez-vous sur notre site internet : <a href="http://amzn.to/2ktrf5g" target="_blank" rel="noopener noreferrer">http://amzn.to/2ktrf5g</a>
+Suivez-nous sur Twitter : <a href="https://twitter.com/aws_actus" target="_blank" rel="noopener noreferrer">https://twitter.com/aws_actus</a></div>
+        
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Bonjour, bienvenue à toutes et à tous dans ce nouveau webinaire AWS. Aujourd'hui, nous allons vous parler d'authentification et d'autorisation d'accès avec AWS IAM. L'agenda du webinaire est le suivant. D'abord, nous ferons un bref rappel sur le modèle de sécurité AWS, dont nous avons déjà parlé dans un webinar précédent. Puis, nous aborderons les premiers concepts, les bases d'IAM. Nous parlerons ensuite des stratégies IAM, qui permettent de définir des politiques de sécurité, des stratégies gérées, qui sont des stratégies prédéfinies par AWS pour vous faciliter la vie. Nous parlerons des rôles qui sont la manière dont vous autoriserez vos ressources AWS à accéder à tel ou tel service, par exemple des instances EC2. Et enfin, nous parlerons d'un sujet important pour les utilisateurs en entreprise, à savoir la fédération d'identité. Bien sûr, comme d'habitude, nous répondrons à vos questions.
+
+Commençons par le modèle de sécurité AWS. Comme je le mentionnais à l'instant, nous avons déjà animé un webinar complet sur le modèle de sécurité, dont vous voyez l'URL sur le slide. Je vous renvoie à ce webinar, je me contente de faire quelques rappels. Le modèle de sécurité AWS divise la sécurité en deux parties. Tout d'abord, la sécurité du cloud dont AWS est en charge, la sécurité de l'infrastructure d'AWS, des data centers, des edge locations, bref de tous les data centers, de tous les lieux physiques où l'infrastructure d'AWS est hébergée et où il est évident que personne non autorisé ne doit mettre les pieds. Au-dessus de l'infrastructure globale, nous assurons également la sécurité des services AWS, services comme EC2, S3, RDS, etc., afin de nous assurer qu'il n'existe pas de vulnérabilité, pas de faille de sécurité dans ces services. Ces différents mécanismes de sécurité sont régulièrement audités, et vous trouverez sur la page aws.amazon.com la liste des certifications et des régulations auxquelles AWS est conforme. Aujourd'hui, il y en a plus d'une cinquantaine.
+
+Donc voilà pour la sécurité du cloud, notre responsabilité. Au-dessus, nous parlons de sécurité dans le cloud, c'est-à-dire la sécurité que les utilisateurs AWS doivent mettre en place pour protéger leurs données, leurs applications. Pour cela, nous vous mettons à disposition un vaste panel de mécanismes de sécurité, de chiffrement, d'audit, de gestion de la conformité, sans parler bien sûr des mécanismes réseau comme les VPC, les security group, etc. Bref, tout ce qui va vous permettre de mettre en œuvre votre politique de sécurité sur votre plateforme. Et bien évidemment, vous êtes en charge de la sécurité de vos applications, vous êtes responsable de veiller à ce que votre code ne comporte pas de vulnérabilité.
+
+Donc voilà très rapidement le rappel sur le modèle de sécurité. Le socle infrastructures et services AWS s'en occupe, la partie applications et données clients, c'est à vous de vous en occuper. Et bien sûr, IAM va jouer un rôle important à cet égard. Ce que signifie ce modèle de sécurité, c'est que vous avez la propriété et le contrôle total de vos données. C'est vous qui décidez de placer vos données dans telle ou telle région. C'est vous qui décidez de les déplacer. Nous ne déplaçons jamais les données des clients. Cet environnement de sécurité a été testé, audité par un très grand nombre de clients AWS. Aujourd'hui, nous avons des millions de clients qui ont toutes des exigences de sécurité différentes, et en satisfaisant les exigences de ces différents clients, progressivement nous avons fait monter le niveau de sécurité d'AWS. Chaque nouveau client aujourd'hui profite de tout cet historique. Nous implémentons plus de 1800 contrôles de sécurité partout dans notre infrastructure, qui sont autant de contrôles que vous n'avez pas à faire. Pour autant, je rappelle que vous êtes en charge de la sécurité de votre plateforme, telle que je l'ai expliquée précédemment.
+
+A quoi sert IAM ? IAM signifie Identity and Access Management, et par conséquent, IAM va vous permettre de gérer l'authentification et les droits d'accès de vos utilisateurs. Très concrètement, IAM va vous permettre de contrôler qui a le droit de faire quoi dans votre compte et sur vos ressources, qui a le droit de démarrer des instances EC2, qui a le droit d'accéder à tel bucket S3, etc. Pour chaque utilisateur de votre compte AWS, vous pourrez soit autoriser, soit interdire chaque opération. La granularité d'IAM est extrêmement fine puisque vous pouvez, pour chaque utilisateur, autoriser ou interdire chaque appel d'API sur chaque ressource AWS. Bien sûr, on pourra factoriser tout ça et se simplifier la vie, mais si vous voulez interdire un appel d'API précis sur une ressource précise pour un utilisateur, vous êtes en mesure de le faire. Tous les appels d'API pourront également être enregistrés dans AWS CloudTrail, qui est un produit AWS dont je parlerai dans un autre webinar, qui vous permet de tracer tous les appels d'API faits à l'intérieur de votre compte, que ce soit en lecture ou en écriture, pour des fins d'audit, de debugging, etc.
+
+Quelles sont les bases d'IAM ? La première chose à savoir, c'est que vous pouvez utiliser IAM avec les différentes interfaces que nous mettons à votre disposition. Vous pouvez utiliser la console AWS, vous pouvez utiliser la ligne de commande AWS, et ces deux premières interfaces vont plutôt servir à des équipes opérationnelles, administration de système. Vous pouvez aussi utiliser des interfaces de développement programmatique avec l'un des SDK AWS dans différents langages et à travers d'autres services AWS. Donc, comme d'habitude, vous pouvez utiliser différents moyens d'accès à IAM.
+
+Le concept le plus important dans IAM, c'est celui d'utilisateur. Un utilisateur IAM, c'est une personne, une entité qui va disposer de droits d'accès, qui pourra les exercer soit en se connectant à la console, soit en utilisant l'API. Ces utilisateurs peuvent être regroupés en groupes, notion assez classique dans les gestions de droits d'accès. L'idée étant de définir des stratégies que vous associerez au groupe et dont tous les utilisateurs du groupe hériteront. Par exemple, vous pourriez avoir un groupe développeur, un groupe administrateur, un groupe finance, etc., dans lequel vous placeriez les différents utilisateurs, et donc ils hériteraient automatiquement des permissions associées au groupe.
+
+Comment est-ce qu'on authentifie un utilisateur à IAM ? La première façon, la plus simple, c'est de le faire via la console, c'est ce que vous pratiquez certainement, ou on va se connecter à la console avec un nom d'utilisateur et un mot de passe qui aura été défini dans IAM. Pour les accès en API programmatique, que ce soit par la ligne de commande ou le SDK, évidemment là on ne va pas utiliser un login et un mot de passe, on va utiliser une clé qu'on appelle l'access key, et une clé secrète qu'on appelle la secret access key, qui seront les paramètres qui serviront à vos utilisateurs ou à vos applications pour s'authentifier programmatiquement. Optionnellement, vous pouvez aussi utiliser de l'authentification multifacteurs, soit avec un token matériel comme celui de Jamalto qui est présent sur ce slide, soit via un token virtuel, une application comme Google Authenticator que vous pourrez utiliser sur votre téléphone et qui vous générera des codes que vous rentrerez au moment où vous vous connectez.
+
+Je tiens quand même à rappeler que les éléments d'authentification sont secrets, que la secret access key est secrète, que si quelqu'un s'empare de ces credentials, il peut utiliser votre compte AWS, et que par conséquent, vous ne devez absolument jamais partager vos éléments d'authentification, vous devez les protéger par tous les moyens nécessaires, et l'authentification multifacteurs est également une forte recommandation que nous vous suggérons d'utiliser. Si j'utilise la console IAM et que je consulte les informations d'un utilisateur, ici j'avais créé un utilisateur Webinar User, et bien qu'est-ce que je vois ? Je vois la date de création de cet utilisateur, je vois qu'il est autorisé à se connecter à la console, je pourrais lui interdire de le faire et dans ce cas-là, il n'utiliserait que les API, je vois le lien que cet utilisateur peut utiliser pour se connecter, je vois sa dernière date de connexion, je vois que le MFA n'est pas actif sur cet utilisateur, et tout en bas, je vois l'identifiant de sa clé d'accès. Je ne vois pas la clé secrète puisque la clé secrète n'est visualisable qu'au moment où vous créez l'utilisateur, c'est le seul moment où elle peut être affichée. Donc si vous oubliez de la copier et de la transmettre à l'utilisateur, vous ne pourrez plus la voir. Il faudrait que vous détruisiez l'utilisateur et que vous le recréez. C'est une sécurité importante, j'insiste, vous ne pouvez pas voir la clé secrète en dehors de la première option.
+
+Donc voilà pour les bases, voilà pour les utilisateurs, notion assez simple. Maintenant, la grande question c'est, très bien, mes utilisateurs peuvent se connecter soit en console, soit en API, qu'est-ce qu'ils ont le droit de faire ? Ce qu'ils ont le droit de faire, ça va être défini par les fameuses stratégies IAM. Une stratégie, c'est un ensemble de permissions qui vont être associées aux utilisateurs et aux groupes. Une permission, c'est l'autorisation d'effectuer un appel d'API sur une ressource. Dans les stratégies, on va trouver une liste de permissions qui vont détailler quelles sont les API autorisées et sur quelles ressources elles peuvent s'appliquer. Ces stratégies, alors vous m'entendrez aussi souvent utiliser le terme de policy qui est le terme américain. Donc si je les utilise de manière interchangeable, stratégie, policy, c'est la même chose. Les stratégies sont exprimées en langage JSON, vous en avez un exemple à droite. Ici, c'est une policy qui s'appelle Amazon EC2 Read Only Access, comme son nom l'indique, elle va autoriser toutes les appels d'API EC2 qui ne modifient pas de ressources.
+
+Si on regarde en plus de détail ce document, qu'est-ce qu'on voit ? On voit les premières lignes du statement, donc « Effect Allow », qui va autoriser une action qui est ici un ensemble d'actions qui sont EC2 describe étoile, toutes les opérations descriptives sur EC2 qui sont donc bien des opérations à lecture, et puis sur quelles ressources, bien étoile, toutes les ressources EC2. En dessous, on voit la même chose pour les load balancer, et puis en dessous, on voit également des appels CloudWatch et tout en bas des appels d'autoscaling. Et vous voyez à chaque fois, c'est du list, du get, du describe, donc on ne modifie pas, on ne fait que lire. Donc voilà un exemple de stratégie IAM où on autorise, donc l'utilisateur ou le groupe auquel cette stratégie sera attachée, on l'autorise à lister tout ce qui peut être listé sur EC2, Elastic Load Balancing, un petit peu de CloudWatch, non pardon, tous les appels CloudWatch également, et puis l'autoscaling.
+
+Donc voilà ce que c'est que des permissions et comment on les regroupe dans une stratégie IAM. Une instruction IAM, on vient d'en voir une, on va trouver toujours la même structure. Donc un effet qui va être soit allow ou soit deny. Un principal qui est l'utilisateur ou l'ensemble d'utilisateurs autorisé à ou à qui on autorise ou à qui on interdit de faire l'action, donc l'action elle-même qui va être soit une API soit un ensemble d'API, la ressource idem, la ressource ou l'ensemble de ressources sur lesquelles porte l'action, et de manière optionnelle des conditions qui vont spécifier des critères qui doivent être vérifiés pour que l'action soit valide. On va en voir quelques exemples.
+
+Donc voilà quelques exemples de principaux. Un principal, c'est, comme je disais tout à l'heure, l'entité sur laquelle porte l'autorisation ou l'interdiction. Elle est désignée par un ARN, donc un Amazon Resource Name, qui est un système de nommage unique de toutes les ressources à l'intérieur d'AWS. Ici, on voit quelques exemples. On voit le premier exemple, tout le monde, étoile, tous les utilisateurs AWS. La ligne du dessous, on voit l'utilisateur root. Et puis, voilà, quelques autres exemples encore. Les exemples de fédération, on en reparlera tout à l'heure. Le cas le plus courant, ça sera sans doute un utilisateur nommé, et c'est souvent sur ça que porteront les permissions.
+
+L'action. L'action définit l'API ou les API sur lesquelles portent l'autorisation et l'interdiction. Vous trouverez la liste de toutes les API dans la documentation des services AWS. On en a vu déjà quelques exemples. Et on peut raisonner en logique positive avec action ou en logique négative avec not action. Par exemple, on voyait la première ligne, l'action EC2 start instance. Donc ici, la permission porte sur l'API start instance de EC2. Si on avait mis not action EC2 start instance, ça aurait été toutes les API sauf EC2 start instance. Idem, dans la plupart des cas, on va plutôt raisonner avec des actions, mais de temps en temps, on veut interdire spécifiquement un appel d'API. Et c'est évidemment plus simple de dire laquelle on interdit que de lister les 50 API qu'on autorise, moins celles qu'on voulait interdire.
+
+Voilà quelques exemples. IAM, Change Password, S3, GetObject, etc. Et bien sûr, comme on l'a vu tout à l'heure, vous pouvez utiliser l'étoile pour regrouper des appels d'API. Si vous faites EC2, deux points, étoile, c'est toutes les APIs de EC2. Donc Not Action, comme je disais tout à l'heure, ça vous permet d'indiquer une logique négative. L'intérêt principal, c'est effectivement de faire des stratégies plus courtes, donc de vouloir tout autoriser sauf une API ou un ancien API, de vouloir tout interdire sauf un certain appel. C'est plus simple de lister explicitement son autorisation ou son interdiction plutôt que de lister tout ce qui n'est pas autorisé ou pas interdit.
+
+Voilà un petit exemple. Donc on peut aussi travailler avec des allows ou des denies. Donc voilà nos exemples. À gauche, on voit soit on autorise tout ce qui n'est pas une action IAM, effect allow not action IAM étoile, tout ce qui n'est pas une action IAM va être autorisé. On pourrait aussi écrire comme on autorise tout, le document de droite, effect allow action étoile, donc tout est autorisé, mais en dessous, on rajoute un deny explicite sur l'IAM. Les deux sont à peu près équivalents, celle de gauche est plus concise.
+
+Les ressources, vous avez certainement l'habitude de les manipuler. On va les mentionner, on va les indiquer dans les stratégies avec des ARN, comme d'habitude. Toutes les ressources Amazon, par exemple ici un bucket S3, une file SQS, des tables DynamoDB, etc. Tout simplement, et là aussi vous pouvez utiliser l'étoile quand vous voulez les factoriser. Je pense que vous en êtes assez familiers.
+
+Les conditions sont des critères qui doivent être valides pour que la stratégie s'applique. On peut avoir plusieurs conditions, on peut jouer avec des opérateurs logiques. Alors à quoi servent les conditions ? Sur la date, ici on vérifie que l'heure est comprise entre midi et 15h le 8 octobre 2015. Et on vérifie également que l'adresse IP source fait partie des sous-réseaux qui sont indiqués, 192.020. et l'autre range. Donc si toutes ces conditions sont vraies, l'instruction va s'appliquer. L'instruction pourra être un allow ou un deny. J'insiste, toutes les conditions doivent être vraies. C'est un bon mécanisme de sécurité si vous voulez restreindre, en particulier à des plages horaires, sur des comptes privilégiés, il est a priori exclu que des opérations se passent en pleine nuit, etc. Et donc vous pouvez ajouter une couche de sécurité supplémentaire en restreignant les opérations avec des conditions.
+
+Vous pouvez aussi utiliser des variables dans vos stratégies IAM. Un certain nombre de variables sont prédéfinies comme par exemple l'IP source, l'heure, peut-être qu'on les a vues sur la condition précédente, le nom, l'utilisateur, l'identifiant de l'utilisateur, etc. Donc vous trouverez toutes ces variables dans la documentation IAM. L'avantage, évidemment, c'est d'éviter de coder en dur des informations très spécifiques et de rendre vos policies plus génériques et applicables à différents types d'utilisateurs et dans différents contextes.
+
+Voilà un petit exemple où on utilise la variable username, où on autorise ici l'accès à slash home slash username, donc le répertoire de départ d'un utilisateur. Donc on l'autorise à faire list bucket sur son home directory, et puis l'autorise à faire toutes les opérations S3 sur le contenu du directory. Donc vous voyez en utilisant AWS username, on n'a pas besoin d'indiquer le nom réel de l'utilisateur et par conséquent on peut avoir une policy qui est générique et qui va fonctionner pour tous les utilisateurs.
+
+Un point important et parfois un petit peu déroutant pour les gens qui débutent sur IAM c'est de bien comprendre comment s'appliquent les stratégies. La politique par défaut, c'est tout est interdit. Donc si vous n'attribuez aucune stratégie à vos utilisateurs, ils n'ont le droit de rien faire. Donc première étape, la réponse est non. Voilà, c'est simple, la réponse est non, tout est interdit. Ensuite, on va lister les stratégies qui sont applicables à l'utilisateur, donc celles qui lui sont attachées directement, celles qui sont attachées au groupe dont il fait partie. On va les empiler et puis on va chercher à l'intérieur de ces stratégies s'il y a un refus explicite de l'action en question. Si par exemple on essaie de faire list bucket sur une ressource donnée, on va regarder est-ce que dans l'ensemble des stratégies applicables il y a un deny explicite sur cette API et sur cette ressource. Si oui, c'est très simple, ça s'arrête tout de suite. Si on a mis un deny explicite, c'est bien pour interdire l'action. Donc le deny est toujours prioritaire. Donc si vous voulez être sûr qu'une opération est interdite, vous mettez un deny. Quel que soit l'empilement de stratégie, si on trouve un deny, on arrête le traitement et on refuse l'accès.
+
+Si on ne trouve pas un deny, est-ce qu'on trouve une autorisation ? Est-ce qu'on trouve un allow ? Un allow list bucket, reprenons notre exemple. Si oui, si on voit un allow explicite, très bien, on va autoriser l'action. Si on ne le trouve pas, si l'action n'a pas été autorisée explicitement, elle est interdite. Donc, le traitement s'arrête. Ce qu'il faut retenir, c'est les deux points suivants. Par défaut, tout est interdit. Tout ce qui n'est pas explicitement autorisé est interdit. Par ailleurs, s'il y a une interdiction explicite, elle est prioritaire sur une autorisation. Si vous avez différentes stratégies attachées à un utilisateur, une qui fait un deny list bucket et une qui fait un allow list bucket, c'est le deny list bucket qui va l'emporter. Le refus est toujours prioritaire sur l'autorisation.
+
+Comment rédiger les stratégies IAM ? Différentes possibilités, on va les étudier. Bien sûr, vous pouvez partir d'une stratégie gérée déjà rédigée. On va en voir quelques exemples. Nous vous proposons des stratégies qui sont liées au poste de l'utilisateur. Donc, ce sont des points de départ, évidemment. Il est peu probable que vous ayez envie de les utiliser tel quel, mais ça vous donne un point de départ sur ce qu'un DBA ou un sysadmin devrait avoir le droit de faire. Ou aussi, on a des stratégies qui sont associées au service AWS. On en a vu tout à l'heure sur EC2, ReadOnly Access, il y en a tout un tas, S3 ReadOnly Access, etc. Tout ça, ce sont des bons points de départ. Bien sûr, vous pouvez aussi partir d'une stratégie existante qui est déjà présente dans votre compte et puis la modifier, la préciser, peut-être préciser les ressources qui sont concernées. Et puis, bien sûr, vous pouvez partir d'une feuille blanche et en utilisant, par exemple, le générateur de stratégie qui est un outil que je vais vous montrer.
+
+Commençons rapidement par couvrir les stratégies gérées. Donc les stratégies gérées, vous les trouverez dans la console IAM. Comme je le disais à l'instant, il y en a deux types. Les stratégies liées aux services, ici vous voyez Amazon S3 Full Access, Administrator Access, etc. Vous pouvez les visualiser, voir quelles sont les permissions qui sont contenues dans ces stratégies et les attacher directement à tel utilisateur ou à tel groupe. Il y a aussi les fameuses stratégies liées au type de poste, donc le database administrator, le sysadmin, etc., idem, qui sont prédéfinis et que vous pouvez rattacher directement. Ou alors vous pouvez vous en inspirer, les copier-coller, et puis les customiser, les spécialiser à votre bout. Vous pouvez donc aussi partir de zéro en utilisant le générateur de stratégie qui va vous aider à les rédiger.
+
+Donc ici, vous voyez, c'est relativement intuitif. Vous commencez par spécifier l'effet que vous voulez atteindre, est-ce que c'est une autorisation ou l'interdiction. Vous choisissez le service sur lequel vous voulez faire porter cette instruction. Vous sélectionnez les actions, vous indiquez l'ARN concerné par l'opération, de manière facultative des conditions, et puis vous cliquez sur ajouter une instruction. Ici, vous voyez ce que j'ai ajouté, j'ai autorisé toutes les actions sur EC2, sur toutes les ressources, et j'ai autorisé la création et la destruction d'un bucket S3 sur toutes les ressources. Tout ça, ça se fait en cliquant, c'est plutôt simple, pas besoin de rédiger du JSON.
+
+Ensuite, vous pouvez examiner votre stratégie. On voit ici le document de JSON qui a été produit par mes actions. Donc l'autorisation de toutes les actions EC2 sur toutes les ressources et l'autorisation de Create Bucket et Delete Bucket sur tous les buckets S3. Vous pouvez valider la stratégie, vous pouvez la modifier, vous pouvez la compléter à la main si vous voulez en la revalidant pour vous assurer que le JSON est bien formaté. Puis ensuite en cliquant sur créer une stratégie, vous sauvegarderez cette stratégie et elle pourra être tout de suite utilisée. Donc voilà, une façon simple de ne pas rédiger du JSON à la main tout en ayant la flexibilité de construire ses propres stratégies.
+
+On peut aussi créer des stratégies IAM programmatiquement. Donc ici, c'est un bout de code .NET qui fait quoi ? Qui crée un statement, allow, qui va autoriser l'accès à un sous-dossier qui est composé du nom de l'utilisateur dans un bucket donné. C'est un peu le même exemple que tout à l'heure avec la variable username. On va autoriser un utilisateur à accéder à son dossier, à son home directory. Donc on crée la ressource, on ajoute les actions qui sont concernées, on veut l'autoriser à faire get object, put object, à accéder, à lire et à modifier les objets qui se trouvent dans son bucket. On ajoute une condition sur une adresse IP, on crée la policy et on l'ajoute. Donc vous pouvez aussi dynamiquement, programmatiquement, créer des stratégies IAM dans votre code. Ici, c'est un exemple .NET, mais on peut évidemment le faire avec les autres SDK.
+
+Comment est-ce qu'on teste ces stratégies IAM ? C'est une question qu'on pose souvent. Vous pouvez les simuler, vous pouvez les tester en vrai, mais quand elles ne fonctionnent pas, ce n'est pas très simple de comprendre ce qui se passe. Le plus simple, de mon point de vue, c'est de les simuler. Vous pouvez utiliser le policy simulator dont l'URL est ici. Vous sélectionnez la stratégie IAM concernée. Et puis, sur la partie droite, vous allez sélectionner des actions sur tel ou tel service. Et puis, demander au simulateur de vérifier si ces actions sont autorisées ou interdites. Donc ici, je lui ai demandé de vérifier que j'avais le droit de faire « Create Bucket » et « Delete Bucket ». Comme ces deux actions sont bien autorisées par ma stratégie, vous voyez qu'elles sont autorisées. Si j'avais tenté de faire, je ne sais pas, en l'occurrence « Put Object », eh bien il me l'aurait refusé en disant « Désolé, il n'est pas dans la stratégie ».
+
+Donc c'est un outil de test et de debug assez pratique, je vous le conseille. Tous ces appels d'API, je l'ai mentionné tout à l'heure, vont être sauvegardés dans CloudTrail si vous l'avez activé. Je vous conseille très fortement de l'activer. CloudTrail va enregistrer dans un journal, dans S3, l'ensemble des appels d'API qui sont faits sur votre compte. Pourquoi est-ce qu'on mentionne ce point-là ? Tout simplement parce que vous trouverez pour chacun de ces appels d'API l'identité IAM de l'appel. Donc vous saurez précisément quelle est l'entité ou quel est l'utilisateur qui a fait cet appel. Une fois de plus, pensez à activer CloudTrail. Le jour où vous en aurez besoin, vous serez très content d'être capable d'aller fouiller dans vos appels d'API d'il y a un mois, deux mois, trois mois.
+
+Voilà pour les stratégies. Les stratégies s'appliquent, on l'a vu, aux utilisateurs et aux groupes d'utilisateurs. Il y a bien sûr d'autres acteurs au sein de votre plateforme qui sont souvent des ressources AWS. La question étant la suivante, comment est-ce qu'on va autoriser tel ou tel service AWS à effectuer telle ou telle action à l'intérieur de votre compte. Eh bien, on va le faire avec les rôles et c'est ce qu'on va voir maintenant. Donc, un rôle, c'est un ensemble de stratégies IAM, telles qu'on les a définies tout à l'heure. Et ces rôles, on va les associer à une ressource AWS. Donc, ça pourrait être un utilisateur, ou un Google utilisateur, mais surtout, j'ai envie de dire, ça va être un service AWS. Par exemple, une instance EC2 ou une fonction Lambda, une ressource qui va exécuter du code et qui a besoin d'avoir des permissions pour le faire. Et donc, pour un rôle, on va se poser toujours deux questions. Qui est autorisé à assumer ce rôle ? Qui a le droit finalement d'exercer cet ensemble de permissions ? Et puis bien sûr, quelles sont les autorisations, quelles sont les permissions qui sont associées à ce rôle ? Donc on va devoir répondre à ces deux questions.
+
+Prenons un exemple, l'instance EC2, c'est un cas concret que tout le monde rencontre. Et ici, un petit peu comme tout à l'heure, le réglage principal, par défaut, c'est qu'une instance EC2 n'a aucun droit d'accès. Donc si vous démarrez une instance EC2 et que vous installez le SDK AWS dessus, si vous essayez d'accéder à S3, RDS, etc., vous verrez que vous n'avez pas le droit de le faire. Quand vous démarrez une instance dans la console, vous voyez ce petit encadré en rouge qui est role.ia, et la valeur par défaut c'est « aucun », et voilà, ceci explique cela. Par défaut, lorsqu'une instance démarre, elle n'a pas de rôle associé, et donc si elle n'a pas de rôle associé, elle n'a aucune permission. Donc il faut explicitement que vous créez ce rôle, que vous l'associiez à l'instance au démarrage pour qu'elle ait le droit de faire des opérations. Ok ? Ça n'est pas faisable après. Si vous avez démarré l'instance EC2 sans rôle, vous ne pouvez pas lui attacher un rôle après. Donc c'est trop tard. Vous pensez bien à le faire au moment du démarrage.
+
+Pour une fonction Lambda, c'est la même chose pour ceux d'entre vous qui ont joué avec Lambda. Vous savez que quand on crée une fonction Lambda, il faut lui définir un rôle. Sinon, elle n'aura pas le droit d'aller accéder à SQS, DynamoDB et aux différents services dont vous avez besoin. C'est exactement la même chose que pour EC2, vous devez créer le rôle, y inclure les bonnes stratégies et puis ensuite associer ce rôle à la Lambda au moment où vous la créez.
+
+Parfois, il est nécessaire d'attribuer des permissions à des utilisateurs externes à AWS, en particulier lorsqu'on parlera de fédération d'identité, on verra ces exemples-là tout à l'heure. Le mécanisme ici, c'est d'utiliser un service qui s'appelle STS, Security Token Service, et comme son nom l'indique, STS va permettre à un utilisateur IAM, AWS, d'attribuer des droits temporaires à un utilisateur externe. Et le point essentiel, c'est que bien sûr, les droits attribués à l'utilisateur externe ne peuvent pas excéder ceux de l'utilisateur IAM. Ce serait extrêmement dangereux qu'un utilisateur IAM puisse attribuer des droits qui lui sont supérieurs. On imagine la catastrophe. Donc il nous faudra un utilisateur IAM créé sur la plateforme et qui fera des appels à STS et qui donc pourra donner des droits inférieurs ou égaux à des utilisateurs extérieurs.
+
+On pourra faire ça sur deux types d'authentification. On pourra le faire sur l'authentification par SDK API avec des durées variables de 15 minutes à 36 heures. Le MFA n'est pas supporté dans ce cas-là. On pourra aussi le faire sur la console avec des droits qui sont valables de 15 à 60 minutes et cette fois avec le MFA.
+
+Et donc, ceci nous amène à la grande discussion de la fédération d'identité. La fédération d'identité, qu'est-ce que c'est ? C'est tout simplement de permettre à des utilisateurs externes à AWS qui ont déjà leur propre identité dans un annuaire d'entreprise, un Active Directory, etc., de leur permettre d'accéder aux ressources AWS. Voilà pourquoi on parle de fédération. Il y a deux grandes catégories de scénarios. Le scénario, appelons-le entreprise, où les utilisateurs sont connus dans un annuaire d'entreprise, de type par exemple Active Directory, et on souhaite leur donner un accès aux comptes AWS. On veut les autoriser par exemple à se connecter à la console AWS sans nécessiter un nouveau login mot de passe. Ce qu'on appelle le single sign-on. Il y a trois scénarios qu'on va voir juste après avec un broker d'identité propriétaire, avec un standard d'authentification qui s'appelle SAML version 2 ou avec un service AWS qui s'appelle Directories Service. Il y a une deuxième catégorie de use case qu'on va appeler les use case sociaux où cette fois on va autoriser non pas un utilisateur mais une application généralement une application mobile à accéder au compte AWS et cette fois on aura différents cas qui sont l'identité web fournie par un fournisseur d'identité Facebook, Google, etc., ou avec une identité web gérée par AWS Cognito.
+
+Donc, commençons par les scénarios entreprise. Ici, l'entreprise est à gauche, le cloud est à droite. Ici, dans l'entreprise, on a des utilisateurs qui sont capables de s'authentifier localement, sur leur fournisseur d'identité locale qui va s'appuyer sur l'annuaire local. Ici, on parle de broker propriétaire puisqu'il est probable que ce composant d'authentification ait été développé localement par l'entreprise. Donc le schéma est le suivant. Première étape, un utilisateur se connecte à son gestionnaire d'identité. Le gestionnaire d'identité, deuxième étape, va l'authentifier auprès de l'annuaire de l'entreprise. Ensuite, il va s'adresser à STS pour obtenir un token temporaire. Donc ça veut dire concrètement qu'il faudra un utilisateur IAM créé côté AWS, dont les credentials sont stockés sur le gestionnaire d'identité, pour qu'il puisse faire l'appel à STS et obtenir un token temporaire. C'est un des défauts de l'approche qui est que, vous voyez que cette flèche qui va de l'identity broker à STS, elle suppose l'existence d'un compte IAM et par conséquent ça veut dire que sur le gestionnaire d'identité vous avez un access key et une secret key AWS. Ça marche, mais ce n'est pas forcément le niveau de sécurité le plus élevé. C'est quand même un accès potentiel au compte AWS. Mais admettons, continuons. Donc une fois que le gestionnaire d'identité a obtenu le token, il va le passer au navigateur du client, le rediriger vers la console AWS, et en passant ce token, qui va faire l'authentification, et donc sans accès login password, l'utilisateur pourra directement se connecter à la console et accéder au service AWS. Donc vous voyez, tout ça repose sur deux choses, le fait qu'on est capable d'authentifier l'utilisateur localisé, et deuxièmement, que le gestionnaire d'identité dispose d'un compte IAM qui lui permet d'invoquer STS et d'obtenir un token.
+
+Deuxième solution, avec un standard qui s'appelle SAML, donc toujours l'entreprise à gauche AWS. Comme tout à l'heure, le navigateur de l'utilisateur va se connecter au fournisseur d'identité. Le fournisseur d'identité, comme tout à l'heure, va authentifier l'utilisateur dans son annuaire local. Il va lui renvoyer une réponse qu'on appelle « AuthN », qui fait partie du standard SAML. Donc un token bien spécifié. Et l'utilisateur va directement être redirigé vers la console AWS et passer ce token. Et il va, une fois de plus, s'authentifier sans login et sans password. Alors, ils vont dire, comment est-ce qu'AWS sait que ce token est valide ? Pourquoi est-ce qu'il l'accepte ? Eh bien, il l'accepte parce que contrairement à tout à l'heure, on a enregistré le fournisseur d'identité de l'entreprise, on l'a enregistré dans IAM, on a une connexion préétablie, un enregistrement de ce fournisseur d'identité dans IAM, et donc via cette déclaration explicite du fournisseur d'identité dans IAM, et via le standard, on est capable de faire cette opération où cette fois-ci, vous voyez qu'on n'utilise pas STS explicitement, on ne fait pas d'appel entre le fournisseur d'identité et le cloud AWS. Par conséquent, il est inutile d'avoir un compte IAM dédié au fournisseur d'identité. Donc de mon point de vue, c'est une sécurité supplémentaire. La relation de confiance ici repose sur le fait que le fournisseur d'identité a été défini et préenregistré dans IAM par l'administrateur du compte AWS. Pour l'utilisateur, le fonctionnement est le même, il va se retrouver redirigé de la même façon.
+
+Troisième possibilité, l'utilisateur d'AWS Directory Service. Alors, AWS Directory Service, c'est un service managé qui permet deux choses. La première, c'est de... Si vous disposez déjà d'un Active Directory sur site, eh bien, de créer une image de cet Active Directory dans AWS. Alors, ce n'est pas une réplication. On ne réplique pas votre Active Directory à l'intérieur de AWS. On fournit simplement AWS, un connecteur, vers votre Active Directory. La deuxième chose qui permet de faire Directory Service pour les gens qui n'ont pas de serveurs sur site, c'est de créer un serveur Active Directory à l'intérieur d'AWS. Alors pourquoi est-ce que ce service est intéressant pour la fédération ? Et bien tout simplement parce que comme on aura une connaissance locale soit via le connecteur soit via le serveur lancé dans l'AWS, comme on aura une connaissance locale à l'AWS de l'utilisateur, on va pouvoir définir la fédération directement à l'intérieur du Directory Services. Le gros avantage de cette solution là, c'est qu'il n'y a pas du tout besoin d'avoir de fonctionnalités d'identité externe comme on l'a vu pour le cas du broker propriétaire ou pour le même cas de SAML. Là, on va faire une fédération directement entre l'AD et l'IAM à l'intérieur de AWS. Donc on n'a pas besoin d'avoir un composant extérieur. Pour les gens qui sont complètement basés sur Active Directory et qui n'avaient pas de plateforme de single sign-on déjà, c'est une assez bonne solution qui ne nécessite pas de notification de leur infrastructure résistante, qui est relativement aisée à mettre en place, en tout cas plus facile que les solutions. Voilà pour les cas d'entreprise. On voit différentes solutions. Passons maintenant au cas d'identité sociale web.
+
+Ici, on a une application mobile qui va authentifier son utilisateur auprès de son fournisseur d'identité, Amazon, Google, Facebook par exemple. On va récupérer un jeton. On va faire un appel à STS qui va envoyer un jeton temporaire, qui va vérifier l'identité auprès du fournisseur web et puis bien sûr vérifier les politiques applicables, et retourner, ou pas, à l'application « Oui » le droit de se connecter. Voilà, donc schéma relativement simple. Il faudrait rentrer beaucoup dans les détails de comment ça se passe avec tel ou tel fournisseur. Vous avez les articles de blog ici qui vous donnent davantage de détails. Voilà, ça ressemble aux fonctionnalités qu'on avait un petit peu avec le broker propriétaire où on fait une authentification avec le fournisseur externe, on fait un appel à la STS et puis en fonction de la vérification on ne donne pas l'accès à l'application. Alors dernière étape qui est l'utilisation de Cognito. Un service managé qui permet de faire différentes choses pour les applications mobiles, qui permet de faire de la synchronisation de données entre devices, qui permet aussi de gérer les identités, etc. Donc ici, le schéma est suivant. On va se connecter à l'application, on va s'authentifier avec un fournisseur d'identité qui est ici Amazon. On va échanger le token fourni par le fournisseur d'identité contre un token Cognito. Ensuite, on va faire une espèce de correspondance de ces deux identités. Ensuite, on va échanger le token Cognito contre un token STS, donc temporaire, et on va utiliser ce token STS pour accéder au service AWS. Là aussi, c'est une machinerie qui mériterait d'être expliquée très en détail. Vous avez les différents articles de blog si vous voulez creuser. Mon avis là-dessus, c'est soit vous utilisez déjà Cognito dans votre appli mobile, par exemple pour faire la synchronisation de données, auquel cas, je pense que ça vaut la peine de regarder Cognito pour faire également de l'authentification. Si vous n'utilisez pas du tout Cognito, je ne suis pas sûr que la seule authentification ait un intérêt et dans ce cas-là il vaut mieux peut-être rester sur le schéma précédent avec le fournisseur d'identité externe. Une fois de plus, si vous utilisez déjà Cognito, autant rationaliser le fonctionnement de votre application et gérer aussi l'authentification avec Cognito.
+
+On pourrait évidemment continuer longtemps parce qu'on a tout un tas de partenaires qui sont de partenaires de single sign-on et de fédération d'identité qui sont intégrés également avec AWS. L'idée étant pour vous de dire que si vous utilisez déjà l'un ou l'autre de ces fournisseurs, pour le SSO de votre entreprise, vous pouvez continuer à les utiliser en définissant les fédérations vers AWS. Si vous avez l'un de ces fournisseurs déjà dans votre plateforme, regardez comment bâtir une fédération afin d'avoir une gestion unifiée de vos utilisateurs entre la partie sur site et la partie cloud. L'idée c'est vraiment de faire en sorte que les choses soient unifiées. Voilà, j'en ai fini pour la fédération. Finissons par peut-être quelques bonnes pratiques qui n'est jamais inutile de rappeler. Si vous devez en retenir une seule, c'est surtout de ne jamais coder en dur les informations publiques d'accès, donc les clés d'accès et encore moins les clés secrètes, vous ne devez jamais les mettre en dur dans le code, encore moins les commettre sur GitHub. Donc vraiment, c'est une très mauvaise pratique, s'il vous plaît ne faites pas ça. Ne copiez pas non plus les clés d'accès sur les instances EC2, c'est là aussi un risque de sécurité et puis c'est une complexité de gestion puisque les instances EC2 vont et viennent et si vous devez à chaque fois que vous démarrez une instance EC2 copier vos secrets, là aussi c'est dangereux, c'est pas pratique. Donc c'est vraiment, je l'ai mis en rouge souligné désolé, mais c'est vraiment deux choses à éviter. La bonne solution c'est de créer des rôles comme je vous l'ai expliqué tout à l'heure. Vous créez des rôles, vous associez à ces rôles des stratégies les plus restrictives possibles et vous les associez aux ressources qui en ont besoin. Par exemple, les instances EC2, les fonctions lambda, etc. Qui dit permission pour des ressources AWS dit rôle. Il ne devrait pas y avoir d'exception à cette règle, surtout pas en utilisant des clés d'accès. Le deuxième conseil que je voulais vous donner c'est de penser à les changer régulièrement, c'est comme les mots de passe, il faut penser à les faire tourner. Je pense qu'une fois par an, il paraît un minimum à vous de définir vos politiques, mais il est très aisé de faire tourner les clés pour un utilisateur donné, vous lui créer une nouvelle clé d'accès et donc une nouvelle clé secrète, vous mettez à jour le compte ou en tout cas les applications qui doivent utiliser cette nouvelle clé, vous vérifiez que tout fonctionne et puis ensuite vous invalidez la clé d'accès initiale, vous revérifiez que tout fonctionne et puis une fois que vous êtes rassuré sur le fait que c'est bien la nouvelle clé qui est utilisée partout que tout fonctionne correctement à ce moment-là vous pouvez supprimer la clé initiale. Penser à faire tourner les clés, c'est inutile de laisser des secrets vivre pendant deux ans, trois ans. Toujours un risque que quelqu'un les diffuse. Faire tourner ces clés, c'est une bonne façon d'atténuer ces risques-là et de fermer les portes à ces attaques-là.
+
+Pour résumer, aujourd'hui, on a parlé d'IAM qui est un ensemble de mécanismes qui vous permet de gérer l'identité et les droits d'accès des utilisateurs et des applications dans votre plateforme. L'objectif c'est de bien vérifier, de bien s'assurer qui a le droit de faire quoi dans le compte et sur quelles ressources avec un niveau de granularité vous l'avez vu qui est très fin puisque pour chaque API et chaque ressource on peut autoriser ou interdire l'accès à tel utilisateur. Vous pouvez fédérer IAM avec des systèmes externes. On en a parlé rapidement, c'est un sujet qui est compliqué, qui est vaste et on a au moins parlé des différentes options possibles. Vous pouvez donc fédérer avec des systèmes d'entreprise basés sur des brokers propriétaires, basés sur le standard SAML ou avec un Active Directory à l'aide d'Active Directory Service. Vous pouvez aussi vous appuyer sur les partenaires qui sont des partenaires de fédération qui supportent AWS. Il n'y a qu'un système, on en a parlé, il y a le Directory services pour les plateformes Microsoft, Cognito pour les plateformes mobiles et puis CloudTrail pour l'auditing et la traçabilité de toutes les appels d'API qui sont faits dans votre plateforme et de l'identité des services ou des utilisateurs qui ont fait ces appels d'API. Quelques ressources supplémentaires, le blog sécurité d'AWS qui est très vivant, qui a beaucoup d'activités, évidemment ça parle beaucoup d'IAM, mais pas seulement, je vous conseille de le suivre. Vous verrez aussi beaucoup d'exemples, de cas concrets d'utilisation, comment bien déployer IAM et les bonnes pratiques autour d'IAM. Et puis j'ai ajouté quelques vidéos intéressantes de re:Invent. Deux vidéos de la conférence 2016 que je vous conseille très fortement pour bien compléter ce webinar. Une vidéo de 2014 qui rentre très en détail sur les sujets de fédération, bien plus en détail que ce que j'ai fait aujourd'hui avec des démos. Donc si vous voulez comprendre quel est le bon scénario de fédération pour vous, je vous incite à regarder cette vidéo. Et puis une autre vidéo de fédération 2015 également très intéressante avec des démonstrations. De quoi bien compléter ce webinar d'introduction à l'IAM.
+
+
+        </div>
+        
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AWS IAM</span><span class="tag">Authentification et Autorisation</span><span class="tag">Fédération d'Identité</span><span class="tag">Stratégies IAM</span><span class="tag">Rôles et Utilisateurs IAM</span>
+        </div>
+        
+        <div class="links">
+            <a href="https://www.julien.org/youtube.html" class="link">Julien.org - Youtube</a>
+            <a href="https://youtube.com/@juliensimon.fr" class="link youtube">Julien's YouTube channel</a>
+        </div>
+    </div>
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  <!-- '"` -->
+</body></html>

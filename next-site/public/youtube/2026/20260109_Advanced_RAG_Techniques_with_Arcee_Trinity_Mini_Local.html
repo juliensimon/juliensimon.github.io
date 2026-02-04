@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced RAG Techniques with Arcee Trinity Mini Local</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .date {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 30px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        .description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .description a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .description a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        .transcript {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            font-size: 1em;
+        }
+        .transcript h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tags {
+            margin-bottom: 30px;
+        }
+        .tags h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background: #2980b9;
+        }
+        .link.youtube {
+            background: #e74c3c;
+        }
+        .link.youtube:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body><p style="margin-bottom: 1.5em;"><a href="https://www.julien.org" style="color: #6366f1; text-decoration: none;">← julien.org</a></p>
+    <div class="container">
+        <h1>Advanced RAG Techniques with Arcee Trinity Mini Local</h1>
+        <div class="date">January 09, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/P-3VkgI6ZSQ" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">In this video, we build a fully local RAG chatbot that runs entirely on a MacBook - no cloud APIs, no usage costs, complete privacy.
+
+We use Arcee's Trinity Mini, a 26-billion-parameter mixture-of-experts model trained for real-world enterprise tasks, including RAG, function calling, and tool use. Running in Q8 quantization through llama.cpp with Metal acceleration, it's surprisingly capable on Apple Silicon.
+
+This builds on a previous video where we used Arcee Conductor for cloud-based inference. Same stack - LangChain for orchestration, ChromaDB for vector storage, Gradio for the UI - but now the model runs locally.
+
+We also explore advanced retrieval techniques:
+- MMR (Maximal Marginal Relevance) for diverse results
+- Hybrid search combining vector similarity and BM25 keyword matching
+- Query rewriting to clean up messy questions before retrieval
+- Cross-encoder re-ranking for precision after recall
+
+All running on a Mac. No internet required.
+
+Resources
+- <a href="https://www.arcee.ai/blog/the-trinity-manifesto" target="_blank" rel="noopener noreferrer">https://www.arcee.ai/blog/the-trinity-manifesto</a>
+- <a href="https://huggingface.co/arcee-ai/Trinity-Mini-GGUF" target="_blank" rel="noopener noreferrer">https://huggingface.co/arcee-ai/Trinity-Mini-GGUF</a>
+- <a href="https://github.com/juliensimon/local-rag-chatbot/" target="_blank" rel="noopener noreferrer">https://github.com/juliensimon/local-rag-chatbot/</a>
+
+#ArceeAI #TrinityMini #RAG #LocalLLM #llamacpp #ChromaDB #LangChain #HybridSearch #Reranking #AppleSilicon #EnterpriseAI #AITutorial #GenerativeAI #Python</div>
+
+        <div class="transcript">
+            <h2>Transcript</h2>
+            Hi everybody, it's Julian. A few months ago, I showed you how to build a rag chatbot using Arcee Conductor for intelligent model routing in the cloud. But today, we're going fully local. I'm going to keep the same rag architecture with Langchain, ChromaDB, Gradio for the UI, but I'll be using Arcee Trinity Mini running locally on my Mac.  with Lama CPP. I've also added some powerful retrieval features since the last video, such as hybrid search, query rewriting, or re-ranking. Let's get started. So why would you want to run a local model instead of using cloud APIs? I can think of a few reasons. The first one, of course, is you don't need internet access. You could be on a plane or you could be  at customer premises where you don't have internet access and still get work done on your local machine. Second, of course, you don't need to pay for API calls, no paper token, just run on your local machine. And third, I guess, is privacy. Documents are on your local machine and you don't need to send them to any third party API.  So there are some good reasons why you would want to work strictly locally. So here I'm going to use RCTrinity Mini, which I already discussed. It was launched by RCE about a month ago now, and it's a 26 billion parameter model with a mixture of experts architecture. And it was specifically trained on high quality data for enterprise users.  And the cool thing is it's got an Apache 2.0 license and the model is available on Hugging Face. And it's also available in GGUF format with different quantizations. And in fact, in my demo, I'm going to use the 8-bit version of the model. Okay, so you can just go, download that from Hugging Face,  launch it locally with LLAMA CPP like I'm going to do here, and you're good to go. You can also try smaller versions, I would say smaller quants like 6 bits or 5 bit. There might be a bit of quality degradation, but honestly, it's worth a shot. Maybe it's good enough for the job at hand. But here I'm using the 8-bit  which is still fairly large, but small enough to run on my machine. I'm also using Chroma, which is a very cool VectorDB, if you want to call it that. And I'm going to show some of the more advanced retrieval features available in Chroma. And as usual, I'll use Gradio for the UI.  So let's take a quick look at the app first. This is what it looks like. It's a simple chatbot. I can enable rag mode or vanilla mode. I've got obviously an input box here. I've got some sample prompts. And I'm running this on a collection of energy resources.  So I actually downloaded, let me find those docs. Here they are. I have about, I think it's 94, 95 PDFs from the energy domain. I think it's the World Energy Agency. Okay. And it's about 10,000 pages if I recall correctly. Okay.  and they're indexed in chroma db and i can go and query those okay so you can use any you can use any files i'll explain that later but that these are the ones i'm using right now okay so my chatbot is running as a python app on gradio so default port is 7860 and i've got lama cpp running here  locally port 8080 on that 8-bit Trinity Mini model. Okay, so these are the building blocks and again I'll put all the links in the video description. Okay, so let's start testing the app and looking at the code and figuring out how things work. Okay, let's start in vanilla mode. So no rag, right? Just sending the question to  the model. So let's try this one. What are the key policy recommendations for accelerating clean energy transitions? So we send that to the model, we see the model doing its thing, my Mac is fairly busy, which is fine, and then we're generating an answer. Typical model invocation. This is  This is fast. It is 58 tokens per second, which is great. And if we look at the answer, there's certainly nothing wrong with it. But, you know, it feels a little high level. I'm sure Trinity Mini saw some energy domain data. But how do I know this is the best answer? Maybe it's outdated.  Maybe it's imprecise. Unfortunately, maybe it's hallucinating. I'm not getting any numbers here, but sometimes you get numbers and you go, yeah, can I really trust this? And that's why, you know, RAG is such a powerful technique. So let's enable RAG. Okay. And we can pick from different retrieval.  So let's start with similarity, which is exactly what the name says. We'll try to find content in the knowledge base, in the Chroma document collection that is as close as possible to my query. So let's just go and try this one again. So now we're retrieving context, as you're seeing here, and we're passing the context  context to the model and now it's generating. Okay, so there's just a bit of extra latency because of course we need to go and query the knowledge base. I'm using a small embeddings model from Hugging Face as you would expect, but it's a fairly fast operation, right? So let's look at the answer now.  So we have context, right? We see the context is quoted directly in the answer. So we could go and check page 56 and page 18 of those docs and see for ourselves that these are actually the policies mentioned in the doc, okay? And I'm also printing out the actual retrievals here, okay?  the highest score or the most relevant is the one with that little star. So I think that's useful to see. What we retrieve, is this really relevant? Is my retrieval mechanism really working? I like to do that. More transparency is always better. So let's try another retrieval technique.  Let's clear this. Okay. And now we're going to try MMR. Okay, so I need to explain what MMR is. So MMR means maximal marginal relevance. So where similarity is looking for the closest match between the query and the document chunks, MMR will actually look  for diversity. It will fetch a number of candidates and it will select chunks that are relevant but diverse. Okay, so for research work or exploration work, this is quite useful. You're not asking, you know, very pointy question where, you know, the answer is just, you know, just a number or stat.  uh here you in this particular case we're trying to get a sense of what those policies are so maybe exploring and just not strictly looking for a similarity match is interesting so let's give it a shot okay so we're querying the the collection again um and uh we're probably going to return different chunks  and see what we get here. And you can see this is a different answer. We're actually quoting from different documents, right? And, well, I guess both answers would be interesting, and, you know, mixing and matching the two would be great. So, you know, why would you stick to one retrieval  technique when several are available in Chroma. And it makes no difference to Trinity. You're just passing different chunks and then it's doing its thing, right? So if you want to relax the similarity constraint, you can do that. And as always, we have hybrid mode. So let's just try hybrid mode, clear this.  And as you would expect, hybrid is a mix of the two, right? And there's a parameter to decide how much MMR you want in there and how much similarity you want in there, okay? We'll just stick to default. So let's try this one. And see...  if we get yet another answer to the question. Okay, well, I don't know if it looks like a mix. Looks like it did hit different documents. We still get that US 2024 doc, but this one, I think, is, again, a different one.  So again, there's no black or white answer to this. I think generally, if your RAG wants to help users answer very pointy questions like data questions, you know, what's the margin in Q3 for company XYZ? Okay, probably similar.  works if you're doing you know open questions maybe like this one maybe MMR opens up the the universe a little bit more and I guess hybrid again is is a mix of the two so you know you could you could try all of them and see what works better for a particular class of questions okay and  You could actually expose that to users and maybe explain a little bit what those things are and over time learn that, well, one ritual technique works better for a certain group of users and then make that one default. Okay? And we could ask follow-up questions, right? Let's try a follow-up question here. Something like this. Are there any...  China specific policies. Why not? We have history management here, so we should be able to follow up on that. Let's see what we get. Okay, so in that knowledge base, we don't have any specific  policies for China, we just have a few data points. But again, they are clearly pinpointed and we could go and double check. So this will build a lot of confidence, of course, in the system instead of just getting an answer where you're never sure how much you can trust the model.  So let's look at a few more techniques to further improve our RAC system. And now I'm going to show you two pretty cool techniques. The first one is called query rewriting and the other one is called re-ranking. So let's start with query rewriting. That's exactly what the name says. Before we query the document collection, we are going to rewrite it.  to improve our hit ratio, I suppose. So why would we do that? User queries have a lot of useless words and we don't want to match those. We want to match the key topics and maybe if it's a short query, we want to expand a little bit on it to try and find  more chunks, more relevant chunks. So instead of teaching your users to write good queries, let's use the model, so in this case Trinity Mini again, to improve the query and then send it to the document collection to find better chunks. So let's just go and enable this.  Again, it will add a bit of latency because that's another round trip to the model, but it's probably worth it. Let's illustrate what rewriting does. First, we're going to ask a pretty basic question. I haven't enabled rewriting. Let's see what the model does here. It's going to do rag.  but it's going to do rag on that pretty dumb query. Okay? So you could argue, well, I do get an answer, right? It's okay, actually. It did match documents, etc., etc. It's not super detailed. So now let's run the same. We'll use MMR again, but this time we'll...  we'll add rewriting, okay, and ask the same thing. So first, we rewrite the query, okay, and second, we send the query to the knowledge base, and third, we generate the answer, okay. So here it's rewritten at net zero carbon emissions definition.  Okay, which is a little better, right? And you can see the reasoning, right, behind the rewriting here, removing filler words, spanning a little bit on the technical concepts, etc. So that's probably a better answer here. Okay, let's try yet another one.  Let's try MMR rewriting. Explain what net zero means to the industry, to the car industry. Let's see.  Let's see if we're writing gets a little more creative here. Oh, that's very interesting. OK, so it's rewritten as net zero automotive sector emissions, blah, blah, blah, vehicle lifecycle, which are all good things. And so now I'm actually matching  good stuff right I'm actually matching the good stuff all those terms are high value and they're certainly present in the document collection and now I'm getting a better answer here right so query writing is a pretty cool technique okay okay now let's look at  Okay, let's look at re-ranking now. So what does re-ranking do? So re-ranking adds an extra step to evaluate how well each retrieve chunk matches the query. Okay, so now things go like this. We send the user query to the embedding model to re-ranking.  retrieve chunks, then we take each chunk with the initial query and we pass that to a re-ranking model for scoring. Once we've scored all the chunks with respect to the user query, we return the top scoring chunks to the model for generation.  So it's retrieval first, ranking second with respect to the query to double check that the match is actually good. And then third, we use the model, the small language model Trinity here for generation. So this one adds a bit of latency again, although the ranking model  models are very small models so even though let's say we retrieve 10 chunks ranking the 10 doesn't had a ton of extra time okay so let's go and try this one okay and we'll see we'll see a little more activity here okay  So here we did retrieve chunks. I'm only retrieving three, you could retrieve more. And then we're scoring each chunk with respect to the initial query. And the best one was this one. And maybe without re-ranking it wouldn't be. So if you tend to retrieve lots of chunks, re-ranking is a good technique.  that could help surface maybe a better top chunk than the one that was initially discovered. And then, of course, we can enable all those things. So we could, let me clear that discussion here, we could try and put all those things together. Why not?  So now a lot is happening. So first we're rewriting the query, so that goes to Trinity. Then with the rewritten query, we hit the document collection with the embedding model. And then for each of the chunk, we hit the ranking model to re-rank the chunks. And then we pass the re-rank chunks back to Trinity Mini for story generation. Okay?  I mean, these are simple queries, and my doc collection isn't insanely large. And you can see this is still plenty fast, right? So we can see the rewrite. We can see the retrieve chunks, et cetera, et cetera. OK? So again, there is no Swiss Army Knife set  techniques that works every single time you have to go and experiment and and find you know which ones work best so if you have if you have an evaluation set or for your rag system this is fairly easy to run automatically and you know enable those different options and see you know in general  when you get the most performance, right? And some of those techniques do have extra hyperparameters, so you may want to explore that a little bit. But in any case, we can see all of that stuff is running local. It's certainly fast enough. I mean, I wouldn't mind working with this system  and maybe try to cut down on the Trinity latency, maybe try a Q6 model instead of a Q8. But the quality is good. It's generating nicely. It's definitely understanding the context, et cetera, et cetera. So that's pretty cool. And then, like I said, we could filter on the  on particular documents if we knew we were looking for... Yeah, let's try one maybe. Let's clear that stuff and let's go and enable... Yeah, let's do hybrid and query writing and re-ranking and let's take... Yeah, Azerbaijan, why not? Okay, and let's go and add.  What are the net zero initiatives? Let's see. So now we're doing the same thing as we've done before, except we're only hitting that particular document, right? So let's see.  if anything happens here. And yes, we do. This is pretty cool, right? We get Azerbaijan-specific information. So obviously, we could have gone and queried the full collection, but sometimes you know the information is going to be there, or maybe you  to chat with a specific document and you just go and hit that document directly. Okay? All right. Enough of the demo. Let me walk you through the code really quickly and show you how you could add your own PDFs and your own documents to this. Okay? All the code is on GitHub. Again, I'll put all the links  in the video description and the main thing you want to know is how do I add my files to this so basically you need a PDF folder with all your PDF files right and just dump them here and chroma  when the app starts, Chroma will detect any new file that hasn't been indexed so far and it will, you know, chunk it and ingest it. So you could do it gradually. You can start with a few files and then you can drop more files over time. Okay? If you want to clear everything because you messed up your document collection, that's very simple. You just  this directory here. Okay, so if you just delete this, which is obviously where chroma indexes everything. You can see my collection here is about 300 megs, right? So just nuke that folder and then when you restart the app, chroma will just re-ingest everything. When it comes to the code, I've tried to keep thinking  organized and maintainable hopefully so this is all about chroma ingesting etc etc this is all the retrieval code so hybrid mmr etc etc and and that's  the Q&amp;A chain from Langchain right so should be fairly easy to understand and I've got a bunch of tests as well if you want to tweak and run the tests again okay that's really what I wanted to show you just you know building on the previous Rack Chatbot showing you more advanced techniques showing you  how to work completely local with the Arcee Trinity mini model which is you know more than capable of dealing with all those rag queries and and generally to show you that local work is possible and you don't need to pay a fortune for a model API's you don't need to go to  the cloud if you don't want to working local is great it has a lot of benefits all right my friends thank you for watching i hope you liked it and until next time keep rocking
+
+
+        </div>
+
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            
+        </div>
+    </div>
+
+
+</body></html>
