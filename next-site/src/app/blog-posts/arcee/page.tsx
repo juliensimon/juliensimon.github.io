@@ -1,14 +1,20 @@
-'use client';
+import { buildMetadata } from '@/lib/metadata';
+import ArceeContent from './ArceeContent';
 
-import BlogListingPage from '@/components/ui/BlogListingPage';
-import { ARCEE_POSTS } from '@/data/blog-listings/arcee';
+export const metadata = buildMetadata({
+  title: 'Arcee AI Blog Posts',
+  description:
+    'Articles on Small Language Models, model merging, practical AI deployment, and enterprise AI strategies with Arcee AI.',
+  path: '/blog-posts/arcee',
+  keywords: [
+    'Arcee AI',
+    'Small Language Models',
+    'model merging',
+    'AI deployment',
+    'enterprise AI',
+  ],
+});
 
-export default function ArceeBlogPostsPage() {
-  return (
-    <BlogListingPage
-      title="Arcee AI Blog Posts"
-      subtitle="Articles on Small Language Models and practical AI deployment"
-      posts={ARCEE_POSTS}
-    />
-  );
+export default function ArceeBlogPage() {
+  return <ArceeContent />;
 }

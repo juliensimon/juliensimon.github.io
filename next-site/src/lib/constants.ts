@@ -2,7 +2,7 @@ export const SITE = {
   name: 'Julien Simon',
   title: 'Julien Simon - AI Operating Partner at Fortino Capital',
   description:
-    'Julien Simon: AI Operating Partner at Fortino Capital accelerating cloud and AI initiatives across Private Equity and Venture Capital portfolios. From product to engineering to operations to GTM. 30+ years technology leadership at AWS, Hugging Face, Arcee AI.',
+    'AI Operating Partner at Fortino Capital. 30+ years accelerating cloud and AI across PE/VC portfolios. Expert in Small Language Models and enterprise AI.',
   url: 'https://www.julien.org',
   image: 'https://www.julien.org/assets/julien.webp',
   locale: 'en_US',

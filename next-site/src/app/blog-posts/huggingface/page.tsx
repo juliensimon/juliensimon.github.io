@@ -1,14 +1,20 @@
-'use client';
+import { buildMetadata } from '@/lib/metadata';
+import HuggingFaceContent from './HuggingFaceContent';
 
-import BlogListingPage from '@/components/ui/BlogListingPage';
-import { HUGGINGFACE_POSTS } from '@/data/blog-listings/huggingface';
+export const metadata = buildMetadata({
+  title: 'Hugging Face Blog Posts',
+  description:
+    '25+ articles on transformer models, the Hugging Face ecosystem, model optimization, and NLP best practices.',
+  path: '/blog-posts/huggingface',
+  keywords: [
+    'Hugging Face',
+    'transformers',
+    'NLP',
+    'model optimization',
+    'inference endpoints',
+  ],
+});
 
-export default function HuggingFaceBlogPostsPage() {
-  return (
-    <BlogListingPage
-      title="Hugging Face Blog Posts"
-      subtitle="25+ articles on transformer models and the HF ecosystem"
-      posts={HUGGINGFACE_POSTS}
-    />
-  );
+export default function HuggingFaceBlogPage() {
+  return <HuggingFaceContent />;
 }

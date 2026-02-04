@@ -1,14 +1,20 @@
-'use client';
+import { buildMetadata } from '@/lib/metadata';
+import AWSMediumContent from './AWSMediumContent';
 
-import BlogListingPage from '@/components/ui/BlogListingPage';
-import { AWS_MEDIUM_POSTS } from '@/data/blog-listings/aws-medium';
+export const metadata = buildMetadata({
+  title: 'AWS Medium Posts',
+  description:
+    'Cross-published AWS technical content on Medium covering AI/ML services, best practices, and tutorials.',
+  path: '/blog-posts/aws-medium',
+  keywords: [
+    'AWS Medium',
+    'cross-published',
+    'AWS tutorials',
+    'cloud AI',
+    'ML services',
+  ],
+});
 
-export default function AWSMediumPostsPage() {
-  return (
-    <BlogListingPage
-      title="AWS Medium Posts"
-      subtitle="Cross-published AWS technical content on Medium"
-      posts={AWS_MEDIUM_POSTS}
-    />
-  );
+export default function AWSMediumBlogPage() {
+  return <AWSMediumContent />;
 }

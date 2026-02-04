@@ -1,14 +1,20 @@
-'use client';
+import { buildMetadata } from '@/lib/metadata';
+import AWSContent from './AWSContent';
 
-import BlogListingPage from '@/components/ui/BlogListingPage';
-import { AWS_POSTS } from '@/data/blog-listings/aws';
+export const metadata = buildMetadata({
+  title: 'AWS Blog Posts',
+  description:
+    '68+ technical articles on AWS AI/ML services including SageMaker, Rekognition, Comprehend, and more.',
+  path: '/blog-posts/aws',
+  keywords: [
+    'AWS blog',
+    'Amazon SageMaker',
+    'AWS AI',
+    'AWS machine learning',
+    'cloud AI services',
+  ],
+});
 
-export default function AWSBlogPostsPage() {
-  return (
-    <BlogListingPage
-      title="AWS Blog Posts"
-      subtitle="68+ technical articles on AWS AI/ML services"
-      posts={AWS_POSTS}
-    />
-  );
+export default function AWSBlogPage() {
+  return <AWSContent />;
 }

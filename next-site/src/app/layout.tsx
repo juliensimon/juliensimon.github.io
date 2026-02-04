@@ -29,17 +29,40 @@ export const metadata: Metadata = {
   icons: { icon: '/assets/favicon.ico' },
   manifest: '/manifest.json',
   alternates: {
+    canonical: SITE.url,
     types: { 'application/rss+xml': '/feed.xml' },
   },
+  openGraph: {
+    type: 'website',
+    locale: SITE.locale,
+    siteName: SITE.name,
+    images: [{ url: SITE.image, width: 200, height: 200, alt: SITE.name }],
+  },
+  twitter: {
+    card: 'summary',
+    site: SITE.twitterHandle,
+    creator: SITE.twitterHandle,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    'max-image-preview': 'large' as const,
+    'max-snippet': -1,
+    'max-video-preview': -1,
+  },
+  authors: [{ name: SITE.name }],
+  creator: SITE.name,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
+      dir="ltr"
       className={`${inter.variable} ${spaceGrotesk.variable}`}
     >
       <head>
+        <link rel="preconnect" href="https://cloud.umami.is" />
         {/* Umami Analytics */}
         <script defer src="https://cloud.umami.is/script.js" data-website-id={SITE.umamiId} />
         <StructuredData data={personSchema()} />
