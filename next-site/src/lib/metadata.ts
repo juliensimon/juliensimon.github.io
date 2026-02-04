@@ -10,10 +10,13 @@ interface PageMetaOptions {
 
 export function buildMetadata({ title, description, path = '', keywords = [] }: PageMetaOptions): Metadata {
   const url = `${SITE.url}${path}`;
-  const fullTitle = path === '' ? SITE.title : `${title} | ${SITE.name}`;
+  const displayTitle = `${title} | ${SITE.name}`;
 
   return {
-    title: fullTitle,
+    // Homepage: use absolute title to bypass the layout template.
+    // Secondary pages: return just the page title; the layout template
+    // ("%s | Julien Simon") appends the site name automatically.
+    title: path === '/' ? { absolute: SITE.title } : title,
     description,
     keywords: [
       'Julien Simon',
@@ -30,15 +33,15 @@ export function buildMetadata({ title, description, path = '', keywords = [] }: 
     openGraph: {
       type: 'website',
       url,
-      title: fullTitle,
+      title: displayTitle,
       description,
       siteName: `${SITE.name} - AI Operating Partner`,
       locale: SITE.locale,
       images: [{ url: SITE.image, width: 200, height: 200, alt: SITE.name }],
     },
     twitter: {
-      card: 'summary_large_image',
-      title: fullTitle,
+      card: 'summary',
+      title: displayTitle,
       description,
       images: [SITE.image],
       creator: SITE.twitterHandle,

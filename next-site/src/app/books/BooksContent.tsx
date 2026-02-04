@@ -39,9 +39,9 @@ export default function BooksContent() {
               )}
               <div className="flex-1">
                 <div className="flex items-start justify-between mb-1">
-                  <h3 className="text-xl font-bold font-heading text-text">
+                  <h2 className="text-xl font-bold font-heading text-text">
                     {book.title}
-                  </h3>
+                  </h2>
                 </div>
                 <p className="text-xs text-highlight font-semibold mb-2">{book.role}</p>
                 <p className="text-sm text-text mb-3">

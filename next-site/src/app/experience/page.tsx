@@ -1,4 +1,6 @@
 import { buildMetadata } from '@/lib/metadata';
+import { breadcrumbSchema } from '@/lib/structured-data';
+import StructuredData from '@/components/seo/StructuredData';
 import ExperienceContent from './ExperienceContent';
 
 export const metadata = buildMetadata({
@@ -18,5 +20,13 @@ export const metadata = buildMetadata({
 });
 
 export default function ExperiencePage() {
-  return <ExperienceContent />;
+  return (
+    <>
+      <StructuredData data={breadcrumbSchema([
+        { name: 'Home', url: 'https://www.julien.org' },
+        { name: 'Experience', url: 'https://www.julien.org/experience' },
+      ])} />
+      <ExperienceContent />
+    </>
+  );
 }

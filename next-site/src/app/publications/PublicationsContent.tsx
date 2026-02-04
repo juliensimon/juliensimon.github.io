@@ -39,9 +39,9 @@ export default function PublicationsContent() {
                   className="block glass-card rounded-xl p-6 hover:scale-[1.02] transition-all duration-300 group h-full"
                 >
                   <div className="flex items-baseline justify-between mb-1">
-                    <h3 className="text-lg font-semibold text-text group-hover:text-primary transition-colors">
+                    <h2 className="text-lg font-semibold text-text group-hover:text-primary transition-colors">
                       {cat.name}
-                    </h3>
+                    </h2>
                     <span className="text-sm font-bold text-highlight">{cat.count}</span>
                   </div>
                   <p className="text-xs text-primary/70 mb-2">{cat.dateRange}</p>

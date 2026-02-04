@@ -1,4 +1,6 @@
 import { buildMetadata } from '@/lib/metadata';
+import { webSiteSchema } from '@/lib/structured-data';
+import StructuredData from '@/components/seo/StructuredData';
 import HomeContent from './HomeContent';
 
 export const metadata = buildMetadata({
@@ -17,5 +19,10 @@ export const metadata = buildMetadata({
 });
 
 export default function HomePage() {
-  return <HomeContent />;
+  return (
+    <>
+      <StructuredData data={webSiteSchema()} />
+      <HomeContent />
+    </>
+  );
 }

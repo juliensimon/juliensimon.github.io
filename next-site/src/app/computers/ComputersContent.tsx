@@ -42,13 +42,13 @@ export default function ComputersContent() {
               )}
               <div className="p-5">
                 <div className="flex items-baseline justify-between mb-1">
-                  <h3 className="text-lg font-semibold text-text">
+                  <h2 className="text-lg font-semibold text-text">
                     {computer.wikiUrl ? (
                       <a href={computer.wikiUrl} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                         {computer.name}
                       </a>
                     ) : computer.name}
-                  </h3>
+                  </h2>
                   <span className="text-sm text-highlight font-bold">{computer.year}</span>
                 </div>
                 <p className="text-sm text-text-muted mb-2">
@@ -152,10 +152,10 @@ export default function ComputersContent() {
             <div className="p-6 grid sm:grid-cols-2 gap-4">
               {VINTAGE_CDS.map((cd) => (
                 <div key={cd.title}>
-                  <h4 className="text-base font-semibold text-text">
+                  <h3 className="text-base font-semibold text-text">
                     {cd.title}
                     <span className="text-sm text-highlight font-normal ml-2">{cd.year}</span>
-                  </h4>
+                  </h3>
                   <p className="text-sm text-text-muted mt-0.5">
                     {cd.description}
                   </p>

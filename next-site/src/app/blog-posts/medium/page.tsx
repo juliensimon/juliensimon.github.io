@@ -1,4 +1,6 @@
 import { buildMetadata } from '@/lib/metadata';
+import { breadcrumbSchema } from '@/lib/structured-data';
+import StructuredData from '@/components/seo/StructuredData';
 import MediumContent from './MediumContent';
 
 export const metadata = buildMetadata({
@@ -16,5 +18,14 @@ export const metadata = buildMetadata({
 });
 
 export default function MediumBlogPage() {
-  return <MediumContent />;
+  return (
+    <>
+      <StructuredData data={breadcrumbSchema([
+        { name: 'Home', url: 'https://www.julien.org' },
+        { name: 'Publications', url: 'https://www.julien.org/publications' },
+        { name: 'Medium Articles', url: 'https://www.julien.org/blog-posts/medium' },
+      ])} />
+      <MediumContent />
+    </>
+  );
 }

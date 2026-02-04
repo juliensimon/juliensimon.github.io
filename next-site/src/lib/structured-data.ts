@@ -40,7 +40,7 @@ export function personSchema() {
         name: '#1 AI Evangelist 2021',
       },
     ],
-    alumniOf: [
+    memberOf: [
       { '@type': 'Organization', name: 'Arcee AI', url: 'https://arcee.ai' },
       { '@type': 'Organization', name: 'Amazon Web Services', url: 'https://aws.amazon.com' },
       { '@type': 'Organization', name: 'Hugging Face', url: 'https://huggingface.co' },
@@ -49,6 +49,17 @@ export function personSchema() {
     contactPoint: { '@type': 'ContactPoint', contactType: 'email', email: SITE.email },
     knowsLanguage: ['English', 'French'],
     nationality: 'French',
+  };
+}
+
+export function webSiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE.name,
+    url: SITE.url,
+    description: SITE.description,
+    author: { '@type': 'Person', name: SITE.name },
   };
 }
 

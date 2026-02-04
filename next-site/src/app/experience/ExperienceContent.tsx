@@ -45,9 +45,9 @@ export default function ExperienceContent() {
 
                 <div className="glass-card rounded-xl p-6">
                   <p className="text-xs font-medium text-highlight mb-1">{exp.period}</p>
-                  <h3 className="text-lg font-bold font-heading text-text">
+                  <h2 className="text-lg font-bold font-heading text-text">
                     {exp.title}
-                  </h3>
+                  </h2>
                   <p className="text-sm font-semibold text-primary mb-2">
                     {exp.companyUrl ? (
                       <a href={exp.companyUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">

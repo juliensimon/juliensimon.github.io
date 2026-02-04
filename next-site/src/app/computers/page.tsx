@@ -1,4 +1,6 @@
 import { buildMetadata } from '@/lib/metadata';
+import { breadcrumbSchema } from '@/lib/structured-data';
+import StructuredData from '@/components/seo/StructuredData';
 import ComputersContent from './ComputersContent';
 
 export const metadata = buildMetadata({
@@ -18,5 +20,13 @@ export const metadata = buildMetadata({
 });
 
 export default function ComputersPage() {
-  return <ComputersContent />;
+  return (
+    <>
+      <StructuredData data={breadcrumbSchema([
+        { name: 'Home', url: 'https://www.julien.org' },
+        { name: 'Vintage Computers', url: 'https://www.julien.org/computers' },
+      ])} />
+      <ComputersContent />
+    </>
+  );
 }
