@@ -9,7 +9,7 @@ interface AnimatedCounterProps {
 }
 
 export default function AnimatedCounter({ value, suffix = '', duration = 2000 }: AnimatedCounterProps) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(value);
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
 
@@ -21,6 +21,7 @@ export default function AnimatedCounter({ value, suffix = '', duration = 2000 }:
       ([entry]) => {
         if (entry.isIntersecting && !started.current) {
           started.current = true;
+          setCount(0);
           const start = performance.now();
           const animate = (now: number) => {
             const progress = Math.min((now - start) / duration, 1);
