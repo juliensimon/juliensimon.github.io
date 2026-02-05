@@ -3,6 +3,7 @@ import { SPEAKING_YEARS } from '@/data/speaking';
 import { buildMetadata } from '@/lib/metadata';
 import { breadcrumbSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import { SITE } from '@/lib/constants';
 import SpeakingYearContent from './SpeakingYearContent';
 
 export function generateStaticParams() {
@@ -31,9 +32,9 @@ export default async function SpeakingYearPage({ params }: Props) {
   return (
     <>
       <StructuredData data={breadcrumbSchema([
-        { name: 'Home', url: 'https://www.julien.org' },
-        { name: 'Speaking', url: 'https://www.julien.org/speaking' },
-        { name: `Speaking ${year}`, url: `https://www.julien.org/speaking/${year}` },
+        { name: 'Home', url: SITE.url },
+        { name: 'Speaking', url: `${SITE.url}/speaking` },
+        { name: `Speaking ${year}`, url: `${SITE.url}/speaking/${year}` },
       ])} />
       <SpeakingYearContent year={year} />
     </>

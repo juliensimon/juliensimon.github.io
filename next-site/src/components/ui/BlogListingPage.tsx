@@ -67,9 +67,9 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
                   {post.date}
                 </p>
               )}
-              <h3 className="text-sm font-medium text-text group-hover:text-primary transition-colors">
+              <h2 className="text-sm font-medium text-text group-hover:text-primary transition-colors">
                 {post.title}
-              </h3>
+              </h2>
             </motion.a>
           ))}
         </div>

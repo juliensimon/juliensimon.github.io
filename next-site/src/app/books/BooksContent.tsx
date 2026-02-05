@@ -32,7 +32,7 @@ export default function BooksContent() {
                 <div className="shrink-0 hidden sm:block">
                   <Image
                     src={book.coverImage}
-                    alt={book.title}
+                    alt={`Cover of ${book.title}`}
                     width={112}
                     height={168}
                     className="w-28 rounded-lg shadow-md"

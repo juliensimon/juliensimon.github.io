@@ -1,6 +1,8 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, bookSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import { SITE } from '@/lib/constants';
+import { BOOKS } from '@/data/books';
 import BooksContent from './BooksContent';
 
 export const metadata = buildMetadata({
@@ -21,9 +23,12 @@ export default function BooksPage() {
   return (
     <>
       <StructuredData data={breadcrumbSchema([
-        { name: 'Home', url: 'https://www.julien.org' },
-        { name: 'Books', url: 'https://www.julien.org/books' },
+        { name: 'Home', url: SITE.url },
+        { name: 'Books', url: `${SITE.url}/books` },
       ])} />
+      {BOOKS.map((book) => (
+        <StructuredData key={book.title} data={bookSchema(book)} />
+      ))}
       <BooksContent />
     </>
   );

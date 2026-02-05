@@ -122,19 +122,15 @@ export default function HomeContent() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold font-heading gradient-brand-text mb-3"
+            className="mb-3"
           >
-            Julien Simon
+            <span className="block text-5xl sm:text-6xl lg:text-7xl font-bold font-heading gradient-brand-text">
+              Julien Simon
+            </span>
+            <span className="block text-xl sm:text-2xl font-semibold text-text mt-3">
+              AI Operating Partner @ Fortino Capital
+            </span>
           </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl sm:text-2xl font-semibold text-text mb-3"
-          >
-            AI Operating Partner @ Fortino Capital
-          </motion.p>
 
           <motion.div
             initial={{ opacity: 0 }}

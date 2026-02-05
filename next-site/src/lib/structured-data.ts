@@ -4,6 +4,7 @@ export function personSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': `${SITE.url}/#person`,
     name: 'Julien Simon',
     jobTitle: 'AI Operating Partner',
     worksFor: {
@@ -32,19 +33,6 @@ export function personSchema() {
       'Hugging Face',
       'Cloud Computing',
     ],
-    hasCredential: [
-      {
-        '@type': 'EducationalOccupationalCredential',
-        credentialCategory: 'Professional Certification',
-        recognizedBy: { '@type': 'Organization', name: 'AI Magazine' },
-        name: '#1 AI Evangelist 2021',
-      },
-    ],
-    memberOf: [
-      { '@type': 'Organization', name: 'Arcee AI', url: 'https://arcee.ai' },
-      { '@type': 'Organization', name: 'Amazon Web Services', url: 'https://aws.amazon.com' },
-      { '@type': 'Organization', name: 'Hugging Face', url: 'https://huggingface.co' },
-    ],
     award: ['AI Magazine #1 AI Evangelist 2021', 'Trophees CIO Prix de l\'Innovation 2013'],
     contactPoint: { '@type': 'ContactPoint', contactType: 'email', email: SITE.email },
     knowsLanguage: ['English', 'French'],
@@ -56,10 +44,13 @@ export function webSiteSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${SITE.url}/#website`,
     name: SITE.name,
     url: SITE.url,
     description: SITE.description,
-    author: { '@type': 'Person', name: SITE.name },
+    inLanguage: 'en',
+    author: { '@id': `${SITE.url}/#person` },
+    publisher: { '@id': `${SITE.url}/#person` },
   };
 }
 
@@ -67,6 +58,7 @@ export function breadcrumbSchema(items: { name: string; url: string }[]) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
+    '@id': `${items[items.length - 1].url}/#breadcrumb`,
     itemListElement: items.map((item, i) => ({
       '@type': 'ListItem',
       position: i + 1,
@@ -76,24 +68,11 @@ export function breadcrumbSchema(items: { name: string; url: string }[]) {
   };
 }
 
-export function webPageSchema(name: string, description: string, url: string) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name,
-    description,
-    url,
-    mainEntity: {
-      '@type': 'Person',
-      name: 'Julien Simon',
-    },
-  };
-}
-
 export function faqSchema(faqs: { question: string; answer: string }[]) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    '@id': `${SITE.url}/#faq`,
     mainEntity: faqs.map((faq) => ({
       '@type': 'Question',
       name: faq.question,
@@ -102,13 +81,60 @@ export function faqSchema(faqs: { question: string; answer: string }[]) {
   };
 }
 
-export function speakableSchema(cssSelectors: string[]) {
+export function bookSchema(book: {
+  title: string;
+  description: string;
+  publisher?: string;
+  pages?: number;
+  coverImage?: string;
+  amazonUrl?: string;
+}) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: cssSelectors,
+    '@type': 'Book',
+    name: book.title,
+    description: book.description,
+    author: { '@id': `${SITE.url}/#person` },
+    ...(book.publisher && { publisher: { '@type': 'Organization', name: book.publisher } }),
+    ...(book.pages && { numberOfPages: book.pages }),
+    ...(book.coverImage && { image: book.coverImage }),
+    ...(book.amazonUrl && { url: book.amazonUrl }),
+    inLanguage: 'en',
+  };
+}
+
+export function videoObjectSchema(channel: {
+  name: string;
+  description: string;
+  channelUrl: string;
+  subscriberCount: number;
+  videoCount: number;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${SITE.url}/#person`,
+    name: 'Julien Simon',
+    url: SITE.url,
+    subjectOf: {
+      '@type': 'WebPage',
+      '@id': `${SITE.url}/youtube-videos`,
+      name: channel.name,
+      description: channel.description,
+      mainEntity: {
+        '@type': 'ItemList',
+        name: 'YouTube Video Collection',
+        description: `${channel.videoCount}+ videos on AI, machine learning, and cloud computing`,
+        numberOfItems: channel.videoCount,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            url: channel.channelUrl,
+            name: 'YouTube Channel',
+          },
+        ],
+      },
     },
   };
 }

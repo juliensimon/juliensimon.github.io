@@ -105,10 +105,11 @@ export default function ComputersContent() {
               >
                 {book.image && (
                   <div className="shrink-0 hidden sm:block">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={book.image}
-                      alt={book.title}
+                      alt={`Cover of ${book.title}`}
+                      width={80}
+                      height={120}
                       className="w-20 rounded-lg shadow-md"
                     />
                   </div>

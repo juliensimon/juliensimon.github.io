@@ -63,6 +63,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta name="theme-color" content="#1e40af" />
         <link rel="preconnect" href="https://cloud.umami.is" />
+        <link rel="dns-prefetch" href="https://cloud.umami.is" />
+        {/* Leaflet map resources (used on /speaking) */}
+        <link rel="preconnect" href="https://unpkg.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://unpkg.com" />
+        <link rel="preconnect" href="https://basemaps.cartocdn.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://basemaps.cartocdn.com" />
         {/* Umami Analytics */}
         <script defer src="https://cloud.umami.is/script.js" data-website-id={SITE.umamiId} />
         <StructuredData data={personSchema()} />

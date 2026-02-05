@@ -1,6 +1,7 @@
 import { buildMetadata } from '@/lib/metadata';
 import { breadcrumbSchema, webPageSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import { SITE } from '@/lib/constants';
 import PublicationsContent from './PublicationsContent';
 
 export const metadata = buildMetadata({
@@ -21,8 +22,8 @@ export default function PublicationsPage() {
   return (
     <>
       <StructuredData data={breadcrumbSchema([
-        { name: 'Home', url: 'https://www.julien.org' },
-        { name: 'Publications', url: 'https://www.julien.org/publications' },
+        { name: 'Home', url: SITE.url },
+        { name: 'Publications', url: `${SITE.url}/publications` },
       ])} />
       <StructuredData data={webPageSchema(
         'Publications',

@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { buildMetadata } from '@/lib/metadata';
 import { breadcrumbSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import { SITE } from '@/lib/constants';
 import BlogListingPage from '@/components/ui/BlogListingPage';
 import { BLOG_CATEGORIES, BLOG_CATEGORY_SLUGS } from '@/data/blog-categories';
 
@@ -39,9 +40,9 @@ export default async function BlogCategoryPage({ params }: Props) {
     <>
       <StructuredData
         data={breadcrumbSchema([
-          { name: 'Home', url: 'https://www.julien.org' },
-          { name: 'Publications', url: 'https://www.julien.org/publications' },
-          { name: config.title, url: `https://www.julien.org/blog-posts/${category}` },
+          { name: 'Home', url: SITE.url },
+          { name: 'Publications', url: `${SITE.url}/publications` },
+          { name: config.title, url: `${SITE.url}/blog-posts/${category}` },
         ])}
       />
       <BlogListingPage
