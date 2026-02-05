@@ -3,6 +3,7 @@
 import Link from 'next/link';
 
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import MetricCard from '@/components/ui/MetricCard';
 import { PUBLICATION_CATEGORIES, TOTAL_ARTICLES } from '@/data/publications';
 
 export default function PublicationsContent() {
@@ -13,11 +14,18 @@ export default function PublicationsContent() {
           Publications
         </h1>
         <p className="mt-2 text-text-muted">
-          {`${TOTAL_ARTICLES}+ technical articles across multiple platforms`}
+          Technical articles on AI, machine learning, and cloud computing
         </p>
       </div>
 
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-4 mb-12">
+          <MetricCard value={TOTAL_ARTICLES} suffix="+" label="Articles" index={0} />
+          <MetricCard value={PUBLICATION_CATEGORIES.length} suffix="" label="Platforms" index={1} />
+          <MetricCard value={18} suffix="" label="Years of Writing" index={2} />
+        </div>
+
         <div className="grid sm:grid-cols-2 gap-5">
           {PUBLICATION_CATEGORIES.map((cat, i) => {
             const isExternal = cat.href.startsWith('/blog/');
