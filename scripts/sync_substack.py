@@ -689,6 +689,33 @@ def update_blog_index(items: list[PostItem], dry_run: bool) -> int:
     return added_count
 
 
+def update_publications_ts(articles_count: int, dry_run: bool):
+    """Update the Industry Perspectives count in publications.ts."""
+    ts_path = SRC / "data" / "publications.ts"
+
+    if not ts_path.exists():
+        print(f"  Warning: publications.ts not found: {ts_path}")
+        return
+
+    content = ts_path.read_text(encoding='utf-8')
+
+    # Find and update Industry Perspectives count
+    pattern = r"(name: 'Industry Perspectives',\s*count: )(\d+)"
+    match = re.search(pattern, content)
+
+    if match:
+        old_count = int(match.group(2))
+        new_count = old_count + articles_count
+        content = re.sub(pattern, f"\\g<1>{new_count}", content)
+
+        if not dry_run:
+            ts_path.write_text(content, encoding='utf-8')
+
+        print(f"  Updated publications.ts: Industry Perspectives {old_count} -> {new_count}")
+    else:
+        print("  Warning: Could not find Industry Perspectives in publications.ts")
+
+
 def print_summary(new_posts: list[PostItem]):
     """Print summary of detected new posts."""
     print(f"\nNEW POSTS DETECTED ({len(new_posts)}):\n")
@@ -756,9 +783,11 @@ def run(dry_run: bool = False, force: bool = False):
     for year, count in year_video_counts.items():
         update_youtube_ts(year, count, dry_run)
 
-    # Update blog index for articles
+    # Update blog index for articles and publications.ts count
     if articles_added:
-        update_blog_index(articles_added, dry_run)
+        articles_indexed = update_blog_index(articles_added, dry_run)
+        if articles_indexed > 0:
+            update_publications_ts(articles_indexed, dry_run)
 
     # Update LATEST_UPDATES
     if new_posts:
