@@ -4,110 +4,100 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Personal website for Julien Simon (julien.org), an AI Operating Partner at Fortino Capital. This is a static site hosted on GitHub Pages with no build system - HTML files are served directly.
+Personal website for Julien Simon (julien.org), an AI Operating Partner at Fortino Capital. The site is built with Next.js 15 and deployed to GitHub Pages via GitHub Actions.
 
 ## Development Commands
 
 ```bash
-# Start local development server
-python -m http.server 8000
-# OR
-npx serve .
+# Next.js development (primary workflow)
+cd next-site
+npm install        # Install dependencies
+npm run dev        # Start dev server at http://localhost:3000
+npm run build      # Build for production (outputs to next-site/out/)
+npm run lint       # Run ESLint
 
-# View site at http://localhost:8000
+# Legacy static content (for blog processing scripts)
+cd scripts
+python extract_blog_posts.py    # Extract posts from Atom feed
+python download_images.py       # Download/convert images to WebP
+python organize_by_year.py      # Organize into year folders
 ```
-
-No build, lint, or test commands - this is a static HTML site.
 
 ## Architecture
 
-### Content Structure
-- **Root HTML pages**: Main site pages (`index.html`, `experience.html`, `speaking.html`, `publications.html`, `youtube.html`, `books.html`, `computers.html`, `code.html`)
-- **Speaking archives**: Year-specific pages (`speaking-2016.html` through `speaking-2024.html`)
-- **Blog platform archives**: Platform-specific listing pages (`aws-blog-posts.html`, `huggingface-blog-posts.html`, `arcee-blog-posts.html`, `medium-blog-posts.html`, `aws-medium-posts.html`)
+### Next.js Application (`/next-site/`)
+The main site is a Next.js 15 app with static export (`output: 'export'`).
 
-### Blog Content (`/blog/`)
-Contains migrated blog posts organized by platform:
-- `legacy-posts-and-images/` - Old personal blog posts (2008-2016) organized by year
-- `aws-posts-and-images/` - AWS blog posts
-- `huggingface-posts-and-images/` - Hugging Face blog posts
-- `arcee-posts/` - Arcee AI posts
-- `aws-medium-posts-and-images/` - AWS Medium posts
+**Tech Stack:**
+- Next.js 15 with App Router
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Framer Motion (animations)
+- Leaflet (speaking map)
 
-Each blog post is a self-contained HTML file with embedded CSS - no external dependencies.
+**Key Directories:**
+- `src/app/` - App Router pages (each page has `page.tsx` + `*Content.tsx` client component)
+- `src/components/` - Reusable UI and layout components
+- `src/data/` - TypeScript data files for content (speaking, publications, youtube, etc.)
+- `src/lib/` - Utilities (constants, metadata, structured-data)
+- `public/` - Static assets (images, fonts)
+
+**Data Files (`src/data/`):**
+- `speaking.ts` - Speaking engagements by year
+- `publications.ts` - Publication statistics
+- `youtube.ts` - Video counts and data
+- `experience.ts` - Career timeline
+- `books.ts`, `code.ts`, `computers.ts` - Collection data
+- `blog-listings/*.ts` - Blog post listings by platform (aws, huggingface, arcee, medium)
+
+**Component Patterns:**
+- Pages use server components (`page.tsx`) wrapping client components (`*Content.tsx`)
+- UI components in `src/components/ui/` (ContentCard, MetricCard, YearCard, etc.)
+- Layout components in `src/components/layout/` (Navigation, Footer)
+- SEO via `src/components/seo/StructuredData.tsx` and `src/lib/metadata.ts`
+
+### Legacy Content (`/blog/`, `/youtube/`)
+Archived blog posts and video transcripts as self-contained HTML files:
+- `blog/legacy-posts-and-images/` - Personal blog (2008-2016) organized by year
+- `blog/aws-posts-and-images/`, `blog/huggingface-posts-and-images/` - Platform posts
+- `youtube/YYYY/` - Video transcripts by year
 
 ### Python Scripts (`/scripts/`)
-56 utility scripts for content processing, primarily:
-- **Blog extraction**: `extract_blog_posts.py` - Parse Atom feeds to HTML
-- **Image processing**: `download_images.py` - Download and convert to WebP
-- **Organization**: `organize_by_year.py` - Structure posts by year
-- **SEO**: Various `add_seo_*.py` and `comprehensive_seo_update.py` scripts
-- **Styling**: `apply_minimal_styling.py`, `apply_modern_styling.py`
+Content processing utilities for legacy blog posts:
+- `extract_blog_posts.py` - Parse Atom feeds to HTML
+- `download_images.py` - Download and convert to WebP
+- `organize_by_year.py` - Structure posts by year
+- `fix_image_references.py` - Clean up image references
 
-Scripts require Python 3.6+ with dependencies from `requirements.txt` (ML libraries for analysis) or `simple_requirements.txt` (core libraries only).
+## Deployment
 
-### Frontend Assets
-- `/css/` - Stylesheets (`styles.css`, `critical.css`, `minimal-blog-styles.css`)
-- `/js/` - JavaScript (`main.js`, `performance-monitor.js`, `enhanced-knowledge-graph.js`)
-- `/assets/` - Images and media
-- `sw.js` - Service worker for PWA/offline support
-- `manifest.json` - PWA manifest
-
-### SEO/Discovery Files
-- `sitemap.xml`, `sitemap-index.xml` - Main sitemaps
-- `sitemap-blog.xml`, `sitemap-speaking.xml`, `sitemap-videos.xml` - Content-specific sitemaps
-- `robots.txt` - Crawler instructions
-- `llms.txt` - AI/LLM content discovery file
-- `feed.xml` - RSS feed
+GitHub Actions (`.github/workflows/deploy.yml`) automatically builds and deploys on push to master:
+1. Runs `npm ci` and `npm run build` in `next-site/`
+2. Uploads `next-site/out/` as artifact
+3. Deploys to GitHub Pages
 
 ## Key Patterns
 
 ### Adding/Updating Content
-1. Edit the relevant HTML file directly
-2. Update `sitemap.xml` with new/changed pages
-3. If adding a new page, include standard meta tags and link in navigation
+1. Edit the relevant TypeScript data file in `next-site/src/data/`
+2. For new pages, create `page.tsx` + `*Content.tsx` in `src/app/`
+3. Update navigation in `src/lib/constants.ts` if needed
+4. Run `npm run build` to verify static export works
 
-### Blog Post Processing Workflow
-When processing legacy blog content:
-```bash
-cd scripts
-python extract_blog_posts.py    # Extract from Atom feed
-python download_images.py       # Download/convert images to WebP
-python organize_by_year.py      # Organize into year folders
-python fix_image_references.py  # Clean up image references
+### Updating Counts/Metrics
+Global metrics in `next-site/src/lib/constants.ts`:
+```typescript
+export const METRICS = [
+  { value: 350, suffix: '+', label: 'Technical Posts' },
+  { value: 665, suffix: '+', label: 'Speaking Engagements' },
+  // ...
+];
 ```
 
-### Image Naming Convention
-Blog images: `YYYY-MM-DD-post-title-image-01.webp`
+### Adding Speaking Events
+Edit `next-site/src/data/speaking.ts` - events are organized by year with location coordinates for the map.
 
-### YouTube Video Content (`/youtube/`)
-Videos are organized by year in folders (`youtube/2025/`, `youtube/2026/`, etc.):
-- Each year folder contains individual video HTML files with embedded transcripts
-- Each year folder has an `index.html` listing all videos for that year
-- Video files follow naming: `YYYYMMDD_Video_Title_With_Underscores.html`
-
-### Adding New Video Transcripts
-When adding new video transcript pages:
-1. Move the HTML file to the correct year folder (`youtube/YYYY/`)
-2. Create year folder and `index.html` if it's a new year (use existing year index as template)
-3. Update the year's `index.html`:
-   - Add video entry at the top (most recent first)
-   - Update the video count in the subtitle
-4. Update `youtube.html`:
-   - Update total video count in stats section (`▶️ <span>X+ videos</span>`)
-   - Update total count in the paragraph (`<strong>Total: X videos</strong>`)
-   - Update years count if new year added (`across X years of content`)
-   - Add year card if new year (at top of years-grid)
-   - Update existing year card video count if needed
-5. Update `index.html` "Latest Updates" section:
-   - Add new videos at the top (most recent first)
-   - Keep exactly 5 items total (remove oldest entries)
-
-### Video Counters to Update (Checklist)
-When adding videos, these counters must stay synchronized:
-- [ ] `youtube.html`: Stats section video count
-- [ ] `youtube.html`: Paragraph total video count
-- [ ] `youtube.html`: Years of content count (if new year)
-- [ ] `youtube.html`: Year card video count
-- [ ] `youtube/YYYY/index.html`: Subtitle video count
-- [ ] `index.html`: Latest Updates section (5 items max)
+### Adding YouTube Videos
+1. Update counts in `next-site/src/data/youtube.ts`
+2. For full transcripts, add HTML file to `youtube/YYYY/` folder (legacy format)
