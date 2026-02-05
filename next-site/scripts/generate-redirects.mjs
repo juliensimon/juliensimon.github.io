@@ -3,6 +3,19 @@ import { join } from 'path';
 
 const OUT_DIR = join(process.cwd(), 'out');
 
+// Validate redirect URL to prevent XSS - only allow safe relative paths
+function isValidRedirectUrl(url) {
+  // Must start with / and contain only safe characters
+  // Disallow: javascript:, data:, //, quotes, angle brackets
+  if (!url || typeof url !== 'string') return false;
+  if (!url.startsWith('/')) return false;
+  if (url.startsWith('//')) return false;
+  if (/[<>"'`]/.test(url)) return false;
+  if (/javascript:/i.test(url)) return false;
+  if (/data:/i.test(url)) return false;
+  return true;
+}
+
 // Only include redirects where the OLD filename differs from what Next.js outputs.
 // Next.js creates e.g. experience.html for /experience, so we must NOT overwrite those.
 // We only redirect old paths that have no corresponding Next.js output file.
@@ -44,7 +57,14 @@ function redirectHtml(to) {
 
 let count = 0;
 let skipped = 0;
+let invalid = 0;
 for (const { from, to } of REDIRECTS) {
+  // Validate URL to prevent XSS injection
+  if (!isValidRedirectUrl(to)) {
+    console.error(`  INVALID URL (skipped): ${from} -> ${to}`);
+    invalid++;
+    continue;
+  }
   const filePath = join(OUT_DIR, from);
   // Safety check: never overwrite a file that Next.js already generated
   if (existsSync(filePath)) {
@@ -56,4 +76,5 @@ for (const { from, to } of REDIRECTS) {
   count++;
 }
 
-console.log(`Generated ${count} redirect files (skipped ${skipped} existing)`);
+console.log(`Generated ${count} redirect files (skipped ${skipped} existing${invalid ? `, ${invalid} invalid` : ''})`);
+if (invalid > 0) process.exit(1);

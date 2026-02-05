@@ -182,7 +182,7 @@ export default function SpeakingMap() {
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-        crossOrigin=""
+        crossOrigin="anonymous"
       />
       <div ref={mapRef} className="w-full h-[400px] sm:h-[500px]" />
       <div className="flex flex-wrap gap-4 p-4 justify-center">
