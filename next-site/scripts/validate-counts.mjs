@@ -178,10 +178,16 @@ if (speakingMetric === speakingTotal) {
   error(`Speaking Engagements metric (${speakingMetric}) doesn't match totalEvents (${speakingTotal})`);
 }
 
-// Check YouTube Subscribers (just report, can't validate externally)
+// Check YouTube Subscribers consistency
 const ytSubsMatch = constantsTs.match(/value:\s*(\d+).*YouTube Subscribers/);
 const ytSubsMetric = ytSubsMatch ? parseInt(ytSubsMatch[1]) : 0;
-success(`YouTube Subscribers metric: ${ytSubsMetric}K+ (manual verification needed)`);
+const ytSubsDataMatch = youtubeTs.match(/subscriberCount:\s*(\d+)/);
+const ytSubsData = ytSubsDataMatch ? parseInt(ytSubsDataMatch[1]) : 0;
+if (ytSubsMetric === ytSubsData) {
+  success(`YouTube Subscribers metric: ${ytSubsMetric}K+`);
+} else {
+  error(`YouTube Subscribers metric (${ytSubsMetric}) doesn't match subscriberCount (${ytSubsData})`);
+}
 
 // ============================================
 // Summary
