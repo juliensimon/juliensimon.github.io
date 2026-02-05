@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 import { BOOKS } from '@/data/books';
@@ -29,10 +30,11 @@ export default function BooksContent() {
             >
               {book.coverImage && (
                 <div className="shrink-0 hidden sm:block">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={book.coverImage}
                     alt={book.title}
+                    width={112}
+                    height={168}
                     className="w-28 rounded-lg shadow-md"
                   />
                 </div>

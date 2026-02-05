@@ -5,7 +5,7 @@ export const SITE = {
     'AI Operating Partner at Fortino Capital. 30+ years accelerating cloud and AI across PE/VC portfolios. Expert in Small Language Models and enterprise AI.',
   url: 'https://www.julien.org',
   image: 'https://www.julien.org/assets/julien.webp',
-  ogImage: 'https://www.julien.org/assets/og-image.png',
+  ogImage: 'https://www.julien.org/assets/og-image.webp',
   locale: 'en_US',
   email: 'julien@julien.org',
   twitterHandle: '@julsimon',
@@ -40,7 +40,7 @@ export const NAV_ITEMS = [
 // - YOUTUBE_STATS.subscribers in youtube.ts (YouTube Subscribers)
 // Run `npm run validate` to check for mismatches
 export const METRICS = [
-  { value: 390, suffix: '+', label: 'Technical Posts' },
+  { value: 397, suffix: '+', label: 'Technical Posts' },
   { value: 684, suffix: '+', label: 'Speaking Engagements' },
   { value: 467, suffix: 'K+', label: 'YouTube Subscribers' },
   { value: 30, suffix: '+', label: 'Years Experience' },

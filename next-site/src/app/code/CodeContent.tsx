@@ -17,6 +17,7 @@ export default function CodeContent() {
       </div>
 
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <h2 className="sr-only">Open Source Repositories</h2>
         <div className="grid sm:grid-cols-2 gap-5">
           {REPOSITORIES.map((repo, i) => (
             <motion.a
