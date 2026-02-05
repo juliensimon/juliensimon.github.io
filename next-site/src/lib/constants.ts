@@ -34,9 +34,14 @@ export const NAV_ITEMS = [
   { label: 'Computers, UNIX, and Me', href: '/computers' },
 ] as const;
 
+// Note: These values should stay in sync with:
+// - TOTAL_ARTICLES in publications.ts (Technical Posts)
+// - SPEAKING_STATS.totalEvents in speaking.ts (Speaking Engagements)
+// - YOUTUBE_STATS.subscribers in youtube.ts (YouTube Subscribers)
+// Run `npm run validate` to check for mismatches
 export const METRICS = [
-  { value: 350, suffix: '+', label: 'Technical Posts' },
-  { value: 665, suffix: '+', label: 'Speaking Engagements' },
+  { value: 390, suffix: '+', label: 'Technical Posts' },
+  { value: 684, suffix: '+', label: 'Speaking Engagements' },
   { value: 445, suffix: 'K+', label: 'YouTube Subscribers' },
   { value: 30, suffix: '+', label: 'Years Experience' },
 ] as const;
