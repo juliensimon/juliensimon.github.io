@@ -14,7 +14,7 @@ export default function SpeakingContent() {
           Speaking
         </h1>
         <p className="mt-2 text-text-muted">
-          {`${SPEAKING_STATS.totalEvents}+ talks across ${SPEAKING_STATS.cities}+ cities in ${SPEAKING_STATS.countries} countries`}
+          Conferences, workshops, and keynotes on AI, machine learning, and cloud computing
         </p>
       </div>
 
