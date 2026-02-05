@@ -24,6 +24,10 @@ from typing import NamedTuple
 
 import requests
 import xml.etree.ElementTree as ET
+from bs4 import BeautifulSoup
+
+from substack_html_cleaner import SubstackHTMLCleaner
+from substack_image_handler import process_images_for_post, update_html_image_refs
 
 RSS_URL = "https://julsimon.substack.com/feed"
 BASE = Path(__file__).parent.parent / "next-site"
@@ -351,8 +355,16 @@ def create_video_page(item: PostItem, dry_run: bool) -> Path:
     return filepath
 
 
+def calculate_read_time(text: str) -> str:
+    """Calculate estimated read time from text content."""
+    words = len(text.split())
+    # Average reading speed: ~200 words per minute
+    minutes = max(1, round(words / 200))
+    return f"{minutes} min read"
+
+
 def create_article_page(item: PostItem, dry_run: bool) -> Path:
-    """Create an article folder with index.html and metadata.json."""
+    """Create an article folder with index.html, metadata.json, and images."""
     date_str = item.pub_date.strftime('%Y-%m-%d')
     slug = slugify(item.title)
     folder_name = f"{date_str}_{slug}"
@@ -364,36 +376,98 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     # Format date for display
     display_date = item.pub_date.strftime('%B %d, %Y').replace(' 0', ' ')
 
-    # Get first paragraph as excerpt
-    excerpt = item.description
-    if len(excerpt) > 200:
-        excerpt = excerpt[:197] + '...'
+    # Use full content from RSS feed (content:encoded)
+    raw_content = item.content if item.content else item.description
 
-    # Create HTML
-    html_content = f'''<!DOCTYPE html><html lang="en"><head>
+    # Clean the HTML using our cleaner
+    cleaner = SubstackHTMLCleaner()
+    cleaned_content, images = cleaner.clean(raw_content)
+
+    # Download and process images (unless dry run)
+    image_count = 0
+    if not dry_run and images:
+        url_mapping = process_images_for_post(images, folder_path, slug)
+        cleaned_content = update_html_image_refs(cleaned_content, url_mapping)
+        image_count = len(url_mapping)
+
+    # Calculate read time from actual content
+    soup = BeautifulSoup(cleaned_content, 'html.parser')
+    plain_text = soup.get_text(separator=' ', strip=True)
+    read_time = calculate_read_time(plain_text)
+
+    # Get first paragraph as excerpt for metadata
+    first_p = soup.find('p')
+    excerpt = ''
+    if first_p:
+        excerpt = first_p.get_text(strip=True)
+        if len(excerpt) > 200:
+            excerpt = excerpt[:197] + '...'
+    elif item.description:
+        excerpt = item.description[:200] + '...' if len(item.description) > 200 else item.description
+
+    # Create HTML with full cleaned content
+    html_content = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{html.escape(item.title)} - Julien Simon</title>
     <meta name="author" content="Julien Simon">
     <meta name="date" content="{date_str}">
+    <meta name="description" content="{html.escape(excerpt)}">
     <meta name="source" content="{item.link}">
     <link rel="stylesheet" href="../../../css/minimal-blog-styles.css">
+    <style>
+        .article-content img {{
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1.5em 0;
+        }}
+        .article-content pre {{
+            background: #f5f5f5;
+            padding: 1em;
+            border-radius: 6px;
+            overflow-x: auto;
+        }}
+        .article-content code {{
+            background: #f0f0f0;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }}
+        .article-content pre code {{
+            background: none;
+            padding: 0;
+        }}
+        .article-content blockquote {{
+            border-left: 4px solid #6366f1;
+            margin: 1.5em 0;
+            padding-left: 1em;
+            color: #555;
+            font-style: italic;
+        }}
+        .read-time {{
+            color: #666;
+            font-size: 0.9em;
+        }}
+    </style>
 </head>
-<body><p style="margin-bottom: 1.5em;"><a href="https://www.julien.org" style="color: #6366f1; text-decoration: none;">&larr; julien.org</a></p>
-    <h1>{html.escape(item.title)}</h1>
-    <div class="meta">
-        <p><strong>Author:</strong> Julien Simon</p>
-        <p><strong>Date:</strong> {display_date}</p>
-        <p><strong>Source:</strong> <a href="{item.link}">{item.link}</a></p>
-    </div>
-    <div class="content">
-        <p>{html.escape(excerpt)}</p>
-        <p><a href="{item.link}" target="_blank" rel="noopener noreferrer">Read the full article on Substack &rarr;</a></p>
-    </div>
-
-
-
-</body></html>'''
+<body>
+    <p style="margin-bottom: 1.5em;"><a href="https://www.julien.org" style="color: #6366f1; text-decoration: none;">&larr; julien.org</a></p>
+    <article>
+        <h1>{html.escape(item.title)}</h1>
+        <div class="meta">
+            <p><strong>Author:</strong> Julien Simon</p>
+            <p><strong>Date:</strong> {display_date} <span class="read-time">· {read_time}</span></p>
+            <p><strong>Source:</strong> <a href="{item.link}" target="_blank" rel="noopener noreferrer">{item.link}</a></p>
+        </div>
+        <div class="article-content">
+{cleaned_content}
+        </div>
+    </article>
+</body>
+</html>'''
 
     # Create metadata
     metadata = {
@@ -401,10 +475,11 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
         "author": "Julien Simon",
         "date": date_str,
         "description": excerpt,
-        "read_time": "5 min read",
+        "read_time": read_time,
         "tags": ["AI", "Technology"],
         "category": "Industry Perspectives",
-        "original_url": item.link
+        "original_url": item.link,
+        "image_count": image_count,
     }
 
     if not dry_run:
@@ -816,10 +891,15 @@ def main():
         action='store_true',
         help='Force re-sync of all posts, ignoring existing files'
     )
+    parser.add_argument(
+        '--update-existing',
+        action='store_true',
+        help='Re-process existing articles to update content and download images'
+    )
     args = parser.parse_args()
 
     try:
-        run(dry_run=args.dry_run, force=args.force)
+        run(dry_run=args.dry_run, force=args.force or args.update_existing)
     except requests.RequestException as e:
         print(f"Error fetching feed: {e}", file=sys.stderr)
         sys.exit(1)

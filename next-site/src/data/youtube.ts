@@ -5,7 +5,7 @@ export interface VideoYear {
 }
 
 export const YOUTUBE_STATS = {
-  totalVideos: 444,
+  totalVideos: 448,
   subscribers: '445K+',
   channelUrl: 'https://youtube.com/@juliensimonfr',
   yearsOfContent: 16,
@@ -14,8 +14,8 @@ export const YOUTUBE_STATS = {
 export const POPULAR_VIDEO_IDS = ['Zdu5UyA46io', '_hNRG3E4Ny4', 'cf8z3Q8PFQQ', 'hMs8VNRy5Ys'];
 
 export const VIDEO_YEARS: VideoYear[] = [
-  { year: 2026, count: 4, href: '/youtube/2026/index.html' },
-  { year: 2025, count: 42, href: '/youtube/2025/index.html' },
+  { year: 2026, count: 5, href: '/youtube/2026/index.html' },
+  { year: 2025, count: 45, href: '/youtube/2025/index.html' },
   { year: 2024, count: 54, href: '/youtube/2024/index.html' },
   { year: 2023, count: 27, href: '/youtube/2023/index.html' },
   { year: 2022, count: 33, href: '/youtube/2022/index.html' },

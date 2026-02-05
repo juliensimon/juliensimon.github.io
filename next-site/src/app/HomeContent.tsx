@@ -10,6 +10,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Two Simple Tricks That Will Dramatically Improve Your Productivity with Claude',
+    href: '/blog/industry-perspectives/2026-01-11_two-simple-tricks-that-will-dramatically-improve-your-productivity-with-claude/index.html',
+    date: 'January 11, 2026',
+    icon: 'article',
+  },
+  {
     title: 'The EU Cloud and AI Development Act (CADA): A Last Shot at Cloud Sovereignty, or Another Expensive Debacle?',
     href: '/blog/industry-perspectives/2026-02-03_the-eu-cloud-and-ai-development-act-cada-a-last-shot-at-cloud-sovereignty-or-another-expensive-debacle/index.html',
     date: 'February 3, 2026',
@@ -32,12 +38,6 @@ const LATEST_UPDATES = [
     href: '/blog/industry-perspectives/2026-01-19_ai-sovereignty-in-europe-a-decision-framework/index.html',
     date: 'January 19, 2026',
     icon: 'article',
-  },
-  {
-    title: 'Verdent : AI Coding with Parallel Agents — Full Demo!',
-    href: '/youtube/2026/20260119_Verdent_AI_Coding_with_Parallel_Agents_Full_Demo.html',
-    date: 'January 19, 2026',
-    icon: 'video',
   },
 ];
 
