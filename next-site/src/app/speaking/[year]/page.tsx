@@ -27,7 +27,6 @@ interface Props {
 
 export default async function SpeakingYearPage({ params }: Props) {
   const { year } = await params;
-  const yearData = SPEAKING_YEARS.find((y) => y.year.toString() === year);
 
   return (
     <>
@@ -36,7 +35,7 @@ export default async function SpeakingYearPage({ params }: Props) {
         { name: 'Speaking', url: 'https://www.julien.org/speaking' },
         { name: `Speaking ${year}`, url: `https://www.julien.org/speaking/${year}` },
       ])} />
-      <SpeakingYearContent year={year} count={yearData?.count} />
+      <SpeakingYearContent year={year} />
     </>
   );
 }

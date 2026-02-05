@@ -23,7 +23,7 @@ export default function PublicationsContent() {
             const isExternal = cat.href.startsWith('/blog/');
             const Wrapper = isExternal ? 'a' : Link;
             const linkProps = isExternal
-              ? { href: cat.href }
+              ? { href: cat.href, target: '_blank' as const, rel: 'noopener noreferrer' }
               : { href: cat.href };
 
             return (

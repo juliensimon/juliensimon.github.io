@@ -66,7 +66,7 @@ const EXPERTISE_CARDS = [
   {
     title: 'Global Thought Leadership',
     description:
-      '665+ speaking engagements worldwide, including major industry events, Fortune 500 companies, and institutions like UNESCO, World Bank, New York Federal Reserve, and sovereign funds.',
+      '684+ speaking engagements worldwide, including major industry events, Fortune 500 companies, and institutions like UNESCO, World Bank, New York Federal Reserve, and sovereign funds.',
     link: '/speaking',
     linkText: 'View Speaking History',
   },
