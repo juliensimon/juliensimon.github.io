@@ -13,7 +13,7 @@ export default function YouTubeContent() {
           Videos
         </h1>
         <p className="mt-2 text-text-muted">
-          {`${YOUTUBE_STATS.totalVideos}+ videos | ${YOUTUBE_STATS.subscribers} subscribers`}
+          Tutorials, demos, and deep dives on AI, machine learning, and cloud computing
         </p>
       </div>
 
