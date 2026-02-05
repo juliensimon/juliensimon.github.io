@@ -9,7 +9,7 @@ export interface PublicationCategory {
 export const PUBLICATION_CATEGORIES: PublicationCategory[] = [
   {
     name: 'Industry Perspectives',
-    count: 18,
+    count: 11,
     description: 'Company-agnostic thoughts and lessons learned.',
     href: '/blog/industry-perspectives/index.html',
     dateRange: '2021 - Present',
@@ -23,7 +23,7 @@ export const PUBLICATION_CATEGORIES: PublicationCategory[] = [
   },
   {
     name: 'Hugging Face',
-    count: 25,
+    count: 23,
     description: 'Articles on the HF blog as Chief Evangelist.',
     href: '/blog-posts/huggingface',
     dateRange: '2021 - 2024',
@@ -51,4 +51,4 @@ export const PUBLICATION_CATEGORIES: PublicationCategory[] = [
   },
 ];
 
-export const TOTAL_ARTICLES = 392;
+export const TOTAL_ARTICLES = 390;

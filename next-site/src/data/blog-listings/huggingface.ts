@@ -28,6 +28,4 @@ export const HUGGINGFACE_POSTS: BlogPost[] = [
   { title: 'Getting Started with Transformers on Habana Gaudi', href: '/blog/huggingface-posts-and-images/2022-04-26_getting-started-with-transformers-on-habana-gaudi/index.html', date: 'April 26, 2022' },
   { title: 'Getting Started with Hugging Face Transformers for IPUs with Optimum', href: '/blog/huggingface-posts-and-images/2021-11-30_getting-started-with-hugging-face-transformers-for-ipus-with-optimum/index.html', date: 'November 30, 2021' },
   { title: 'Accelerating PyTorch distributed fine-tuning with Intel technologies', href: '/blog/huggingface-posts-and-images/2021-11-19_accelerating-pytorch-distributed-fine-tuning-with-intel-technologies/index.html', date: 'November 19, 2021' },
-  { title: "Large Language Models: A New Moore's Law?", href: '/blog/industry-perspectives/2021-10-26_large-language-models-a-new-moores-law/index.html', date: 'October 26, 2021' },
-  { title: 'The Age of Machine Learning As Code Has Arrived', href: '/blog/industry-perspectives/2021-10-20_the-age-of-machine-learning-as-code-has-arrived/index.html', date: 'October 20, 2021' },
 ];

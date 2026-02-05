@@ -22,7 +22,7 @@ export default function YouTubeContent() {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4 mb-12">
           <MetricCard value={YOUTUBE_STATS.totalVideos} suffix="+" label="Videos" index={0} />
-          <MetricCard value={445} suffix="K+" label="Subscribers" index={1} />
+          <MetricCard value={parseInt(YOUTUBE_STATS.subscribers)} suffix="K+" label="Subscribers" index={1} />
           <MetricCard value={YOUTUBE_STATS.yearsOfContent} suffix="" label="Years of Content" index={2} />
         </div>
 
