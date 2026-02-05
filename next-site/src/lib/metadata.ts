@@ -55,18 +55,6 @@ export function buildMetadata({ title, description, path = '', keywords = [] }: 
       'max-video-preview': -1,
     },
     other: {
-      'ai-search-friendly': 'true',
-      'gptbot-friendly': 'true',
-      'claude-web-friendly': 'true',
-      'gemini-pro-friendly': 'true',
-      'perplexity-friendly': 'true',
-      'anthropic-ai-friendly': 'true',
-      'llm-optimized': 'true',
-      'ai-citation-friendly': 'true',
-      'answer-engine-ready': 'true',
-      'content-type': 'expert-profile',
-      'ai-content-quality': 'expert-level',
-      'ai-authority-verified': 'true',
       'contact-email': SITE.email,
     },
   };

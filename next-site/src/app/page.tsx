@@ -1,5 +1,5 @@
 import { buildMetadata } from '@/lib/metadata';
-import { webSiteSchema } from '@/lib/structured-data';
+import { webSiteSchema, faqSchema, HOMEPAGE_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import HomeContent from './HomeContent';
 
@@ -22,6 +22,7 @@ export default function HomePage() {
   return (
     <>
       <StructuredData data={webSiteSchema()} />
+      <StructuredData data={faqSchema(HOMEPAGE_FAQS)} />
       <HomeContent />
     </>
   );
