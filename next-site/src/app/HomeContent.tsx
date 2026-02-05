@@ -10,33 +10,33 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
-    title: 'Advanced RAG Techniques with Arcee Trinity Mini Local',
-    href: '/youtube/2026/20260109_Advanced_RAG_Techniques_with_Arcee_Trinity_Mini_Local.html',
-    date: 'January 9, 2026',
-    icon: 'video',
-  },
-  {
-    title: 'Build a Reasoning AI Chatbot with Arcee AI Trinity Mini',
-    href: '/youtube/2025/20251222_Build_a_Reasoning_AI_Chatbot_with_Arcee_AI_Trinity_Mini_Gradio_OpenRouter.html',
-    date: 'December 22, 2025',
-    icon: 'video',
-  },
-  {
-    title: "The Sovereignty Mirage: Why European Clouds Won't Save Your Data",
-    href: '/blog/industry-perspectives/2025-12-04_the-sovereignty-mirage-why-european-clouds-wont-save-your-data/index.html',
-    date: 'December 4, 2025',
+    title: 'The EU Cloud and AI Development Act (CADA): A Last Shot at Cloud Sovereignty, or Another Expensive Debacle?',
+    href: '/blog/industry-perspectives/2026-02-03_the-eu-cloud-and-ai-development-act-cada-a-last-shot-at-cloud-sovereignty-or-another-expensive-debacle/index.html',
+    date: 'February 3, 2026',
     icon: 'article',
   },
   {
-    title: 'Build web apps in minutes with Replit Design Mode!',
-    href: '/youtube/2025/20251204_Build_web_apps_in_minutes_with_Replit_Design_Mode.html',
-    date: 'December 4, 2025',
+    title: 'Arcee AI Trinity Large: An Open 400B MoE Model',
+    href: '/youtube/2026/20260201_Arcee_AI_Trinity_Large_An_Open_400B_MoE_Model.html',
+    date: 'February 1, 2026',
     icon: 'video',
   },
   {
-    title: 'Introducing the Arcee AI Trinity Models',
-    href: '/youtube/2025/20251204_Introducing_the_Arcee_AI_Trinity_Models.html',
-    date: 'December 4, 2025',
+    title: 'Build Mobile Apps with Replit in Minutes!',
+    href: '/youtube/2026/20260125_Build_Mobile_Apps_with_Replit_in_Minutes.html',
+    date: 'January 25, 2026',
+    icon: 'video',
+  },
+  {
+    title: 'AI Sovereignty in Europe: A Decision Framework',
+    href: '/blog/industry-perspectives/2026-01-19_ai-sovereignty-in-europe-a-decision-framework/index.html',
+    date: 'January 19, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Verdent : AI Coding with Parallel Agents — Full Demo!',
+    href: '/youtube/2026/20260119_Verdent_AI_Coding_with_Parallel_Agents_Full_Demo.html',
+    date: 'January 19, 2026',
     icon: 'video',
   },
 ];
