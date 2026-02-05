@@ -29,7 +29,6 @@ export const metadata: Metadata = {
   icons: { icon: '/assets/favicon.ico' },
   manifest: '/manifest.json',
   alternates: {
-    canonical: SITE.url,
     types: { 'application/rss+xml': '/feed.xml' },
   },
   openGraph: {
@@ -62,6 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${inter.variable} ${spaceGrotesk.variable}`}
     >
       <head>
+        <meta name="theme-color" content="#1e40af" />
         <link rel="preconnect" href="https://cloud.umami.is" />
         {/* Umami Analytics */}
         <script defer src="https://cloud.umami.is/script.js" data-website-id={SITE.umamiId} />

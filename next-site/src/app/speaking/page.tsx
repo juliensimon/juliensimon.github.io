@@ -1,12 +1,12 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import SpeakingContent from './SpeakingContent';
 
 export const metadata = buildMetadata({
   title: 'Speaking',
   description:
-    '600+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing. Keynotes at AWS re:Invent, KubeCon, and more.',
+    '684+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing. Keynotes at AWS re:Invent, ODSC, and more.',
   path: '/speaking',
   keywords: [
     'conference speaker',
@@ -24,6 +24,11 @@ export default function SpeakingPage() {
         { name: 'Home', url: 'https://www.julien.org' },
         { name: 'Speaking', url: 'https://www.julien.org/speaking' },
       ])} />
+      <StructuredData data={webPageSchema(
+        'Speaking Engagements',
+        '684+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing.',
+        'https://www.julien.org/speaking',
+      )} />
       <SpeakingContent />
     </>
   );

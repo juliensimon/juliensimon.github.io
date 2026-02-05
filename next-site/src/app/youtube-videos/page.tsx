@@ -6,7 +6,7 @@ import YouTubeContent from './YouTubeContent';
 export const metadata = buildMetadata({
   title: 'YouTube Videos',
   description:
-    '445K+ subscribers. Tutorials, demos, and deep-dives on AI, machine learning, Hugging Face, and AWS services.',
+    '467K+ subscribers. Tutorials, demos, and deep-dives on AI, machine learning, Hugging Face, and AWS services.',
   path: '/youtube-videos',
   keywords: [
     'YouTube',

@@ -1,12 +1,12 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import PublicationsContent from './PublicationsContent';
 
 export const metadata = buildMetadata({
   title: 'Publications',
   description:
-    'Technical blog posts across AWS, Hugging Face, Medium, and Arcee AI. 300+ articles on machine learning, NLP, computer vision, and AI deployment.',
+    'Technical blog posts across AWS, Hugging Face, Medium, and Arcee AI. 397+ articles on machine learning, NLP, computer vision, and AI deployment.',
   path: '/publications',
   keywords: [
     'technical writing',
@@ -24,6 +24,11 @@ export default function PublicationsPage() {
         { name: 'Home', url: 'https://www.julien.org' },
         { name: 'Publications', url: 'https://www.julien.org/publications' },
       ])} />
+      <StructuredData data={webPageSchema(
+        'Publications',
+        '390+ technical blog posts across AWS, Hugging Face, Medium, and Arcee AI.',
+        'https://www.julien.org/publications',
+      )} />
       <PublicationsContent />
     </>
   );
