@@ -9,7 +9,7 @@ export interface PublicationCategory {
 export const PUBLICATION_CATEGORIES: PublicationCategory[] = [
   {
     name: 'Industry Perspectives',
-    count: 11,
+    count: 18,
     description: 'Company-agnostic thoughts and lessons learned.',
     href: '/blog/industry-perspectives/index.html',
     dateRange: '2021 - Present',
