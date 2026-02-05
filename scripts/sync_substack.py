@@ -598,6 +598,97 @@ def update_latest_updates(items: list[PostItem], dry_run: bool):
     print(f"  Updated LATEST_UPDATES with {len(new_entries)} new items")
 
 
+def update_blog_index(items: list[PostItem], dry_run: bool) -> int:
+    """Update the blog/industry-perspectives/index.html with new article entries.
+    Returns the number of entries actually added."""
+    index_path = PUBLIC / "blog" / "industry-perspectives" / "index.html"
+
+    if not index_path.exists():
+        print(f"  Warning: Blog index not found: {index_path}")
+        return 0
+
+    content = index_path.read_text(encoding='utf-8')
+
+    # Filter to articles only and sort by date (newest first)
+    articles = [item for item in items if item.post_type == 'article']
+    articles.sort(key=lambda x: x.pub_date, reverse=True)
+
+    added_count = 0
+    for item in articles:
+        date_str = item.pub_date.strftime('%Y-%m-%d')
+        slug = slugify(item.title)
+        folder_name = f"{date_str}_{slug}"
+        year = item.pub_date.year
+
+        # Check if already in index
+        if folder_name in content:
+            continue
+
+        display_date = item.pub_date.strftime('%B %-d, %Y')
+
+        # Create new entry HTML
+        new_entry = f'''
+    <div class="blog-post">
+      <div class="blog-post-title">
+        <a href="{item.link}" target="_blank" rel="noopener noreferrer">{html.escape(item.title)}</a>
+        <div class="local-copy-link"><a href="{folder_name}/index.html">local copy</a></div>
+      </div>
+      <div class="date">{display_date}</div>
+    </div>'''
+
+        # Find or create year section
+        year_section_pattern = rf'<div class="year-section">\s*<h2>{year}</h2>'
+        year_match = re.search(year_section_pattern, content)
+
+        if year_match:
+            # Add after the <h2>year</h2> line
+            insert_pos = year_match.end()
+            content = content[:insert_pos] + new_entry + content[insert_pos:]
+        else:
+            # Create new year section before the first existing year section
+            first_year_match = re.search(r'<div class="year-section">', content)
+            if first_year_match:
+                new_section = f'''
+  <div class="year-section">
+    <h2>{year}</h2>{new_entry}
+  </div>
+'''
+                content = content[:first_year_match.start()] + new_section + content[first_year_match.start():]
+
+        added_count += 1
+
+    # Update total count
+    count_match = re.search(r'<strong>Total posts:</strong> (\d+)', content)
+    if count_match:
+        old_count = int(count_match.group(1))
+        new_count = old_count + added_count
+        content = re.sub(
+            r'<strong>Total posts:</strong> \d+',
+            f'<strong>Total posts:</strong> {new_count}',
+            content
+        )
+
+    # Update years covered if needed
+    years_match = re.search(r'<strong>Years covered:</strong> (\d{4})-(\d{4})', content)
+    if years_match and articles:
+        max_year = max(item.pub_date.year for item in articles)
+        current_end_year = int(years_match.group(2))
+        if max_year > current_end_year:
+            content = re.sub(
+                r'<strong>Years covered:</strong> (\d{4})-\d{4}',
+                f'<strong>Years covered:</strong> \\1-{max_year}',
+                content
+            )
+
+    if not dry_run and added_count > 0:
+        index_path.write_text(content, encoding='utf-8')
+
+    if added_count > 0:
+        print(f"  Updated blog index: added {added_count} articles")
+
+    return added_count
+
+
 def print_summary(new_posts: list[PostItem]):
     """Print summary of detected new posts."""
     print(f"\nNEW POSTS DETECTED ({len(new_posts)}):\n")
@@ -664,6 +755,10 @@ def run(dry_run: bool = False, force: bool = False):
     # Update youtube.ts with the total count changes per year
     for year, count in year_video_counts.items():
         update_youtube_ts(year, count, dry_run)
+
+    # Update blog index for articles
+    if articles_added:
+        update_blog_index(articles_added, dry_run)
 
     # Update LATEST_UPDATES
     if new_posts:
