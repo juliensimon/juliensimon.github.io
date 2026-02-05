@@ -1,7 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
+import ScrollReveal from '@/components/ui/ScrollReveal';
 import { EXPERIENCES, EDUCATION } from '@/data/experience';
 
 export default function ExperienceContent() {
@@ -25,12 +24,11 @@ export default function ExperienceContent() {
           {EXPERIENCES.map((exp, i) => {
             const isLeft = i % 2 === 0;
             return (
-              <motion.div
+              <ScrollReveal
                 key={`${exp.company}-${exp.period}`}
-                initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5, delay: 0.1 }}
+                direction={isLeft ? 'left' : 'right'}
+                delay={0.1}
+                margin="-50px"
                 className={`relative mb-12 md:w-[calc(50%-2rem)] ${
                   isLeft ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'
                 } pl-8 md:pl-0`}
@@ -87,18 +85,13 @@ export default function ExperienceContent() {
                     </div>
                   )}
                 </div>
-              </motion.div>
+              </ScrollReveal>
             );
           })}
         </div>
 
         {/* Education */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16"
-        >
+        <ScrollReveal direction="up" className="mt-16">
           <h2 className="text-2xl font-bold font-heading gradient-brand-text mb-6 text-center">
             Education
           </h2>
@@ -114,7 +107,7 @@ export default function ExperienceContent() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </ScrollReveal>
       </section>
     </>
   );

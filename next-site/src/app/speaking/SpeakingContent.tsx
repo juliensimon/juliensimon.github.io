@@ -1,7 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
+import ScrollReveal from '@/components/ui/ScrollReveal';
 import MetricCard from '@/components/ui/MetricCard';
 import YearCard from '@/components/ui/YearCard';
 import SpeakingMap from '@/components/ui/SpeakingMap';
@@ -28,25 +27,15 @@ export default function SpeakingContent() {
         </div>
 
         {/* Map */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-12"
-        >
+        <ScrollReveal direction="up" className="mb-12">
           <h2 className="text-2xl font-bold font-heading gradient-brand-text mb-6 text-center">
             Speaking Locations Worldwide
           </h2>
           <SpeakingMap />
-        </motion.div>
+        </ScrollReveal>
 
         {/* Notable venues */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass-card rounded-xl p-6 mb-12"
-        >
+        <ScrollReveal direction="up" className="glass-card rounded-xl p-6 mb-12">
           <h2 className="text-xl font-bold font-heading text-text mb-3">
             Notable Venues
           </h2>
@@ -55,15 +44,10 @@ export default function SpeakingContent() {
             NY Federal Reserve, Fortune 500 companies, sovereign funds, and major
             technology conferences across six continents.
           </p>
-        </motion.div>
+        </ScrollReveal>
 
         {/* Podcasts & Media */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="grid sm:grid-cols-2 gap-4 mb-12"
-        >
+        <ScrollReveal direction="up" className="grid sm:grid-cols-2 gap-4 mb-12">
           <a
             href="/podcasts.html"
             className="glass-card rounded-xl p-6 hover:shadow-lg transition-shadow group"
@@ -86,7 +70,7 @@ export default function SpeakingContent() {
               Press coverage, TV interviews, and industry analyst briefings.
             </p>
           </a>
-        </motion.div>
+        </ScrollReveal>
 
         {/* Year grid */}
         <h2 className="text-2xl font-bold font-heading gradient-brand-text mb-6 text-center">

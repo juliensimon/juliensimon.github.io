@@ -1,7 +1,3 @@
-'use client';
-
-import { motion } from 'framer-motion';
-
 interface GradientHeroProps {
   title: string;
   subtitle?: string;
@@ -16,23 +12,18 @@ export default function GradientHero({ title, subtitle, children }: GradientHero
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold font-heading gradient-brand-text mb-4"
+        <h1
+          className="text-4xl sm:text-5xl lg:text-6xl font-bold font-heading gradient-brand-text mb-4 animate-page-fade-up"
         >
           {title}
-        </motion.h1>
+        </h1>
         {subtitle && (
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="text-lg text-text-muted max-w-2xl mx-auto"
+          <p
+            className="text-lg text-text-muted max-w-2xl mx-auto animate-page-fade-up"
+            style={{ animationDelay: '0.15s' }}
           >
             {subtitle}
-          </motion.p>
+          </p>
         )}
         {children}
       </div>

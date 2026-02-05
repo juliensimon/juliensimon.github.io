@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 
+import ScrollReveal from '@/components/ui/ScrollReveal';
 import { PUBLICATION_CATEGORIES, TOTAL_ARTICLES } from '@/data/publications';
 
 export default function PublicationsContent() {
@@ -27,13 +27,7 @@ export default function PublicationsContent() {
               : { href: cat.href };
 
             return (
-              <motion.div
-                key={cat.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-              >
+              <ScrollReveal key={cat.name} direction="up" delay={i * 0.08}>
                 <Wrapper
                   {...linkProps}
                   className="block glass-card rounded-xl p-6 hover:scale-[1.02] transition-all duration-300 group h-full"
@@ -49,7 +43,7 @@ export default function PublicationsContent() {
                     {cat.description}
                   </p>
                 </Wrapper>
-              </motion.div>
+              </ScrollReveal>
             );
           })}
         </div>

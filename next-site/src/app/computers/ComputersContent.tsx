@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 
+import ScrollReveal from '@/components/ui/ScrollReveal';
 import { COMPUTERS, UNIX_JOURNEY, UNIX_BOOKS, VINTAGE_CDS, UNIX_PHILOSOPHY } from '@/data/computers';
 
 export default function ComputersContent() {
@@ -21,12 +21,10 @@ export default function ComputersContent() {
         {/* Computers grid */}
         <div className="grid sm:grid-cols-2 gap-5">
           {COMPUTERS.map((computer, i) => (
-            <motion.div
+            <ScrollReveal
               key={computer.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06 }}
+              direction="up"
+              delay={i * 0.06}
               className="glass-card rounded-xl overflow-hidden"
             >
               {computer.image && (
@@ -60,17 +58,12 @@ export default function ComputersContent() {
                   </p>
                 )}
               </div>
-            </motion.div>
+            </ScrollReveal>
           ))}
         </div>
 
         {/* UNIX Journey */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-20"
-        >
+        <ScrollReveal direction="up" className="mt-20">
           <h2 className="text-3xl font-bold font-heading gradient-brand-text mb-6 text-center">
             My UNIX Journey (1992&ndash;)
           </h2>
@@ -81,26 +74,19 @@ export default function ComputersContent() {
               </p>
             ))}
           </div>
-        </motion.div>
+        </ScrollReveal>
 
         {/* UNIX Books */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16"
-        >
+        <ScrollReveal direction="up" className="mt-16">
           <h2 className="text-3xl font-bold font-heading gradient-brand-text mb-6 text-center">
             UNIX Book Collection
           </h2>
           <div className="grid sm:grid-cols-2 gap-5">
             {UNIX_BOOKS.map((book, i) => (
-              <motion.div
+              <ScrollReveal
                 key={book.title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
+                direction="up"
+                delay={i * 0.05}
                 className="glass-card rounded-xl p-5 flex gap-4"
               >
                 {book.image && (
@@ -125,18 +111,13 @@ export default function ComputersContent() {
                     {book.description}
                   </p>
                 </div>
-              </motion.div>
+              </ScrollReveal>
             ))}
           </div>
-        </motion.div>
+        </ScrollReveal>
 
         {/* Vintage CDs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16"
-        >
+        <ScrollReveal direction="up" className="mt-16">
           <h2 className="text-2xl font-bold font-heading gradient-brand-text mb-6 text-center">
             Vintage UNIX &amp; BSD CD Collection
           </h2>
@@ -164,15 +145,10 @@ export default function ComputersContent() {
               ))}
             </div>
           </div>
-        </motion.div>
+        </ScrollReveal>
 
         {/* UNIX Philosophy */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16"
-        >
+        <ScrollReveal direction="up" className="mt-16">
           <h2 className="text-2xl font-bold font-heading gradient-brand-text mb-6 text-center">
             UNIX Philosophy
           </h2>
@@ -192,7 +168,7 @@ export default function ComputersContent() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </ScrollReveal>
       </section>
     </>
   );

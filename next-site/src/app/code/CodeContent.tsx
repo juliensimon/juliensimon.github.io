@@ -1,7 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
+import ScrollReveal from '@/components/ui/ScrollReveal';
 import { REPOSITORIES, GITHUB_PROFILE } from '@/data/code';
 
 export default function CodeContent() {
@@ -20,15 +19,14 @@ export default function CodeContent() {
         <h2 className="sr-only">Open Source Repositories</h2>
         <div className="grid sm:grid-cols-2 gap-5">
           {REPOSITORIES.map((repo, i) => (
-            <motion.a
+            <ScrollReveal
               key={repo.name}
+              as="a"
               href={repo.url}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
+              direction="up"
+              delay={i * 0.08}
               className={`block glass-card rounded-xl p-6 hover:scale-[1.02] transition-all duration-300 group ${
                 repo.featured ? 'border border-primary/30' : ''
               }`}
@@ -59,16 +57,11 @@ export default function CodeContent() {
                   </span>
                 ))}
               </div>
-            </motion.a>
+            </ScrollReveal>
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mt-10"
-        >
+        <ScrollReveal direction="up" className="text-center mt-10">
           <a
             href={GITHUB_PROFILE}
             target="_blank"
@@ -77,7 +70,7 @@ export default function CodeContent() {
           >
             View All Repositories on GitHub
           </a>
-        </motion.div>
+        </ScrollReveal>
       </section>
     </>
   );

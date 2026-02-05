@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 
+import ScrollReveal from '@/components/ui/ScrollReveal';
 import { BOOKS } from '@/data/books';
 
 export default function BooksContent() {
@@ -20,12 +20,10 @@ export default function BooksContent() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="space-y-6">
           {BOOKS.map((book, i) => (
-            <motion.div
+            <ScrollReveal
               key={book.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              direction="up"
+              delay={i * 0.1}
               className="glass-card rounded-xl p-6 flex gap-6"
             >
               {book.coverImage && (
@@ -67,7 +65,7 @@ export default function BooksContent() {
                   )}
                 </div>
               </div>
-            </motion.div>
+            </ScrollReveal>
           ))}
         </div>
       </section>

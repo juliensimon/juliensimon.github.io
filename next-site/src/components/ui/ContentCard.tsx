@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import ScrollReveal from './ScrollReveal';
 
 interface ContentCardProps {
   title: string;
@@ -26,13 +26,12 @@ export default function ContentCard({
     : {};
 
   return (
-    <motion.a
+    <ScrollReveal
+      as="a"
       href={href}
       {...linkProps}
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-30px' }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
+      direction="up"
+      delay={index * 0.05}
       className="block group glass-card rounded-xl p-5 hover:scale-[1.01] transition-all duration-300"
     >
       {date && (
@@ -49,6 +48,6 @@ export default function ContentCard({
           {excerpt}
         </p>
       )}
-    </motion.a>
+    </ScrollReveal>
   );
 }

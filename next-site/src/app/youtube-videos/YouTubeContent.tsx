@@ -1,7 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
+import ScrollReveal from '@/components/ui/ScrollReveal';
 import MetricCard from '@/components/ui/MetricCard';
 import YearCard from '@/components/ui/YearCard';
 import { YOUTUBE_STATS, VIDEO_YEARS } from '@/data/youtube';
@@ -27,12 +26,7 @@ export default function YouTubeContent() {
         </div>
 
         {/* Channel link */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
+        <ScrollReveal direction="up" className="text-center mb-12">
           <a
             href="https://youtube.com/juliensimonfr"
             target="_blank"
@@ -41,7 +35,7 @@ export default function YouTubeContent() {
           >
             Visit YouTube Channel
           </a>
-        </motion.div>
+        </ScrollReveal>
 
         {/* Year grid */}
         <h2 className="text-2xl font-bold font-heading gradient-brand-text mb-6 text-center">

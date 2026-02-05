@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import MetricCard from '@/components/ui/MetricCard';
+import ScrollReveal from '@/components/ui/ScrollReveal';
 import SocialButton from '@/components/ui/SocialButton';
 import TypingEffect from '@/components/ui/TypingEffect';
 import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
@@ -103,11 +103,7 @@ export default function HomeContent() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-          >
+          <div className="animate-page-fade-scale">
             <Image
               src="/assets/julien.webp"
               alt="Julien Simon"
@@ -116,41 +112,32 @@ export default function HomeContent() {
               priority
               className="mx-auto rounded-full border-4 border-primary/30 shadow-xl shadow-primary/10 mb-6"
             />
-          </motion.div>
+          </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mb-3"
-          >
+          <h1 className="mb-3 animate-page-fade-up" style={{ animationDelay: '0.1s' }}>
             <span className="block text-5xl sm:text-6xl lg:text-7xl font-bold font-heading gradient-brand-text">
               Julien Simon
             </span>
             <span className="block text-xl sm:text-2xl font-semibold text-text mt-3">
               AI Operating Partner @ Fortino Capital
             </span>
-          </motion.h1>
+          </h1>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-lg text-text-muted h-8 mb-8"
+          <div
+            className="text-lg text-text-muted h-8 mb-8 animate-page-fade-in"
+            style={{ animationDelay: '0.4s' }}
           >
             <TypingEffect texts={TYPING_PHRASES} />
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-wrap justify-center gap-2"
+          <div
+            className="flex flex-wrap justify-center gap-2 animate-page-fade-up"
+            style={{ animationDelay: '0.5s' }}
           >
             {SOCIAL_LINKS.map((link) => (
               <SocialButton key={link.name} name={link.name} href={link.href} />
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -158,21 +145,12 @@ export default function HomeContent() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid lg:grid-cols-[2fr_1fr] gap-12">
           <div>
-            <motion.h2
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="text-3xl font-bold font-heading gradient-brand-text mb-6"
-            >
-              About
-            </motion.h2>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="space-y-4 text-text leading-relaxed"
-            >
+            <ScrollReveal direction="left">
+              <h2 className="text-3xl font-bold font-heading gradient-brand-text mb-6">
+                About
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal direction="up" delay={0.1} className="space-y-4 text-text leading-relaxed">
               <p>
                 <strong>Julien Simon bridges the gap between AI research and enterprise reality.</strong>{' '}
                 While many experts choose either academic research or practical implementation,
@@ -198,27 +176,23 @@ export default function HomeContent() {
                 Julien&apos;s mission? <strong>To demystify buzzwords and cut through industry hype to
                 focus on what actually works in production.</strong>
               </p>
-            </motion.div>
+            </ScrollReveal>
           </div>
 
           <div>
-            <motion.h2
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="text-3xl font-bold font-heading gradient-brand-text mb-6"
-            >
-              Latest Updates
-            </motion.h2>
+            <ScrollReveal direction="right">
+              <h2 className="text-3xl font-bold font-heading gradient-brand-text mb-6">
+                Latest Updates
+              </h2>
+            </ScrollReveal>
             <div className="space-y-4">
               {LATEST_UPDATES.map((item, i) => (
-                <motion.a
+                <ScrollReveal
                   key={item.href}
+                  as="a"
                   href={item.href}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
+                  direction="up"
+                  delay={i * 0.08}
                   className="block glass-card rounded-xl p-4 hover:scale-[1.01] transition-all duration-300 group"
                 >
                   <p className="text-xs text-text-muted mb-1">
@@ -227,7 +201,7 @@ export default function HomeContent() {
                   <h3 className="text-sm font-semibold text-text group-hover:text-primary transition-colors">
                     {item.title}
                   </h3>
-                </motion.a>
+                </ScrollReveal>
               ))}
             </div>
           </div>
@@ -236,24 +210,17 @@ export default function HomeContent() {
 
       {/* ── Industry Impact & Metrics ──────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-3xl font-bold font-heading gradient-brand-text mb-4 text-center"
-        >
-          Industry Impact &amp; Recognition
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-center text-text-muted max-w-3xl mx-auto mb-10"
-        >
-          Julien&apos;s approach to AI—combining theoretical depth with practical results—has
-          earned recognition across the global tech community.
-        </motion.p>
+        <ScrollReveal direction="up">
+          <h2 className="text-3xl font-bold font-heading gradient-brand-text mb-4 text-center">
+            Industry Impact &amp; Recognition
+          </h2>
+        </ScrollReveal>
+        <ScrollReveal direction="up" delay={0.1} className="text-center text-text-muted max-w-3xl mx-auto mb-10">
+          <p>
+            Julien&apos;s approach to AI—combining theoretical depth with practical results—has
+            earned recognition across the global tech community.
+          </p>
+        </ScrollReveal>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {METRICS.map((m, i) => (
@@ -264,12 +231,10 @@ export default function HomeContent() {
         {/* Philosophy cards */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           {PHILOSOPHY_CARDS.map((card, i) => (
-            <motion.div
+            <ScrollReveal
               key={card.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
+              direction="up"
+              delay={i * 0.08}
               className="glass-card rounded-xl p-5 border-l-4 border-primary"
             >
               <h3 className="text-base font-semibold text-text mb-2">
@@ -278,7 +243,7 @@ export default function HomeContent() {
               <p className="text-sm text-text-muted">
                 {card.description}
               </p>
-            </motion.div>
+            </ScrollReveal>
           ))}
         </div>
 
@@ -289,16 +254,14 @@ export default function HomeContent() {
           </h3>
           <div className="space-y-3">
             {RECOGNITIONS.map((item, i) => (
-              <motion.div
+              <ScrollReveal
                 key={i}
-                initial={{ opacity: 0, x: -16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
+                direction="left"
+                delay={i * 0.06}
                 className="glass-card rounded-lg p-4 border-l-4 border-secondary"
               >
                 <p className="text-sm text-text">{item}</p>
-              </motion.div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -306,23 +269,18 @@ export default function HomeContent() {
 
       {/* ── Expertise Grid ─────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-3xl font-bold font-heading gradient-brand-text mb-8 text-center"
-        >
-          Expertise &amp; Leadership Impact
-        </motion.h2>
+        <ScrollReveal direction="up">
+          <h2 className="text-3xl font-bold font-heading gradient-brand-text mb-8 text-center">
+            Expertise &amp; Leadership Impact
+          </h2>
+        </ScrollReveal>
 
         <div className="grid sm:grid-cols-2 gap-5">
           {EXPERTISE_CARDS.map((card, i) => (
-            <motion.div
+            <ScrollReveal
               key={card.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
+              direction="up"
+              delay={i * 0.08}
               className="glass-card rounded-xl p-6 border-l-4 border-primary flex flex-col justify-between"
             >
               <div>
@@ -339,35 +297,26 @@ export default function HomeContent() {
               >
                 {card.linkText} &rarr;
               </Link>
-            </motion.div>
+            </ScrollReveal>
           ))}
         </div>
       </section>
 
       {/* ── Contact ────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-3xl font-bold font-heading gradient-brand-text mb-4"
-        >
-          Contact
-        </motion.h2>
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-text-muted space-y-2"
-        >
+        <ScrollReveal direction="up">
+          <h2 className="text-3xl font-bold font-heading gradient-brand-text mb-4">
+            Contact
+          </h2>
+        </ScrollReveal>
+        <ScrollReveal direction="up" delay={0.1} className="text-text-muted space-y-2">
           <p>For portfolio company advisory, strategy consulting, speaking engagements, or AI partnerships:</p>
           <p>
             <a href="mailto:julien@julien.org" className="text-primary hover:text-primary-hover font-medium">
               julien@julien.org
             </a>
           </p>
-        </motion.div>
+        </ScrollReveal>
       </section>
     </>
   );

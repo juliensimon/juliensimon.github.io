@@ -68,6 +68,20 @@ export function breadcrumbSchema(items: { name: string; url: string }[]) {
   };
 }
 
+export function webPageSchema(name: string, description: string, url: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}/#webpage`,
+    name,
+    description,
+    url,
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    about: { '@id': `${SITE.url}/#person` },
+    inLanguage: 'en',
+  };
+}
+
 export function faqSchema(faqs: { question: string; answer: string }[]) {
   return {
     '@context': 'https://schema.org',

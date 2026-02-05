@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 
+import ScrollReveal from './ScrollReveal';
 
 export interface BlogPost {
   title: string;
@@ -53,13 +53,13 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
         {/* Posts list */}
         <div className="space-y-3">
           {filtered.map((post, i) => (
-            <motion.a
+            <ScrollReveal
               key={post.href}
+              as="a"
               href={post.href}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-20px' }}
-              transition={{ delay: Math.min(i * 0.03, 0.5) }}
+              direction="up"
+              delay={Math.min(i * 0.03, 0.5)}
+              margin="-20px"
               className="block glass-card rounded-lg p-4 hover:scale-[1.005] transition-all duration-300 group"
             >
               {post.date && (
@@ -70,7 +70,7 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
               <h2 className="text-sm font-medium text-text group-hover:text-primary transition-colors">
                 {post.title}
               </h2>
-            </motion.a>
+            </ScrollReveal>
           ))}
         </div>
 

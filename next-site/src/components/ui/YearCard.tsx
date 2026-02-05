@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import ScrollReveal from './ScrollReveal';
 
 interface YearCardProps {
   year: number;
@@ -13,12 +13,7 @@ interface YearCardProps {
 
 export default function YearCard({ year, count, label, href, index = 0 }: YearCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.06 }}
-    >
+    <ScrollReveal direction="scale" delay={index * 0.06}>
       <Link
         href={href}
         className="block glass-card rounded-xl p-5 text-center hover:scale-[1.03] transition-all duration-300 group"
@@ -30,6 +25,6 @@ export default function YearCard({ year, count, label, href, index = 0 }: YearCa
           {count} {label}
         </div>
       </Link>
-    </motion.div>
+    </ScrollReveal>
   );
 }
