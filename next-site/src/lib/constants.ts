@@ -5,6 +5,7 @@ export const SITE = {
     'AI Operating Partner at Fortino Capital. 30+ years accelerating cloud and AI across PE/VC portfolios. Expert in Small Language Models and enterprise AI.',
   url: 'https://www.julien.org',
   image: 'https://www.julien.org/assets/julien.webp',
+  ogImage: 'https://www.julien.org/assets/og-image.png',
   locale: 'en_US',
   email: 'julien@julien.org',
   twitterHandle: '@julsimon',
