@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import ExportedImage from 'next-image-export-optimizer';
 
 import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
@@ -26,7 +26,7 @@ export default function ComputersContent() {
             >
               {computer.image && (
                 <div className="aspect-video relative bg-surface">
-                  <Image
+                  <ExportedImage
                     src={computer.image}
                     alt={computer.name}
                     fill
@@ -88,7 +88,7 @@ export default function ComputersContent() {
               >
                 {book.image && (
                   <div className="shrink-0 hidden sm:block">
-                    <Image
+                    <ExportedImage
                       src={book.image}
                       alt={`Cover of ${book.title}`}
                       width={80}
@@ -120,7 +120,7 @@ export default function ComputersContent() {
           </h2>
           <div className="glass-card rounded-xl overflow-hidden">
             <div className="relative aspect-[3/1] bg-surface">
-              <Image
+              <ExportedImage
                 src="/assets/computers/vintage-cds-collection.webp"
                 alt="Vintage UNIX and BSD CD collection"
                 fill
@@ -151,7 +151,7 @@ export default function ComputersContent() {
           </h2>
           <div className="glass-card rounded-xl overflow-hidden">
             <div className="relative aspect-[3/1] bg-surface">
-              <Image
+              <ExportedImage
                 src="/assets/computers/unix-license-plate.webp"
                 alt="Live Free or Die - UNIX license plate"
                 fill

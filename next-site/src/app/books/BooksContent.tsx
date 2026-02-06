@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import ExportedImage from 'next-image-export-optimizer';
 
 import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
@@ -25,7 +25,7 @@ export default function BooksContent() {
             >
               {book.coverImage && (
                 <div className="shrink-0 hidden sm:block">
-                  <Image
+                  <ExportedImage
                     src={book.coverImage}
                     alt={`Cover of ${book.title}`}
                     width={112}

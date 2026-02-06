@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import ExportedImage from 'next-image-export-optimizer';
 import Link from 'next/link';
 import MetricCard from '@/components/ui/MetricCard';
 import ScrollReveal from '@/components/ui/ScrollReveal';
@@ -104,7 +104,7 @@ export default function HomeContent() {
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
           <div className="animate-page-fade-scale">
-            <Image
+            <ExportedImage
               src="/assets/julien.webp"
               alt="Julien Simon - AI Operating Partner at Fortino Capital"
               width={160}
