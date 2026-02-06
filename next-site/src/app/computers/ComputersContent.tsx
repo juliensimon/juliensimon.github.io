@@ -2,20 +2,17 @@
 
 import Image from 'next/image';
 
+import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import { COMPUTERS, UNIX_JOURNEY, UNIX_BOOKS, VINTAGE_CDS, UNIX_PHILOSOPHY } from '@/data/computers';
 
 export default function ComputersContent() {
   return (
     <>
-      <div className="pt-24 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold font-heading text-text">
-          Computers, UNIX, and Me
-        </h1>
-        <p className="mt-2 text-text-muted">
-          A journey through computing history — the machines that shaped a career
-        </p>
-      </div>
+      <GradientHero
+        title="Computers, UNIX, and Me"
+        subtitle="A journey through computing history — the machines that shaped a career"
+      />
 
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {/* Computers grid */}
@@ -24,7 +21,7 @@ export default function ComputersContent() {
             <ScrollReveal
               key={computer.name}
               direction="up"
-              delay={i * 0.06}
+              delay={i * 0.08}
               className="glass-card rounded-xl overflow-hidden"
             >
               {computer.image && (
@@ -86,7 +83,7 @@ export default function ComputersContent() {
               <ScrollReveal
                 key={book.title}
                 direction="up"
-                delay={i * 0.05}
+                delay={i * 0.08}
                 className="glass-card rounded-xl p-5 flex gap-4"
               >
                 {book.image && (

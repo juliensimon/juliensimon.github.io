@@ -98,7 +98,7 @@ export default function HomeContent() {
   return (
     <>
       {/* ── Hero Section ─────────────────────────────────── */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-20">
+      <section className="relative min-h-[70vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0 gradient-mesh" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
 
@@ -268,7 +268,7 @@ export default function HomeContent() {
               <ScrollReveal
                 key={i}
                 direction="left"
-                delay={i * 0.06}
+                delay={i * 0.08}
                 className="glass-card rounded-lg p-4 border-l-4 border-secondary"
               >
                 <p className="text-sm text-text">{item}</p>

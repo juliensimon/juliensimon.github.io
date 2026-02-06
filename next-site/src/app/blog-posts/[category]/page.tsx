@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, collectionPageSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import { SITE } from '@/lib/constants';
 import BlogListingPage from '@/components/ui/BlogListingPage';
@@ -44,6 +44,13 @@ export default async function BlogCategoryPage({ params }: Props) {
           { name: 'Publications', url: `${SITE.url}/publications` },
           { name: config.title, url: `${SITE.url}/blog-posts/${category}` },
         ])}
+      />
+      <StructuredData
+        data={collectionPageSchema(
+          config.title,
+          config.description,
+          `${SITE.url}/blog-posts/${category}`
+        )}
       />
       <BlogListingPage
         title={config.title}

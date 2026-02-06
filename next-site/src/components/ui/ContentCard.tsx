@@ -31,8 +31,8 @@ export default function ContentCard({
       href={href}
       {...linkProps}
       direction="up"
-      delay={index * 0.05}
-      className="block group glass-card rounded-xl p-5 hover:scale-[1.01] transition-all duration-300"
+      delay={index * 0.08}
+      className="block group glass-card rounded-xl p-5 hover:scale-[1.02] transition-all duration-300"
     >
       {date && (
         <p className="text-xs text-text-muted mb-1">
@@ -42,6 +42,11 @@ export default function ContentCard({
       )}
       <h3 className="text-base font-semibold text-text group-hover:text-primary transition-colors">
         {title}
+        {external && (
+          <svg className="inline-block w-3 h-3 ml-1 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        )}
       </h3>
       {excerpt && (
         <p className="mt-1.5 text-sm text-text-muted line-clamp-2">

@@ -82,6 +82,20 @@ export function webPageSchema(name: string, description: string, url: string) {
   };
 }
 
+export function collectionPageSchema(name: string, description: string, url: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${url}/#collectionpage`,
+    name,
+    description,
+    url,
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    author: { '@id': `${SITE.url}/#person` },
+    inLanguage: 'en',
+  };
+}
+
 export function faqSchema(faqs: { question: string; answer: string }[]) {
   return {
     '@context': 'https://schema.org',
@@ -126,30 +140,30 @@ export function videoObjectSchema(channel: {
 }) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Person',
-    '@id': `${SITE.url}/#person`,
-    name: 'Julien Simon',
-    url: SITE.url,
-    subjectOf: {
-      '@type': 'WebPage',
-      '@id': `${SITE.url}/youtube-videos`,
-      name: channel.name,
-      description: channel.description,
-      mainEntity: {
-        '@type': 'ItemList',
-        name: 'YouTube Video Collection',
-        description: `${channel.videoCount}+ videos on AI, machine learning, and cloud computing`,
-        numberOfItems: channel.videoCount,
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            url: channel.channelUrl,
-            name: 'YouTube Channel',
-          },
-        ],
+    '@type': 'ItemList',
+    '@id': `${SITE.url}/youtube-videos/#itemlist`,
+    name: channel.name,
+    description: channel.description,
+    numberOfItems: channel.videoCount,
+    url: `${SITE.url}/youtube-videos`,
+    author: { '@id': `${SITE.url}/#person` },
+    itemListElement: [
+      {
+        '@type': 'VideoObject',
+        position: 1,
+        name: 'YouTube Channel',
+        description: `${channel.videoCount}+ educational videos on AI, machine learning, and cloud computing`,
+        thumbnailUrl: SITE.image,
+        uploadDate: '2020-01-01',
+        contentUrl: channel.channelUrl,
+        embedUrl: channel.channelUrl,
+        interactionStatistic: {
+          '@type': 'InteractionCounter',
+          interactionType: { '@type': 'WatchAction' },
+          userInteractionCount: channel.subscriberCount,
+        },
       },
-    },
+    ],
   };
 }
 
