@@ -7,7 +7,7 @@
   --color-primary: #6366f1;
   --color-primary-hover: #4f46e5;
   --color-secondary: #8b5cf6;
-  --color-highlight: #06b6d4;
+  --color-highlight: #0891b2;
   --color-text: #0f172a;
   --color-text-muted: #334155;
   --color-border: #e2e8f0;
@@ -29,11 +29,11 @@ body {
 
 /* ── Gradient Utilities ────────────────────────────────── */
 .gradient-brand {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #0891b2);
 }
 
 .gradient-brand-text {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #0891b2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -54,30 +54,6 @@ body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-/* ── Animated Gradient Border ──────────────────────────── */
-@keyframes gradient-rotate {
-  0%   { --gradient-angle: 0deg; }
-  100% { --gradient-angle: 360deg; }
-}
-
-.gradient-border {
-  position: relative;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  padding: 1px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-}
-
 /* ── Typing cursor ─────────────────────────────────────── */
 @keyframes blink {
   0%, 50% { opacity: 1; }
@@ -87,7 +63,7 @@ body {
 .typing-cursor::after {
   content: '|';
   animation: blink 1s step-end infinite;
-  color: #06b6d4;
+  color: #0891b2;
   font-weight: 300;
 }
 
@@ -173,5 +149,13 @@ body {
   .animate-page-fade-in {
     animation: none;
     opacity: 1;
+  }
+  .typing-cursor::after {
+    animation: none;
+  }
+  .fade-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

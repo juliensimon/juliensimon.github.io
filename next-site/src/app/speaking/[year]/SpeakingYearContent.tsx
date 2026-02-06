@@ -1,29 +1,24 @@
 'use client';
 
 import Link from 'next/link';
+import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
-import { SPEAKING_EVENTS } from '@/data/speaking-events';
-import { SPEAKING_YEARS } from '@/data/speaking';
+import type { SpeakingEvent } from '@/data/speaking-events';
 
 interface Props {
   year: string;
+  events: SpeakingEvent[];
+  totalCount: number;
 }
 
-export default function SpeakingYearContent({ year }: Props) {
-  const events = SPEAKING_EVENTS[year] ?? [];
-  const yearData = SPEAKING_YEARS.find((y) => y.year.toString() === year);
-  const totalCount = yearData?.count ?? events.length;
+export default function SpeakingYearContent({ year, events, totalCount }: Props) {
 
   return (
     <>
-      <div className="pt-24 pb-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold font-heading text-text">
-          Speaking {year}
-        </h1>
-        <p className="mt-2 text-text-muted">
-          {totalCount} event{totalCount !== 1 ? 's' : ''} — conferences, workshops, and meetups on AI, machine learning, and cloud computing
-        </p>
-      </div>
+      <GradientHero
+        title={`Speaking ${year}`}
+        subtitle={`${totalCount} event${totalCount !== 1 ? 's' : ''} — conferences, workshops, and meetups on AI, machine learning, and cloud computing`}
+      />
 
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {events.length > 0 ? (

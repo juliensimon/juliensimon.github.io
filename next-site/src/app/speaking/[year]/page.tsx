@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { SPEAKING_YEARS } from '@/data/speaking';
+import { SPEAKING_EVENTS } from '@/data/speaking-events';
 import { buildMetadata } from '@/lib/metadata';
 import { breadcrumbSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
@@ -29,6 +30,12 @@ interface Props {
 export default async function SpeakingYearPage({ params }: Props) {
   const { year } = await params;
 
+  // Filter events for this year server-side (at build time)
+  // Only the filtered events will be serialized to the client bundle
+  const events = SPEAKING_EVENTS[year] ?? [];
+  const yearData = SPEAKING_YEARS.find((y) => y.year.toString() === year);
+  const totalCount = yearData?.count ?? events.length;
+
   return (
     <>
       <StructuredData data={breadcrumbSchema([
@@ -36,7 +43,11 @@ export default async function SpeakingYearPage({ params }: Props) {
         { name: 'Speaking', url: `${SITE.url}/speaking` },
         { name: `Speaking ${year}`, url: `${SITE.url}/speaking/${year}` },
       ])} />
-      <SpeakingYearContent year={year} />
+      <SpeakingYearContent
+        year={year}
+        events={events}
+        totalCount={totalCount}
+      />
     </>
   );
 }

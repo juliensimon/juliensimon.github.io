@@ -1,21 +1,21 @@
 'use client';
 
+import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import { EXPERIENCES, EDUCATION } from '@/data/experience';
 
 export default function ExperienceContent() {
   return (
     <>
-      <div className="pt-24 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold font-heading text-text">
-          Experience
-        </h1>
-        <p className="mt-2 text-text-muted">
-          30+ years of research-informed technology leadership — from embedded systems to AI at scale
-        </p>
-      </div>
+      <GradientHero
+        title="Experience"
+        subtitle="30+ years of research-informed technology leadership — from embedded systems to AI at scale"
+      />
 
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        {/* Professional Experience Section */}
+        <h2 className="sr-only">Professional Experience</h2>
+
         {/* Timeline */}
         <div className="relative">
           {/* Vertical line */}
@@ -43,9 +43,9 @@ export default function ExperienceContent() {
 
                 <div className="glass-card rounded-xl p-6">
                   <p className="text-xs font-medium text-highlight mb-1">{exp.period}</p>
-                  <h2 className="text-lg font-bold font-heading text-text">
+                  <h3 className="text-lg font-bold font-heading text-text">
                     {exp.title}
-                  </h2>
+                  </h3>
                   <p className="text-sm font-semibold text-primary mb-2">
                     {exp.companyUrl ? (
                       <a href={exp.companyUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">

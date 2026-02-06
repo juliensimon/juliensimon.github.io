@@ -1,5 +1,6 @@
 'use client';
 
+import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import MetricCard from '@/components/ui/MetricCard';
 import YearCard from '@/components/ui/YearCard';
@@ -9,14 +10,10 @@ import { SPEAKING_STATS, SPEAKING_YEARS } from '@/data/speaking';
 export default function SpeakingContent() {
   return (
     <>
-      <div className="pt-24 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold font-heading text-text">
-          Speaking
-        </h1>
-        <p className="mt-2 text-text-muted">
-          Conferences, workshops, and keynotes on AI, machine learning, and cloud computing
-        </p>
-      </div>
+      <GradientHero
+        title="Speaking"
+        subtitle="Conferences, workshops, and keynotes on AI, machine learning, and cloud computing"
+      />
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {/* Stats */}
@@ -44,6 +41,22 @@ export default function SpeakingContent() {
             NY Federal Reserve, Fortune 500 companies, sovereign funds, and major
             technology conferences across six continents.
           </p>
+        </ScrollReveal>
+
+        {/* Book Julien CTA */}
+        <ScrollReveal direction="up" className="mb-12">
+          <div className="glass-card rounded-2xl p-8 text-center">
+            <h2 className="text-2xl font-heading font-bold text-text mb-3">Book Julien to Speak</h2>
+            <p className="text-text-muted mb-6 max-w-2xl mx-auto">
+              Available for keynotes, panels, and workshops on AI strategy, small language models, and enterprise AI adoption.
+            </p>
+            <a
+              href="mailto:julien@julien.org?subject=Speaking%20Inquiry"
+              className="inline-flex items-center px-6 py-3 text-sm font-medium text-white rounded-lg gradient-brand hover:opacity-90 transition-opacity"
+            >
+              Get in Touch
+            </a>
+          </div>
         </ScrollReveal>
 
         {/* Podcasts & Media */}
