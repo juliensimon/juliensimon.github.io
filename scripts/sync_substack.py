@@ -30,9 +30,12 @@ from substack_html_cleaner import SubstackHTMLCleaner
 from substack_image_handler import process_images_for_post, update_html_image_refs
 
 RSS_URL = "https://julsimon.substack.com/feed"
-BASE = Path(__file__).parent.parent / "next-site"
+REPO_ROOT = Path(__file__).parent.parent
+BASE = REPO_ROOT / "next-site"
 PUBLIC = BASE / "public"
 SRC = BASE / "src"
+# Repo-root youtube/ is the canonical copy checked by the validator
+REPO_YOUTUBE = REPO_ROOT / "youtube"
 
 
 class PostItem(NamedTuple):
@@ -351,6 +354,10 @@ def create_video_page(item: PostItem, dry_run: bool) -> Path:
     if not dry_run:
         year_dir.mkdir(parents=True, exist_ok=True)
         filepath.write_text(html_content, encoding='utf-8')
+        # Mirror to repo-root youtube/ for validator consistency
+        repo_year_dir = REPO_YOUTUBE / str(year)
+        repo_year_dir.mkdir(parents=True, exist_ok=True)
+        (repo_year_dir / filepath.name).write_text(html_content, encoding='utf-8')
 
     return filepath
 
@@ -543,6 +550,10 @@ def update_year_index(year: int, item: PostItem, dry_run: bool) -> bool:
 
     if not dry_run:
         index_path.write_text(content, encoding='utf-8')
+        # Mirror to repo-root youtube/ for validator consistency
+        repo_index = REPO_YOUTUBE / str(year) / "index.html"
+        if repo_index.parent.exists():
+            repo_index.write_text(content, encoding='utf-8')
 
     print(f"  Updated {index_path.name}: {current_count} -> {new_count} videos")
     return True
