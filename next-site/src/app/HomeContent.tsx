@@ -106,7 +106,7 @@ export default function HomeContent() {
           <div className="animate-page-fade-scale">
             <Image
               src="/assets/julien.webp"
-              alt="Julien Simon"
+              alt="Julien Simon - AI Operating Partner at Fortino Capital"
               width={160}
               height={160}
               priority
@@ -196,7 +196,18 @@ export default function HomeContent() {
                   className="block glass-card rounded-xl p-4 hover:scale-[1.01] transition-all duration-300 group"
                 >
                   <p className="text-xs text-text-muted mb-1">
-                    {item.icon === 'video' ? '📺' : '📝'} {item.date}
+                    {item.icon === 'video' ? (
+                      <>
+                        <span aria-hidden="true">📺</span>
+                        <span className="sr-only">Video: </span>
+                      </>
+                    ) : (
+                      <>
+                        <span aria-hidden="true">📝</span>
+                        <span className="sr-only">Article: </span>
+                      </>
+                    )}{' '}
+                    {item.date}
                   </p>
                   <h3 className="text-sm font-semibold text-text group-hover:text-primary transition-colors">
                     {item.title}

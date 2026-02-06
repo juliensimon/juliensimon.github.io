@@ -2,13 +2,15 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NAV_ITEMS } from '@/lib/constants';
 
 export default function Navigation() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -33,6 +35,44 @@ export default function Navigation() {
     };
   }, [mobileMenuOpen]);
 
+  // Focus trap for mobile menu
+  useEffect(() => {
+    if (!mobileMenuOpen || !drawerRef.current) return;
+
+    const drawer = drawerRef.current;
+    const focusable = drawer.querySelectorAll<HTMLElement>(
+      'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+    );
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    // Focus first nav link on open
+    focusable[1]?.focus();
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+        hamburgerRef.current?.focus();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
+    }
+
+    drawer.addEventListener('keydown', handleKeyDown);
+    return () => drawer.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
   return (
     <>
       <nav
@@ -41,7 +81,6 @@ export default function Navigation() {
             ? 'py-2 bg-background/90 backdrop-blur-xl shadow-lg shadow-black/5'
             : 'py-4 bg-transparent'
         }`}
-        role="navigation"
         aria-label="Main navigation"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -63,10 +102,11 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={active ? 'page' : undefined}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                     active
                       ? 'bg-primary/15 text-primary'
-                      : 'text-text-muted hover:text-primary hover:bg-primary/5'
+                      : `${scrolled ? 'text-text-muted' : 'text-text'} hover:text-primary hover:bg-primary/5`
                   }`}
                 >
                   {item.label}
@@ -75,10 +115,19 @@ export default function Navigation() {
             })}
           </div>
 
+          {/* Desktop Contact CTA */}
+          <a
+            href="mailto:julien@julien.org"
+            className="hidden md:inline-flex items-center px-4 py-1.5 text-sm font-medium text-white rounded-lg gradient-brand hover:opacity-90 transition-opacity"
+          >
+            Contact
+          </a>
+
           {/* Mobile Hamburger Button */}
           <button
+            ref={hamburgerRef}
             type="button"
-            className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-primary/5 transition-colors"
+            className="md:hidden relative w-11 h-11 flex items-center justify-center rounded-lg hover:bg-primary/5 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
@@ -117,6 +166,7 @@ export default function Navigation() {
 
       {/* Mobile Menu Drawer */}
       <div
+        ref={drawerRef}
         id="mobile-menu"
         className={`fixed top-0 right-0 h-full w-72 max-w-[80vw] bg-background z-50 md:hidden transform transition-transform duration-300 ease-out shadow-2xl ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
@@ -133,7 +183,7 @@ export default function Navigation() {
             </span>
             <button
               type="button"
-              className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-primary/5 transition-colors"
+              className="w-11 h-11 flex items-center justify-center rounded-lg hover:bg-primary/5 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
               aria-label="Close menu"
             >
@@ -155,6 +205,7 @@ export default function Navigation() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
+                      aria-current={active ? 'page' : undefined}
                       className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                         active
                           ? 'bg-primary/15 text-primary'

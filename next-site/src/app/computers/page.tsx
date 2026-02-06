@@ -1,5 +1,5 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import { SITE } from '@/lib/constants';
 import ComputersContent from './ComputersContent';
@@ -27,6 +27,11 @@ export default function ComputersPage() {
         { name: 'Home', url: SITE.url },
         { name: 'Vintage Computers', url: `${SITE.url}/computers` },
       ])} />
+      <StructuredData data={webPageSchema(
+        'Vintage Computers',
+        'A personal collection of vintage and retro computers, from Apple II to Amiga, SGI workstations, and Sun SPARC systems.',
+        `${SITE.url}/computers`,
+      )} />
       <ComputersContent />
     </>
   );

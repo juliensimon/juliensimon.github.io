@@ -1,5 +1,5 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import { SITE } from '@/lib/constants';
 import CodeContent from './CodeContent';
@@ -25,6 +25,11 @@ export default function CodePage() {
         { name: 'Home', url: SITE.url },
         { name: 'Code & Projects', url: `${SITE.url}/code` },
       ])} />
+      <StructuredData data={webPageSchema(
+        'Code & Projects',
+        'Open source projects and code examples for machine learning, AI, and cloud computing.',
+        `${SITE.url}/code`,
+      )} />
       <CodeContent />
     </>
   );
