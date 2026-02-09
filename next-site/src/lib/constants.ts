@@ -5,7 +5,7 @@ export const SITE = {
     'AI Operating Partner at Fortino Capital. 30+ years accelerating cloud and AI across PE/VC portfolios. Expert in Small Language Models and enterprise AI.',
   url: 'https://www.julien.org',
   image: 'https://www.julien.org/assets/julien.webp',
-  ogImage: 'https://www.julien.org/assets/og-image.webp',
+  ogImage: 'https://www.julien.org/assets/og-image-1200x630.png',
   locale: 'en_US',
   email: 'julien@julien.org',
   twitterHandle: '@julsimon',
@@ -19,7 +19,7 @@ export const SOCIAL_LINKS = [
   { name: 'Medium', href: 'https://julsimon.medium.com/', icon: 'medium' },
   { name: 'Substack', href: 'https://julsimon.substack.com/', icon: 'substack' },
   { name: 'Twitter (X)', href: 'https://x.com/julsimon', icon: 'twitter' },
-  { name: 'YouTube', href: 'https://youtube.com/juliensimonfr', icon: 'youtube' },
+  { name: 'YouTube', href: 'https://youtube.com/@juliensimonfr', icon: 'youtube' },
   { name: 'Slideshare', href: 'https://fr.slideshare.net/JulienSIMON5/presentations', icon: 'slideshare' },
 ] as const;
 
@@ -40,7 +40,7 @@ export const NAV_ITEMS = [
 // - YOUTUBE_STATS.subscribers in youtube.ts (YouTube Subscribers)
 // Run `npm run validate` to check for mismatches
 export const METRICS = [
-  { value: 397, suffix: '+', label: 'Technical Posts' },
+  { value: 399, suffix: '+', label: 'Technical Posts' },
   { value: 684, suffix: '+', label: 'Speaking Engagements' },
   { value: 467, suffix: 'K+', label: 'YouTube Subscribers' },
   { value: 30, suffix: '+', label: 'Years Experience' },
