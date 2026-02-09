@@ -658,8 +658,10 @@ def update_latest_updates(items: list[PostItem], dry_run: bool):
             'icon': icon,
         })
 
-    # Merge: new entries first, then existing, keep top 5
-    all_entries = new_entries + existing_entries
+    # Merge: new entries first, then existing (avoiding duplicates), keep top 5
+    seen_hrefs = {e['href'] for e in new_entries}
+    unique_existing = [e for e in existing_entries if e['href'] not in seen_hrefs]
+    all_entries = new_entries + unique_existing
     all_entries = all_entries[:5]
 
     # Generate new array content
@@ -700,7 +702,8 @@ def update_blog_index(items: list[PostItem], dry_run: bool) -> int:
     articles.sort(key=lambda x: x.pub_date, reverse=True)
 
     added_count = 0
-    for item in articles:
+    # Process in reverse (oldest first) so newest posts end up at top when inserted
+    for item in reversed(articles):
         date_str = item.pub_date.strftime('%Y-%m-%d')
         slug = slugify(item.title)
         folder_name = f"{date_str}_{slug}"
