@@ -11,7 +11,7 @@ const FOOTER_NAV = [
 const FOOTER_SOCIAL = [
   { label: 'LinkedIn', href: 'https://linkedin.com/in/juliensimon' },
   { label: 'YouTube', href: 'https://youtube.com/@juliensimonfr' },
-  { label: 'Substack', href: 'https://julsimon.substack.com/' },
+  { label: 'Substack', href: 'https://www.airealist.ai/' },
   { label: 'GitHub', href: 'https://github.com/juliensimon' },
   { label: 'Twitter/X', href: 'https://x.com/julsimon' },
 ] as const;
@@ -76,7 +76,7 @@ export default function Footer() {
           <h3 className="text-lg font-heading font-semibold text-text mb-2">Stay Updated</h3>
           <p className="text-sm text-text-muted mb-4">Get the latest on AI, small language models, and enterprise ML.</p>
           <a
-            href="https://julsimon.substack.com/"
+            href="https://www.airealist.ai/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-white rounded-lg gradient-brand hover:opacity-90 transition-opacity"

@@ -2,7 +2,7 @@
 """
 Sync Substack posts to julien.org
 
-Fetches the RSS feed from julsimon.substack.com, detects new posts,
+Fetches the RSS feed from www.airealist.ai, detects new posts,
 and creates the appropriate files on the website.
 
 Video posts go to: /youtube/YYYY/
@@ -29,7 +29,7 @@ from bs4 import BeautifulSoup
 from substack_html_cleaner import SubstackHTMLCleaner
 from substack_image_handler import process_images_for_post, update_html_image_refs
 
-RSS_URL = "https://julsimon.substack.com/feed"
+RSS_URL = "https://www.airealist.ai/feed"
 REPO_ROOT = Path(__file__).parent.parent
 BASE = REPO_ROOT / "next-site"
 PUBLIC = BASE / "public"

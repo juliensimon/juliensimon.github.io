@@ -17,7 +17,7 @@ export const SOCIAL_LINKS = [
   { name: 'Hugging Face', href: 'https://huggingface.co/juliensimon', icon: 'huggingface' },
   { name: 'LinkedIn', href: 'https://linkedin.com/in/juliensimon', icon: 'linkedin' },
   { name: 'Medium', href: 'https://julsimon.medium.com/', icon: 'medium' },
-  { name: 'Substack', href: 'https://julsimon.substack.com/', icon: 'substack' },
+  { name: 'Substack', href: 'https://www.airealist.ai/', icon: 'substack' },
   { name: 'Twitter (X)', href: 'https://x.com/julsimon', icon: 'twitter' },
   { name: 'YouTube', href: 'https://youtube.com/@juliensimonfr', icon: 'youtube' },
   { name: 'Slideshare', href: 'https://fr.slideshare.net/JulienSIMON5/presentations', icon: 'slideshare' },

@@ -1,5 +1,5 @@
 ---
-description: Sync new posts from julsimon.substack.com to julien.org
+description: Sync new posts from www.airealist.ai to julien.org
 ---
 
 Fetch the Substack RSS feed and detect new posts not yet on the website.

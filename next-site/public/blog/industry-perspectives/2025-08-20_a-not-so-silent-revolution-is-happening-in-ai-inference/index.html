@@ -7,7 +7,7 @@
     <meta name="author" content="Julien Simon">
     <meta name="date" content="2025-08-20">
     <meta name="description" content="The combination of smaller yet more efficient language models, advances in open-source inference frameworks, and hardware acceleration is enabling an unprecedented pace of innovation for CPU infere...">
-    <meta name="source" content="https://julsimon.substack.com/p/a-not-so-silent-revolution-is-happening">
+    <meta name="source" content="https://www.airealist.ai/p/a-not-so-silent-revolution-is-happening">
     <link rel="stylesheet" href="../../../css/minimal-blog-styles.css">
     <style>
         .article-content img {
@@ -52,7 +52,7 @@
         <div class="meta">
             <p><strong>Author:</strong> Julien Simon</p>
             <p><strong>Date:</strong> August 20, 2025 <span class="read-time">· 1 min read</span></p>
-            <p><strong>Source:</strong> <a href="https://julsimon.substack.com/p/a-not-so-silent-revolution-is-happening" target="_blank" rel="noopener noreferrer">https://julsimon.substack.com/p/a-not-so-silent-revolution-is-happening</a></p>
+            <p><strong>Source:</strong> <a href="https://www.airealist.ai/p/a-not-so-silent-revolution-is-happening" target="_blank" rel="noopener noreferrer">https://www.airealist.ai/p/a-not-so-silent-revolution-is-happening</a></p>
         </div>
         <div class="article-content">
 <p>The combination of smaller yet more efficient language models, advances in open-source inference frameworks, and hardware acceleration is enabling an unprecedented pace of innovation for CPU inference.</p><p>A little over a month ago, we published a blog post sharing numbers for<a href="https://huggingface.co/arcee-ai/AFM-4.5B">AFM-4.5B</a>inference on Intel Corporation, Arm, and Qualcomm (see: "<a href="https://www.arcee.ai/blog/is-running-language-models-on-cpu-really-viable">Is Running Language Models on CPU Really Viable?</a>").</p><p>I reran the Intel and Arm benchmarks in the same configuration, and all numbers have improved across the board, with some increases of up to 50%. You’ll find numbers at the end of the post.</p><p>Same model. Same chips. What happened? Llama.cpp is on fire, that's what. New features, such as<a href="https://github.com/ggml-org/llama.cpp/pull/14363">splitting the KV cache across sequence decoding</a>, are delivering double-digit gains overnight.</p><p>Takeaways:</p><p>➡️ If you're been using GPU inference indiscriminately, it's time to reconsider. Your existing CPU servers may be an extremely cost-effective option, and they can also run your app!</p><p>➡️ If you're not rebuilding llama.cpp every day, you're doing it wrong 😂</p><p>➡️ We used to pick between 'fast but less imprecise 4-bit' vs 'slow but more precise 8-bit'. That's not so true anymore. 8-bit models are now fast enough (whatever that means to you) for many use cases.</p><p>➡️ The speedup on larger batch sizes definitely invalidates my long-standing advice of "CPU inference only really makes sense at batch size 1". Now, I would consider larger batch sizes, especially for non-interactive workloads, and experiment to find the sweet spot between thread count, latency, and throughput.</p><p>What truly puts a smile on my face is that these aren't even the bleeding-edge CPUs. There's much more speed coming.</p><p>And this story ends on laptops and devices for minimal latency, maximum cost optimization, and full privacy. Many of us know that already 😀</p><img src="image-01.webp"/><img src="image-02.webp"/>
