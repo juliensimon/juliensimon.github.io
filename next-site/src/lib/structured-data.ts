@@ -16,6 +16,7 @@ export function personSchema() {
     description:
       'Open source AI advocate who champions transparent, open-weights models over black box LLMs. Research-fluent expert democratizing AI through accessible, controllable solutions enterprises can understand and deploy.',
     url: SITE.url,
+    mainEntityOfPage: { '@id': `${SITE.url}/#profilepage` },
     image: {
       '@type': 'ImageObject',
       url: SITE.image,
@@ -33,10 +34,82 @@ export function personSchema() {
       'Hugging Face',
       'Cloud Computing',
     ],
+    alumniOf: [
+      {
+        '@type': 'Organization',
+        name: 'Amazon Web Services',
+        url: 'https://aws.amazon.com',
+        description: 'Global Evangelist, Machine Learning and AI (2015–2021)',
+      },
+      {
+        '@type': 'Organization',
+        name: 'Hugging Face',
+        url: 'https://huggingface.co',
+        description: 'Chief Evangelist (2021–2024)',
+      },
+      {
+        '@type': 'Organization',
+        name: 'Arcee AI',
+        url: 'https://www.arcee.ai',
+        description: 'Vice President & Chief Evangelist (2024–2025)',
+      },
+      {
+        '@type': 'EducationalOrganization',
+        name: 'Sorbonne University',
+        description: "Master's degree in Computer Systems (1995)",
+      },
+      {
+        '@type': 'EducationalOrganization',
+        name: 'ISEP Paris',
+        description: 'Engineering degree (1993)',
+      },
+    ],
+    hasOccupation: [
+      {
+        '@type': 'Occupation',
+        name: 'AI Operating Partner',
+        occupationLocation: { '@type': 'Country', name: 'Netherlands' },
+        description: 'Accelerating cloud and AI initiatives across PE/VC portfolio companies at Fortino Capital.',
+      },
+    ],
+    hasCredential: [
+      {
+        '@type': 'EducationalOccupationalCredential',
+        name: 'Author of "Learn Amazon SageMaker"',
+        credentialCategory: 'Published Author',
+        description: 'First book ever published on Amazon SageMaker (Packt Publishing, 2020 & 2021)',
+      },
+      {
+        '@type': 'EducationalOccupationalCredential',
+        name: '#1 AI Evangelist — AI Magazine 2021',
+        credentialCategory: 'Industry Award',
+      },
+      {
+        '@type': 'EducationalOccupationalCredential',
+        name: 'Featured in "The 100 Shaping AI in Europe" (2025)',
+        credentialCategory: 'Industry Recognition',
+        description: 'Recognized by L\'Opinion and Oliver Wyman in the "Builders" category',
+      },
+    ],
     award: ['AI Magazine #1 AI Evangelist 2021', 'Trophees CIO Prix de l\'Innovation 2013'],
     contactPoint: { '@type': 'ContactPoint', contactType: 'email', email: SITE.email },
     knowsLanguage: ['English', 'French'],
     nationality: 'French',
+  };
+}
+
+export function profilePageSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    '@id': `${SITE.url}/#profilepage`,
+    name: 'Julien Simon - AI Operating Partner at Fortino Capital',
+    description: SITE.description,
+    url: SITE.url,
+    mainEntity: { '@id': `${SITE.url}/#person` },
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    dateModified: new Date().toISOString().split('T')[0],
+    inLanguage: 'en',
   };
 }
 
