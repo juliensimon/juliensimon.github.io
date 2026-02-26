@@ -779,7 +779,7 @@ def update_blog_index(items: list[PostItem], dry_run: bool) -> int:
 
 
 def update_publications_ts(articles_count: int, dry_run: bool):
-    """Update the Industry Perspectives count in publications.ts."""
+    """Update the Industry Perspectives count, TOTAL_ARTICLES, and constants.ts metric."""
     ts_path = SRC / "data" / "publications.ts"
 
     if not ts_path.exists():
@@ -796,13 +796,35 @@ def update_publications_ts(articles_count: int, dry_run: bool):
         old_count = int(match.group(2))
         new_count = old_count + articles_count
         content = re.sub(pattern, f"\\g<1>{new_count}", content)
-
-        if not dry_run:
-            ts_path.write_text(content, encoding='utf-8')
-
         print(f"  Updated publications.ts: Industry Perspectives {old_count} -> {new_count}")
     else:
         print("  Warning: Could not find Industry Perspectives in publications.ts")
+
+    # Update TOTAL_ARTICLES
+    total_pattern = r"(TOTAL_ARTICLES = )(\d+)"
+    total_match = re.search(total_pattern, content)
+    if total_match:
+        old_total = int(total_match.group(2))
+        new_total = old_total + articles_count
+        content = re.sub(total_pattern, f"\\g<1>{new_total}", content)
+        print(f"  Updated TOTAL_ARTICLES: {old_total} -> {new_total}")
+
+    if not dry_run:
+        ts_path.write_text(content, encoding='utf-8')
+
+    # Update constants.ts Technical Posts metric
+    constants_path = SRC / "lib" / "constants.ts"
+    if constants_path.exists():
+        const_content = constants_path.read_text(encoding='utf-8')
+        metric_pattern = r"(\{ value: )(\d+)(, suffix: '\+', label: 'Technical Posts' \})"
+        metric_match = re.search(metric_pattern, const_content)
+        if metric_match:
+            old_metric = int(metric_match.group(2))
+            new_metric = old_metric + articles_count
+            const_content = re.sub(metric_pattern, f"\\g<1>{new_metric}\\g<3>", const_content)
+            if not dry_run:
+                constants_path.write_text(const_content, encoding='utf-8')
+            print(f"  Updated constants.ts: Technical Posts {old_metric} -> {new_metric}")
 
 
 def print_summary(new_posts: list[PostItem]):

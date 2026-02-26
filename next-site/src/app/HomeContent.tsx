@@ -10,34 +10,34 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
-    title: 'AI Regulation or AI Requiem? Part 4',
-    href: '/blog/industry-perspectives/2026-02-09_ai-regulation-or-ai-requiem-part-4/index.html',
-    date: 'February 9, 2026',
+    title: 'Two Sovereign Clouds, One Legal Wall',
+    href: '/blog/industry-perspectives/2026-02-26_two-sovereign-clouds-one-legal-wall/index.html',
+    date: 'February 26, 2026',
     icon: 'article',
   },
   {
-    title: 'Coding Classic Arcade Games with Claude',
-    href: '/blog/industry-perspectives/2026-02-08_coding-classic-arcade-games-with-claude/index.html',
-    date: 'February 8, 2026',
+    title: 'Japan Built the Bullet Train. Why Can’t It Build an LLM?',
+    href: '/blog/industry-perspectives/2026-02-24_japan-built-the-bullet-train-why-cant-it-build-an-llm/index.html',
+    date: 'February 24, 2026',
     icon: 'article',
   },
   {
-    title: 'Claude Opus 4.6 and Agent Teams',
-    href: '/youtube/2026/20260206_Claude_Opus_46_and_Agent_Teams.html',
-    date: 'February 6, 2026',
-    icon: 'video',
-  },
-  {
-    title: 'The EU Cloud and AI Development Act (CADA): A Last Shot at Cloud Sovereignty, or Another Expensive Debacle?',
-    href: '/blog/industry-perspectives/2026-02-03_the-eu-cloud-and-ai-development-act-cada-a-last-shot-at-cloud-sovereignty-or-another-expensive-debacle/index.html',
-    date: 'February 3, 2026',
+    title: 'Indians Rule Big Tech. Why Can’t India Build?',
+    href: '/blog/industry-perspectives/2026-02-22_indians-rule-big-tech-why-cant-india-build/index.html',
+    date: 'February 22, 2026',
     icon: 'article',
   },
   {
-    title: 'Arcee AI Trinity Large: An Open 400B MoE Model',
-    href: '/youtube/2026/20260201_Arcee_AI_Trinity_Large_An_Open_400B_MoE_Model.html',
-    date: 'February 1, 2026',
-    icon: 'video',
+    title: 'Two Markets, One Asset: The GPU Debt Market Is Building the Architecture of Its Own Crisis',
+    href: '/blog/industry-perspectives/2026-02-20_two-markets-one-asset-the-gpu-debt-market-is-building-the-architecture-of-its-own-crisis/index.html',
+    date: 'February 20, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'The EU Parliament just disabled AI on its own devices.',
+    href: '/blog/industry-perspectives/2026-02-19_the-eu-parliament-just-disabled-ai-on-its-own-devices/index.html',
+    date: 'February 19, 2026',
+    icon: 'article',
   },
 ];
 

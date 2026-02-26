@@ -137,8 +137,12 @@ class SubstackHTMLCleaner:
 
     def _remove_substack_elements(self, soup: BeautifulSoup) -> None:
         """Remove elements with Substack-specific classes."""
-        # Find all elements with class attributes
-        for element in soup.find_all(class_=True):
+        # Collect all elements first, then filter - decompose() invalidates
+        # child elements still in the iterator, setting their attrs to None
+        elements = list(soup.find_all(class_=True))
+        for element in elements:
+            if element.attrs is None:
+                continue
             classes = element.get('class', [])
             if isinstance(classes, str):
                 classes = [classes]
