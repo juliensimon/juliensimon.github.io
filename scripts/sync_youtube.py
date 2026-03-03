@@ -353,6 +353,42 @@ def create_video_page(video: VideoItem, dry_run: bool) -> Path:
     return PUBLIC / "youtube" / str(year) / f"{filename}.html"
 
 
+def _sort_video_entries(content: str) -> str:
+    """Sort video-item entries in an index page by date (newest first).
+
+    Splits the video-list div into individual video-item blocks,
+    sorts them by the YYYYMMDD prefix in their href filename,
+    and reassembles the HTML.
+    """
+    marker = '<div class="video-list">'
+    end_marker = '<div class="links">'
+
+    start = content.find(marker)
+    end = content.find(end_marker)
+    if start == -1 or end == -1:
+        return content
+
+    before = content[:start + len(marker)]
+    after = content[end:]
+    list_html = content[start + len(marker):end]
+
+    # Split into individual items at each <div class="video-item"> boundary
+    parts = re.split(r'(?=<div class="video-item">)', list_html.strip())
+    items = [p.strip() for p in parts if p.strip()]
+
+    if len(items) < 2:
+        return content
+
+    # Sort by date extracted from href filename (YYYYMMDD prefix)
+    def sort_key(item_html: str) -> str:
+        m = re.search(r'href="(\d{8})_', item_html)
+        return m.group(1) if m else '00000000'
+
+    items.sort(key=sort_key, reverse=True)
+
+    return before + '\n' + '\n'.join(items) + '\n' + after
+
+
 def update_year_index(year: int, video: VideoItem, dry_run: bool) -> bool:
     """Update the youtube/YYYY/index.html with a new video entry.
     Returns True if the entry was added."""
@@ -404,6 +440,9 @@ def update_year_index(year: int, video: VideoItem, dry_run: bool) -> bool:
             f'\\1\n{new_entry}',
             content,
         )
+
+        # Re-sort all entries by date (newest first)
+        content = _sort_video_entries(content)
 
         if not dry_run:
             index_path.write_text(content, encoding='utf-8')

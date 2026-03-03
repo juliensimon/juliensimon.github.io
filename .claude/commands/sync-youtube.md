@@ -9,7 +9,7 @@ Fetch the YouTube channel feed and detect new videos not yet on the website.
 - **No API key required**: Uses the public YouTube Atom feed (~15 most recent videos)
 - **Shorts excluded**: Automatically detects and skips YouTube Shorts (use `--include-shorts` to override)
 - **Dual-write**: Creates pages in both `youtube/YYYY/` and `next-site/public/youtube/YYYY/`
-- **Auto-updates**: Updates year index files, `youtube.ts` counts, and LATEST_UPDATES on the homepage
+- **Auto-updates**: Updates year index files (sorted by date, newest first), `youtube.ts` counts, and LATEST_UPDATES on the homepage
 - **Deduplication**: Checks existing HTML files for YouTube video IDs to avoid duplicates
 
 ## Steps
