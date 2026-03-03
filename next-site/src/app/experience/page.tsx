@@ -30,7 +30,7 @@ export default function ExperiencePage() {
       <StructuredData data={webPageSchema(
         'Experience',
         '30+ years of professional experience in AI, cloud computing, and software engineering.',
-        'https://www.julien.org/experience',
+        `${SITE.url}/experience`,
       )} />
       <ExperienceContent />
     </>

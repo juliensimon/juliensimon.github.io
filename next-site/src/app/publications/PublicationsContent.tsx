@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 
+import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import MetricCard from '@/components/ui/MetricCard';
 import { PUBLICATION_CATEGORIES, TOTAL_ARTICLES } from '@/data/publications';
@@ -9,14 +10,10 @@ import { PUBLICATION_CATEGORIES, TOTAL_ARTICLES } from '@/data/publications';
 export default function PublicationsContent() {
   return (
     <>
-      <div className="pt-24 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold font-heading text-text">
-          Publications
-        </h1>
-        <p className="mt-2 text-text-muted">
-          Technical articles on AI, machine learning, and cloud computing
-        </p>
-      </div>
+      <GradientHero
+        title="Publications"
+        subtitle="Technical articles on AI, machine learning, and cloud computing"
+      />
 
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {/* Stats */}

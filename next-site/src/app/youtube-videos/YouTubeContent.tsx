@@ -1,5 +1,6 @@
 'use client';
 
+import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import MetricCard from '@/components/ui/MetricCard';
 import YearCard from '@/components/ui/YearCard';
@@ -8,14 +9,10 @@ import { YOUTUBE_STATS, VIDEO_YEARS } from '@/data/youtube';
 export default function YouTubeContent() {
   return (
     <>
-      <div className="pt-24 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold font-heading text-text">
-          Videos
-        </h1>
-        <p className="mt-2 text-text-muted">
-          Tutorials, demos, and deep dives on AI, machine learning, and cloud computing
-        </p>
-      </div>
+      <GradientHero
+        title="Videos"
+        subtitle="Tutorials, demos, and deep dives on AI, machine learning, and cloud computing"
+      />
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {/* Stats */}

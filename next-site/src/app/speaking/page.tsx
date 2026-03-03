@@ -28,7 +28,7 @@ export default function SpeakingPage() {
       <StructuredData data={webPageSchema(
         'Speaking Engagements',
         '684+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing.',
-        'https://www.julien.org/speaking',
+        `${SITE.url}/speaking`,
       )} />
       <SpeakingContent />
     </>

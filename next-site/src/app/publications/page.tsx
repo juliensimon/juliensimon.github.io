@@ -27,8 +27,8 @@ export default function PublicationsPage() {
       ])} />
       <StructuredData data={webPageSchema(
         'Publications',
-        '390+ technical blog posts across AWS, Hugging Face, Medium, and Arcee AI.',
-        'https://www.julien.org/publications',
+        '397+ technical blog posts across AWS, Hugging Face, Medium, and Arcee AI.',
+        `${SITE.url}/publications`,
       )} />
       <PublicationsContent />
     </>

@@ -176,6 +176,8 @@ export default function SpeakingMap() {
     };
   }, []);
 
+  const totalCities = REGIONS.reduce((sum, r) => sum + r.cities.length, 0);
+
   return (
     <div className="glass-card rounded-xl overflow-hidden">
       <link
@@ -184,11 +186,19 @@ export default function SpeakingMap() {
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossOrigin="anonymous"
       />
-      <div ref={mapRef} className="w-full h-[400px] sm:h-[500px]" />
+      <div
+        ref={mapRef}
+        role="img"
+        aria-label={`Interactive map showing speaking engagement locations across ${totalCities} cities worldwide`}
+        className="w-full h-[400px] sm:h-[500px]"
+      />
+      <span className="sr-only">
+        Speaking locations by region: {REGIONS.map((r) => `${r.name} (${r.cities.length} cities)`).join(', ')}.
+      </span>
       <div className="flex flex-wrap gap-4 p-4 justify-center">
         {REGIONS.map((r) => (
           <div key={r.name} className="flex items-center gap-1.5 text-xs text-text-muted">
-            <span className="w-3 h-3 rounded-full inline-block" style={{ backgroundColor: r.color }} />
+            <span className="w-3 h-3 rounded-full inline-block" style={{ backgroundColor: r.color }} aria-hidden="true" />
             {r.name} ({r.cities.length})
           </div>
         ))}

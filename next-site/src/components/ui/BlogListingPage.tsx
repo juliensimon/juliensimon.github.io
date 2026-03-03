@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
+import GradientHero from './GradientHero';
 import ScrollReveal from './ScrollReveal';
 
 export interface BlogPost {
@@ -27,16 +28,7 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
 
   return (
     <>
-      <div className="pt-24 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold font-heading text-text">
-          {title}
-        </h1>
-        {subtitle && (
-          <p className="mt-2 text-text-muted">
-            {subtitle}
-          </p>
-        )}
-      </div>
+      <GradientHero title={title} subtitle={subtitle} />
 
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {/* Search */}
@@ -44,6 +36,7 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
           <input
             type="text"
             placeholder="Filter posts..."
+            aria-label="Filter posts"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full max-w-md mx-auto block px-4 py-2 rounded-lg border border-border bg-surface text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary/50"

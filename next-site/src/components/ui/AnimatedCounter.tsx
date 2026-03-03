@@ -18,10 +18,16 @@ export default function AnimatedCounter({ value, suffix = '', duration = 2000 }:
     const numberEl = numberRef.current;
     if (!el || !numberEl) return;
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !started.current) {
           started.current = true;
+          if (prefersReducedMotion) {
+            numberEl.textContent = String(value);
+            return;
+          }
           numberEl.textContent = '0';
           const start = performance.now();
           const animate = (now: number) => {

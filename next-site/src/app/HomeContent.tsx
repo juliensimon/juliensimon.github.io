@@ -10,33 +10,33 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Data Residency Is a Blast Radius',
+    href: '/blog/industry-perspectives/2026-03-02_data-residency-is-a-blast-radius/index.html',
+    date: 'March 2, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Objects That Struck the Data Center',
+    href: '/blog/industry-perspectives/2026-03-02_objects-that-struck-the-data-center/index.html',
+    date: 'March 2, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Chip and Mortar',
+    href: '/blog/industry-perspectives/2026-03-01_chip-and-mortar/index.html',
+    date: 'March 1, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Compute Equals Commitments',
+    href: '/blog/industry-perspectives/2026-02-27_compute-equals-commitments/index.html',
+    date: 'February 27, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Two Sovereign Clouds, One Legal Wall',
     href: '/blog/industry-perspectives/2026-02-26_two-sovereign-clouds-one-legal-wall/index.html',
     date: 'February 26, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Japan Built the Bullet Train. Why Can’t It Build an LLM?',
-    href: '/blog/industry-perspectives/2026-02-24_japan-built-the-bullet-train-why-cant-it-build-an-llm/index.html',
-    date: 'February 24, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Indians Rule Big Tech. Why Can’t India Build?',
-    href: '/blog/industry-perspectives/2026-02-22_indians-rule-big-tech-why-cant-india-build/index.html',
-    date: 'February 22, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Two Markets, One Asset: The GPU Debt Market Is Building the Architecture of Its Own Crisis',
-    href: '/blog/industry-perspectives/2026-02-20_two-markets-one-asset-the-gpu-debt-market-is-building-the-architecture-of-its-own-crisis/index.html',
-    date: 'February 20, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'The EU Parliament just disabled AI on its own devices.',
-    href: '/blog/industry-perspectives/2026-02-19_the-eu-parliament-just-disabled-ai-on-its-own-devices/index.html',
-    date: 'February 19, 2026',
     icon: 'article',
   },
 ];

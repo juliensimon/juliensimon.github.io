@@ -19,8 +19,18 @@ export default function TypingEffect({
   const [textIndex, setTextIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
+    setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }, []);
+
+  useEffect(() => {
+    if (reducedMotion) {
+      setDisplayed(texts[textIndex]);
+      return;
+    }
+
     const current = texts[textIndex];
 
     if (!deleting && charIndex < current.length) {
@@ -48,12 +58,15 @@ export default function TypingEffect({
       setDeleting(false);
       setTextIndex((textIndex + 1) % texts.length);
     }
-  }, [charIndex, deleting, textIndex, texts, speed, deleteSpeed, pauseMs]);
+  }, [charIndex, deleting, textIndex, texts, speed, deleteSpeed, pauseMs, reducedMotion]);
 
   return (
     <span>
-      {displayed}
-      <span className="typing-cursor" />
+      <span aria-hidden="true">
+        {displayed}
+        <span className="typing-cursor" />
+      </span>
+      <span className="sr-only">{texts[textIndex]}</span>
     </span>
   );
 }
