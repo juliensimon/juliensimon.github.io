@@ -204,7 +204,7 @@ export function bookSchema(book: {
   };
 }
 
-export function videoObjectSchema(channel: {
+export function youtubeChannelSchema(channel: {
   name: string;
   description: string;
   channelUrl: string;
@@ -213,30 +213,26 @@ export function videoObjectSchema(channel: {
 }) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    '@id': `${SITE.url}/youtube-videos/#itemlist`,
+    '@type': 'CollectionPage',
+    '@id': `${SITE.url}/youtube-videos/#collectionpage`,
     name: channel.name,
     description: channel.description,
-    numberOfItems: channel.videoCount,
     url: `${SITE.url}/youtube-videos`,
     author: { '@id': `${SITE.url}/#person` },
-    itemListElement: [
-      {
-        '@type': 'VideoObject',
-        position: 1,
-        name: 'YouTube Channel',
-        description: `${channel.videoCount}+ educational videos on AI, machine learning, and cloud computing`,
-        thumbnailUrl: SITE.image,
-        uploadDate: '2020-01-01',
-        contentUrl: channel.channelUrl,
-        embedUrl: channel.channelUrl,
-        interactionStatistic: {
+    about: {
+      '@type': 'WebPage',
+      name: `${channel.name} YouTube Channel`,
+      url: channel.channelUrl,
+      description: `${channel.videoCount}+ educational videos on AI, machine learning, and cloud computing`,
+      interactionStatistic: [
+        {
           '@type': 'InteractionCounter',
-          interactionType: { '@type': 'WatchAction' },
+          interactionType: { '@type': 'SubscribeAction' },
           userInteractionCount: channel.subscriberCount,
         },
-      },
-    ],
+      ],
+    },
+    inLanguage: 'en',
   };
 }
 

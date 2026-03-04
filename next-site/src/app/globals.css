@@ -98,16 +98,20 @@ body {
 }
 
 /* ── Scroll-triggered reveal animations ──────────────── */
-[data-reveal] {
+/* Content is visible by default for non-JS crawlers (SEO).
+   The .js-reveal-ready class is added by ScrollReveal on mount,
+   enabling the hidden→revealed animation only when JS is active. */
+.js-reveal-ready [data-reveal] {
   opacity: 0;
   transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
-[data-reveal="up"]    { transform: translateY(20px); }
-[data-reveal="down"]  { transform: translateY(-20px); }
-[data-reveal="left"]  { transform: translateX(-20px); }
-[data-reveal="right"] { transform: translateX(20px); }
-[data-reveal="scale"] { transform: scale(0.95); }
+.js-reveal-ready [data-reveal="up"]    { transform: translateY(20px); }
+.js-reveal-ready [data-reveal="down"]  { transform: translateY(-20px); }
+.js-reveal-ready [data-reveal="left"]  { transform: translateX(-20px); }
+.js-reveal-ready [data-reveal="right"] { transform: translateX(20px); }
+.js-reveal-ready [data-reveal="scale"] { transform: scale(0.95); }
 
+.js-reveal-ready [data-reveal].revealed,
 [data-reveal].revealed {
   opacity: 1;
   transform: translate(0, 0) scale(1);
@@ -139,6 +143,7 @@ body {
 
 /* ── Accessibility: respect reduced motion ───────────── */
 @media (prefers-reduced-motion: reduce) {
+  .js-reveal-ready [data-reveal],
   [data-reveal] {
     opacity: 1;
     transform: none;

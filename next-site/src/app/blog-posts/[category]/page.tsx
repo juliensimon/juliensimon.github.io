@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category } = await params;
   const config = BLOG_CATEGORIES[category];
-  if (!config) return {};
+  if (!config) return { title: 'Not Found', robots: { index: false, follow: false } };
 
   return buildMetadata({
     title: config.title,

@@ -6,6 +6,9 @@ const FOOTER_NAV = [
   { label: 'Speaking', href: '/speaking' },
   { label: 'Publications', href: '/publications' },
   { label: 'Videos', href: '/youtube-videos' },
+  { label: 'Books', href: '/books' },
+  { label: 'Code & Projects', href: '/code' },
+  { label: 'Computers', href: '/computers' },
 ] as const;
 
 const FOOTER_SOCIAL = [

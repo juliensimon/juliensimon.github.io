@@ -27,6 +27,12 @@ export default function ScrollReveal({
 }: ScrollRevealProps) {
   const ref = useRef<HTMLElement>(null);
 
+  // Mark <html> as JS-ready so CSS can safely hide [data-reveal] elements.
+  // Without JS (crawlers), content stays visible (opacity: 1).
+  useEffect(() => {
+    document.documentElement.classList.add('js-reveal-ready');
+  }, []);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
