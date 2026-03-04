@@ -7,7 +7,7 @@ import PublicationsContent from './PublicationsContent';
 export const metadata = buildMetadata({
   title: 'Publications',
   description:
-    'Technical blog posts across AWS, Hugging Face, Medium, and Arcee AI. 397+ articles on machine learning, NLP, computer vision, and AI deployment.',
+    'Technical blog posts across AWS, Hugging Face, Medium, and Arcee AI. 414+ articles on machine learning, NLP, computer vision, and AI deployment.',
   path: '/publications',
   keywords: [
     'technical writing',
@@ -27,7 +27,7 @@ export default function PublicationsPage() {
       ])} />
       <StructuredData data={webPageSchema(
         'Publications',
-        '397+ technical blog posts across AWS, Hugging Face, Medium, and Arcee AI.',
+        '414+ technical blog posts across AWS, Hugging Face, Medium, and Arcee AI.',
         `${SITE.url}/publications`,
       )} />
       <PublicationsContent />

@@ -1,5 +1,5 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, videoObjectSchema, webPageSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, youtubeChannelSchema, webPageSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import { SITE } from '@/lib/constants';
 import { YOUTUBE_STATS } from '@/data/youtube';
@@ -31,7 +31,7 @@ export default function YouTubeVideosPage() {
         '467K+ subscribers. Tutorials, demos, and deep-dives on AI, machine learning, Hugging Face, and AWS services.',
         `${SITE.url}/youtube-videos`,
       )} />
-      <StructuredData data={videoObjectSchema({
+      <StructuredData data={youtubeChannelSchema({
         name: 'Julien Simon - AI & Machine Learning',
         description: 'Tutorials, demos, and deep-dives on AI, machine learning, Hugging Face, and AWS services.',
         channelUrl: YOUTUBE_STATS.channelUrl,
