@@ -10,6 +10,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'South Korea Powers the World’s AI Chips. Where are its LLMs?',
+    href: '/blog/industry-perspectives/2026-03-04_south-korea-powers-the-worlds-ai-chips-where-are-its-llms/index.html',
+    date: 'March 4, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Deep Dive: Teaching Arcee Trinity Mini to Read Medical Research with RLVR and GRPO',
     href: '/youtube/2026/20260303_Deep_Dive_Teaching_Arcee_Trinity_Mini_to_Read_Medical_Research_with_RLVR_and_GRPO.html',
     date: 'March 3, 2026',
@@ -31,12 +37,6 @@ const LATEST_UPDATES = [
     title: 'Chip and Mortar',
     href: '/blog/industry-perspectives/2026-03-01_chip-and-mortar/index.html',
     date: 'March 1, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Compute Equals Commitments',
-    href: '/blog/industry-perspectives/2026-02-27_compute-equals-commitments/index.html',
-    date: 'February 27, 2026',
     icon: 'article',
   },
 ];

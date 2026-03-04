@@ -32,6 +32,19 @@ Fetch the Substack RSS feed and detect new posts not yet on the website.
 
 5. Commit and push changes
 
+6. Monitor the GitHub Actions deployment:
+   ```bash
+   gh run list --repo juliensimon/juliensimon.github.io --limit 1
+   ```
+   Then watch it until completion:
+   ```bash
+   gh run watch <run-id> --repo juliensimon/juliensimon.github.io --exit-status
+   ```
+   If the deployment fails, investigate the logs with:
+   ```bash
+   gh run view <run-id> --repo juliensimon/juliensimon.github.io --log-failed
+   ```
+
 ## Options
 
 | Flag | Description |
