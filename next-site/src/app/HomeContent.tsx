@@ -10,6 +10,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Deep Dive: Teaching Arcee Trinity Mini to Read Medical Research with RLVR and GRPO',
+    href: '/youtube/2026/20260303_Deep_Dive_Teaching_Arcee_Trinity_Mini_to_Read_Medical_Research_with_RLVR_and_GRPO.html',
+    date: 'March 3, 2026',
+    icon: 'video',
+  },
+  {
     title: 'Data Residency Is a Blast Radius',
     href: '/blog/industry-perspectives/2026-03-02_data-residency-is-a-blast-radius/index.html',
     date: 'March 2, 2026',
@@ -31,12 +37,6 @@ const LATEST_UPDATES = [
     title: 'Compute Equals Commitments',
     href: '/blog/industry-perspectives/2026-02-27_compute-equals-commitments/index.html',
     date: 'February 27, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Two Sovereign Clouds, One Legal Wall',
-    href: '/blog/industry-perspectives/2026-02-26_two-sovereign-clouds-one-legal-wall/index.html',
-    date: 'February 26, 2026',
     icon: 'article',
   },
 ];
