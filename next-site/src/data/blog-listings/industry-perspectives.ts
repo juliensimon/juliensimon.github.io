@@ -29,19 +29,19 @@ export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   },
   {
     title: 'The AI Crash That Isn\'t: A Reality Check from the Trenches',
-    slug: '2025-08-24-The-AI-Crash-That-Isnt-A-Reality-Check-from-the-Trenches',
+    slug: '2025-08-24_the-ai-crash-that-isnt-a-reality-check-from-the-trenches',
     date: '2025-08-24',
     originalUrl: 'https://julsimon.medium.com/the-ai-crash-that-isnt-a-reality-check-from-the-trenches-525d3d6a255f',
   },
   {
     title: 'A not-so-silent revolution is happening in AI inference',
-    slug: '2025-08-20_A not-so-silent revolution is happening in AI inference',
+    slug: '2025-08-20_a-not-so-silent-revolution-is-happening-in-ai-inference',
     date: '2025-08-20',
     originalUrl: 'https://julsimon.medium.com/a-not-so-silent-revolution-is-happening-in-ai-inference-936ef4b9ba88',
   },
   {
     title: 'CSLMs have arrived',
-    slug: '2025-08-16_CSLMs have arrived',
+    slug: '2025-08-16_cslms-have-arrived',
     date: '2025-08-16',
     originalUrl: 'https://julsimon.medium.com/cslms-have-arrived-36ef90789cfb',
   },

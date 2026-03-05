@@ -423,6 +423,18 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     <meta name="date" content="{date_str}">
     <meta name="description" content="{html.escape(excerpt)}">
     <meta name="source" content="{item.link}">
+    <link rel="canonical" href="https://www.julien.org/blog/industry-perspectives/{folder_name}/index.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{html.escape(item.title)} - Julien Simon">
+    <meta property="og:description" content="{html.escape(excerpt)}">
+    <meta property="og:url" content="https://www.julien.org/blog/industry-perspectives/{folder_name}/index.html">
+    <meta property="og:image" content="https://www.julien.org/assets/og-image-1200x630.webp">
+    <meta property="article:author" content="Julien Simon">
+    <meta property="article:published_time" content="{date_str}T00:00:00Z">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{html.escape(item.title)} - Julien Simon">
+    <meta name="twitter:description" content="{html.escape(excerpt)}">
+    <meta name="twitter:creator" content="@julsimon">
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="../../style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">

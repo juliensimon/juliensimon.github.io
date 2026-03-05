@@ -225,7 +225,22 @@ def create_video_page(video: VideoItem, dry_run: bool) -> Path:
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{html.escape(video.title)}">
+    <meta name="twitter:creator" content="@julsimon">
     <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "{html.escape(video.title).replace(chr(34), '&quot;')}",
+        "description": "{html.escape(video.title)} - YouTube video by Julien Simon",
+        "uploadDate": "{video.published.strftime('%Y-%m-%d')}",
+        "embedUrl": "https://www.youtube.com/embed/{video.video_id}",
+        "thumbnailUrl": "https://img.youtube.com/vi/{video.video_id}/maxresdefault.jpg",
+        "author": {{ "@id": "https://www.julien.org/#person" }}
+    }}
+    </script>
 </head>
 <body>
     <div class="container">

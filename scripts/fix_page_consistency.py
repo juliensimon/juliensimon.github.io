@@ -2,7 +2,7 @@
 """
 Bulk-fix HTML page consistency across the site.
 
-Fixes:
+Round 1 fixes (back links, favicons, analytics):
   4a: YouTube video pages — remove old top back-link, add correct bottom links
   4b: Legacy blog year pages — fix "All Years" nav link
   4c: YouTube pages (all) — add favicon if missing
@@ -10,12 +10,20 @@ Fixes:
   4e: Industry-perspectives pages — add favicon if missing
   4f: Industry-perspectives posts — fix back link to point to index
 
+Round 2 fixes (SEO):
+  5a: Add canonical URLs to all pages missing them
+  5b: Add OG/Twitter tags to industry-perspectives posts
+  5c: Add VideoObject schema to YouTube video pages
+  5d: Add meta descriptions to YouTube video pages missing them
+
 Usage:
   python scripts/fix_page_consistency.py --dry-run   # Preview changes
   python scripts/fix_page_consistency.py              # Apply changes
 """
 
 import argparse
+import html as html_mod
+import json
 import re
 from pathlib import Path
 
@@ -23,11 +31,53 @@ PUBLIC = Path(__file__).resolve().parent.parent / "next-site" / "public"
 YOUTUBE_DIR = PUBLIC / "youtube"
 INDUSTRY_DIR = PUBLIC / "blog" / "industry-perspectives"
 LEGACY_DIR = PUBLIC / "blog" / "legacy-posts-and-images"
+AWS_DIR = PUBLIC / "blog" / "aws-posts-and-images"
+HF_DIR = PUBLIC / "blog" / "huggingface-posts-and-images"
+ARCEE_DIR = PUBLIC / "blog" / "arcee-posts"
 
 FAVICON_TAG = '<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">'
 UMAMI_SCRIPT = '<script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>'
+OG_IMAGE = "https://www.julien.org/assets/og-image-1200x630.webp"
+SITE_URL = "https://www.julien.org"
 
 stats = {"checked": 0, "modified": 0, "skipped": 0}
+
+
+def _write_if_changed(filepath, content, original, label, dry_run):
+    """Helper to write file only if content changed."""
+    if content != original:
+        stats["modified"] += 1
+        if dry_run:
+            print(f"  [DRY RUN] Would fix: {filepath.relative_to(PUBLIC)} ({label})")
+        else:
+            filepath.write_text(content, encoding="utf-8")
+            print(f"  Fixed: {filepath.relative_to(PUBLIC)} ({label})")
+        return True
+    stats["skipped"] += 1
+    return False
+
+
+def _extract_title(content):
+    """Extract title from <title> tag."""
+    m = re.search(r"<title>([^<]+)</title>", content)
+    return m.group(1).strip() if m else ""
+
+
+def _extract_description(content):
+    """Extract meta description."""
+    m = re.search(r'<meta\s+name="description"\s+content="([^"]*)"', content)
+    if not m:
+        m = re.search(r'<meta\s+content="([^"]*)"\s+name="description"', content)
+    return m.group(1).strip() if m else ""
+
+
+def _extract_h1(content):
+    """Extract h1 text."""
+    m = re.search(r"<h1[^>]*>([^<]+)</h1>", content)
+    return m.group(1).strip() if m else ""
+
+
+# ── Round 1 fixes ──────────────────────────────────────────────
 
 
 def fix_youtube_video_pages(dry_run: bool):
@@ -44,44 +94,24 @@ def fix_youtube_video_pages(dry_run: bool):
             content = html_file.read_text(encoding="utf-8")
             original = content
 
-            # Remove old-style top back-link div pointing to homepage
             content = re.sub(
                 r'<div class="back-link"><a href="https://www\.julien\.org">[^<]*</a></div>\s*',
-                "",
-                content,
+                "", content,
             )
+            content = content.replace('href="https://www.julien.org"', 'href="index.html"')
 
-            # Fix any remaining back links pointing to homepage (various templates)
-            content = content.replace(
-                'href="https://www.julien.org"',
-                'href="index.html"',
-            )
-
-            # Replace entire links div with correct back links
             new_links_block = (
                 '<div class="links">\n'
                 f'            <a href="index.html">&larr; Back to {year} Videos</a>\n'
                 '            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>\n'
                 "        </div>"
             )
-            # Match both empty and non-empty links divs
             content = re.sub(
-                r'<div class="links">.*?</div>',
-                new_links_block,
-                content,
-                flags=re.DOTALL,
+                r'<div class="links">.*?</div>', new_links_block, content, flags=re.DOTALL,
             )
 
-            if content != original:
+            if _write_if_changed(html_file, content, original, "back links", dry_run):
                 count += 1
-                stats["modified"] += 1
-                if dry_run:
-                    print(f"  [DRY RUN] Would fix back links: {html_file.relative_to(PUBLIC)}")
-                else:
-                    html_file.write_text(content, encoding="utf-8")
-                    print(f"  Fixed back links: {html_file.relative_to(PUBLIC)}")
-            else:
-                stats["skipped"] += 1
 
     return count
 
@@ -98,24 +128,12 @@ def fix_legacy_blog_year_pages(dry_run: bool):
         stats["checked"] += 1
         content = index_file.read_text(encoding="utf-8")
         original = content
-
-        # Fix the "All Years" nav link
         content = content.replace(
             'href="https://www.julien.org" class="nav-link"',
             'href="../index.html" class="nav-link"',
         )
-
-        if content != original:
+        if _write_if_changed(index_file, content, original, "nav link", dry_run):
             count += 1
-            stats["modified"] += 1
-            if dry_run:
-                print(f"  [DRY RUN] Would fix nav link: {index_file.relative_to(PUBLIC)}")
-            else:
-                index_file.write_text(content, encoding="utf-8")
-                print(f"  Fixed nav link: {index_file.relative_to(PUBLIC)}")
-        else:
-            stats["skipped"] += 1
-
     return count
 
 
@@ -128,18 +146,14 @@ def add_favicon_to_youtube(dry_run: bool):
         if "favicon" in content:
             stats["skipped"] += 1
             continue
-
-        # Insert favicon before </head>
         if "</head>" in content:
             content = content.replace("</head>", f"    {FAVICON_TAG}\n</head>")
-            count += 1
             stats["modified"] += 1
+            count += 1
             if dry_run:
                 print(f"  [DRY RUN] Would add favicon: {html_file.relative_to(PUBLIC)}")
             else:
                 html_file.write_text(content, encoding="utf-8")
-                print(f"  Added favicon: {html_file.relative_to(PUBLIC)}")
-
     return count
 
 
@@ -154,22 +168,17 @@ def add_analytics_to_industry_perspectives(dry_run: bool):
             continue
         stats["checked"] += 1
         content = index_file.read_text(encoding="utf-8")
-
         if "umami" in content:
             stats["skipped"] += 1
             continue
-
-        # Insert analytics before </head>
         if "</head>" in content:
             content = content.replace("</head>", f"    {UMAMI_SCRIPT}\n</head>")
-            count += 1
             stats["modified"] += 1
+            count += 1
             if dry_run:
                 print(f"  [DRY RUN] Would add analytics: {index_file.relative_to(PUBLIC)}")
             else:
                 index_file.write_text(content, encoding="utf-8")
-                print(f"  Added analytics: {index_file.relative_to(PUBLIC)}")
-
     return count
 
 
@@ -182,23 +191,19 @@ def add_favicon_to_industry_perspectives(dry_run: bool):
         if "favicon" in content:
             stats["skipped"] += 1
             continue
-
-        # Insert favicon before </head>
         if "</head>" in content:
             content = content.replace("</head>", f"    {FAVICON_TAG}\n</head>")
-            count += 1
             stats["modified"] += 1
+            count += 1
             if dry_run:
                 print(f"  [DRY RUN] Would add favicon: {html_file.relative_to(PUBLIC)}")
             else:
                 html_file.write_text(content, encoding="utf-8")
-                print(f"  Added favicon: {html_file.relative_to(PUBLIC)}")
-
     return count
 
 
 def fix_industry_perspectives_backlinks(dry_run: bool):
-    """4f: Fix back links in industry-perspectives post pages to point to ../index.html."""
+    """4f: Fix back links in industry-perspectives post pages."""
     count = 0
     for post_dir in sorted(INDUSTRY_DIR.iterdir()):
         if not post_dir.is_dir():
@@ -209,26 +214,225 @@ def fix_industry_perspectives_backlinks(dry_run: bool):
         stats["checked"] += 1
         content = index_file.read_text(encoding="utf-8")
         original = content
-
-        # Fix back link from homepage to industry-perspectives index (various text patterns)
         content = re.sub(
             r'<a href="https://www\.julien\.org"([^>]*)>(?:&larr;|←)\s*(?:julien\.org|Back to Industry Perspectives)</a>',
             r'<a href="../index.html"\1>&larr; Back to Industry Perspectives</a>',
             content,
         )
-
-        if content != original:
+        if _write_if_changed(index_file, content, original, "back link", dry_run):
             count += 1
-            stats["modified"] += 1
-            if dry_run:
-                print(f"  [DRY RUN] Would fix back link: {index_file.relative_to(PUBLIC)}")
-            else:
-                index_file.write_text(content, encoding="utf-8")
-                print(f"  Fixed back link: {index_file.relative_to(PUBLIC)}")
-        else:
+    return count
+
+
+# ── Round 2 fixes (SEO) ───────────────────────────────────────
+
+
+def add_canonical_urls(dry_run: bool):
+    """5a: Add canonical URLs to all pages missing them."""
+    count = 0
+
+    # YouTube pages
+    for html_file in sorted(YOUTUBE_DIR.rglob("*.html")):
+        stats["checked"] += 1
+        content = html_file.read_text(encoding="utf-8")
+        if "canonical" in content:
             stats["skipped"] += 1
+            continue
+        rel_path = html_file.relative_to(PUBLIC)
+        canonical = f'{SITE_URL}/{rel_path}'
+        tag = f'<link rel="canonical" href="{canonical}">'
+        if "</head>" in content:
+            content = content.replace("</head>", f"    {tag}\n</head>")
+            stats["modified"] += 1
+            count += 1
+            if dry_run:
+                print(f"  [DRY RUN] Would add canonical: {rel_path}")
+            else:
+                html_file.write_text(content, encoding="utf-8")
+
+    # Industry-perspectives pages
+    for html_file in sorted(INDUSTRY_DIR.rglob("*.html")):
+        stats["checked"] += 1
+        content = html_file.read_text(encoding="utf-8")
+        if "canonical" in content:
+            stats["skipped"] += 1
+            continue
+        rel_path = html_file.relative_to(PUBLIC)
+        canonical = f'{SITE_URL}/{rel_path}'
+        tag = f'<link rel="canonical" href="{canonical}">'
+        if "</head>" in content:
+            content = content.replace("</head>", f"    {tag}\n</head>")
+            stats["modified"] += 1
+            count += 1
+            if dry_run:
+                print(f"  [DRY RUN] Would add canonical: {rel_path}")
+            else:
+                html_file.write_text(content, encoding="utf-8")
+
+    # Legacy blog pages
+    for html_file in sorted(LEGACY_DIR.rglob("*.html")):
+        stats["checked"] += 1
+        content = html_file.read_text(encoding="utf-8")
+        if "canonical" in content:
+            stats["skipped"] += 1
+            continue
+        rel_path = html_file.relative_to(PUBLIC)
+        canonical = f'{SITE_URL}/{rel_path}'
+        tag = f'<link rel="canonical" href="{canonical}">'
+        if "</head>" in content:
+            content = content.replace("</head>", f"    {tag}\n</head>")
+            stats["modified"] += 1
+            count += 1
+            if dry_run:
+                print(f"  [DRY RUN] Would add canonical: {rel_path}")
+            else:
+                html_file.write_text(content, encoding="utf-8")
 
     return count
+
+
+def add_og_tags_to_industry_perspectives(dry_run: bool):
+    """5b: Add OG/Twitter tags to industry-perspectives posts missing them."""
+    count = 0
+    for post_dir in sorted(INDUSTRY_DIR.iterdir()):
+        if not post_dir.is_dir():
+            continue
+        index_file = post_dir / "index.html"
+        if not index_file.exists():
+            continue
+        stats["checked"] += 1
+        content = index_file.read_text(encoding="utf-8")
+        if 'og:title' in content:
+            stats["skipped"] += 1
+            continue
+
+        title = _extract_title(content) or _extract_h1(content)
+        description = _extract_description(content) or title
+        rel_path = index_file.relative_to(PUBLIC)
+        url = f"{SITE_URL}/{rel_path}"
+
+        # Extract date from directory name if possible
+        date_match = re.match(r'(\d{4}-\d{2}-\d{2})', post_dir.name)
+        date_str = date_match.group(1) if date_match else ""
+
+        og_tags = f'''    <meta property="og:type" content="article">
+    <meta property="og:title" content="{html_mod.escape(title)}">
+    <meta property="og:description" content="{html_mod.escape(description[:200])}">
+    <meta property="og:url" content="{url}">
+    <meta property="og:image" content="{OG_IMAGE}">'''
+        if date_str:
+            og_tags += f'\n    <meta property="article:published_time" content="{date_str}T00:00:00Z">'
+        og_tags += f'''
+    <meta property="article:author" content="Julien Simon">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{html_mod.escape(title)}">
+    <meta name="twitter:description" content="{html_mod.escape(description[:200])}">
+    <meta name="twitter:creator" content="@julsimon">'''
+
+        if "</head>" in content:
+            content = content.replace("</head>", f"{og_tags}\n</head>")
+            stats["modified"] += 1
+            count += 1
+            if dry_run:
+                print(f"  [DRY RUN] Would add OG tags: {rel_path}")
+            else:
+                index_file.write_text(content, encoding="utf-8")
+                print(f"  Added OG tags: {rel_path}")
+
+    return count
+
+
+def add_video_schema_to_youtube(dry_run: bool):
+    """5c: Add VideoObject JSON-LD schema to YouTube video pages missing it."""
+    count = 0
+    for year_dir in sorted(YOUTUBE_DIR.iterdir()):
+        if not year_dir.is_dir():
+            continue
+        for html_file in sorted(year_dir.glob("*.html")):
+            if html_file.name == "index.html":
+                continue
+            stats["checked"] += 1
+            content = html_file.read_text(encoding="utf-8")
+            if "VideoObject" in content:
+                stats["skipped"] += 1
+                continue
+
+            title = _extract_title(content) or _extract_h1(content)
+            if not title:
+                stats["skipped"] += 1
+                continue
+
+            # Extract video ID from iframe
+            vid_match = re.search(r'youtube\.com/embed/([a-zA-Z0-9_-]+)', content)
+            if not vid_match:
+                stats["skipped"] += 1
+                continue
+            video_id = vid_match.group(1)
+
+            # Extract date from filename (YYYYMMDD prefix)
+            date_match = re.match(r'(\d{4})(\d{2})(\d{2})', html_file.stem)
+            upload_date = f"{date_match.group(1)}-{date_match.group(2)}-{date_match.group(3)}" if date_match else ""
+
+            schema = {
+                "@context": "https://schema.org",
+                "@type": "VideoObject",
+                "name": title,
+                "description": f"{title} - YouTube video by Julien Simon",
+                "embedUrl": f"https://www.youtube.com/embed/{video_id}",
+                "thumbnailUrl": f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg",
+                "author": {"@id": f"{SITE_URL}/#person"},
+            }
+            if upload_date:
+                schema["uploadDate"] = upload_date
+
+            schema_tag = f'    <script type="application/ld+json">\n    {json.dumps(schema, ensure_ascii=False)}\n    </script>'
+
+            if "</head>" in content:
+                content = content.replace("</head>", f"{schema_tag}\n</head>")
+                stats["modified"] += 1
+                count += 1
+                if dry_run:
+                    print(f"  [DRY RUN] Would add VideoObject: {html_file.relative_to(PUBLIC)}")
+                else:
+                    html_file.write_text(content, encoding="utf-8")
+
+    return count
+
+
+def add_meta_descriptions_to_youtube(dry_run: bool):
+    """5d: Add meta descriptions to YouTube video pages missing them."""
+    count = 0
+    for year_dir in sorted(YOUTUBE_DIR.iterdir()):
+        if not year_dir.is_dir():
+            continue
+        for html_file in sorted(year_dir.glob("*.html")):
+            if html_file.name == "index.html":
+                continue
+            stats["checked"] += 1
+            content = html_file.read_text(encoding="utf-8")
+            if 'name="description"' in content or 'name=description' in content:
+                stats["skipped"] += 1
+                continue
+
+            title = _extract_title(content) or _extract_h1(content)
+            if not title:
+                stats["skipped"] += 1
+                continue
+
+            desc_tag = f'    <meta name="description" content="{html_mod.escape(title)} - YouTube video by Julien Simon">'
+            if "</head>" in content:
+                content = content.replace("</head>", f"{desc_tag}\n</head>")
+                stats["modified"] += 1
+                count += 1
+                if dry_run:
+                    print(f"  [DRY RUN] Would add description: {html_file.relative_to(PUBLIC)}")
+                else:
+                    html_file.write_text(content, encoding="utf-8")
+
+    return count
+
+
+# ── Main ───────────────────────────────────────────────────────
 
 
 def main():
@@ -238,6 +442,8 @@ def main():
 
     mode = "DRY RUN" if args.dry_run else "APPLYING"
     print(f"\n=== Page Consistency Fix ({mode}) ===\n")
+
+    print("── Round 1: Structure & consistency ──\n")
 
     print("4a: Fixing YouTube video page back links...")
     n = fix_youtube_video_pages(args.dry_run)
@@ -261,6 +467,24 @@ def main():
 
     print("4f: Fixing industry-perspectives back links...")
     n = fix_industry_perspectives_backlinks(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("── Round 2: SEO enhancements ──\n")
+
+    print("5a: Adding canonical URLs to pages missing them...")
+    n = add_canonical_urls(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("5b: Adding OG/Twitter tags to industry-perspectives...")
+    n = add_og_tags_to_industry_perspectives(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("5c: Adding VideoObject schema to YouTube video pages...")
+    n = add_video_schema_to_youtube(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("5d: Adding meta descriptions to YouTube video pages...")
+    n = add_meta_descriptions_to_youtube(args.dry_run)
     print(f"    -> {n} pages\n")
 
     print(f"=== Summary ===")
