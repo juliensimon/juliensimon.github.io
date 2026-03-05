@@ -1,0 +1,441 @@
+/* ── Blog Posts Shared Stylesheet ─────────────────────────
+   Matches julien.org Next.js design system:
+   Inter + Space Grotesk, indigo/violet/cyan gradient, glass-card styling.
+
+   Covers:
+   - AWS blog posts (WordPress classes: alignleft/right/center/none, wp-block-image)
+   - HuggingFace blog posts (Tailwind prose classes)
+   - Medium export posts (h-entry, e-content, graf-image)
+   - Arcee / industry perspectives (Medium export classes)
+   - Legacy personal blog posts (inline-styled Blogger content)
+────────────────────────────────────────────────────────── */
+
+/* ── Reset & Base ──────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.7;
+  background-color: #f8fafc;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* ── Gradient Brand Bar ────────────────────────────────── */
+body::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #0891b2);
+}
+
+/* ── Back Link ─────────────────────────────────────────── */
+.back-link {
+  display: block;
+  max-width: 800px;
+  margin: 1.5em auto 0;
+  padding: 0 20px;
+  font-size: 0.95em;
+}
+
+.back-link a {
+  color: #6366f1;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.back-link a:hover {
+  color: #4f46e5;
+}
+
+/* ── Article Container (glass-card) ──────────────────── */
+body > article,
+body > .article,
+body > .post,
+body > .content,
+body > .e-content,
+body > section {
+  max-width: 800px;
+  margin: 1.5em auto 3em;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  border-radius: 12px;
+  padding: 2.5em;
+}
+
+/* Fallback: if no wrapper element, constrain body content */
+body {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px 3em;
+}
+
+/* ── Headings ──────────────────────────────────────────── */
+h1 {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  font-size: 2.2em;
+  font-weight: 700;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #0891b2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+h2 {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  color: #0f172a;
+  font-size: 1.6em;
+  font-weight: 600;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+h3 {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  color: #0f172a;
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-top: 1.75em;
+  margin-bottom: 0.5em;
+}
+
+h4, h5, h6 {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  color: #0f172a;
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+/* ── Paragraphs ───────────────────────────────────────── */
+p {
+  margin-bottom: 1.2em;
+  font-size: 1.05em;
+  line-height: 1.8;
+}
+
+/* ── Links ─────────────────────────────────────────────── */
+a {
+  color: #6366f1;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #4f46e5;
+  text-decoration: underline;
+}
+
+/* ── Images ────────────────────────────────────────────── */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.5em 0;
+}
+
+figure {
+  margin: 1.5em 0;
+}
+
+figcaption {
+  text-align: center;
+  font-size: 0.9em;
+  color: #64748b;
+  margin-top: 0.5em;
+  font-style: italic;
+}
+
+/* ── WordPress Image Alignment ─────────────────────────── */
+img.alignleft {
+  float: left;
+  margin: 0.5em 1.5em 1em 0;
+}
+
+img.alignright {
+  float: right;
+  margin: 0.5em 0 1em 1.5em;
+}
+
+img.aligncenter {
+  display: block;
+  margin: 1.5em auto;
+  float: none;
+}
+
+img.alignnone {
+  float: none;
+  margin: 1em 0;
+}
+
+/* Clear floats after images */
+.wp-block-image::after,
+p:has(img.alignleft)::after,
+p:has(img.alignright)::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ── Blockquotes ──────────────────────────────────────── */
+blockquote {
+  border-left: 4px solid #6366f1;
+  margin: 1.5em 0;
+  padding: 0.75em 1.25em;
+  color: #334155;
+  background: #f8fafc;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+}
+
+blockquote p {
+  margin-bottom: 0.5em;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Code Blocks ──────────────────────────────────────── */
+pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25em;
+  overflow-x: auto;
+  font-size: 0.9em;
+  line-height: 1.6;
+  margin: 1.5em 0;
+}
+
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+/* Inline code */
+:not(pre) > code {
+  background: #f1f5f9;
+  color: #6366f1;
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+}
+
+/* ── Lists ─────────────────────────────────────────────── */
+ul, ol {
+  margin: 1em 0;
+  padding-left: 1.75em;
+}
+
+li {
+  margin-bottom: 0.5em;
+  line-height: 1.7;
+}
+
+/* ── Tables ────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 0.95em;
+}
+
+th {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  padding: 0.75em 1em;
+  text-align: left;
+  font-weight: 600;
+}
+
+td {
+  padding: 0.75em 1em;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+tr:hover {
+  background: #f8fafc;
+}
+
+/* ── Horizontal Rules ──────────────────────────────────── */
+hr {
+  border: none;
+  height: 1px;
+  background: #e2e8f0;
+  margin: 2em 0;
+}
+
+/* ── Author Bio Section ───────────────────────────────── */
+.author-bio {
+  background: #f1f5f9;
+  border-left: 4px solid #6366f1;
+  padding: 1.25em 1.5em;
+  margin: 2.5em 0;
+  border-radius: 0 10px 10px 0;
+}
+
+.author-bio h3 {
+  margin-top: 0;
+  color: #6366f1;
+  font-size: 1.1em;
+}
+
+/* ── About Section (listing pages) ────────────────────── */
+.about-section {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.5em;
+  margin-top: 2em;
+}
+
+/* ── HuggingFace Prose Overrides ──────────────────────── */
+.prose {
+  max-width: none;
+}
+
+.prose pre {
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
+.prose code {
+  background: #f1f5f9;
+  color: #6366f1;
+}
+
+/* HuggingFace header links */
+.relative.group {
+  color: inherit;
+}
+
+.relative.group:hover {
+  color: #6366f1;
+}
+
+/* ── Medium Export Classes ─────────────────────────────── */
+.h-entry {
+  max-width: 100%;
+}
+
+.e-content {
+  max-width: 100%;
+}
+
+.graf--figure {
+  margin: 1.5em 0;
+}
+
+.graf-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.markup--code {
+  font-family: 'JetBrains Mono', 'Monaco', 'Consolas', monospace;
+}
+
+.postList {
+  list-style: none;
+  padding: 0;
+}
+
+/* Medium class overrides - ensure clean rendering */
+.section-content,
+.section--body {
+  max-width: 100%;
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 640px) {
+  body {
+    padding: 0 16px 2em;
+  }
+
+  .back-link {
+    padding: 0;
+    margin-top: 1em;
+  }
+
+  body > article,
+  body > .article,
+  body > .post,
+  body > .content,
+  body > .e-content,
+  body > section {
+    margin: 1em 0 2em;
+    padding: 1.5em;
+    border-radius: 10px;
+  }
+
+  h1 {
+    font-size: 1.6em;
+  }
+
+  h2 {
+    font-size: 1.3em;
+  }
+
+  p {
+    font-size: 1em;
+  }
+
+  pre {
+    font-size: 0.85em;
+    padding: 1em;
+  }
+
+  img.alignleft,
+  img.alignright {
+    float: none;
+    margin: 1em 0;
+    display: block;
+  }
+}
+
+/* ── Print ─────────────────────────────────────────────── */
+@media print {
+  body::before {
+    display: none;
+  }
+
+  body {
+    background: white;
+    color: black;
+    max-width: 100%;
+  }
+
+  a {
+    color: #333;
+  }
+
+  pre {
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+}
