@@ -235,7 +235,7 @@ def add_canonical_urls(dry_run: bool):
     for html_file in sorted(YOUTUBE_DIR.rglob("*.html")):
         stats["checked"] += 1
         content = html_file.read_text(encoding="utf-8")
-        if "canonical" in content:
+        if 'rel="canonical"' in content:
             stats["skipped"] += 1
             continue
         rel_path = html_file.relative_to(PUBLIC)
@@ -254,7 +254,7 @@ def add_canonical_urls(dry_run: bool):
     for html_file in sorted(INDUSTRY_DIR.rglob("*.html")):
         stats["checked"] += 1
         content = html_file.read_text(encoding="utf-8")
-        if "canonical" in content:
+        if 'rel="canonical"' in content:
             stats["skipped"] += 1
             continue
         rel_path = html_file.relative_to(PUBLIC)
@@ -273,7 +273,7 @@ def add_canonical_urls(dry_run: bool):
     for html_file in sorted(LEGACY_DIR.rglob("*.html")):
         stats["checked"] += 1
         content = html_file.read_text(encoding="utf-8")
-        if "canonical" in content:
+        if 'rel="canonical"' in content:
             stats["skipped"] += 1
             continue
         rel_path = html_file.relative_to(PUBLIC)
