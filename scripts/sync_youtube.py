@@ -167,6 +167,19 @@ def is_video_existing(year: int, youtube_id: str) -> bool:
     return False
 
 
+def is_substack_content(video: VideoItem) -> bool:
+    """Check if a video's description indicates it's a Substack blog post
+    rather than a genuine YouTube video. Substack posts sometimes appear
+    in YouTube feeds when they contain embedded videos."""
+    desc_lower = video.description.lower()
+    substack_signals = [
+        'airealist.ai',
+        'read full post on substack',
+        'substack.com',
+    ]
+    return any(signal in desc_lower for signal in substack_signals)
+
+
 def get_new_videos(
     videos: list[VideoItem], force: bool = False,
 ) -> list[VideoItem]:
@@ -176,6 +189,9 @@ def get_new_videos(
 
     new_videos = []
     for video in videos:
+        if is_substack_content(video):
+            print(f"  Skipping Substack content: {video.title}")
+            continue
         year = video.published.year
         if not is_video_existing(year, video.video_id):
             new_videos.append(video)
