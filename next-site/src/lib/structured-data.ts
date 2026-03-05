@@ -14,7 +14,7 @@ export function personSchema() {
       description: 'Private Equity and Venture Capital firm',
     },
     description:
-      'Open source AI advocate who champions transparent, open-weights models over black box LLMs. Research-fluent expert democratizing AI through accessible, controllable solutions enterprises can understand and deploy.',
+      'Open source AI advocate who champions transparent, open-weights models over black box LLMs. Research-fluent expert democratizing AI through accessible, controllable solutions enterprises can understand and deploy. Author of The AI Realist newsletter (airealist.ai).',
     url: SITE.url,
     mainEntityOfPage: { '@id': `${SITE.url}/#profilepage` },
     image: {
@@ -72,6 +72,9 @@ export function personSchema() {
         description: 'Accelerating cloud and AI initiatives across PE/VC portfolio companies at Fortino Capital.',
       },
     ],
+    publishesContentIn: {
+      '@id': 'https://www.airealist.ai/#newsletter',
+    },
     hasCredential: [
       {
         '@type': 'EducationalOccupationalCredential',
@@ -236,15 +239,66 @@ export function youtubeChannelSchema(channel: {
   };
 }
 
+export function articleSchema(article: {
+  title: string;
+  description: string;
+  datePublished: string;
+  url: string;
+  canonicalUrl: string;
+  readTime?: string;
+  tags?: string[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.description,
+    datePublished: article.datePublished,
+    dateModified: article.datePublished,
+    author: { '@id': `${SITE.url}/#person` },
+    publisher: {
+      '@type': 'Organization',
+      name: 'The AI Realist',
+      url: 'https://www.airealist.ai/',
+    },
+    mainEntityOfPage: article.canonicalUrl,
+    url: article.url,
+    inLanguage: 'en',
+    ...(article.tags && { keywords: article.tags.join(', ') }),
+    isPartOf: {
+      '@type': 'Blog',
+      name: 'The AI Realist',
+      url: 'https://www.airealist.ai/',
+    },
+  };
+}
+
+export function newsletterSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Periodical',
+    '@id': 'https://www.airealist.ai/#newsletter',
+    name: 'The AI Realist',
+    alternateName: 'AI Realist Newsletter',
+    url: 'https://www.airealist.ai/',
+    description:
+      'Practical AI for builders, operators, and investors. Long-form structural analysis of AI ecosystems, infrastructure, digital sovereignty, and investment architecture.',
+    publisher: { '@id': `${SITE.url}/#person` },
+    inLanguage: 'en',
+    dateCreated: '2022-08',
+    genre: ['Technology', 'Artificial Intelligence', 'Industry Analysis'],
+  };
+}
+
 // Pre-built FAQ for homepage - common questions about Julien Simon
 export const HOMEPAGE_FAQS = [
   {
     question: 'Who is Julien Simon?',
-    answer: 'Julien Simon is an AI Operating Partner at Fortino Capital with over 30 years of technology leadership experience. He previously held executive roles at AWS, Hugging Face, and Arcee AI. He is recognized as the #1 AI Evangelist globally by AI Magazine (2021) and has delivered 684+ speaking engagements across 37 countries.',
+    answer: 'Julien Simon is an AI Operating Partner at Fortino Capital with over 30 years of technology leadership experience. He previously held executive roles at AWS, Hugging Face, and Arcee AI. He is recognized as the #1 AI Evangelist globally by AI Magazine (2021), has delivered 684+ speaking engagements across 37 countries, and publishes The AI Realist newsletter (airealist.ai).',
   },
   {
     question: 'What is Julien Simon known for?',
-    answer: 'Julien Simon is known for his expertise in Small Language Models (SLMs), enterprise AI implementation, and bridging the gap between AI research and practical business applications. He authored "Learn Amazon SageMaker" and has 467K+ YouTube subscribers for his AI/ML educational content.',
+    answer: 'Julien Simon is known for his expertise in Small Language Models (SLMs), enterprise AI implementation, and bridging the gap between AI research and practical business applications. He authored "Learn Amazon SageMaker", has 467K+ YouTube subscribers for his AI/ML educational content, and writes The AI Realist newsletter offering structural analysis of AI industry trends.',
   },
   {
     question: 'What does an AI Operating Partner do?',
@@ -253,5 +307,9 @@ export const HOMEPAGE_FAQS = [
   {
     question: 'What are Small Language Models?',
     answer: 'Small Language Models (SLMs) are AI models that deliver enterprise-grade performance with significantly lower computational requirements than large language models. Julien Simon champions SLMs as practical, cost-effective solutions that enterprises can deploy on-premises while maintaining complete control over their data.',
+  },
+  {
+    question: 'What is The AI Realist newsletter?',
+    answer: 'The AI Realist (www.airealist.ai) is Julien Simon\'s Substack newsletter offering practical AI analysis for builders, operators, and investors. It delivers long-form structural analysis rooted in SEC filings, government surveys, legislative text, and regulatory documents, covering AI ecosystems, infrastructure, digital sovereignty, and investment architecture.',
   },
 ];

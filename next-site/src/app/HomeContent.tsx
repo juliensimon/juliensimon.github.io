@@ -173,6 +173,14 @@ export default function HomeContent() {
                 accelerators, from real-time operating systems to cloud-native architectures.
               </p>
               <p>
+                Julien publishes{' '}
+                <a href="https://www.airealist.ai/" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-hover font-medium">
+                  The AI Realist
+                </a>
+                , a newsletter delivering structural analysis of AI ecosystems, infrastructure, and
+                investment architecture for builders, operators, and investors.
+              </p>
+              <p>
                 Julien&apos;s mission? <strong>To demystify buzzwords and cut through industry hype to
                 focus on what actually works in production.</strong>
               </p>

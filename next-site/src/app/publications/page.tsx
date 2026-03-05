@@ -7,7 +7,7 @@ import PublicationsContent from './PublicationsContent';
 export const metadata = buildMetadata({
   title: 'Publications',
   description:
-    'Technical blog posts across AWS, Hugging Face, Medium, and Arcee AI. 414+ articles on machine learning, NLP, computer vision, and AI deployment.',
+    'Technical blog posts across AWS, Hugging Face, Medium, Arcee AI, and The AI Realist newsletter. 414+ articles on machine learning, NLP, computer vision, and AI deployment.',
   path: '/publications',
   keywords: [
     'technical writing',
@@ -15,6 +15,8 @@ export const metadata = buildMetadata({
     'machine learning articles',
     'AWS blog',
     'Hugging Face blog',
+    'The AI Realist',
+    'AI newsletter',
   ],
 });
 

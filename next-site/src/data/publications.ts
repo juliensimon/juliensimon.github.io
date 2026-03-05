@@ -8,9 +8,9 @@ export interface PublicationCategory {
 
 export const PUBLICATION_CATEGORIES: PublicationCategory[] = [
   {
-    name: 'Industry Perspectives',
+    name: 'The AI Realist (Industry Perspectives)',
     count: 35,
-    description: 'Company-agnostic thoughts and lessons learned.',
+    description: 'Practical AI analysis for builders, operators, and investors. Published on The AI Realist newsletter.',
     href: '/blog/industry-perspectives/index.html',
     dateRange: '2021 - Present',
   },

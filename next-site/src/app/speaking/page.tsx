@@ -15,6 +15,7 @@ export const metadata = buildMetadata({
     'machine learning workshops',
     'keynote speaker',
     'tech conferences',
+    'The AI Realist',
   ],
 });
 

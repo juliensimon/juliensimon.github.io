@@ -7,7 +7,7 @@ import HomeContent from './HomeContent';
 export const metadata = buildMetadata({
   title: 'AI Operating Partner & Expert in Small Language Models',
   description:
-    'AI Operating Partner at Fortino Capital. 30+ years accelerating cloud and AI across PE/VC portfolios. Expert in Small Language Models and enterprise AI.',
+    'AI Operating Partner at Fortino Capital. 30+ years accelerating cloud and AI across PE/VC portfolios. Expert in Small Language Models and enterprise AI. Author of The AI Realist newsletter.',
   path: '/',
   keywords: [
     'AI expert',
@@ -16,6 +16,8 @@ export const metadata = buildMetadata({
     'cloud computing',
     'Hugging Face',
     'AWS',
+    'The AI Realist',
+    'AI newsletter',
   ],
 });
 
@@ -26,7 +28,7 @@ export default function HomePage() {
       <StructuredData data={profilePageSchema()} />
       <StructuredData data={webPageSchema(
         'Julien Simon - AI Operating Partner at Fortino Capital',
-        'AI Operating Partner at Fortino Capital. 30+ years accelerating cloud and AI across PE/VC portfolios. Expert in Small Language Models and enterprise AI.',
+        'AI Operating Partner at Fortino Capital. 30+ years accelerating cloud and AI across PE/VC portfolios. Expert in Small Language Models and enterprise AI. Author of The AI Realist newsletter.',
         `${SITE.url}/`,
       )} />
       <StructuredData data={faqSchema(HOMEPAGE_FAQS)} />

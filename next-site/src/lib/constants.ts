@@ -2,7 +2,7 @@ export const SITE = {
   name: 'Julien Simon',
   title: 'Julien Simon - AI Operating Partner at Fortino Capital',
   description:
-    'AI Operating Partner at Fortino Capital. 30+ years accelerating cloud and AI across PE/VC portfolios. Expert in Small Language Models and enterprise AI.',
+    'AI Operating Partner at Fortino Capital. 30+ years accelerating cloud and AI across PE/VC portfolios. Expert in Small Language Models and enterprise AI. Author of The AI Realist newsletter (airealist.ai).',
   url: 'https://www.julien.org',
   image: 'https://www.julien.org/assets/julien.webp',
   ogImage: 'https://www.julien.org/assets/og-image-1200x630.png',
@@ -17,7 +17,7 @@ export const SOCIAL_LINKS = [
   { name: 'Hugging Face', href: 'https://huggingface.co/juliensimon', icon: 'huggingface' },
   { name: 'LinkedIn', href: 'https://linkedin.com/in/juliensimon', icon: 'linkedin' },
   { name: 'Medium', href: 'https://julsimon.medium.com/', icon: 'medium' },
-  { name: 'Substack', href: 'https://www.airealist.ai/', icon: 'substack' },
+  { name: 'The AI Realist', href: 'https://www.airealist.ai/', icon: 'substack' },
   { name: 'Twitter (X)', href: 'https://x.com/julsimon', icon: 'twitter' },
   { name: 'YouTube', href: 'https://youtube.com/@juliensimonfr', icon: 'youtube' },
   { name: 'Slideshare', href: 'https://fr.slideshare.net/JulienSIMON5/presentations', icon: 'slideshare' },

@@ -14,7 +14,7 @@ const FOOTER_NAV = [
 const FOOTER_SOCIAL = [
   { label: 'LinkedIn', href: 'https://linkedin.com/in/juliensimon' },
   { label: 'YouTube', href: 'https://youtube.com/@juliensimonfr' },
-  { label: 'Substack', href: 'https://www.airealist.ai/' },
+  { label: 'The AI Realist', href: 'https://www.airealist.ai/' },
   { label: 'GitHub', href: 'https://github.com/juliensimon' },
   { label: 'Twitter/X', href: 'https://x.com/julsimon' },
 ] as const;
@@ -76,15 +76,15 @@ export default function Footer() {
 
         {/* Newsletter signup */}
         <div className="mt-10 text-center">
-          <h3 className="text-lg font-heading font-semibold text-text mb-2">Stay Updated</h3>
-          <p className="text-sm text-text-muted mb-4">Get the latest on AI, small language models, and enterprise ML.</p>
+          <h3 className="text-lg font-heading font-semibold text-text mb-2">The AI Realist</h3>
+          <p className="text-sm text-text-muted mb-4">Practical AI analysis for builders, operators, and investors.</p>
           <a
-            href="https://www.airealist.ai/"
+            href="https://www.airealist.ai/subscribe"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-white rounded-lg gradient-brand hover:opacity-90 transition-opacity"
           >
-            Subscribe on Substack
+            Subscribe to The AI Realist
             <span className="sr-only"> (opens in new tab)</span>
           </a>
         </div>

@@ -4,7 +4,7 @@ import './globals.css';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
 import StructuredData from '@/components/seo/StructuredData';
-import { personSchema } from '@/lib/structured-data';
+import { personSchema, newsletterSchema } from '@/lib/structured-data';
 import { SITE } from '@/lib/constants';
 
 const inter = Inter({
@@ -65,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Umami Analytics */}
         <script defer src="https://cloud.umami.is/script.js" data-website-id={SITE.umamiId} />
         <StructuredData data={personSchema()} />
+        <StructuredData data={newsletterSchema()} />
       </head>
       <body className="font-sans antialiased min-h-screen">
         <a

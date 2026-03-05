@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/constants';
 import { SPEAKING_YEARS } from '@/data/speaking';
 import { BLOG_CATEGORY_SLUGS } from '@/data/blog-categories';
+import { INDUSTRY_PERSPECTIVES_ARTICLES } from '@/data/blog-listings/industry-perspectives';
 
 export const dynamic = 'force-static';
 
@@ -79,5 +80,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...speakingPages, ...blogPages];
+  // Individual industry-perspectives articles (static HTML, outside Next.js)
+  const articlePages: MetadataRoute.Sitemap = INDUSTRY_PERSPECTIVES_ARTICLES.map((a) => ({
+    url: `${SITE.url}/blog/industry-perspectives/${encodeURIComponent(a.slug)}/index.html`,
+    lastModified: a.date,
+    changeFrequency: 'yearly' as const,
+    priority: 0.6,
+  }));
+
+  return [...staticPages, ...speakingPages, ...blogPages, ...articlePages];
 }
