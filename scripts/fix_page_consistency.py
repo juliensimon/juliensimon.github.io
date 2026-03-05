@@ -22,6 +22,12 @@ Round 3 fixes (remaining SEO gaps):
   6c: Add BlogPosting JSON-LD to industry-perspectives posts
   6d: Add meta descriptions to legacy blog pages missing them
 
+Round 4 fixes (full coverage):
+  7a: Add OG/Twitter tags to YouTube video pages
+  7b: Add favicon to legacy blog pages
+  7c: Fix industry-perspectives posts with missing/malformed meta descriptions
+  7d: Add Article schema to Arcee pages missing it
+
 Usage:
   python scripts/fix_page_consistency.py --dry-run   # Preview changes
   python scripts/fix_page_consistency.py              # Apply changes
@@ -643,6 +649,180 @@ def add_meta_descriptions_to_legacy_blog(dry_run: bool):
     return count
 
 
+# ── Round 4 fixes (full coverage) ──────────────
+
+
+def add_og_tags_to_youtube(dry_run: bool):
+    """7a: Add OG/Twitter tags to YouTube video pages missing them."""
+    count = 0
+    for year_dir in sorted(YOUTUBE_DIR.iterdir()):
+        if not year_dir.is_dir():
+            continue
+        for html_file in sorted(year_dir.glob("*.html")):
+            if html_file.name == "index.html":
+                continue
+            stats["checked"] += 1
+            content = html_file.read_text(encoding="utf-8")
+            if "og:title" in content:
+                stats["skipped"] += 1
+                continue
+            if "</head>" not in content:
+                stats["skipped"] += 1
+                continue
+
+            title = _extract_title(content) or _extract_h1(content)
+            if not title:
+                stats["skipped"] += 1
+                continue
+
+            vid_match = re.search(r'youtube\.com/embed/([a-zA-Z0-9_-]+)', content)
+            if not vid_match:
+                stats["skipped"] += 1
+                continue
+            video_id = vid_match.group(1)
+            thumbnail = f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg"
+
+            description = f"{title} - YouTube video by Julien Simon"
+            rel_path = html_file.relative_to(PUBLIC)
+            url = f"{SITE_URL}/{rel_path}"
+
+            date_match = re.match(r'(\d{4})(\d{2})(\d{2})', html_file.stem)
+            date_str = f"{date_match.group(1)}-{date_match.group(2)}-{date_match.group(3)}" if date_match else ""
+
+            og_tags = f'''    <meta property="og:type" content="video.other">
+    <meta property="og:title" content="{html_mod.escape(title)}">
+    <meta property="og:description" content="{html_mod.escape(description)}">
+    <meta property="og:url" content="{url}">
+    <meta property="og:image" content="{thumbnail}">'''
+            if date_str:
+                og_tags += f'\n    <meta property="og:video:release_date" content="{date_str}T00:00:00Z">'
+            og_tags += f'''
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{html_mod.escape(title)}">
+    <meta name="twitter:description" content="{html_mod.escape(description)}">
+    <meta name="twitter:image" content="{thumbnail}">
+    <meta name="twitter:creator" content="@julsimon">'''
+
+            content = content.replace("</head>", f"{og_tags}\n</head>")
+            stats["modified"] += 1
+            count += 1
+            if dry_run:
+                print(f"  [DRY RUN] Would add OG tags: {rel_path}")
+            else:
+                html_file.write_text(content, encoding="utf-8")
+
+    return count
+
+
+def add_favicon_to_legacy_blog(dry_run: bool):
+    """7b: Add favicon to legacy blog pages missing it."""
+    count = 0
+    for html_file in sorted(LEGACY_DIR.rglob("*.html")):
+        stats["checked"] += 1
+        content = html_file.read_text(encoding="utf-8")
+        if "favicon" in content:
+            stats["skipped"] += 1
+            continue
+        if "</head>" not in content:
+            stats["skipped"] += 1
+            continue
+
+        content = content.replace("</head>", f"    {FAVICON_TAG}\n</head>")
+        stats["modified"] += 1
+        count += 1
+        if dry_run:
+            print(f"  [DRY RUN] Would add favicon: {html_file.relative_to(PUBLIC)}")
+        else:
+            html_file.write_text(content, encoding="utf-8")
+
+    return count
+
+
+def fix_industry_perspectives_meta_descriptions(dry_run: bool):
+    """7c: Fix industry-perspectives posts with missing/malformed meta descriptions."""
+    count = 0
+    for post_dir in sorted(INDUSTRY_DIR.iterdir()):
+        if not post_dir.is_dir():
+            continue
+        index_file = post_dir / "index.html"
+        if not index_file.exists():
+            continue
+        stats["checked"] += 1
+        content = index_file.read_text(encoding="utf-8")
+        if 'name="description"' in content:
+            stats["skipped"] += 1
+            continue
+        if "</head>" not in content:
+            stats["skipped"] += 1
+            continue
+
+        title = _extract_title(content) or _extract_h1(content)
+        if not title:
+            stats["skipped"] += 1
+            continue
+
+        desc_tag = f'    <meta name="description" content="{html_mod.escape(title)} - Industry perspectives by Julien Simon">'
+        content = content.replace("</head>", f"{desc_tag}\n</head>")
+        stats["modified"] += 1
+        count += 1
+        if dry_run:
+            print(f"  [DRY RUN] Would add description: {index_file.relative_to(PUBLIC)}")
+        else:
+            index_file.write_text(content, encoding="utf-8")
+
+    return count
+
+
+def add_article_schema_to_arcee(dry_run: bool):
+    """7d: Add Article schema to Arcee pages missing structured data."""
+    count = 0
+    for html_file in sorted(ARCEE_DIR.rglob("*.html")):
+        stats["checked"] += 1
+        content = html_file.read_text(encoding="utf-8")
+        if "schema.org" in content:
+            stats["skipped"] += 1
+            continue
+        if "</head>" not in content:
+            stats["skipped"] += 1
+            continue
+
+        title = _extract_title(content) or _extract_h1(content)
+        if not title:
+            stats["skipped"] += 1
+            continue
+
+        description = _extract_description(content) or title
+        rel_path = html_file.relative_to(PUBLIC)
+        url = f"{SITE_URL}/{rel_path}"
+
+        date_match = re.match(r'(\d{4}-\d{2}-\d{2})', html_file.parent.name)
+        date_str = date_match.group(1) if date_match else ""
+
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": title,
+            "description": description[:200],
+            "url": url,
+            "image": OG_IMAGE,
+            "author": {"@id": f"{SITE_URL}/#person"},
+            "publisher": {"@id": f"{SITE_URL}/#person"},
+        }
+        if date_str:
+            schema["datePublished"] = f"{date_str}T00:00:00Z"
+
+        schema_tag = f'    <script type="application/ld+json">\n    {json.dumps(schema, ensure_ascii=False)}\n    </script>'
+        content = content.replace("</head>", f"{schema_tag}\n</head>")
+        stats["modified"] += 1
+        count += 1
+        if dry_run:
+            print(f"  [DRY RUN] Would add Article schema: {rel_path}")
+        else:
+            html_file.write_text(content, encoding="utf-8")
+
+    return count
+
+
 # ── Main ───────────────────────────────────────────────────────
 
 
@@ -714,6 +894,24 @@ def main():
 
     print("6d: Adding meta descriptions to legacy blog pages...")
     n = add_meta_descriptions_to_legacy_blog(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("── Round 4: Full coverage ──\n")
+
+    print("7a: Adding OG/Twitter tags to YouTube video pages...")
+    n = add_og_tags_to_youtube(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("7b: Adding favicon to legacy blog pages...")
+    n = add_favicon_to_legacy_blog(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("7c: Fixing industry-perspectives meta descriptions...")
+    n = fix_industry_perspectives_meta_descriptions(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("7d: Adding Article schema to Arcee pages...")
+    n = add_article_schema_to_arcee(args.dry_run)
     print(f"    -> {n} pages\n")
 
     print(f"=== Summary ===")
