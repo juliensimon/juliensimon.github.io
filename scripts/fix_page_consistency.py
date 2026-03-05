@@ -16,6 +16,12 @@ Round 2 fixes (SEO):
   5c: Add VideoObject schema to YouTube video pages
   5d: Add meta descriptions to YouTube video pages missing them
 
+Round 3 fixes (remaining SEO gaps):
+  6a: Add canonical/OG/favicon/analytics to Arcee pages missing them
+  6b: Add OG tags to legacy blog pages
+  6c: Add BlogPosting JSON-LD to industry-perspectives posts
+  6d: Add meta descriptions to legacy blog pages missing them
+
 Usage:
   python scripts/fix_page_consistency.py --dry-run   # Preview changes
   python scripts/fix_page_consistency.py              # Apply changes
@@ -432,6 +438,211 @@ def add_meta_descriptions_to_youtube(dry_run: bool):
     return count
 
 
+# ── Round 3 fixes (remaining SEO gaps) ─────────
+
+
+def fix_arcee_pages(dry_run: bool):
+    """6a: Add canonical/OG/favicon/analytics to Arcee pages missing them."""
+    count = 0
+    for html_file in sorted(ARCEE_DIR.rglob("*.html")):
+        stats["checked"] += 1
+        content = html_file.read_text(encoding="utf-8")
+        original = content
+
+        if "</head>" not in content:
+            stats["skipped"] += 1
+            continue
+
+        title = _extract_title(content) or _extract_h1(content)
+        description = _extract_description(content) or title
+        rel_path = html_file.relative_to(PUBLIC)
+        url = f"{SITE_URL}/{rel_path}"
+
+        # Extract date from directory name
+        date_match = re.match(r'(\d{4}-\d{2}-\d{2})', html_file.parent.name)
+        date_str = date_match.group(1) if date_match else ""
+
+        additions = []
+
+        if "favicon" not in content:
+            additions.append(f"    {FAVICON_TAG}")
+
+        if "umami" not in content:
+            additions.append(f"    {UMAMI_SCRIPT}")
+
+        if 'rel="canonical"' not in content:
+            additions.append(f'    <link rel="canonical" href="{url}">')
+
+        if 'name="description"' not in content and title:
+            additions.append(f'    <meta name="description" content="{html_mod.escape(description[:200])}">')
+
+        if "og:title" not in content and title:
+            og = f'''    <meta property="og:type" content="article">
+    <meta property="og:title" content="{html_mod.escape(title)}">
+    <meta property="og:description" content="{html_mod.escape(description[:200])}">
+    <meta property="og:url" content="{url}">
+    <meta property="og:image" content="{OG_IMAGE}">
+    <meta property="article:author" content="Julien Simon">'''
+            if date_str:
+                og += f'\n    <meta property="article:published_time" content="{date_str}T00:00:00Z">'
+            og += f'''
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{html_mod.escape(title)}">
+    <meta name="twitter:description" content="{html_mod.escape(description[:200])}">
+    <meta name="twitter:creator" content="@julsimon">'''
+            additions.append(og)
+
+        if additions:
+            insert = "\n".join(additions)
+            content = content.replace("</head>", f"{insert}\n</head>")
+
+        if _write_if_changed(html_file, content, original, "arcee SEO", dry_run):
+            count += 1
+
+    return count
+
+
+def add_og_tags_to_legacy_blog(dry_run: bool):
+    """6b: Add OG tags to legacy blog pages missing them."""
+    count = 0
+    for html_file in sorted(LEGACY_DIR.rglob("*.html")):
+        if html_file.name == "index.html":
+            continue
+        stats["checked"] += 1
+        content = html_file.read_text(encoding="utf-8")
+        if "og:title" in content:
+            stats["skipped"] += 1
+            continue
+        if "</head>" not in content:
+            stats["skipped"] += 1
+            continue
+
+        title = _extract_title(content) or _extract_h1(content)
+        if not title:
+            stats["skipped"] += 1
+            continue
+
+        description = _extract_description(content) or f"{title} - Blog post by Julien Simon"
+        rel_path = html_file.relative_to(PUBLIC)
+        url = f"{SITE_URL}/{rel_path}"
+
+        # Extract date from filename (YYYY-MM-DD prefix)
+        date_match = re.match(r'(\d{4}-\d{2}-\d{2})', html_file.stem)
+        date_str = date_match.group(1) if date_match else ""
+
+        og_tags = f'''    <meta property="og:type" content="article">
+    <meta property="og:title" content="{html_mod.escape(title)}">
+    <meta property="og:description" content="{html_mod.escape(description[:200])}">
+    <meta property="og:url" content="{url}">
+    <meta property="og:image" content="{OG_IMAGE}">
+    <meta property="article:author" content="Julien Simon">'''
+        if date_str:
+            og_tags += f'\n    <meta property="article:published_time" content="{date_str}T00:00:00Z">'
+        og_tags += f'''
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{html_mod.escape(title)}">
+    <meta name="twitter:creator" content="@julsimon">'''
+
+        content = content.replace("</head>", f"{og_tags}\n</head>")
+        stats["modified"] += 1
+        count += 1
+        if dry_run:
+            print(f"  [DRY RUN] Would add OG tags: {rel_path}")
+        else:
+            html_file.write_text(content, encoding="utf-8")
+
+    return count
+
+
+def add_blogposting_schema_to_industry_perspectives(dry_run: bool):
+    """6c: Add BlogPosting JSON-LD to industry-perspectives posts missing it."""
+    count = 0
+    for post_dir in sorted(INDUSTRY_DIR.iterdir()):
+        if not post_dir.is_dir():
+            continue
+        index_file = post_dir / "index.html"
+        if not index_file.exists():
+            continue
+        stats["checked"] += 1
+        content = index_file.read_text(encoding="utf-8")
+        if "BlogPosting" in content:
+            stats["skipped"] += 1
+            continue
+        if "</head>" not in content:
+            stats["skipped"] += 1
+            continue
+
+        title = _extract_title(content) or _extract_h1(content)
+        if not title:
+            stats["skipped"] += 1
+            continue
+
+        description = _extract_description(content) or title
+        rel_path = index_file.relative_to(PUBLIC)
+        url = f"{SITE_URL}/{rel_path}"
+
+        date_match = re.match(r'(\d{4}-\d{2}-\d{2})', post_dir.name)
+        date_str = date_match.group(1) if date_match else ""
+
+        schema = {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": title.replace(" - Julien Simon", ""),
+            "description": description[:200],
+            "url": url,
+            "image": OG_IMAGE,
+            "author": {"@id": f"{SITE_URL}/#person"},
+            "publisher": {"@id": f"{SITE_URL}/#person"},
+        }
+        if date_str:
+            schema["datePublished"] = f"{date_str}T00:00:00Z"
+            schema["dateModified"] = f"{date_str}T00:00:00Z"
+
+        schema_tag = f'    <script type="application/ld+json">\n    {json.dumps(schema, ensure_ascii=False)}\n    </script>'
+
+        content = content.replace("</head>", f"{schema_tag}\n</head>")
+        stats["modified"] += 1
+        count += 1
+        if dry_run:
+            print(f"  [DRY RUN] Would add BlogPosting: {rel_path}")
+        else:
+            index_file.write_text(content, encoding="utf-8")
+
+    return count
+
+
+def add_meta_descriptions_to_legacy_blog(dry_run: bool):
+    """6d: Add meta descriptions to legacy blog pages missing them."""
+    count = 0
+    for html_file in sorted(LEGACY_DIR.rglob("*.html")):
+        if html_file.name == "index.html":
+            continue
+        stats["checked"] += 1
+        content = html_file.read_text(encoding="utf-8")
+        if 'name="description"' in content:
+            stats["skipped"] += 1
+            continue
+        if "</head>" not in content:
+            stats["skipped"] += 1
+            continue
+
+        title = _extract_title(content) or _extract_h1(content)
+        if not title:
+            stats["skipped"] += 1
+            continue
+
+        desc_tag = f'    <meta name="description" content="{html_mod.escape(title)} - Blog post by Julien Simon">'
+        content = content.replace("</head>", f"{desc_tag}\n</head>")
+        stats["modified"] += 1
+        count += 1
+        if dry_run:
+            print(f"  [DRY RUN] Would add description: {html_file.relative_to(PUBLIC)}")
+        else:
+            html_file.write_text(content, encoding="utf-8")
+
+    return count
+
+
 # ── Main ───────────────────────────────────────────────────────
 
 
@@ -485,6 +696,24 @@ def main():
 
     print("5d: Adding meta descriptions to YouTube video pages...")
     n = add_meta_descriptions_to_youtube(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("── Round 3: Remaining SEO gaps ──\n")
+
+    print("6a: Fixing Arcee pages (canonical/OG/favicon/analytics)...")
+    n = fix_arcee_pages(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("6b: Adding OG tags to legacy blog pages...")
+    n = add_og_tags_to_legacy_blog(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("6c: Adding BlogPosting schema to industry-perspectives...")
+    n = add_blogposting_schema_to_industry_perspectives(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("6d: Adding meta descriptions to legacy blog pages...")
+    n = add_meta_descriptions_to_legacy_blog(args.dry_run)
     print(f"    -> {n} pages\n")
 
     print(f"=== Summary ===")

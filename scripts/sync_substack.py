@@ -441,6 +441,20 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "{html.escape(item.title).replace(chr(34), '&quot;')}",
+        "description": "{html.escape(excerpt).replace(chr(34), '&quot;')}",
+        "url": "https://www.julien.org/blog/industry-perspectives/{folder_name}/index.html",
+        "image": "https://www.julien.org/assets/og-image-1200x630.webp",
+        "datePublished": "{date_str}T00:00:00Z",
+        "dateModified": "{date_str}T00:00:00Z",
+        "author": {{ "@id": "https://www.julien.org/#person" }},
+        "publisher": {{ "@id": "https://www.julien.org/#person" }}
+    }}
+    </script>
     <style>
         .article-content img {{
             max-width: 100%;
