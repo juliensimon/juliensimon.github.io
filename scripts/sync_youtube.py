@@ -223,11 +223,11 @@ def create_video_page(video: VideoItem, dry_run: bool) -> Path:
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="../style.css">
     <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
 </head>
 <body>
-    <div class="back-link"><a href="https://www.julien.org">&larr; julien.org</a></div>
     <div class="container">
         <h1>{html.escape(video.title)}</h1>
         <div class="date">{display_date}</div>
@@ -245,7 +245,8 @@ def create_video_page(video: VideoItem, dry_run: bool) -> Path:
         </div>
 
         <div class="links">
-
+            <a href="index.html">&larr; Back to {year} Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
         </div>
     </div>
 

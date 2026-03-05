@@ -423,7 +423,12 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     <meta name="date" content="{date_str}">
     <meta name="description" content="{html.escape(excerpt)}">
     <meta name="source" content="{item.link}">
-    <link rel="stylesheet" href="../../../css/minimal-blog-styles.css">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
     <style>
         .article-content img {{
             max-width: 100%;
@@ -461,7 +466,7 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     </style>
 </head>
 <body>
-    <p style="margin-bottom: 1.5em;"><a href="https://www.julien.org" style="color: #6366f1; text-decoration: none;">&larr; julien.org</a></p>
+    <p style="margin-bottom: 1.5em;"><a href="../index.html" style="color: #6366f1; text-decoration: none;">&larr; Back to Industry Perspectives</a></p>
     <article>
         <h1>{html.escape(item.title)}</h1>
         <div class="meta">
