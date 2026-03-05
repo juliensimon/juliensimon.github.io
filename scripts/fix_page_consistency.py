@@ -28,6 +28,9 @@ Round 4 fixes (full coverage):
   7c: Fix industry-perspectives posts with missing/malformed meta descriptions
   7d: Add Article schema to Arcee pages missing it
 
+Round 5 fixes (cleanup):
+  8a: Add OG tags to legacy blog listing/index pages
+
 Usage:
   python scripts/fix_page_consistency.py --dry-run   # Preview changes
   python scripts/fix_page_consistency.py              # Apply changes
@@ -823,6 +826,48 @@ def add_article_schema_to_arcee(dry_run: bool):
     return count
 
 
+def add_og_tags_to_legacy_listing_pages(dry_run: bool):
+    """8a: Add OG tags to legacy blog listing/index pages."""
+    count = 0
+    for html_file in sorted(LEGACY_DIR.rglob("index.html")):
+        stats["checked"] += 1
+        content = html_file.read_text(encoding="utf-8")
+        if "og:title" in content:
+            stats["skipped"] += 1
+            continue
+        if "</head>" not in content:
+            stats["skipped"] += 1
+            continue
+
+        title = _extract_title(content) or _extract_h1(content)
+        if not title:
+            stats["skipped"] += 1
+            continue
+
+        description = _extract_description(content) or f"{title} - Julien Simon"
+        rel_path = html_file.relative_to(PUBLIC)
+        url = f"{SITE_URL}/{rel_path}"
+
+        og_tags = f'''    <meta property="og:type" content="website">
+    <meta property="og:title" content="{html_mod.escape(title)}">
+    <meta property="og:description" content="{html_mod.escape(description[:200])}">
+    <meta property="og:url" content="{url}">
+    <meta property="og:image" content="{OG_IMAGE}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{html_mod.escape(title)}">
+    <meta name="twitter:creator" content="@julsimon">'''
+
+        content = content.replace("</head>", f"{og_tags}\n</head>")
+        stats["modified"] += 1
+        count += 1
+        if dry_run:
+            print(f"  [DRY RUN] Would add OG tags: {rel_path}")
+        else:
+            html_file.write_text(content, encoding="utf-8")
+
+    return count
+
+
 # ── Main ───────────────────────────────────────────────────────
 
 
@@ -912,6 +957,12 @@ def main():
 
     print("7d: Adding Article schema to Arcee pages...")
     n = add_article_schema_to_arcee(args.dry_run)
+    print(f"    -> {n} pages\n")
+
+    print("── Round 5: Cleanup ──\n")
+
+    print("8a: Adding OG tags to legacy blog listing pages...")
+    n = add_og_tags_to_legacy_listing_pages(args.dry_run)
     print(f"    -> {n} pages\n")
 
     print(f"=== Summary ===")
