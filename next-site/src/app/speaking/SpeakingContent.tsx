@@ -59,32 +59,6 @@ export default function SpeakingContent() {
           </div>
         </ScrollReveal>
 
-        {/* Podcasts & Media */}
-        <ScrollReveal direction="up" className="grid sm:grid-cols-2 gap-4 mb-12">
-          <a
-            href="/podcasts.html"
-            className="glass-card rounded-xl p-6 hover:shadow-lg transition-shadow group"
-          >
-            <h2 className="text-xl font-bold font-heading text-text mb-2 group-hover:text-primary transition-colors">
-              Podcasts
-            </h2>
-            <p className="text-sm text-text-muted">
-              Guest appearances on technology and AI podcasts.
-            </p>
-          </a>
-          <a
-            href="/media-analysts.html"
-            className="glass-card rounded-xl p-6 hover:shadow-lg transition-shadow group"
-          >
-            <h2 className="text-xl font-bold font-heading text-text mb-2 group-hover:text-primary transition-colors">
-              Media &amp; Analysts
-            </h2>
-            <p className="text-sm text-text-muted">
-              Press coverage, TV interviews, and industry analyst briefings.
-            </p>
-          </a>
-        </ScrollReveal>
-
         {/* Year grid */}
         <h2 className="text-2xl font-bold font-heading gradient-brand-text mb-6 text-center">
           Browse by Year

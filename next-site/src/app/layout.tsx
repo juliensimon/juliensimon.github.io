@@ -27,7 +27,6 @@ export const metadata: Metadata = {
   description: SITE.description,
   metadataBase: new URL(SITE.url),
   icons: { icon: '/assets/favicon.ico' },
-  manifest: '/manifest.json',
   openGraph: {
     type: 'website',
     locale: SITE.locale,
