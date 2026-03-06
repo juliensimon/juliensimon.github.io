@@ -227,6 +227,8 @@ TRANSCRIPT_REPLACEMENTS: list[tuple[str, str]] = [
     (r'\bGGUF\b', 'GGUF'),
     (r'\bgguf\b', 'GGUF'),
     (r'\bMLX\b', 'MLX'),
+    # Name
+    (r'\bJulian\b', 'Julien'),
     # Versioning
     (r'\bapache 2 zero\b', 'Apache 2.0'),
     (r'\bApache 2 zero\b', 'Apache 2.0'),
