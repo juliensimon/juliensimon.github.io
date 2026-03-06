@@ -32,6 +32,10 @@ export default function robots(): MetadataRoute.Robots {
       // Meta AI
       { userAgent: 'meta-externalagent', allow: '/' },
     ],
-    sitemap: [`${SITE.url}/sitemap.xml`, `${SITE.url}/sitemap-legacy.xml`],
+    sitemap: [
+      `${SITE.url}/sitemap.xml`,
+      `${SITE.url}/sitemap-blog.xml`,
+      `${SITE.url}/sitemap-videos.xml`,
+    ],
   };
 }
