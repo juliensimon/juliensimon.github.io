@@ -26,7 +26,11 @@ export const BOOKS: Book[] = [
   {
     title: 'Natural Language Processing with AWS AI Services',
     role: 'Contributor (Foreword)',
+    publisher: "O'Reilly Media / Packt Publishing",
+    pages: 450,
     description:
       'A comprehensive guide to implementing NLP solutions using AWS AI services (Amazon Comprehend, Translate, Polly, etc.).',
+    coverImage: 'https://m.media-amazon.com/images/I/71s-sMqDi1L._SY385_.jpg',
+    amazonUrl: 'https://www.amazon.com/Natural-Language-Processing-AWS-Services/dp/1801812934',
   },
 ];

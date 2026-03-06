@@ -23,7 +23,7 @@ export default function YouTubeContent() {
         {/* Channel link */}
         <ScrollReveal direction="up" className="text-center mb-12">
           <a
-            href="https://youtube.com/juliensimonfr"
+            href="https://youtube.com/@juliensimonfr"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-8 py-3 rounded-xl gradient-brand text-white font-semibold hover:opacity-90 transition-opacity"
