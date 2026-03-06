@@ -1,0 +1,644 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Technical articles published on the official AWS Blog covering machine learning, AI services, and cloud computing. 68 posts by Julien Simon from 2018-2021.">
+    <meta name="keywords" content="Julien Simon, AWS Blog, machine learning, AI services, Amazon SageMaker, cloud computing">
+    <meta name="author" content="Julien Simon">
+    <meta name="robots" content="index, follow">
+
+    <title>AWS Blog Posts – Julien Simon</title>
+
+    <!-- Umami Analytics -->
+    <script>
+        window.addEventListener('load', function() {
+            var script = document.createElement('script');
+            script.src = 'https://cloud.umami.is/script.js';
+            script.setAttribute('data-website-id', '27550dad-d418-4f5d-ad1b-dab573da1020');
+            document.head.appendChild(script);
+        });
+    </script>
+
+    <!-- Resource hints -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+
+    <style>
+        /* Override style.css body constraints for this layout page */
+        body {
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+            background: #f8fafc;
+        }
+
+        /* Skip link - sr-only, visible on focus */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            z-index: 100;
+            padding: 0.75em 1.5em;
+            background: #6366f1;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 0 0 8px 0;
+            text-decoration: none;
+        }
+        .skip-link:focus {
+            left: 0;
+        }
+
+        /* Top navigation bar */
+        .top-nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .top-nav a {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .top-nav a:hover {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+        .top-nav .sep {
+            color: #cbd5e1;
+        }
+        .top-nav .current {
+            color: #334155;
+            font-weight: 600;
+        }
+
+        /* Gradient Hero */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 4rem 1.5rem 3.5rem;
+            text-align: center;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(8,145,178,0.10) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.08) 0%, transparent 50%),
+                #f8fafc;
+        }
+        .hero h1 {
+            font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+            font-size: clamp(2.2rem, 6vw, 3.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #0891b2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0 0 0.75rem;
+            line-height: 1.15;
+        }
+        .hero p {
+            color: #334155;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.7;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .hero-stat {
+            background: rgba(99,102,241,0.08);
+            border: 1px solid rgba(99,102,241,0.15);
+            padding: 0.5rem 1.25rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            color: #6366f1;
+            font-weight: 600;
+        }
+
+        /* Content wrapper */
+        .content-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* Year sections */
+        .year-section {
+            margin-bottom: 2.5rem;
+        }
+        .year-header {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .year-number {
+            font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        .year-count {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Post list */
+        .post-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 0.5rem;
+        }
+        .post-item {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .post-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+            border-color: #c7d2fe;
+        }
+        .post-item a {
+            color: #1e293b;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: block;
+        }
+        .post-item a:hover {
+            color: #6366f1;
+        }
+        .post-date {
+            font-size: 0.82rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+            font-weight: 400;
+        }
+
+        /* Blog sections nav */
+        .sections-nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem 2rem;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.5rem;
+        }
+        .sections-nav p.label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .sections-nav p.links {
+            font-size: 0.95rem;
+            color: #334155;
+        }
+        .sections-nav a {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .sections-nav a:hover {
+            color: #4f46e5;
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .site-footer {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .site-footer a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1.25rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #0891b2);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+        .site-footer a:hover {
+            opacity: 0.9;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .site-footer p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 2.5rem 1rem 2rem; }
+            .hero-stats { gap: 0.5rem; }
+            .hero-stat { padding: 0.4rem 0.9rem; font-size: 0.82rem; }
+            .content-wrap { padding: 1.5rem 1rem 2rem; }
+            .post-item { padding: 0.85rem 1rem; }
+            .site-footer { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+    <link rel="canonical" href="https://www.julien.org/blog/aws-posts-and-images/index.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AWS Blog Posts – Julien Simon">
+    <meta property="og:description" content="Technical articles published on the official AWS Blog covering machine learning, AI services, and cloud computing. 68 posts by Julien Simon from 2018-2021.">
+    <meta property="og:url" content="https://www.julien.org/blog/aws-posts-and-images/index.html">
+    <meta property="og:image" content="https://www.julien.org/assets/og-image-1200x630.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AWS Blog Posts – Julien Simon">
+    <meta name="twitter:creator" content="@julsimon">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="top-nav">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <a href="/publications">Publications</a>
+        <span class="sep">/</span>
+        <span class="current">AWS Blog Posts</span>
+    </nav>
+
+    <main id="main-content">
+        <section class="hero">
+            <h1>AWS Blog Posts</h1>
+            <p>Technical articles published on the official AWS Blog covering machine learning, AI services, and cloud computing.</p>
+            <div class="hero-stats">
+                <div class="hero-stat">68 Total Posts</div>
+                <div class="hero-stat">4 Years Covered</div>
+                <div class="hero-stat">2018 - 2021</div>
+            </div>
+        </section>
+
+        <div class="content-wrap">
+
+            <!-- 2021 - 9 posts -->
+            <div class="year-section">
+                <div class="year-header">
+                    <div class="year-number">2021</div>
+                    <div class="year-count">9 posts</div>
+                </div>
+                <ul class="post-list">
+                    <li class="post-item">
+                        <a href="2021-09-22_scaling-ad-verification-with-machine-learning-and-aws-inferentia/index.html">Scaling Ad Verification with Machine Learning and AWS Inferentia</a>
+                        <div class="post-date">September 22, 2021</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2021-09-03_decoding-the-social-effects-of-media-with-machine-learning/index.html">Decoding the Social Effects Of Media with Machine Learning</a>
+                        <div class="post-date">September 3, 2021</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2021-08-04_extract-insights-from-customer-conversations-with-amazon-transcribe-call-analytics/index.html">Extract Insights From Customer Conversations with Amazon Transcribe Call Analytics</a>
+                        <div class="post-date">August 4, 2021</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2021-07-15_paging-doctor-cloud-amazon-healthlake-is-now-generally-available/index.html">Paging Doctor Cloud! Amazon HealthLake Is Now Generally Available</a>
+                        <div class="post-date">July 15, 2021</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2021-06-09_amazon-sagemaker-named-as-the-outright-leader-in-enterprise-mlops-platforms/index.html">Amazon SageMaker Named as the Outright Leader in Enterprise MLOps Platforms</a>
+                        <div class="post-date">June 9, 2021</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2021-05-10_resolve-it-incidents-faster-with-incident-manager-a-new-capability-of-aws-systems-manager/index.html">Resolve IT Incidents Faster with Incident Manager, a New Capability of AWS Systems Manager</a>
+                        <div class="post-date">May 10, 2021</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2021-04-20_decrease-your-machine-learning-costs-with-instance-price-reductions-and-savings-plans-for-amazon-sagemaker/index.html">Decrease Your Machine Learning Costs with Instance Price Reductions and Savings Plans for Amazon SageMaker</a>
+                        <div class="post-date">April 20, 2021</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2021-03-30_troubleshoot-boot-and-networking-issues-with-new-ec2-serial-console/index.html">Troubleshoot Boot and Networking Issues with New EC2 Serial Console</a>
+                        <div class="post-date">March 30, 2021</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2021-03-23_aws-and-hugging-face-collaborate-to-simplify-and-accelerate-adoption-of-natural-language-processing-models/index.html">AWS and Hugging Face collaborate to simplify and accelerate adoption of Natural Language Processing models</a>
+                        <div class="post-date">March 23, 2021</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 2020 - 25 posts -->
+            <div class="year-section">
+                <div class="year-header">
+                    <div class="year-number">2020</div>
+                    <div class="year-count">25 posts</div>
+                </div>
+                <ul class="post-list">
+                    <li class="post-item">
+                        <a href="2020-12-08_new-store-discover-and-share-machine-learning-features-with-amazon-sagemaker-feature-store/index.html">New - Store, Discover, and Share Machine Learning Features with Amazon SageMaker Feature Store</a>
+                        <div class="post-date">December 8, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-12-08_new-profile-your-machine-learning-training-jobs-with-amazon-sagemaker-debugger/index.html">New - Profile Your Machine Learning Training Jobs With Amazon SageMaker Debugger</a>
+                        <div class="post-date">December 8, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-12-08_new-data-parallelism-library-in-amazon-sagemaker-simplifies-training-on-large-datasets/index.html">New - Data Parallelism Library in Amazon SageMaker Simplifies Training on Large Datasets</a>
+                        <div class="post-date">December 8, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-12-08_new-amazon-sagemaker-pipelines-brings-devops-capabilities-to-your-machine-learning-projects/index.html">New - Amazon SageMaker Pipelines Brings DevOps Capabilities to your Machine Learning Projects</a>
+                        <div class="post-date">December 8, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-12-08_new-amazon-sagemaker-clarify-detects-bias-and-increases-the-transparency-of-machine-learning-models/index.html">New - Amazon SageMaker Clarify Detects Bias and Increases the Transparency of Machine Learning Models</a>
+                        <div class="post-date">December 8, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-12-08_introducing-amazon-sagemaker-data-wrangler-a-visual-interface-to-prepare-data-for-machine-learning/index.html">Introducing Amazon SageMaker Data Wrangler, a Visual Interface to Prepare Data for Machine Learning</a>
+                        <div class="post-date">December 8, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-12-08_amazon-sagemaker-simplifies-training-deep-learning-models-with-billions-of-parameters/index.html">Amazon SageMaker Simplifies Training Deep Learning Models With Billions of Parameters</a>
+                        <div class="post-date">December 8, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-12-08_amazon-sagemaker-jumpstart-simplifies-access-to-pre-built-models-and-machine-learning-solutions/index.html">Amazon SageMaker JumpStart Simplifies Access to Pre-built Models and Machine Learning Solutions</a>
+                        <div class="post-date">December 8, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-12-08_amazon-sagemaker-edge-manager-simplifies-operating-machine-learning-models-on-edge-devices/index.html">Amazon SageMaker Edge Manager Simplifies Operating Machine Learning Models on Edge Devices</a>
+                        <div class="post-date">December 8, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-12-01_amazon-monitron-a-simple-and-cost-effective-service-enabling-predictive-maintenance/index.html">Amazon Monitron, a Simple and Cost-Effective Service Enabling Predictive Maintenance</a>
+                        <div class="post-date">December 1, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-10-07_amazon-sagemaker-continues-to-lead-the-way-in-machine-learning-and-announces-up-to-18-lower-prices-on-gpu-instances/index.html">Amazon SageMaker Continues to Lead the Way in Machine Learning and Announces up to 18% Lower Prices on GPU Instances</a>
+                        <div class="post-date">October 7, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-09-15_amazon-transcribe-now-supports-automatic-language-identification/index.html">Amazon Transcribe Now Supports Automatic Language Identification</a>
+                        <div class="post-date">September 15, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-08-14_amazon-ecs-now-supports-ec2-inf1-instances/index.html">Amazon ECS Now Supports EC2 Inf1 Instances</a>
+                        <div class="post-date">August 14, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-07-29_amazon-translate-now-supports-office-documents/index.html">Amazon Translate now supports Office documents</a>
+                        <div class="post-date">July 29, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-07-09_new-label-videos-with-amazon-sagemaker-ground-truth/index.html">New - Label Videos with Amazon SageMaker Ground Truth</a>
+                        <div class="post-date">July 9, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-06-15_amazon-eks-now-supports-ec2-inf1-instances/index.html">Amazon EKS Now Supports EC2 Inf1 Instances</a>
+                        <div class="post-date">June 15, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-06-10_new-label-3d-point-clouds-with-amazon-sagemaker-ground-truth/index.html">New - Label 3D Point Clouds with Amazon SageMaker Ground Truth</a>
+                        <div class="post-date">June 10, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-05-11_reinventing-enterprise-search-amazon-kendra-is-now-generally-available/index.html">Reinventing Enterprise Search - Amazon Kendra is Now Generally Available</a>
+                        <div class="post-date">May 11, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-04-22_announcing-availability-of-inf1-instances-in-amazon-sagemaker-for-high-performance-and-cost-effective-machine-learning-inference/index.html">Announcing availability of Inf1 instances in Amazon SageMaker for high performance and cost-effective machine learning inference</a>
+                        <div class="post-date">April 22, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-04-21_announcing-torchserve-an-open-source-model-server-for-pytorch/index.html">Announcing TorchServe, An Open Source Model Server for PyTorch</a>
+                        <div class="post-date">April 21, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-04-02_aws-deepcomposer-now-generally-available-with-new-features/index.html">AWS DeepComposer - Now Generally Available With New Features</a>
+                        <div class="post-date">April 2, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-03-16_now-available-amazon-elasticache-global-datastore-for-redis/index.html">Now Available: Amazon ElastiCache Global Datastore for Redis</a>
+                        <div class="post-date">March 16, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-02-26_now-available-in-amazon-transcribe-automatic-redaction-of-personally-identifiable-information/index.html">Now available in Amazon Transcribe: Automatic Redaction of Personally Identifiable Information</a>
+                        <div class="post-date">February 26, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-02-06_ec2-price-reduction-in-the-são-paulo-region-r5-and-i3/index.html">EC2 Price Reduction in the Sao Paulo Region (R5 and I3)</a>
+                        <div class="post-date">February 6, 2020</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2020-01-27_update-on-amazon-linux-ami-end-of-life/index.html">Update on Amazon Linux AMI end-of-life</a>
+                        <div class="post-date">January 27, 2020</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 2019 - 25 posts -->
+            <div class="year-section">
+                <div class="year-header">
+                    <div class="year-number">2019</div>
+                    <div class="year-count">25 posts</div>
+                </div>
+                <ul class="post-list">
+                    <li class="post-item">
+                        <a href="2019-12-03_amazon-sagemaker-studio-the-first-fully-integrated-development-environment-for-machine-learning/index.html">Amazon SageMaker Studio: The First Fully Integrated Development Environment For Machine Learning</a>
+                        <div class="post-date">December 3, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-12-03_amazon-sagemaker-processing-fully-managed-data-processing-and-model-evaluation/index.html">Amazon SageMaker Processing - Fully Managed Data Processing and Model Evaluation</a>
+                        <div class="post-date">December 3, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-12-03_amazon-sagemaker-model-monitor-fully-managed-automatic-monitoring-for-your-machine-learning-models/index.html">Amazon SageMaker Model Monitor - Fully Managed Automatic Monitoring For Your Machine Learning Models</a>
+                        <div class="post-date">December 3, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-12-03_amazon-sagemaker-experiments-organize-track-and-compare-your-machine-learning-trainings/index.html">Amazon SageMaker Experiments - Organize, Track And Compare Your Machine Learning Trainings</a>
+                        <div class="post-date">December 3, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-12-03_amazon-sagemaker-debugger-debug-your-machine-learning-models/index.html">Amazon SageMaker Debugger - Debug Your Machine Learning Models</a>
+                        <div class="post-date">December 3, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-12-03_amazon-sagemaker-autopilot-automatically-create-high-quality-machine-learning-models-with-full-control-and-visibility/index.html">Amazon SageMaker Autopilot - Automatically Create High-Quality Machine Learning Models With Full Control And Visibility</a>
+                        <div class="post-date">December 3, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-12-03_now-available-on-amazon-sagemaker-the-deep-graph-library/index.html">Now Available on Amazon SageMaker: The Deep Graph Library</a>
+                        <div class="post-date">December 3, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-12-02_aws-deepcomposer-compose-music-with-generative-machine-learning-models/index.html">AWS DeepComposer - Compose Music with Generative Machine Learning Models</a>
+                        <div class="post-date">December 2, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-12-02_amazon-transcribe-medical-real-time-automatic-speech-recognition-for-healthcare-customers/index.html">Amazon Transcribe Medical - Real-Time Automatic Speech Recognition for Healthcare Customers</a>
+                        <div class="post-date">December 2, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-11-25_22-new-languages-and-variants-6-new-regions-for-amazon-translate/index.html">22 New Languages And Variants, 6 New Regions For Amazon Translate</a>
+                        <div class="post-date">November 25, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-11-19_aws-systems-manager-explorer-a-multi-account-multi-region-operations-dashboard/index.html">AWS Systems Manager Explorer - A Multi-Account, Multi-Region Operations Dashboard</a>
+                        <div class="post-date">November 19, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-11-15_now-available-batch-recommendations-in-amazon-personalize/index.html">Now available: Batch Recommendations in Amazon Personalize</a>
+                        <div class="post-date">November 15, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-11-05_now-available-new-c5d-instance-sizes-and-bare-metal-instances/index.html">Now Available: New C5d Instance Sizes and Bare Metal Instances</a>
+                        <div class="post-date">November 5, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-10-10_now-available-bare-metal-arm-based-ec2-instances/index.html">Now Available: Bare Metal Arm-Based EC2 Instances</a>
+                        <div class="post-date">October 10, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-10-10_new-m5n-and-r5n-ec2-instances-with-up-to-100-gbps-networking/index.html">New M5n and R5n EC2 Instances, with up to 100 Gbps Networking</a>
+                        <div class="post-date">October 10, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-10-07_now-available-in-amazon-sagemaker-ec2-p3dn-gpu-instances/index.html">Now available in Amazon SageMaker: EC2 P3dn GPU Instances</a>
+                        <div class="post-date">October 7, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-10-03_new-languages-for-amazon-translate-greek-hungarian-romanian-thai-ukrainian-urdu-and-vietnamese/index.html">New languages for Amazon Translate: Greek, Hungarian, Romanian, Thai, Ukrainian, Urdu and Vietnamese</a>
+                        <div class="post-date">October 3, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-09-24_introducing-batch-mode-processing-for-amazon-comprehend-medical/index.html">Introducing Batch Mode Processing for Amazon Comprehend Medical</a>
+                        <div class="post-date">September 24, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-08-26_managed-spot-training-save-up-to-90-on-your-amazon-sagemaker-training-jobs/index.html">Managed Spot Training: Save Up to 90% On Your Amazon SageMaker Training Jobs</a>
+                        <div class="post-date">August 26, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-08-23_amazon-transcribe-now-supports-mandarin-and-russian/index.html">Amazon Transcribe Now Supports Mandarin and Russian</a>
+                        <div class="post-date">August 23, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-07-30_amazon-polly-introduces-neural-text-to-speech-and-newscaster-style/index.html">Amazon Polly Introduces Neural Text-To-Speech and Newscaster Style</a>
+                        <div class="post-date">July 30, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-06-21_train-and-deploy-keras-models-with-tensorflow-and-apache-mxnet-on-amazon-sagemaker/index.html">Train and deploy Keras models with TensorFlow and Apache MXNet on Amazon SageMaker</a>
+                        <div class="post-date">June 21, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-06-18_now-available-new-c5-instance-sizes-and-bare-metal-instances/index.html">Now Available: New C5 instance sizes and bare metal instances</a>
+                        <div class="post-date">June 18, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-06-10_amazon-personalize-is-now-generally-available/index.html">Amazon Personalize is Now Generally Available</a>
+                        <div class="post-date">June 10, 2019</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2019-04-24_amazon-sagemaker-ground-truth-keeps-simplifying-labeling-workflows/index.html">Amazon SageMaker Ground Truth Keeps Simplifying Labeling Workflows</a>
+                        <div class="post-date">April 24, 2019</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 2018 - 9 posts -->
+            <div class="year-section">
+                <div class="year-header">
+                    <div class="year-number">2018</div>
+                    <div class="year-count">9 posts</div>
+                </div>
+                <ul class="post-list">
+                    <li class="post-item">
+                        <a href="2018-11-28_amazon-sagemaker-rl-managed-reinforcement-learning-with-amazon-sagemaker/index.html">Amazon SageMaker RL - Managed Reinforcement Learning with Amazon SageMaker</a>
+                        <div class="post-date">November 28, 2018</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2018-11-28_amazon-sagemaker-neo-train-your-machine-learning-models-once-run-them-anywhere/index.html">Amazon SageMaker Neo - Train Your Machine Learning Models Once, Run Them Anywhere</a>
+                        <div class="post-date">November 28, 2018</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2018-11-28_amazon-sagemaker-ground-truth-build-highly-accurate-datasets-and-reduce-labeling-costs-by-up-to-70/index.html">Amazon SageMaker Ground Truth - Build Highly Accurate Datasets and Reduce Labeling Costs by up to 70%</a>
+                        <div class="post-date">November 28, 2018</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2018-11-28_amazon-personalize-real-time-personalization-and-recommendation-for-everyone/index.html">Amazon Personalize - Real-Time Personalization and Recommendation for Everyone</a>
+                        <div class="post-date">November 28, 2018</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2018-11-28_amazon-elastic-inference-gpu-powered-deep-learning-inference-acceleration/index.html">Amazon Elastic Inference - GPU-Powered Deep Learning Inference Acceleration</a>
+                        <div class="post-date">November 28, 2018</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2018-11-27_amazon-comprehend-medical-natural-language-processing-for-healthcare-customers/index.html">Amazon Comprehend Medical - Natural Language Processing for Healthcare Customers</a>
+                        <div class="post-date">November 27, 2018</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2018-06-18_build-a-movie-recommender-with-factorization-machines-on-amazon-sagemaker/index.html">Build a movie recommender with factorization machines on Amazon SageMaker</a>
+                        <div class="post-date">June 18, 2018</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2018-05-03_use-pre-trained-models-with-apache-mxnet/index.html">Use pre-trained models with Apache MXNet</a>
+                        <div class="post-date">May 3, 2018</div>
+                    </li>
+                    <li class="post-item">
+                        <a href="2018-01-22_speeding-up-apache-mxnet-using-the-nnpack-library/index.html">Speeding up Apache MXNet using the NNPACK library</a>
+                        <div class="post-date">January 22, 2018</div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </main>
+
+    <nav class="sections-nav">
+        <p class="label">More blog sections</p>
+        <p class="links"><a href="/blog/legacy-posts-and-images/">Legacy Blog Archive</a> &middot;
+        <a href="/blog/industry-perspectives/">Industry Perspectives</a> &middot;
+        <a href="/blog/huggingface-posts-and-images/">Hugging Face Blog Posts</a> &middot;
+        <a href="/blog/arcee-posts/">Arcee Blog Posts</a></p>
+    </nav>
+
+    <footer class="site-footer">
+        <a href="/">&larr; Back to Home</a>
+        <p>&copy; 2026 Julien Simon</p>
+    </footer>
+</body></html>
