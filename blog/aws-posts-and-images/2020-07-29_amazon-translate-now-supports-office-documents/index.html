@@ -117,7 +117,7 @@
 <link rel="dns-prefetch" href="//cloud.umami.is">
   <meta name="title" content="Amazon Translate now supports Office documents - Julien Simon | AWS Expert"/>
   <meta name="description" content="Expert analysis and technical deep-dive on amazon translate now supports office documents by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
-  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'Translate', 'now'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="keywords" content="AWS, Amazon Web Services, machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
   <meta name="author" content="Julien Simon"/>
   <meta name="robots" content="index, follow"/>
   
@@ -150,53 +150,40 @@
   
   <!-- Structured Data -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": "Amazon Translate now supports Office documents",
-    "description": "Expert analysis and technical deep-dive on amazon translate now supports office documents by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
-    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
-    "author": {
-      "@type": "Person",
-      "name": "Julien Simon",
-      "url": "https://julien.org/",
-      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Amazon Web Services"
-      },
-      "sameAs": [
-        "https://twitter.com/julsimon",
-        "https://linkedin.com/in/juliensimon",
-        "https://github.com/juliensimon"
-      ]
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Julien Simon",
-      "url": "https://julien.org/",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://julien.org/assets/julien-simon-logo.jpg"
-      }
-    },
-    "datePublished": "2020-07-29T00:00:00Z",
-    "dateModified": "2020-07-29T00:00:00Z",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://julien.org/blog/amazon-translate-now-supports-office-documents/"
-    },
-    "url": "https://julien.org/blog/amazon-translate-now-supports-office-documents/",
-    "keywords": "AWS, Amazon Web Services, ['Amazon', 'Translate', 'now'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
-    "articleSection": "AWS",
-    "inLanguage": "en-US",
-    "isPartOf": {
-      "@type": "Blog",
-      "name": "Julien Simon - AWS Expert Blog",
-      "url": "https://julien.org/blog/"
-    }
+  
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Amazon Translate now supports Office documents",
+  "description": "Expert analysis and technical deep-dive on amazon translate now supports office documents by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+  "image": "https://www.julien.org/assets/og-image-1200x630.webp",
+  "author": {
+    "@id": "https://www.julien.org/#person"
+  },
+  "publisher": {
+    "@id": "https://www.julien.org/#person"
+  },
+  "datePublished": "2020-07-29T00:00:00Z",
+  "dateModified": "2020-07-29T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.julien.org/blog/aws-posts-and-images/2020-07-29_amazon-translate-now-supports-office-documents/index.html"
+  },
+  "url": "https://www.julien.org/blog/aws-posts-and-images/2020-07-29_amazon-translate-now-supports-office-documents/index.html",
+  "keywords": "AWS, Amazon Web Services, machine learning, AI, cloud computing, Julien Simon, AWS expert",
+  "articleSection": "AWS",
+  "inLanguage": "en-US",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [
+      "h1",
+      "h2",
+      "h3",
+      "p"
+    ]
   }
-  </script>
+}
+</script>
   
   <!-- Additional SEO Meta Tags -->
   <meta name="twitter:site" content="@julsimon"/>
@@ -488,9 +475,9 @@ document = Document('blog_post.docx')
 text = document.paragraphs[0].text
 comprehend = boto3.client('comprehend')
 response = comprehend.detect_dominant_language(Text=text)
-top_language = response['Languages'][0]
-code = top_language['LanguageCode']
-score = top_language['Score']
+top_language = response[0]
+code = top_language
+score = top_language
 print("%s, %f" % (code,score))</code></pre>
   <p>
    Pretty simple! You could also detect the type of each file based on its extension, and move it to the proper input location in S3. Then, you could

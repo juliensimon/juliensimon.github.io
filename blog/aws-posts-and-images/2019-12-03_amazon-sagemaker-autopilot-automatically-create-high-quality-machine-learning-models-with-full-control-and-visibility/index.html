@@ -117,7 +117,7 @@
 <link rel="dns-prefetch" href="//cloud.umami.is">
   <meta name="title" content="Amazon SageMaker Autopilot – Automatically Create High-Quality Machine Learning Models With Full Control And Visibility - Julien Simon | AWS Expert"/>
   <meta name="description" content="Expert analysis and technical deep-dive on amazon sagemaker autopilot – automatically create high-quality machine learning models with full control and visibility by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
-  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'SageMaker', 'Autopilot'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="keywords" content="AWS, Amazon Web Services, machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
   <meta name="author" content="Julien Simon"/>
   <meta name="robots" content="index, follow"/>
   
@@ -150,53 +150,40 @@
   
   <!-- Structured Data -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": "Amazon SageMaker Autopilot – Automatically Create High-Quality Machine Learning Models With Full Control And Visibility",
-    "description": "Expert analysis and technical deep-dive on amazon sagemaker autopilot – automatically create high-quality machine learning models with full control and visibility by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
-    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
-    "author": {
-      "@type": "Person",
-      "name": "Julien Simon",
-      "url": "https://julien.org/",
-      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Amazon Web Services"
-      },
-      "sameAs": [
-        "https://twitter.com/julsimon",
-        "https://linkedin.com/in/juliensimon",
-        "https://github.com/juliensimon"
-      ]
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Julien Simon",
-      "url": "https://julien.org/",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://julien.org/assets/julien-simon-logo.jpg"
-      }
-    },
-    "datePublished": "2019-12-03T00:00:00Z",
-    "dateModified": "2019-12-03T00:00:00Z",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://julien.org/blog/amazon-sagemaker-autopilot-automatically-create-high-quality-machine-learning-models-with-full-control-and-visibility/"
-    },
-    "url": "https://julien.org/blog/amazon-sagemaker-autopilot-automatically-create-high-quality-machine-learning-models-with-full-control-and-visibility/",
-    "keywords": "AWS, Amazon Web Services, ['Amazon', 'SageMaker', 'Autopilot'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
-    "articleSection": "AWS",
-    "inLanguage": "en-US",
-    "isPartOf": {
-      "@type": "Blog",
-      "name": "Julien Simon - AWS Expert Blog",
-      "url": "https://julien.org/blog/"
-    }
+  
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Amazon SageMaker Autopilot – Automatically Create High-Quality Machine Learning Models With Full Control And Visibility",
+  "description": "Expert analysis and technical deep-dive on amazon sagemaker autopilot – automatically create high-quality machine learning models with full control and visibility by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+  "image": "https://www.julien.org/assets/og-image-1200x630.webp",
+  "author": {
+    "@id": "https://www.julien.org/#person"
+  },
+  "publisher": {
+    "@id": "https://www.julien.org/#person"
+  },
+  "datePublished": "2019-12-03T00:00:00Z",
+  "dateModified": "2019-12-03T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.julien.org/blog/aws-posts-and-images/2019-12-03_amazon-sagemaker-autopilot-automatically-create-high-quality-machine-learning-models-with-full-control-and-visibility/index.html"
+  },
+  "url": "https://www.julien.org/blog/aws-posts-and-images/2019-12-03_amazon-sagemaker-autopilot-automatically-create-high-quality-machine-learning-models-with-full-control-and-visibility/index.html",
+  "keywords": "AWS, Amazon Web Services, machine learning, AI, cloud computing, Julien Simon, AWS expert",
+  "articleSection": "AWS",
+  "inLanguage": "en-US",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [
+      "h1",
+      "h2",
+      "h3",
+      "p"
+    ]
   }
-  </script>
+}
+</script>
   
   <!-- Additional SEO Meta Tags -->
   <meta name="twitter:site" content="@julsimon"/>
@@ -471,10 +458,10 @@ AutoMLJobName: automl-dm-28-10-17-49</code></pre>
    </code>
    API , and also view them in the AWS console.
   </p>
-  <pre><code class="lang-python">candidates = sm.list_candidates_for_auto_ml_job(AutoMLJobName=auto_ml_job_name, SortBy='FinalObjectiveMetricValue')['Candidates']
+  <pre><code class="lang-python">candidates = sm.list_candidates_for_auto_ml_job(AutoMLJobName=auto_ml_job_name, SortBy='FinalObjectiveMetricValue')
 index = 1
 for candidate in candidates:
-  print (str(index) + "  " + candidate['CandidateName'] + "  " + str(candidate['FinalAutoMLJobObjectiveMetric']['Value']))
+  print (str(index) + "  " + candidate + "  " + str(candidate))
   index += 1
 
 1 automl-dm-28-tuning-job-1-fabb8-001-f3b6dead 0.9186699986457825
@@ -518,7 +505,7 @@ for candidate in candidates:
     .
    </li>
   </ul>
-  <pre><code class="lang-python">model_arn = sm.create_model(Containers=best_candidate['InferenceContainers'],
+  <pre><code class="lang-python">model_arn = sm.create_model(Containers=best_candidate,
                             ModelName=model_name,
                             ExecutionRoleArn=role)
 
@@ -556,8 +543,8 @@ create_endpoint_response = sm.create_endpoint(EndpointName=ep_name,
    </strong>
   </p>
   <pre><code class="lang-python">job = sm.describe_auto_ml_job(AutoMLJobName=auto_ml_job_name)
-job_data_notebook = job['AutoMLJobArtifacts']['DataExplorationNotebookLocation']
-job_candidate_notebook = job['AutoMLJobArtifacts']['CandidateDefinitionNotebookLocation']
+job_data_notebook = job
+job_candidate_notebook = job
 
 print(job_data_notebook)
 print(job_candidate_notebook)

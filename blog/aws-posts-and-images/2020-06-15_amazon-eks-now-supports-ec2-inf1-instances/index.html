@@ -117,7 +117,7 @@
 <link rel="dns-prefetch" href="//cloud.umami.is">
   <meta name="title" content="Amazon EKS Now Supports EC2 Inf1 Instances - Julien Simon | AWS Expert"/>
   <meta name="description" content="Expert analysis and technical deep-dive on amazon eks now supports ec2 inf1 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services."/>
-  <meta name="keywords" content="AWS, Amazon Web Services, ['Amazon', 'EKS', 'Now'], machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
+  <meta name="keywords" content="AWS, Amazon Web Services, machine learning, AI, cloud computing, Julien Simon, AWS expert"/>
   <meta name="author" content="Julien Simon"/>
   <meta name="robots" content="index, follow"/>
   
@@ -150,53 +150,40 @@
   
   <!-- Structured Data -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": "Amazon EKS Now Supports EC2 Inf1 Instances",
-    "description": "Expert analysis and technical deep-dive on amazon eks now supports ec2 inf1 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
-    "image": "https://julien.org/assets/julien-simon-aws-expert.jpg",
-    "author": {
-      "@type": "Person",
-      "name": "Julien Simon",
-      "url": "https://julien.org/",
-      "jobTitle": "AWS Expert & Former Global Technical Evangelist",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Amazon Web Services"
-      },
-      "sameAs": [
-        "https://twitter.com/julsimon",
-        "https://linkedin.com/in/juliensimon",
-        "https://github.com/juliensimon"
-      ]
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Julien Simon",
-      "url": "https://julien.org/",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://julien.org/assets/julien-simon-logo.jpg"
-      }
-    },
-    "datePublished": "2020-06-15T00:00:00Z",
-    "dateModified": "2020-06-15T00:00:00Z",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://julien.org/blog/amazon-eks-now-supports-ec2-inf1-instances/"
-    },
-    "url": "https://julien.org/blog/amazon-eks-now-supports-ec2-inf1-instances/",
-    "keywords": "AWS, Amazon Web Services, ['Amazon', 'EKS', 'Now'], machine learning, AI, cloud computing, Julien Simon, AWS expert",
-    "articleSection": "AWS",
-    "inLanguage": "en-US",
-    "isPartOf": {
-      "@type": "Blog",
-      "name": "Julien Simon - AWS Expert Blog",
-      "url": "https://julien.org/blog/"
-    }
+  
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Amazon EKS Now Supports EC2 Inf1 Instances",
+  "description": "Expert analysis and technical deep-dive on amazon eks now supports ec2 inf1 instances by Julien Simon, leading AWS expert and former Global Technical Evangelist for AI & ML at Amazon Web Services.",
+  "image": "https://www.julien.org/assets/og-image-1200x630.webp",
+  "author": {
+    "@id": "https://www.julien.org/#person"
+  },
+  "publisher": {
+    "@id": "https://www.julien.org/#person"
+  },
+  "datePublished": "2020-06-15T00:00:00Z",
+  "dateModified": "2020-06-15T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.julien.org/blog/aws-posts-and-images/2020-06-15_amazon-eks-now-supports-ec2-inf1-instances/index.html"
+  },
+  "url": "https://www.julien.org/blog/aws-posts-and-images/2020-06-15_amazon-eks-now-supports-ec2-inf1-instances/index.html",
+  "keywords": "AWS, Amazon Web Services, machine learning, AI, cloud computing, Julien Simon, AWS expert",
+  "articleSection": "AWS",
+  "inLanguage": "en-US",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [
+      "h1",
+      "h2",
+      "h3",
+      "p"
+    ]
   }
-  </script>
+}
+</script>
   
   <!-- Additional SEO Meta Tags -->
   <meta name="twitter:site" content="@julsimon"/>
@@ -705,9 +692,9 @@ if __name__ == '__main__':
     request = predict_pb2.PredictRequest()
     request.model_spec.name = 'bert_mrpc_hc_gelus_b4_l24_0926_02'
     i = np.zeros([1, 128], dtype=np.int32)
-    request.inputs['input_ids'].CopyFrom(tf.contrib.util.make_tensor_proto(i, shape=i.shape))
-    request.inputs['input_mask'].CopyFrom(tf.contrib.util.make_tensor_proto(i, shape=i.shape))
-    request.inputs['segment_ids'].CopyFrom(tf.contrib.util.make_tensor_proto(i, shape=i.shape))
+    request.inputs.CopyFrom(tf.contrib.util.make_tensor_proto(i, shape=i.shape))
+    request.inputs.CopyFrom(tf.contrib.util.make_tensor_proto(i, shape=i.shape))
+    request.inputs.CopyFrom(tf.contrib.util.make_tensor_proto(i, shape=i.shape))
 
     latencies = []
     for i in range(100):
