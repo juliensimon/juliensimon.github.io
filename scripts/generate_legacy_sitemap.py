@@ -112,12 +112,29 @@ def write_sitemap(filename, urls):
     return len(urls)
 
 
+def generate_speaking_sitemap():
+    """Generate sitemap-speaking.xml from known speaking year pages."""
+    years = [2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016]
+    urls = []
+    for year in years:
+        url = f"{SITE_URL}/speaking/{year}"
+        lastmod = f"{year}-12-31" if year < 2025 else datetime.now().strftime("%Y-%m-%d")
+        changefreq = "weekly" if year >= 2025 else "yearly"
+        priority = "0.7" if year >= 2025 else "0.5"
+        urls.append((url, lastmod, changefreq, priority))
+    # Also include the main speaking page
+    urls.insert(0, (f"{SITE_URL}/speaking", datetime.now().strftime("%Y-%m-%d"), "weekly", "0.9"))
+    return urls
+
+
 def main():
     blog_urls = scan_dirs(BLOG_DIRS, blog_priority)
     video_urls = scan_dirs(VIDEO_DIRS, video_priority)
+    speaking_urls = generate_speaking_sitemap()
 
     n_blog = write_sitemap("sitemap-blog.xml", blog_urls)
     n_video = write_sitemap("sitemap-videos.xml", video_urls)
+    n_speaking = write_sitemap("sitemap-speaking.xml", speaking_urls)
 
     # Also generate combined sitemap-legacy.xml for backwards compat
     all_urls = blog_urls + video_urls
@@ -125,6 +142,7 @@ def main():
 
     print(f"\nGenerated sitemap-blog.xml with {n_blog} URLs")
     print(f"Generated sitemap-videos.xml with {n_video} URLs")
+    print(f"Generated sitemap-speaking.xml with {n_speaking} URLs")
     print(f"Generated sitemap-legacy.xml with {n_all} URLs (combined)")
 
 
