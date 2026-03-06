@@ -298,7 +298,7 @@ export const HOMEPAGE_FAQS = [
   },
   {
     question: 'What is Julien Simon known for?',
-    answer: 'Julien Simon is known for his expertise in Small Language Models (SLMs), enterprise AI implementation, and bridging the gap between AI research and practical business applications. He authored "Learn Amazon SageMaker", has 467K+ YouTube subscribers for his AI/ML educational content, and writes The AI Realist newsletter offering structural analysis of AI industry trends.',
+    answer: 'Julien Simon is known for his expertise in Small Language Models (SLMs), enterprise AI implementation, and bridging the gap between AI research and practical business applications. He authored "Learn Amazon SageMaker", has 494K+ YouTube subscribers for his AI/ML educational content, and writes The AI Realist newsletter offering structural analysis of AI industry trends.',
   },
   {
     question: 'What does an AI Operating Partner do?',

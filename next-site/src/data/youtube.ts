@@ -6,8 +6,8 @@ export interface VideoYear {
 
 export const YOUTUBE_STATS = {
   totalVideos: 451,
-  subscribers: '467K+',
-  subscriberCount: 467, // numeric value for MetricCard
+  subscribers: '494K+',
+  subscriberCount: 494, // numeric value for MetricCard
   channelUrl: 'https://youtube.com/@juliensimonfr',
   yearsOfContent: 15,
 } as const;

@@ -8,7 +8,7 @@ import YouTubeContent from './YouTubeContent';
 export const metadata = buildMetadata({
   title: 'YouTube Videos',
   description:
-    '467K+ subscribers. Tutorials, demos, and deep-dives on AI, machine learning, Hugging Face, and AWS services.',
+    '494K+ subscribers. Tutorials, demos, and deep-dives on AI, machine learning, Hugging Face, and AWS services.',
   path: '/youtube-videos',
   keywords: [
     'YouTube',
@@ -28,7 +28,7 @@ export default function YouTubeVideosPage() {
       ])} />
       <StructuredData data={webPageSchema(
         'YouTube Videos',
-        '467K+ subscribers. Tutorials, demos, and deep-dives on AI, machine learning, Hugging Face, and AWS services.',
+        '494K+ subscribers. Tutorials, demos, and deep-dives on AI, machine learning, Hugging Face, and AWS services.',
         `${SITE.url}/youtube-videos`,
       )} />
       <StructuredData data={youtubeChannelSchema({

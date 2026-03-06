@@ -34,7 +34,7 @@ export const EXPERIENCES: Experience[] = [
     companyUrl: 'https://www.arcee.ai',
     period: '2024 – November 2025',
     description:
-      'Acted as the first customer and provided in-depth feedback to the R&D team. Created deep technical content including code demos, blog posts, and YouTube videos (400k subscribers). Recognized as an Arm Ambassador.',
+      'Acted as the first customer and provided in-depth feedback to the R&D team. Created deep technical content including code demos, blog posts, and YouTube videos (494K subscribers). Recognized as an Arm Ambassador.',
     achievements: [
       'First customer, providing product feedback to enhance usability',
       'Created deep technical content (code demos, blog posts, YouTube videos)',
