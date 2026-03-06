@@ -5,9 +5,9 @@
     <meta name="keywords" content="Julien Simon, legacy blog posts, technical articles, blog archive, technology, programming">
     <meta name="author" content="Julien Simon">
     <meta name="robots" content="index, follow">
-    
+
     <title>Legacy Blog Posts Archive – Julien Simon</title>
-    
+
     <!-- Umami Analytics -->
     <script>
         window.addEventListener('load', function() {
@@ -17,190 +17,292 @@
             document.head.appendChild(script);
         });
     </script>
-    
+
     <!-- Resource hints -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+
     <!-- Styles -->
     <link rel="stylesheet" href="../style.css">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
-    
-    <!-- Archive-specific styles using design system -->
+
     <style>
-        .archive-hero {
-            background: linear-gradient(135deg, rgba(30, 64, 175, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
-            padding: var(--space-16) 0;
-            margin-bottom: var(--space-20);
-            border-radius: 0 0 1rem 1rem;
-            text-align: center;
+        /* Override style.css body constraints for this layout page */
+        body {
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+            background: #f8fafc;
         }
-        
-        .archive-hero h1 {
-            font-size: clamp(2.5rem, 8vw, var(--text-6xl));
-            color: var(--text-primary);
-            margin-bottom: var(--space-4);
-            font-weight: 800;
-        }
-        
-        .archive-hero p {
-            font-size: clamp(1.125rem, 4vw, var(--text-xl));
-            color: var(--text-secondary);
-            max-width: 800px;
-            margin: 0 auto var(--space-8);
-            line-height: 1.6;
-        }
-        
-        .archive-stats {
-            display: flex;
-            justify-content: center;
-            gap: var(--space-8);
-            flex-wrap: wrap;
-            margin-top: var(--space-8);
-        }
-        
-        .stat {
-            background: rgba(30, 64, 175, 0.1);
-            padding: var(--space-4) var(--space-6);
-            border-radius: 2rem;
-            font-size: var(--text-base);
-            color: var(--primary-color);
+
+        /* Skip link - sr-only, visible on focus */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            z-index: 100;
+            padding: 0.75em 1.5em;
+            background: #6366f1;
+            color: #fff;
             font-weight: 600;
-            border: 1px solid rgba(30, 64, 175, 0.2);
+            border-radius: 0 0 8px 0;
+            text-decoration: none;
         }
-        
-        .years-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--space-8);
-            margin: var(--space-12) 0;
+        .skip-link:focus {
+            left: 0;
         }
-        
-        .year-card {
-            background: var(--background);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: var(--space-8);
-            transition: all var(--transition-normal);
-            box-shadow: var(--shadow-sm);
+
+        /* Top navigation bar */
+        .top-nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .top-nav a {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .top-nav a:hover {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+        .top-nav .sep {
+            color: #cbd5e1;
+        }
+        .top-nav .current {
+            color: #334155;
+            font-weight: 600;
+        }
+
+        /* Gradient Hero */
+        .hero {
             position: relative;
             overflow: hidden;
-            contain: layout style;
+            padding: 4rem 1.5rem 3.5rem;
+            text-align: center;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(8,145,178,0.10) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.08) 0%, transparent 50%),
+                #f8fafc;
         }
-        
+        .hero h1 {
+            font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+            font-size: clamp(2.2rem, 6vw, 3.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #0891b2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0 0 0.75rem;
+            line-height: 1.15;
+        }
+        .hero p {
+            color: #334155;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.7;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .hero-stat {
+            background: rgba(99,102,241,0.08);
+            border: 1px solid rgba(99,102,241,0.15);
+            padding: 0.5rem 1.25rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            color: #6366f1;
+            font-weight: 600;
+        }
+
+        /* Content wrapper */
+        .content-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+        .content-wrap > h2 {
+            font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 0.5rem;
+        }
+        .content-wrap > p {
+            color: #334155;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin: 0 0 2rem;
+        }
+
+        /* Year cards grid */
+        .years-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .year-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
         .year-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 4px;
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #0891b2);
             transform: scaleX(0);
-            transition: transform var(--transition-normal);
+            transform-origin: left;
+            transition: transform 0.3s ease;
         }
-        
+        .year-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+            border-color: #c7d2fe;
+        }
         .year-card:hover::before {
             transform: scaleX(1);
         }
-        
-        .year-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--primary-color);
-        }
-        
+
         .year-number {
-            font-size: var(--text-4xl);
+            font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+            font-size: 2.5rem;
             font-weight: 800;
-            color: var(--primary-color);
-            margin-bottom: var(--space-4);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             line-height: 1;
+            margin-bottom: 0.75rem;
         }
-        
-        .year-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--space-6);
-        }
-        
         .post-count {
-            font-size: var(--text-lg);
-            color: var(--text-secondary);
+            font-size: 1rem;
+            color: #334155;
             font-weight: 600;
+            margin-bottom: 1.25rem;
         }
-        
         .year-link {
             display: inline-flex;
             align-items: center;
-            gap: var(--space-2);
-            padding: var(--space-4) var(--space-6);
-            background: var(--gradient-primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: all var(--transition-normal);
-            width: 100%;
             justify-content: center;
-            font-size: var(--text-base);
+            gap: 0.4rem;
+            width: 100%;
+            padding: 0.75rem 1.25rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #0891b2);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
         }
-        
         .year-link:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            opacity: 0.92;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+            color: #ffffff;
+            text-decoration: none;
         }
-        
-        .back-link {
+
+        /* Blog sections nav */
+        .sections-nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem 2rem;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.5rem;
+        }
+        .sections-nav p.label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .sections-nav p.links {
+            font-size: 0.95rem;
+            color: #334155;
+        }
+        .sections-nav a {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .sections-nav a:hover {
+            color: #4f46e5;
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .site-footer {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .site-footer a {
             display: inline-flex;
             align-items: center;
-            gap: var(--space-2);
-            padding: var(--space-4) var(--space-6);
-            background: var(--secondary-color);
-            color: white;
+            gap: 0.4rem;
+            padding: 0.6rem 1.25rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #0891b2);
+            color: #ffffff;
             text-decoration: none;
-            border-radius: 12px;
+            border-radius: 8px;
             font-weight: 600;
-            transition: all var(--transition-normal);
-            margin-top: var(--space-12);
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
         }
-        
-        .back-link:hover {
-            background: var(--text-secondary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+        .site-footer a:hover {
+            opacity: 0.9;
+            color: #ffffff;
+            text-decoration: none;
         }
-        
+        .site-footer p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
         @media (max-width: 768px) {
-            .archive-stats {
-                gap: var(--space-4);
-            }
-            
-            .stat {
-                padding: var(--space-3) var(--space-4);
-                font-size: var(--text-sm);
-            }
-            
-            .years-grid {
-                grid-template-columns: 1fr;
-                gap: var(--space-6);
-            }
-            
-            .year-card {
-                padding: var(--space-6);
-            }
-            
-            .year-number {
-                font-size: var(--text-3xl);
-            }
+            .hero { padding: 2.5rem 1rem 2rem; }
+            .hero-stats { gap: 0.5rem; }
+            .hero-stat { padding: 0.4rem 0.9rem; font-size: 0.82rem; }
+            .years-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .year-card { padding: 1.5rem; }
+            .year-number { font-size: 2rem; }
+            .content-wrap { padding: 1.5rem 1rem 2rem; }
+            .site-footer { flex-direction: column; align-items: flex-start; }
         }
     </style>
     <link rel="canonical" href="https://www.julien.org/blog/legacy-posts-and-images/index.html">
@@ -215,130 +317,98 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    
-    <main class="container" id="main-content">
-        <section class="archive-hero">
+
+    <nav class="top-nav">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <a href="/publications">Publications</a>
+        <span class="sep">/</span>
+        <span class="current">Legacy Blog Archive</span>
+    </nav>
+
+    <main id="main-content">
+        <section class="hero">
             <h1>Legacy Blog Archive</h1>
             <p>A comprehensive collection of technical articles, tutorials, and insights spanning 2008-2016. These posts cover topics from technology and programming to industry insights and personal experiences.</p>
-            
-            <div class="archive-stats">
-                <div class="stat">90 Total Posts</div>
-                <div class="stat">9 Years Covered</div>
-                <div class="stat">2008 - 2016</div>
+            <div class="hero-stats">
+                <div class="hero-stat">90 Total Posts</div>
+                <div class="hero-stat">9 Years Covered</div>
+                <div class="hero-stat">2008 - 2016</div>
             </div>
         </section>
-        
-        <section>
+
+        <div class="content-wrap">
             <h2>Posts by Year</h2>
             <p>Browse the archive organized by year. Each year contains technical articles, tutorials, and insights from that period in my career.</p>
-            
+
             <div class="years-grid">
                 <div class="year-card">
                     <div class="year-number">2016</div>
-                    <div class="year-stats">
-                        <span class="post-count">1 post</span>
-                    </div>
-                    <a href="2016/index.html" class="year-link">
-                        View 2016 Posts →
-                    </a>
+                    <div class="post-count">1 post</div>
+                    <a href="2016/index.html" class="year-link">View 2016 Posts &rarr;</a>
                 </div>
-                
+
                 <div class="year-card">
                     <div class="year-number">2015</div>
-                    <div class="year-stats">
-                        <span class="post-count">16 posts</span>
-                    </div>
-                    <a href="2015/index.html" class="year-link">
-                        View 2015 Posts →
-                    </a>
+                    <div class="post-count">16 posts</div>
+                    <a href="2015/index.html" class="year-link">View 2015 Posts &rarr;</a>
                 </div>
-                
+
                 <div class="year-card">
                     <div class="year-number">2014</div>
-                    <div class="year-stats">
-                        <span class="post-count">2 posts</span>
-                    </div>
-                    <a href="2014/index.html" class="year-link">
-                        View 2014 Posts →
-                    </a>
+                    <div class="post-count">2 posts</div>
+                    <a href="2014/index.html" class="year-link">View 2014 Posts &rarr;</a>
                 </div>
-                
+
                 <div class="year-card">
                     <div class="year-number">2013</div>
-                    <div class="year-stats">
-                        <span class="post-count">25 posts</span>
-                    </div>
-                    <a href="2013/index.html" class="year-link">
-                        View 2013 Posts →
-                    </a>
+                    <div class="post-count">25 posts</div>
+                    <a href="2013/index.html" class="year-link">View 2013 Posts &rarr;</a>
                 </div>
-                
+
                 <div class="year-card">
                     <div class="year-number">2012</div>
-                    <div class="year-stats">
-                        <span class="post-count">13 posts</span>
-                    </div>
-                    <a href="2012/index.html" class="year-link">
-                        View 2012 Posts →
-                    </a>
+                    <div class="post-count">13 posts</div>
+                    <a href="2012/index.html" class="year-link">View 2012 Posts &rarr;</a>
                 </div>
-                
+
                 <div class="year-card">
                     <div class="year-number">2011</div>
-                    <div class="year-stats">
-                        <span class="post-count">5 posts</span>
-                    </div>
-                    <a href="2011/index.html" class="year-link">
-                        View 2011 Posts →
-                    </a>
+                    <div class="post-count">5 posts</div>
+                    <a href="2011/index.html" class="year-link">View 2011 Posts &rarr;</a>
                 </div>
-                
+
                 <div class="year-card">
                     <div class="year-number">2010</div>
-                    <div class="year-stats">
-                        <span class="post-count">9 posts</span>
-                    </div>
-                    <a href="2010/index.html" class="year-link">
-                        View 2010 Posts →
-                    </a>
+                    <div class="post-count">9 posts</div>
+                    <a href="2010/index.html" class="year-link">View 2010 Posts &rarr;</a>
                 </div>
-                
+
                 <div class="year-card">
                     <div class="year-number">2009</div>
-                    <div class="year-stats">
-                        <span class="post-count">11 posts</span>
-                    </div>
-                    <a href="2009/index.html" class="year-link">
-                        View 2009 Posts →
-                    </a>
+                    <div class="post-count">11 posts</div>
+                    <a href="2009/index.html" class="year-link">View 2009 Posts &rarr;</a>
                 </div>
-                
+
                 <div class="year-card">
                     <div class="year-number">2008</div>
-                    <div class="year-stats">
-                        <span class="post-count">8 posts</span>
-                    </div>
-                    <a href="2008/index.html" class="year-link">
-                        View 2008 Posts →
-                    </a>
+                    <div class="post-count">8 posts</div>
+                    <a href="2008/index.html" class="year-link">View 2008 Posts &rarr;</a>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
-    
-    <nav style="margin: 2em auto; max-width: 800px; padding: 1.5em; border-top: 1px solid #e5e7eb;">
-        <p style="margin-bottom: 0.5em; font-weight: 600; color: #888;">More blog sections</p>
-        <p><a href="/blog/industry-perspectives/" style="color: #6366f1; text-decoration: none;">Industry Perspectives</a> &middot;
-        <a href="/blog/aws-posts-and-images/" style="color: #6366f1; text-decoration: none;">AWS Blog Posts</a> &middot;
-        <a href="/blog/huggingface-posts-and-images/" style="color: #6366f1; text-decoration: none;">Hugging Face Blog Posts</a> &middot;
-        <a href="/blog/arcee-posts/" style="color: #6366f1; text-decoration: none;">Arcee Blog Posts</a></p>
+
+    <nav class="sections-nav">
+        <p class="label">More blog sections</p>
+        <p class="links"><a href="/blog/industry-perspectives/">Industry Perspectives</a> &middot;
+        <a href="/blog/aws-posts-and-images/">AWS Blog Posts</a> &middot;
+        <a href="/blog/huggingface-posts-and-images/">Hugging Face Blog Posts</a> &middot;
+        <a href="/blog/arcee-posts/">Arcee Blog Posts</a></p>
     </nav>
 
-    <footer>
-        <div class="container">
-            <a href="/" class="back-link">&larr; Back to Home</a>
-            <p>&copy; 2026 Julien Simon</p>
-        </div>
+    <footer class="site-footer">
+        <a href="/">&larr; Back to Home</a>
+        <p>&copy; 2026 Julien Simon</p>
     </footer>
-
- </body></html>
+</body></html>
