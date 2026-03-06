@@ -3,45 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A not-so-silent revolution is happening in AI inference - Julien Simon</title>
+    <title>A not-so-silent revolution is happening in AI inference</title>
     <meta name="author" content="Julien Simon">
     <meta name="date" content="2025-08-20">
-    <meta name="description" content="The combination of smaller yet more efficient language models, advances in open-source inference frameworks, and hardware acceleration is enabling an unprecedented pace of innovation for CPU infere...">
-    <meta name="source" content="https://www.airealist.ai/p/a-not-so-silent-revolution-is-happening">
+    <meta name="source" content="https://julsimon.medium.com/a-not-so-silent-revolution-is-happening-in-ai-inference-936ef4b9ba88">
   <link rel="stylesheet" href="../../style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
-    <link rel="canonical" href="https://www.julien.org/blog/industry-perspectives/2025-08-20_a-not-so-silent-revolution-is-happening-in-ai-inference/index.html">
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="A not-so-silent revolution is happening in AI inference - Julien Simon">
-    <meta property="og:description" content="The combination of smaller yet more efficient language models, advances in open-source inference frameworks, and hardware acceleration is enabling an unprecedented pace of innovation for CPU infere...">
-    <meta property="og:url" content="https://www.julien.org/blog/industry-perspectives/2025-08-20_a-not-so-silent-revolution-is-happening-in-ai-inference/index.html">
-    <meta property="og:image" content="https://www.julien.org/assets/og-image-1200x630.webp">
-    <meta property="article:published_time" content="2025-08-20T00:00:00Z">
-    <meta property="article:author" content="Julien Simon">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="A not-so-silent revolution is happening in AI inference - Julien Simon">
-    <meta name="twitter:description" content="The combination of smaller yet more efficient language models, advances in open-source inference frameworks, and hardware acceleration is enabling an unprecedented pace of innovation for CPU infere...">
-    <meta name="twitter:creator" content="@julsimon">
-    <script type="application/ld+json">
-    {"@context": "https://schema.org", "@type": "BlogPosting", "headline": "A not-so-silent revolution is happening in AI inference", "description": "The combination of smaller yet more efficient language models, advances in open-source inference frameworks, and hardware acceleration is enabling an unprecedented pace of innovation for CPU infere...", "url": "https://www.julien.org/blog/industry-perspectives/2025-08-20_a-not-so-silent-revolution-is-happening-in-ai-inference/index.html", "image": "https://www.julien.org/assets/og-image-1200x630.webp", "author": {"@id": "https://www.julien.org/#person"}, "publisher": {"@id": "https://www.julien.org/#person"}, "datePublished": "2025-08-20T00:00:00Z", "dateModified": "2025-08-20T00:00:00Z"}
-    </script>
+  <meta name="description" content="CPU inference is becoming a viable alternative to GPU inference. Smaller models combined with advances in llama.cpp and hardware acceleration deliver dramatic performance improvements.">
+  <link rel="canonical" href="https://julsimon.medium.com/a-not-so-silent-revolution-is-happening-in-ai-inference-936ef4b9ba88">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "A not-so-silent revolution is happening in AI inference",
+  "description": "CPU inference is becoming a viable alternative to GPU inference. Smaller models combined with advances in llama.cpp and hardware acceleration deliver dramatic performance improvements.",
+  "datePublished": "2025-08-20",
+  "dateModified": "2025-08-20",
+  "author": {
+    "@type": "Person",
+    "name": "Julien Simon",
+    "url": "https://www.julien.org"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "The AI Realist",
+    "url": "https://www.airealist.ai/"
+  },
+  "mainEntityOfPage": "https://julsimon.medium.com/a-not-so-silent-revolution-is-happening-in-ai-inference-936ef4b9ba88",
+  "url": "https://www.julien.org/blog/industry-perspectives/2025-08-20_A not-so-silent revolution is happening in AI inference/index.html",
+  "inLanguage": "en",
+  "keywords": "AI Inference, CPU, llama.cpp, Performance, Small Language Models",
+  "timeRequired": "5 min read",
+  "potentialAction": {
+    "@type": "SubscribeAction",
+    "target": "https://www.airealist.ai/subscribe",
+    "name": "Subscribe to The AI Realist"
+  },
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [
+      ".content",
+      "h1",
+      ".meta"
+    ]
+  }
+}
+  </script>
 </head>
 <body>
-    <p style="margin-bottom: 1.5em;"><a href="../index.html" style="color: #6366f1; text-decoration: none;">&larr; Back to Industry Perspectives</a></p>
-    <article>
-        <h1>A not-so-silent revolution is happening in AI inference</h1>
-        <div class="meta">
-            <p><strong>Author:</strong> Julien Simon</p>
-            <p><strong>Date:</strong> August 20, 2025 <span class="read-time">· 1 min read</span></p>
-            <p><strong>Source:</strong> <a href="https://www.airealist.ai/p/a-not-so-silent-revolution-is-happening" target="_blank" rel="noopener noreferrer">https://www.airealist.ai/p/a-not-so-silent-revolution-is-happening</a></p>
-        </div>
-        <div class="article-content">
-<p>The combination of smaller yet more efficient language models, advances in open-source inference frameworks, and hardware acceleration is enabling an unprecedented pace of innovation for CPU inference.</p><p>A little over a month ago, we published a blog post sharing numbers for<a href="https://huggingface.co/arcee-ai/AFM-4.5B">AFM-4.5B</a>inference on Intel Corporation, Arm, and Qualcomm (see: "<a href="https://www.arcee.ai/blog/is-running-language-models-on-cpu-really-viable">Is Running Language Models on CPU Really Viable?</a>").</p><p>I reran the Intel and Arm benchmarks in the same configuration, and all numbers have improved across the board, with some increases of up to 50%. You’ll find numbers at the end of the post.</p><p>Same model. Same chips. What happened? Llama.cpp is on fire, that's what. New features, such as<a href="https://github.com/ggml-org/llama.cpp/pull/14363">splitting the KV cache across sequence decoding</a>, are delivering double-digit gains overnight.</p><p>Takeaways:</p><p>➡️ If you're been using GPU inference indiscriminately, it's time to reconsider. Your existing CPU servers may be an extremely cost-effective option, and they can also run your app!</p><p>➡️ If you're not rebuilding llama.cpp every day, you're doing it wrong 😂</p><p>➡️ We used to pick between 'fast but less imprecise 4-bit' vs 'slow but more precise 8-bit'. That's not so true anymore. 8-bit models are now fast enough (whatever that means to you) for many use cases.</p><p>➡️ The speedup on larger batch sizes definitely invalidates my long-standing advice of "CPU inference only really makes sense at batch size 1". Now, I would consider larger batch sizes, especially for non-interactive workloads, and experiment to find the sweet spot between thread count, latency, and throughput.</p><p>What truly puts a smile on my face is that these aren't even the bleeding-edge CPUs. There's much more speed coming.</p><p>And this story ends on laptops and devices for minimal latency, maximum cost optimization, and full privacy. Many of us know that already 😀</p><img src="image-01.webp"/><img src="image-02.webp"/>
-        </div>
-    </article>
+    <h1>A not-so-silent revolution is happening in AI inference</h1>
+    <div class="meta">
+        <p><strong>Author:</strong> Julien Simon</p>
+        <p><strong>Date:</strong> 2025-08-20</p>
+        <p><strong>Source:</strong> <a href="https://julsimon.medium.com/a-not-so-silent-revolution-is-happening-in-ai-inference-936ef4b9ba88">https://julsimon.medium.com/a-not-so-silent-revolution-is-happening-in-ai-inference-936ef4b9ba88</a></p>
+    </div>
+    <div class="content">
+        <article><div><div><span></span><section><div><div></div><div><div><div><div><h1 id="3fd9">A not-so-silent revolution is happening in AI inference</h1><div></div></div><p id="6ebe">The combination of smaller yet more efficient language models, advances in open-source inference frameworks, and hardware acceleration is enabling an unprecedented pace of innovation for CPU inference.</p><p id="a12f">A little over a month ago, we published a blog post sharing numbers for <a href="https://huggingface.co/arcee-ai/AFM-4.5B" target="_blank">AFM-4.5B</a> inference on Intel Corporation, Arm, and Qualcomm (see: “<a href="https://www.arcee.ai/blog/is-running-language-models-on-cpu-really-viable" target="_blank">Is Running Language Models on CPU Really Viable?</a>”).</p><p id="a1fc">I reran the Intel and Arm benchmarks in the same configuration, and all numbers have improved across the board, with some increases of up to 50%. You’ll find numbers at the end of the post.</p><p id="0f32">Same model. Same chips. What happened? Llama.cpp is on fire, that’s what. New features, such as <a href="https://github.com/ggml-org/llama.cpp/pull/14363" target="_blank">splitting the KV cache across sequence decoding</a>, are delivering double-digit gains overnight.</p><p id="5add">Takeaways:</p><p id="55f6">➡️ If you’re been using GPU inference indiscriminately, it’s time to reconsider. Your existing CPU servers may be an extremely cost-effective option, and they can also run your app!</p><p id="0425">➡️ If you’re not rebuilding llama.cpp every day, you’re doing it wrong 😂</p><p id="58b2">➡️ We used to pick between ‘fast but less imprecise 4-bit’ vs ‘slow but more precise 8-bit’. That’s not so true anymore. 8-bit models are now fast enough (whatever that means to you) for many use cases.</p><p id="9170">➡️ The speedup on larger batch sizes definitely invalidates my long-standing advice of “CPU inference only really makes sense at batch size 1”. Now, I would consider larger batch sizes, especially for non-interactive workloads, and experiment to find the sweet spot between thread count, latency, and throughput.</p><p id="3d01">What truly puts a smile on my face is that these aren’t even the bleeding-edge CPUs. There’s much more speed coming.</p><p id="f739">And this story ends on laptops and devices for minimal latency, maximum cost optimization, and full privacy. Many of us know that already 😀</p><figure><div><img alt="" height="591" src="image01.webp" width="486"/></div></figure><figure><div><img alt="" height="611" src="image02.webp" width="479"/></div></figure></div></div></div></div></section></div></div></article>
+    </div>
 </body>
 </html>

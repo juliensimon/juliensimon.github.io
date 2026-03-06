@@ -24,7 +24,62 @@
     <meta name="twitter:description" content="Why MCP’s Disregard for 40 Years of RPC Best Practices Will Burn Enterprises">
     <meta name="twitter:creator" content="@julsimon">
     <script type="application/ld+json">
-    {"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Why MCP’s Disregard for 40 Years of RPC Best Practices Will Burn Enterprises", "description": "Why MCP’s Disregard for 40 Years of RPC Best Practices Will Burn Enterprises", "url": "https://www.julien.org/blog/industry-perspectives/2025-07-30-why-mcp-disregard-for-40-years-of-rpc-best-practices-will-burn-enterprises/index.html", "image": "https://www.julien.org/assets/og-image-1200x630.webp", "author": {"@id": "https://www.julien.org/#person"}, "publisher": {"@id": "https://www.julien.org/#person"}, "datePublished": "2025-07-30T00:00:00Z", "dateModified": "2025-07-30T00:00:00Z"}
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Why MCP’s Disregard for 40 Years of RPC Best Practices Will Burn Enterprises",
+  "description": "Why MCP’s Disregard for 40 Years of RPC Best Practices Will Burn Enterprises",
+  "url": "https://www.julien.org/blog/industry-perspectives/2025-07-30-why-mcp-disregard-for-40-years-of-rpc-best-practices-will-burn-enterprises/index.html",
+  "image": "https://www.julien.org/assets/og-image-1200x630.webp",
+  "author": {
+    "@id": "https://www.julien.org/#person"
+  },
+  "publisher": {
+    "@id": "https://www.julien.org/#person"
+  },
+  "datePublished": "2025-07-30T00:00:00Z",
+  "dateModified": "2025-07-30T00:00:00Z",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [
+      ".content",
+      "h1",
+      ".meta"
+    ]
+  }
+}
+</script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is wrong with MCP (Model Context Protocol)?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "MCP systematically ignores four decades of hard-won distributed systems lessons. It lacks type safety (using schemaless JSON instead of compiler-enforced contracts), has no distributed tracing or correlation IDs for debugging, provides no built-in service discovery or version management, and was released without authentication — a feature retrofitted after enterprises had already deployed it. Each language implements MCP independently, guaranteeing inconsistencies. The protocol’s answer to every critical gap is a constellation of third-party libraries, which creates the exact fragmentation a protocol is supposed to prevent."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is MCP ready for enterprise production use?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. MCP was designed for simplicity over robustness, which works for experimentation but fails for production deployment. It lacks distributed tracing (making debugging across multiple tool calls a multi-day effort instead of 30 minutes), has no cost attribution mechanism for AI spend, no deadline propagation to prevent cascading failures, no schema versioning independent of protocol version, and no binary protocol option for high-throughput scenarios. The pattern of retroactively adding critical features like OAuth authentication proves it was released prematurely."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How does MCP compare to established RPC protocols like gRPC?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "MCP lacks most capabilities that production RPC systems have deemed essential since 1982. gRPC provides built-in distributed tracing, bidirectional streaming, deadline propagation, and structured status codes. CORBA provided compiler-generated language bindings ensuring cross-platform consistency. Even SOAP provided machine-readable contracts and standardized security. MCP has none of this richness — its streaming support forces complex interactions through multiple round-trips, it has no trace context propagation, and its error handling lacks the taxonomies that distinguish retriable from permanent failures."
+                }
+            }
+        ]
+    }
     </script>
     <meta name="description" content="Why MCP’s Disregard for 40 Years of RPC Best Practices Will Burn Enterprises - Industry perspectives by Julien Simon">
 </head>

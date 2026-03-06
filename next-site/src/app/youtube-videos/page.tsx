@@ -1,5 +1,5 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, youtubeChannelSchema, webPageSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, youtubeChannelSchema, webPageSchema, faqSchema, YOUTUBE_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import { SITE } from '@/lib/constants';
 import { YOUTUBE_STATS } from '@/data/youtube';
@@ -38,6 +38,7 @@ export default function YouTubeVideosPage() {
         subscriberCount: YOUTUBE_STATS.subscriberCount * 1000,
         videoCount: YOUTUBE_STATS.totalVideos,
       })} />
+      <StructuredData data={faqSchema(YOUTUBE_FAQS)} />
       <YouTubeContent />
     </>
   );

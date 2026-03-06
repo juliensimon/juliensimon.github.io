@@ -1,5 +1,5 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, faqSchema, EXPERIENCE_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import { SITE } from '@/lib/constants';
 import ExperienceContent from './ExperienceContent';
@@ -33,6 +33,7 @@ export default function ExperiencePage() {
         '30+ years of professional experience in AI, cloud computing, and software engineering.',
         `${SITE.url}/experience`,
       )} />
+      <StructuredData data={faqSchema(EXPERIENCE_FAQS)} />
       <ExperienceContent />
     </>
   );

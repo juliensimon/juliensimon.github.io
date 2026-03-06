@@ -1,5 +1,5 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, faqSchema, PUBLICATIONS_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import { SITE } from '@/lib/constants';
 import PublicationsContent from './PublicationsContent';
@@ -32,6 +32,7 @@ export default function PublicationsPage() {
         '414+ technical blog posts across AWS, Hugging Face, Medium, and Arcee AI.',
         `${SITE.url}/publications`,
       )} />
+      <StructuredData data={faqSchema(PUBLICATIONS_FAQS)} />
       <PublicationsContent />
     </>
   );

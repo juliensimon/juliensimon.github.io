@@ -1,5 +1,5 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, faqSchema, SPEAKING_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import { SITE } from '@/lib/constants';
 import SpeakingContent from './SpeakingContent';
@@ -31,6 +31,7 @@ export default function SpeakingPage() {
         '684+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing.',
         `${SITE.url}/speaking`,
       )} />
+      <StructuredData data={faqSchema(SPEAKING_FAQS)} />
       <SpeakingContent />
     </>
   );
