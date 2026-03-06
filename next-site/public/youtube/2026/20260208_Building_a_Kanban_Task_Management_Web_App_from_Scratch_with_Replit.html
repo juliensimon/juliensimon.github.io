@@ -50,7 +50,113 @@ Key features:
 * Shared visibility -- All boards are visible to all users, but each board tracks who created it
 * Database persistence -- Everything is saved to a PostgreSQL database, so nothing is lost on refresh</div>
 
-        <div class="tags">
+        
+        <div class="transcript">
+<h2>Transcript</h2>
+            This is. In this video, we&#x27;re going to keep exploring what we can build with Replit without writing a single line of code. So this time I&#x27;ve decided to build a web app and we&#x27;re going to build a Canban board. So step by step, we&#x27;ll add features starting from basic things like creating cards, editing them, to storing them in a database, to adding Google authentication, and maybe a few And of course, once we&#x27;re done, we&#x27;ll deploy the app for real. Okay, sounds good.
+
+Let&#x27;s get started. Okay, so let&#x27;s start building this app. Okay, make sure you selected web app and build. This is a simple app. We could plan, but we can go and build directly.
+
+I broke down the tasks a little bit. Okay, so let&#x27;s go really step by step, and let me grab the first prompt where we really want to build the basics, okay? So create a Canban board with three columns, add some sample cards, clean, minimal design, and at this point, I just want the layout, okay? I don&#x27;t want database, I don&#x27;t want anything else. You know, RAPLIT is very eager to build and sometime it will anticipate on your needs, but let&#x27;s just take it slow and validate step by step.
+
+Okay? So let&#x27;s just go and start. And well, very quickly, we should get this first very minimal version of the app and then we can add more stuff to it. Okay, so here&#x27;s the first version. Very, very simple.
+
+Let&#x27;s maybe tweak the layout just a tiny bit. So I should say use a blue palette with an enterprise load. And alignment is just a little bit off. So maybe add more spacing between columns to avoid overlap. Okay, let&#x27;s give that a shot.
+
+All right. And if we&#x27;re happy with that, then I guess the next step will be to start adding the database and the ability, of course, to create new tasks at this point. This is just static HTML and CSS. Let&#x27;s see what this goes. Okay, so again, after a minute, we see the spacing looks much better.
+
+We have a bit of blue here. Okay, now let&#x27;s go and add the ability to create cards, add an ad card button at the top. When clicked, show form to enter title and description, save cards to a database. We need a title or description, it belongs to, obviously. And when the page loads, fetch cards from the database, display them in the correct columns, convert the existing samples to database entries.
+
+Okay? And that&#x27;s the only thing we want. We&#x27;ll look at drag and drop and editing cards later. Okay? Let&#x27;s take it slow and validate every single step.
+
+All right, so lots of progress here. The database has been created. We see the three cards have been added to it. We see the button. It has been added and we see a replica is actually running a test and checking, I guess, that it can add a card, et cetera, so that&#x27;s nice.
+
+Okay, let&#x27;s see how this goes. That&#x27;s super cool. Oh wow, let&#x27;s see, it&#x27;s testing on its own, perfect. And the button works, it&#x27;s adding a test card, adding a test. Description then I guess it&#x27;s going to click add okay so replete is happy with its own testing so let&#x27;s give it a shot well reloaded the page okay so we have the ad card let&#x27;s say right product documentation description user manual plus API docs I&#x27;ll add this.
+
+It&#x27;s in here. We see the test card that Replit added. And if we go, we see it&#x27;s been updated. Okay, so we have basic functionality here, the add button and the ability to add a card to the board. Okay, so that&#x27;s pretty nice.
+
+Right? Let&#x27;s keep going. Okay, so here&#x27;s my next step. Now we want to add drag and drop. Okay, so dragable between columns when a card moves update the database immediately and let&#x27;s add some visual feedback let&#x27;s not do card editing okay again I would recommend one step at a time and testing validating before you move on to the next thing okay that&#x27;s always a good strategy okay let&#x27;s run this so replet decides to use native I&#x27;ll drag and drop, which is fine.
+
+We&#x27;re not looking for anything super fancy here. If you had specific requirements, maybe a specific library you wanted to use, of course, you would mention that in the prompt. But here, you know, I&#x27;m assuming a very non-technical persona. So I try to stay away from giving rep with any technical advice. Okay.
+
+So a lot of you are there can do the same. Even if you&#x27;re not a developer, you can just go and build things exactly like this. You don&#x27;t need to worry about what&#x27;s happening under the hood. Just make sure it looks good, make sure it works, focus on testing, focus on the UX, and let Replit decide what to build. Okay, so it looks like it&#x27;s done adding, okay?
+
+Yes, we started the app and now I guess it&#x27;s going to test it. Okay, here we go. Browser on the side. We should see a replica trying to move cards around. Oh, bam, there it goes.
+
+Okay. Okay, so it&#x27;s happy with the testing. Am I happy with the agent so far? Oh, yes. I&#x27;ll give you five stars.
+
+Okay, so let&#x27;s try this. Okay, it&#x27;s moving. Oh, it&#x27;s grayed out. Okay, let&#x27;s figure this one later. Let&#x27;s just go and look at the database for now.
+
+So it should say in progress. Yes. Okay. And then if I move it again, okay. Okay, it&#x27;s done.
+
+So this works. We have a bit of a rendering problem, so let&#x27;s go and try to fix this. Okay. So when I&#x27;m moving cards, they&#x27;re grayed out. , they should look like other cards instead.
+
+Okay. Okay, I&#x27;m not sure if it&#x27;s an amazing problem, but let&#x27;s see if this is enough to fix it. Okay, that took 10 seconds. So, all right. Yeah, this looks good now.
+
+Yeah there was a that visual feedback thing showing dragging state maybe maybe that&#x27;s the assumption here okay anyway that was super easy to fix and now we have something that does what we want okay we can move those cards around good let&#x27;s keep going so now we should be able to edit and delete cards right so let&#x27;s ask for that when I click a card Open a model window showing full details with edit and delete buttons. Edit, I should let me change the title, the description. Delete, obviously, should delete the card from the board and the database. Okay? And yeah, we don&#x27;t want multiple boards.
+
+That&#x27;s my next step. So let&#x27;s just go and add editing. And now it is testing. Okay, let&#x27;s give it a shot. Do your thing.
+
+So is it going to go and open a card and change it? Oh, there we go. Okay. All right. Looks like the Q3 marketing strategy is going to be changed or deleted.
+
+Who knows? Okay, yeah, looks like we need to update the marketing strategy. Go. Yes. Come up with something smart.
+
+Come up with something smart here. Oh, no more marketing strategy. Yeah, maybe we don&#x27;t need marketing after all. Okay, but the important bit is we&#x27;re able to edit the card, right? Okay, so it&#x27;s going to probably save it or cancel it.
+
+And then it&#x27;s going to go and then it&#x27;s going to go and delete something, I guess. Yep, just deleted something here. Okay, so we&#x27;ll let it finish and then we&#x27;ll run our own test and check the database, et cetera, et cetera. Okay, so let&#x27;s go and well, let&#x27;s maybe open this one. It&#x27;s going to test card, so why don&#x27;t we delete it?
+
+It&#x27;s gone. Let&#x27;s check the database. Yeah, it is gone. Okay. And why don&#x27;t we open this one?
+
+Edit it. Yeah, new marketing strategy. Do we need one? Save. Okay, and the card is here.
+
+Let&#x27;s check the database. Yes, dated. And yeah, let&#x27;s move this thing around. In progress. Okay, so everything still works.
+
+Okay, and of course, if we reload again and again, we have the database, and so we have the database. So, I&#x27;m running a persistence of information here. Okay, let&#x27;s keep adding stuff. Okay, now I&#x27;d like to have multiple boards, okay, because I&#x27;m running multiple projects or multiple teams, and of course, I don&#x27;t want all those things to be mixed up on the same board. Okay, so add board management, show board naming header with a drop-down selector, and the ability to add new board to the button, store everything in the database, figure it out.
+
+And users can switch, create new ones, and I don&#x27;t want authentication yet. We&#x27;ll do that later. I just want the multi-board capability. Okay? So this is a bigger change.
+
+Let&#x27;s go. So there&#x27;s a bit of work here because we need to update the database to store boards. But we have existing data in the database, as we see here, we have cards. So it&#x27;s not a huge migration, you know, three cards, but we still need to migrate the data to the new schema and make sure those three cards. Are assigned to whatever board this is.
+
+It doesn&#x27;t even have a name. Okay. Yeah. So that&#x27;s what we see here. We need to handle the migration carefully.
+
+Let&#x27;s see how that goes. Okay. So this looks pretty good. There was a lot of stuff happening here. It deleted all the data in the database, probably stored it somewhere safe.
+
+Then it applied the schema change, It created a new table for boards and it actually reinserted the three tasks and attached them to a board that it created, right? Board ID, so this is pretty sweet, right? All right, okay, now it&#x27;s testing, apparently creating a new board with a random name and creating some tasks. Okay, so it did a bit of testing and it&#x27;s saying everything works. Okay, took a little longer.
+
+I mean, that&#x27;s definitely a bigger job. Okay, let&#x27;s give it a go. Just reload here just in case. Okay, so we still have the original board. Let&#x27;s go maybe to create a new board.
+
+Okay, now we can add a card. Card, blah blah blah. And okay, let&#x27;s check the database. So it should be in tasks, right? My test card, blah, blah, blah.
+
+To-do board ID 3, which sounds about right? Okay, I guess we should still be able to move things around. Let&#x27;s go back to tasks. Okay, in progress. Okay, well that&#x27;s pretty good, right?
+
+Looks like we have implemented what we want in here. So we could go and implement board deletion and so on. Let&#x27;s go and try something very different. Let&#x27;s try to add Google authentication, because if we want to deploy this, to a group of colleagues. We need to know who&#x27;s working with what, who is who, et cetera.
+
+And here we have zero authentication. Okay, so let&#x27;s go and add that. Okay, so here&#x27;s the prompt. We want Google sign in. We want to store user info.
+
+They should have a sign in with Google icon to click on before they get access, obviously. Each port belongs to the user created it. All users, So should be able to see all boards, right? We could create board permissions, but that&#x27;s a different feature and they should be able to sign out. Okay, this is a big one too.
+
+Let&#x27;s see here it goes. Okay, so lots of progress. We have a landing page because of course now we need users to sign in before they can get to the boards, right? And yeah, it looks okay. That&#x27;s pretty good.
+
+Your replica testing, so logging in and getting to boards, etc., checking that the API won&#x27;t let you access anything unless you&#x27;ve signed up, and so on and so on. Okay, so let it finish its test, and then we&#x27;ll run our... So let&#x27;s wait for a replete to finish testing, and then of course we&#x27;ll run our own. Okay, so let&#x27;s go and try this. And we have a message that says, open a new tab to test So let&#x27;s just go and try this.
+
+I&#x27;m guessing this built-in view is not capable of doing that. Okay, so we see our temporary website here. Let&#x27;s click on sign in. Okay, board design like to access your replete account. Yes.
+
+Let&#x27;s just go add a card. We&#x27;ll add a few. Real quick make sure everything still works okay and let&#x27;s just put this one in progress and this one in done can we still edit everything let&#x27;s delete this one let&#x27;s edit this one So why don&#x27;t we go and deploy it, right? Put it on the internet and test it one last time. So let&#x27;s just go and do this.
+
+Yes. Go. Okay, so it&#x27;s deploying, security scan, development database schema, et cetera, et cetera. And once we have that, of course, we&#x27;ll open the URL and test it one last time. Okay, done.
+
+Let&#x27;s go and grab this URL. Temporary one. Okay, so here&#x27;s the real production app. Okay, let&#x27;s go and sign in. And of course, we have an empty database this time.
+
+Because it&#x27;s the production DB, not the test DB. So let&#x27;s quickly create a board and some tasks. And move them around. Comp. And if we look at the database, we can switch between the production and the development database here.
+
+We see the board. We see a single session. We see our three tasks. And we see me. OK.
+
+Well, I think this is good. I think this is more than good. And definitely we&#x27;ve achieved a lot in just, I don&#x27;t know, 20 minutes or something. So yeah, this is it, right? Just you as a non-technical user, prompting a replete to build something that is a little more than a toy, honestly.
+
+We have authentication, we have users, we have a database, we&#x27;ve deployed it to the cloud, and we haven&#x27;t written a single line of code. And I&#x27;m sure you would have a million ideas to you keep exploring, adding labels, adding private boards, adding board management, delete, transfer boards across users, and so on and so on, right? The list goes on, but hey, I have to stop somewhere, and I think we&#x27;ve covered a lot with Replit, and I, of course, encourage you to go and try on your own, okay? So, I hope you liked it. I hope this was informative and hopefully fun, too.
+
+And until next time, my friends, you know what to do. Keep rocking.</div>
+<div class="tags">
             <h2>Tags</h2>
             <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
         </div>

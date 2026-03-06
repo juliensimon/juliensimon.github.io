@@ -29,7 +29,81 @@ Hugging Face model page: https://huggingface.co/arcee-ai/Trinity-Large-Preview
 OpenRouter model page: https://openrouter.ai/arcee-ai/trinity-large-preview
 Arcee AI blog post: https://www.arcee.ai/blog/trinity-large</div>
 
-        <div class="tags">
+        
+        <div class="transcript">
+<h2>Transcript</h2>
+            C. Hi everybody, Julian here. In a previous video, I showed you a code review application that I built with the Trinity Large model from R.C. In this video, we&#x27;re going to add a few more features to this application, and we&#x27;re going to use the Trinity Lard model itself to generate the code. And I&#x27;m going to do that using an open source AI coding agent called Klein.
+
+Okay, so I guess we&#x27;re going to be building open source and to end, which is pretty cool. Let&#x27;s get started. This is the app I built last time. And again, as usual, all the links will be in the video description. This is hosted as a Hugging Face space.
+
+And the whirlwind tour is you paste a file, also on GitHub, and you select how gentle, standard, or brutal you want the code review to be. And just click on review. With one of our built-in examples and those cover a wide range of programming languages and a wide range of very popular open source projects. Okay, so let&#x27;s give it a go. Let&#x27;s just go and try maybe, yeah, why don&#x27;t we do a brutal review of this Rabbit MQ Airlang file?
+
+Okay, so here we&#x27;re starting to analyze the code. We have a summary. . Okay. And then we have code quality insights with diffs.
+
+And then we&#x27;ll have performance and then security, some additional suggestions. And then the fun part is we&#x27;re going to have a verdict from the ghosts, I guess, of Linus Torvalds, Donald Knott, and Bjorn Storstrup. And that&#x27;s where that tone setting comes in. So here, the model is hosted on OpenRouter. Let me show you that.
+
+It&#x27;s actually free because we&#x27;re working the preview model right now. And that&#x27;s the same model we&#x27;re going to be using in Cline. Okay? So no fee, no worries. Just run the app.
+
+And you don&#x27;t get any charge here. Okay? So that&#x27;s the app. And let&#x27;s say I want to add. Maybe I want to be able to copy the full code review, maybe I want to save it to a markdown file, etc., etc.
+
+Okay? So why don&#x27;t we use Trinity itself, Trinity Large itself, to actually perform those changes? Okay? And there&#x27;s an easy way to do that. We can use an open source coding agent called Klein, which out of the box works with Trinity Large.
+
+And that&#x27;s, again, the version hosted on open router. Okay? So it&#x27;s a very simple installation. Let&#x27;s just go, install Klein, make sure we use Trinity, and then we&#x27;ll start generating some code. Okay?
+
+All right, so first things first, let&#x27;s just go and install Klein. So that should be simple. Okay, good. And okay, now I&#x27;m, I guess I&#x27;m in a right repo. Let&#x27;s make sure this is clean.
+
+Yes, it is clean. Okay, so now we can just start client. And I&#x27;ll keep this other window on the side to do the dark. Darker stuff and the good stuff. Okay, so if you want to make sure you&#x27;re using the right model, okay, just go slash models and select Trinity Large preview.
+
+Okay. And yeah, let&#x27;s make sure we have auto-approved all enabled to avoid saying yes a million times. Now that we&#x27;ve configured the model, let&#x27;s start working with our repo. So I guess the first thing to do is scroll the repo. So let&#x27;s figure out what&#x27;s in there.
+
+So of course, right now we have the source code, etc. But this will let the model figure things out, explore the code, write a document. And this is a good context that we can reuse again and again and again when we work. With the repo. We don&#x27;t have to go and find those things again.
+
+So I guess it&#x27;s saving us time and tokens. OK, so let&#x27;s give it a minute and see what he learns about this repo. All right, so it has explored the repo, figured out what the project is all about, and it actually started it. Why not? OK, so let&#x27;s see if this app works.
+
+Let&#x27;s just open. A browser, let&#x27;s reload this page. And apparently, yes, it works. Let&#x27;s just make sure we see some generation. And yes, we do.
+
+Okay, perfect. So we have a local version that works. This is good. Maybe say save your findings to mark down file and this is the good stuff. Will it can reuse again and again?
+
+Okay, all right, so that&#x27;s fine. And of course, along the way we see Arcee, the Trinity Large model just crunching away. We see the number of tokens, but the good news is the cost is still zero because, again, So let&#x27;s wait for this file to be ready. Okay, and we have repository exploration. Cool.
+
+All that information. Okay, nice. So now let&#x27;s make sure we can run the Docker version. And this is important because on Hockingface, this is how the app is deployed. So let&#x27;s just say, we have of course a Docker file here and we have a dot-end file which is hidden but it is here with the key for open router so let&#x27;s just say I guess we can why don&#x27;t we clear and say dockerize the app mount the dot end file which contains the open and router key, start the container, and we&#x27;ll use, I guess, 7860.
+
+Okay, let&#x27;s see how this goes. So there is a Docker file, there is an AN file. So I guess, let&#x27;s just build a Docker image. It&#x27;s not a big darker file either. Oh, the port was already by default, 7.860.
+
+Okay, could I have ignored that. So let&#x27;s build, let&#x27;s run, and let&#x27;s try to open the app again. Okay, darker build. This looks fine. Okay, I&#x27;m not 100% sure about this.
+
+Okay, I&#x27;ll check that later. It and maybe check here. Yeah, okay, fair enough. So it figured out Docker. Oh, it&#x27;s opening it again.
+
+I didn&#x27;t want that. I&#x27;ve won already. And it&#x27;s working. Okay. So it figured out Docker, built it, started it.
+
+Looks fine to me. We have our dev environment all figured out, let&#x27;s go and add a feature. So let&#x27;s wait for this thing to complete to see the final UI and decide what we want to do. This is the version we had on HugginkPace. We saw this copy review thing.
+
+Why don&#x27;t we change it to save review? Okay, we&#x27;ll see the button in a second. It should be exactly the same, right? All right, yes. Okay, so the plan now is let&#x27;s change this to save review, which will save the full review, why not in markdown format?
+
+Okay, so that we can reuse it later in documents and I guess other prompts, etc. Okay, so let&#x27;s clear our context. Again, because there&#x27;s stuff here we don&#x27;t need. And let&#x27;s just move to plan mode. So tab and say I want to replace the copy review button with a save button.
+
+Let&#x27;s just call it save. Just save, not save review. And this should save the full review, divs, verdicts, in a markdown file. Okay, I use a meaningful name. We don&#x27;t want those things to be called file.md.
+
+Meaningful name. Okay, what else? Yeah, I guess this is a simple feature, but just in case, ask me questions if you need it. Okay. So let&#x27;s see how Arcee Trinity Large does this.
+
+Okay, so it found the copy review button, which is hidden by default because it shows up once generation is complete. So far so good. Clarifying questions. Okay. Save markdown files be stored?
+
+That&#x27;s a good question. Yeah, I guess user downloads is fine. Should the save button be visible immediately when the review starts or after the review is complete? Yeah, yes. Only after the review is complete, because otherwise we&#x27;re going to miss some info.
+
+And do I want some specific? Yeah, well, okay. I don&#x27;t want to think about this, figure it out. Okay. Yeah, I guess we&#x27;re good.
+
+Yeah, I guess we&#x27;re good to go. Okay. Let&#x27;s just go to Act mode. And we can see the changes. So OK, it&#x27;s renaming the button, just calling it save.
+
+Of course, the JavaScript needs to be changed. So it is creating a file name. And yeah, just copying everything to the dock. Yeah, I&#x27;m definitely not a GS expert. So I&#x27;ll trust the model on this and we&#x27;ll just go and test.
+
+Okay. So this saves to the user downloads, the button invisible. It is completed. Okay, so now let&#x27;s just say rebuild and restart and type today. The container okay so let&#x27;s go back to our browser make sure we reload here and let&#x27;s try um yeah this one why not shouldn&#x27;t be too large okay and I&#x27;m expecting this uh save button here we have a save button I don&#x27;t like the color but we&#x27;ll click and yeah if I open this file what does that look like yeah it has the good name that we wanted which is cool and we have proper markdown all right so let&#x27;s just say save button works but the color should be the same blue as other buttons.
+
+That shouldn&#x27;t be too hard. All right, so looks like the CSS has been updated. Let&#x27;s just update this final time and then we&#x27;ll be good. We&#x27;ll be able to push our space. So I regenerated a review in the interest of time and we&#x27;ll be and we have our nice blue button and it still works.
+
+So that&#x27;s pretty cool. All right, that&#x27;s what I wanted to show you today. So more Trinity Large, but in a different context and you can see how easy it is to use it with Klein and I guess we&#x27;ll keep exploring those cool open source tools in future videos. But that&#x27;s it for today. And I hope you enjoyed it.
+
+And until next time, keep rocking.</div>
+<div class="tags">
             <h2>Tags</h2>
             <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
         </div>

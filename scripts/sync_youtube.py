@@ -12,8 +12,12 @@ Usage:
 
 import argparse
 import html
+import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 from datetime import datetime
 from pathlib import Path
 from typing import NamedTuple
@@ -180,6 +184,274 @@ def is_substack_content(video: VideoItem) -> bool:
     return any(signal in desc_lower for signal in substack_signals)
 
 
+# ---------------------------------------------------------------------------
+# Transcript generation
+# ---------------------------------------------------------------------------
+
+# Text replacements applied to transcripts (case-insensitive matching,
+# replaced with the exact casing given in the value).
+TRANSCRIPT_REPLACEMENTS: list[tuple[str, str]] = [
+    # Standalone pronoun "i"
+    (r'\bi\b(?=\s[a-z]|\s[A-Z]|\')', 'I'),
+    # Arcee AI — Whisper hears "RC", "Arsy", "rcai", "RC AI", etc.
+    (r'\brcai\b', 'Arcee AI'),
+    (r'\bRC AI\b', 'Arcee AI'),
+    (r'\bRC\b', 'Arcee'),
+    (r'\bArsy\b', 'Arcee'),
+    (r'\bArcee\.ai\b', 'Arcee AI'),
+    # LLaMA / Llama
+    (r'\bLama\b', 'Llama'),
+    (r'\bllama\b', 'Llama'),
+    # Hugging Face
+    (r'\bhugging face\b', 'Hugging Face'),
+    (r'\bHuggingface\b', 'Hugging Face'),
+    (r'\bhuggingface\b', 'Hugging Face'),
+    # AWS services
+    (r'\bSagemaker\b', 'SageMaker'),
+    (r'\bsagemaker\b', 'SageMaker'),
+    (r'\bBedrock\b', 'Bedrock'),
+    # Common AI terms
+    (r'\bGPT\b', 'GPT'),
+    (r'\bOpen AI\b', 'OpenAI'),
+    (r'\bopen AI\b', 'OpenAI'),
+    (r'\bPytorch\b', 'PyTorch'),
+    (r'\bpytorch\b', 'PyTorch'),
+    (r'\bTensor flow\b', 'TensorFlow'),
+    (r'\btensor flow\b', 'TensorFlow'),
+    (r'\btensorflow\b', 'TensorFlow'),
+    (r'\bOpen Vino\b', 'OpenVINO'),
+    (r'\bopen vino\b', 'OpenVINO'),
+    (r'\bopenvino\b', 'OpenVINO'),
+    (r'\bDeep Seek\b', 'DeepSeek'),
+    (r'\bdeep seek\b', 'DeepSeek'),
+    (r'\bGGUF\b', 'GGUF'),
+    (r'\bgguf\b', 'GGUF'),
+    (r'\bMLX\b', 'MLX'),
+    # Versioning
+    (r'\bapache 2 zero\b', 'Apache 2.0'),
+    (r'\bApache 2 zero\b', 'Apache 2.0'),
+    (r'\bapache 2\.0\b', 'Apache 2.0'),
+]
+
+# Whisper model for transcription
+DEFAULT_WHISPER_MODEL = "distil-whisper/distil-large-v3"
+
+# Lazy-loaded pipeline
+_asr_pipeline = None
+
+
+_whisper_model = None
+_whisper_processor = None
+_whisper_device = None
+_whisper_dtype = None
+
+
+def _load_whisper(model_id: str = DEFAULT_WHISPER_MODEL):
+    """Lazy-load the Whisper model and processor."""
+    global _whisper_model, _whisper_processor, _whisper_device, _whisper_dtype
+    if _whisper_model is not None:
+        return
+
+    print(f"  Loading transcription model: {model_id}")
+    import torch
+    from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor
+
+    _whisper_device = "mps" if torch.backends.mps.is_available() else "cpu"
+    _whisper_dtype = torch.float16 if _whisper_device != "cpu" else torch.float32
+    print(f"  Device: {_whisper_device}, dtype: {_whisper_dtype}")
+
+    _whisper_model = AutoModelForSpeechSeq2Seq.from_pretrained(
+        model_id, dtype=_whisper_dtype, low_cpu_mem_usage=True,
+    )
+    _whisper_model.to(_whisper_device)
+    _whisper_processor = AutoProcessor.from_pretrained(model_id)
+
+    # Suppress the specific MPS warning about cumsum with int64
+    import warnings
+    warnings.filterwarnings("ignore", message=".*cumsum_out_mps.*")
+
+
+def _get_audio_duration(audio_path: str) -> float:
+    """Get audio duration in seconds from a WAV file."""
+    import wave
+    try:
+        with wave.open(audio_path) as w:
+            return w.getnframes() / w.getframerate()
+    except Exception:
+        return 0.0
+
+
+def download_audio(video_id: str, output_dir: str) -> str | None:
+    """Download audio from a YouTube video using yt-dlp.
+    Returns path to the downloaded WAV file, or None on failure."""
+    output_path = os.path.join(output_dir, f"{video_id}.wav")
+    cmd = [
+        "yt-dlp",
+        "--extract-audio",
+        "--audio-format", "wav",
+        "--postprocessor-args", "ffmpeg:-ar 16000 -ac 1",
+        "--output", os.path.join(output_dir, f"{video_id}.%(ext)s"),
+        "--no-playlist",
+        "--no-warnings",
+        "--progress",
+        "--newline",
+        f"https://www.youtube.com/watch?v={video_id}",
+    ]
+    try:
+        proc = subprocess.Popen(
+            cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+        )
+        for line in proc.stdout:
+            line = line.strip()
+            # Show download progress lines
+            if '[download]' in line and '%' in line:
+                print(f"\r  {line}", end='', flush=True)
+            elif '[ExtractAudio]' in line:
+                print(f"\n  {line}")
+        proc.wait(timeout=300)
+        print()  # newline after progress
+
+        if proc.returncode != 0:
+            print(f"  Warning: yt-dlp exited with code {proc.returncode}")
+            return None
+
+        if os.path.exists(output_path):
+            dur = _get_audio_duration(output_path)
+            size_mb = os.path.getsize(output_path) / 1024 / 1024
+            print(f"  Audio: {dur/60:.1f} min, {size_mb:.0f} MB")
+            return output_path
+        # yt-dlp may use a different intermediate extension
+        for f in Path(output_dir).glob(f"{video_id}.*"):
+            if f.suffix == ".wav":
+                return str(f)
+        print(f"  Warning: audio file not found after download for {video_id}")
+        return None
+    except (subprocess.TimeoutExpired, OSError) as e:
+        print(f"  Warning: failed to download audio for {video_id}: {e}")
+        return None
+
+
+def transcribe_audio(audio_path: str, model_id: str = DEFAULT_WHISPER_MODEL) -> str:
+    """Transcribe audio by chunking into 30s segments and using model.generate().
+
+    This avoids the pipeline's chunk_length_s issues with long audio while
+    still providing reliable transcription for videos of any length."""
+    import time
+    import torch
+    import librosa
+
+    _load_whisper(model_id)
+    duration = _get_audio_duration(audio_path)
+    dur_str = f"{duration/60:.1f} min" if duration else "unknown length"
+
+    # Load full audio
+    print(f"  Loading audio ({dur_str})...")
+    audio_array, sr = librosa.load(audio_path, sr=16000)
+
+    # Chunk into 30-second segments (Whisper's native window)
+    chunk_samples = 30 * 16000  # 30s at 16kHz
+    chunks = []
+    for start_sample in range(0, len(audio_array), chunk_samples):
+        chunk = audio_array[start_sample:start_sample + chunk_samples]
+        chunks.append(chunk)
+
+    total_chunks = len(chunks)
+    print(f"  Transcribing {total_chunks} chunks ({dur_str})...")
+    start = time.time()
+
+    transcripts = []
+    for i, chunk in enumerate(chunks):
+        input_features = _whisper_processor(
+            chunk, sampling_rate=16000, return_tensors="pt",
+        ).input_features.to(_whisper_device, dtype=_whisper_dtype)
+
+        with torch.no_grad():
+            predicted_ids = _whisper_model.generate(
+                input_features,
+                max_new_tokens=440,
+                language="en",
+            )
+        text = _whisper_processor.batch_decode(
+            predicted_ids, skip_special_tokens=True,
+        )[0].strip()
+        transcripts.append(text)
+
+        elapsed = time.time() - start
+        pct = (i + 1) / total_chunks * 100
+        print(f"\r  [{i+1}/{total_chunks}] {pct:.0f}% — {elapsed:.0f}s elapsed", end='', flush=True)
+
+    elapsed = time.time() - start
+    speed = duration / elapsed if elapsed > 0 else 0
+    print(f"\r  Transcribed {dur_str} in {elapsed:.0f}s ({speed:.1f}x realtime)" + " " * 30)
+
+    return " ".join(transcripts)
+
+
+def clean_transcript(text: str) -> str:
+    """Apply text replacements and clean up transcript."""
+    # Fix Whisper hallucination artifacts at chunk boundaries
+    text = re.sub(r'!{2,}', '', text)            # !!!! -> remove
+    text = re.sub(r'\.{3,}', '...', text)        # normalize ellipses
+    text = re.sub(r'!\s*\.', '.', text)           # !. -> .
+    text = re.sub(r'\.\s*!', '.', text)           # .! -> .
+    text = re.sub(r'to\.\.\.m!?\s*', '', text)    # "to...m!" artifact
+    # Remove sequences of short exclamatory fragments (Whisper chunk-boundary noise)
+    text = re.sub(r'(?:\w{1,4}!\s*){2,}', '', text)  # "it! Is! and!" patterns
+    text = re.sub(r'(?<![a-zA-Z])!\s*', '', text) # isolated ! not after words
+
+    for pattern, replacement in TRANSCRIPT_REPLACEMENTS:
+        text = re.sub(pattern, replacement, text)
+
+    # Clean up whitespace
+    text = re.sub(r'  +', ' ', text)
+    text = text.strip()
+
+    # Capitalize first letter of text
+    if text and text[0].islower():
+        text = text[0].upper() + text[1:]
+
+    # Capitalize after sentence-ending punctuation
+    text = re.sub(r'([.!?]\s+)([a-z])', lambda m: m.group(1) + m.group(2).upper(), text)
+
+    # Break into paragraphs roughly every 5 sentences for readability
+    sentences = re.split(r'(?<=[.!?])\s+', text)
+    paragraphs = []
+    current = []
+    for sentence in sentences:
+        current.append(sentence)
+        if len(current) >= 5:
+            paragraphs.append(' '.join(current))
+            current = []
+    if current:
+        paragraphs.append(' '.join(current))
+
+    return '\n\n'.join(paragraphs)
+
+
+def generate_transcript(
+    video_id: str,
+    model_id: str = DEFAULT_WHISPER_MODEL,
+) -> str | None:
+    """Full pipeline: download audio, transcribe, clean up.
+    Returns cleaned transcript text or None on failure."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        print(f"  Downloading audio for {video_id}...")
+        audio_path = download_audio(video_id, tmpdir)
+        if not audio_path:
+            return None
+
+        print(f"  Transcribing...")
+        raw_text = transcribe_audio(audio_path, model_id)
+        if not raw_text:
+            print(f"  Warning: empty transcript for {video_id}")
+            return None
+
+        transcript = clean_transcript(raw_text)
+        word_count = len(transcript.split())
+        print(f"  Transcript: {word_count} words")
+        return transcript
+
+
 def get_new_videos(
     videos: list[VideoItem], force: bool = False,
 ) -> list[VideoItem]:
@@ -199,8 +471,12 @@ def get_new_videos(
     return new_videos
 
 
-def create_video_page(video: VideoItem, dry_run: bool) -> Path:
-    """Create a video HTML page."""
+def create_video_page(
+    video: VideoItem,
+    dry_run: bool,
+    transcript: str | None = None,
+) -> Path:
+    """Create a video HTML page, optionally with a transcript."""
     year = video.published.year
     date_str = video.published.strftime('%Y%m%d')
     filename = f"{date_str}_{title_to_filename(video.title)}"
@@ -210,6 +486,21 @@ def create_video_page(video: VideoItem, dry_run: bool) -> Path:
     description = video.description
     if len(description) > 2000:
         description = description[:2000] + '...'
+
+    # Build transcript HTML section
+    transcript_html = ''
+    if transcript:
+        # Convert paragraphs to HTML
+        paragraphs = transcript.split('\n\n')
+        transcript_body = '\n'.join(
+            f'            {html.escape(p)}' if i == 0
+            else f'\n{html.escape(p)}'
+            for i, p in enumerate(paragraphs)
+        )
+        transcript_html = f'''
+        <div class="transcript">
+<h2>Transcript</h2>
+{transcript_body}</div>'''
 
     html_content = f'''<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
@@ -253,7 +544,7 @@ def create_video_page(video: VideoItem, dry_run: bool) -> Path:
         </div>
 
         <div class="description">{html.escape(description)}</div>
-
+{transcript_html}
         <div class="tags">
             <h2>Tags</h2>
             <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
@@ -495,6 +786,91 @@ def update_latest_updates(videos: list[VideoItem], dry_run: bool):
     print(f"  Updated LATEST_UPDATES with {len(new_entries)} new videos")
 
 
+def backfill_transcripts(
+    dry_run: bool,
+    model_id: str = DEFAULT_WHISPER_MODEL,
+):
+    """Find existing video pages without transcripts and add them."""
+    print("\nScanning for videos without transcripts...")
+    missing = []
+
+    base = PUBLIC / "youtube"
+    for html_file in sorted(base.rglob("*.html")):
+        if html_file.name == "index.html":
+            continue
+        content = html_file.read_text(encoding='utf-8', errors='replace')
+        if '<div class="transcript">' in content:
+            continue
+        # Extract video ID from embed URL
+        m = re.search(r'youtube\.com/embed/([a-zA-Z0-9_-]+)', content)
+        if not m:
+            continue
+        video_id = m.group(1)
+        missing.append((html_file, video_id))
+
+    if not missing:
+        print("All video pages already have transcripts!")
+        return
+
+    print(f"Found {len(missing)} videos without transcripts:\n")
+    for filepath, vid in missing:
+        rel = filepath.relative_to(PUBLIC / "youtube")
+        print(f"  {rel}  (ID: {vid})")
+
+    if dry_run:
+        print("\nDRY RUN - No files were modified")
+        return
+
+    success = 0
+    for filepath, video_id in missing:
+        rel = filepath.relative_to(PUBLIC / "youtube")
+        print(f"\nProcessing {rel}...")
+        transcript = generate_transcript(video_id, model_id)
+        if not transcript:
+            print(f"  Skipped (transcription failed)")
+            continue
+
+        # Build transcript HTML
+        paragraphs = transcript.split('\n\n')
+        transcript_body = '\n'.join(
+            f'            {html.escape(p)}' if i == 0
+            else f'\n{html.escape(p)}'
+            for i, p in enumerate(paragraphs)
+        )
+        transcript_div = (
+            f'<div class="transcript">\n'
+            f'<h2>Transcript</h2>\n'
+            f'{transcript_body}</div>'
+        )
+
+        # Insert transcript before the tags div in both copies
+        for base_dir in [PUBLIC / "youtube", REPO_YOUTUBE]:
+            target = base_dir / filepath.relative_to(PUBLIC / "youtube")
+            if not target.exists():
+                continue
+            page_content = target.read_text(encoding='utf-8')
+            # Insert before the tags/links section
+            insertion_point = page_content.find('<div class="tags">')
+            if insertion_point == -1:
+                insertion_point = page_content.find('<div class="links">')
+            if insertion_point == -1:
+                insertion_point = page_content.find('<div class="video-links">')
+            if insertion_point == -1:
+                print(f"  Warning: could not find insertion point in {target}")
+                continue
+            new_content = (
+                page_content[:insertion_point]
+                + '\n        ' + transcript_div + '\n'
+                + page_content[insertion_point:]
+            )
+            target.write_text(new_content, encoding='utf-8')
+
+        success += 1
+        print(f"  Added transcript ({len(transcript.split())} words)")
+
+    print(f"\nBackfill complete: {success}/{len(missing)} transcripts added.")
+
+
 def print_summary(new_videos: list[VideoItem]):
     """Print summary of detected new videos."""
     print(f"\nNEW VIDEOS DETECTED ({len(new_videos)}):\n")
@@ -514,8 +890,16 @@ def run(
     force: bool = False,
     channel_id: str | None = None,
     include_shorts: bool = False,
+    no_transcript: bool = False,
+    backfill: bool = False,
+    whisper_model: str = DEFAULT_WHISPER_MODEL,
 ):
     """Main execution."""
+    # Handle backfill mode
+    if backfill:
+        backfill_transcripts(dry_run=dry_run, model_id=whisper_model)
+        return
+
     # Use hardcoded channel ID, resolve from handle, or use provided value
     if not channel_id:
         channel_id = CHANNEL_ID
@@ -545,9 +929,16 @@ def run(
         print("\nRun without --dry-run to apply changes")
         return
 
-    # Create video pages
+    # Create video pages (with transcripts unless --no-transcript)
     for video in new_videos:
-        filepath = create_video_page(video, dry_run)
+        transcript = None
+        if not no_transcript:
+            print(f"\nGenerating transcript for: {video.title}")
+            transcript = generate_transcript(video.video_id, whisper_model)
+            if not transcript:
+                print(f"  Warning: proceeding without transcript")
+
+        filepath = create_video_page(video, dry_run, transcript=transcript)
         print(f"Created: {filepath}")
 
     # Update year indexes and collect counts
@@ -596,6 +987,22 @@ def main():
         action='store_true',
         help='Include YouTube Shorts (excluded by default)',
     )
+    parser.add_argument(
+        '--no-transcript',
+        action='store_true',
+        help='Skip transcript generation (create pages without transcripts)',
+    )
+    parser.add_argument(
+        '--backfill-transcripts',
+        action='store_true',
+        help='Find existing videos without transcripts and add them',
+    )
+    parser.add_argument(
+        '--whisper-model',
+        type=str,
+        default=DEFAULT_WHISPER_MODEL,
+        help=f'Whisper model for transcription (default: {DEFAULT_WHISPER_MODEL})',
+    )
     args = parser.parse_args()
 
     try:
@@ -604,6 +1011,9 @@ def main():
             force=args.force,
             channel_id=args.channel_id,
             include_shorts=args.include_shorts,
+            no_transcript=args.no_transcript,
+            backfill=args.backfill_transcripts,
+            whisper_model=args.whisper_model,
         )
     except requests.RequestException as e:
         print(f"Error fetching data: {e}", file=sys.stderr)

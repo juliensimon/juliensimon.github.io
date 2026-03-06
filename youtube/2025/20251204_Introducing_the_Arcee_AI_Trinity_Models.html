@@ -53,6 +53,58 @@
 </ul>
 </div>
 
+
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, Julian here with exciting news from our friends our RCAI. Arcee has just released the first Trinity models. You get a 6 billion parameter model called Nano and a 26B parameter model called Mini. They&#x27;re both mixture of experts model. You can use them today and we&#x27;ll take a look in a minute.
+
+They&#x27;ve also announced they are training a 420 billion parameter model, yes, you heard that right, 420b model to be released in 2026, and this one will be called Trinity Large. Let&#x27;s go. A few months ago, Arcee released their first foundation model, which I covered in several videos. You may remember this one called AFM Arcee Foundation Model 4.5B, 4.5 billion parameters. And this one was already a very good model, highly competitive with comparable models from Google, or Quinn.
+
+But with Trinity, Arcee is definitely moving to the next level. So let&#x27;s take a look. This is the launch blog post introducing the new foundation models called Trinity. Okay. So as mentioned, you will get three models, the small one called Nano, 6 billion mixture of experts, the mini model, 26 billion mixer of experts, upcoming large model 420b I can&#x27;t wait to test that one so why does this matter it&#x27;s fair to say the best open weights model today are probably the models coming out of China so Gwen DeepSeek and so on and don&#x27;t get me wrong they perform really well and a lot of folks out there are taking those models and fine-tuning them to their own domains but no offense to anybody there are a lot of organizations that have concerns with using models built in China.
+
+Maybe they&#x27;re worried about IP and copyright issues. Maybe they&#x27;re worried about the worldviews that those models could display. Or maybe, honestly, they&#x27;re just afraid that they would be called out for using China models. That&#x27;s how it is. And we&#x27;re not into politics.
+
+But there&#x27;s clearly the nt, for state-of-the-art, open-weight models, clean data that is not going to cause infringement or liability issues, that has world views that are probably more acceptable to the Western world, and generally that are seen as a strategic asset to Western countries and the US. And this is exactly what the Trinity models are. At building foundation model, as I mentioned a few minutes ago, was AFM 4.5B, showing that a small frontier lab like Arcee without billions of dollars and thousands of engineers could actually build a frontier model that would be on par with the best. And this is what they did. And a lot of the magic came from the very high quality data that was used.
+
+To pre-trained the model. And we already discussed AFM. There was a joint partnership with Datology to clean and curate and enrich the training data to the highest quality level possible. And so that led to building the next generation of Arcee models, the Trinity models. So Trinity Nano, which is still in preview, 6B model, architecture okay and probably more importantly right now trinity mini a 26b model so that&#x27;s the general release again a mixture of experts model fully trained post trained for reasoning and this is really important because again there was no clear high quality alternative to to the chinese model in that size range and with ne the super clean data that the Trinity models have been trained on.
+
+What is that the models are released under Apache 2. You can download the web from Hockingface. We&#x27;ll look at the model page in a minute. And we can also use them on the open router, which we&#x27;ll try. The price point is equally amazing, I would say.
+
+We see Trinity Mini, so the 26B model is price. At 4.5 cents per million input token and 15 cents per million output tokens okay so well that&#x27;s literally 100 times cheaper than the largest models out there so if you&#x27;re using gpt4 or bigger if you&#x27;re using cloud or bigger you&#x27;re probably used to spending you know dollars sometimes tens of dollars So here, I would absolutely recommend that you check out those models because if they work for a use case, the savings are going to be massive. Absolutely massive. There are a lot of technical details in the blog post, so we won&#x27;t go through that. If you&#x27;re interested, you can go and read about the architecture, how many experts are active, etc., etc.
+
+I want to dive into maybe the training set and the training data that was used because we know how important that is in terms of model quality. So Nano and Mini were trained on 10 trillion tokens, okay, in different phases. And again, Datology was involved in the project to make sure the data was as clean as possible. And we saw how positively that influenced the model. In AFM.
+
+On the training side, the model was trained on prime intellect. If you&#x27;re not familiar with prime intellect, they provide training infrastructure that is distributed across continents. So that&#x27;s a really interesting way to train models outside of hypers. Nothing wrong with hyperscalars, but hey, there is an alternative to that as well. About the upcoming Trinity Large model, we learned that it&#x27;s currently being trained on 2KB300 GPUs.
+
+So that&#x27;s a nice cluster, right? Looking forward to that. Let&#x27;s take a look at the benchmarks for Mini. Okay? So we can see, well, the usual benchmark, simple QA, MUSR, MMLU, math, etc.
+
+BFCL is a function calling benchmark. We can see Trinity in green. We can see Quen 30B thinking in I guess purple. We can see GPT, OpenAI, GPT USS, 20B in blue. And we can see Magistral Small, 24B, the Mistral model, in orange.
+
+And well, there is some variation across benchmarks, but we can see that Trinity Mini is highly competitive with all those models and you know it&#x27;s probably equally good on most if not all benchmarks and there&#x27;s a significant advantage on function calling right which is which is interesting obviously for I would say agentic applications and an automation use cases okay so if you&#x27;re using other models today for for those It looks like Trinity Mini would be a really, really good choice. Okay, so that&#x27;s the benchmarks. Again, you can read all of that. I will put all the links in the video description. And yes, I&#x27;m quite sure training at this scale is difficult.
+
+You know, we&#x27;re talking trillions of tokens. We&#x27;re talking very large clusters. And, yeah, trading, you know, even, honestly, even the minim. Is a big job, right? So think about the large one.
+
+So again, this is coming next, Trinity Large, 20 trillion tokens, half real-life web data cleaned up, curated, hopefully no stupid stuff in there, and half synthetic because we know synthetic data is a good way to control the quality, it&#x27;s a good way to add targeted domain-specific data that you might find difficult to procure on the web, et cetera, et cetera. Okay, it will still be an MOE model. And fingers crossed, it&#x27;s coming in January. Okay, so I can&#x27;t wait to test this. Okay, so speaking of which, where can you test the models?
+
+So you can find the weights on Hugging Face, right? And there&#x27;s a Trinity collection here. So we see Mini, we see the preview. We have the base model for you crazy post-training freaks. So go and have fun with the base model if you like or grab the post-trained model.
+
+We have Gigi web versions. So if you&#x27;re looking for quants, you&#x27;ll find them here. Okay, so that&#x27;s always useful. And of course, you&#x27;ll find a Summary and benchmarks, how to run it with Llama CPP and so on. The usual stuff.
+
+I found this cool press article from Venture Beat, right? If you&#x27;re interested, if you want to share something maybe a little less technical with your colleagues and stakeholders and try to educate them on why they need U.S. Built open weight models instead of the Chinese models. So I&#x27;ll add this link. And of course, last but not least, we can test the models, well, not just test, we can actually run production too, on open router.
+
+Okay, so if you just go to openrouter.aI and look for Arcee, you&#x27;ll find Trinity Mini deployed there. Okay. And there is a free tier, which is awesome. Right? So, zero dollars.
+
+Context size here is 128K, which is nice for long conversations with complex reasoning, et cetera, et cetera. So we could call the API as we usually do on open router, but we also have a quick chat here. So let me move my face out of the way for a second. And why don&#x27;t we try some of those sample prompts what do we have here why don&#x27;t we try this one personal finance wow look at that speed wow that&#x27;s what you get when you work with small models you know how many times have you heard me saying that this is blazingly fast okay wow ... Okay, so we have the reasoning...
+
+Okay, so we have the full reasoning text and then we have, of course, the answer. Let&#x27;s try a follow-up question on this. Let&#x27;s say, I&#x27;m a risk adverse. Suggest the safest strategy. Wow.
+
+Amazing. I&#x27;m super impressed by the speed. Well done. This is really great. You can see here throughput is 219, let&#x27;s say 220.
+
+220 tokens per second, which is just mind-blowing. Yeah, the BF16 model. So imagine what you would get from Quants. This is great. So you should absolutely look at this model.
+
+I will put all the links in the video description. R.C. Trinity Mini. And take a look at the preview Nano model, which looks interesting as well. So well done, Arcee.
+
+This is a very, very strong addition to the open source community and an amazing alternative for enterprise builders who prefer to build with a cleaner model. So well done, really, really good work there. And I&#x27;m sure I&#x27;ll keep covering those models and we&#x27;ll keep diving into them and put them through their paces. Thank you for watching. And until then, keep rocking.</div>
 <div class="video-links">
 <a href="https://youtu.be/JWkAC90eiLY" target="_blank" rel="noopener noreferrer" class="btn">Watch on YouTube</a>
 <a href="index.html" class="btn">← Back to 2025 Videos</a>

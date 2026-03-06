@@ -43,7 +43,185 @@ Deploying on Amazon SageMaker (Loka blog) → https://medium.com/loka-engineerin
 ***DATASETS
 DrugProt on Huggin...</div>
 
-        <div class="tags">
+        
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi, Julian here. What if I told you that a single engineer working on his own time took the RCAI Trinity Mini model and turned it into a biomedical specialist? No massive team, no million dollar compute budget, just open source tools. Sounds impossible? Let&#x27;s take a look.
+
+His name is Bojan Jakimovsky. He&#x27;s a senior ML engineer at Loka. And what he built is a model called and Trinity Mini drug prod think. A bit of a mouthful, but we&#x27;re going to explain. This is a model that can read scientific papers and extract how drugs interact with proteins.
+
+That&#x27;s the kind of work that normally takes a team of expert human curators month to do by hand. The foundation we built on RCAI Trinity Mini, which I&#x27;ve already discussed in previous videos. This is an open source model that anyone can download modify, and deploy. No API fees, no vendor lock-in, pool Apache tool license compatible with commercial usage. RCE actually retweeted the project, so they must be quite proud.
+
+So today, I&#x27;m going to walk you through exactly how we did it, step by step, in plain language, so that you can understand why this matters, and more importantly, how you could do something similar in your own field. Let&#x27;s dive into it. First, let me give you some context on the base model. You&#x27;ve heard about RCAI a million times. I used to work there.
+
+It&#x27;s a US startup, about 30 people based in San Francisco. And what they do is they build Frontier, open source AI models. And when I say open source, I truly mean open. You get access to the models on Hugging Face, you can download them, inspect the weights, and if you fine-tune the model, own the model, you can run it on your own hardware. The model does not phone home, there are no usage restrictions, it&#x27;s not open, but it is open and you&#x27;re free to do whatever you want with the model.
+
+A few months ago they released a model called Trinity Mini, which is the one we&#x27;re using here, and in recent videos I&#x27;ve also covered their latest model called Trinity Large. And please take a look. This is really an amazing model. The time of recording. It is still free to use on open router.
+
+So go and hunt for that video. Maybe I&#x27;ll put the link in the video description. But let&#x27;s go back to Trinity Mini and you&#x27;ll see this is where it gets interesting. Trinity Mini has 26 billion total parameters. But get this, only 3 billion are active at any given time.
+
+So when you run inference with the model, you&#x27;re predicting with 3 billion parameters. Why is that useful? Well, this is based on an architecture called the mixture of experts or M-O-E architecture. So let me give you an analogy. Imagine a hospital with 128 specialists doctors on staff, cardiologists, gastroenterologists, brain surgeons, every possible specialist is available.
+
+But for any given patient, only eight of them walk into the room. And what this gives you is that, well, the hospital has this massive expertise across every single specialty, but every consultation is still very fast and efficient because you&#x27;re only using the relevant experts. It doesn&#x27;t make sense to ask 128 doctors what they think. Just pick the eight specialists you need for this particular consultation and get them to give their opinion. Well, that&#x27;s exactly what&#x27;s happening in.
+
+Trinity Mini. It has 128 expert networks. Well, you can think of them as tiny models that have been all trained together. And every time you use the model for every piece of text, every prompt you send to the model, Trinity Mini will just activate eight of those experts. So you get the knowledge of a really large model, but with the speed and cost of a much smaller one.
+
+You need to load those 26 billion parameters in memory but at inference time you&#x27;re only using 3 so the model is extremely fast so these are the key specs 26 billion total parameters 3 billion active 128 experts 8 active at any given time the model was trained on 10 trillion tokens and yes that&#x27;s the big number and rc curated public internet data sets and also used high quality synthetic data to get to that number. The model has a 131,000 context window which is fairly large and certainly large enough for a lot of tasks and as mentioned before the model is fully open weights. It&#x27;s available on Hugging Face under an Apache 200 license which is once again compatible with commercial usage. Well, this is why you should care about the model. Let&#x27;s take a look at the benchmarks.
+
+So Trinity Mini scores 84.95 on MMLU, which is a general knowledge and reasoning benchmark. Just for context, Quen 2.5-70 to be, so a much larger model, scores 86.1. So Trinity Mini gets really within spitting distance with only 3 billion active parameters. Okay, remember, we&#x27;re only predicting with a subset of the parameters. It scores very high on math, demonstrating strong quantitative reasoning, and it also scores fairly high on GPQA Diamond, which is a benchmark related to graduate level science questions.
+
+So those are great indication that the model is doing fairly well. But of course you need to try it for yourself. And the easiest way to do this is to run it on OpenRouter. Again, I will put all the links in the video description. There&#x27;s a free tier for testing.
+
+Of course, you will get limited tokens out of it, but it should be enough for you to get a taste of the model. And there&#x27;s also a paid API, which will cost you $0.0.45. Per million input tokens and 0.15 dollars per million output tokens. So that&#x27;s a fraction of what a GPT4 class model would cost you, let alone the GPT5 or the anthropic models. Okay, so give it a try on open router and let me know what you think.
+
+So it is a good model, no doubt about it, but it&#x27;s a generalist model. So it can do a lot of different things like I&#x27;m reasoning, a multi-step tasks, et cetera, but what Bojan did was to take this generalist model and turn it into a biomedical specialist. And of course, the technique that he used is the real story. So let&#x27;s dive into that. Let me set the scene with a concrete example.
+
+Here&#x27;s a sentence from a biomedical research paper that says aspirin inhibits the cox two enzyme. So in that sentence, we have three pieces of information that a drug researcher would care about. There&#x27;s a drug, aspirin, a protein name, Cox 2, and the relationship between the two, inhibitor. Now, imagine you need to extract these relationships from millions of scientific papers. There are 13 different types of drug protein relationships researchers track, and you&#x27;ll have to trust me on this.
+
+Activator, inhibitor, agonist, Soximate, and way more. How can you do this manually? Of course, it&#x27;s impossible at scale. It could take a human curator team weeks, years, maybe more, and they would have to have deep biomedical knowledge. The drug prod dataset, which is mentioned in the model name, is a dataset that is benchmark for exactly this task.
+
+Thousand manually labeled drug protein relationships annotated by domain experts using real medical papers. It&#x27;s the gold standard and as always it&#x27;s available on Hugging Face. Just look for Big Bio slash Drug Broad. Again links will be in the video description and you can start exploring the data set immediately. So this is the question that Bojan asked.
+
+Can we take a general purpose, high quality, open model like Trinity Mini and teach it to do this specific job. But not by showing it thousands and thousands of solved examples as the one available in the dataset, but by letting it learn to reason through this specific problem. Well, the answer is yes we can. And the technique that was used is called RLVR. And we&#x27;re going to break that down.
+
+So let&#x27;s get a little technical now. I&#x27;m going to go deeper into the training techniques, but I&#x27;ll try to keep the jargon and the machine learning mumbo-jumbo reasonable. So there are two ways you can teach a model new tricks. The first one which you may already be familiar with is called supervised fine tuning or SFT in short. So SFT means taking the thousands of solved examples, golden examples, sentences with the correct drug protein relationship, already labeled, and you train the model to copy those patterns.
+
+So it&#x27;s like giving a medical student a textbook, fooled of solved cases, and have them study the answers and learn to mimic their approach. So in a way, monkey see, monkey do. And SFT is a great technique. It&#x27;s been used for years. It definitely works, but it has two problems.
+
+Number one, you need a lot of label data, a lot of solved examples. And this is expensive to create, as we just discussed. Sometimes you need highly skilled people to actually build the samples and they may not be readily available or even willing to do that kind of job. Number two, the model learns. To copy patterns, but it doesn&#x27;t really learn how to reason.
+
+It doesn&#x27;t learn how to think. It&#x27;s matching patterns instead of solving problems. And matching patterns is fine until you encounter a sequence or a sentence that the model has not seen before. And then you&#x27;ll probably get an hallucination. The other technique is called RLVR.
+
+Reinforcement learning. With verifiable rewards. That&#x27;s hard to say. And this completely changes the game. So here, instead of showing the model all the answers that you have, you give it the questions and you give it an answer key.
+
+And the model will try to solve the problems on its own. And if it gets the right answer, you give the model a reward. If the model is wrong, you don&#x27;t give it a reward. Just like giving candy, to a kid, over many iterations, the model will develop a strategy to maximize the reward. It just wants more candy.
+
+And by doing that, it will get to the correct answer more and more. So this is really how SFT compares to RLVR. SFT is giving the student a lot of solved examples, hoping that they will memorize them. RLVR is giving them real patient files and a diagnostic answer key. And now they have to figure out how to get to the correct answer.
+
+And so by doing that, they have to think about how to get to that answer. And they get rewarded if they do. So you may be thinking, wait a minute, reinforcement learning is not really new. It&#x27;s been around for a long, long time. So how is RLVR different?
+
+Great question. You certainly have heard of traditional REL techniques for language models like RALHF, reinforcement learning with human feedback, which is what OpenAI use to build chat GPT. This is a good technique, but it has a problem. It requires an additional reward model. And this reward model is a second deep learning network that has been trained to judge whether the output, whether the prediction, from your model is good or bad, correct, incorrect.
+
+So that&#x27;s expensive to build. You need to train that model as well. It could drift over time and of course it could be biased in deciding whether that output is correct or incorrect. So there are pretty complex problems to solve to use RLHF very efficiently. The difference is RLVR doesn&#x27;t need The reward model.
+
+The reward comes from an objective, verifiable truth. So you are right or you are wrong and there&#x27;s no extra model needed to decide that. You don&#x27;t need humans to review the predictions. You just look at the answer and decide if it&#x27;s right or wrong. And this is a fundamentally cleaner training signal.
+
+Definitely a simpler implementation. So your next question I&#x27;m sure is going to be okay, but how do we know that a reward is actually verifiable? How do we build that? So that&#x27;s the key constraint. It&#x27;s important to understand where we can apply that technique and where we can&#x27;t.
+
+So a task is verifiable when there&#x27;s a non-ambiguous way to validate the output. In this case, We&#x27;re looking at drug protein extraction. So coming back to our previous example, either aspirin inhibits Cox 2 or it doesn&#x27;t. There&#x27;s no middle ground, there&#x27;s no ambiguity. And the gold standard data set that we have drug prod will tell us that.
+
+So another example is code generation. A model generates code. Does it pass the test suite? Yes or no. Or it doesn&#x27;t, although you could argue that with software, it always kind of works.
+
+But hey, let&#x27;s be rigorous about this. Math is a good example. Your solving an equation, either you have the right result or you don&#x27;t, and there&#x27;s no middle ground. Try arguing with your math teacher about this. Legal documents can be also verifiable.
+
+Is there a non-compete clause? In your work contract? Yes or no? Well, hopefully not. Some clauses could be more ambiguous, but for some specific tasks, you can actually design verifiable rewards.
+
+Another example would be document processing. Let&#x27;s say you&#x27;re working with legal documents and you want to see if a work contract has a non-complete clause, yes or no. And all the yes or no, right wrong problems are verifiable. On the contrary, a task where quality is subjective is not verifiable. So let&#x27;s say write a really engaging marketing email.
+
+Yeah. Who decides that it&#x27;s engaging? Maybe I think it is, maybe you think it&#x27;s not. Text summarization is another example. We could look at the same piece of text and write really good summaries, just a little bit different.
+
+So how do we know yours is better than mine? So for those tasks, you still need RLHF or you still need human evaluation. You need somebody to set the bar and say, yeah, this is high quality and this isn&#x27;t. But for tasks where we can verify, RLVR will work very well when things are yes or no right or wrong and precisely measurable. So that&#x27;s what we get in the drug prod data set.
+
+We get 25,000 golden annotations from domain experts. So for each sentence, we get an answer key that says, these are the drugs, these are the proteins, and these are the relationships. Okay? And that&#x27;s the reward signal if the model gets it right. So we explain what RLVR is.
+
+Now let&#x27;s look at the specific algorithm. So here, Bojan used an algorithm called G-R-P-O, another mouthful, which means group-relative policy optimization never mind what the name really means all you need to know this is a popular algo and it&#x27;s actually the one that DeepSeek r1 used and and made waves with in January 2025 so it&#x27;s the go-to algorithm for RLVR so let&#x27;s break it down step by step the first step is to generate okay so we&#x27;ll take a training example let&#x27;s say a center that says metformin activates AMPK, and the model will generate multiple candidate answers, okay, not just one, but a whole bunch, maybe 8, maybe 16. And of course, some will be right, some will be wrong, and some will be partially right. Maybe we got the drug name right, maybe we got the protein name wrong. Okay.
+
+Step two is we scroll. All those generated answers. Okay, so each candidate answer is checked against the ground truth. Did we correctly identify the drug name? Did we correctly identify the protein name?
+
+And did we correctly identify the relationship? Okay, so the right answers score very high, and the wrong answers score very low, as you would expect. Okay? Step three is to compare. And this is the clever bit.
+
+So instead of scoring each answers in absolute terms, okay, with just a, you know, scoring criteria, GRPO will actually compare answers within the group. Okay, so it will compare them altogether. So it&#x27;s going to compute the mean and the standard deviation of the score in this particular batch. Then it will normalize the scores. And it will check how far above or below the average each answer is.
+
+Okay. And this relative scoring is very important because that&#x27;s how you learn even when most answers are wrong. Okay. If you want to make some progress, you need to be rewarded if you came up with an answer that is just a little bit less wrong than the others. Okay.
+
+And that&#x27;s how you learn. Get wrong answers and zero scores for the whole batch, then there&#x27;s nothing to learn. If one or two of the answers are a little bit better, huh, okay, that&#x27;s a signal that you should keep going in that direction. So it&#x27;s really like grading on a curve. If you have a really hard exam, the best student maybe only gets 60%.
+
+So relative to everybody else, it&#x27;s the best grade, so it&#x27;s an A. But for a really good student 60% might feel very low. So relative positioning is important, right? So that&#x27;s how the model learns. It will learn for whatever best answer it came up with in a batch, even if best is not perfect.
+
+And this is really important in the early stages of training when the model is just trying to figure things out and it&#x27;s probably horrible at everything. To get early signals that some of the answers are actually not as horrible as the rest and it needs to keep progressing in this direction. And step four is updating the model&#x27;s parameter to over time make the above average answers a little more likely and below average answers a little less likely. We want to do more of the good stuff. And less of the bad stuff so that&#x27;s the reinforcement thing okay and here we&#x27;re reinforcing the reasoning process and not just the answer okay we really want the model to generate a chain of thought um trace and the whole trace the whole reasoning is reinforced when it leads to a correct answer okay so maybe you&#x27;re just got lucky and got the right answer but that&#x27;s not enough okay you need to show the reasoning again I&#x27;m sure you can remember your math classes where the teacher would insist that the answer is not enough.
+
+You need to show your reasoning, right, to get the full grades. Same thing here. Let&#x27;s discuss another technical point that I think is important. Okay. So if you&#x27;ve already read a little bit about RL for language models, I&#x27;m sure you&#x27;ve heard about this other algorithm called PPO, Proximal Policy Optimization, which is the standard algorithm used in our RLHF for chat GPD.
+
+How does GRPO compare? Well, it&#x27;s simpler and it&#x27;s more practical. So let me explain. So with PPO, you&#x27;re running two neural networks at the same time during training. The model you are training and a separate network, let&#x27;s call it the critic, that will estimate the value of each state.
+
+Okay, so the problem here is we are working with a 26 billion parameter model. So that means we need to double the GPU memory required to train the model. And well, in practice, you may very well need two GPUs instead of one. Or you have to train with really tiny batch sizes to help everything fit on the same GPU, which slows everything to and may cause training problems. So GRPO eliminates the need for the critic model.
+
+We only use the model that we are training and the statistics that we&#x27;ve discussed. So we just run one model and we don&#x27;t need as much memory. The second important difference is stability. PPO has several hyper parameters that are very tricky to get right. If you get them wrong, and honestly, that&#x27;s very, very easy to get wrong if you&#x27;re not an expert, and I am not one, definitely.
+
+Your training job collapses. It stops learning. Of course, it will collapse after hours and hours. You just wasted time and, well, potentially money, and you have to start all over again. So PPO is really tricky to work with.
+
+GRPO is simpler. It has fewer parameters. And well, that&#x27;s the difference between, you know, training for weeks, probably, and training for maybe a couple of days. Okay, I hope you&#x27;re not fed up with the technical stuff. There&#x27;s one last piece to the puzzle.
+
+It&#x27;s the thinking element. Okay? Remember, the model is called Trinity Mini Drug Prot, Think. Okay? So the think element is related to chain of thought reasoning.
+
+So the model is not just giving you an answer. It&#x27;s showing you how it came up with the answer. Okay, so before extracting the relationship between the drug and the protein, the model will reason step by step through the medical text. Okay, and if you run the model, you&#x27;ll see things like, I see the entity aspirin, that&#x27;s a drug, I see Cox 2, that&#x27;s a protein, the word inhibits connects them, and so the relationship type that match is inhibitor. Therefore, the drug is aspirin, protein is Kux 2 and relationship is inhibitor, okay?
+
+Which makes a lot of sense, but being able to see this and read this and grade this is very important because we know we got to the right answer. Okay, so it&#x27;s not just nice to have. It makes the output auditable. A researcher can read it and understand if it trusts the reasoning and the extraction. Number two, it makes errors debuggable.
+
+If a model gets something wrong, you see where. It went off the tracks and you can think about how to fix it. And number three, well, chain of thought actually improves accuracy because models that reason step by step tend to make fewer mistakes than models that jump straight to the answer because each reasoning step should lead logically to the next. So in a way, you&#x27;re taking smaller steps and instead of trying to jump directly to the answer. So that&#x27;s the full technical stack, R-I-L-V-R for the training architecture, GRPO as the optimization algorithm and chain of thought for the reasoning format.
+
+And of course, the drug prod dataset to verify if we did a good job or not. Okay, take a deep breath. I guess we&#x27;re done with the horrible technical details. So so far, we&#x27;ve covered the what and the why. Now let&#x27;s talk about the how.
+
+How did Bojan engineer the model? Because what I think is most impressive and interesting about this project is how accessible the tool chain is. It&#x27;s all in the open. So if you look at the model card on Hugging Face, you&#x27;ll see that it is tagged as a Laura adapter built with the PFT library. Okay, more acronyms.
+
+Let me explain what that means and why it&#x27;s so important. So Trinity Mini has 26 billion parameters and training all of them from scratch or updating all of them from scratch requires serious compute. Many GPUs, days of compute, significant cost, not a weekend project and that&#x27;s why not a lot of folks are actually doing that. So instead they use a technique which I probably covered years ago another video called Laura, which stands for low-rank adaptation. Okay, so let&#x27;s not get into the math.
+
+Let&#x27;s just try to explain what Laura is. So instead of updating every parameter in the model, Laura greases the entire base model, meaning we&#x27;re not touching all those weights, okay? And we just train small matrices that sit on top of specific layers. And those matrices are low rank because they&#x27;re smaller. It&#x27;s math mumbo-jum, to say they have fewer parameters than the original weights.
+
+And typically when we&#x27;re training with Laura, we&#x27;re not training the full model, we&#x27;re just updating a tiny fraction of the original weights with those small matrices. We&#x27;re sitting between 0.1% and 1% of the original model. Okay, so you immediately see why this is important. Fewer parameters trained, less time, less compute required, less memory required, less money spent. Okay?
+
+So let me try an analogy here. Imagine the base model is a huge library with 26 billion books. Okay? So instead of trying to going to rewrite every book, Laura is going to add sticky notes to specific pages in specific books. Okay, with just tiny updates.
+
+So the notes are small, but they&#x27;re placed in strategic places where we can change how the model processes information. Okay, so when we run the model, we read the original weights, we load them, the changed original weights and we just add up those sticky notes on top of that to specialize particular areas in the model. And that&#x27;s how we get a specialized model without the need for full retraining or fine tuning. So this is really important if you work with a mixture of experts model like Trinity Mini. If you have 128 expert networks, you could apply Laura to all experts or to a subset or to the shared layers across the model.
+
+The PFT library, and by the way, PFT stands for parameter efficient fine tuning, lets you configure this. So you can specify which layers and which modules you want to update with Laura matrices and you leave everything else frozen. So you get the benefits are huge. An obvious one. You don&#x27;t need to load and update and fine tune the full model, just the updates to the model.
+
+And as mentioned before, we&#x27;re using less than 1% of the original parameters. So we&#x27;re going to be able to do this on a small GPU. We won&#x27;t need a huge GPU for this. Storage is important. The update is actually very tiny could be tens of megabytes maybe 100 or 200 megabytes compared to the full model which which could be you know in this case I guess 40 or 50 gigabytes so you can easily share it on Hugging Face you can download it immediately and anyone who already has the trinity model can just download your adapter in seconds okay and the third benefit is composability you can train multiple laura adapters for different tasks okay So let&#x27;s say we could have one for a drug protein extraction, we could have one for clinical trial, we could have one for another task, and all of them would be small enough, and we would be able to even load them as needed on the same base model at inference time.
+
+Now looking at the full stack that Bojan used, of course, we have the Hugging Face Transformers library to load the Trinity mini model plus the PEPF Then he used Prime Intellect as a hosted environment for the GRPO training. If you&#x27;ve never heard of Prime Intellect, I highly recommend that you take a look. They host infrastructure all over the world and they do some pretty clever things with that. And they have a hosted environment for RLVR, which means you don&#x27;t have to write everything from scratch. Find a fairly simple config file in your RL environment.
+
+So bringing the data set, bringing the reward function that we&#x27;re going to discuss. And then you run everything in one single command on Prime intellect. So that&#x27;s a pretty cool and simple way to do this. Of course, we have the Drug Prod dataset. And there also is Prime Intellect environment that hosts this data set.
+
+So you don&#x27;t even have to go and use it and download it from Hugging Face. So that&#x27;s pretty cool. And of course you want to track your experiments and Bojan used weights and biases, which is well known. You can log all your experiments. You can see what&#x27;s going on.
+
+You have nice dashboards, et cetera, et cetera. So everything is open. Everything is reproducible. The config file, I think, is about 20 lines. The reward functions are Python.
+
+And you could absolutely take everything and reproduce this experiment or start from this experiment to build your own. So we explain that GRPO doesn&#x27;t need a reward model, but of course it needs a reward function to tell the model in training you did a good job or you did a horrible job. So what does that reward function look like? So we can actually see the reward function in the open source. A repository on GitHub and it&#x27;s quite simple.
+
+It&#x27;s a composite reward that factors in three things. Accuracy, reasoning, and format. Okay? So let&#x27;s look at each one. So accuracy is obvious, okay?
+
+This is the verifiable part of the task. So drug prot is framed as a multiple choice classification task. Given a sentence with a drug and a protein, you need to find the correct relationship from 13 options and the model will output that answer as a letter and inside a template that is provided. And the reward is binary. One, if you find the right relationship and output the right letter, zero if you don&#x27;t.
+
+So right or wrong, no subjectivity. Okay. And that&#x27;s 70% of the reward. Is 20% of the reward. So that encourages the model to think before answering.
+
+And the score here is based on the length of the thinking block. So the longer you think, the higher the score. The biomedical keyword density. So are you actually reasoning over the medical terms and the domain terminology? Is the sky blue.
+
+That&#x27;s not really, really meaningful. We really want the reasoning to be about the problem at hand. And finally, the format is, did the model produce a single letter representing the relationship? Okay? Again, right or wrong, true, false, no subjectivity.
+
+And as you can see, this reward function doesn&#x27;t need a neural network, doesn&#x27;t need a model, doesn&#x27;t need a second AI and it&#x27;s it&#x27;s all it&#x27;s all python and rule based and very simple okay so it&#x27;s very efficient very fast and and that&#x27;s how you generate the reward so the important point here is that this is not bleeding edge research this is a standard open source stack plus a hosted training service that any ml engineer can set up in a few hours or in an afternoon The innovation isn&#x27;t in the tools, it&#x27;s in combining them. Starting with a high quality model, a verifiable task, and of course, GRPO and Laura to train the model very efficiently. So of course, the base model has to be good for this to work, okay? Trinity Mini wasn&#x27;t fine-tuned into competence by accident. It already had capabilities, and RLVR unlocked that.
+
+And improved the capabilities for a specific domain. So I think this speaks to the quality of Arcee&#x27;s pre-training. As always, garbage in, garbage out. If you have a weak foundation, you can post-train all you want and you&#x27;ll get nothing out of it. Of course, open weights made this possible.
+
+This project could not have happened with a closed API model. Able to download the weights, apply GRPO training, using open tools from HuggingFace, and was able to run it cost efficiently on Prime intellect. And it did the right thing and published everything that came out of that. The model, the code, the blog post. There&#x27;s even a deployment blog post on how to deploy the model on Amazon SageMaker, which brought tears to my eyes.
+
+And it was kind enough to share everything, free, open, and then this is really awesome. And I think that&#x27;s the spirit of the open source community. And I think the valuable insight for enterprise practitioners is you don&#x27;t need to pre-train to get a lot of value. R.C. Spent the time, the money, and the sleepless nights to pre-train Trinity Mini.
+
+And Bojan took the model. And spend just a fraction of additional post-training for the biomedical use case. Again, the composability of open source AI is demonstrated here. Labs like RCE build great foundation models, and you just spent a little bit of time and effort and money on specializing it for a particular application. And again, you could use the same base model across many different use cases.
+
+I mean, this is repeatable. This is just one example, but any problem that you have that has verifiable outputs could follow exactly the same process. So, as we said, extracting particular clauses from documents, matching financial entities in financial documents, code generation, why not, et cetera, et cetera. So if you can write a reward function that checks right or wrong, you can apply RLVR and on top of Trinity Mini to build a domain specialist. And the last bit is very important.
+
+You don&#x27;t need a ton of hardware and a ton of money to do this, right? Because we&#x27;re only running a 3 billion parameter active model on inference. And I guess the smallest GPU on AWS, is probably still able to do that. So you don&#x27;t need clusters, you don&#x27;t need anything weird. Again, you can look at the deployment notebook that was shared on SageMaker or deploy this anywhere else.
+
+So this could run on a local server, very cost-efficient, completely private, no internet access, full control over your data. That I meet ask me how they can specialize models for particular tasks and of course some of the closed models have fine-tuning APIs but right do they really work how expensive are they who owns the model etc etc so here none of those problems download an open model use open source libraries to apply VR to teach it about your specific domain, deploy it on your infrastructure, and maintain full control. So this is really a great, great example of using Trinity Mini for this workflow. It&#x27;s not the largest model out there, which is actually a quality, but for well-defined verifiable tasks, you just saw an example of using Trinity Mini in a really, really amazing way. And that&#x27;s something you can build in maybe hours or just a couple of days, right?
+
+So this is an amazing proof of concept. It&#x27;s also a template. Again, Bojan shared everything you need to replicate this. The blog post will walk you through every single step. And I&#x27;m confident you can apply your own tasks and your own data here and get a All right, all right, again, everything in the description, the model, etc.
+
+All right, all right. All right. That&#x27;s all in the open. That&#x27;s the video. That&#x27;s all in the open.
+
+Now, now it&#x27;s your turn. I hope it&#x27;s like this. I hope you&#x27;re learning your own models. Why don&#x27;t you ping me and I might do a video about it, especially if you use an Arcee model. Thanks for watching.
+
+Until the next one, keep rocking.</div>
+<div class="tags">
             <h2>Tags</h2>
             <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
         </div>

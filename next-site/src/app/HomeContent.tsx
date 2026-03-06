@@ -10,16 +10,22 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Build, Buy, or Download Someone Else’s Politics',
+    href: '/blog/industry-perspectives/2026-03-06_build-buy-or-download-someone-elses-politics/index.html',
+    date: 'March 6, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'AI Tools Work. Does Your Engineering Process?',
+    href: '/blog/industry-perspectives/2026-03-05_ai-tools-work-does-your-engineering-process/index.html',
+    date: 'March 5, 2026',
+    icon: 'article',
+  },
+  {
     title: 'South Korea Powers the World’s AI Chips. Where are its LLMs?',
     href: '/blog/industry-perspectives/2026-03-04_south-korea-powers-the-worlds-ai-chips-where-are-its-llms/index.html',
     date: 'March 4, 2026',
     icon: 'article',
-  },
-  {
-    title: 'Deep Dive: Teaching Arcee Trinity Mini to Read Medical Research with RLVR and GRPO',
-    href: '/youtube/2026/20260303_Deep_Dive_Teaching_Arcee_Trinity_Mini_to_Read_Medical_Research_with_RLVR_and_GRPO.html',
-    date: 'March 3, 2026',
-    icon: 'video',
   },
   {
     title: 'Data Residency Is a Blast Radius',
@@ -31,12 +37,6 @@ const LATEST_UPDATES = [
     title: 'Objects That Struck the Data Center',
     href: '/blog/industry-perspectives/2026-03-02_objects-that-struck-the-data-center/index.html',
     date: 'March 2, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Chip and Mortar',
-    href: '/blog/industry-perspectives/2026-03-01_chip-and-mortar/index.html',
-    date: 'March 1, 2026',
     icon: 'article',
   },
 ];

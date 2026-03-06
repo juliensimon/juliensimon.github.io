@@ -59,6 +59,258 @@
 <p><strong>Focus:</strong> Europe's First Developer Conference Dedicated to Model Context Protocol</p>
 </div>
 
+
+        <div class="transcript">
+<h2>Transcript</h2>
+            At all everybody julian here and this is a bit of a different video today I&#x27;m very happy to be at the fork and my guest yan will tell you maybe a little bit what the fork is just out of curiosity but today we&#x27;re here to talk about mcp and as you know I have some doubts let&#x27;s call them that way about mcp I&#x27;ve been a bit vocal about it and I met yan was my THE opposite, is an MCP enthusiast. And it&#x27;s actually an MCP contributor. So that&#x27;s pretty awesome. And we thought it would be valuable just to chat, right? Have this open conversation, friendly conversation, two French guys, right?
+
+Discussing about MCP, what we like, what we don&#x27;t like, and hopefully help you learn a little bit more and I guess have a good time. So, yeah, very nice to see you today. Invite to me. So first things first, tell us a little bit about yourself and tell us about the fork because I&#x27;m pretty sure a lot of people will not be familiar with the company. Yeah, so I&#x27;m I&#x27;m Anjouena.
+
+I am director of engineering strategy and transformation at the fork. So if you don&#x27;t know the fork, the folk is a part of trip advisor and it&#x27;s the leader in the restaurant booking in Europe. So yeah, that&#x27;s one of the reason for being very enthusiastic on this ecosystem. Just testing a lot of restaurants. By myself, a lot.
+
+Well, at least you have good recommendations. You&#x27;re the guy to ask. You&#x27;re the guy to ask. If you&#x27;re looking for good restaurants in Paris, ask him. Yeah, and the fork.
+
+As the folk. All right. And yeah, I&#x27;m working in like now 20, 25 years. I&#x27;ve been a very early adopter also of the Hadoop stack back in the years. I own the AI.
+
+So we have the focus is to really look at the market and decide and work together with our teams to decide what is the best new technological stack to implement and introduce. So we look for areas in brand new, assess the technology and then look if it makes sense and what is the maturity. And that&#x27;s a kind of balance between being enthusiastic and being pragmatic. Thank you. The reason why we&#x27;re here is because we won&#x27;t have, you know, a two-sided conversation about MCP.
+
+You can start by also staying back. Because this guy just came to a conference in Berlin, a few weeks ago. All right, call me out, okay, yeah, okay, let&#x27;s get started, all right. And that was, that was like the, just, he was just having this talk just before me, and my talk was named why every company should have a strategy for MCP. I would say that it was destabilizing to come just after you.
+
+Yeah, and my talk was called missing critical pieces. Exactly, right? Guess what the initials mean. But okay, so let&#x27;s let&#x27;s dive into the topic. So maybe let&#x27;s start by explaining in simple terms what MCP is.
+
+Okay, let&#x27;s not focus on what it does, what it doesn&#x27;t do, Let&#x27;s just be pragmatic and say, okay, what is this? What problem is it trying to solve? And from a technical perspective, what are we talking about? Yeah, so I would say the baseline for MCP was to become the USBC of AI. The idea behind MCP is if you have been experiencing implementation of AI, agent and you have, I would say, the need for connecting what they call tool, which that&#x27;s the really basic semantic that every agent shares.
+
+If you have to implement a tool, which is providing some instruction to an agent to call a specific piece of code, like code that in this way, then you encounter a lot of different keys in the past where If you have multiple agents, usually you need to wrap up any of this tool by yourself. Which means that anytime your library will evolve, you may have to rew wrap this tool again and again. And MCP is trying to perform this kind of layer between your tools and your agent. That was the original purpose of the list. So I have a list of tools which are going to be, let&#x27;s say, Python function.
+
+APIs, right? Which probably interact with backends and databases, etc. And they&#x27;re available and they do certain business processes for us, business operations. And on the other side, I have agents. And in a perfect world, the agents would use MCP to discover what&#x27;s available, what&#x27;s the set of APIs.
+
+What do they do? Do they match the had the user prompt and automatically the agent will call the right APIs and give you a high quality answer. I&#x27;m not being sarcastic, okay? I think that&#x27;s a real problem we want to solve. Okay, that&#x27;s a real problem we want to solve.
+
+So I think there&#x27;s a lot of confusion and I don&#x27;t know who&#x27;s responsible for it, but it doesn&#x27;t matter, but there&#x27;s a lot of confusion on what MCP actually is. So is MCP a protocol? Is MCP a set of APIs? Is MCP a full-fledged solution? Is it one piece of the puzzle?
+
+Is it the full puzzle? So what is exactly MCP, right? Yeah. In the real thing, not the LinkedIn influencer BS? MCP is really a protocol.
+
+So the idea behind is to normalize, standardize, the way your two applications one being the agent and the second one being your application server let&#x27;s call it like this all way you know okay how can they actually have this discovery protocol or can they interact together what are the minimum security level you expect to be authenticated and so on so that&#x27;s a set of rules which is basically a protocol or to implement it okay good so I think a lot of my frustration and a lot of my objections and a lot of my warnings are exactly that. The fact that there&#x27;s this funny cartoon floating around on LinkedIn when you see two doors. Have you seen that? MCP users, so there&#x27;s an open door with nobody in front of it and MCP builders with a long queue. Yeah, I can imagine that.
+
+Derivative, it&#x27;s pretty, like, everybody&#x27;s trying to sound smart, right? And maybe that&#x27;s what we&#x27;re trying to do as well, guilty as charge. But a lot of people are just, and I think it&#x27;s just the sorry state of the tech industry, a lot of people are just throwing MCP around, like they&#x27;re throwing, you know, Gen AI, SLM, LLM, fine tuning, model merging, like all those passwords, DPO, and they&#x27;re trying to look smart, sharing articles they haven&#x27;t written, I&#x27;m sorry to say, most of the time they haven&#x27;t read. And if you&#x27;re a business user, and that&#x27;s my crowd, okay, that&#x27;s my focus. The business user, the enterprise practitioner trying to understand what to build, what not to build, how to build it, they get this completely wrong picture of what MCP is.
+
+MCP is not a cloud service. MCP is not a fully baked solution. It&#x27;s the wire. And that&#x27;s why I&#x27;m saying a lot of parts are missing to turn it into a solution. Yeah, so that&#x27;s totally valid.
+
+And I believe also it&#x27;s very important to remember why and what were the first use case, and we were trying to cope. Yeah, where does it come from? Yeah, actually, so it comes from Anthropic. And as you know, Anthropic has one. Thing is if you talk about finding a model that can generate codes in the best way you well everyone would come and say oh that might be solid so back to this I think the first use case a lot of people were focusing on is you&#x27;re a developer so you know a bit of technology you&#x27;re starting to your agent in your day-to-day basis and you&#x27;re lazy because you&#x27;re a developer right and so the idea is You have a brain, so something that can just act as a human brain.
+
+And usually your task is not only generating code. It&#x27;s deploying in production, it&#x27;s testing with the playwright system. It&#x27;s plenty of this task. And you want to be the most lazy person in the world. So you start looking for some arms, meaning something that can activate and make your air activable and actionable.
+
+And this is exactly the main purpose of MCP. Okay. From the day first. Okay. And I think that&#x27;s fine.
+
+I think again, we have a million tools available to us. And I&#x27;ve been fighting for years, you know, the Swiss Army knife mentality. Watch my AWS videos. You&#x27;ll hear me saying there&#x27;s no single database that, you know, solves everything. Yeah.
+
+The reason why we need, you know, RDS and DynamoDB and everything else is because we have very different use cases. And at Hockingface you heard me say, you know, there&#x27;s no single model that does the job. Even if it&#x27;s an open source model. And I think here it&#x27;s really important to understand who created MCP and what kind of problem they were trying to solve for themselves and for their users and who their users are. Exactly.
+
+Right. And that&#x27;s the, you know, that&#x27;s the past that has to be really like clarified. Because the day first when you start and say, oh look, this is very easy for a developer to use the VS code. And from the ESC code, they will be able to close a Gira ticket or document or push a PR or push, you know, everything that you have to do like day to day. Then having a way that your provider, your main provider like GERR Atlassian can bring the MCP7 to connect or GitLab or anything, anything.
+
+It&#x27;s totally valid. And that thing, that&#x27;s the one the original. All purpose. Yeah, and I think if you look at it that way, you&#x27;re a developer, you have, you know, like I said, hundreds of possible tools for code review and, you know, code versioning and everything else. And from one task to the next, you need a different set of tools to help you out.
+
+I can see that, you know, I&#x27;m not that close-minded. I mean, I write code too, I use code code, I use all the tools, and I use cursor. I mean, I try them all. Some of them I like better than others, but anyway, I see that. I see the diversity.
+
+So I understand why you would need to build something like that. Again, my problem, my fundamental problem is when people who probably did not read anything or write anything try to push that bit of technology as the ultimate answer to, you know, agentic systems, et cetera, and let&#x27;s take the opposite example. Okay, so let&#x27;s worry about my enterprise dudes, okay? Who they have business processes and they don&#x27;t change overnight, right? And I&#x27;m sure you have them here, okay?
+
+Sure. You know, booking, booking a table at a restaurant is a certain series of steps. Okay. It&#x27;s safe to say it was the same set of steps six months ago. And it will probably be the same set of steps in six months.
+
+So you have IT systems, you have APIs, you need to go through step one, two, three, four in that particular order, et cetera, et cetera. So the highly dynamic environment that you describe for developers where you have hundreds of tools and you need to combine them in very different ways often does not apply to, I would say, traditional API driven or automation driven workflows and that&#x27;s that&#x27;s that&#x27;s my problem you know that&#x27;s so what what do you I mean am I wrong here or no no is it MCP you know Uber Alice and so so I just think that what you mentioned is imagine is imagine you have a conflict workflow composed of a bunch of course of APIs the non-deterministic way that we like any agent, any model will call your flow, at least at the moment is not acceptable. So you cannot say, okay, let&#x27;s not write any workflow, let&#x27;s not write, let the agent figure it out. Let the agent figure it out. Yeah, let the agent figure out.
+
+Well, for me, that&#x27;s the same level of asking an agent to generate a problem for another agent without control. For sure, it&#x27;s not. What is a good practice. At some point on the opposite you can have some complex workflow that will under, based on the context, require, with a set of rules to call all this, all this, all this, all this. Yeah, okay.
+
+And in this more, yeah, the more, well, not randomness, but more flexibility. More flexibility. Well, where you end up with this kind of diagram that implies a forest of here and no one wants to implement that like statistically. And the second thing is you can also have this kind of problem. And you know that if you integrate with external provider where their process changed and you don&#x27;t want to be the one implementing the change of the process.
+
+So that might fit some specific case. And again, the workflow, a complex workflow is maybe not in the right level of maturity right at the end. Okay. So can we agree? See, we can agree.
+
+Yeah, a lot. We can agree that if you have, let&#x27;s try to be a little black and white here, even though everything is gray, as we know. So if you have a scenario, a use case where you have a lot of non-deterministic behavior, you&#x27;re refactoring a code base, and who really knows what kind of tools are needed? A lot of tools and they can be combined in very different, very creative ways and it&#x27;s very difficult to actually list what the vanilla steps would be, then MCP makes sense, right? Yeah, in a way.
+
+And again, if you just remember the first case in Nio is sometime you will have your janking pipeline just fade. And actually you want to continue and deliver. And there will be some log to enliance There was some action to take because maybe there was one action that was forgotten before and you have to clear state of something. Well, maybe in this kind of case you end up with the system also healing and this is what you expect. I give you an example.
+
+Test automation. How many times if you run, try to do like a mobile test automation, you end up with a very uncommon state because that&#x27;s not predicable what happened with a device. The vendors that didn&#x27;t build their system for you to test it. Right. So you end up with stuff like you&#x27;re supposed to launch an app and in the end the app is not showing up because there is a setting system and you expect your agent to like try to find a way to fix the situation.
+
+I believe this is the right kind of use case for your agent to have all the tool available and activate that on purpose. Okay, yeah. When things get unpredictable and sometimes weird and you need an agent to actually say, Wait, that&#x27;s weird, how do I fix this? Is the benefit risk of developing resilient? And on the other hand, when we have, I would say, fairly or very well defined workflows where we know the steps, there&#x27;s no, well, things could fail obviously, but there&#x27;s no, you know, going from A to B is a well mapped and well defined path, then you don&#x27;t really need the, actually you don&#x27;t want.
+
+The possible randomness of an agent. You want certainty that I&#x27;m going from A to B doing step one, step two, step three. And there&#x27;s really zero value in having, probably in having AI in the first place. Right? Yes.
+
+Even if you have a conversational interface on top, you could just trigger an API call and get it done. That is valid. The real problem is always the same. So you should not mix detecting the intent of the user, which is what I start to do and running a complete workflow. And if you look at what MCPA is trying to do, usually you end up in designing APIs, I mean tools that are really focusing so an agent can use them.
+
+Right. I just have a getaway that is doing MCP to open an API. Well, in some case, that&#x27;s very valid, but in the other case, especially you have an imaginary registration workflow and you have to call A, B, C, C, D. No, in this case, I will mostly try to implement the workflow into an MCP tool, provide to the agent or the required parameters. Maybe use elicitation, which is a mechanism to have back and forth in case there is something that fail and you want to recover.
+
+I think that&#x27;s a good point. And implement the logic inside my tool instead of letting just the API. Or rolling the dice. Yeah, I agree. And that&#x27;s also from a pure economical point of view because the token is crazy.
+
+Every time you use an agent, you roll the dice. Yeah, exactly. So if you do need step one, step two, step three, there&#x27;s a strong chance the agent will do it most of the time, but not all of the time. So if you want to have a certain then either don&#x27;t use agents at all and you can use function calling. You know, I actually like function calling.
+
+But the number of the problem is function calling in an identical world. Yes. Because whatever, you end up with implementing a tool. Yeah, yeah, yeah. And you will have exactly the same behavior than with MTP.
+
+Yeah, yeah, exactly. So, okay, so I think now we understand a little bit what the pattern and the anti-pattern are. Okay, so we&#x27;re making progress. Good. Okay.
+
+So now, what&#x27;s the state of MCP right now? I mean, I know, again, not being too sarcastic. Let&#x27;s talk maybe the state of, and I don&#x27;t really want to use the word, but standardization. Yep. So who owns it?
+
+Who contributes to it? Who are the main players? Topic calling all the shots, you know, what&#x27;s going on right now? So there is a governance that I&#x27;ve been open to different companies. For sure, at the moment, this is very US-centric.
+
+I also believe that it&#x27;s the tech in general. Probably. And in this, there are commoners, this steering committee, and mostly they come from Microsoft, they come from Oktar. So usually, you can find in this steering committee experts of their area and they come with valid experience and strong volunteer to create adoption. On the second layer there are some work group where people can join and this very open honestly so you can just join the contributor discord and that&#x27;s what you do right exactly that&#x27;s what I did and you come and you come with your problem first because that&#x27;s usually what happened is okay I&#x27;m an enterprise user I have this which is the part of norm and you try to build well not influence in the bad shape but the one that makes people understand you need and kind of oh yeah there with people here and there that have mine mine it okay sure then there are a full set of mechanism like the SCP which all you to prepare and propose for modifying the protocol okay for sure they are picky in the level of it&#x27;s just like not a PR in a random project.
+
+You come with something and you have to debate and show how your solution is a good one. But it&#x27;s being picky is not being opinionated. In this case, I&#x27;ve seen a lot of progress in the last month for opening to the different kind of usage. Okay, so a skeptic like me can actually be that even though this protocol was not born under the best it was born under a bad sign right you know if you know that blues song born under a bad sign that&#x27;s MCP in terms of you know engineering best practices let&#x27;s call them so okay that&#x27;s T0 there&#x27;s a there&#x27;s a community it&#x27;s not just a couple of guys in the central Francisco office thinking that can solve problems at global scale without talking to users. No.
+
+They&#x27;re actually listening. They are more than listening. They are looking at the market also and they are, you know, I think I never had this kind of meeting with people that are so experienced. Okay. So I can give you the example, just the basics of security.
+
+One of the... Yeah, we&#x27;re getting to security. But yeah, let&#x27;s talk about it. You cannot imagine that there was this moment where I have this problem in the hook just to find a good way to plug the authentication. And one of the, I started discussing and I was discussing with Aaron Paranke.
+
+And actually, I have to say I was very naive because I did another guy. Just a day later, I had this small talk and we discussed the problem and we tried to find solution. And we have this meeting together. And the next day I just realized. This guy is the author of most of the OOT&#x27;s RFCs.
+
+So this is serious people with very open heart, let&#x27;s say that this way, and passions. Even the people like me that come with some kind of naive questions, I would say. At the same time, they are steering a protocol. As you say, it&#x27;s a lot of responsibility so they cannot let the protocol drift and become something in manager. Okay, great.
+
+So let&#x27;s talk about security. And again, in that now in famous blog post that I wrote, a lot of my points were about security. And I&#x27;ll clarify it. Once again, I think if you&#x27;re just Joe developer or Jane developer and you write some code and you put it on GitHub and say, hey, I build this, fine. I mean, you did your best.
+
+It&#x27;s just a one-person project. There&#x27;s no expectation. It&#x27;s going to solve the world&#x27;s problem overnight. Although sometimes some open-source projects are exactly that, right? Yeah, just start like this.
+
+But if you&#x27;re anthropic, if you&#x27;re major, major AI company, and if the history, I mean, if your history, which is anthropic history, is about, you know, responsibility. Really like the anthropic models. I think that constitutional AI was a much better way to build models than what the other guys did, the not so open guys. I think if you have this, you know, if you, if you created the company that way, saying we want to build AI, but we want to build it in a responsible way, which I could stand behind, it&#x27;s very disappointing to see that, you know, you push a protocol and you start marketing it. And I think there&#x27;s probably that&#x27;s probably as always where a lot of problems happen.
+
+The tech guys did their thing. And then the bowl starts rolling and overnight it becomes a phenomenon. And it looks much better and much bigger and much more complete than it really is. And specifically security is that. And I think I was really, really pissed off, excuse my French, when I started reading the docs and seeing, yeah, well, and I&#x27;m paraphrasing, but, you know, yes, we know it&#x27;s not secure, but somebody else will take care of it.
+
+And if you really want to have credentials, you can put them in environment variables. And, okay, so I&#x27;m the old grumpy guy, okay? I was born a century ago. This violates everything that I I&#x27;ve learned and everything that I&#x27;ve practiced in the last decades. So maybe I&#x27;m too old for this stuff.
+
+Or maybe they were over enthusiastic or maybe marketing took something nice and sold it as something bigger. But yeah, let&#x27;s talk about that. Yeah. So let&#x27;s talk about maybe before we dive into the security things and you know much more than I do. Is that a responsible way to build tech?
+
+You build tech. You build tech. Is that okay? Is that a response? Is that how people do things now?
+
+Yeah. Do we have to get used to that? Yeah, that&#x27;s the question now. That&#x27;s happened. And I believe, again, it&#x27;s a new world and it&#x27;s not the tech we used to have.
+
+But remember also how many times we have been waiting for EFSIs to be implemented because sometimes, and I still know some of them, they&#x27;re pretty in all the network equipment that are still draft, just because it takes ages before everyone consensus and push the button. So that&#x27;s a big question. First, again, if we come back to the original purpose, remember the first single user of MCP was a local server running in your safe environment. Yes. Something crazy and was expecting just to let any model to access your local file system to see your files in a specific folder.
+
+So if you start from this problem, for sure they won&#x27;t have put like crazy. Yeah, you&#x27;re inside the firewall. It&#x27;s okay. It&#x27;s like sometimes when you have people saying, oh, you know, all machines are still there and it&#x27;s not connected to internet. I&#x27;m in a private subnet, nothing can go wrong.
+
+So you don&#x27;t go crazy. And maybe where you&#x27;re right is the problem that I&#x27;ve been solving, which is connecting an agent to external stuff, is a big, big problem. Yes, it is very difficult. And because it&#x27;s difficult, people just see like that, see the star and they say, oh, maybe we should use it for something else. And that&#x27;s where the problem, the travel starts because they first few years.
+
+Use is being expanded to something different. Yeah, and we saw that. I mean, it went out of control. And yeah, you know, immediately. Like, look, I create these proxies so I can use the client and the server with HTTP.
+
+Within days, we had open source projects popping up, you know, exposing MCP servers, you know, open to the internet, blah, blah, blah. And so I agree. I mean, I, you know, I don&#x27;t want to blame the authors. I mean, you know, I don&#x27;t want to blame the authors. I&#x27;m sure they knew.
+
+Well, and I&#x27;m not sure I want to blame somebody. I, at the end of the day, I don&#x27;t really care. I just think, again, the, if more than anything, it&#x27;s the sign of, and I&#x27;m sorry for that, the sign of how stupid collectively the tech industry can be. Yeah, I just really one thing is, like, because, you know, you want. You want to jump on that train and all of a sudden, you know, everybody&#x27;s building a CP product.
+
+Maybe that&#x27;s stupid, maybe more lazy. Because sometimes I see also this is you have plenty of different version of the protocol already. It&#x27;s version the right way. You can go into the specification and you can see the exact change I&#x27;ve been done. Sure.
+
+What I can tell you is there was the main discussion that I&#x27;ve been on security. Even if you look right now the way to correctly implement MCP, because you are expecting from the data for the users to be a provider that will provide to anonymous user, or I mean, a user that will start connecting from his machine or an agent or anything, and you are supposed to work with or anonymous user or a user with credential. They have been implemented the last version of the OOD protocol. And this is by the norm considered as a resource protected environment. So for me, this is not about the way to secure it mostly because anyone I can tell you that implementing the security level is a bit complex because you have to use the last technology, the safer one.
+
+So not all the provider will have that. But let&#x27;s say it&#x27;s for the good. For me, it&#x27;s the fact that people still relying on the day first protocol to consider that compatible with MCP. And they won&#x27;t implement the protocol. What&#x27;s the minimum set of boxes you need to take?
+
+Sometimes I say, yes, I have an MCP. The thing is, will the user, you look at all those MCP integrations, how does the user know what the guys actually built into the integration. Is security optional? Is it fully implemented? It&#x27;s a dangerous world out there.
+
+At the moment, I don&#x27;t see that as a big problem considering that most of the client have been fixed, whatever happened. So this code will not connect to any unsecure implementation. Or you will have to set that by yourself. So you take the risk is like, okay, do you want to disable your production in your market instead? And think of an interested source.
+
+They first, if you do it, you&#x27;re supposed to know. And sometimes that&#x27;s how the work work. What I&#x27;m a bit more feeling bad is anyone stating that your SMCP, even with the worth implementation. And if you try to connect that to most of the client would not work. But still, they&#x27;re advertising that.
+
+And for sure, there are some people that want to also use this hype to do some research paper sometimes. And they would just write a simple MCPD data or stuff. So they will just find a hundred of servers with lack of authentication, no HTTP, basic, you know. And they will say, you see, it&#x27;s not secure because there are 25% of the server in the internet are not secure. But the truth is you cannot connect that to a client.
+
+So where, you know, it&#x27;s also a hype in, I think also for the pessimistic. Okay, I agree. Yeah, yeah, I agree. Of course. I think you&#x27;re right.
+
+And so I think the conclusion here is it&#x27;s client-server communication. So if you&#x27;re writing the client and you&#x27;re writing the server, well, you have full control and if you inside a firewall, you can keep things plain and simple if you want. But if you&#x27;re using an existing client and if you&#x27;re using existing servers, you need to do homework. Right? And I think if you remember, I&#x27;m sure you know that.
+
+You remember the SIP hype also back in the voice digital voice. No one were implementing the protocol correctly. And just building something that can work between clients, server was Maze. Well, no, it&#x27;s really better here, but still the implementation, if you don&#x27;t use an official client or official server, can drift and you can have an inspected resource. So in the next, I don&#x27;t know, six months.
+
+Does this mean that we&#x27;ll mostly see, I would say, vertically integrated implementations? So we&#x27;ll see, you know, a client built by X and a set of servers built by X. And they will work very nicely together because obviously they&#x27;re compatible. Is this where we&#x27;re going, you know, the X implementation, the Y implementation and the Z implementation and replace XYZ with your favorite hyperscalor? That might have been the case stream.
+
+Is that the risk? Yeah. Could have been a risk. In the end, I see the exact opposites. Okay.
+
+So if you test any of the recent implementation from the bigger providers. And they actually interoperate. They more than interoperates. They really follow, let&#x27;s say, by the line, the protocol implementation, including the best security program. So yeah, I think also that might explain that some big player I&#x27;ve been waiting for adopting before the stock comes with the right level of security.
+
+But you we would agree on you know due diligence is needed. Oh yes I&#x27;m sure there will be an ecosystem for that. Don&#x27;t just download stuff and run it. Okay, that&#x27;s the basics right if you are yeah but you see you see I remember me the platform game. Yeah, WebMV is a platform game with the iOS and Android.
+
+And where I consider the Android failing, for example, sometimes the Play Store is full of stuff. You don&#x27;t want to install on your, just on your smartphone, right? That&#x27;s the same is the most you open the system, the more you make it accessible for everyone, and the most you will have malware because people are trying to rub your stuff and that&#x27;s your responsibility. And on the opposite, I expect there will be an ecosystem of registry that are safe and you can trust and there will be some corporate registries where the, you know, CIO of a company can decide to trust. Yeah, yeah, yeah, okay.
+
+There will be that. Okay, yeah, I&#x27;ve been telling people, you know, keep your, don&#x27;t put public, don&#x27;t enable public access on S3 buckets. Wow, you need, everyone, every time I read the news. Everyone say it&#x27;s a basic, but still. Yes.
+
+Do you have three buckets? Can you please check you don&#x27;t have public access? Especially if you use vaib coding. Yes. That&#x27;s it.
+
+Oh yeah, yeah, yeah. Starting to see payment, agentic payment applications. That&#x27;s going to be fun. Okay, maybe let&#x27;s move on. So there are a lot of MCP related open source projects out there.
+
+Do you have, do you want to recommend, I don&#x27;t know, one or two that you really like, that you think are really filling in the two, the two, three things that our viewers should look at if they really want to go ahead and build it with MCP? The first thing is take a look at the implementation that is done by the official clients and sellers. Because remember the community is always bringing something new. So I can just have a look at the protocol GitHub, which is cool because you have plenty of ideas coming here and understanding the arguments about Should we go here or there? And then this kind of tool, they come with a good community.
+
+So we will find the best implementation in place. Even if some projects like a fast MCPE in Python are the very good ones also. And there is everything that is super freeing me, which is the MCPEI. So it&#x27;s a specific, let&#x27;s call it an extension, even if the world is not really at the moment. Defined.
+
+It&#x27;s an add-on. Yeah, it&#x27;s a way to use the protocol without modifying the protocol by itself, but just using metadata. So you can also bring in your chatbot a UI. So you at the same time when you call a tool, you deliver the data expected, but also a way to render. Yeah, you can render the UI associated.
+
+And this is for me the big shift of how MCT can really bring additional value. I have been testing some kind of stuff, but I&#x27;ve tried to simulate a loan with Chargevity. Just getting exactly what you want will take you like a few hours. Because you always want to change what I will pay every month, how many time will I take the loan and the amount I can borrow anything. For sure, this is something you will do in a few sliders in any place.
+
+And for me, this is where we are going. Have plenty of platforms becoming more and more connected to this kind of widget, adopting this kind of widget. And I expect the MCP protocol will just be a kind of, yeah, a way to carry this new usage between agents and all applications. Okay, interesting. Okay, MCP UI.
+
+Yeah, MCPI UI. Definitely worth reading about and testing. So how do we get started? I mean, again, I&#x27;m not talking about, you know, the little guy or the little gal, you know, experimenting. Do anything you want on your laptop, that&#x27;s fine.
+
+Just make sure you have a backup. But again, in an enterprise, in a business scenario, what would be, you know, a good project to experiment with MCP? What&#x27;s the typical first thing people should try to build in their organization to see if it&#x27;s valuable, yes or no? What kind of scenario works well? So I think you have two kind of different scenarios.
+
+The first is all you want to focus on productivity of your employees and then for sure you might be expecting to connect your business solutions or your applications. To an agent to help finding documentation, asking tasks. I give you an example, but it would be super easy if I, that&#x27;s my dream, by the way. And if we have a solution for all the PTO, time off and so on, you know, and time tracking. And my engineers, they like me because I&#x27;m the one that goes to them and say, you have to do your time tracking.
+
+And for sure, one of my earlier this year is how we can activate through an agent, the capacity that they report the time tracking just by being in their workflow of code. So I think having MCP servers and most of the provider will come with that connected to an internal chatbot, an internal solution for share, or your corporate solution for chatbot connected to that. So you can use the data, retrieve data, summarize data every day that makes sense for you. And I do it with notion, for example. I come back in the office and say, can you summarize what was the good stuff of yesterday?
+
+And that works well. And you don&#x27;t have to use the area that is inside your tool. You can concentrate information. That for me is a good use case. It comes with some security question, for sure, because you have to, around from Octah would be like more and more giving you the insight on that what they call the cross-up problem.
+
+And there is a very good blog. Article blog he wrote about that. So you will have to have your CIO thinking about security for that. But for sure, this is the kind of case that would first go. If you are not building a solution, if your SaaS provider, then that can make sense for bringing to your users some additional features.
+
+I give you an example. To an IWS, do you know all the configuration that can be done with the IAM in this kind of super complex problem? So me, I will be like, even if you certify, you will be like, I know 25, 30% of what can be done by half because that&#x27;s my everyday stuff and I use it from Terraform. And then you have the few configurations. You do once a year or some new project or for new technology that you don&#x27;t know.
+
+This is where I would put an agent connected with MCP to help the user to do stuff that are complex. Okay. And if someone wants to write an MCP server, what are the ones that really make sense? And expose them to your user. Like for example, I guess the fork is looking at that, but you don&#x27;t have to talk about internal projects.
+
+But which ones make most sense? The first one... Because everybody&#x27;s just running Hello World example or the RBM example or the Spotify example, but okay, now we&#x27;re talking about real business value. What... When should a company consider exposing MCP to the external world?
+
+What would they use there? Let&#x27;s start by one thing. For me, there is a shift in this specific world coming with Chad GPT as the first. Of course, yeah. Is the focusing on the intent of the user.
+
+You have to forget the old war that was I will create a way, let&#x27;s back to 2000 where we create websites and we create anti-partum so people can buy what we want them to buy and not them what they need. That was, and they can. I have no idea what you do. I&#x27;ve never done that. I&#x27;ve never done that.
+
+Yeah, so that pattern, everyone knows that. I&#x27;ve never done any of that. And we try to create a world where they believe and they like a brand and they like our interface. And now they use chativity and they ask exactly what they want. Well, like a user.
+
+So if a user knows what he wants is cool, but still they start with an intent. MCP servers, I would write, is something that will connect the intent of a user to what I have at an API. And this is for me the best case scenario because If you just to make your APIIs in the MCP world, well, your APIs are done for your developers. Yes. And even if you&#x27;re, if you&#x27;re partners, it&#x27;s not partners API, it&#x27;s just the Conwello applied to the APIs.
+
+Yes. Yes. And it&#x27;s the right moment to break that. And to make the, to make an agent to understand what could be good for the user to perform. Intent.
+
+Okay. So I would start by that. Okay, that&#x27;s good. Okay. All right, I think it&#x27;s about time.
+
+We could go on for a few more hours. Even days, I&#x27;m sure. So let&#x27;s wrap up. So why, okay, in 60 seconds, you know, why should people invest in MCP and, you know, and why are you a believer? Adoption first I believe you know you never know if a protocol will take before the big star start to use it and this is the case now okay I really see more of the big players starting to have part of the strategy to rely on that on NCP maturity it start to be a really mature protocol based on JZone RPC which is a standard it&#x27;s just a layering of the good that we know can work together.
+
+And the last thing is the user. As you say, we can have the ecosystem of builders. Now we will have to take care if people understand what is behind MCP and can they use it. And that I believe will come very soon with registry. So they will start to see no more MCP servers, but connectors.
+
+Yes. But ecosystem. And they will start by that. All right. And I guess I will ask myself a question, you know, why I, you know, have you changed my mind?
+
+I hope so. I did change my mind and, you know, where do I stand? I will still, and maybe that&#x27;s a philosophical discussion, but, you know, I think, you know, as builders, it&#x27;s, you know, everybody keeps talking about being responsible, responsible, responsible, but here&#x27;s the perfect example where that launch, I don&#x27;t think was responsible. Okay, I think when the internet was built, you know, in the late 60s, early 70s, it was a different world. You know, it was hippies, right?
+
+Yes. It was people in Berkeley and, you know, smoking, things and coding stuff and trying to build a better world. And it was a very tiny group, right? Yeah. A very bright group of people.
+
+Now it&#x27;s really different. I mean, the world is much more complicated. It&#x27;s much more dangerous. I mean, IT, AI, everything&#x27;s connected. We have bad actors, you know, from governments to, you know, organized crime, etc., etc.
+
+And sorry if I&#x27;m going to sound like AWS again, but security is priority zero. And I think anything you build, anything, cannot ignore security. So I think that was a major oversight, let&#x27;s call it like that. And I think there should have been more care here. I&#x27;m not sure who I&#x27;m not sure I&#x27;m not sure I&#x27;m just saying it happened that way and it makes me a little sad that a company like Anthropic who actually has a very interesting take on what responsible AI is did that.
+
+I was disappointed you know yeah I was disappointed I totally get it I&#x27;m still wondering but anyway I&#x27;m still wondering what will happen if if they&#x27;ll come with something that is looking more like super safe with Open App Store. You know, people will have this criticism that you have, oh, you want to close your system and you want to make this system, not open. Well, I think it&#x27;s, you know, that&#x27;s my number one problem. My number two problem is, again, how stupid collectively the tech community can be the lack of, you know, the inability to step back and say, okay, this is an interesting thing, but it&#x27;s so. So immature in that respect and that respect.
+
+So, you know, let&#x27;s say it, right? Let&#x27;s not let&#x27;s not say this is the second coming of Christ or your favorite deity. Okay, let&#x27;s be, let&#x27;s be pragmatic about what it is. It&#x27;s a prototype. So, you know, influencers, consultants, vendors, you know, stay away.
+
+Rougars. Yeah, yeah, yeah. Go sell whatever you sell. Yeah, yeah. But, you know, don&#x27;t try to.
+
+To lure organizations into, oh yeah, MCP, perfect, go spend your dollars. I think this is really painful. This is really painful. So I&#x27;m happy to hear it&#x27;s getting better. Like you have some security heavyweights, world-class people on the project, so it&#x27;s going to get better.
+
+Of course, you need to do your homework, as always. But the same way that when you select a model is a... You can&#x27;t just randomly do it. Yes. Don&#x27;t blindly trust what stupid evangelists tell you.
+
+Do the homework, do your test. If you&#x27;re working with the client, look at what the client actually implements. If you&#x27;re building a server, make sure to add security, especially if you have data stores connected to it. Totally. So, you know, again.
+
+And test, test and test. Yes. Well, evaluate. Yes. That&#x27;s the new.
+
+Evaluate and observe. Best practices apply. And I keep saying, you know, it&#x27;s not different. This time, it&#x27;s never different this time. So all the best practices apply.
+
+So I think MCP will become a thing. I think it&#x27;s already, but I&#x27;m sure that if I consider that big today is really huge tomorrow. Yeah. So I think it will be, you know, it&#x27;s here to stay. Whether I like it or not, that&#x27;s irrelevant.
+
+Again, I&#x27;m just a very pragmatic guy, so I&#x27;ll keep reading the specs, you know. Maybe I&#x27;ll pay a very close attention to anything related to security because again, you know, I work a lot with enterprise customers and that&#x27;s always the first question they ask. Sure. And as it should be because it&#x27;s their data, it&#x27;s their company data, it&#x27;s compliance regulation. Some parts of the world are stricter than others.
+
+And nobody wants to go in jail, right? That&#x27;s it. Especially for MCB. So yeah, I&#x27;ll keep, you know, and I encourage you to keep watching, keep reading, you know, be smart. Be smart.
+
+Be smart. That&#x27;s the thing. Do the homework, be smart. And figure out if you can actually build something useful with that. Okay?
+
+And I think that&#x27;s a good conclusion. And we can see you in six months so we can be briefed. Yeah, yeah. We&#x27;ll keep in touch. We&#x27;ll have another lunch in six months and see where we stand.
+
+I&#x27;ll change my mind. I am, you know, you know, you know, you disagree, but I am actually capable of changing my mind, at least on technical topics. Okay, so Jan, thank you so much. Thank you for having me today. Go check out the fork if you&#x27;re looking for restaurants.
+
+And this is not a sponsored video just to make it clear. Yeah. We just happen to be in the office today. And I&#x27;ll see you soon with more content and hopefully more interviews. If you like those, let me know.
+
+Okay. See you. Thank you.</div>
 <div class="video-links">
 <a href="https://youtu.be/VHfXKxmlcTA" target="_blank" rel="noopener noreferrer" class="btn">Watch on YouTube</a>
 <a href="../index.html" class="btn">← Back to 2025 Videos</a>

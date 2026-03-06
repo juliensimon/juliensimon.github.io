@@ -22,7 +22,111 @@
 
 <a href="https://www.airealist.ai/p/arcee-ai-trinity-large-an-open-400b" target="_blank" rel="noopener noreferrer">Read full post on Substack &rarr;</a></div>
 
-        <div class="tags">
+        
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, this is Julian. I have big news, or I should say large news today. Just a couple of days ago, RCAI have released their latest model called Trinity Large Preview, and it&#x27;s a 400 billion parameter model with a mixture of experts architecture. The model is available on Hocking Face, Openweight, Apache 2-0 license, how crazy is that? So we&#x27;re going to take a look at some of the architecture features of Trinity Large, and then of course we&#x27;re going to do a fun demo with code reviews in many many languages and a few surprises okay let&#x27;s get started as usual you&#x27;ll find all the links in the video description let&#x27;s start with the launch block post which covers a lot of ground so let me give you some of the highlights first of all rc is actually releasing several models so we have trinity large preview the one we&#x27;re going to look at and and play with And this is not, as the name implies, the final reasoning model.
+
+This one has been, as they put it, lightly post-trained, and it&#x27;s ready for chat type applications. They have the large base model, which is the best pre-training checkpoint, and they have true base, which is an early checkpoint, which would be absolutely great for researchers out there. It&#x27;s very, very rare that AI labs actually output such early checkpoints. And that&#x27;s the case here. So all the models, as you would expect, are on Hugging Face.
+
+There is a Trinity Large Collection here. So we have the preview. We have the base. We have the true base. We have a bunch of quantized versions for the preview model.
+
+Although I have to say this is a large, large, large model. So easy to run locally this time around, but maybe I&#x27;ll find a solution. So everything on Hugging Face, as you would expect. And there&#x27;s also a pretty interesting interview on Venture Beat, which again will give you even more insight into how and why Trinity Large was built. Okay, let&#x27;s go back to the blog post.
+
+So as you can see here, Trinity Large is a mixture of experts model. Very sparse meaning that a small fraction of those experts are actually used at inference time okay so as we can see here we&#x27;re only using four experts at for each token okay so at inference time when we&#x27;re generating one token only four experts are active for a total of 256 okay so that means we&#x27;re only of the total model parameters when we&#x27;re running inference. And this is only, I guess, bested by Llama 4, and you can see all the other popular models tend to use more of their parameters. So why is this significant? Well, it is because in a way you get the knowledge of a 400 billion parameter model with the inference speed of a 13 billion parameter model.
+
+You will see how fast Trinity Large can I actually generate text. So in a way, we get the best of both worlds. So that&#x27;s the first important property. So how good is the model? Well, we can see some benchmarks here and we see Trinity Large Bays as the green model versus Llama 4 blue and GLM45 gray.
+
+And we can see that the model is holding its ground some benchmarks actually much more than that. We can see on Bath that Trinity Large looks extremely, extremely strong. And it&#x27;s also doing very, very well on reasoning tasks and MMLU, right? So this is a very, very strong foundation. I know everybody says state of the art, but this is clearly one of the best models out there.
+
+And keep in mind, we&#x27;re still waiting for the reasoning model. So how was the model trained? Again, R.C. Shared a lot of information. They trained on 2KB300 GPUs.
+
+I believe this is actually the first model to be trained on those latest GPUs, right? I think they were actually the first to grab them and release a model. They trained for a total of 30 days. And about $20 million. And you could say, well, 20 million, that&#x27;s a lot of money.
+
+Well, for this kind of initiative, it&#x27;s not. Trust me, you can look at some of the numbers that all the labs have shared. This is actually super fast, 30 days, and super cost efficient. And 20 million is everything, not just the GPU, it&#x27;s everything that went into the model, data preparation, et cetera, et cetera. Okay?
+
+Now, they have a tech report. For you R&amp;D folks and researchers where they talk much more about the model and the architecture tweaks that they&#x27;ve made. Again, I&#x27;ll put the link in the video description. So lots of very advanced stuff that I won&#x27;t cover here, but just so you know, you can learn more in the technical report. Okay?
+
+So let&#x27;s talk about data. So the model was trained on 17 trillion tokens. That were curated by Datology AI. And if you&#x27;ve been following, you may remember that Arcee&#x27;s first foundation model, AFM 4.5B, was trained also on about, I think, 10 trillion tokens, trained and curated by Datology. So it&#x27;s good to see the partnership going on.
+
+It&#x27;s definitely delivering amazing results. So 17 trillion tokens, a mix of coding and science, engineering and math, reasoning, multilingual data, etc. So you should get great performance, not just in English, but also other languages. And 8 trillion tokens were actually generated synthetically to enhance and improve the quality of those tokens. So most of it is not net new data that they generate.
+
+It&#x27;s actually a rewriting, let&#x27;s say, Wikipedia pages in a shorter, dancer way, just to increase, I guess, the information density in that data. So that&#x27;s what it is, 17 trillion tokens, pretty good. And so we get Trinity Large Preview, which is not the reasoning model. And again I can&#x27;t wait to test this thing but we get a model that is absolutely good for for chat applications and and we&#x27;ll see how well the model does when we start testing it in a few minutes okay all right so I think that&#x27;s pretty much what we could we could look at again more information 20 million I worried about true base and and where to use it we&#x27;ll look at in a second Yeah, I guess the last bit of useful information is we have 512K context, which is very, very large. And we&#x27;ll make this model a great, great choice for large code analysis, large code refactoring, very complex reasoning with huge user-provided data in the context, et cetera, et cetera.
+
+The model is deployed on open router, can see here and for now it&#x27;s free right as in zero dollars which is awesome it&#x27;s limited to 128 k which is absolutely more than enough to have good fun with it okay and that&#x27;s the version we&#x27;re going to try in a minute so like I said everything is on Hugging Face you can go and grab them and that&#x27;s about it okay so again go and read that blog post go and read the tech report, go and read the VentureBit Capital, and start testing the model on open router. And that&#x27;s what we see here. And as usual, this is super, super easy to do. We get some examples in many languages. And all you need to do, as usual, is create an API key.
+
+But once again, the model is free. So there&#x27;s no reason not to do. Do this and here&#x27;s a bunch of code examples JavaScript and Python and TypeScript and even Curl if you want to try that. Okay? So this is what it is.
+
+Absolutely amazing. So now let&#x27;s take a look at the small application that I built and you can actually test it as well because it is a Hugging Face space. Okay, let&#x27;s take a look. All right, so what did I build this time around? So given how much code and STEM went into the data set, I thought, okay, this time we should really focus on a more technical application for Trinity Large.
+
+So I decided to build a code review application, and it&#x27;s a small app that is hosted on Hugging Face. Again, the link is in the video description, so you can actually go to it right now and test. I&#x27;ll leave it up as long as the model is free. So you can go and have fun. So how does that thing work?
+
+Well, you simply paste the URL of a GitHub file in here, okay? Or you select one of the many examples below. We&#x27;ll look at them in a second. Then you select how gentle or standard or brutal you want the code review to be, okay? And then you just launch the code review.
+
+Okay? And what you&#x27;re going to get is a fairly, fairly deep code review in terms of just code quality and performance and security. And just for fun, I added three extra code reviewers. So Linne Starvels, Donald Knott, and Bjorn Storstrup. I hope you know those names.
+
+Linus, is the creator of Linux. Linus, is the creator of Linux. Donald Knut is, well, how do I call him? Computer science, legend, and algorithm god. Just go check his books.
+
+And of course, Bjorn Storstrup is the creator of C++ and another software engineering legend. And I have to warn you, the more brutal you go. The more brutal it&#x27;s going to get, especially Linus. We&#x27;ll look at the prompt in the second, and I think it&#x27;s proof that Trinity Large is very, very capable of following very clear instructions. OK, but let&#x27;s wait for that.
+
+OK, so we&#x27;re going to look at some of those examples here. So I have something like 40 different programming languages, because I didn&#x27;t want to do just Python or Java or the most common stuff. I&#x27;d cry out very exotic and sometimes legacy languages to see how Trinity Large would do with them, all the assembly languages or Progress ABL. Somebody remembers that? And I selected files from very famous, I guess, open source projects, and I specifically looked for files that are critical files in the project.
+
+Complex ones, not just the, you know, not the peripheral stuff. Okay, so why don&#x27;t we start? Okay, let&#x27;s go and start maybe with Git or the Linux kernel. Why don&#x27;t we do that? Okay, so let&#x27;s go with Brutal, Linux kernel, and off it goes.
+
+Okay, so first we get a summary of what that file is. So it&#x27;s the red-black tree implementation in the kernel, which is used across the kernel. And obviously, it&#x27;s a, It&#x27;s a critical, critical piece. Then we have code quality. Let&#x27;s see how fast this goes.
+
+Yeah. See? OK. So that&#x27;s the speed we get from Trinity Large. And the reason we get that kind of speed is because we&#x27;re only using 13 billion parameters and not the full 400.
+
+OK, so it&#x27;s quite fast. So we get code quality, we get performance, we get security, we get extra suggestions and we&#x27;re going to get verdicts from our three elite reviewers. Okay? So go and run those examples. Go and run yours.
+
+And of course you will see some very, very fine grain advice. And I was surprised how well the model not only would, you know, how relevant the comments would be, but also how about how good those fixes were. And for every one of them, I added why should we fix this and why not? So for example, here we repeatedly access a field in a struct and okay, well, this could waste a bit of time. On the other hand, maybe the compiler is already optimizing this.
+
+So maybe there&#x27;s no reason to change it. So, yep, lots of really, really good insights. So it looks like we found 13 issues. Let&#x27;s find maybe security. There&#x27;s an overflow risk here.
+
+Some extra suggestions. And then of course, the fun stuff is the verdicts. And if you did spend a bit of time in Linux mailing lists or interacting with Linux, in some form. You know how rude and how this one is honestly a very good example of what he is capable of when he&#x27;s not happy about a bit of which is quite funny here because of course it&#x27;s a red and black implementation in the Linux kernel. So not sure who actually wrote that piece, maybe Linux, maybe someone else.
+
+But yeah, this is the kind of pushback, let&#x27;s call it like that, that you would get. Donald is obviously well, well-mannered, a true gentleman, but still making points about this piece of code not being great. And same for Bjorn, the amazing software architect telling you that you just violated the zero overhead principle and a few more things. All right, let&#x27;s try another example. I&#x27;m going to try and do maybe, let&#x27;s stick to brutal, because that&#x27;s really the fun one.
+
+So this. Okay. So this is the core Kubernetes scheduler scheduling loop. Okay. So apparently a very important piece of code.
+
+And well, the code is a mess of nested conditionals, error handling spaghetti, and performance anti-patterns. It&#x27;s trying to do too much and doing it poorly. Okay. Disclaimer, not a huge Kubernetes fan anyway, but okay, let&#x27;s look at the code. Okay, so we find a lot of issues.
+
+A function this large is impossible to test. Hard-coded constants that should be comfortable are a code smell. Deep copying is expensive. Resource cleanup should be in a defer to guarantee execution. Okay, so there are a lot, a lot of things that Trinity Large is going to find.
+
+And to be honest with you, I also started from those amazing open source projects because I thought, well, you know, the code quality is probably, it&#x27;s better. And I was surprised that every, every file I&#x27;m throwing at Trinity is just riddled with horrible issues. And yet the projects work and the tools run. But, you know, I think it was an eye open for me that even those amazing projects have fairly poor code quality, at least in some places, and security and safety issues all over the place. All right, so what do the experts have to say on this one?
+
+OK, this is absolute garbage, a 123 line function that does everything and nothing well. OK, that&#x27;s kind of funny. OK, this code is a perfect example of why Kubernetes has performance problems? Well, I couldn&#x27;t comment on that. Fix it or find another job.
+
+Okay, and then we have more and more issues. All right. So we could play with this for a while and actually it&#x27;s quite addictive. If you really want to run, I have to say, all the examples. Okay, let&#x27;s do maybe a final one.
+
+Let&#x27;s do Fortran. Okay, and we&#x27;ll dial it down. Let&#x27;s do standard Fortran. See how that works. So this one is the linear solver for X equal B, okay, which is kind of a thing when you do linear algebra.
+
+The code is functional, which shows its age. It&#x27;s written in F77 style. For the younger ones out there, that yes, that means 1977. Okay, code quality. Well, there are some issues.
+
+Okay. Performance. Okay, we have an unnecessary branch, unnecessary string comparisons, no bounce checking on arrays. Oh, that&#x27;s always bad. Two more things here.
+
+Some extra suggestions. Get the funny verdicts. Well, I guess not so brutal because we&#x27;re in standard mode. But generally, again, you see how the model is able just to pick up any language and find problems in there, regardless of how old it is, regardless of how bizarre it is. So I think it&#x27;s proof that the model was trained right and certainly trained on a lot of coding, because some of this stuff is really really It&#x27;s a bit obscure, you know, and it goes on and on and find problems there.
+
+Okay, and let&#x27;s look at the verdicts. Ah, okay, so apparently Linus is having a good day. This kind of is functional but archaic, okay? Fix the security issues, modernized interfaces, this isn&#x27;t rocket science. Oh, okay, no profanity and no caps, so that&#x27;s certainly a good day.
+
+And Donald likes the algorithm, but doesn&#x27;t like the implementation. And Bjorn would probably say, just rewrite the damn thing in C++, but okay, right? So that&#x27;s what it is. And you can have fun if you want to try your own code. Again, just paste your own code in here.
+
+And because it&#x27;s a Hugging Face space, you get access to the code. And it&#x27;s a fairly simple app. And if we look at the, let&#x27;s look at the prompt. Okay. So we have a basic, If you&#x27;re gentle, you&#x27;re supportive and constructive.
+
+If you&#x27;re standard, you are an elite code reviewer with uncompromising standards. And you can be witty but never nice for the sake of being nice. And I should put that on a t-shirt. And brutal, you are the most savage code reviewer in existence. You channel the peak rage of Lynn Storles on his worst day.
+
+Etc, etc, etc. And yeah, go read the prompts. And that&#x27;s pretty funny. And I have to say it works very well. This is exactly what you see on the output.
+
+So even though the model is not final, and even though the model has just been post-trained a bit, it&#x27;s already amazingly good at, I guess, impersonating those folks. And that&#x27;s pretty cool. And the rest of the prompt is such as finding problems and displaying them correctly with a diff format, which is fairly, I don&#x27;t want to say complicated, but it&#x27;s still a bit of advanced templating and formatting. And it works, right? So I really can&#x27;t wait to try to try.
+
+Try the final model, the thinking model. I think it&#x27;s going to be absolutely amazing. Okay? So, well, this is what you get, Trinity Large, a brand new foundation model trained by a small frontier lab in San Francisco. Well done, guys.
+
+30 days, only 20 millions, and already on par or better than Llama 4 and other model. And 20 million dollars. So this is an amazing achievement. It looks to have a very, very strong code and reasoning and tech and complex task profile. So again, of course, we&#x27;ll wait for the reasoning model to drop and I&#x27;ll be the first in line to test it.
+
+Okay? As usual, all the links in the video description. Go and play with that. That, have fun code reviewing and building more things. And until next time, my friends, you know what to do.
+
+Keep rocking.</div>
+<div class="tags">
             <h2>Tags</h2>
             <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
         </div>

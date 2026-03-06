@@ -22,7 +22,79 @@
 
 <a href="https://www.airealist.ai/p/verdent-ai-coding-with-parallel-agents" target="_blank" rel="noopener noreferrer">Read full post on Substack &rarr;</a></div>
 
-        <div class="tags">
+        
+        <div class="transcript">
+<h2>Transcript</h2>
+            D. Hi everybody, I am Julian. In this video, I&#x27;m going to demo a new AI coding tool called Verdant AI. Verdant lets you run multiple AI agents in parallel, each in its own isolated workspace. So no stepping on each other&#x27;s code and no code merging nightmare at the end.
+
+In the next 10, 15 minutes, I will build a full stack app, live, backend, front end, unit tests. All at the same time. Let&#x27;s get started. A lot of us are using AI coding tools at the moment, and they&#x27;re awesome. They definitely add a lot of productivity.
+
+Most of the time we start working on a feature, prompting the agent, waiting to see results, testing, and then finding a bug or something we don&#x27;t like, and switching to fixing that, and then we move to another thing and then another thing. So we have those long conversations that, over time and context gets lost or becomes irrelevant. And it&#x27;s making it&#x27;s making it harder for the agent to actually do a great job. Files are reloaded, we need to explain what we were doing five minutes ago, et cetera, et cetera. And the reason for that is because, you know, this conversation is single-threaded, right?
+
+And every time we switch to something, you know, we lose relevance, we lose context. So how about trying to do things in parallel, in isolated tasks? And that&#x27;s really what Verdant is trying to solve. So we&#x27;re going to work with multiple agents. Each one is running in its own workspace, its own contexts, and they&#x27;re completely parallel.
+
+So obviously we focus each agent on a particular thing, and they&#x27;re running parallel. So hopefully we get more things done in the same amount of time, right? We just assign the tasks to the agent and we let them run. Okay? So let&#x27;s see if this really works.
+
+And using Verdant, I&#x27;m going to build a small app and I&#x27;ve decided to build a mock-up for an LLM benchmark dashboard. Okay, so we&#x27;re going to build a backend with APIs and we&#x27;ll use I&#x27;ll use fast API for that. We&#x27;ll use a front end with React. And I can&#x27;t write any React codes. I&#x27;m hoping the agent will do a good job here.
+
+And of course, we&#x27;ll need unit tests with pie tests. So three agents and three workspaces running all at once. Okay, so let&#x27;s switch to the Verdant app and set up the workspaces. Okay, so my starting point is an empty project. That verdant.
+
+Boulder, I initialized Git. I have a first silly commit just to create an empty read-me file and there is a single branch called master. Okay, so that&#x27;s where we start. So now looking at Verdant, we&#x27;re going to create the three workspaces, front-end, backend, and tests. Okay, so let&#x27;s just go This one, this one, let&#x27;s just call front end.
+
+And well, I guess we&#x27;ll start from master. Okay, that&#x27;s the only option right now. Okay, let&#x27;s do the same for the backend. And let&#x27;s do the same for unit tests. So I haven&#x27;t done much so far, just created those.
+
+Once I&#x27;ve created the three workspaces, I can see that verdant has automatically created branches for that. So that&#x27;s pretty cool because it can then work automatically with those. So here&#x27;s my backend prompt. Build a fast API backend for an LLM benchmark dashboard. I want a main script with two endpoints.
+
+Slash models, slash benchmarks, benchmark scores. Okay? So we&#x27;ll use mock data, but we could easily add actual scores in a database. And, you know, we&#x27;ll just use some well-known models with that mock data. And these are the benchmarks I want to see.
+
+I want a health endpoint, basic errors, et cetera, et cetera. Okay? So nothing too fancy. Take care of the front end prompt. To build a React dashboard that displays the benchmarks, we&#x27;re going to retrieve the data from the two backend APIs, which is discussed.
+
+I want to see those numbers in a table. I have a simple bar chart for comparison. Just something nice, simple, clean. It&#x27;s the first version. Nothing weird, single page, etc., etc.
+
+So that&#x27;s it for our front end. And of course, we need tests. So these are our requirements for the test. I want pie tests. I have my three endpoints, models, benchmarks, health.
+
+And I guess at this point, I want simple tests, making sure the APIs work, making sure the return JSON is correct, et cetera, et cetera. I want to use Pi test, HTTPX, and keep everything nicely organized. So we&#x27;re ready to run those and as you can see we could pick from a long list of models, right? The cloud models, the Google models and the OpenEI models. So I&#x27;ll just stick to Opus 4-5 but feel free to go and experiment and we could use agent mode which is what we&#x27;re going to go for directly and I&#x27;ll show you later mode, which you may already be familiar with.
+
+Here, you know, we have decent prompts. We&#x27;ve done the homework and we&#x27;re ready to run that stuff. Okay, so let&#x27;s just fire them up. So here they go, starting to work on their individual task. We can see here the front end.
+
+Going to install a whole bunch of packages and dependencies. I don&#x27;t need to worry about that. And I see the backend, again, is busy creating the app. It might actually be done with that already. And yeah, the tests are happening as well.
+
+Okay, so this is really cool. And again, all of that, ne is happening independently in different branches, that&#x27;s nice. Okay, so the front end is being built. Looks like the backend is done. Yes.
+
+Okay, well that&#x27;s a simple app, but still, we can go and look at the code. Fast API. Class benchmarks, some bogus data, but that&#x27;s what we wanted. And the three APIs and requirements looks fairly reasonable to me. We could ask for a code review.
+
+Okay, why not? Let&#x27;s ask for a code review whilst the other agents are working. We see the thinking the thinking code here. Let&#x27;s see the thinking code here. Let&#x27;s see what happens.
+
+And the code review. Must fix nothing. Okay, good. Should fix some Python syntax here. Course.
+
+Okay. All right. Well, nothing, nothing too bad. Okay. So we&#x27;ll just leave it at that.
+
+But hey, that&#x27;s pretty cool. This call review in place. I think the front end is over. Okay, the front end has been created. A whole bunch of files that I clearly do not want to open.
+
+I just want to see that the app works. And unit tests, unit tests are complete. Okay, and yeah, we have simple tests. That&#x27;s what we wanted and they seemed to pass. So all three agents did what they were supposed to do.
+
+Apparently everything worked out and I guess the isolation is important here and it took you know about two, three minutes max. How much time would it have taken me to do this? Okay, the back end, not too long for sure, but certainly longer than three, four minutes and the front end would have taken me even with an assistant I don&#x27;t know way too long right and the tests nobody likes to write tests right so this is quite fast it looks very very productive to me so now that the agents are done we should merge those branches into into master and run the app okay so I just asked verdant in the base workspace to start the app the back end has been started and the front end has been started to Let&#x27;s see that it works. Because on top of everything, this is, of course, an AI system, right? And we could ask Opus here to go and run some tests and make sure things are okay.
+
+Okay, backend works, front end seems to work. Okay, now we can try opening the app. Fingers crossed. That&#x27;s what I wanted. It&#x27;s very simple, but okay, that&#x27;s what I wanted.
+
+Table and a benchmark. We only have three models here, so let&#x27;s add a few more. But maybe we can make it look a little nicer. So let&#x27;s try and build something. So let&#x27;s try to have a slightly sexy or UI here.
+
+Maybe a heat map, maybe some colors. And because we have existing code, let&#x27;s be careful. I&#x27;m going to switch to plan mode here. Let the agent think about how it&#x27;s going to build it. And if it&#x27;s convincing, then we&#x27;ll go and build it.
+
+Okay, let&#x27;s run this. And while it&#x27;s doing that, okay, we have more models. So let&#x27;s go and... Yeah, nice. Okay.
+
+Looks a little bit easier. Again, all those scores are bogus, okay. Ah, so we&#x27;re getting a question here. Should this replace the dashboard? Or should I create it a separate project?
+
+I don&#x27;t know. Both. All right? Let&#x27;s just do both visualizations. Okay, okay, so here&#x27;s the plan, some new components, some colors, and a toggle.
+
+Yeah, let&#x27;s go build it. Okay, it&#x27;s done. We can merge. All right, that looks pretty sweet. That&#x27;s what I want it.
+
+Okay, and well, we could keep iterating for a while. But hey, I&#x27;ve got a way to create UI code now, which is awesome for me. And generally, I think it&#x27;s a nice tool. I like it. I like the isolation.
+
+I like the fact that we can create the different workspaces and have autonomous agents building in their own Git environment, not stepping on each other&#x27;s toes. Then when I&#x27;m happy with the result, I can just merge the branches and test the app. So there you go.verton.a.I go and download the application and you have a free trial, which is always good. And yeah, curious what you&#x27;re going to build with it, right? Happy to answer questions in the comments section.
+
+I hope you liked it. I certainly had fun. Testing verdant. Until next time, keep rocking.</div>
+<div class="tags">
             <h2>Tags</h2>
             <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
         </div>

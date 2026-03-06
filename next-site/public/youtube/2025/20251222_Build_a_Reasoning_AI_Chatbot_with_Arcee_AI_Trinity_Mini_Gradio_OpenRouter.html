@@ -38,7 +38,87 @@
 
 <a href="https://www.airealist.ai/p/build-a-reasoning-ai-chatbot-with" target="_blank" rel="noopener noreferrer">Read full post on Substack &rarr;</a></div>
 
-        <div class="tags">
+        
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi, hi, Julian here. In this video, we&#x27;re going to continue exploring the recently launched RCAI Trinity Mini model. And to do that, we&#x27;re going to vibe code a simple chatbot. And I&#x27;m going to use Python, Gradio, the OpenAI API. We&#x27;re going to invoke the model hosted on OpenRouter.
+
+And of course, I&#x27;m going to use my favorite tools, cursor, and cloud code. Okay, let&#x27;s get started. I&#x27;m not going to do that again. I&#x27;ll just include all the links in the video description. Okay.
+
+So elevator pitch, 26 billion parameter model, mixer of experts, reasoning capabilities, and we&#x27;ll see those in action. Okay, the model is available on Hocking Face under an Apache 200 license, which means you can use it even for commercial apps. And that&#x27;s when we&#x27;re going to used today it&#x27;s also available on open router with a friendly open a I compatible API okay all right let&#x27;s get started let&#x27;s fire up cursor okay so there isn&#x27;t much here just an environment and a dot on file with the open router API key okay which is the usual way to do that instead of hard coding it into your code but then again I&#x27;m showing it which is not what you should do. And obviously I will disable that key when I&#x27;m done. Okay.
+
+So let&#x27;s just prompt the model. I&#x27;m going to use plan mode for now and just let them. Yeah, just let Currisor, pick the right model. So here&#x27;s my prompt. I want to build a simple chatbot based on the RCI Trinity mini model.
+
+You should use Gradio, the opening eye client, and streaming mode. I also want to see the reasoning code. Add some simple prompts and then I give it the model page on open router and point it at the API key okay let&#x27;s try this we&#x27;ll look at the plan first and if we like the plan then we&#x27;ll switch to to building there&#x27;s a question how would you like to display the reasoning code in a separate panel tab below in line Thank you. Okay, that&#x27;s a collapsible section. Okay, show me the reasoning code on top, then the answer below.
+
+Use different panels. That&#x27;s why I like to ask the models, you know, ask me for clarification instead of just picking one of the options and then me realizing, ah, okay, no, that&#x27;s not what I wanted. Okay, so it looks like we have our plan. Let&#x27;s take a look at the plan. Okay, create chatbot, Gradio, OpenAI, streaming handler, implement reasoning extraction, add simple prompt.
+
+Okay. The layout. Okay, panels are stacked vertically. Simple prompts. Okay, well, that looks fairly straightforward.
+
+Okay, let&#x27;s go build. So that&#x27;s probably going to take. So I&#x27;ll post the video and there&#x27;s anything fascinating I&#x27;ll show you. Here&#x27;s the code already. Okay, so we&#x27;ve made good progress.
+
+We have the basic structure. We have history management, which is nice because I didn&#x27;t ask about that. So we should be able to ask full-up questions. We have the streaming code. We have sample prompts.
+
+And then we have the app and the Gradually. All right, that should be done soon. Okay, so now we have extraction for the reasoning code, which is important. And yeah, that should be the last thing. It&#x27;s fixing something somehow, which is fine.
+
+Let&#x27;s give it a minute. Okay, so now we have the code. One thing I think we&#x27;re missing is the requirements file. So let&#x27;s ask for that. I didn&#x27;t specify.
+
+Okay, done. So let&#x27;s just keep all those updates and let&#x27;s just run the chatbot. Okay, there&#x27;s a small error. Fine. Yeah, let&#x27;s ask you to review the code for Gradio 6 compatibility, because that&#x27;s the one it installed by default.
+
+I didn&#x27;t specify any version here. Some additional keywords or inconsistencies. Let&#x27;s double check that. We should save on debug. Okay, so apparently it did fix a few things.
+
+So let&#x27;s keep all of those and run. Okay, let&#x27;s try and run it. I don&#x27;t like the built-in browser so much. Okay. Good, good, good.
+
+Reasoning code, chat. Okay. Examples. Let&#x27;s give it a shot. Oh, yes.
+
+Man, this is fast. In the previous video I showed you how fast this was. It was like 250 tokens per second. And we get that here. Okay, so we see the reasoning code.
+
+Nice and then we see we see the answer with a bit of math and everything I like here a bit of code good um nice nice why don&#x27;t we try another one what are the key differences between supervised and unsupervised learning let&#x27;s go , wow. Isn&#x27;t that cool? Seriously? That&#x27;s the beauty of those mixture of experts models. So it&#x27;s 26 billion parameters, but it&#x27;s only 3 billion active, meaning when you run inference, you&#x27;re only using, you&#x27;re only computing, so to speak, with 3 billion parameters.
+
+So that&#x27;s why you get that kind of speed. Literally, you get the speed of a 3B model with the knowledge of a 26B model. Yeah, so that&#x27;s pretty nice. One thing I&#x27;d love to have here is maybe the ability to set the number of tokens. So why don&#x27;t we go back to cursor and ask for that?
+
+Okay. Let&#x27;s try this add a slider to control the number of generated tokens. Okay, yeah, we can build that directly. It shouldn&#x27;t be a big thing. It&#x27;s just one more widget in the UI.
+
+Yeah, it&#x27;s passing a max tokens to the chat function. And what&#x27;s this bit? Okay. Yeah, it&#x27;s passing the same to the completion API at OpenRouter. It&#x27;s adding the slider.
+
+Max 2K. Yeah, let&#x27;s make that 4K maybe. And yeah, then it&#x27;s passing it again. Okay, well, that looks good. Let&#x27;s run that again.
+
+Redode it. Ah, here&#x27;s my slider. Okay, well, let&#x27;s ask 4K. And let&#x27;s try. Yeah, let&#x27;s try this one again.
+
+Yeah. All right. That&#x27;s pretty cool. You could keep playing with this. Right.
+
+It&#x27;s so easy. Maybe one last thing I want to show you. One thing I tend to do. Let&#x27;s shut this ran is run a code review with a different model. And we could use code here.
+
+And there&#x27;s an extension for Clod in Cursor. So you get the best of both worlds. You get all the cool models here. And you get to use your CLI. Check which one we have here.
+
+Let&#x27;s use Opus. Okay, do code review. List issues. Don&#x27;t fix them. Oops, don&#x27;t fix them for now.
+
+And trust me, it will always. Always find something it&#x27;s pretty crazy no error handling or missing API key okay that&#x27;s problem no error handling for API calls oh that&#x27;s bad um global client initialization okay hard-coded magic numbers for tag parsing oh that&#x27;s that&#x27;s ugly yeah redundant very All right. Oh, there&#x27;s a lot of stuff wrong about this thing. Critical issues. Logic issues.
+
+Oh, dog strings. Oh, my God. 15 issues. There you go, vibe coding. Okay, let&#x27;s fix the critical issues.
+
+I advise you to fix them, I would say, by one or not all at once. If you ask it to fix 15, it&#x27;s going to rewrite everything and it&#x27;s going to break a lot of things. And I like to tell it apply the smallest possible change. Okay, ask me if I&#x27;m sure. Okay.
+
+So if API keys missing, just yell at the user. Yes, I like that one. Gen, right? Code reviews, code reviews, and it have this tendency to just rewrite everything and, they can just kill everything you&#x27;ve done so far. So what is it doing here?
+
+It&#x27;s going to add a try-accept block around the API call, which isn&#x27;t changed. Yeah, okay, I like this one too. Okay, great. So that&#x27;s a good start. And we could keep going, right.
+
+We could list the remaining issues. One thing I like to do is for a real project, not a toy demo like this, is to ask it to create get up issues automatically have a bunch of agents which live in a terminal which is way too tiny to see oh there you go so have a GitHub issue creator I have a GitHub issue resolver etc etc and those are really nice because you can you can use the GitHub CLI to get things done and focus the agent on a particular thing And that&#x27;s really nice instead of using everything in the same conversation, right? So that&#x27;s pretty cool. So should we try the chat? But again, just see if we haven&#x27;t broken anything.
+
+I&#x27;d be surprised, but you never know. Okay, it&#x27;s still working. Okay, let&#x27;s try one of them again. Just bump this, submit. All right, and off it goes.
+
+Perfect. Perfect. So, as you can see, you got to use the right tool for the job. And the coding assistants are absolutely amazing. I love the combination of the built-in models in cursor and encode as well.
+
+Do the building first, check out the code, run it, get it. To a decent place and then use plot code and maybe your subagents to polish everything from security to maybe the UI, maybe creating issues, et cetera, et cetera. And working with different models, we&#x27;ll cover more ground and hopefully find more issues, right? And when it comes to solving business problems, I think working with with a high quality model like this one is just mind blowing, right? The speed, as you can see, is just amazing.
+
+And it&#x27;s super easy to use, right? You can use the, again, the OpenI API from OpenRouter. It will look exactly like any of the other models you&#x27;re working with, except, of course, the speed and the cost is very, very different. We&#x27;re using the free version, but if we look at, which has some kind of quota, I suppose, but if we look at the paid version, you&#x27;re only paying 15 cents per million output token, which is, I think, at least 10 times cheaper than GPT5 Mini, which is already fairly cost-effective. So if you&#x27;re looking at the GPT-5s or the huge anthropic models, You can probably divide your cost by 50, maybe 100 if you work with a model like this.
+
+And again, it&#x27;s a reasoning model. It&#x27;s incredibly good. You&#x27;ll see the benchmarks in the blog post. So, yeah, I would recommend that you take a look. You could get a lot of speed up, a lot of scalability, and a lot of savings, right?
+
+So what&#x27;s not to like? Okay, that&#x27;s what I wanted to show you today. A little bit of Vype coding, a little bit of AI-assisted software development with large models to build a simple and fast and cost-effective application with a much smaller model. So, thank you for watching. I hope you liked it, and I&#x27;ll see you soon with more content.
+
+Until next time, you know what to do. Keep rocking.</div>
+<div class="tags">
             <h2>Tags</h2>
             <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
         </div>
