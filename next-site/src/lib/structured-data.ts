@@ -26,6 +26,7 @@ export function personSchema() {
     sameAs: [
       ...SOCIAL_LINKS.map((l) => l.href),
       // Authoritative entity databases for AI knowledge graph disambiguation
+      'https://www.wikidata.org/wiki/Q138589324',
       'https://www.crunchbase.com/person/julien-simon-2',
       'https://www.amazon.com/stores/Julien-Simon/author/B089RFQTQG',
       'https://www.packtpub.com/authors/julien-simon',
