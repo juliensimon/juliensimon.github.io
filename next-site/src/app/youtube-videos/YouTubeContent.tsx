@@ -1,10 +1,8 @@
-'use client';
-
 import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import MetricCard from '@/components/ui/MetricCard';
 import YearCard from '@/components/ui/YearCard';
-import { YOUTUBE_STATS, VIDEO_YEARS } from '@/data/youtube';
+import { YOUTUBE_STATS, VIDEO_YEARS, LATEST_VIDEOS } from '@/data/youtube';
 
 export default function YouTubeContent() {
   return (
@@ -33,6 +31,31 @@ export default function YouTubeContent() {
             Visit YouTube Channel
           </a>
         </ScrollReveal>
+
+        {/* Latest videos */}
+        <h2 className="text-2xl font-bold font-heading gradient-brand-text mb-6 text-center">
+          Latest Videos
+        </h2>
+        <div className="grid sm:grid-cols-3 gap-4 mb-16">
+          {LATEST_VIDEOS.map((video, i) => (
+            <ScrollReveal key={video.id} direction="up" delay={i * 0.08} className="glass-card rounded-xl overflow-hidden">
+              <div className="aspect-video">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${video.id}`}
+                  title={video.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="text-sm font-semibold text-text line-clamp-2">{video.title}</h3>
+                <p className="text-xs text-text-muted mt-1">{video.date}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
 
         {/* Year grid */}
         <h2 className="text-2xl font-bold font-heading gradient-brand-text mb-6 text-center">

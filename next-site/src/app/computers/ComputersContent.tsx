@@ -1,5 +1,3 @@
-'use client';
-
 import ExportedImage from 'next-image-export-optimizer';
 
 import GradientHero from '@/components/ui/GradientHero';

@@ -1,5 +1,3 @@
-'use client';
-
 import ExportedImage from 'next-image-export-optimizer';
 import Link from 'next/link';
 import MetricCard from '@/components/ui/MetricCard';
@@ -45,7 +43,7 @@ const EXPERTISE_CARDS = [
   {
     title: 'Portfolio AI Acceleration',
     description:
-      'Accelerating cloud and AI initiatives across Private Equity and Venture Capital portfolios at Fortino Capital. Supporting portfolio companies from product to engineering to operations to GTM.',
+      'Driving AI strategy and implementation across Fortino Capital portfolio companies. Identifying high-impact opportunities, building technical roadmaps, and accelerating time-to-value for AI initiatives.',
     link: '/experience',
     linkText: 'View Executive Experience',
   },

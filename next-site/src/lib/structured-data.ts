@@ -392,7 +392,7 @@ export const SPEAKING_FAQS = [
 export const PUBLICATIONS_FAQS = [
   {
     question: 'How many articles has Julien Simon published?',
-    answer: 'Julien Simon has published 409+ technical articles across multiple platforms including the AWS Blog, Hugging Face Blog, Arcee AI Blog, Medium, and his Substack newsletter The AI Realist (airealist.ai).',
+    answer: 'Julien Simon has published 414+ technical articles across multiple platforms including the AWS Blog, Hugging Face Blog, Arcee AI Blog, Medium, and his Substack newsletter The AI Realist (airealist.ai).',
   },
   {
     question: 'What is The AI Realist newsletter?',
@@ -403,7 +403,7 @@ export const PUBLICATIONS_FAQS = [
 export const YOUTUBE_FAQS = [
   {
     question: 'How many YouTube subscribers does Julien Simon have?',
-    answer: 'Julien Simon\'s YouTube channel has 494K+ subscribers with 449+ educational videos spanning 15 years of content on AI, machine learning, and cloud computing.',
+    answer: 'Julien Simon\'s YouTube channel has 494K+ subscribers with 450+ educational videos spanning 15 years of content on AI, machine learning, and cloud computing.',
   },
   {
     question: 'What kind of videos does Julien Simon create?',
