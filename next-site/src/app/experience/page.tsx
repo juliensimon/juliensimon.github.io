@@ -33,7 +33,7 @@ export default function ExperiencePage() {
         '30+ years of professional experience in AI, cloud computing, and software engineering.',
         `${SITE.url}/experience`,
       )} />
-      <StructuredData data={faqSchema(EXPERIENCE_FAQS)} />
+      <StructuredData data={faqSchema(EXPERIENCE_FAQS, `${SITE.url}/experience`)} />
       <ExperienceContent />
     </>
   );

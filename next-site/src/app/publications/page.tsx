@@ -32,7 +32,7 @@ export default function PublicationsPage() {
         '416+ technical blog posts across AWS, Hugging Face, Medium, and Arcee AI.',
         `${SITE.url}/publications`,
       )} />
-      <StructuredData data={faqSchema(PUBLICATIONS_FAQS)} />
+      <StructuredData data={faqSchema(PUBLICATIONS_FAQS, `${SITE.url}/publications`)} />
       <PublicationsContent />
     </>
   );

@@ -31,7 +31,7 @@ export default function SpeakingPage() {
         '684+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing.',
         `${SITE.url}/speaking`,
       )} />
-      <StructuredData data={faqSchema(SPEAKING_FAQS)} />
+      <StructuredData data={faqSchema(SPEAKING_FAQS, `${SITE.url}/speaking`)} />
       <SpeakingContent />
     </>
   );

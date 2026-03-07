@@ -38,7 +38,7 @@ export default function YouTubeVideosPage() {
         subscriberCount: YOUTUBE_STATS.subscriberCount * 1000,
         videoCount: YOUTUBE_STATS.totalVideos,
       })} />
-      <StructuredData data={faqSchema(YOUTUBE_FAQS)} />
+      <StructuredData data={faqSchema(YOUTUBE_FAQS, `${SITE.url}/youtube-videos`)} />
       <YouTubeContent />
     </>
   );

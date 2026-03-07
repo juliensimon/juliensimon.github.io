@@ -29,7 +29,7 @@ export default function HomePage() {
       <StructuredData data={webPageSchema(
         'Julien Simon - AI Operating Partner at Fortino Capital',
         'AI Operating Partner at Fortino Capital. 30+ years accelerating cloud and AI across PE/VC portfolios. Expert in Small Language Models and enterprise AI. Author of The AI Realist newsletter.',
-        `${SITE.url}/`,
+        SITE.url,
       )} />
       <StructuredData data={faqSchema(HOMEPAGE_FAQS)} />
       <HomeContent />

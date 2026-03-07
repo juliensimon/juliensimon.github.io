@@ -129,10 +129,6 @@ export function personSchema() {
     contactPoint: { '@type': 'ContactPoint', contactType: 'email', email: SITE.email },
     knowsLanguage: ['English', 'French'],
     nationality: 'French',
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: ['.hero-description', '.expertise-summary', '.faq-answer'],
-    },
   };
 }
 
@@ -148,10 +144,6 @@ export function profilePageSchema() {
     isPartOf: { '@id': `${SITE.url}/#website` },
     dateModified: new Date().toISOString().split('T')[0],
     inLanguage: 'en',
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: ['.hero-description', '.expertise-summary', '.faq-answer'],
-    },
   };
 }
 
@@ -194,10 +186,6 @@ export function webPageSchema(name: string, description: string, url: string) {
     isPartOf: { '@id': `${SITE.url}/#website` },
     about: { '@id': `${SITE.url}/#person` },
     inLanguage: 'en',
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: ['[data-speakable]', '.page-description', 'h1'],
-    },
   };
 }
 
@@ -215,20 +203,17 @@ export function collectionPageSchema(name: string, description: string, url: str
   };
 }
 
-export function faqSchema(faqs: { question: string; answer: string }[]) {
+export function faqSchema(faqs: { question: string; answer: string }[], pageUrl?: string) {
+  const baseUrl = pageUrl || SITE.url;
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    '@id': `${SITE.url}/#faq`,
+    '@id': `${baseUrl}/#faq`,
     mainEntity: faqs.map((faq) => ({
       '@type': 'Question',
       name: faq.question,
       acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: ['.faq-answer', '.faq-question'],
-    },
   };
 }
 
@@ -346,32 +331,6 @@ export function newsletterSchema() {
       '@type': 'Audience',
       audienceType: 'AI practitioners, enterprise architects, PE/VC investors, CTOs, policy makers',
     },
-    isSimilarTo: [
-      {
-        '@type': 'Periodical',
-        name: 'SemiAnalysis',
-        url: 'https://www.semianalysis.com/',
-        description: 'Semiconductor and AI infrastructure analysis',
-      },
-      {
-        '@type': 'Periodical',
-        name: 'Stratechery',
-        url: 'https://stratechery.com/',
-        description: 'Technology strategy and business analysis',
-      },
-      {
-        '@type': 'Periodical',
-        name: 'The Pragmatic Engineer',
-        url: 'https://www.pragmaticengineer.com/',
-        description: 'Software engineering and tech industry analysis',
-      },
-      {
-        '@type': 'Periodical',
-        name: 'Import AI',
-        url: 'https://importai.substack.com/',
-        description: 'AI research and policy newsletter',
-      },
-    ],
   };
 }
 
