@@ -40,7 +40,7 @@ export const NAV_ITEMS = [
 // - YOUTUBE_STATS.subscribers in youtube.ts (YouTube Subscribers)
 // Run `npm run validate` to check for mismatches
 export const METRICS = [
-  { value: 414, suffix: '+', label: 'Technical Posts' },
+  { value: 415, suffix: '+', label: 'Technical Posts' },
   { value: 684, suffix: '+', label: 'Speaking Engagements' },
   { value: 494, suffix: 'K+', label: 'YouTube Subscribers' },
   { value: 30, suffix: '+', label: 'Years Experience' },
