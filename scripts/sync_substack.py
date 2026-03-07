@@ -100,17 +100,34 @@ def classify_post(content: str) -> tuple[str, str | None]:
     """
     Classify post as video or article.
     Returns ('video', youtube_id) or ('article', None)
+
+    Only iframe embeds count as video posts. Textual YouTube links
+    (e.g. references or citations inside an article) do NOT make a
+    post a video.  Additionally, posts with substantial text (500+
+    words after stripping HTML) are always articles — they may embed
+    a video as supplementary content but are not video-only posts.
     """
-    patterns = [
+    # Only match actual iframe embeds, not textual links
+    embed_patterns = [
         r'youtube-nocookie\.com/embed/([a-zA-Z0-9_-]{11})',
         r'youtube\.com/embed/([a-zA-Z0-9_-]{11})',
-        r'youtu\.be/([a-zA-Z0-9_-]{11})',
-        r'youtube\.com/watch\?v=([a-zA-Z0-9_-]{11})',
     ]
-    for pattern in patterns:
+    youtube_id = None
+    for pattern in embed_patterns:
         if match := re.search(pattern, content):
-            return ('video', match.group(1))
-    return ('article', None)
+            youtube_id = match.group(1)
+            break
+    if not youtube_id:
+        return ('article', None)
+
+    # Articles with substantial text are not video posts even if they
+    # embed a video — they are articles that reference a video.
+    text_only = re.sub(r'<[^>]+>', ' ', content)
+    word_count = len(text_only.split())
+    if word_count >= 500:
+        return ('article', None)
+
+    return ('video', youtube_id)
 
 
 def slugify(text: str) -> str:
@@ -683,7 +700,7 @@ def update_latest_updates(items: list[PostItem], dry_run: bool):
         display_date = item.pub_date.strftime('%B %-d, %Y')
 
         new_entries.append({
-            'title': item.title.replace("'", "\\'"),
+            'title': item.title.replace("'", "\u2019"),  # use curly quote, safe inside JS single quotes
             'href': href,
             'date': display_date,
             'icon': icon,

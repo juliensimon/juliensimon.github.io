@@ -8,6 +8,18 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Anthropic Named Names. The Timing Wasn’t Accidental.',
+    href: '/blog/industry-perspectives/2026-02-24_anthropic-named-names-the-timing-wasnt-accidental/index.html',
+    date: 'February 24, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Access, Disable, Destroy',
+    href: '/blog/industry-perspectives/2026-03-07_access-disable-destroy/index.html',
+    date: 'March 7, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Build, Buy, or Download Someone Else’s Politics',
     href: '/blog/industry-perspectives/2026-03-06_build-buy-or-download-someone-elses-politics/index.html',
     date: 'March 6, 2026',
@@ -17,24 +29,6 @@ const LATEST_UPDATES = [
     title: 'AI Tools Work. Does Your Engineering Process?',
     href: '/blog/industry-perspectives/2026-03-05_ai-tools-work-does-your-engineering-process/index.html',
     date: 'March 5, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'South Korea Powers the World’s AI Chips. Where are its LLMs?',
-    href: '/blog/industry-perspectives/2026-03-04_south-korea-powers-the-worlds-ai-chips-where-are-its-llms/index.html',
-    date: 'March 4, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Data Residency Is a Blast Radius',
-    href: '/blog/industry-perspectives/2026-03-02_data-residency-is-a-blast-radius/index.html',
-    date: 'March 2, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Objects That Struck the Data Center',
-    href: '/blog/industry-perspectives/2026-03-02_objects-that-struck-the-data-center/index.html',
-    date: 'March 2, 2026',
     icon: 'article',
   },
 ];
