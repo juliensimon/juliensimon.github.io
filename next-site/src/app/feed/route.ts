@@ -18,7 +18,7 @@ export function GET() {
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
       <pubDate>${pubDate}</pubDate>
-      <author>${SITE.email} (${SITE.name})</author>
+      <author>${SITE.email} (${SITE.name})</author>${a.description ? `\n      <description><![CDATA[${a.description}]]></description>` : ''}
     </item>`;
   });
 

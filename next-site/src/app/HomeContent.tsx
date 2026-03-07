@@ -8,19 +8,13 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
-    title: 'Anthropic Named Names. The Timing Wasn’t Accidental.',
-    href: '/blog/industry-perspectives/2026-02-24_anthropic-named-names-the-timing-wasnt-accidental/index.html',
-    date: 'February 24, 2026',
-    icon: 'article',
-  },
-  {
     title: 'Access, Disable, Destroy',
     href: '/blog/industry-perspectives/2026-03-07_access-disable-destroy/index.html',
     date: 'March 7, 2026',
     icon: 'article',
   },
   {
-    title: 'Build, Buy, or Download Someone Else’s Politics',
+    title: 'Build, Buy, or Download Someone Else\u2019s Politics',
     href: '/blog/industry-perspectives/2026-03-06_build-buy-or-download-someone-elses-politics/index.html',
     date: 'March 6, 2026',
     icon: 'article',
@@ -29,6 +23,12 @@ const LATEST_UPDATES = [
     title: 'AI Tools Work. Does Your Engineering Process?',
     href: '/blog/industry-perspectives/2026-03-05_ai-tools-work-does-your-engineering-process/index.html',
     date: 'March 5, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'South Korea Powers the World\u2019s AI Chips. Where are its LLMs?',
+    href: '/blog/industry-perspectives/2026-03-04_south-korea-powers-the-worlds-ai-chips-where-are-its-llms/index.html',
+    date: 'March 4, 2026',
     icon: 'article',
   },
 ];
