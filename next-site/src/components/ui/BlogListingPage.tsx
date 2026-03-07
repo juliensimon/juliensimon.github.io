@@ -10,6 +10,7 @@ export interface BlogPost {
   title: string;
   href: string;
   date?: string;
+  description?: string;
 }
 
 interface Props {
@@ -23,7 +24,10 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
   const [search, setSearch] = useState('');
 
   const filtered = search
-    ? posts.filter((p) => p.title.toLowerCase().includes(search.toLowerCase()))
+    ? posts.filter((p) =>
+        p.title.toLowerCase().includes(search.toLowerCase()) ||
+        p.description?.toLowerCase().includes(search.toLowerCase())
+      )
     : posts;
 
   return (
@@ -45,26 +49,39 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
 
         {/* Posts list */}
         <div className="space-y-3">
-          {filtered.map((post, i) => (
-            <ScrollReveal
-              key={post.href}
-              as="a"
-              href={post.href}
-              direction="up"
-              delay={Math.min(i * 0.03, 0.5)}
-              margin="-20px"
-              className="block glass-card rounded-lg p-4 hover:scale-[1.005] transition-all duration-300 group"
-            >
-              {post.date && (
-                <p className="text-xs text-text-muted mb-0.5">
-                  {post.date}
-                </p>
-              )}
-              <h2 className="text-sm font-medium text-text group-hover:text-primary transition-colors">
-                {post.title}
-              </h2>
-            </ScrollReveal>
-          ))}
+          {filtered.map((post, i) => {
+            const isExternal = post.href.startsWith('https://');
+            const linkProps = isExternal
+              ? { target: '_blank' as const, rel: 'noopener noreferrer' }
+              : {};
+            return (
+              <ScrollReveal
+                key={post.href}
+                as="a"
+                href={post.href}
+                {...linkProps}
+                direction="up"
+                delay={Math.min(i * 0.03, 0.5)}
+                margin="-20px"
+                className="block glass-card rounded-lg p-4 hover:scale-[1.005] transition-all duration-300 group"
+              >
+                {post.date && (
+                  <p className="text-xs text-text-muted mb-0.5">
+                    {post.date}
+                  </p>
+                )}
+                <h2 className="text-sm font-medium text-text group-hover:text-primary transition-colors">
+                  {post.title}
+                  {isExternal && <span className="sr-only"> (opens in new tab)</span>}
+                </h2>
+                {post.description && (
+                  <p className="text-xs text-text-muted mt-1 line-clamp-2">
+                    {post.description}
+                  </p>
+                )}
+              </ScrollReveal>
+            );
+          })}
         </div>
 
         {filtered.length === 0 && (
