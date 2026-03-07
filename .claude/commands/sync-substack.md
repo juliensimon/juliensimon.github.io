@@ -53,14 +53,20 @@ Fetch the Substack RSS feed and detect new posts not yet on the website.
 | `--force` | Force re-sync of all posts, ignoring existing files |
 | `--update-existing` | Re-process existing articles to update content and download images |
 
+## SEO: Canonical URLs
+
+Synced articles set `<link rel="canonical">` pointing to the **original Substack URL** (e.g. `https://www.airealist.ai/p/post-slug`). This is intentional: Substack should hold ranking authority to grow newsletter subscribers. The julien.org copies exist for site visitors but tell Google "the authoritative version is on Substack."
+
+If a post originated from Medium (older posts), the canonical points to the Medium URL instead.
+
 ## Output Structure
 
 Articles are saved to:
 ```
 next-site/public/blog/industry-perspectives/
   YYYY-MM-DD_post-slug/
-    index.html      # Full article with cleaned HTML
-    metadata.json   # Post metadata including image count
+    index.html      # Full article with cleaned HTML, canonical -> Substack
+    metadata.json   # Post metadata including original_url and image count
     image-01.webp   # Downloaded images (WebP format)
     image-02.webp
     ...

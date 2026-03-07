@@ -440,7 +440,7 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     <meta name="date" content="{date_str}">
     <meta name="description" content="{html.escape(excerpt)}">
     <meta name="source" content="{item.link}">
-    <link rel="canonical" href="https://www.julien.org/blog/industry-perspectives/{folder_name}/index.html">
+    <link rel="canonical" href="{item.link}">
     <meta property="og:type" content="article">
     <meta property="og:title" content="{html.escape(item.title)} - Julien Simon">
     <meta property="og:description" content="{html.escape(excerpt)}">

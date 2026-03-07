@@ -142,7 +142,7 @@ export function profilePageSchema() {
     url: SITE.url,
     mainEntity: { '@id': `${SITE.url}/#person` },
     isPartOf: { '@id': `${SITE.url}/#website` },
-    dateModified: new Date().toISOString().split('T')[0],
+    dateModified: '2026-03-07',
     inLanguage: 'en',
   };
 }

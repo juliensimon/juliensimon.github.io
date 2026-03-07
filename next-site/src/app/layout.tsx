@@ -26,7 +26,11 @@ export const metadata: Metadata = {
   },
   description: SITE.description,
   metadataBase: new URL(SITE.url),
-  icons: { icon: '/assets/favicon.ico' },
+  icons: {
+    icon: '/assets/favicon.ico',
+    apple: '/assets/apple-touch-icon.png',
+  },
+  manifest: '/site.webmanifest',
   openGraph: {
     type: 'website',
     locale: SITE.locale,

@@ -31,7 +31,7 @@ export default function HomePage() {
         'AI Operating Partner at Fortino Capital. 30+ years accelerating cloud and AI across PE/VC portfolios. Expert in Small Language Models and enterprise AI. Author of The AI Realist newsletter.',
         SITE.url,
       )} />
-      <StructuredData data={faqSchema(HOMEPAGE_FAQS)} />
+      <StructuredData data={faqSchema(HOMEPAGE_FAQS, SITE.url)} />
       <HomeContent />
     </>
   );
