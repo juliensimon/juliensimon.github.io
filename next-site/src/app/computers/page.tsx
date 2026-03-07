@@ -1,6 +1,7 @@
 import { buildMetadata } from '@/lib/metadata';
 import { breadcrumbSchema, webPageSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import ComputersContent from './ComputersContent';
 
@@ -32,6 +33,10 @@ export default function ComputersPage() {
         'A personal collection of vintage and retro computers, from Apple II to Amiga, SGI workstations, and Sun SPARC systems.',
         `${SITE.url}/computers`,
       )} />
+      <Breadcrumbs items={[
+        { name: 'Home', href: '/' },
+        { name: 'Vintage Computers', href: '/computers' },
+      ]} />
       <ComputersContent />
     </>
   );

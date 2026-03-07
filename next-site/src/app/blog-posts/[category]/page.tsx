@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { buildMetadata } from '@/lib/metadata';
 import { breadcrumbSchema, collectionPageSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import BlogListingPage from '@/components/ui/BlogListingPage';
 import { BLOG_CATEGORIES, BLOG_CATEGORY_SLUGS } from '@/data/blog-categories';
@@ -52,6 +53,11 @@ export default async function BlogCategoryPage({ params }: Props) {
           `${SITE.url}/blog-posts/${category}`
         )}
       />
+      <Breadcrumbs items={[
+        { name: 'Home', href: '/' },
+        { name: 'Publications', href: '/publications' },
+        { name: config.title, href: `/blog-posts/${category}` },
+      ]} />
       <BlogListingPage
         title={config.title}
         subtitle={config.subtitle}

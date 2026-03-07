@@ -1,6 +1,7 @@
 import { buildMetadata } from '@/lib/metadata';
 import { breadcrumbSchema, bookSchema, webPageSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import { BOOKS } from '@/data/books';
 import BooksContent from './BooksContent';
@@ -34,6 +35,10 @@ export default function BooksPage() {
       {BOOKS.map((book) => (
         <StructuredData key={book.title} data={bookSchema(book)} />
       ))}
+      <Breadcrumbs items={[
+        { name: 'Home', href: '/' },
+        { name: 'Books', href: '/books' },
+      ]} />
       <BooksContent />
     </>
   );

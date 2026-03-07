@@ -1,6 +1,7 @@
 import { buildMetadata } from '@/lib/metadata';
 import { breadcrumbSchema, youtubeChannelSchema, webPageSchema, faqSchema, YOUTUBE_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import { YOUTUBE_STATS } from '@/data/youtube';
 import YouTubeContent from './YouTubeContent';
@@ -39,6 +40,10 @@ export default function YouTubeVideosPage() {
         videoCount: YOUTUBE_STATS.totalVideos,
       })} />
       <StructuredData data={faqSchema(YOUTUBE_FAQS, `${SITE.url}/youtube-videos`)} />
+      <Breadcrumbs items={[
+        { name: 'Home', href: '/' },
+        { name: 'Videos', href: '/youtube-videos' },
+      ]} />
       <YouTubeContent />
     </>
   );

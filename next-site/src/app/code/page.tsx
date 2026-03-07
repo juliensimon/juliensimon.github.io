@@ -1,6 +1,7 @@
 import { buildMetadata } from '@/lib/metadata';
 import { breadcrumbSchema, webPageSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import CodeContent from './CodeContent';
 
@@ -30,6 +31,10 @@ export default function CodePage() {
         'Open source projects and code examples for machine learning, AI, and cloud computing.',
         `${SITE.url}/code`,
       )} />
+      <Breadcrumbs items={[
+        { name: 'Home', href: '/' },
+        { name: 'Code & Projects', href: '/code' },
+      ]} />
       <CodeContent />
     </>
   );

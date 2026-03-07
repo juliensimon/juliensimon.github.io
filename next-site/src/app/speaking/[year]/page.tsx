@@ -4,6 +4,7 @@ import { SPEAKING_EVENTS } from '@/data/speaking-events';
 import { buildMetadata } from '@/lib/metadata';
 import { breadcrumbSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import SpeakingYearContent from './SpeakingYearContent';
 
@@ -43,6 +44,11 @@ export default async function SpeakingYearPage({ params }: Props) {
         { name: 'Speaking', url: `${SITE.url}/speaking` },
         { name: `Speaking ${year}`, url: `${SITE.url}/speaking/${year}` },
       ])} />
+      <Breadcrumbs items={[
+        { name: 'Home', href: '/' },
+        { name: 'Speaking', href: '/speaking' },
+        { name: `Speaking ${year}`, href: `/speaking/${year}` },
+      ]} />
       <SpeakingYearContent
         year={year}
         events={events}

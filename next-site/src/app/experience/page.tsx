@@ -1,6 +1,7 @@
 import { buildMetadata } from '@/lib/metadata';
 import { breadcrumbSchema, webPageSchema, faqSchema, EXPERIENCE_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import ExperienceContent from './ExperienceContent';
 
@@ -34,6 +35,10 @@ export default function ExperiencePage() {
         `${SITE.url}/experience`,
       )} />
       <StructuredData data={faqSchema(EXPERIENCE_FAQS, `${SITE.url}/experience`)} />
+      <Breadcrumbs items={[
+        { name: 'Home', href: '/' },
+        { name: 'Experience', href: '/experience' },
+      ]} />
       <ExperienceContent />
     </>
   );

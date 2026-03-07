@@ -1,6 +1,7 @@
 import { buildMetadata } from '@/lib/metadata';
 import { breadcrumbSchema, webPageSchema, faqSchema, SPEAKING_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import SpeakingContent from './SpeakingContent';
 
@@ -32,6 +33,10 @@ export default function SpeakingPage() {
         `${SITE.url}/speaking`,
       )} />
       <StructuredData data={faqSchema(SPEAKING_FAQS, `${SITE.url}/speaking`)} />
+      <Breadcrumbs items={[
+        { name: 'Home', href: '/' },
+        { name: 'Speaking', href: '/speaking' },
+      ]} />
       <SpeakingContent />
     </>
   );
