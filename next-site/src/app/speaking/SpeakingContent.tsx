@@ -18,9 +18,9 @@ export default function SpeakingContent() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4 mb-16">
-          <MetricCard value={SPEAKING_STATS.totalEvents} suffix="+" label="Speaking Engagements" index={0} />
+          <MetricCard value={SPEAKING_STATS.totalEvents} suffix="" label="Speaking Engagements" index={0} />
           <MetricCard value={SPEAKING_STATS.countries} suffix="" label="Countries" index={1} />
-          <MetricCard value={SPEAKING_STATS.cities} suffix="+" label="Cities" index={2} />
+          <MetricCard value={SPEAKING_STATS.cities} suffix="" label="Cities" index={2} />
         </div>
 
         {/* Map */}

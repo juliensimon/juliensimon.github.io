@@ -18,7 +18,7 @@ export default function PublicationsContent() {
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4 mb-12">
-          <MetricCard value={TOTAL_ARTICLES} suffix="+" label="Articles" index={0} />
+          <MetricCard value={TOTAL_ARTICLES} suffix="" label="Articles" index={0} />
           <MetricCard value={PUBLICATION_CATEGORIES.length} suffix="" label="Platforms" index={1} />
           <MetricCard value={18} suffix="" label="Years of Writing" index={2} />
         </div>
