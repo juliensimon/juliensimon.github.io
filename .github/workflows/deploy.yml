@@ -53,10 +53,26 @@ jobs:
       - name: Ping IndexNow (Bing + Yandex)
         if: success()
         run: |
-          SITE_URL="https://www.julien.org"
-          KEY="24d30db2b0514b1780b427dde1b02d0d"
-          SITEMAPS=("sitemap.xml" "sitemap-blog.xml" "sitemap-videos.xml" "sitemap-speaking.xml")
-          for sm in "${SITEMAPS[@]}"; do
-            curl -s -o /dev/null -w "%{http_code}" \
-              "https://api.indexnow.org/indexnow?url=${SITE_URL}/${sm}&key=${KEY}"
-          done
+          curl -s -w "\n%{http_code}" -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "host": "www.julien.org",
+              "key": "24d30db2b0514b1780b427dde1b02d0d",
+              "keyLocation": "https://www.julien.org/24d30db2b0514b1780b427dde1b02d0d.txt",
+              "urlList": [
+                "https://www.julien.org/",
+                "https://www.julien.org/experience",
+                "https://www.julien.org/speaking",
+                "https://www.julien.org/publications",
+                "https://www.julien.org/code",
+                "https://www.julien.org/youtube-videos",
+                "https://www.julien.org/books",
+                "https://www.julien.org/computers",
+                "https://www.julien.org/blog",
+                "https://www.julien.org/industry-perspectives",
+                "https://www.julien.org/sitemap.xml",
+                "https://www.julien.org/sitemap-blog.xml",
+                "https://www.julien.org/sitemap-videos.xml",
+                "https://www.julien.org/sitemap-speaking.xml"
+              ]
+            }'
