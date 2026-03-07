@@ -55,6 +55,44 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
             const linkProps = isExternal
               ? { target: '_blank' as const, rel: 'noopener noreferrer' }
               : {};
+
+            if (post.localHref) {
+              return (
+                <ScrollReveal
+                  key={post.href}
+                  direction="up"
+                  delay={Math.min(i * 0.03, 0.5)}
+                  margin="-20px"
+                  className="block glass-card rounded-lg p-4 hover:scale-[1.005] transition-all duration-300 group"
+                >
+                  {post.date && (
+                    <p className="text-xs text-text-muted mb-0.5">
+                      {post.date}
+                    </p>
+                  )}
+                  <h2 className="text-sm font-medium">
+                    <a href={post.href} {...linkProps} className="text-text hover:text-primary transition-colors">
+                      {post.title}
+                      {isExternal && <span className="sr-only"> (opens in new tab)</span>}
+                    </a>
+                  </h2>
+                  {post.description && (
+                    <p className="text-xs text-text-muted mt-1 line-clamp-2">
+                      {post.description}
+                    </p>
+                  )}
+                  <p className="mt-1">
+                    <a
+                      href={post.localHref}
+                      className="text-[10px] text-primary/60 hover:text-primary transition-colors"
+                    >
+                      local copy
+                    </a>
+                  </p>
+                </ScrollReveal>
+              );
+            }
+
             return (
               <ScrollReveal
                 key={post.href}
@@ -78,17 +116,6 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
                 {post.description && (
                   <p className="text-xs text-text-muted mt-1 line-clamp-2">
                     {post.description}
-                  </p>
-                )}
-                {post.localHref && (
-                  <p className="mt-1">
-                    <a
-                      href={post.localHref}
-                      onClick={(e) => e.stopPropagation()}
-                      className="text-[10px] text-primary/60 hover:text-primary transition-colors"
-                    >
-                      local copy
-                    </a>
                   </p>
                 )}
               </ScrollReveal>
