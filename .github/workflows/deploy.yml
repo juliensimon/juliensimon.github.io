@@ -49,3 +49,14 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
+
+      - name: Ping IndexNow (Bing + Yandex)
+        if: success()
+        run: |
+          SITE_URL="https://www.julien.org"
+          KEY="24d30db2b0514b1780b427dde1b02d0d"
+          SITEMAPS=("sitemap.xml" "sitemap-blog.xml" "sitemap-videos.xml" "sitemap-speaking.xml")
+          for sm in "${SITEMAPS[@]}"; do
+            curl -s -o /dev/null -w "%{http_code}" \
+              "https://api.indexnow.org/indexnow?url=${SITE_URL}/${sm}&key=${KEY}"
+          done

@@ -31,6 +31,10 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'Applebot-Extended', allow: '/' },
       // Meta AI
       { userAgent: 'meta-externalagent', allow: '/' },
+      // Bing
+      { userAgent: 'bingbot', allow: '/' },
+      // Yandex
+      { userAgent: 'YandexBot', allow: '/' },
     ],
     sitemap: [
       `${SITE.url}/sitemap.xml`,
