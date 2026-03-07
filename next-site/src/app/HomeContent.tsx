@@ -31,6 +31,12 @@ const LATEST_UPDATES = [
     date: 'March 4, 2026',
     icon: 'article',
   },
+  {
+    title: 'Deep Dive: Teaching Arcee Trinity Mini to Read Medical Research with RLVR and GRPO',
+    href: '/youtube/2026/20260303_Deep_Dive_Teaching_Arcee_Trinity_Mini_to_Read_Medical_Research_with_RLVR_and_GRPO.html',
+    date: 'March 3, 2026',
+    icon: 'video',
+  },
 ];
 
 const EXPERTISE_CARDS = [
@@ -184,8 +190,14 @@ export default function HomeContent() {
 
           <div>
             <ScrollReveal direction="right">
-              <h2 className="text-3xl font-bold font-heading gradient-brand-text mb-6">
+              <h2 className="text-3xl font-bold font-heading gradient-brand-text mb-6 flex items-center gap-3">
                 Latest Updates
+                <a href="/feed" title="RSS Feed" className="text-text-muted hover:text-primary transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                    <circle cx="6.18" cy="17.82" r="2.18" />
+                    <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z" />
+                  </svg>
+                </a>
               </h2>
             </ScrollReveal>
             <div className="space-y-4">
