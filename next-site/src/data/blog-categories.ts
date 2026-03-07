@@ -4,6 +4,7 @@ import { AWS_MEDIUM_POSTS } from './blog-listings/aws-medium';
 import { ARCEE_POSTS } from './blog-listings/arcee';
 import { HUGGINGFACE_POSTS } from './blog-listings/huggingface';
 import { MEDIUM_POSTS } from './blog-listings/medium';
+import { LEGACY_POSTS } from './blog-listings/legacy';
 
 export interface BlogCategory {
   slug: string;
@@ -54,6 +55,14 @@ export const BLOG_CATEGORIES: Record<string, BlogCategory> = {
     description: `${MEDIUM_POSTS.length} technical deep-dives on machine learning, AI, and cloud computing on Medium.`,
     keywords: ['Medium blog', 'AI articles', 'machine learning tutorials', 'tech blog'],
     posts: MEDIUM_POSTS,
+  },
+  legacy: {
+    slug: 'legacy',
+    title: 'Legacy Blog Posts',
+    subtitle: `${LEGACY_POSTS.length} personal blog posts from 2008–2016`,
+    description: `${LEGACY_POSTS.length} technical articles, tutorials, and insights spanning 2008-2016, covering AWS, Docker, MongoDB, Node.js, and more.`,
+    keywords: ['legacy blog', 'technical blog', 'AWS tutorials', 'Docker', 'MongoDB', 'Node.js'],
+    posts: LEGACY_POSTS,
   },
 };
 

@@ -46,7 +46,7 @@ export const PUBLICATION_CATEGORIES: PublicationCategory[] = [
     name: 'Legacy Blog Posts',
     count: 90,
     description: 'Pre-AWS technical articles archive.',
-    href: '/blog/legacy-posts-and-images/index.html',
+    href: '/blog-posts/legacy',
     dateRange: '2008 - 2016',
   },
 ];
