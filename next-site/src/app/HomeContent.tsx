@@ -65,10 +65,10 @@ const EXPERTISE_CARDS = [
 ];
 
 const PHILOSOPHY_CARDS = [
+  { title: 'Primary Sources, Not Press Releases', description: 'Analyze SEC filings, court rulings, and regulatory documents to separate real AI progress from marketing narratives.' },
   { title: 'Small Models, Big Results', description: 'Champion Small Language Models that deliver enterprise-grade performance with significantly lower computational requirements.' },
-  { title: 'Privacy-First Architecture', description: 'Design AI solutions for on-premises and private cloud deployment, ensuring enterprises maintain complete control.' },
-  { title: 'Enterprise-Scale Implementation', description: 'Build AI strategies that grow with business needs—from proof-of-concept to company-wide deployment.' },
-  { title: 'Transparency Over Black Boxes', description: 'Champion open-weights models that enterprises can inspect, understand, and control.' },
+  { title: 'Infrastructure Over Hype', description: 'Investigate AI capital expenditure sustainability, compute access geopolitics, and the real economics of model deployment.' },
+  { title: 'Open Weights, Full Control', description: 'Champion open-weights models that enterprises can inspect, customize, and deploy on their own infrastructure.' },
 ];
 
 const RECOGNITIONS = [
@@ -169,12 +169,15 @@ export default function HomeContent() {
                 <a href="https://www.airealist.ai/" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-hover font-medium">
                   The AI Realist
                 </a>
-                , a newsletter delivering structural analysis of AI ecosystems, infrastructure, and
-                investment architecture for builders, operators, and investors.
+                , a long-form investigative newsletter sourced from SEC filings, government surveys,
+                legislative text, court rulings, and regulatory documents — not conference
+                presentations or vendor materials. Topics include national AI ecosystems, cloud
+                and digital sovereignty, AI capital expenditure sustainability, and the geopolitics
+                of compute access.
               </p>
               <p>
-                Julien&apos;s mission? <strong>To demystify buzzwords and cut through industry hype to
-                focus on what actually works in production.</strong>
+                Julien&apos;s mission? <strong>To distinguish real AI developments from marketing
+                narratives, with primary sources and independent verification.</strong>
               </p>
             </ScrollReveal>
           </div>
