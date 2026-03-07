@@ -11,6 +11,7 @@ export interface BlogPost {
   href: string;
   date?: string;
   description?: string;
+  localHref?: string;
 }
 
 interface Props {
@@ -77,6 +78,17 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
                 {post.description && (
                   <p className="text-xs text-text-muted mt-1 line-clamp-2">
                     {post.description}
+                  </p>
+                )}
+                {post.localHref && (
+                  <p className="mt-1">
+                    <a
+                      href={post.localHref}
+                      onClick={(e) => e.stopPropagation()}
+                      className="text-[10px] text-primary/60 hover:text-primary transition-colors"
+                    >
+                      local copy
+                    </a>
                   </p>
                 )}
               </ScrollReveal>
