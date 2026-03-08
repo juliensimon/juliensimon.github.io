@@ -837,7 +837,7 @@ def update_publications_ts(articles_count: int, dry_run: bool):
     content = ts_path.read_text(encoding='utf-8')
 
     # Find and update Industry Perspectives count
-    pattern = r"(name: 'Industry Perspectives',\s*count: )(\d+)"
+    pattern = r"(name: 'The AI Realist \(Industry Perspectives\)',\s*count: )(\d+)"
     match = re.search(pattern, content)
 
     if match:
@@ -864,7 +864,7 @@ def update_publications_ts(articles_count: int, dry_run: bool):
     constants_path = SRC / "lib" / "constants.ts"
     if constants_path.exists():
         const_content = constants_path.read_text(encoding='utf-8')
-        metric_pattern = r"(\{ value: )(\d+)(, suffix: '\+', label: 'Technical Posts' \})"
+        metric_pattern = r"(\{ value: )(\d+)(, suffix: '[^']*', label: 'Technical Posts' \})"
         metric_match = re.search(metric_pattern, const_content)
         if metric_match:
             old_metric = int(metric_match.group(2))
