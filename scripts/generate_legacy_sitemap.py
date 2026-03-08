@@ -127,6 +127,27 @@ def generate_speaking_sitemap():
     return urls
 
 
+def write_sitemap_index(filename, sitemaps):
+    """Generate a sitemap index file referencing all individual sitemaps."""
+    now = datetime.now().strftime("%Y-%m-%d")
+    xml_parts = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+    for sitemap_url in sitemaps:
+        xml_parts.append("  <sitemap>")
+        xml_parts.append(f"    <loc>{sitemap_url}</loc>")
+        xml_parts.append(f"    <lastmod>{now}</lastmod>")
+        xml_parts.append("  </sitemap>")
+    xml_parts.append("</sitemapindex>")
+    xml_content = "\n".join(xml_parts) + "\n"
+
+    for target_dir in [PUBLIC, OUT]:
+        target = target_dir / filename
+        target.write_text(xml_content, encoding="utf-8")
+        print(f"  Written sitemap index to {target}")
+
+
 def main():
     blog_urls = scan_dirs(BLOG_DIRS, blog_priority)
     video_urls = scan_dirs(VIDEO_DIRS, video_priority)
@@ -140,10 +161,20 @@ def main():
     all_urls = blog_urls + video_urls
     n_all = write_sitemap("sitemap-legacy.xml", all_urls)
 
+    # Generate sitemap index referencing all individual sitemaps
+    write_sitemap_index("sitemap-index.xml", [
+        f"{SITE_URL}/sitemap.xml",
+        f"{SITE_URL}/sitemap-blog.xml",
+        f"{SITE_URL}/sitemap-videos.xml",
+        f"{SITE_URL}/sitemap-speaking.xml",
+        f"{SITE_URL}/sitemap-legacy.xml",
+    ])
+
     print(f"\nGenerated sitemap-blog.xml with {n_blog} URLs")
     print(f"Generated sitemap-videos.xml with {n_video} URLs")
     print(f"Generated sitemap-speaking.xml with {n_speaking} URLs")
     print(f"Generated sitemap-legacy.xml with {n_all} URLs (combined)")
+    print(f"Generated sitemap-index.xml (sitemap index)")
 
 
 if __name__ == "__main__":
