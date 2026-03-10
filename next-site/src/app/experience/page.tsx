@@ -8,7 +8,7 @@ import ExperienceContent from './ExperienceContent';
 export const metadata = buildMetadata({
   title: 'Experience',
   description:
-    '30+ years of professional experience in AI, cloud computing, and software engineering. From Apple to AWS, Hugging Face, and Fortino Capital. Author of The AI Realist newsletter.',
+    'Julien Simon\'s career: AI Operating Partner at Fortino Capital, former VP at Hugging Face, Principal Evangelist at AWS. 30+ years from Apple to enterprise AI.',
   path: '/experience',
   keywords: [
     'career',

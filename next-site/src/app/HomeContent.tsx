@@ -86,7 +86,7 @@ const RECOGNITIONS = [
 ];
 
 const TYPING_PHRASES = [
-  'Accelerating AI across PE/VC portfolios',
+  'Accelerating AI across enterprise portfolios',
   'Championing Small Language Models',
   'Bridging AI research and enterprise reality',
   'Making AI practical, not magical',

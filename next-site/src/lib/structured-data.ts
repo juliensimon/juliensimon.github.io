@@ -42,9 +42,9 @@ export function personSchema() {
       'Amazon SageMaker',
       'Cloud Computing',
       'AWS',
-      // PE/VC expertise
-      'Portfolio Company AI Acceleration',
-      'Private Equity AI Strategy',
+      // Enterprise AI expertise
+      'Enterprise AI Deployment',
+      'AI Strategy',
       // Industry analysis topics (from The AI Realist newsletter)
       'EU AI Act',
       'AI Regulation',
@@ -100,7 +100,7 @@ export function personSchema() {
         '@type': 'Occupation',
         name: 'AI Operating Partner',
         occupationLocation: { '@type': 'Country', name: 'Netherlands' },
-        description: 'Accelerating cloud and AI initiatives across PE/VC portfolio companies at Fortino Capital.',
+        description: 'Helping portfolio companies build and deploy AI at Fortino Capital.',
       },
     ],
     publishesContentIn: {
@@ -170,12 +170,12 @@ export function breadcrumbSchema(items: { name: string; url: string }[]) {
       '@type': 'ListItem',
       position: i + 1,
       name: item.name,
-      item: item.url,
+      item: { '@type': 'WebPage', '@id': item.url, name: item.name },
     })),
   };
 }
 
-export function webPageSchema(name: string, description: string, url: string) {
+export function webPageSchema(name: string, description: string, url: string, dateModified?: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -186,6 +186,7 @@ export function webPageSchema(name: string, description: string, url: string) {
     isPartOf: { '@id': `${SITE.url}/#website` },
     about: { '@id': `${SITE.url}/#person` },
     inLanguage: 'en',
+    ...(dateModified && { dateModified }),
   };
 }
 
@@ -271,6 +272,67 @@ export function youtubeChannelSchema(channel: {
   };
 }
 
+export function videoObjectListSchema(
+  videos: { id: string; title: string; date: string }[],
+  channelName: string,
+  channelUrl: string,
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${SITE.url}/youtube-videos/#videolist`,
+    name: `${channelName} - Latest Videos`,
+    url: `${SITE.url}/youtube-videos`,
+    numberOfItems: videos.length,
+    itemListElement: videos.map((video, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'VideoObject',
+        name: video.title,
+        description: video.title,
+        uploadDate: video.date,
+        thumbnailUrl: `https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`,
+        embedUrl: `https://www.youtube-nocookie.com/embed/${video.id}`,
+        contentUrl: `https://www.youtube.com/watch?v=${video.id}`,
+        author: { '@id': `${SITE.url}/#person` },
+        publisher: {
+          '@type': 'Organization',
+          name: channelName,
+          url: channelUrl,
+        },
+      },
+    })),
+  };
+}
+
+export function blogPostingListSchema(
+  posts: { title: string; href: string; date?: string; description?: string }[],
+  categoryName: string,
+  categoryUrl: string,
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${categoryUrl}/#itemlist`,
+    name: categoryName,
+    url: categoryUrl,
+    numberOfItems: posts.length,
+    itemListElement: posts.slice(0, 50).map((post, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'BlogPosting',
+        headline: post.title,
+        url: post.href,
+        author: { '@id': `${SITE.url}/#person` },
+        ...(post.date && { datePublished: post.date }),
+        ...(post.description && { description: post.description }),
+      },
+    })),
+  };
+}
+
 export function articleSchema(article: {
   title: string;
   description: string;
@@ -329,7 +391,7 @@ export function newsletterSchema() {
     ],
     audience: {
       '@type': 'Audience',
-      audienceType: 'AI practitioners, enterprise architects, PE/VC investors, CTOs, policy makers',
+      audienceType: 'AI practitioners, enterprise architects, CTOs, investors, policy makers',
     },
   };
 }
@@ -352,7 +414,7 @@ export const SPEAKING_FAQS = [
 export const PUBLICATIONS_FAQS = [
   {
     question: 'How many articles has Julien Simon published?',
-    answer: 'Julien Simon has published 416+ technical articles across multiple platforms including the AWS Blog, Hugging Face Blog, Arcee AI Blog, Medium, and his Substack newsletter The AI Realist (airealist.ai).',
+    answer: 'Julien Simon has published 417+ technical articles across multiple platforms including the AWS Blog, Hugging Face Blog, Arcee AI Blog, Medium, and his Substack newsletter The AI Realist (airealist.ai).',
   },
   {
     question: 'What is The AI Realist newsletter?',
