@@ -11,6 +11,20 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Cloud vs. Clout',
+    slug: '2026-03-11_cloud-vs-clout',
+    date: '2026-03-11',
+    description: 'Oracle has produced the most leveraged cloud infrastructure transformation on record: $125 billion in debt, $553 billion in contractual commitments, 57 percent of which are concentrated in a single...',
+    originalUrl: 'https://www.airealist.ai/p/cloud-vs-clout',
+  },
+  {
+    title: 'Mistral Succeeded. France\'s AI Strategy Didn\'t.',
+    slug: '2026-03-10_mistral-succeeded-frances-ai-strategy-didnt',
+    date: '2026-03-10',
+    description: 'In the winter of 1972, in a cellar in Ch\u00e2tenay-Malabry, a suburb south of Paris, an engineer named Fran\u00e7ois Gernelle worked eighteen-hour days to meet a deadline from the Institut National de Reche...',
+    originalUrl: 'https://www.airealist.ai/p/mistral-succeeded-frances-ai-strategy',
+  },
+  {
     title: 'Access, Disable, Destroy',
     slug: '2026-03-07_access-disable-destroy',
     date: '2026-03-07',

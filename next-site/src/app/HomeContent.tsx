@@ -8,6 +8,18 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Cloud vs. Clout',
+    href: '/blog/industry-perspectives/2026-03-11_cloud-vs-clout/index.html',
+    date: 'March 11, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Mistral Succeeded. France\u2019s AI Strategy Didn\u2019t.',
+    href: '/blog/industry-perspectives/2026-03-10_mistral-succeeded-frances-ai-strategy-didnt/index.html',
+    date: 'March 10, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Access, Disable, Destroy',
     href: '/blog/industry-perspectives/2026-03-07_access-disable-destroy/index.html',
     date: 'March 7, 2026',
@@ -24,18 +36,6 @@ const LATEST_UPDATES = [
     href: '/blog/industry-perspectives/2026-03-05_ai-tools-work-does-your-engineering-process/index.html',
     date: 'March 5, 2026',
     icon: 'article',
-  },
-  {
-    title: 'South Korea Powers the World\u2019s AI Chips. Where are its LLMs?',
-    href: '/blog/industry-perspectives/2026-03-04_south-korea-powers-the-worlds-ai-chips-where-are-its-llms/index.html',
-    date: 'March 4, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Deep Dive: Teaching Arcee Trinity Mini to Read Medical Research with RLVR and GRPO',
-    href: '/youtube/2026/20260303_Deep_Dive_Teaching_Arcee_Trinity_Mini_to_Read_Medical_Research_with_RLVR_and_GRPO.html',
-    date: 'March 3, 2026',
-    icon: 'video',
   },
 ];
 
