@@ -700,7 +700,7 @@ def update_latest_updates(items: list[PostItem], dry_run: bool):
         display_date = item.pub_date.strftime('%B %-d, %Y')
 
         new_entries.append({
-            'title': item.title.replace("'", "\u2019"),  # use curly quote, safe inside JS single quotes
+            'title': item.title.replace("'", '\u2019'),  # use curly quote, safe inside JS single quotes
             'href': href,
             'date': display_date,
             'icon': icon,
@@ -875,6 +875,76 @@ def update_publications_ts(articles_count: int, dry_run: bool):
             print(f"  Updated constants.ts: Technical Posts {old_metric} -> {new_metric}")
 
 
+def update_industry_perspectives_ts(items: list[PostItem], dry_run: bool):
+    """Update industry-perspectives.ts with new article entries for RSS feed."""
+    ts_path = SRC / "data" / "blog-listings" / "industry-perspectives.ts"
+
+    if not ts_path.exists():
+        print(f"  Warning: industry-perspectives.ts not found: {ts_path}")
+        return
+
+    content = ts_path.read_text(encoding='utf-8')
+
+    articles = [item for item in sorted(items, key=lambda x: x.pub_date, reverse=True)
+                if item.post_type == 'article']
+
+    if not articles:
+        return
+
+    # Build new entries to prepend
+    new_entries = []
+    for item in articles:
+        date_str = item.pub_date.strftime('%Y-%m-%d')
+        slug = f"{date_str}_{slugify(item.title)}"
+
+        # Check if already present
+        if slug in content:
+            continue
+
+        # Read description from metadata.json if available
+        metadata_path = PUBLIC / "blog" / "industry-perspectives" / slug / "metadata.json"
+        description = ''
+        if metadata_path.exists():
+            try:
+                meta = json.loads(metadata_path.read_text(encoding='utf-8'))
+                description = meta.get('description', '')
+            except (json.JSONDecodeError, KeyError):
+                pass
+
+        # Escape single quotes in title for TS
+        escaped_title = item.title.replace("'", "\\'")
+
+        new_entries.append(
+            f"  {{\n"
+            f"    title: '{escaped_title}',\n"
+            f"    slug: '{slug}',\n"
+            f"    date: '{date_str}',\n"
+            f"    description: '{description}',\n"
+            f"    originalUrl: '{item.url}',\n"
+            f"  }}"
+        )
+
+    if not new_entries:
+        return
+
+    # Insert after the array opening
+    marker = 'export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = ['
+    if marker not in content:
+        print("  Warning: Could not find INDUSTRY_PERSPECTIVES_ARTICLES array")
+        return
+
+    insert_str = ',\n'.join(new_entries)
+    content = content.replace(
+        marker + '\n',
+        marker + '\n' + insert_str + ',\n'
+    )
+
+    if not dry_run:
+        ts_path.write_text(content, encoding='utf-8')
+
+    print(f"  Updated industry-perspectives.ts: added {len(new_entries)} articles")
+
+
 def print_summary(new_posts: list[PostItem]):
     """Print summary of detected new posts."""
     print(f"\nNEW POSTS DETECTED ({len(new_posts)}):\n")
@@ -942,9 +1012,10 @@ def run(dry_run: bool = False, force: bool = False):
     for year, count in year_video_counts.items():
         update_youtube_ts(year, count, dry_run)
 
-    # Update blog index for articles and publications.ts count
+    # Update blog index, industry-perspectives.ts, and publications.ts count
     if articles_added:
         articles_indexed = update_blog_index(articles_added, dry_run)
+        update_industry_perspectives_ts(articles_added, dry_run)
         if articles_indexed > 0:
             update_publications_ts(articles_indexed, dry_run)
 

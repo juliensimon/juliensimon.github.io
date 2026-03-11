@@ -59,6 +59,19 @@ Synced articles set `<link rel="canonical">` pointing to the **original Substack
 
 If a post originated from Medium (older posts), the canonical points to the Medium URL instead.
 
+## What the Script Updates Automatically
+
+The sync script updates all of these files when new articles are found:
+
+| File | What | Purpose |
+|------|------|---------|
+| `public/blog/industry-perspectives/YYYY-MM-DD_slug/` | Article HTML + images | The actual post content |
+| `public/blog/industry-perspectives/index.html` | Blog listing page | Category listing page |
+| `src/data/blog-listings/industry-perspectives.ts` | Article metadata array | RSS feed (`/feed`) source |
+| `src/app/HomeContent.tsx` | `LATEST_UPDATES` array | Homepage "Latest Updates" section |
+| `src/data/publications.ts` | Article counts | Publication stats |
+| `src/lib/constants.ts` | Technical Posts metric | Homepage metric cards |
+
 ## Output Structure
 
 Articles are saved to:
