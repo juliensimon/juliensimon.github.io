@@ -920,7 +920,7 @@ def update_industry_perspectives_ts(items: list[PostItem], dry_run: bool):
             f"    slug: '{slug}',\n"
             f"    date: '{date_str}',\n"
             f"    description: '{description}',\n"
-            f"    originalUrl: '{item.url}',\n"
+            f"    originalUrl: '{item.link}',\n"
             f"  }}"
         )
 

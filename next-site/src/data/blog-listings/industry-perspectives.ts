@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Register, Disclose, Pay',
+    slug: '2026-03-12_register-disclose-pay',
+    date: '2026-03-12',
+    description: 'On the morning of March 10, 2026, the Court of Justice of the European Union convened its fifteen-judge Grand Chamber in Luxembourg to hear oral arguments in Like Company v. Google — the first case t...',
+    originalUrl: 'https://www.airealist.ai/p/register-disclose-pay',
+  },
+  {
     title: 'Cloud vs. Clout',
     slug: '2026-03-11_cloud-vs-clout',
     date: '2026-03-11',

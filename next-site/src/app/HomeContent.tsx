@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Register, Disclose, Pay',
+    href: '/blog/industry-perspectives/2026-03-12_register-disclose-pay/index.html',
+    date: 'March 12, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Cloud vs. Clout',
     href: '/blog/industry-perspectives/2026-03-11_cloud-vs-clout/index.html',
     date: 'March 11, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'Build, Buy, or Download Someone Else\u2019s Politics',
     href: '/blog/industry-perspectives/2026-03-06_build-buy-or-download-someone-elses-politics/index.html',
     date: 'March 6, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'AI Tools Work. Does Your Engineering Process?',
-    href: '/blog/industry-perspectives/2026-03-05_ai-tools-work-does-your-engineering-process/index.html',
-    date: 'March 5, 2026',
     icon: 'article',
   },
 ];
