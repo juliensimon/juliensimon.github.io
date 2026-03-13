@@ -724,7 +724,7 @@ def update_latest_updates(items: list[PostItem], dry_run: bool):
     # Use a lookahead to ensure we stop at the closing ]; followed by whitespace and next const
     content = re.sub(
         r'const LATEST_UPDATES = \[[\s\S]*?\];(?=\s*\nconst )',
-        new_array,
+        lambda _: new_array,
         content
     )
 

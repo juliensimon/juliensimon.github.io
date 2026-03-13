@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Open Source, Closed Orbit',
+    slug: '2026-03-13_open-source-closed-orbit',
+    date: '2026-03-13',
+    description: 'On August 8, 2023, Jensen Huang stood on stage at SIGGRAPH and asked a question.',
+    originalUrl: 'https://www.airealist.ai/p/open-source-closed-orbit',
+  },
+  {
     title: 'Register, Disclose, Pay',
     slug: '2026-03-12_register-disclose-pay',
     date: '2026-03-12',

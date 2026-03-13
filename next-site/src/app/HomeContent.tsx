@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Open Source, Closed Orbit',
+    href: '/blog/industry-perspectives/2026-03-13_open-source-closed-orbit/index.html',
+    date: 'March 13, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Register, Disclose, Pay',
     href: '/blog/industry-perspectives/2026-03-12_register-disclose-pay/index.html',
     date: 'March 12, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'Access, Disable, Destroy',
     href: '/blog/industry-perspectives/2026-03-07_access-disable-destroy/index.html',
     date: 'March 7, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Build, Buy, or Download Someone Else\u2019s Politics',
-    href: '/blog/industry-perspectives/2026-03-06_build-buy-or-download-someone-elses-politics/index.html',
-    date: 'March 6, 2026',
     icon: 'article',
   },
 ];
