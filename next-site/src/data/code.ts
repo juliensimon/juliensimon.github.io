@@ -9,6 +9,14 @@ export interface Repository {
 
 export const REPOSITORIES: Repository[] = [
   {
+    name: 'starlink-viz',
+    description: 'Real-time 3D Starlink satellite tracker with live dish telemetry. Track ~10,000 satellites, ground stations, handoffs, and network performance.',
+    url: 'https://github.com/juliensimon/starlink-viz',
+    language: 'TypeScript',
+    tags: ['Three.js', 'Next.js', 'Satellite Tracking', '3D Visualization'],
+    featured: true,
+  },
+  {
     name: 'gradio-mcp-server-builder',
     description: 'CLI tool to create MCP servers with Gradio web interfaces from existing Python functions.',
     url: 'https://github.com/juliensimon/gradio-mcp-server-builder',
@@ -35,13 +43,6 @@ export const REPOSITORIES: Repository[] = [
     description: 'Framework for evaluating and comparing LLMs across industry domains using radar charts and automated scoring.',
     url: 'https://github.com/juliensimon/radar-evaluator',
     tags: ['LLM Evaluation', 'Radar Charts', 'Automated Scoring', 'Benchmarking'],
-  },
-  {
-    name: 'aws-samples',
-    description: 'Developer resources for Arcee models on AWS.',
-    url: 'https://github.com/juliensimon/aws-samples',
-    language: 'Jupyter Notebook',
-    tags: ['AWS', 'SageMaker', 'CloudFormation', 'JumpStart'],
   },
   {
     name: 'sagemaker-inference-container-cpu',
