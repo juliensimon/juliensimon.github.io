@@ -2,6 +2,7 @@ import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import MetricCard from '@/components/ui/MetricCard';
 import YearCard from '@/components/ui/YearCard';
+import RelatedContent from '@/components/ui/RelatedContent';
 import { YOUTUBE_STATS, VIDEO_YEARS, LATEST_VIDEOS } from '@/data/youtube';
 
 export default function YouTubeContent() {
@@ -74,6 +75,12 @@ export default function YouTubeContent() {
           ))}
         </div>
       </section>
+
+      <RelatedContent items={[
+        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '439 articles' },
+        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '684 engagements' },
+        { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos' },
+      ]} />
     </>
   );
 }

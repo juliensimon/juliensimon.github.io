@@ -2,6 +2,7 @@ import ExportedImage from 'next-image-export-optimizer';
 
 import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import RelatedContent from '@/components/ui/RelatedContent';
 import { BOOKS } from '@/data/books';
 
 export default function BooksContent() {
@@ -64,6 +65,12 @@ export default function BooksContent() {
           ))}
         </div>
       </section>
+
+      <RelatedContent items={[
+        { href: '/experience', title: 'Experience', subtitle: '30+ years of technology leadership' },
+        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '684 engagements' },
+        { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos' },
+      ]} />
     </>
   );
 }

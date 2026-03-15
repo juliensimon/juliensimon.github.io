@@ -5,6 +5,7 @@ import Link from 'next/link';
 import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import MetricCard from '@/components/ui/MetricCard';
+import RelatedContent from '@/components/ui/RelatedContent';
 import { PUBLICATION_CATEGORIES, TOTAL_ARTICLES } from '@/data/publications';
 
 export default function PublicationsContent() {
@@ -53,6 +54,12 @@ export default function PublicationsContent() {
           })}
         </div>
       </section>
+
+      <RelatedContent items={[
+        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '684 engagements' },
+        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '494K subscribers' },
+        { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos' },
+      ]} />
     </>
   );
 }

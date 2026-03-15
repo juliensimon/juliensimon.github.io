@@ -5,6 +5,7 @@ import ScrollReveal from '@/components/ui/ScrollReveal';
 import MetricCard from '@/components/ui/MetricCard';
 import YearCard from '@/components/ui/YearCard';
 import SpeakingMap from '@/components/ui/SpeakingMap';
+import RelatedContent from '@/components/ui/RelatedContent';
 import { SPEAKING_STATS, SPEAKING_YEARS } from '@/data/speaking';
 
 export default function SpeakingContent() {
@@ -76,6 +77,12 @@ export default function SpeakingContent() {
           ))}
         </div>
       </section>
+
+      <RelatedContent items={[
+        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '439 articles' },
+        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '494K subscribers' },
+        { href: '/books', title: 'Books', subtitle: 'Published works on ML and cloud', metric: '4 books' },
+      ]} />
     </>
   );
 }

@@ -2,6 +2,7 @@
 
 import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import RelatedContent from '@/components/ui/RelatedContent';
 import { REPOSITORIES, GITHUB_PROFILE } from '@/data/code';
 
 export default function CodeContent() {
@@ -69,6 +70,12 @@ export default function CodeContent() {
           </a>
         </ScrollReveal>
       </section>
+
+      <RelatedContent items={[
+        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '494K subscribers' },
+        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '439 articles' },
+        { href: '/experience', title: 'Experience', subtitle: '30+ years of technology leadership' },
+      ]} />
     </>
   );
 }

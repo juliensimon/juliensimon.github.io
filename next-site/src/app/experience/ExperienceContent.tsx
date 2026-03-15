@@ -2,6 +2,7 @@
 
 import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import RelatedContent from '@/components/ui/RelatedContent';
 import { EXPERIENCES, EDUCATION } from '@/data/experience';
 
 export default function ExperienceContent() {
@@ -109,6 +110,12 @@ export default function ExperienceContent() {
           </div>
         </ScrollReveal>
       </section>
+
+      <RelatedContent items={[
+        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '684 engagements' },
+        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '439 articles' },
+        { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos' },
+      ]} />
     </>
   );
 }

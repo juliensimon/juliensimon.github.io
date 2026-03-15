@@ -2,6 +2,7 @@ import ExportedImage from 'next-image-export-optimizer';
 
 import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import RelatedContent from '@/components/ui/RelatedContent';
 import { COMPUTERS, UNIX_JOURNEY, UNIX_BOOKS, VINTAGE_CDS, UNIX_PHILOSOPHY } from '@/data/computers';
 
 export default function ComputersContent() {
@@ -165,6 +166,12 @@ export default function ComputersContent() {
           </div>
         </ScrollReveal>
       </section>
+
+      <RelatedContent items={[
+        { href: '/experience', title: 'Experience', subtitle: '30+ years of technology leadership' },
+        { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos' },
+        { href: '/books', title: 'Books', subtitle: 'Published works on ML and cloud', metric: '4 books' },
+      ]} />
     </>
   );
 }
