@@ -6,7 +6,7 @@ import { SITE } from '@/lib/constants';
 import CodeContent from './CodeContent';
 
 export const metadata = buildMetadata({
-  title: 'Code & Projects',
+  title: 'Code & Open Source — AI & ML Projects',
   description:
     'Open source projects, GitHub repositories, and code examples for machine learning, AI, and cloud computing.',
   path: '/code',

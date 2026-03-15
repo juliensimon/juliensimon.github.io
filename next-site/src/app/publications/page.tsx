@@ -6,9 +6,9 @@ import { SITE } from '@/lib/constants';
 import PublicationsContent from './PublicationsContent';
 
 export const metadata = buildMetadata({
-  title: 'Publications',
+  title: 'Publications — 439 Articles on AI & ML',
   description:
-    '417 articles on AI, machine learning, and cloud computing. Published on AWS Blog, Hugging Face, Medium, and The AI Realist newsletter by Julien Simon.',
+    '439 articles on AI, machine learning, and cloud computing. Published on AWS Blog, Hugging Face, Medium, and The AI Realist newsletter by Julien Simon.',
   path: '/publications',
   keywords: [
     'technical writing',
@@ -30,7 +30,7 @@ export default function PublicationsPage() {
       ])} />
       <StructuredData data={webPageSchema(
         'Publications',
-        '417 articles on AI, machine learning, and cloud computing by Julien Simon.',
+        '439 articles on AI, machine learning, and cloud computing by Julien Simon.',
         `${SITE.url}/publications`,
       )} />
       <StructuredData data={faqSchema(PUBLICATIONS_FAQS, `${SITE.url}/publications`)} />

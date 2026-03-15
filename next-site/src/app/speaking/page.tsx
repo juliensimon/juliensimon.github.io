@@ -6,7 +6,7 @@ import { SITE } from '@/lib/constants';
 import SpeakingContent from './SpeakingContent';
 
 export const metadata = buildMetadata({
-  title: 'Speaking',
+  title: 'Speaking — 684+ Talks on AI & Machine Learning',
   description:
     '684+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing. Keynotes at AWS re:Invent, ODSC, and more.',
   path: '/speaking',

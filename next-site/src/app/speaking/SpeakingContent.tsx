@@ -4,7 +4,12 @@ import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import MetricCard from '@/components/ui/MetricCard';
 import YearCard from '@/components/ui/YearCard';
-import SpeakingMap from '@/components/ui/SpeakingMap';
+import dynamic from 'next/dynamic';
+
+const SpeakingMap = dynamic(() => import('@/components/ui/SpeakingMap'), {
+  ssr: false,
+  loading: () => <div className="w-full h-[400px] sm:h-[500px] glass-card rounded-xl animate-pulse" />,
+});
 import RelatedContent from '@/components/ui/RelatedContent';
 import { SPEAKING_STATS, SPEAKING_YEARS } from '@/data/speaking';
 
