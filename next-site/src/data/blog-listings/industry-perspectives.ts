@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'AWS Built Its Own AI Chip. Now It Needs Someone Else’s.',
+    slug: '2026-03-15_aws-built-its-own-ai-chip-now-it-needs-someone-elses',
+    date: '2026-03-15',
+    description: 'In March 2024, I explained to my YouTube audience how LLM inference actually works.[1] Two distinct phases, I said. Prefill — the phase where the model processes your entire prompt in parallel, fil...',
+    originalUrl: 'https://www.airealist.ai/p/aws-built-its-own-ai-chip-now-it',
+  },
+  {
     title: 'Open Source, Closed Orbit',
     slug: '2026-03-13_open-source-closed-orbit',
     date: '2026-03-13',

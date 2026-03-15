@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'AWS Built Its Own AI Chip. Now It Needs Someone Else’s.',
+    href: '/blog/industry-perspectives/2026-03-15_aws-built-its-own-ai-chip-now-it-needs-someone-elses/index.html',
+    date: 'March 15, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Open Source, Closed Orbit',
     href: '/blog/industry-perspectives/2026-03-13_open-source-closed-orbit/index.html',
     date: 'March 13, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'Mistral Succeeded. France\u2019s AI Strategy Didn\u2019t.',
     href: '/blog/industry-perspectives/2026-03-10_mistral-succeeded-frances-ai-strategy-didnt/index.html',
     date: 'March 10, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Access, Disable, Destroy',
-    href: '/blog/industry-perspectives/2026-03-07_access-disable-destroy/index.html',
-    date: 'March 7, 2026',
     icon: 'article',
   },
 ];
