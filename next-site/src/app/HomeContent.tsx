@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Still Missing Critical Pieces',
+    href: '/blog/industry-perspectives/2026-03-16_still-missing-critical-pieces/index.html',
+    date: 'March 16, 2026',
+    icon: 'article',
+  },
+  {
     title: 'No Cloud, No API Keys: Local Open-Source Coding with Trinity Mini, OpenCode, and MLX',
     href: '/youtube/2026/20260315_No_Cloud_No_API_Keys_Local_Open-Source_Coding_with_Trinity_Mini_OpenCode_and_MLX.html',
     date: 'March 15, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'Register, Disclose, Pay',
     href: '/blog/industry-perspectives/2026-03-12_register-disclose-pay/index.html',
     date: 'March 12, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Cloud vs. Clout',
-    href: '/blog/industry-perspectives/2026-03-11_cloud-vs-clout/index.html',
-    date: 'March 11, 2026',
     icon: 'article',
   },
 ];

@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Still Missing Critical Pieces',
+    slug: '2026-03-16_still-missing-critical-pieces',
+    date: '2026-03-16',
+    description: 'In July 2025, I published a piece arguing that the Model Context Protocol systematically overlooked four decades of hard-won lessons from distributed systems.[1] The piece made specific claims. MCP...',
+    originalUrl: 'https://www.airealist.ai/p/still-missing-critical-pieces',
+  },
+  {
     title: 'AWS Built Its Own AI Chip. Now It Needs Someone Else’s.',
     slug: '2026-03-15_aws-built-its-own-ai-chip-now-it-needs-someone-elses',
     date: '2026-03-15',
