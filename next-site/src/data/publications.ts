@@ -9,7 +9,7 @@ export interface PublicationCategory {
 export const PUBLICATION_CATEGORIES: PublicationCategory[] = [
   {
     name: 'The AI Realist (Industry Perspectives)',
-    count: 43,
+    count: 41,
     description: 'Practical AI analysis for builders, operators, and investors. Published on The AI Realist newsletter.',
     href: '/blog/industry-perspectives/index.html',
     dateRange: '2021 - Present',
@@ -43,6 +43,13 @@ export const PUBLICATION_CATEGORIES: PublicationCategory[] = [
     dateRange: '2015 - 2021',
   },
   {
+    name: 'Medium Articles',
+    count: 19,
+    description: 'Personal technical deep-dives on machine learning and cloud computing.',
+    href: '/blog-posts/medium',
+    dateRange: '2017 - 2021',
+  },
+  {
     name: 'Legacy Blog Posts',
     count: 90,
     description: 'Pre-AWS technical articles archive.',
@@ -51,4 +58,4 @@ export const PUBLICATION_CATEGORIES: PublicationCategory[] = [
   },
 ];
 
-export const TOTAL_ARTICLES = 422;
+export const TOTAL_ARTICLES = 439;

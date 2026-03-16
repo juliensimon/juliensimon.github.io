@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'No Cloud, No API Keys: Local Open-Source Coding with Trinity Mini, OpenCode, and MLX',
+    href: '/youtube/2026/20260315_No_Cloud_No_API_Keys_Local_Open-Source_Coding_with_Trinity_Mini_OpenCode_and_MLX.html',
+    date: 'March 15, 2026',
+    icon: 'video',
+  },
+  {
     title: 'AWS Built Its Own AI Chip. Now It Needs Someone Else’s.',
     href: '/blog/industry-perspectives/2026-03-15_aws-built-its-own-ai-chip-now-it-needs-someone-elses/index.html',
     date: 'March 15, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'Cloud vs. Clout',
     href: '/blog/industry-perspectives/2026-03-11_cloud-vs-clout/index.html',
     date: 'March 11, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Mistral Succeeded. France\u2019s AI Strategy Didn\u2019t.',
-    href: '/blog/industry-perspectives/2026-03-10_mistral-succeeded-frances-ai-strategy-didnt/index.html',
-    date: 'March 10, 2026',
     icon: 'article',
   },
 ];

@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Cloud, No API Keys: Local Open-Source Coding with Trinity Mini, OpenCode, and MLX</title>
+    <meta name="description" content="No Cloud, No API Keys: Local Open-Source Coding with Trinity Mini, OpenCode, and MLX - YouTube video by Julien Simon">
+    <meta property="og:title" content="No Cloud, No API Keys: Local Open-Source Coding with Trinity Mini, OpenCode, and MLX">
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://www.julien.org/youtube/2026/20260315_No_Cloud_No_API_Keys_Local_Open-Source_Coding_with_Trinity_Mini_OpenCode_and_MLX.html">
+    <link rel="canonical" href="https://www.julien.org/youtube/2026/20260315_No_Cloud_No_API_Keys_Local_Open-Source_Coding_with_Trinity_Mini_OpenCode_and_MLX.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="No Cloud, No API Keys: Local Open-Source Coding with Trinity Mini, OpenCode, and MLX">
+    <meta name="twitter:creator" content="@julsimon">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "No Cloud, No API Keys: Local Open-Source Coding with Trinity Mini, OpenCode, and MLX",
+        "description": "No Cloud, No API Keys: Local Open-Source Coding with Trinity Mini, OpenCode, and MLX - YouTube video by Julien Simon",
+        "uploadDate": "2026-03-15",
+        "embedUrl": "https://www.youtube.com/embed/GdsxWhBVJjg",
+        "thumbnailUrl": "https://img.youtube.com/vi/GdsxWhBVJjg/maxresdefault.jpg",
+        "author": { "@id": "https://www.julien.org/#person" }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>No Cloud, No API Keys: Local Open-Source Coding with Trinity Mini, OpenCode, and MLX</h1>
+        <div class="date">March 15, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/GdsxWhBVJjg" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">No API keys. No cloud. No per-token cost. Just your Mac.
+
+In this video, I show you how to run Arcee AI&#x27;s Trinity Mini (26B parameters, 3B active) locally on Apple Silicon using MLX, and wire it up to OpenCode as a fully local AI coding assistant. Everything runs on-device — ideal for air-gapped environments, regulated industries, or anyone who wants a private coding AI.
+
+I cover the full setup: choosing the right quantization for your hardware, benchmarking generation speed across all quantizations, and configuring OpenCode to talk to the local model. I also check Trinity&#x27;s results with Claude Code!
+
+  ⭐️⭐️⭐️ More content on Substack at https://www.airealist.ai ⭐️⭐️⭐️
+
+  *** MODELS
+  Arcee Trinity Mini (base) → https://huggingface.co/arcee-ai/Trinity-Mini
+  Trinity Mini MLX 8-bit → https://huggingface.co/mlx-community/Trinity-Mini-8bit
+  Trinity Mini MLX 6-bit → https://huggingface.co/mlx-community/Trinity-Mini-6bit
+  Trinity Mini MLX 4-bit → https://huggingface.co/mlx-community/Trinity-Mini-4bit
+  Trinity Mini on OpenRouter (free) → https://openrouter.ai/arcee-ai/trinity-mini:free
+
+  *** CODE
+Full walkthrough + scripts → https://github.com/juliensimon/arcee-demos/tree/main/trinity-mini-mlx
+
+  *** TOOLS
+  MLX by Apple → https://github.com/ml-explore/mlx
+  mlx-lm (model serving) → https://github.com/ml-explore/mlx-lm
+  OpenCode (terminal coding assistant) → https://opencode.ai
+  Arcee AI → https://www.arcee.ai</div>
+
+        <div class="transcript">
+<h2>Transcript</h2>
+            I&#x27;m here. You know how much I love open source, language models, AI agents and local inference. Well, in this video we&#x27;re going to put all of this together and we&#x27;re going to build a fully local, fully open source coding solution running on my laptop. We&#x27;re going to use open code. We&#x27;re going to use the RCAI Trinity Mini model and we&#x27;re going to use the MLX server to run an OK, this should be fun.
+
+Let&#x27;s get started. Before we dive into the demo, let&#x27;s discuss why we would need such a setup. After all, we&#x27;re also all using Cloud code or codex or cursor, etc. And these are all very nice. But sometimes you just have to work without an internet connection and without connectivity to your favorite model.
+
+Examples include working at customer premises where the customer mandates that you work completely air-gapped inside their data center, working with confidential data, which completely precludes, of course, the use of cloud services. And I work with companies who have to deal with this on a daily basis. So what&#x27;s the option then? Well, the option is to have a laptop with a local model and a coding agent. Pts you get the job done and the job could be writing SQL queries against databases that are running in the data center, running in TL scripts, building infrastructure as code to deploy your own solution within their data center, etc., etc.
+
+So there are a lot of scenarios where you may need this. And of course, you could just be flying around without reliable Wi-Fi, right? And that happens to. So this is exactly what we&#x27;re going to do here. So what are we going to use today?
+
+We&#x27;re going to use Trinity Mini, 26 billion parameter model by RCAI, and I&#x27;ve presented the model before. The model has a mixture of experts architecture, which is really interesting in our particular case because you get the knowledge of a 26 billion parameter model and the inference speed of a 3 billion parameter model, only 3 billion parameters are active per token. And that&#x27;s great because obviously my machine, we don&#x27;t have the same processing power as in the cloud, so we can just optimize the speed by leveraging an MOE model. And this particular model is a really good choice for function calling and agentic apps. It scores pretty high on this BFCL benchmark, which is a benchmark specialized for function calling and agentic and it tends to do better than models in the same size range.
+
+So that&#x27;s a good sign. It&#x27;s also quite good at math and coding, and that&#x27;s exactly what we need. Okay, so that&#x27;s the model. So how do we run the model? We run the model inside the MLX language model server, and that&#x27;s an open source project that leverages the MLX framework.
+
+By Apple to run AI and ML models on Apple hardware. So MLXLM allows you to grab almost any model from the Hocking Face Hub and optimizing for the Apple hardware. And as we will see in a minute, there&#x27;s a large community doing that and in fact will reuse optimized models that are readily available. We don&#x27;t even need to optimize the models ourselves. So that&#x27;s pretty good.
+
+And the model is exposed through an OpenAI endpoint, which makes it compatible, which would pretty much have a thing. And last but not least, we&#x27;re going to use open code as our coding assistant. And if you haven&#x27;t tried open code, I highly recommend it. It&#x27;s almost a drop in replacement for whatever coding agent you&#x27;re using today. And it&#x27;s open source.
+
+And of course, you can use it for more than coding. You can just chat with the model. And if you can&#x27;t, you know, plain text language task, you know, summarization, translation, et cetera, I mean, you can do that too, okay? So that&#x27;s what we&#x27;re going to do. And let&#x27;s talk about quantization for a second.
+
+So if you followed for a while, you know that you can&#x27;t just take any model and run it locally. You have to optimize it, right, for the machine you&#x27;re running it on. And most of this means quantization. And I&#x27;ve covered quantization in a lot of detail in previous videos, which you&#x27;ll find on the channel. In a nutshell, we&#x27;re resizing model parameters from the initial precision, generally 16-bit, to something quite smaller, 8 and less, maybe all the way down to 4.
+
+So you can immediately see the benefit You know, smaller parameters mean we need less memory to load the model. So we don&#x27;t need a fancy GPU, we don&#x27;t need a huge machine. And the stronger the quantization, of course, the more memory we save. The trade-off is that, of course, we are losing a bit of precision as we shrink the parameter size. So from 16 to 8 is generally invisible.
+
+It&#x27;s really negligible degradation, if any. And as you keep going to 6, 5 and 4, you may see some degradation. So you have to run your tests. For simple tasks, it won&#x27;t be noticeable. Again, working with text generally doesn&#x27;t make any difference.
+
+But if you&#x27;re trying to do function calling and coding or reasoning, yes, you will see some degradation. Difficult to give you a very clear rule of thumb. You have to try it out and see what&#x27;s the smallest model that gets the job done. So as mentioned, we have those models on the Hugging Face Hub. Let&#x27;s maybe look at the 8-bit model.
+
+Let me bring that up for a second. Here it is. Okay. And this is all part of this amazing MLX community organization. And feel free to join, by the way.
+
+And contribute models. It&#x27;s a really, really open community. And as we can see here, we have the original Trinity Mini model that was quantized and in this case, optimized for MLX. So you don&#x27;t even need to do it, which is great. Okay, so we&#x27;ll work with the 8-bit model because we&#x27;re going to do some coding and see we want the best precision we can get.
+
+Okay? So let&#x27;s get to setting things up. So I&#x27;m running this on a Mac. It&#x27;s an M3 Mac with 48 gigs. Any M series Mac should work.
+
+If you&#x27;re lucky to have M4 or M5, great. It will work even better. The amount of RAM you have should drive your model choice. But again, you know, give it a shot. Maybe try four, five, six, see how far you can push it.
+
+Okay? We&#x27;ll need UV and a homebrew for installation, but if you&#x27;re watching this, I&#x27;m guessing you have everything you need. So just a tiny bit of weirdness. When I started testing Trinity Mini on MLX at the time of recording, I did find a couple of issues. So one is a good old bug, and you&#x27;ll find details in this file.
+
+The other one is just a bit of an awkward processing for tool calling. So tool calling works, but the output in open code isn&#x27;t as nice as it should be. So I fixed both issues. I submitted GitHub issues to the project. They are actually being worked on as we speak.
+
+So if you&#x27;re watching this a few weeks after the video has been posted, pause now. Go check that the issues have been closed and merged into whatever version will be the latest one. And feel free to completely ignore this section. This only applies until the issues have been fixed and merged into an official release. So the only thing you need to do is just grab this and write it in your product folder.
+
+Okay, it will install MLX if it&#x27;s not there. It will download the 8-bit model if it&#x27;s not there, and then it will apply the patch. Okay, so we can see, I&#x27;m starting fresh here. So we can see it&#x27;s installing MLX. And then it&#x27;s going to do the patching.
+
+I think the models are already downloaded, so you should save some time on that. Okay, that&#x27;s done. So we patched the server and as you can see we&#x27;re only patching the local environment so it&#x27;s not messing up anything and patching the tokenizers. Okay, so that&#x27;s all good. Again, if you&#x27;re watching this a bit later, this is probably unnecessary and just try running the examples without this and see how it goes.
+
+Okay, now we can start the server and there&#x27;s again a small script to do that just run this we&#x27;re going to run the 8-bit model it&#x27;s going to load fairly quickly okay and now it&#x27;s running locally port 8080 and it&#x27;s exposing the open a I API API which we can quickly test in a different terminal okay we get an answer all good now we can set up open code So that&#x27;s very simple. I like to use HomeBrew. Let&#x27;s just give this a shot. It should already be here. Let me show you all the steps.
+
+Okay, and then we can verify it. It is here. Let&#x27;s just check it&#x27;s starting. Okay, we have open code. All right, the final step before we start running, inference to declare the models in the config file.
+
+Okay, so just grab this and you can see we have the older variants. Okay, and those are the Hockingface repo names, and this is the local endpoint we&#x27;re going to use. So just copy this right into your open code config, and you&#x27;re good to go. And now we can launch open code. Great.
+
+And going slash models, we let us select whatever model we want, but we already have Trinity Mini 8-bit as the default. So that&#x27;s what we want. Okay, so now let&#x27;s go and try a few things. So in the folder, I created a simple SQL schema, right? Customers, products, orders, order items, not insanely complicated, but just enough to start testing a few things.
+
+Okay? So what we&#x27;re going to do now, we&#x27;re going to run those three sample queries in open code, okay? Hopefully we&#x27;re going to get a good SQL out of OpenCode and Trinity Mini, and we will ask Claude code to double check. And this is why you see Cloud on the screen here. Okay?
+
+So it&#x27;s a completely unfair fight because we have a 26 billion parameter model on the left, and we have possibly the best model in the world on the right. So now we can start testing. And to do that, I created a small SQL schema with Customers, products, orders, and order items. And we&#x27;re going to ask Trinity Mini through OpenCode to write some queries based on this schema. Okay?
+
+And these are the three we&#x27;re going to try. So hopefully we&#x27;re going to get working SQL out of this and we&#x27;ll check by asking Cloud Code. That&#x27;s why it&#x27;s on the screen. And this is a completely unfair fight because we have, on the left, 26B model, and on the right we have a much, much larger model, possibly the best model in the world for coding. But we need to check what&#x27;s going on, and I don&#x27;t care if it&#x27;s unfair, let&#x27;s do it this way.
+
+Okay, so let&#x27;s grab the first query here. And so we want to find all pending orders with their customer names and order totals. And let&#x27;s reference the schema. Okay, here we go. Trinity Mini, as you may remember, is a thinking model.
+
+So we&#x27;re going to see quite a bit of a thinking code, which is very useful because it helps us understand what the model is doing and how it&#x27;s looking at the problem. All right. Trinity Mini Thinking. Let&#x27;s wait for the query. And you can see the speed is pretty good.
+
+We&#x27;ll run a small benchmark afterwards. Okay, so here&#x27;s the query. Looks good, but let&#x27;s ask our friend here. And just say okay let&#x27;s grab this again say is this a working solution I would say yes but what do I know and Claude says yes that Query is correct and straightforward. It joins orders to customers on the front key, filters for pending orders, etc., etc.
+
+And as usual with Cloud, we get some suggestions. Case sensitivity, ordering, but as written, the query does exactly what it was asked. Okay, well done, Trinity Mini. Okay, why don&#x27;t we try another one? Me clear the session.
+
+Okay, let&#x27;s try this one. List the top five most expensive products that are currently available sorted by price descending. Okay, let&#x27;s run this one. All right, here we go again. Let me prepare this.
+
+Look okay to me that&#x27;s a simple one no join okay that&#x27;s correct it filters for available products etc the query does exactly what was asked okay great let&#x27;s try the last one okay so let&#x27;s see what we get All right, this one is a little longer. Hoping it works. Two joins, group by. Yes, that&#x27;s correct. It joins the three tables, filters for completed orders, et cetera.
+
+The query does exactly what it was asked. Okay, well, this is pretty cool. So it&#x27;s not a very complicated schema, but this is just a short demo. But it goes to show you can get work done in a very So, and Claude doesn&#x27;t have anything to say about it. So that&#x27;s exactly what we want.
+
+Let&#x27;s try with the 4-bit model, just for comparison. Okay, so now we are working with the 4-bit model, and I&#x27;m going to try this same last query. Total revenue per product category. That&#x27;s the toughest one of the three. Pulls it off and again we&#x27;ll ask Claude to see if it&#x27;s working.
+
+All right. Is it different? It looks the same. It looks the same. Same query.
+
+Okay, just a different order. So again, this is great because if we get the job done with the 4-bit model, we&#x27;re just saving memory. It could work on a smaller machine. It would definitely work a little faster. Again, you have to try things out on this particular one.
+
+It does exactly the same thing. You may see some degradation on other use cases. Finish this with a small benchmark. So we have a benchmark script, which we can run here. And it&#x27;s going to iterate through the 4, 5, 6 and 8-bit versions.
+
+So I recommend closing as much as you can on your local machine, because this will literally bring memory usage all the way to 100%. So OK, with the 4-bit model, we&#x27;re getting about 75. Socons per second, which is very comfortable. Let&#x27;s see what we get with the other ones. Okay, we get, let&#x27;s say, 68 with the 5-bit model, which is still very nice.
+
+Okay, now the 6-bit and we&#x27;re down to 61. Okay, still quite good, but you can see, you know, we&#x27;re already lost about 20% compared to the 4-bit model. Okay, and we&#x27;re down to, let&#x27;s say, 57. Okay, so that&#x27;s, yeah, that&#x27;s a good, let&#x27;s say, 30%, yeah, 25, 30% less than the 4-bit model. So noticeable, but 50 tokens per second, as you saw during the demo is still very, very comfortable.
+
+So that&#x27;s what I wanted to show you today. Working completely locally, completely open source, and doing in this case some SQL work that Cloud add nothing to say about. So that&#x27;s pretty cool. Again, feel free to experiment, feel free to try things out, let me know how you&#x27;re doing, post comments in the YouTube video, and as usual, I&#x27;ll put all the links in the description. That&#x27;s it for today.
+
+Thanks for watching my friends. Until the next one, you know what to do, keep rocking.</div>
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            <a href="index.html">&larr; Back to 2026 Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
+        </div>
+    </div>
+
+
+</body></html>

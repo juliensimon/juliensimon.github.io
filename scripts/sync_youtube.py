@@ -174,12 +174,16 @@ def is_video_existing(year: int, youtube_id: str) -> bool:
 def is_substack_content(video: VideoItem) -> bool:
     """Check if a video's description indicates it's a Substack blog post
     rather than a genuine YouTube video. Substack posts sometimes appear
-    in YouTube feeds when they contain embedded videos."""
+    in YouTube feeds when they contain embedded videos.
+
+    We only flag explicit cross-post indicators, NOT mere mentions of
+    the Substack URL (which appear as promotional links in every video).
+    """
     desc_lower = video.description.lower()
     substack_signals = [
-        'airealist.ai',
         'read full post on substack',
-        'substack.com',
+        'read the full post on substack',
+        'full article on substack',
     ]
     return any(signal in desc_lower for signal in substack_signals)
 

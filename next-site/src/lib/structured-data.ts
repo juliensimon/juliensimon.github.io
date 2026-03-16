@@ -142,7 +142,7 @@ export function profilePageSchema() {
     url: SITE.url,
     mainEntity: { '@id': `${SITE.url}/#person` },
     isPartOf: { '@id': `${SITE.url}/#website` },
-    dateModified: '2026-03-07',
+    dateModified: '2026-03-15',
     inLanguage: 'en',
   };
 }
@@ -210,10 +210,14 @@ export function faqSchema(faqs: { question: string; answer: string }[], pageUrl?
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     '@id': `${baseUrl}/#faq`,
-    mainEntity: faqs.map((faq) => ({
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: faqs.map((_, i) => `#faq-${i}-answer`),
+    },
+    mainEntity: faqs.map((faq, i) => ({
       '@type': 'Question',
       name: faq.question,
-      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer, '@id': `#faq-${i}-answer` },
     })),
   };
 }
@@ -414,7 +418,7 @@ export const SPEAKING_FAQS = [
 export const PUBLICATIONS_FAQS = [
   {
     question: 'How many articles has Julien Simon published?',
-    answer: 'Julien Simon has published 417+ technical articles across multiple platforms including the AWS Blog, Hugging Face Blog, Arcee AI Blog, Medium, and his Substack newsletter The AI Realist (airealist.ai).',
+    answer: 'Julien Simon has published 439+ technical articles across multiple platforms including the AWS Blog, Hugging Face Blog, Arcee AI Blog, Medium, and his Substack newsletter The AI Realist (airealist.ai).',
   },
   {
     question: 'What is The AI Realist newsletter?',
