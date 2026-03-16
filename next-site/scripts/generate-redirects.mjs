@@ -69,6 +69,7 @@ const STATIC_REDIRECTS = [
   { from: 'speaking-2022.html', to: '/speaking/2022' },
   { from: 'speaking-2023.html', to: '/speaking/2023' },
   { from: 'speaking-2024.html', to: '/speaking/2024' },
+  { from: 'media-analysts.html', to: '/' },
 ];
 
 let created = 0;
@@ -87,15 +88,25 @@ console.log(`Static redirects: ${created} created, ${skipped} skipped`);
 
 const SPECIAL_REDIRECTS = [
   ['/youtube/youtube.html', '/youtube-videos'],
+  ['/youtube/index.html', '/youtube-videos'],
   ['/certifications.html', '/experience'],
   ['/blog/aws-posts-and-images/', '/blog-posts/aws'],
   ['/blog/huggingface-posts-and-images/', '/blog-posts/huggingface'],
   ['/blog/arcee-posts/', '/blog-posts/arcee'],
   ['/blog/legacy-posts-and-images/', '/blog-posts/legacy'],
   ['/blog/aws-medium-posts-and-images/', '/blog-posts/aws-medium'],
+  ['/blog-posts/huggingface/', '/blog-posts/huggingface'],
   ['/docs/hub/spaces-gpus', '/'],
   ['/RoyZ/', '/computers'],
   ['/RoyZ/driver_ep.html', '/computers'],
+  // Old /posts/ paths (Hugging Face era)
+  ['/posts/paperspace-graphcore-partner-free-ipus-developers', '/blog-posts/huggingface'],
+  ['/posts/getting-started-with-ipus-on-paperspace', '/blog-posts/huggingface'],
+  ['/posts/getting-started-with-hugging-face-transformers-for-ipus-with-optimum', '/blog-posts/huggingface'],
+  // Non-existent video page
+  ['/youtube/2025/20250916_MCP_Conference_Berlin.html', '/youtube-videos'],
+  // Old blog URL for Substack-only post (no local copy)
+  ['/blog/2021-10-20-the-age-of-machine-learning-as-code-has-arrived/', '/blog/industry-perspectives/'],
 ];
 
 created = 0; skipped = 0;
@@ -170,7 +181,22 @@ for (const localHref of allPosts) {
   }
 }
 
-console.log(`Blog redirects: ${created} created, ${skipped} skipped`);
+// Also create slug-only redirects: /blog/slug/ (no date prefix)
+// Google sometimes indexes these from old sitemaps or link references
+let slugOnlyCreated = 0;
+for (const localHref of allPosts) {
+  if (!isValidRedirectUrl(localHref)) continue;
+
+  // Extract slug from any pattern
+  let slug;
+  let match = localHref.match(/\/blog\/[^/]+\/(?:\d{4}\/)?(?:\d{4}-\d{2}-\d{2})[_-](.+?)(?:\/index\.html|\.html)$/);
+  if (match) {
+    slug = match[1].toLowerCase().replace(/\s+/g, '-');
+    if (writeRedirect(`/blog/${slug}/`, localHref)) slugOnlyCreated++;
+  }
+}
+
+console.log(`Blog redirects: ${created} created, ${skipped} skipped (+ ${slugOnlyCreated} slug-only)`);
 
 // ─── blog.julien.org redirects ──────────────────────────────────────
 //
@@ -338,6 +364,8 @@ const BLOGGER_404_PATHS = [
   '/2010/02/new-currys-website-live.html',
   '/2008/09/walmart-drops-drm-and-your-music-files.html',
   '/2007/05/after-dark-bash.html',
+  '/2016/03/talk-meetup-aws-user-group-nantes.html',
+  '/2009/01/howto-converting-mkv-files-to-play-on.html',
 ];
 
 // Also create redirects for archive-style URLs: /YYYY_MM_01_archive.html
@@ -353,14 +381,21 @@ const BLOGGER_ARCHIVE_PATHS = [
   '/2016_02_01_archive.html',
 ];
 
-// Year/month directory listing URLs
+// Year/month directory listing URLs (blog.julien.org → legacy listing)
 const BLOGGER_DIR_PATHS = [
-  '/2008/10/', '/2008/12/', '/2008/01/', '/2009/01/',
-  '/2009/02/', '/2010/03/', '/2010/06/', '/2010/11/',
-  '/2011/01/', '/2011/07/', '/2012/07/', '/2013/01/',
-  '/2013/08/', '/2013/09/', '/2014/', '/2015/02/',
-  '/2015/04/', '/2015/05/', '/2016/02/', '/2016/05/',
-  '/2009/', '/2010/02/',
+  '/2007/05/',
+  '/2008/01/', '/2008/09/', '/2008/10/', '/2008/11/', '/2008/12/',
+  '/2009/', '/2009/01/', '/2009/02/', '/2009/03/', '/2009/04/',
+  '/2009/05/', '/2009/11/', '/2009/12/',
+  '/2010/02/', '/2010/03/', '/2010/05/', '/2010/06/', '/2010/11/',
+  '/2011/01/', '/2011/07/',
+  '/2012/04/', '/2012/05/', '/2012/06/', '/2012/07/', '/2012/08/',
+  '/2012/09/', '/2012/12/',
+  '/2013/01/', '/2013/07/', '/2013/08/', '/2013/09/', '/2013/10/',
+  '/2014/', '/2014/03/', '/2014/05/',
+  '/2015/02/', '/2015/04/', '/2015/05/', '/2015/11/', '/2015/12/',
+  '/2016/01/', '/2016/02/', '/2016/03/', '/2016/05/', '/2016/11/', '/2016/12/',
+  '/2017/03/',
 ];
 
 created = 0; skipped = 0;
