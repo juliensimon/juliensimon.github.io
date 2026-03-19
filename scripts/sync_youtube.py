@@ -22,6 +22,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import NamedTuple
 
+import json
 import requests
 import xml.etree.ElementTree as ET
 
@@ -73,7 +74,7 @@ def resolve_channel_id(handle: str) -> str:
     raise ValueError(f"Could not resolve channel ID for @{handle}")
 
 
-def fetch_feed(channel_id: str) -> list[VideoItem]:
+def fetch_feed_rss(channel_id: str) -> list[VideoItem]:
     """Fetch and parse the YouTube Atom feed (returns ~15 most recent videos)."""
     url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
     print(f"Fetching {url}...")
@@ -112,6 +113,71 @@ def fetch_feed(channel_id: str) -> list[VideoItem]:
             ))
 
     return videos
+
+
+def fetch_feed_ytdlp(handle: str) -> list[VideoItem]:
+    """Fallback: use yt-dlp to list recent videos when RSS feed is unavailable."""
+    url = f"https://www.youtube.com/@{handle}/videos"
+    print(f"Fetching video list via yt-dlp from {url}...")
+
+    # Step 1: get video IDs and titles (fast, no per-video fetch)
+    result = subprocess.run(
+        ['yt-dlp', '--flat-playlist', '-j', '--playlist-end', '15', url],
+        capture_output=True, text=True, timeout=60,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"yt-dlp playlist fetch failed: {result.stderr}")
+
+    entries = [json.loads(line) for line in result.stdout.strip().splitlines() if line.strip()]
+    if not entries:
+        return []
+
+    # Step 2: fetch full metadata per video to get upload dates
+    videos = []
+    for entry in entries:
+        vid = entry.get('id', '')
+        title = entry.get('title', '').strip()
+        description = entry.get('description', '').strip()
+        if not vid or not title:
+            continue
+
+        # Get upload date via individual video metadata
+        meta_result = subprocess.run(
+            ['yt-dlp', '-j', '--no-download', f'https://www.youtube.com/watch?v={vid}'],
+            capture_output=True, text=True, timeout=30,
+        )
+        published = datetime.now()
+        if meta_result.returncode == 0:
+            meta = json.loads(meta_result.stdout)
+            date_str = meta.get('upload_date', '')  # YYYYMMDD
+            description = meta.get('description', description).strip()
+            if date_str and len(date_str) == 8:
+                try:
+                    published = datetime.strptime(date_str, '%Y%m%d')
+                except ValueError:
+                    pass
+
+        videos.append(VideoItem(
+            video_id=vid,
+            title=title,
+            published=published,
+            description=description,
+        ))
+
+    print(f"  yt-dlp returned {len(videos)} videos")
+    return videos
+
+
+def fetch_feed(channel_id: str) -> list[VideoItem]:
+    """Fetch recent videos, trying RSS first then falling back to yt-dlp."""
+    try:
+        videos = fetch_feed_rss(channel_id)
+        return videos
+    except requests.HTTPError as e:
+        print(f"  RSS feed unavailable ({e}), falling back to yt-dlp...")
+    except Exception as e:
+        print(f"  RSS feed error ({e}), falling back to yt-dlp...")
+    return fetch_feed_ytdlp(CHANNEL_HANDLE)
 
 
 def is_short(video_id: str) -> bool:
