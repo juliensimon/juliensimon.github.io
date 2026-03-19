@@ -112,14 +112,14 @@ export default function HomeContent() {
             />
           </div>
 
-          <h1 className="mb-3 animate-page-fade-up" style={{ animationDelay: '0.1s' }}>
+          <h1 className="mb-1 animate-page-fade-up" style={{ animationDelay: '0.1s' }}>
             <span className="block text-5xl sm:text-6xl lg:text-7xl font-bold font-heading gradient-brand-text">
               Julien Simon
             </span>
-            <span className="block text-xl sm:text-2xl font-semibold text-text mt-3">
-              AI Operating Partner @ Fortino Capital
-            </span>
           </h1>
+          <p className="mb-3 animate-page-fade-up text-xl sm:text-2xl font-semibold text-text mt-3" style={{ animationDelay: '0.1s' }}>
+            AI Operating Partner @ Fortino Capital
+          </p>
 
           <div
             className="text-lg text-text-muted h-8 mb-8 animate-page-fade-in"

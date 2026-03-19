@@ -21,6 +21,7 @@ function redirectHtml(to) {
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex, follow">
 <meta http-equiv="refresh" content="0;url=${to}">
 <link rel="canonical" href="${canonical}">
 <title>Redirecting...</title>

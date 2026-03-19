@@ -400,6 +400,66 @@ export function newsletterSchema() {
   };
 }
 
+export function eventSchema(event: {
+  title: string;
+  venue?: string;
+  date?: string;
+  location?: string;
+  description?: string;
+  links?: { url: string; label: string }[];
+}) {
+  return {
+    '@type': 'Event',
+    name: event.title,
+    ...(event.date && { startDate: event.date }),
+    ...(event.description && { description: event.description }),
+    ...(event.location && {
+      location: {
+        '@type': 'Place',
+        name: event.venue || event.location,
+        address: event.location,
+      },
+    }),
+    ...(event.venue && {
+      organizer: {
+        '@type': 'Organization',
+        name: event.venue,
+      },
+    }),
+    performer: { '@id': `${SITE.url}/#person` },
+    ...(event.links?.[0] && { url: event.links[0].url }),
+  };
+}
+
+export function eventListSchema(
+  events: {
+    title: string;
+    venue?: string;
+    date?: string;
+    location?: string;
+    description?: string;
+    links?: { url: string; label: string }[];
+  }[],
+  pageUrl: string,
+  listName: string,
+  maxItems?: number,
+) {
+  const items = maxItems ? events.slice(0, maxItems) : events;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${pageUrl}/#eventlist`,
+    name: listName,
+    url: pageUrl,
+    numberOfItems: items.length,
+    itemListElement: items.map((event, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: eventSchema(event),
+    })),
+  };
+}
+
 export const SPEAKING_FAQS = [
   {
     question: 'How many speaking engagements has Julien Simon delivered?',
@@ -418,7 +478,7 @@ export const SPEAKING_FAQS = [
 export const PUBLICATIONS_FAQS = [
   {
     question: 'How many articles has Julien Simon published?',
-    answer: 'Julien Simon has published 439+ technical articles across multiple platforms including the AWS Blog, Hugging Face Blog, Arcee AI Blog, Medium, and his Substack newsletter The AI Realist (airealist.ai).',
+    answer: 'Julien Simon has published 440+ technical articles across multiple platforms including the AWS Blog, Hugging Face Blog, Arcee AI Blog, Medium, and his Substack newsletter The AI Realist (airealist.ai).',
   },
   {
     question: 'What is The AI Realist newsletter?',

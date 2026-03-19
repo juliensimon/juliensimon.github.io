@@ -2,7 +2,7 @@ export const SITE = {
   name: 'Julien Simon',
   title: 'Julien Simon - AI Operating Partner at Fortino Capital',
   description:
-    'Julien Simon is an AI expert and Operating Partner at Fortino Capital. 684 talks, 439 articles, 494K YouTube subscribers. Author of The AI Realist newsletter.',
+    'Julien Simon is an AI expert and Operating Partner at Fortino Capital. 684 talks, 440 articles, 494K YouTube subscribers. Author of The AI Realist newsletter.',
   url: 'https://www.julien.org',
   image: 'https://www.julien.org/assets/julien.webp',
   ogImage: 'https://www.julien.org/assets/og-image-1200x630.webp',

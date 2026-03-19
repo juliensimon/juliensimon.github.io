@@ -113,7 +113,7 @@ export default function ExperienceContent() {
 
       <RelatedContent items={[
         { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '684 engagements' },
-        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '439 articles' },
+        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '440 articles' },
         { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos' },
       ]} />
     </>

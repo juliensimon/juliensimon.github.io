@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { SPEAKING_YEARS } from '@/data/speaking';
 import { SPEAKING_EVENTS } from '@/data/speaking-events';
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, eventListSchema } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
@@ -49,6 +49,13 @@ export default async function SpeakingYearPage({ params }: Props) {
         `${totalCount} talks and workshops delivered in ${year} at conferences worldwide on AI, machine learning, and cloud computing.`,
         `${SITE.url}/speaking/${year}`,
       )} />
+      {events.length > 0 && (
+        <StructuredData data={eventListSchema(
+          events,
+          `${SITE.url}/speaking/${year}`,
+          `Julien Simon — Speaking ${year}`,
+        )} />
+      )}
       <Breadcrumbs items={[
         { name: 'Home', href: '/' },
         { name: 'Speaking', href: '/speaking' },

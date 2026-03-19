@@ -1,8 +1,9 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema, faqSchema, SPEAKING_FAQS } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, faqSchema, eventListSchema, SPEAKING_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
+import { SPEAKING_EVENTS } from '@/data/speaking-events';
 import SpeakingContent from './SpeakingContent';
 
 export const metadata = buildMetadata({
@@ -21,6 +22,11 @@ export const metadata = buildMetadata({
 });
 
 export default function SpeakingPage() {
+  // Flatten all events across years for the ItemList (latest 50)
+  const allEvents = Object.entries(SPEAKING_EVENTS)
+    .sort(([a], [b]) => Number(b) - Number(a))
+    .flatMap(([, events]) => events);
+
   return (
     <>
       <StructuredData data={breadcrumbSchema([
@@ -33,6 +39,12 @@ export default function SpeakingPage() {
         `${SITE.url}/speaking`,
       )} />
       <StructuredData data={faqSchema(SPEAKING_FAQS, `${SITE.url}/speaking`)} />
+      <StructuredData data={eventListSchema(
+        allEvents,
+        `${SITE.url}/speaking`,
+        'Julien Simon — Speaking Engagements',
+        50,
+      )} />
       <Breadcrumbs items={[
         { name: 'Home', href: '/' },
         { name: 'Speaking', href: '/speaking' },
