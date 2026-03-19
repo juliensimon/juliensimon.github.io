@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Built the Datacenter, Lost the Brain',
+    slug: '2026-03-17_built-the-datacenter-lost-the-brain',
+    date: '2026-03-17',
+    description: 'On March 10, 2026, Yann LeCun’s new company announced a $1.03 billion funding round at a $3.5 billion pre-money valuation.[1] The company had twelve employees, no product, and no revenue. Its techn...',
+    originalUrl: 'https://www.airealist.ai/p/built-the-datacenter-lost-the-brain',
+  },
+  {
     title: 'Still Missing Critical Pieces',
     slug: '2026-03-16_still-missing-critical-pieces',
     date: '2026-03-16',

@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Built the Datacenter, Lost the Brain',
+    href: '/blog/industry-perspectives/2026-03-17_built-the-datacenter-lost-the-brain/index.html',
+    date: 'March 17, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Still Missing Critical Pieces',
     href: '/blog/industry-perspectives/2026-03-16_still-missing-critical-pieces/index.html',
     date: 'March 16, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'Open Source, Closed Orbit',
     href: '/blog/industry-perspectives/2026-03-13_open-source-closed-orbit/index.html',
     date: 'March 13, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Register, Disclose, Pay',
-    href: '/blog/industry-perspectives/2026-03-12_register-disclose-pay/index.html',
-    date: 'March 12, 2026',
     icon: 'article',
   },
 ];
