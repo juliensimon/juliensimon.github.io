@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: "AI-powered engineering \u2014 We Love SaaS AI Leadership Day",
+    href: '/speaking/2026',
+    date: 'March 18, 2026',
+    icon: 'event',
+  },
+  {
     title: 'Built the Datacenter, Lost the Brain',
     href: '/blog/industry-perspectives/2026-03-17_built-the-datacenter-lost-the-brain/index.html',
     date: 'March 17, 2026',
@@ -26,15 +32,9 @@ const LATEST_UPDATES = [
     icon: 'video',
   },
   {
-    title: 'AWS Built Its Own AI Chip. Now It Needs Someone Else’s.',
+    title: "AWS Built Its Own AI Chip. Now It Needs Someone Else's.",
     href: '/blog/industry-perspectives/2026-03-15_aws-built-its-own-ai-chip-now-it-needs-someone-elses/index.html',
     date: 'March 15, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Open Source, Closed Orbit',
-    href: '/blog/industry-perspectives/2026-03-13_open-source-closed-orbit/index.html',
-    date: 'March 13, 2026',
     icon: 'article',
   },
 ];
@@ -64,7 +64,7 @@ const EXPERTISE_CARDS = [
   {
     title: 'Global Thought Leadership',
     description:
-      '684+ speaking engagements worldwide, including major industry events, Fortune 500 companies, and institutions like UNESCO, World Bank, New York Federal Reserve, and sovereign funds.',
+      '685+ speaking engagements worldwide, including major industry events, Fortune 500 companies, and institutions like UNESCO, World Bank, New York Federal Reserve, and sovereign funds.',
     link: '/speaking',
     linkText: 'View Speaking History',
   },
@@ -215,6 +215,11 @@ export default function HomeContent() {
                       <>
                         <span aria-hidden="true">📺</span>
                         <span className="sr-only">Video: </span>
+                      </>
+                    ) : item.icon === 'event' ? (
+                      <>
+                        <span aria-hidden="true">🎤</span>
+                        <span className="sr-only">Event: </span>
                       </>
                     ) : (
                       <>
