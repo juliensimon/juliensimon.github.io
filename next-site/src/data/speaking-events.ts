@@ -9,6 +9,17 @@ export interface SpeakingEvent {
 }
 
 export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
+  '2026': [
+    {
+      title: "AI-powered engineering: the new way of building software",
+      venue: "We Love SaaS AI Leadership Day 2026",
+      date: "March 18, 2026",
+      location: "Amsterdam, Netherlands",
+      description: "Presentation on how AI is changing the way software teams build products. Part of a practical afternoon for SaaS founders and CxOs focused on the real impact of AI on product strategy and engineering workflows.",
+      tags: ["Conference","AI Engineering","SaaS","Amsterdam"],
+      links: [{"url":"https://welovesaas.io/events/ai-leadership-day-2026/","label":"Event"},{"url":"https://fr.slideshare.net/slideshow/ai-powered-engineering-transforming-software-development-in-2026/286587342","label":"Slides"}],
+    },
+  ],
   '2025': [
     {
       title: "ODSC West 2025",
