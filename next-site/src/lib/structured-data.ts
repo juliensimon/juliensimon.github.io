@@ -295,7 +295,7 @@ export function videoObjectListSchema(
         '@type': 'VideoObject',
         name: video.title,
         description: video.title,
-        uploadDate: video.date,
+        uploadDate: new Date(video.date).toISOString(),
         thumbnailUrl: `https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`,
         embedUrl: `https://www.youtube-nocookie.com/embed/${video.id}`,
         contentUrl: `https://www.youtube.com/watch?v=${video.id}`,

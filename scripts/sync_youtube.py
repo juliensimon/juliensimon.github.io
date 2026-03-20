@@ -598,7 +598,7 @@ def create_video_page(
         "@type": "VideoObject",
         "name": "{html.escape(video.title).replace(chr(34), '&quot;')}",
         "description": "{html.escape(video.title)} - YouTube video by Julien Simon",
-        "uploadDate": "{video.published.strftime('%Y-%m-%d')}",
+        "uploadDate": "{video.published.strftime('%Y-%m-%dT%H:%M:%S+00:00')}",
         "embedUrl": "https://www.youtube.com/embed/{video.video_id}",
         "thumbnailUrl": "https://img.youtube.com/vi/{video.video_id}/maxresdefault.jpg",
         "author": {{ "@id": "https://www.julien.org/#person" }}

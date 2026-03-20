@@ -386,7 +386,7 @@ def add_video_schema_to_youtube(dry_run: bool):
 
             # Extract date from filename (YYYYMMDD prefix)
             date_match = re.match(r'(\d{4})(\d{2})(\d{2})', html_file.stem)
-            upload_date = f"{date_match.group(1)}-{date_match.group(2)}-{date_match.group(3)}" if date_match else ""
+            upload_date = f"{date_match.group(1)}-{date_match.group(2)}-{date_match.group(3)}T00:00:00+00:00" if date_match else ""
 
             schema = {
                 "@context": "https://schema.org",
