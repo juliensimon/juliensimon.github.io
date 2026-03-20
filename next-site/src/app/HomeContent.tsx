@@ -8,7 +8,19 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
-    title: "AI-powered engineering \u2014 We Love SaaS AI Leadership Day",
+    title: 'Every Country Needs Sovereign AI. Jensen Is Selling It.',
+    href: '/blog/industry-perspectives/2026-03-20_every-country-needs-sovereign-ai-jensen-is-selling-it/index.html',
+    date: 'March 20, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Three Orbits',
+    href: '/blog/industry-perspectives/2026-03-19_three-orbits/index.html',
+    date: 'March 19, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'AI-powered engineering \u2014 We Love SaaS AI Leadership Day',
     href: '/speaking/2026',
     date: 'March 18, 2026',
     icon: 'event',
@@ -23,18 +35,6 @@ const LATEST_UPDATES = [
     title: 'Still Missing Critical Pieces',
     href: '/blog/industry-perspectives/2026-03-16_still-missing-critical-pieces/index.html',
     date: 'March 16, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'No Cloud, No API Keys: Local Open-Source Coding with Trinity Mini, OpenCode, and MLX',
-    href: '/youtube/2026/20260315_No_Cloud_No_API_Keys_Local_Open-Source_Coding_with_Trinity_Mini_OpenCode_and_MLX.html',
-    date: 'March 15, 2026',
-    icon: 'video',
-  },
-  {
-    title: "AWS Built Its Own AI Chip. Now It Needs Someone Else's.",
-    href: '/blog/industry-perspectives/2026-03-15_aws-built-its-own-ai-chip-now-it-needs-someone-elses/index.html',
-    date: 'March 15, 2026',
     icon: 'article',
   },
 ];

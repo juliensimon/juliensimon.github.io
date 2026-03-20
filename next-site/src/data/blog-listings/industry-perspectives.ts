@@ -11,6 +11,20 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Every Country Needs Sovereign AI. Jensen Is Selling It.',
+    slug: '2026-03-20_every-country-needs-sovereign-ai-jensen-is-selling-it',
+    date: '2026-03-20',
+    description: 'On March 16, Jensen Huang stood on the GTC stage in San Jose and showed the audience a map. Dozens of countries. More than 1 million Nvidia GPUs are deployed worldwide through the company’s cloud p...',
+    originalUrl: 'https://www.airealist.ai/p/every-country-needs-sovereign-ai',
+  },
+  {
+    title: 'Three Orbits',
+    slug: '2026-03-19_three-orbits',
+    date: '2026-03-19',
+    description: 'On February 2, 2026, Elon Musk published a blog post announcing what SpaceX called the largest corporate merger in history. SpaceX would acquire xAI — his artificial intelligence company — at a com...',
+    originalUrl: 'https://www.airealist.ai/p/three-orbits',
+  },
+  {
     title: 'Built the Datacenter, Lost the Brain',
     slug: '2026-03-17_built-the-datacenter-lost-the-brain',
     date: '2026-03-17',
