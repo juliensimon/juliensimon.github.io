@@ -25,6 +25,14 @@ export const REPOSITORIES: Repository[] = [
     featured: true,
   },
   {
+    name: 'ai-inference-tco-calculator',
+    description: 'AI Inference TCO Calculator — compare API vs self-hosted GPU vs local/edge inference costs.',
+    url: 'https://github.com/juliensimon/ai-inference-tco-calculator',
+    language: 'Python',
+    tags: ['TCO Analysis', 'AI Inference', 'GPU Costs', 'Cost Optimization'],
+    featured: true,
+  },
+  {
     name: 'arcee-demos',
     description: 'Demos, examples, and tools for Arcee AI models and services.',
     url: 'https://github.com/juliensimon/arcee-demos',
