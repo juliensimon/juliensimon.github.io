@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Musk’s Chip Gambit',
+    href: '/blog/industry-perspectives/2026-03-23_musks-chip-gambit/index.html',
+    date: 'March 23, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Every Country Needs Sovereign AI. Jensen Is Selling It.',
     href: '/blog/industry-perspectives/2026-03-20_every-country-needs-sovereign-ai-jensen-is-selling-it/index.html',
     date: 'March 20, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'Built the Datacenter, Lost the Brain',
     href: '/blog/industry-perspectives/2026-03-17_built-the-datacenter-lost-the-brain/index.html',
     date: 'March 17, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Still Missing Critical Pieces',
-    href: '/blog/industry-perspectives/2026-03-16_still-missing-critical-pieces/index.html',
-    date: 'March 16, 2026',
     icon: 'article',
   },
 ];

@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Musk\'s Chip Gambit',
+    slug: '2026-03-23_musks-chip-gambit',
+    date: '2026-03-23',
+    description: 'On March 14, 2026, Elon Musk posted five words to X: “Terafab Project launches in 7 days.” The announcement described a $25 billion semiconductor fabrication facility targeting 2nm process technolo...',
+    originalUrl: 'https://www.airealist.ai/p/musks-chip-gambit',
+  },
+  {
     title: 'Every Country Needs Sovereign AI. Jensen Is Selling It.',
     slug: '2026-03-20_every-country-needs-sovereign-ai-jensen-is-selling-it',
     date: '2026-03-20',
