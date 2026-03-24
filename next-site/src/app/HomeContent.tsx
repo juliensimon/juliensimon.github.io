@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'When the Credit Market Builds a Fire Exit',
+    href: '/blog/industry-perspectives/2026-03-24_when-the-credit-market-builds-a-fire-exit/index.html',
+    date: 'March 24, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Musk’s Chip Gambit',
     href: '/blog/industry-perspectives/2026-03-23_musks-chip-gambit/index.html',
     date: 'March 23, 2026',
@@ -30,12 +36,6 @@ const LATEST_UPDATES = [
     href: '/speaking/2026',
     date: 'March 18, 2026',
     icon: 'event',
-  },
-  {
-    title: 'Built the Datacenter, Lost the Brain',
-    href: '/blog/industry-perspectives/2026-03-17_built-the-datacenter-lost-the-brain/index.html',
-    date: 'March 17, 2026',
-    icon: 'article',
   },
 ];
 

@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'When the Credit Market Builds a Fire Exit',
+    slug: '2026-03-24_when-the-credit-market-builds-a-fire-exit',
+    date: '2026-03-24',
+    description: 'On Monday, Bloomberg reported that JPMorgan launched a basket of credit default swaps on five hyperscalers — Alphabet, Amazon, Meta, Microsoft, and Oracle — tradeable in $25 million increments.[1] ...',
+    originalUrl: 'https://www.airealist.ai/p/when-the-credit-market-builds-a-fire',
+  },
+  {
     title: 'Musk\'s Chip Gambit',
     slug: '2026-03-23_musks-chip-gambit',
     date: '2026-03-23',
