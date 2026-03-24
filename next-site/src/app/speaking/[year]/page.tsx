@@ -54,6 +54,8 @@ export default async function SpeakingYearPage({ params }: Props) {
           events,
           `${SITE.url}/speaking/${year}`,
           `Julien Simon — Speaking ${year}`,
+          undefined,
+          year,
         )} />
       )}
       <Breadcrumbs items={[

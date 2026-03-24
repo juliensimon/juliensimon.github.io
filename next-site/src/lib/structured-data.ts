@@ -400,6 +400,43 @@ export function newsletterSchema() {
   };
 }
 
+const MONTHS: Record<string, string> = {
+  january: '01', february: '02', march: '03', april: '04',
+  may: '05', june: '06', july: '07', august: '08',
+  september: '09', october: '10', november: '11', december: '12',
+};
+
+/**
+ * Parse a human-readable date string into ISO 8601 format (YYYY-MM-DD).
+ * Handles: "March 18, 2026", "October 28–30, 2025", "2025" (year only).
+ * Uses string parsing to avoid timezone-related off-by-one errors from Date.
+ */
+function parseToISODate(dateStr: string): string | null {
+  // Already ISO 8601
+  if (/^\d{4}-\d{2}-\d{2}/.test(dateStr)) return dateStr;
+  // Year only
+  if (/^\d{4}$/.test(dateStr.trim())) return dateStr.trim();
+  // Strip date ranges: "October 28–30, 2025" → "October 28, 2025"
+  const cleaned = dateStr.replace(/[–-]\d{1,2},/, ',');
+  // Match "Month DD, YYYY"
+  const match = cleaned.match(/(\w+)\s+(\d{1,2}),?\s+(\d{4})/);
+  if (match) {
+    const month = MONTHS[match[1].toLowerCase()];
+    if (month) {
+      return `${match[3]}-${month}-${match[2].padStart(2, '0')}`;
+    }
+  }
+  return null;
+}
+
+/**
+ * Determine if an event is online based on location/venue.
+ */
+function isOnlineEvent(event: { location?: string; venue?: string }): boolean {
+  const text = `${event.location ?? ''} ${event.venue ?? ''}`.toLowerCase();
+  return text.includes('online') || text.includes('twitch') || text.includes('webinar');
+}
+
 export function eventSchema(event: {
   title: string;
   venue?: string;
@@ -407,27 +444,44 @@ export function eventSchema(event: {
   location?: string;
   description?: string;
   links?: { url: string; label: string }[];
-}) {
+}, yearFallback?: string) {
+  const isoDate = event.date ? parseToISODate(event.date) : (yearFallback || null);
+  const online = isOnlineEvent(event);
+  // Use location if available, fall back to venue (which often contains city info)
+  const placeName = event.location || event.venue;
+  const eventLink = event.links?.find(l => l.label === 'Event')?.url || event.links?.[0]?.url;
+
   return {
     '@type': 'Event',
     name: event.title,
-    ...(event.date && { startDate: event.date }),
+    ...(isoDate && { startDate: isoDate }),
     ...(event.description && { description: event.description }),
-    ...(event.location && {
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: online
+      ? 'https://schema.org/OnlineEventAttendanceMode'
+      : 'https://schema.org/OfflineEventAttendanceMode',
+    ...(placeName && !online && {
       location: {
         '@type': 'Place',
-        name: event.venue || event.location,
-        address: event.location,
+        name: event.venue || placeName,
+        address: event.location || event.venue,
+      },
+    }),
+    ...(online && {
+      location: {
+        '@type': 'VirtualLocation',
+        url: eventLink || SITE.url,
       },
     }),
     ...(event.venue && {
       organizer: {
         '@type': 'Organization',
         name: event.venue,
+        ...(eventLink && { url: eventLink }),
       },
     }),
     performer: { '@id': `${SITE.url}/#person` },
-    ...(event.links?.[0] && { url: event.links[0].url }),
+    ...(eventLink && { url: eventLink }),
   };
 }
 
@@ -443,6 +497,7 @@ export function eventListSchema(
   pageUrl: string,
   listName: string,
   maxItems?: number,
+  yearFallback?: string,
 ) {
   const items = maxItems ? events.slice(0, maxItems) : events;
   return {
@@ -455,7 +510,7 @@ export function eventListSchema(
     itemListElement: items.map((event, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      item: eventSchema(event),
+      item: eventSchema(event, yearFallback),
     })),
   };
 }

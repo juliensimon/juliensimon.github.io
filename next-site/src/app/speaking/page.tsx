@@ -1,5 +1,5 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema, faqSchema, eventListSchema, SPEAKING_FAQS } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, faqSchema, eventSchema, SPEAKING_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
@@ -22,10 +22,29 @@ export const metadata = buildMetadata({
 });
 
 export default function SpeakingPage() {
-  // Flatten all events across years for the ItemList (latest 50)
-  const allEvents = Object.entries(SPEAKING_EVENTS)
+  // Flatten all events across years for the ItemList (latest 50), preserving year context
+  const allEventsWithYear = Object.entries(SPEAKING_EVENTS)
     .sort(([a], [b]) => Number(b) - Number(a))
-    .flatMap(([, events]) => events);
+    .flatMap(([year, events]) => events.map(e => ({ ...e, _year: year })));
+
+  // Build event list with per-event year fallback
+  const top50 = allEventsWithYear.slice(0, 50);
+  const eventListData = {
+    '@context': 'https://schema.org' as const,
+    '@type': 'ItemList' as const,
+    '@id': `${SITE.url}/speaking/#eventlist`,
+    name: 'Julien Simon — Speaking Engagements',
+    url: `${SITE.url}/speaking`,
+    numberOfItems: top50.length,
+    itemListElement: top50.map((event, i) => {
+      const { _year, ...eventData } = event;
+      return {
+        '@type': 'ListItem' as const,
+        position: i + 1,
+        item: eventSchema(eventData, _year),
+      };
+    }),
+  };
 
   return (
     <>
@@ -39,12 +58,7 @@ export default function SpeakingPage() {
         `${SITE.url}/speaking`,
       )} />
       <StructuredData data={faqSchema(SPEAKING_FAQS, `${SITE.url}/speaking`)} />
-      <StructuredData data={eventListSchema(
-        allEvents,
-        `${SITE.url}/speaking`,
-        'Julien Simon — Speaking Engagements',
-        50,
-      )} />
+      <StructuredData data={eventListData} />
       <Breadcrumbs items={[
         { name: 'Home', href: '/' },
         { name: 'Speaking', href: '/speaking' },
