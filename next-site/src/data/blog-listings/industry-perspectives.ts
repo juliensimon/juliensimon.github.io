@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The King\'s New Datacenters',
+    slug: '2026-03-25_the-kings-new-datacenters',
+    date: '2026-03-25',
+    description: 'On February 11, 2025, at Station F in Paris, Emmanuel Macron announced that France had secured €109 billion in private investment for artificial intelligence. He compared the figure favorably to Am...',
+    originalUrl: 'https://www.airealist.ai/p/the-kings-new-datacenters',
+  },
+  {
     title: 'When the Credit Market Builds a Fire Exit',
     slug: '2026-03-24_when-the-credit-market-builds-a-fire-exit',
     date: '2026-03-24',

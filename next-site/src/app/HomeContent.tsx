@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'The King’s New Datacenters',
+    href: '/blog/industry-perspectives/2026-03-25_the-kings-new-datacenters/index.html',
+    date: 'March 25, 2026',
+    icon: 'article',
+  },
+  {
     title: 'When the Credit Market Builds a Fire Exit',
     href: '/blog/industry-perspectives/2026-03-24_when-the-credit-market-builds-a-fire-exit/index.html',
     date: 'March 24, 2026',
@@ -30,12 +36,6 @@ const LATEST_UPDATES = [
     href: '/blog/industry-perspectives/2026-03-19_three-orbits/index.html',
     date: 'March 19, 2026',
     icon: 'article',
-  },
-  {
-    title: 'AI-powered engineering \u2014 We Love SaaS AI Leadership Day',
-    href: '/speaking/2026',
-    date: 'March 18, 2026',
-    icon: 'event',
   },
 ];
 
