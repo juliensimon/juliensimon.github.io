@@ -8,6 +8,18 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Build, Regulate, Scare',
+    href: '/blog/industry-perspectives/2026-03-27_build-regulate-scare/index.html',
+    date: 'March 27, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Acquired, Absorbed, Disaggregated',
+    href: '/blog/industry-perspectives/2026-03-26_acquired-absorbed-disaggregated/index.html',
+    date: 'March 26, 2026',
+    icon: 'article',
+  },
+  {
     title: 'The King’s New Datacenters',
     href: '/blog/industry-perspectives/2026-03-25_the-kings-new-datacenters/index.html',
     date: 'March 25, 2026',
@@ -23,18 +35,6 @@ const LATEST_UPDATES = [
     title: 'Musk’s Chip Gambit',
     href: '/blog/industry-perspectives/2026-03-23_musks-chip-gambit/index.html',
     date: 'March 23, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Every Country Needs Sovereign AI. Jensen Is Selling It.',
-    href: '/blog/industry-perspectives/2026-03-20_every-country-needs-sovereign-ai-jensen-is-selling-it/index.html',
-    date: 'March 20, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Three Orbits',
-    href: '/blog/industry-perspectives/2026-03-19_three-orbits/index.html',
-    date: 'March 19, 2026',
     icon: 'article',
   },
 ];

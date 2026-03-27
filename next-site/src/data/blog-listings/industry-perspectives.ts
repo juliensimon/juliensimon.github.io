@@ -11,6 +11,20 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Build, Regulate, Scare',
+    slug: '2026-03-27_build-regulate-scare',
+    date: '2026-03-27',
+    description: 'On March 17, the Innovation Makers Alliance played an AI-generated fake newscast to an amphitheatre at Station F.[1] IMA is a consortium of the CIOs, CDOs, and innovation directors at three-quarter...',
+    originalUrl: 'https://www.airealist.ai/p/build-regulate-scare',
+  },
+  {
+    title: 'Acquired, Absorbed, Disaggregated',
+    slug: '2026-03-26_acquired-absorbed-disaggregated',
+    date: '2026-03-26',
+    description: '(Updated on March 27th based on new public information).',
+    originalUrl: 'https://www.airealist.ai/p/acquired-absorbed-diaggregated',
+  },
+  {
     title: 'The King\'s New Datacenters',
     slug: '2026-03-25_the-kings-new-datacenters',
     date: '2026-03-25',
