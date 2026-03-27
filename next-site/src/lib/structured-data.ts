@@ -445,7 +445,9 @@ export function eventSchema(event: {
   description?: string;
   links?: { url: string; label: string }[];
 }, yearFallback?: string) {
-  const isoDate = event.date ? parseToISODate(event.date) : (yearFallback || null);
+  const parsed = event.date ? parseToISODate(event.date) : null;
+  // Only use dates with at least YYYY-MM-DD precision; year-only values fail Google validation
+  const isoDate = parsed && /^\d{4}-\d{2}-\d{2}/.test(parsed) ? parsed : null;
   const online = isOnlineEvent(event);
   // Use location if available, fall back to venue (which often contains city info)
   const placeName = event.location || event.venue;
