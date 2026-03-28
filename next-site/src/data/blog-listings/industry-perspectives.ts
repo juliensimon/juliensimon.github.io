@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Reverse-Engineering The Apollo 11 Code with AI',
+    slug: '2026-03-28_reverse-engineering-the-apollo-11-code-with-ai',
+    date: '2026-03-28',
+    description: 'The complete walkthrough — 8 modules, 6,500 lines of technical analysis, all prompts used, and a full process trace documenting what the AI got right and wrong — is on GitHub:apollo11-ai-walkthroug...',
+    originalUrl: 'https://www.airealist.ai/p/reverse-engineering-the-apollo-11',
+  },
+  {
     title: 'Build, Regulate, Scare',
     slug: '2026-03-27_build-regulate-scare',
     date: '2026-03-27',
