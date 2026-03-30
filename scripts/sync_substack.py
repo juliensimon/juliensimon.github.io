@@ -419,15 +419,21 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     plain_text = soup.get_text(separator=' ', strip=True)
     read_time = calculate_read_time(plain_text)
 
-    # Get first paragraph as excerpt for metadata
-    first_p = soup.find('p')
+    # Get excerpt for metadata: prefer RSS description (Substack subtitle) over first paragraph
+    # Substack subtitles are hand-crafted teasers that make better meta descriptions
     excerpt = ''
-    if first_p:
-        excerpt = first_p.get_text(strip=True)
+    if item.description and len(item.description.strip()) >= 40:
+        excerpt = item.description.strip()
         if len(excerpt) > 200:
             excerpt = excerpt[:197] + '...'
-    elif item.description:
-        excerpt = item.description[:200] + '...' if len(item.description) > 200 else item.description
+    else:
+        first_p = soup.find('p')
+        if first_p:
+            excerpt = first_p.get_text(strip=True)
+            if len(excerpt) > 200:
+                excerpt = excerpt[:197] + '...'
+        elif item.description:
+            excerpt = item.description.strip()
 
     # Create HTML with full cleaned content
     html_content = f'''<!DOCTYPE html>
