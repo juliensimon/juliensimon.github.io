@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The Half-Life of a Press Release',
+    slug: '2026-03-31_the-half-life-of-a-press-release',
+    date: '2026-03-31',
+    description: 'Small Modular Reactors, Hyperscalers, and the Distance Between a Press Release and a Megawatt',
+    originalUrl: 'https://www.airealist.ai/p/the-half-life-of-a-press-release',
+  },
+  {
     title: 'Reverse-Engineering The Apollo 11 Code with AI',
     slug: '2026-03-28_reverse-engineering-the-apollo-11-code-with-ai',
     date: '2026-03-28',

@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Dive: LLM Quantization, part 3 - FP8, FP4</title>
+    <meta name="description" content="Deep Dive: LLM Quantization, part 3 - FP8, FP4 - YouTube video by Julien Simon">
+    <meta property="og:title" content="Deep Dive: LLM Quantization, part 3 - FP8, FP4">
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://www.julien.org/youtube/2026/20260330_Deep_Dive_LLM_Quantization_part_3_-_FP8_FP4.html">
+    <link rel="canonical" href="https://www.julien.org/youtube/2026/20260330_Deep_Dive_LLM_Quantization_part_3_-_FP8_FP4.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Deep Dive: LLM Quantization, part 3 - FP8, FP4">
+    <meta name="twitter:creator" content="@julsimon">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "Deep Dive: LLM Quantization, part 3 - FP8, FP4",
+        "description": "Deep Dive: LLM Quantization, part 3 - FP8, FP4 - YouTube video by Julien Simon",
+        "uploadDate": "2026-03-30T17:53:15+00:00",
+        "embedUrl": "https://www.youtube.com/embed/_hhbzZeQ8sY",
+        "thumbnailUrl": "https://img.youtube.com/vi/_hhbzZeQ8sY/maxresdefault.jpg",
+        "author": { "@id": "https://www.julien.org/#person" }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Deep Dive: LLM Quantization, part 3 - FP8, FP4</h1>
+        <div class="date">March 30, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/_hhbzZeQ8sY" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">Two years after parts 1 (https://youtu.be/kw7S-3s50uk) and 2 (https://youtu.be/fXBBwCIA0Ds), the quantization landscape has changed completely. FP8 is the new default; the serving stack has absorbed quantization, and MoE models have broken the old assumptions. This video shows you what practitioners actually use today.
+
+In Part 3 of this series, I&#x27;m showing you exactly what to run, on which GPU, with which tool, and what breaks when you get it wrong. One model, start to finish: Arcee Trinity Mini (26B MoE, 3B active, 128 experts).
+What&#x27;s covered: 
+→ Why FP8 is the new BF16 — essentially lossless, one flag, works everywhere 
+→ The three things people call &quot;4-bit&quot; (INT4 vs MXFP4 vs NVFP4) and why they&#x27;re completely different 
+→ Serving with vLLM: BF16, FP8 on-the-fly, FP8 checkpoint, with verified H100 numbers 
+→ Why MoE models break standard quantization and how to fix it 
+→ Creating your own checkpoints with llm-compressor and NVIDIA ModelOpt 
+→ NVFP4 on Blackwell: real 4-bit tensor core math, what works and what doesn&#x27;t yet 
+→ The FP4 deep dive: E2M1 bit layout, MXFP4 vs NVFP4 scale factors, worked error example 
+→ Decision tree: which quantization path for your hardware and use case
+
+*** Slides
+https://fr.slideshare.net/slideshow/advanced-quantization-techniques-for-large-language-models-in-2026-a4c8/286754686
+
+*** Arcee Trinity Mini:
+26B total parameters, 3B active per token, 128 experts, 128K context, Apache 2.0.
+https://huggingface.co/arcee-ai/Trinity-Mini
+NVFP4: https://huggingface.co/arcee-ai/Trinity-Mini-NVFP4
+FP8: https://huggingface.co/arcee-ai/Trinity-Mini-FP8-Block 
+
+#llm #quantization #fp8 #fp4 #nvfp4 #vllm #inference #nvidia #blackwell #moe #arcee</div>
+
+        <div class="transcript">
+<h2>Transcript</h2>
+            Again, Julien here. What if I told you that a single flag in your LLM serving config could cut your GPU bill in half? No retraining, no accuracy loss. That&#x27;s not a slide from a research talk. That&#x27;s what FP8 quantization does today, right now, on inference servers like the LLM.
+
+Two years ago, I did a two-part deep dive on quantization. The theory, the algorithms, GPTQ, Since then, the entire landscape has flipped. The standalone tools got deprecated. The serving frameworks have absorbed quantization natively. And mixture of experts&#x27; models have broken half the assumptions that those algorithms were built on.
+
+So this is LLM quantization, Part 3, the Practitioner Toolkit. No papers, no theory. I&#x27;m going to show you exactly what to run on which GPU with which tool and what breaks when you get it wrong? One model starts to finish will use Arcee Trinity Mini, 26 billion parameters, 128 experts. This is going to be a very deep dive.
+
+Let&#x27;s go. Everythings have changed and they&#x27;ve changed everything about how we approach quantization in production. First, FP8 is the new default, 8-bit floating point, which barely existed as a practical option when I recorded those earlier videos. Today, FP8 is essentially lossless. One flag in VLM or SGLang and you&#x27;re running in FP8 natively accelerated on NVD architecture like Loveless, Hopper and Blackwell GPUs.
+
+It&#x27;s the new BF16. Second, their serving stacks have gone native. In 2024, quantization was something you would do offline, run say GPDQ, upload the model and hope it worked. Today, inference servers handle quantization natively. You load a BF16 checkpoint, pass a flag, and the server does the rest.
+
+The standalone tools are deprecated or in maintenance mode. The algorithms live on, but now they&#x27;re available in unified libraries like LLM Compressor or Quark. And third, MOE models have broken the old assumptions. GPTQ, W.U.Q and so on assumed that every weight, every model parameter would see every token during calibration for quantization. It&#x27;s still true for dense models, but then the open world went crazy for a mixture of experts model.
+
+And in an MOE model, the router sends different tokens to different experts. So some experts get heavily exercised during calibration, others may be almost ignored. And this changes everything. To make all of this concrete, we&#x27;re going to use one model throughout the video, Arcee Trinity Mini, 26B parameters, and because it&#x27;s a mixture of experts model, we only use 3 billion active parameters per token. We have a total of 120 experts.
+
+Token plus one shared expert. The context window is a 128k. The license is a friendly Apache 20 license, and the model was trained end-to-end on about 10 trillion tokens on 512 H-200 GPUs. So this model is a real mixture of experts model, 120 experts with routing, and the quantization challenges are real. It&#x27;s still small enough that we can work with it and quantize it on a single Nvidia GPU like the H-100 or the B-200.
+
+And Arcee has already published pre-quantized checkpoints for FP8, NVF4, and GGUF. And in this video, I&#x27;m going to show you how those were built, what&#x27;s happening under the hood and how to serve them. Before we get into the details, I want to clear something up, which causes, I think, a lot of confusion. When people say four-biquantization, there are actually three So the first one, the most familiar one, is int 4. GPDQ, E.WQ, GGUF, Q4.
+
+So this is 4-bit integer storage. It works everywhere, CPU, GPU. But the weights get dequantized back to 16-bit before the actual matrix multiplication happens. So yes, we&#x27;re saving memory. And bandwidth, thanks to 4 bits, but we&#x27;re not doing 4-bit math.
+
+The second option is MX FP4, which is the open standard backed by AMD, Nvidia, Intel, etc. So this one is 4-bit floating point, and it groups weights into 32 value groups that share a single scale factor. We&#x27;re going to dive deep into all of this later. We get hardware acceleration on Nvidia Black and the latest AMD GPU, the MI 355X. Third, we have NVFP4, which is Nvidia&#x27;s proprietary 4-bit floating point format.
+
+Again, we&#x27;ll look at the difference in detail. The main one is we group weights into smaller groups of 16 with a finer scale factor. And the tensor cores operate directly on 4-bit values. There is no decontization. Helps and Vedia claim 2.3x higher throughput than with In4 on Blackwell only.
+
+In this video we&#x27;re going to discuss four quantization methods from the most familiar to the bleeding edge. So the first one is well known. I&#x27;ve covered it before. In4 with GGUF, most of you already know this. We use round to nearest quantization, weight only quantization and this works everywhere on on GPU, CPU, with tools like Llama CPP, O-Llama, etc.
+
+The second method is on-the-fly FP8. And that&#x27;s the new default. As we&#x27;ll see, it&#x27;s super easy to use. The only thing we need to do is pass quantization FP8 flag to VLM. We still use round to nearest quantization, but this time we use 8-bit floating point values.
+
+We don&#x27;t need any calibration data. Everything is computed dynamically during the forward pass. So there&#x27;s no preparation work at all. The third technique is the FP8 checkpoint. So in this case, we convert a model offline to FP8 using a tool like LLM compressor and a calibration data set.
+
+Okay, and generally we&#x27;ll need a few hundred samples for that. This will compute static values and save The advantage is, you don&#x27;t need to reconvert the model every time. And because it&#x27;s already converted, there&#x27;s no on-the-fly work and you get slightly better throughput. Last but not least, we have NVFP4 on Blackwell, which does require calibration. And as we&#x27;ll see, it&#x27;s only quantizing part of the model for maximum accuracy and we&#x27;ll need specific tools to do that.
+
+So the main thing here is that FP8 is really almost universal these days. It&#x27;s very forgiving, round to nearest with no calibration happens to work, and it&#x27;s essentially lossless. FP4 needs calibration data, some specific tools, and it&#x27;s just a little trickier to get right. So let&#x27;s do the easy things first, and let&#x27;s look at FP8. First, of course, we need to figure out which GPUs , so here&#x27;s a list of popular GPUs.
+
+Let&#x27;s see which ones can actually do what. And this matters because, of course, you need to pick the right one and the right cloud instance type. So FP8 is very well supported. It works on loveless architectures and newer. So in the cloud, that means L40S and above.
+
+Okay, H100, H200, Blackwell, all work. One that doesn&#x27;t work is the A10G, for example, the G5 instance family on AWS. That&#x27;s not possible. If you want to do NVFP4, it&#x27;s Blackwell only, if you can get your hands on that. On the AMD side, the MI 300X supports FP8 via Rokam and Quark, and the newer MI355X, and native mx fp4 support.
+
+Unfortunately, it&#x27;s a little more difficult to get your hands on the AMDpues. You won&#x27;t find them on AWS, but they&#x27;re available on co-weave or lambda or I guess run pod. So the good news is that both vendors quantized checkpoints work with the same serving stack, VLM, SGL, etc. So you could quantize on one and serve on the other. And now let&#x27;s talk about something that a lot of tutorials skip and I think it&#x27;s super important.
+
+Quantization has two parts. How you store the weights and how you compute with them and that&#x27;s not the same thing. On the left we see the in four path GPDQ, EWQ GGUF. The weights are stored in four bits but at compute time they get unpacked, they get dequantized to FP16 and they&#x27;re multiplied using probably the Marlin kernel. And then the tensor cores are doing FP16 math.
+
+So we save memory and bandwidth, but we&#x27;re still computing in 16 bit. On the right, we have the FP8 path. The tensor cores operate directly on 8-bit floating point values. There is no decontization step. And that&#x27;s why FP8 on Hopper or Blackwell isn&#x27;t just smaller numbers.
+
+It&#x27;s really the hardware doing less work per element per weight. And of course, the same goes for NVFP4 on Blackwell. Because Trinity Mini is a mixture of experts model, there&#x27;s a third dimension. You need fused kernels that will handle both the routing to the experts and the quantized matrix multiplication in one operation. So when VLM starts up, you will see a log line that says something like using Triton Fp.8 M.O.E back end.
+
+Quite a mouthful. That&#x27;s really VLM telling you that it found a kernel that can do FP8 matrix multiplication fused with MEO routing for your GPU. It&#x27;s not something you have to configure. The inference server will pick up the fastest available option automatically. Here are three ways we can serve Trinity Mini or other models with VLM.
+
+So we have the same model, the same OpenAI API, compatible API, just three different precision path. First one is the BF16 baseline, full precision. On an H100, this is about 49 gigs of model weights. I checked all those numbers. This leaves about 19 gigs for the KV cache, which is about 311,000 tokens.
+
+Meaning about 70 concurrent requests at 4K context. Of course, if you work with larger context, you&#x27;re going to have less room for concurrency. FP8 on the fly, as we mentioned, just one flag to add, consolidation FP8. On the same at 100, the model shrinks to 25 gigs, about half the size. And the LLM pre-allocates by default 90% of GPU memory So if you look at NVDA SMI, you&#x27;ll see the same memory usage, which can confuse you.
+
+But this memory is used very differently. We still get 25 gigs for parameters, and the rest goes to the KV cache. So now, instead of 19 gigs, we have 42 gigs. Instead of 311,000 tokens, we get 68,000, which could mean 167 concurrent requests. Okay, so double the throughput capacity.
+
+With just one flag. That&#x27;s awesome. That&#x27;s why everybody loves FP8. The FPA checkpoint, well, that&#x27;s the same. We just load the FP8 checkpoint from Arcee.
+
+We don&#x27;t need the quantization flag. And obviously, it starts a little faster, but memory usage will be identical. So while we&#x27;re talking about the KV cache, let&#x27;s keep exploring. If you&#x27;re working with a long context, the KV cache will actually consume more GPU RAM than the model weights, right? Especially because FP8 will reduce the model weights to half the size.
+
+But we could also use quantization for the KV cache, and we could also use FP8, which means we can cut the KV cash requirements in half. There are two FP8 formats for the cache. They have weird names, we&#x27;ll explain them in detail. The first one is E4M3, which means four exponent bits, pre-mentis of bits. I&#x27;ll explain later what those are.
+
+In a nutshell, the exponent gives you the range of values that you can encode, and the mantisa gives you the granularity. So for now, E4M3 gives us a little bit more precision. We need a scaling factor, and it works on Kuda and Rockham. E5M2, 5 exponent bits, two mantis of bits. Means a wider range, but fewer mantisabits mean we can&#x27;t describe values as precisely.
+
+So generally, I would recommend E4M3. Another thing, we need to understand exactly what this means. So we&#x27;re quantizing the KV cache. So this is a memory win. We can store more.
+
+But it&#x27;s not a speed win, because the KV cache, although it&#x27;s stored in FP8, It will still be dequantized and computed in 16-bit precision, okay? At the time of recording, I&#x27;m sure the VLM team is working on this, and they&#x27;ll be able to implement KV cache computation in 8-bit soon. But for now, it&#x27;s still FP16. So when does this make sense? It makes sense when context length is the bottleneck because you can just pack more tokens in the cache.
+
+But it won&#x27;t solve anything if latency is a problem. Before we talk about creating checkpoints, let&#x27;s get to why MOE models need special treatment. And this is really important because if you get it wrong, you may be able to quantize a model, but it will be completely broken. So the first problem is the imbalance between experts. During calibration, the router will send different So some experts may get hundreds of samples and their scaling factors will be perfect, but some experts could be picked very rarely and they will only see a few samples, maybe even none, and of course the calibration will be garbage, pretty much random.
+
+In a dense model like, let&#x27;s say Llama 3-1, that doesn&#x27;t happen because every model weight, every parameter, sees every calibration sample and every calibration token. But in an MOE model, this is not happening. The coverage is uneven by design. The second problem is the risk for routing instability. Quantization will introduce small numerical changes in the values, in the weights.
+
+In a dense model, this is just noise and it tends to cancel out. But in an MOE model, The router has to make hard decisions on which eight experts to pick in the case of a Trinity Mini. So a tiny shift could flip from one expert being selected to another one being selected. And so now the token is being processed by a completely different expert that may be actually the wrong one. And if too much of that happens, the errors cascade through layers and accuracy suffers.
+
+So how do you solve that? For now, the practical solution is to skip the routing layers. We leave them alone. We don&#x27;t quantize them. And this is what the ignore pattern with the regular expression means.
+
+So we keep that in full precision. We quantize everything else. Okay, let&#x27;s talk about the tools now. So the main one, I want to say the most popular one, is called LLM Compressor. It&#x27;s an open source library, which is part of BLLM.
+
+So if you use auto-edible A W. Q auto GPDQ, that&#x27;s the replacement. One library that gives you FP8, NVF4, AWQ, GPTQ, etc. And you can load the checkpoints easily in VLLM and SGLang. You have a PIP package, which, funny enough, has a different name as the tool, LLM Compressor, no hyphen, and the GitHub repo is LLM Compressor with a hyphen.
+
+I love open source. Is pretty much the full script, load a model, set a recipe, here we use FP8, user calibration data set, why not 512 samples from Ultra Chat, and just call this API call one shot and that&#x27;s it. Wait for a little while and you get your FP8 checkpoint, very simple. So the RCFP8 block checkpoint was built that way, different parameters, compressing blocks instead of compressing tensors, which gives you a little more acceleration, but that&#x27;s the same general ID. So now let&#x27;s talk about NVFP4.
+
+So LLM Compressor actually works for dense models. Here&#x27;s an example with Llama. Not a big difference, we just changed the scheme to NVF4. We run calibration, et cetera, et cetera. So, as mentioned before, on a dense model, every parameter sees every token for every calibration samples.
+
+So fairly straightforward. Now, I actually gave Trinity Mini a shot using LLM compressor in NVFP4. And, well, I hit a wall. I was actually able to quantize the model, but it was all garbage. And this is what went wrong.
+
+. Need something called an MOE calibration module for each MOE architecture. And this module does two things during quantization. The first thing is routing to all experts. Normally, the router will pick the top eight experts out of 128.
+
+And during calibration, the module will actually override this. It stands every token to every expert. So that every expert gets calibrated, right? And then it applies the router scores for actual expert selection. Okay, so that&#x27;s how all experts see all calibration data.
+
+The scales get computed accurately. And of course, we still do expert selection. So in a way, we need to, it&#x27;s a little bit of heart surgery here. We replace during calibration this MOU process with another one. The second thing that it does is weight linearization.
+
+Some MOUE architectures store all the expert weights packed in one big tensor, which obviously makes it difficult to quantize different experts with different parameters. So the module will actually unpack the experts and in a way break them into individual weight matrices, one for each expert, and then each one of them can be quantized separately and in the most efficient way. And this is actually a permanent change. The quantized checkpoint will carry this unpacked structure. So that&#x27;s the thing.
+
+If you want to use a LLM compressor with an MEO model, So, LLM compressant needs to provide this mechanism. And fortunately, at the time of recording, we didn&#x27;t get that for Trinity Mini, which is why I failed. So fortunately, there is another tool to do this. It&#x27;s called Model Opt. It&#x27;s an open source library from Nvidia.
+
+We load the model. We set the config to NVFP4, MLP only. And the name is important because we&#x27;ll only quantize the fully connected layers and the expert layers. And we keep attention in BF16. So that&#x27;s the recipe for now.
+
+Again, if you watch this later, we may have more aggressive and VFP4 techniques, but for now, this is what&#x27;s available. And then we define the calibration loop, the samples, we call quantize, and then we save the checkpoint. And the old expert calibration here is built in. So we don&#x27;t need per MOE architecture module. Actually, model op can handle any MOE architecture.
+
+So it doesn&#x27;t need to catch up to a new model architectures. That&#x27;s the key difference with an LLM compressor, which needs specific module for new architectures. So the NVFP4 checkpoint for Arcee Trinity Mini, All the links will be in the video description, as always, has been built with Model Opt. So maybe not exactly this code. I didn&#x27;t get the Arcee code, but I&#x27;m pretty sure it&#x27;s very close to this.
+
+Okay, so just doubling down on those calibration modules, this is an example. Here&#x27;s Llama 4, where there&#x27;s 16 experts. So on the left, this is what happens without the calibration module. Again, during calibration, the router sends each token to So here we see expert zero is highly popular. It gets to see almost every single calibration token.
+
+But if we look at the bottom, we have a few experts who almost see no token at all. And for those, the quantization scales will be garbage. So on the right, if we have a calibration module, whether a custom one in LLM compressor or the all-encompassing technique in Model Opt, we see that the router is overridden during calibration, so every token goes to every expert. And the scores are applied, of course, to keep expert selection. But anyway, every expert sees everything and quantization works, and we have valid scales.
+
+And the module also impacts the expert weights, as we discussed, and they&#x27;re saved. Into the quantized checkpoint. So that&#x27;s what it is. For LN compressor, today you can do LMA 4, Quine3, Dipsic V3, Qan3, Qan3 VL, and GLM4. Pretty short Trinity Min is coming at some point, but until it&#x27;s available, you have to use Model Opt.
+
+So now that we got the MOE madness out of the way, let&#x27;s talk about FP4 in more detail. Floating point format since the dawn of time allocates its bits across three fields. The sign, negative or positive, the exponent and the mantisa. So the exponent controls the range, how big or small the values can be, and the mantisa controls the precision, the granularity, if you will, how many distinct values can exist within each range. So if you look at a We have 5 exponent bits, 10 mantisar bits.
+
+Okay? So between the value 1 and the value 2, we have 2 to the power of 10, which is 1024 distinct steps. Okay? So very fine grain values extremely precise. If you look at FP8, E4 and 3, we have 4 exponent bits, 3 mantisab bits.
+
+So between the value 1 and the value 2, 2 to power 3, 8 steps, which is quite coarse. But in practice, it works. And it doesn&#x27;t affect model quality. And that&#x27;s why FP8 is pretty much lossless. 8 steps is enough for weights and activations.
+
+Now, FP4E2M1, 2 exponent bits, 1 mantisabits, means that, well, we just have one step. And two right so we can do one 1.5 and 2 and that&#x27;s it okay so the entire set of values is much smaller and we only have 8 values to represent any weight in the model so that&#x27;s pretty demanding so that with that little precision you absolutely need to have shared scale to shift each block of value into the right ballpark. You can&#x27;t expect to describe everything with a single scale factor, right? So you need to move those blocks around. And the design of that is where MXFP4 and MVF4 are different.
+
+So let&#x27;s talk about that. So both use E2M1, so four bits, but the difference is in the bookkeeping, right? So MXFP4 uses blocks of 32 elements and they all share an E8M0 scale factor, which means eight exponent bits, zero METSA. So it can only represent parts of two. And if you look at how many values are available between two and four, well, there&#x27;s only one, which is two, and then four.
+
+Ideal scale factor for this block is, let&#x27;s say, 3. It doesn&#x27;t work. You&#x27;re stuck, and you have to pick 2 or 4. So we don&#x27;t get a lot of options here. NVFP4 is different in two ways.
+
+So it uses smaller blocks, 16 elements, and the scale is upgraded to E4M3. So that&#x27;s an FP8 number with three mantis a bit. So 2 to the power of 3, we get 8 steps between different values. So let&#x27;s say between 2 and 4, we have 8 steps 2 to 25, 25, 25, 0, 0,000, etc, all the way to 4. So if your ideal number is 3, then you can hit it.
+
+If it&#x27;s 3.1, you can select 3, I guess. If it&#x27;s 3.2, you can pick 325. So you get smaller steps. And of course, that means more precision. So we have 8x the granularity and 2x the groups to adapt for local variation.
+
+And that&#x27;s where the accuracy advantage comes from, not from the 4-bit values, which are all 4-bit, but just the way they&#x27;re organized. This is the I&#x27;m going to need coffee slide. So pause now, get coffee, and come back. Okay, I&#x27;ll give you a second. All right, you&#x27;re back.
+
+Hopefully. Thank you. Enjoy the coffee. So let&#x27;s look at an example where we compare the different quantization schemes and different errors. Okay.
+
+So here we have eight BF16 weights, okay, just a small block to keep it readable on screen. And they&#x27;re quantized in three ways. So FP8 E4M3, we see there&#x27;s almost no error at all. Absolute error is negligible. We&#x27;re all in the green because again we have enough steps between values to I guess jump to the closest acceptable one.
+
+And that&#x27;s why FP8 is a no-brainer. Well it&#x27;s easy to compute obviously and it just works. So NVFP4 with E4M3 has an higher We have some yellow cells, we have a red one. But the scale is not too far off from the ideal value. And the reconstruction is pretty good.
+
+Now looking at MXFP4, we see the error is quite higher. We have red cells and we have a really bad one. So look at the negative 1.23, which can only be quantized to negative 1. So that&#x27;s a large error and if you want to be picky, that&#x27;s 18.7% off. So in this example we see with the same 4 bits we can get pretty large differences.
+
+So of course this is just one example and I&#x27;m not saying MXFP4 is highly inferior to NVFP4. If you ask me, I I actually prefer to have an open standard like MXFP4 versus the proprietary NVDA solution, but if we have to admit, the NVFP4 solution can get more accuracy out of 4-bit quantization. So there you go. What should we actually do? Let&#x27;s try to build a decision tree here.
+
+So if you can get your hands on Nvidia, L4TS, H100, H-200, H-200, FP8 is. Is the best option. You can quantize on the fly. You can easily do FPA checkpoints. It&#x27;s essentially lossless and it&#x27;s probably the default for production these days.
+
+You can use LLM compressor and works out of the box. If you&#x27;re running long context and just want to pack more or if you&#x27;re running out of memory, you can use FPA quantization for the KV cache, Remember, this is a memory win, not a speed win, but you can just pack twice the tokens in your GPU memory. If you&#x27;re running locally on a consumer GPU or a laptop or your Mac, of course, Gigi, G. G. G.
+
+G.O.F, Llama CPP, Q4, or Q8, if you have more memory on your machine, I&#x27;ve showed you this many times, and this is a great technique. To have B-200s, well, you could of course use P8 and you can use NVFP4 to run the really huge models. If you&#x27;re working with the MOE models, be careful of what the tool support, LLM compressor versus model opt, read the docs and use the right tool for the job. Okay? And if you&#x27;re on AMD, MI 300X, you can use and when we get MI 355x then we can go and try MX FP4.
+
+So plenty of options and I encourage you to experiment a lot. So here&#x27;s the full comparison with Trinity Mini, the algos, whether we need calibration or not, the V-RAM we need, the speed, the perplexity impact, the GPU type, the approximate cost. The cloud all right so again fp8 on the fly or fp8 checkpoint give you the same model quality as bf 16 and have the rearam you can also easily quantized the kb cache so with the same GPU and the same cost you can get twice the memory almost perplexity is almost the same for all fp8 methods it will only go up a bit meaning quality is little a little worse when you move to 4-bit formats. But they&#x27;re still very good and slightly worse means very different things to different people and different use cases. If you have a vanilla chatbot, you&#x27;re not going to see any difference.
+
+If you do advanced agent tick and function calling and complex reasoning, etc., you may see some difference. So honestly, the only option is to experiment and see if quantization is hurting accuracy in a meaningful way or not. Okay. Last thing I want to say is, of course, all those methods here are post-training quantization. So we didn&#x27;t retrain the model.
+
+Either we just converted it or converted it with calibration, but we didn&#x27;t do any quantization-aware training. That&#x27;s just another set of techniques. Three, what I wanted to tell you, the deep, the super deep dive on quantization, FP8, FP4, MOE, etc. So all the links are in the video description. Go try Trinity Mini.
+
+It&#x27;s on Hugging Face with the FP8 and NVFP4 checkpoints. And you&#x27;ll find GGEUF quantizations as well. The tools, VLLM, SGLang, LM Compressor, Nvidia, ModelOpt, and then the AMD tools, Quark, etc. They&#x27;re all out there and you can go and have fun. Okay?
+
+So that&#x27;s part three. Thank you very much for watching. I hope you don&#x27;t have a headache. And I guess I&#x27;ll keep talking about quantization because very interesting things are happening right now. I&#x27;m just waiting for them to show up in production tools.
+
+But you will keep talking about this. Keep rocking.</div>
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            <a href="index.html">&larr; Back to 2026 Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
+        </div>
+    </div>
+
+
+</body></html>

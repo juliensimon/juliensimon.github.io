@@ -8,6 +8,18 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Deep Dive: LLM Quantization, part 3 - FP8, FP4',
+    href: '/youtube/2026/20260330_Deep_Dive_LLM_Quantization_part_3_-_FP8_FP4.html',
+    date: 'March 30, 2026',
+    icon: 'video',
+  },
+  {
+    title: 'The Half-Life of a Press Release',
+    href: '/blog/industry-perspectives/2026-03-31_the-half-life-of-a-press-release/index.html',
+    date: 'March 31, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Reverse-Engineering The Apollo 11 Code with AI',
     href: '/blog/industry-perspectives/2026-03-28_reverse-engineering-the-apollo-11-code-with-ai/index.html',
     date: 'March 28, 2026',
@@ -23,18 +35,6 @@ const LATEST_UPDATES = [
     title: 'Acquired, Absorbed, Disaggregated',
     href: '/blog/industry-perspectives/2026-03-26_acquired-absorbed-disaggregated/index.html',
     date: 'March 26, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'The King’s New Datacenters',
-    href: '/blog/industry-perspectives/2026-03-25_the-kings-new-datacenters/index.html',
-    date: 'March 25, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'When the Credit Market Builds a Fire Exit',
-    href: '/blog/industry-perspectives/2026-03-24_when-the-credit-market-builds-a-fire-exit/index.html',
-    date: 'March 24, 2026',
     icon: 'article',
   },
 ];
