@@ -834,10 +834,12 @@ def update_latest_updates(videos: list[VideoItem], dry_run: bool):
             'icon': 'video',
         })
 
-    # Merge: new first, then existing (no duplicates), keep top 5
+    # Merge: new first, then existing (no duplicates), sort by date, keep top 5
     seen_hrefs = {e['href'] for e in new_entries}
     unique_existing = [e for e in existing_entries if e['href'] not in seen_hrefs]
-    all_entries = (new_entries + unique_existing)[:5]
+    all_entries = new_entries + unique_existing
+    all_entries.sort(key=lambda e: datetime.strptime(e['date'], '%B %d, %Y'), reverse=True)
+    all_entries = all_entries[:5]
 
     entries_str = ',\n  '.join([
         f"{{\n    title: '{e['title']}',\n    href: '{e['href']}',"

@@ -8,16 +8,16 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
-    title: 'Deep Dive: LLM Quantization, part 3 - FP8, FP4',
-    href: '/youtube/2026/20260330_Deep_Dive_LLM_Quantization_part_3_-_FP8_FP4.html',
-    date: 'March 30, 2026',
-    icon: 'video',
-  },
-  {
     title: 'The Half-Life of a Press Release',
     href: '/blog/industry-perspectives/2026-03-31_the-half-life-of-a-press-release/index.html',
     date: 'March 31, 2026',
     icon: 'article',
+  },
+  {
+    title: 'Deep Dive: LLM Quantization, part 3 - FP8, FP4',
+    href: '/youtube/2026/20260330_Deep_Dive_LLM_Quantization_part_3_-_FP8_FP4.html',
+    date: 'March 30, 2026',
+    icon: 'video',
   },
   {
     title: 'Reverse-Engineering The Apollo 11 Code with AI',
