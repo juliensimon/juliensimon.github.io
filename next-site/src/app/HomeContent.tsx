@@ -8,33 +8,33 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'What to Buy for Local LLMs (April 2026)',
+    href: '/blog/industry-perspectives/2026-04-03_what-to-buy-for-local-llms-april-2026/index.html',
+    date: 'April 3, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Your Parents Paid',
+    href: '/blog/industry-perspectives/2026-04-03_your-parents-paid/index.html',
+    date: 'April 3, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Open Source Won, But Changed Owners',
+    href: '/blog/industry-perspectives/2026-04-02_open-source-won-but-changed-owners/index.html',
+    date: 'April 2, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'What China Shipped While the West Was Banning Chips',
+    href: '/blog/industry-perspectives/2026-04-01_what-china-shipped-while-the-west-was-banning-chips/index.html',
+    date: 'April 1, 2026',
+    icon: 'article',
+  },
+  {
     title: 'The Half-Life of a Press Release',
     href: '/blog/industry-perspectives/2026-03-31_the-half-life-of-a-press-release/index.html',
     date: 'March 31, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Deep Dive: LLM Quantization, part 3 - FP8, FP4',
-    href: '/youtube/2026/20260330_Deep_Dive_LLM_Quantization_part_3_-_FP8_FP4.html',
-    date: 'March 30, 2026',
-    icon: 'video',
-  },
-  {
-    title: 'Reverse-Engineering The Apollo 11 Code with AI',
-    href: '/blog/industry-perspectives/2026-03-28_reverse-engineering-the-apollo-11-code-with-ai/index.html',
-    date: 'March 28, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Build, Regulate, Scare',
-    href: '/blog/industry-perspectives/2026-03-27_build-regulate-scare/index.html',
-    date: 'March 27, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Acquired, Absorbed, Disaggregated',
-    href: '/blog/industry-perspectives/2026-03-26_acquired-absorbed-disaggregated/index.html',
-    date: 'March 26, 2026',
     icon: 'article',
   },
 ];

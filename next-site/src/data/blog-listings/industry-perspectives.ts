@@ -11,6 +11,34 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'What to Buy for Local LLMs (April 2026)',
+    slug: '2026-04-03_what-to-buy-for-local-llms-april-2026',
+    date: '2026-04-03',
+    description: 'A practitioner’s guide to inference and training, why they’re not the same machine, and why you may still need cloud',
+    originalUrl: 'https://www.airealist.ai/p/what-to-buy-for-local-llms-april',
+  },
+  {
+    title: 'Your Parents Paid',
+    slug: '2026-04-03_your-parents-paid',
+    date: '2026-04-03',
+    description: 'NVIDIA built the world’s most profitable hardware company by treating its consumer GPUs as a recruitment pipeline. Now many recruits are buying Macs.',
+    originalUrl: 'https://www.airealist.ai/p/your-parents-paid',
+  },
+  {
+    title: 'Open Source Won, But Changed Owners',
+    slug: '2026-04-02_open-source-won-but-changed-owners',
+    date: '2026-04-02',
+    description: 'Smaller, cheaper, open — and the base layer is up for grabs.',
+    originalUrl: 'https://www.airealist.ai/p/open-source-won-but-changed-owners',
+  },
+  {
+    title: 'What China Shipped While the West Was Banning Chips',
+    slug: '2026-04-01_what-china-shipped-while-the-west-was-banning-chips',
+    date: '2026-04-01',
+    description: 'Six domains where China’s deployment record contradicts the restriction narrative.',
+    originalUrl: 'https://www.airealist.ai/p/what-china-shipped-while-the-west',
+  },
+  {
     title: 'The Half-Life of a Press Release',
     slug: '2026-03-31_the-half-life-of-a-press-release',
     date: '2026-03-31',
