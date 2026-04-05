@@ -3,62 +3,65 @@ export interface Repository {
   description: string;
   url: string;
   language?: string;
+  stars?: number;
+  forks?: number;
   tags: string[];
-  featured?: boolean;
 }
 
-export const REPOSITORIES: Repository[] = [
+export const PINNED_REPOSITORIES: Repository[] = [
   {
     name: 'starlink-viz',
-    description: 'Real-time 3D Starlink satellite tracker with live dish telemetry. Track ~10,000 satellites, ground stations, handoffs, and network performance.',
+    description: 'Real-time 3D Starlink satellite tracker with space/sky views, live telemetry, and ISL routing for ~10,000 satellites.',
     url: 'https://github.com/juliensimon/starlink-viz',
     language: 'TypeScript',
+    stars: 8,
+    forks: 1,
     tags: ['Three.js', 'Next.js', 'Satellite Tracking', '3D Visualization'],
-    featured: true,
   },
   {
-    name: 'gradio-mcp-server-builder',
-    description: 'CLI tool to create MCP servers with Gradio web interfaces from existing Python functions.',
-    url: 'https://github.com/juliensimon/gradio-mcp-server-builder',
+    name: 'space-datasets',
+    description: '160+ auto-updated space, astronomy & physics datasets on Hugging Face (NASA, NOAA, ESA, JPL, SpaceX, Wikidata).',
+    url: 'https://github.com/juliensimon/space-datasets',
     language: 'Python',
-    tags: ['MCP Protocol', 'Gradio UI', 'AI/ML Tools', 'Code Generation'],
-    featured: true,
+    stars: 2,
+    tags: ['Hugging Face', 'NASA', 'Astronomy', 'Open Data'],
   },
   {
-    name: 'ai-inference-tco-calculator',
-    description: 'AI Inference TCO Calculator — compare API vs self-hosted GPU vs local/edge inference costs.',
-    url: 'https://github.com/juliensimon/ai-inference-tco-calculator',
+    name: 'cache-commander',
+    description: 'Terminal UI tool to explore, audit, and clean developer cache directories with CVE scanning.',
+    url: 'https://github.com/juliensimon/cache-commander',
+    language: 'Rust',
+    stars: 11,
+    forks: 1,
+    tags: ['TUI', 'Cache Management', 'CVE Scanning', 'Developer Tools'],
+  },
+  {
+    name: 'ocel-generator',
+    description: 'Generate realistic multi-agent workflow traces with LLM-enriched content (pip installable).',
+    url: 'https://github.com/juliensimon/ocel-generator',
     language: 'Python',
-    tags: ['TCO Analysis', 'AI Inference', 'GPU Costs', 'Cost Optimization'],
-    featured: true,
-  },
-  {
-    name: 'arcee-demos',
-    description: 'Demos, examples, and tools for Arcee AI models and services.',
-    url: 'https://github.com/juliensimon/arcee-demos',
-    language: 'Jupyter Notebook',
-    tags: ['Arcee AI', 'SuperNova', 'Model Engine', 'Conductor'],
-  },
-  {
-    name: 'huggingface-demos',
-    description: 'Practical demos and tutorials for Hugging Face technologies, optimization, and deployment.',
-    url: 'https://github.com/juliensimon/huggingface-demos',
-    language: 'Jupyter Notebook',
-    tags: ['Hugging Face', 'Optimum', 'Neuron', 'Trainium', 'Inferentia2'],
-  },
-  {
-    name: 'radar-evaluator',
-    description: 'Framework for evaluating and comparing LLMs across industry domains using radar charts and automated scoring.',
-    url: 'https://github.com/juliensimon/radar-evaluator',
-    tags: ['LLM Evaluation', 'Radar Charts', 'Automated Scoring', 'Benchmarking'],
+    stars: 4,
+    forks: 1,
+    tags: ['OCEL', 'Process Mining', 'Multi-Agent', 'Synthetic Data'],
   },
   {
     name: 'sagemaker-inference-container-cpu',
-    description: 'Docker Container for HF Inference on CPU. Cost-efficient AI inference with SLMs.',
+    description: 'Amazon SageMaker container for Hugging Face inference on Graviton and Intel CPUs.',
     url: 'https://github.com/juliensimon/sagemaker-inference-container-cpu',
     language: 'Python',
+    stars: 11,
+    forks: 1,
     tags: ['SageMaker', 'llama.cpp', 'ARM64', 'AMD64'],
+  },
+  {
+    name: 'my-aws-talks-2015-2021',
+    description: 'Collection of 300+ AWS presentations from tenure as Technical Evangelist at Amazon Web Services.',
+    url: 'https://github.com/juliensimon/my-aws-talks-2015-2021',
+    stars: 13,
+    forks: 1,
+    tags: ['AWS', 'Presentations', 'Technical Evangelism', 'Archive'],
   },
 ];
 
-export const GITHUB_PROFILE = 'https://github.com/juliensimon?tab=repositories';
+export const GITHUB_USERNAME = 'juliensimon';
+export const GITHUB_PROFILE = 'https://github.com/juliensimon';
