@@ -26,11 +26,9 @@ export default function PublicationsContent() {
 
         <div className="grid sm:grid-cols-2 gap-5">
           {PUBLICATION_CATEGORIES.map((cat, i) => {
-            const isExternal = cat.href.startsWith('/blog/');
-            const Wrapper = isExternal ? 'a' : Link;
-            const linkProps = isExternal
-              ? { href: cat.href, target: '_blank' as const, rel: 'noopener noreferrer' }
-              : { href: cat.href };
+            const isStaticPath = cat.href.startsWith('/blog/');
+            const Wrapper = isStaticPath ? 'a' : Link;
+            const linkProps = { href: cat.href };
 
             return (
               <ScrollReveal key={cat.name} direction="up" delay={i * 0.08}>

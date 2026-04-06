@@ -1,23 +1,26 @@
 import Link from 'next/link';
-import { SITE } from '@/lib/constants';
+import { SITE, NAV_ITEMS, SOCIAL_LINKS } from '@/lib/constants';
 
-const FOOTER_NAV = [
-  { label: 'Experience', href: '/experience' },
-  { label: 'Speaking', href: '/speaking' },
-  { label: 'Publications', href: '/publications' },
-  { label: 'Videos', href: '/youtube-videos' },
-  { label: 'Books', href: '/books' },
-  { label: 'Code & Projects', href: '/code' },
-  { label: 'Computers', href: '/computers' },
-] as const;
+const FOOTER_LABEL_OVERRIDES: Record<string, string> = {
+  '/code': 'Code & Projects',
+  '/computers': 'Computers',
+};
 
-const FOOTER_SOCIAL = [
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/juliensimon' },
-  { label: 'YouTube', href: 'https://youtube.com/@juliensimonfr' },
-  { label: 'The AI Realist', href: 'https://www.airealist.ai/' },
-  { label: 'GitHub', href: 'https://github.com/juliensimon' },
-  { label: 'Twitter/X', href: 'https://x.com/julsimon' },
-] as const;
+const FOOTER_NAV = NAV_ITEMS
+  .filter((item) => item.href !== '/')
+  .map((item) => ({ label: FOOTER_LABEL_OVERRIDES[item.href] ?? item.label, href: item.href }));
+
+const FOOTER_SOCIAL_HREFS = new Set([
+  'https://linkedin.com/in/juliensimon',
+  'https://youtube.com/@juliensimonfr',
+  'https://www.airealist.ai/',
+  'https://github.com/juliensimon',
+  'https://x.com/julsimon',
+]);
+
+const FOOTER_SOCIAL = SOCIAL_LINKS
+  .filter((link) => FOOTER_SOCIAL_HREFS.has(link.href))
+  .map((link) => ({ label: link.name, href: link.href }));
 
 export default function Footer() {
   return (

@@ -37,7 +37,7 @@ export const NAV_ITEMS = [
 // Note: These values should stay in sync with:
 // - TOTAL_ARTICLES in publications.ts (Technical Posts)
 // - SPEAKING_STATS.totalEvents in speaking.ts (Speaking Engagements)
-// - YOUTUBE_STATS.subscribers in youtube.ts (YouTube Subscribers)
+// - YOUTUBE_STATS.subscriberCount in youtube.ts (YouTube Subscribers)
 // Run `npm run validate` to check for mismatches
 export const METRICS = [
   { value: 454, suffix: '', label: 'Technical Posts' },

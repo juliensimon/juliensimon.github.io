@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, type ReactNode } from 'react';
 
 type Direction = 'up' | 'down' | 'left' | 'right' | 'scale';
 
@@ -25,7 +25,8 @@ export default function ScrollReveal({
   as = 'div',
   ...rest
 }: ScrollRevealProps) {
-  const ref = useRef<HTMLElement>(null);
+  const elRef = useRef<HTMLElement | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   // Mark <html> as JS-ready so CSS can safely hide [data-reveal] elements.
   // Without JS (crawlers), content stays visible (opacity: 1).
@@ -34,26 +35,29 @@ export default function ScrollReveal({
   }, []);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
+    observerRef.current = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.classList.add('revealed');
-          observer.unobserve(el);
+          entry.target.classList.add('revealed');
+          observerRef.current?.unobserve(entry.target);
         }
       },
       { rootMargin: margin, threshold: 0 }
     );
-    observer.observe(el);
-    return () => observer.disconnect();
+    if (elRef.current) observerRef.current.observe(elRef.current);
+    return () => observerRef.current?.disconnect();
   }, [margin]);
+
+  const refCallback = useCallback((node: HTMLElement | null) => {
+    elRef.current = node;
+    if (node && observerRef.current) observerRef.current.observe(node);
+  }, []);
 
   const Tag = as;
 
   return (
     <Tag
-      ref={ref as never}
+      ref={refCallback}
       data-reveal={direction}
       style={delay ? { transitionDelay: `${delay}s` } : undefined}
       className={className}
