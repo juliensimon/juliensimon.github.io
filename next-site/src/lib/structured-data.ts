@@ -142,7 +142,7 @@ export function profilePageSchema() {
     url: SITE.url,
     mainEntity: { '@id': `${SITE.url}/#person` },
     isPartOf: { '@id': `${SITE.url}/#website` },
-    dateModified: '2026-03-15',
+    dateModified: new Date().toISOString().split('T')[0],
     inLanguage: 'en',
   };
 }
@@ -520,7 +520,7 @@ export function eventListSchema(
 export const SPEAKING_FAQS = [
   {
     question: 'How many speaking engagements has Julien Simon delivered?',
-    answer: 'Julien Simon has delivered 684+ speaking engagements across 37 countries and 95 cities, including keynotes at AWS re:Invent, ODSC, KubeCon, and talks at institutions like UNESCO, World Bank, New York Federal Reserve, and Bank of Italy.',
+    answer: 'Julien Simon has delivered 685+ speaking engagements across 37 countries and 95 cities, including keynotes at AWS re:Invent, ODSC, KubeCon, and talks at institutions like UNESCO, World Bank, New York Federal Reserve, and Bank of Italy.',
   },
   {
     question: 'What topics does Julien Simon speak about?',
@@ -535,7 +535,7 @@ export const SPEAKING_FAQS = [
 export const PUBLICATIONS_FAQS = [
   {
     question: 'How many articles has Julien Simon published?',
-    answer: 'Julien Simon has published 440+ technical articles across multiple platforms including the AWS Blog, Hugging Face Blog, Arcee AI Blog, Medium, and his Substack newsletter The AI Realist (airealist.ai).',
+    answer: 'Julien Simon has published 454+ technical articles across multiple platforms including the AWS Blog, Hugging Face Blog, Arcee AI Blog, Medium, and his Substack newsletter The AI Realist (airealist.ai).',
   },
   {
     question: 'What is The AI Realist newsletter?',
@@ -569,11 +569,11 @@ export const EXPERIENCE_FAQS = [
 export const HOMEPAGE_FAQS = [
   {
     question: 'Who is Julien Simon?',
-    answer: 'Julien Simon is an AI Operating Partner at Fortino Capital with over 30 years of technology leadership experience. He previously held executive roles at AWS, Hugging Face, and Arcee AI. He is recognized as the #1 AI Evangelist globally by AI Magazine (2021), has delivered 684+ speaking engagements across 37 countries, and publishes The AI Realist newsletter (airealist.ai).',
+    answer: 'Julien Simon is an AI Operating Partner at Fortino Capital with over 30 years of technology leadership experience. He previously held executive roles at AWS, Hugging Face, and Arcee AI. He is recognized as the #1 AI Evangelist globally by AI Magazine (2021), has delivered 685+ speaking engagements across 37 countries, and publishes The AI Realist newsletter (airealist.ai).',
   },
   {
     question: 'What is Julien Simon known for?',
-    answer: 'Julien Simon is known for his expertise in Small Language Models (SLMs), enterprise AI implementation, and bridging the gap between AI research and practical business applications. He authored "Learn Amazon SageMaker", has 494K+ YouTube subscribers for his AI/ML educational content, and writes The AI Realist newsletter offering structural analysis of AI industry trends.',
+    answer: 'Julien Simon is known for his expertise in Small Language Models (SLMs), enterprise AI implementation, and bridging the gap between AI research and practical business applications. He authored "Learn Amazon SageMaker", has 494K+ YouTube subscribers for his AI/ML educational content, and writes The AI Realist newsletter offering structural analysis of AI industry trends. He has published 454+ technical articles and delivered 685+ speaking engagements worldwide.',
   },
   {
     question: 'What does an AI Operating Partner do?',

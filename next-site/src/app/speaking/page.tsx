@@ -7,9 +7,9 @@ import { SPEAKING_EVENTS } from '@/data/speaking-events';
 import SpeakingContent from './SpeakingContent';
 
 export const metadata = buildMetadata({
-  title: 'Speaking — 684+ Talks on AI & Machine Learning',
+  title: 'Speaking — 685+ Talks on AI & Machine Learning',
   description:
-    '684+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing. Keynotes at AWS re:Invent, ODSC, and more.',
+    '685+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing. Keynotes at AWS re:Invent, ODSC, and more.',
   path: '/speaking',
   keywords: [
     'conference speaker',
@@ -54,7 +54,7 @@ export default function SpeakingPage() {
       ])} />
       <StructuredData data={webPageSchema(
         'Speaking Engagements',
-        '684+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing.',
+        '685+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing.',
         `${SITE.url}/speaking`,
       )} />
       <StructuredData data={faqSchema(SPEAKING_FAQS, `${SITE.url}/speaking`)} />

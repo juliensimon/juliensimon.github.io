@@ -22,7 +22,7 @@ export default function SpeakingYearContent({ year, events, totalCount }: Props)
 
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {events.length > 0 ? (
-          <div className="space-y-4">
+          <div className="space-y-4" role="list" aria-label={`Speaking events in ${year}`}>
             {events.map((event, i) => (
               <ScrollReveal
                 key={`${event.title}-${i}`}
@@ -32,9 +32,9 @@ export default function SpeakingYearContent({ year, events, totalCount }: Props)
                 className="glass-card rounded-xl p-5"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <h2 className="text-base font-semibold text-text">
+                  <h3 className="text-base font-semibold text-text">
                     {event.title}
-                  </h2>
+                  </h3>
                   {event.date && (
                     <span className="text-xs text-highlight font-medium whitespace-nowrap shrink-0">
                       {event.date}

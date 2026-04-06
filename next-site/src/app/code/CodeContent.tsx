@@ -88,7 +88,7 @@ export default function CodeContent() {
 
       <RelatedContent items={[
         { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '494K subscribers' },
-        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '440 articles' },
+        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '454+ articles' },
         { href: '/experience', title: 'Experience', subtitle: '30+ years of technology leadership' },
       ]} />
     </>
