@@ -82,7 +82,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Individual industry-perspectives articles (static HTML, outside Next.js)
   const articlePages: MetadataRoute.Sitemap = INDUSTRY_PERSPECTIVES_ARTICLES.map((a) => ({
-    url: `${SITE.url}/blog/industry-perspectives/${encodeURIComponent(a.slug)}/index.html`,
+    url: `${SITE.url}/blog/industry-perspectives/${encodeURIComponent(a.slug)}/`,
     lastModified: a.date,
     changeFrequency: 'yearly' as const,
     priority: 0.6,

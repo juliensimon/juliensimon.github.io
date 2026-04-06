@@ -62,7 +62,12 @@ def scan_dirs(dirs, priority_fn=None):
             rel_path = str(html_file.relative_to(PUBLIC))
             if rel_path in SKIP_FILES:
                 continue
-            encoded_path = "/".join(quote(part, safe="") for part in rel_path.split("/"))
+            # Use directory URL for index.html files (e.g. blog/slug/ instead of blog/slug/index.html)
+            if rel_path.endswith("/index.html"):
+                url_path = rel_path[:-len("index.html")]
+            else:
+                url_path = rel_path
+            encoded_path = "/".join(quote(part, safe="") for part in url_path.split("/"))
             url = f"{SITE_URL}/{encoded_path}"
             lastmod = extract_date_from_path(rel_path)
             priority = priority_fn(rel_path) if priority_fn else "0.5"

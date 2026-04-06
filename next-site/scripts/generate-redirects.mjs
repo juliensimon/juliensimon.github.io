@@ -16,7 +16,8 @@ function isValidRedirectUrl(url) {
 }
 
 function redirectHtml(to) {
-  const canonical = `https://www.julien.org${to === '/' ? '' : to}`;
+  const cleanPath = to.endsWith('/index.html') ? to.slice(0, -'index.html'.length) : to;
+  const canonical = `https://www.julien.org${cleanPath === '/' ? '' : cleanPath}`;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -153,8 +154,8 @@ created = 0; skipped = 0;
 for (const localHref of allPosts) {
   if (!isValidRedirectUrl(localHref)) { skipped++; continue; }
 
-  // Pattern A: /blog/CATEGORY/YYYY-MM-DD_slug/index.html
-  let match = localHref.match(/\/blog\/[^/]+\/(\d{4}-\d{2}-\d{2})[_](.+?)\/index\.html$/);
+  // Pattern A: /blog/CATEGORY/YYYY-MM-DD_slug/
+  let match = localHref.match(/\/blog\/[^/]+\/(\d{4}-\d{2}-\d{2})[_](.+?)\/$/);
   if (match) {
     const [, date, slug] = match;
     // Old URL: /blog/YYYY-MM-DD-slug/
@@ -163,8 +164,8 @@ for (const localHref of allPosts) {
     continue;
   }
 
-  // Pattern B: /blog/CATEGORY/YYYY/YYYY-MM-DD_slug/index.html (aws-medium)
-  match = localHref.match(/\/blog\/[^/]+\/\d{4}\/(\d{4}-\d{2}-\d{2})[_](.+?)\/index\.html$/);
+  // Pattern B: /blog/CATEGORY/YYYY/YYYY-MM-DD_slug/ (aws-medium)
+  match = localHref.match(/\/blog\/[^/]+\/\d{4}\/(\d{4}-\d{2}-\d{2})[_](.+?)\/$/);
   if (match) {
     const [, date, slug] = match;
     if (writeRedirect(`/blog/${date}-${slug.toLowerCase().replace(/\s+/g, '-')}/`, localHref)) created++;
@@ -190,7 +191,7 @@ for (const localHref of allPosts) {
 
   // Extract slug from any pattern
   let slug;
-  let match = localHref.match(/\/blog\/[^/]+\/(?:\d{4}\/)?(?:\d{4}-\d{2}-\d{2})[_-](.+?)(?:\/index\.html|\.html)$/);
+  let match = localHref.match(/\/blog\/[^/]+\/(?:\d{4}\/)?(?:\d{4}-\d{2}-\d{2})[_-](.+?)(?:\/|\.html)$/);
   if (match) {
     slug = match[1].toLowerCase().replace(/\s+/g, '-');
     if (writeRedirect(`/blog/${slug}/`, localHref)) slugOnlyCreated++;

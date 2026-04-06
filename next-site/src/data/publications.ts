@@ -11,7 +11,7 @@ export const PUBLICATION_CATEGORIES: PublicationCategory[] = [
     name: 'The AI Realist (Industry Perspectives)',
     count: 56,
     description: 'Practical AI analysis for builders, operators, and investors. Published on The AI Realist newsletter.',
-    href: '/blog/industry-perspectives/index.html',
+    href: '/blog/industry-perspectives/',
     dateRange: '2021 - Present',
   },
   {

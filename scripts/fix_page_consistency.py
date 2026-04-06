@@ -254,7 +254,10 @@ def add_canonical_urls(dry_run: bool):
             stats["skipped"] += 1
             continue
         rel_path = html_file.relative_to(PUBLIC)
-        canonical = f'{SITE_URL}/{rel_path}'
+        canonical_path = str(rel_path)
+        if canonical_path.endswith('/index.html'):
+            canonical_path = canonical_path[:-len('index.html')]
+        canonical = f'{SITE_URL}/{canonical_path}'
         tag = f'<link rel="canonical" href="{canonical}">'
         if "</head>" in content:
             content = content.replace("</head>", f"    {tag}\n</head>")
@@ -273,7 +276,10 @@ def add_canonical_urls(dry_run: bool):
             stats["skipped"] += 1
             continue
         rel_path = html_file.relative_to(PUBLIC)
-        canonical = f'{SITE_URL}/{rel_path}'
+        canonical_path = str(rel_path)
+        if canonical_path.endswith('/index.html'):
+            canonical_path = canonical_path[:-len('index.html')]
+        canonical = f'{SITE_URL}/{canonical_path}'
         tag = f'<link rel="canonical" href="{canonical}">'
         if "</head>" in content:
             content = content.replace("</head>", f"    {tag}\n</head>")
@@ -292,7 +298,10 @@ def add_canonical_urls(dry_run: bool):
             stats["skipped"] += 1
             continue
         rel_path = html_file.relative_to(PUBLIC)
-        canonical = f'{SITE_URL}/{rel_path}'
+        canonical_path = str(rel_path)
+        if canonical_path.endswith('/index.html'):
+            canonical_path = canonical_path[:-len('index.html')]
+        canonical = f'{SITE_URL}/{canonical_path}'
         tag = f'<link rel="canonical" href="{canonical}">'
         if "</head>" in content:
             content = content.replace("</head>", f"    {tag}\n</head>")

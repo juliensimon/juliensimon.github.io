@@ -83,7 +83,7 @@ def add_meta_tags_to_index_pages():
         if not canonical:
             canonical = soup.new_tag('link', attrs={'rel': 'canonical'})
             head.insert(9, canonical)
-        canonical['href'] = f"https://www.julien.org/youtube/{year}/index.html"
+        canonical['href'] = f"https://www.julien.org/youtube/{year}/"
         
         with open(index_file, 'w', encoding='utf-8') as f:
             f.write(str(soup))

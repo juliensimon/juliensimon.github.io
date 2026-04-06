@@ -19,6 +19,7 @@ def redirect_html(target_url: str, canonical_url: str) -> str:
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex, follow">
 <meta http-equiv="refresh" content="0;url={target_url}">
 <link rel="canonical" href="{canonical_url}">
 <title>Redirecting...</title>
@@ -44,7 +45,7 @@ def get_old_url_patterns():
             if match:
                 date, slug = match.groups()
                 old_path = f'blog/{date}-{slug}'
-                new_path = f'/blog/arcee-posts/{post_dir.name}/index.html'
+                new_path = f'/blog/arcee-posts/{post_dir.name}/'
                 canonical = f'https://www.julien.org{new_path}'
                 redirects.append((old_path, new_path, canonical))
 
@@ -58,7 +59,7 @@ def get_old_url_patterns():
             if match:
                 date, slug = match.groups()
                 old_path = f'blog/{date}-{slug}'
-                new_path = f'/blog/huggingface-posts-and-images/{post_dir.name}/index.html'
+                new_path = f'/blog/huggingface-posts-and-images/{post_dir.name}/'
                 canonical = f'https://www.julien.org{new_path}'
                 redirects.append((old_path, new_path, canonical))
 
@@ -73,7 +74,7 @@ def get_old_url_patterns():
                 date, slug = match.groups()
                 # AWS old canonical had no date
                 old_path = f'blog/{slug}'
-                new_path = f'/blog/aws-posts-and-images/{post_dir.name}/index.html'
+                new_path = f'/blog/aws-posts-and-images/{post_dir.name}/'
                 canonical = f'https://www.julien.org{new_path}'
                 redirects.append((old_path, new_path, canonical))
                 # Also add with date prefix (some may have been indexed both ways)

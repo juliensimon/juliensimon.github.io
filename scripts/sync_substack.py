@@ -450,7 +450,7 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     <meta property="og:type" content="article">
     <meta property="og:title" content="{html.escape(item.title)} - Julien Simon">
     <meta property="og:description" content="{html.escape(excerpt)}">
-    <meta property="og:url" content="https://www.julien.org/blog/industry-perspectives/{folder_name}/index.html">
+    <meta property="og:url" content="https://www.julien.org/blog/industry-perspectives/{folder_name}/">
     <meta property="og:image" content="https://www.julien.org/assets/og-image-1200x630.webp">
     <meta property="article:author" content="Julien Simon">
     <meta property="article:published_time" content="{date_str}T00:00:00Z">
@@ -470,7 +470,7 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
         "@type": "BlogPosting",
         "headline": "{html.escape(item.title).replace(chr(34), '&quot;')}",
         "description": "{html.escape(excerpt).replace(chr(34), '&quot;')}",
-        "url": "https://www.julien.org/blog/industry-perspectives/{folder_name}/index.html",
+        "url": "https://www.julien.org/blog/industry-perspectives/{folder_name}/",
         "image": "https://www.julien.org/assets/og-image-1200x630.webp",
         "datePublished": "{date_str}T00:00:00Z",
         "dateModified": "{date_str}T00:00:00Z",
@@ -700,7 +700,7 @@ def update_latest_updates(items: list[PostItem], dry_run: bool):
         else:
             date_str = item.pub_date.strftime('%Y-%m-%d')
             slug = slugify(item.title)
-            href = f"/blog/industry-perspectives/{date_str}_{slug}/index.html"
+            href = f"/blog/industry-perspectives/{date_str}_{slug}/"
             icon = 'article'
 
         display_date = item.pub_date.strftime('%B %-d, %Y')
