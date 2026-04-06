@@ -45,7 +45,7 @@ function getVideoItems(): FeedItem[] {
 export function GET() {
   const articleItems: FeedItem[] = INDUSTRY_PERSPECTIVES_ARTICLES.map((a) => ({
     title: a.title,
-    url: `${SITE.url}/blog/industry-perspectives/${a.slug}/index.html`,
+    url: `${SITE.url}/blog/industry-perspectives/${a.slug}/`,
     date: a.date,
     description: a.description || undefined,
     category: 'article',

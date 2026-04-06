@@ -108,7 +108,7 @@ def inject_seo_tags(article_dir: Path) -> bool:
     canonical_url = meta.get("original_url", "")
     description = meta.get("description", "")
     slug = article_dir.name
-    page_url = f"{SITE_URL}/blog/industry-perspectives/{slug}/index.html"
+    page_url = f"{SITE_URL}/blog/industry-perspectives/{slug}/"
 
     # Build injection block
     seo_lines = []

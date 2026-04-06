@@ -9,31 +9,31 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 const LATEST_UPDATES = [
   {
     title: 'What to Buy for Local LLMs (April 2026)',
-    href: '/blog/industry-perspectives/2026-04-03_what-to-buy-for-local-llms-april-2026/index.html',
+    href: '/blog/industry-perspectives/2026-04-03_what-to-buy-for-local-llms-april-2026/',
     date: 'April 3, 2026',
     icon: 'article',
   },
   {
     title: 'Your Parents Paid',
-    href: '/blog/industry-perspectives/2026-04-03_your-parents-paid/index.html',
+    href: '/blog/industry-perspectives/2026-04-03_your-parents-paid/',
     date: 'April 3, 2026',
     icon: 'article',
   },
   {
     title: 'Open Source Won, But Changed Owners',
-    href: '/blog/industry-perspectives/2026-04-02_open-source-won-but-changed-owners/index.html',
+    href: '/blog/industry-perspectives/2026-04-02_open-source-won-but-changed-owners/',
     date: 'April 2, 2026',
     icon: 'article',
   },
   {
     title: 'What China Shipped While the West Was Banning Chips',
-    href: '/blog/industry-perspectives/2026-04-01_what-china-shipped-while-the-west-was-banning-chips/index.html',
+    href: '/blog/industry-perspectives/2026-04-01_what-china-shipped-while-the-west-was-banning-chips/',
     date: 'April 1, 2026',
     icon: 'article',
   },
   {
     title: 'The Half-Life of a Press Release',
-    href: '/blog/industry-perspectives/2026-03-31_the-half-life-of-a-press-release/index.html',
+    href: '/blog/industry-perspectives/2026-03-31_the-half-life-of-a-press-release/',
     date: 'March 31, 2026',
     icon: 'article',
   },
