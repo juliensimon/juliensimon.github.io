@@ -49,6 +49,7 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
         </div>
 
         {/* Posts list */}
+        <h2 className="sr-only">Posts</h2>
         <div className="space-y-3">
           {filtered.map((post, i) => {
             const isExternal = post.href.startsWith('https://');
@@ -70,12 +71,12 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
                       {post.date}
                     </p>
                   )}
-                  <h2 className="text-sm font-medium">
+                  <h3 className="text-sm font-medium">
                     <a href={post.href} {...linkProps} className="text-text hover:text-primary transition-colors">
                       {post.title}
                       {isExternal && <span className="sr-only"> (opens in new tab)</span>}
                     </a>
-                  </h2>
+                  </h3>
                   {post.description && (
                     <p className="text-xs text-text-muted mt-1 line-clamp-2">
                       {post.description}
@@ -109,10 +110,10 @@ export default function BlogListingPage({ title, subtitle, posts, backLabel = 'P
                     {post.date}
                   </p>
                 )}
-                <h2 className="text-sm font-medium text-text group-hover:text-primary transition-colors">
+                <h3 className="text-sm font-medium text-text group-hover:text-primary transition-colors">
                   {post.title}
                   {isExternal && <span className="sr-only"> (opens in new tab)</span>}
-                </h2>
+                </h3>
                 {post.description && (
                   <p className="text-xs text-text-muted mt-1 line-clamp-2">
                     {post.description}

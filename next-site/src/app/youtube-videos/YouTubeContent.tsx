@@ -77,8 +77,8 @@ export default function YouTubeContent() {
       </section>
 
       <RelatedContent items={[
-        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '440 articles' },
-        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '684 engagements' },
+        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '454+ articles' },
+        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '685+ engagements' },
         { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos' },
       ]} />
     </>

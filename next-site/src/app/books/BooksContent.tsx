@@ -68,7 +68,7 @@ export default function BooksContent() {
 
       <RelatedContent items={[
         { href: '/experience', title: 'Experience', subtitle: '30+ years of technology leadership' },
-        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '684 engagements' },
+        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '685+ engagements' },
         { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos' },
       ]} />
     </>
