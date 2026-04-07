@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Train, Deploy, Write Down',
+    slug: '2026-04-07_train-deploy-write-down',
+    date: '2026-04-07',
+    description: 'The AI industry’s most expensive assets depreciate faster than anything in corporate history. The accounting rules haven’t noticed.',
+    originalUrl: 'https://www.airealist.ai/p/train-deploy-write-down',
+  },
+  {
     title: 'What to Buy for Local LLMs (April 2026)',
     slug: '2026-04-03_what-to-buy-for-local-llms-april-2026',
     date: '2026-04-03',
