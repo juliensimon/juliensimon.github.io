@@ -8,6 +8,18 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'The Verification Tax',
+    href: '/blog/industry-perspectives/2026-04-10_the-verification-tax/',
+    date: 'April 10, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Open From Both Sides',
+    href: '/blog/industry-perspectives/2026-04-09_open-from-both-sides/',
+    date: 'April 9, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Train, Deploy, Write Down',
     href: '/blog/industry-perspectives/2026-04-07_train-deploy-write-down/',
     date: 'April 7, 2026',
@@ -23,18 +35,6 @@ const LATEST_UPDATES = [
     title: 'Your Parents Paid',
     href: '/blog/industry-perspectives/2026-04-03_your-parents-paid/',
     date: 'April 3, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Open Source Won, But Changed Owners',
-    href: '/blog/industry-perspectives/2026-04-02_open-source-won-but-changed-owners/',
-    date: 'April 2, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'What China Shipped While the West Was Banning Chips',
-    href: '/blog/industry-perspectives/2026-04-01_what-china-shipped-while-the-west-was-banning-chips/',
-    date: 'April 1, 2026',
     icon: 'article',
   },
 ];

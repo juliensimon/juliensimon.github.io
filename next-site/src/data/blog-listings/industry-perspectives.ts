@@ -11,24 +11,38 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The Verification Tax',
+    slug: '2026-04-10_the-verification-tax',
+    date: '2026-04-10',
+    description: 'The GPU ate the AI narrative. The CPU kept doing the work.',
+    originalUrl: 'https://www.airealist.ai/p/the-verification-tax',
+  },
+  {
+    title: 'Open From Both Sides',
+    slug: '2026-04-09_open-from-both-sides',
+    date: '2026-04-09',
+    description: 'Chinese proliferation, trivial alignment removal, and the week the safety moat didn\'t hold.',
+    originalUrl: 'https://www.airealist.ai/p/open-from-both-sides',
+  },
+  {
     title: 'Train, Deploy, Write Down',
     slug: '2026-04-07_train-deploy-write-down',
     date: '2026-04-07',
-    description: 'The AI industry’s most expensive assets depreciate faster than anything in corporate history. The accounting rules haven’t noticed.',
+    description: 'The AI industry\'s most expensive assets depreciate faster than anything in corporate history. The accounting rules haven\'t noticed.',
     originalUrl: 'https://www.airealist.ai/p/train-deploy-write-down',
   },
   {
     title: 'What to Buy for Local LLMs (April 2026)',
     slug: '2026-04-03_what-to-buy-for-local-llms-april-2026',
     date: '2026-04-03',
-    description: 'A practitioner’s guide to inference and training, why they’re not the same machine, and why you may still need cloud',
+    description: 'A practitioner\'s guide to inference and training, why they\'re not the same machine, and why you may still need cloud',
     originalUrl: 'https://www.airealist.ai/p/what-to-buy-for-local-llms-april',
   },
   {
     title: 'Your Parents Paid',
     slug: '2026-04-03_your-parents-paid',
     date: '2026-04-03',
-    description: 'NVIDIA built the world’s most profitable hardware company by treating its consumer GPUs as a recruitment pipeline. Now many recruits are buying Macs.',
+    description: 'NVIDIA built the world\'s most profitable hardware company by treating its consumer GPUs as a recruitment pipeline. Now many recruits are buying Macs.',
     originalUrl: 'https://www.airealist.ai/p/your-parents-paid',
   },
   {
@@ -42,7 +56,7 @@ export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
     title: 'What China Shipped While the West Was Banning Chips',
     slug: '2026-04-01_what-china-shipped-while-the-west-was-banning-chips',
     date: '2026-04-01',
-    description: 'Six domains where China’s deployment record contradicts the restriction narrative.',
+    description: 'Six domains where China\'s deployment record contradicts the restriction narrative.',
     originalUrl: 'https://www.airealist.ai/p/what-china-shipped-while-the-west',
   },
   {
@@ -98,7 +112,7 @@ export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
     title: 'Every Country Needs Sovereign AI. Jensen Is Selling It.',
     slug: '2026-03-20_every-country-needs-sovereign-ai-jensen-is-selling-it',
     date: '2026-03-20',
-    description: 'On March 16, Jensen Huang stood on the GTC stage in San Jose and showed the audience a map. Dozens of countries. More than 1 million Nvidia GPUs are deployed worldwide through the company’s cloud p...',
+    description: 'On March 16, Jensen Huang stood on the GTC stage in San Jose and showed the audience a map. Dozens of countries. More than 1 million Nvidia GPUs are deployed worldwide through the company\'s cloud p...',
     originalUrl: 'https://www.airealist.ai/p/every-country-needs-sovereign-ai',
   },
   {
@@ -112,7 +126,7 @@ export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
     title: 'Built the Datacenter, Lost the Brain',
     slug: '2026-03-17_built-the-datacenter-lost-the-brain',
     date: '2026-03-17',
-    description: 'On March 10, 2026, Yann LeCun’s new company announced a $1.03 billion funding round at a $3.5 billion pre-money valuation.[1] The company had twelve employees, no product, and no revenue. Its techn...',
+    description: 'On March 10, 2026, Yann LeCun\'s new company announced a $1.03 billion funding round at a $3.5 billion pre-money valuation.[1] The company had twelve employees, no product, and no revenue. Its techn...',
     originalUrl: 'https://www.airealist.ai/p/built-the-datacenter-lost-the-brain',
   },
   {
@@ -123,7 +137,7 @@ export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
     originalUrl: 'https://www.airealist.ai/p/still-missing-critical-pieces',
   },
   {
-    title: 'AWS Built Its Own AI Chip. Now It Needs Someone Else’s.',
+    title: 'AWS Built Its Own AI Chip. Now It Needs Someone Else\'s.',
     slug: '2026-03-15_aws-built-its-own-ai-chip-now-it-needs-someone-elses',
     date: '2026-03-15',
     description: 'In March 2024, I explained to my YouTube audience how LLM inference actually works.[1] Two distinct phases, I said. Prefill — the phase where the model processes your entire prompt in parallel, fil...',

@@ -918,15 +918,19 @@ def update_industry_perspectives_ts(items: list[PostItem], dry_run: bool):
             except (json.JSONDecodeError, KeyError):
                 pass
 
-        # Escape single quotes in title for TS
-        escaped_title = item.title.replace("'", "\\'")
+        # Escape single quotes and curly quotes in strings for TS
+        def escape_ts(s):
+            return s.replace('\u2018', "'").replace('\u2019', "'").replace("'", "\\'")
+
+        escaped_title = escape_ts(item.title)
+        escaped_description = escape_ts(description)
 
         new_entries.append(
             f"  {{\n"
             f"    title: '{escaped_title}',\n"
             f"    slug: '{slug}',\n"
             f"    date: '{date_str}',\n"
-            f"    description: '{description}',\n"
+            f"    description: '{escaped_description}',\n"
             f"    originalUrl: '{item.link}',\n"
             f"  }}"
         )
