@@ -400,6 +400,53 @@ export function newsletterSchema() {
   };
 }
 
+export function dataCatalogSchema(datasets: Array<{
+  name: string;
+  prettyName: string;
+  description: string;
+  hfUrl: string;
+  source: string;
+  updateFrequency?: string;
+  records?: number;
+}>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DataCatalog',
+    name: 'Space Datasets by Julien Simon',
+    description: '177 open datasets for orbital mechanics, space weather, astronomy, and physics on Hugging Face',
+    url: `${SITE.url}/datasets`,
+    publisher: {
+      '@type': 'Person',
+      name: 'Julien Simon',
+      url: SITE.url,
+      sameAs: [
+        'https://huggingface.co/juliensimon',
+        'https://github.com/juliensimon',
+      ],
+    },
+    dataset: datasets.map(d => ({
+      '@type': 'Dataset',
+      name: d.prettyName,
+      description: d.description,
+      url: d.hfUrl,
+      license: 'https://creativecommons.org/licenses/by/4.0/',
+      isAccessibleForFree: true,
+      creator: {
+        '@type': 'Person',
+        name: 'Julien Simon',
+        url: SITE.url,
+      },
+      distribution: {
+        '@type': 'DataDownload',
+        encodingFormat: 'application/x-parquet',
+        contentUrl: d.hfUrl,
+      },
+      ...(d.source && { isBasedOn: d.source }),
+      ...(d.records && { size: `${d.records.toLocaleString()} records` }),
+    })),
+  };
+}
+
 const MONTHS: Record<string, string> = {
   january: '01', february: '02', march: '03', april: '04',
   may: '05', june: '06', july: '07', august: '08',
