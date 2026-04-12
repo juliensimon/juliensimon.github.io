@@ -33,7 +33,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'satellites',
     source: 'Space-Track',
     updateFrequency: 'daily',
-    records: 238_000_000,
+    records: 8_009_984,
   },
   {
     name: 'starlink-fleet-data',
@@ -43,7 +43,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'satellites',
     source: 'CelesTrak',
     updateFrequency: 'daily',
-    records: 15_000,
+    records: 10_156,
   },
   {
     name: 'constellation-tle-latest',
@@ -53,7 +53,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'satellites',
     source: 'CelesTrak',
     updateFrequency: 'daily',
-    records: 300,
+    records: 1_783,
   },
   {
     name: 'spacex-launches',
@@ -63,7 +63,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'satellites',
     source: 'SpaceX API',
     updateFrequency: 'weekly',
-    records: 350,
+    records: 661,
   },
   {
     name: 'donki-space-weather-events',
@@ -73,7 +73,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'weather',
     source: 'NASA',
     updateFrequency: 'daily',
-    records: 45_000,
+    records: 12_192,
   },
   {
     name: 'solar-flare-events',
@@ -83,7 +83,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'weather',
     source: 'NOAA',
     updateFrequency: 'daily',
-    records: 60_000,
+    records: 16_113,
   },
   {
     name: 'solar-wind',
@@ -93,7 +93,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'weather',
     source: 'NOAA',
     updateFrequency: 'daily',
-    records: 500_000,
+    records: 36_167,
   },
   {
     name: 'kp-index',
@@ -103,7 +103,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'weather',
     source: 'NOAA',
     updateFrequency: 'daily',
-    records: 250_000,
+    records: 197,
   },
   {
     name: 'gaia-dr3-eclipsing-binaries',
@@ -113,7 +113,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'astronomy',
     source: 'ESA',
     updateFrequency: 'static',
-    records: 2_184_000,
+    records: 2_184_477,
   },
   {
     name: 'pulsars',
@@ -123,7 +123,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'astronomy',
     source: 'VizieR',
     updateFrequency: 'weekly',
-    records: 3_500,
+    records: 4_353,
   },
   {
     name: 'quasars',
@@ -133,7 +133,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'astronomy',
     source: 'VizieR',
     updateFrequency: 'weekly',
-    records: 900_000,
+    records: 50_000,
   },
   {
     name: 'gravitational-waves',
@@ -143,7 +143,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'physics',
     source: 'GWOSC',
     updateFrequency: 'static',
-    records: 200,
+    records: 263,
   },
   {
     name: 'exoplanets',
@@ -153,7 +153,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'planetary',
     source: 'NASA',
     updateFrequency: 'weekly',
-    records: 5_800,
+    records: 6_153,
   },
   {
     name: 'esa-exomars-tgo-observations',
@@ -163,7 +163,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'planetary',
     source: 'ESA',
     updateFrequency: 'static',
-    records: 1_200_000,
+    records: 27_035_038,
   },
   {
     name: 'mars-craters',
@@ -173,7 +173,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'planetary',
     source: 'NASA',
     updateFrequency: 'static',
-    records: 384_000,
+    records: 385_049,
   },
   {
     name: 'neo-close-approaches',
@@ -183,7 +183,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'small-bodies',
     source: 'NASA JPL',
     updateFrequency: 'weekly',
-    records: 400_000,
+    records: 41_947,
   },
   {
     name: 'sbdb-small-bodies',
@@ -193,7 +193,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'small-bodies',
     source: 'NASA JPL',
     updateFrequency: 'weekly',
-    records: 1_400_000,
+    records: 1_524_222,
   },
   {
     name: 'fireballs',
@@ -203,7 +203,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'small-bodies',
     source: 'NASA JPL',
     updateFrequency: 'weekly',
-    records: 1_000,
+    records: 1_056,
   },
   {
     name: 'fermi-4fgl',
@@ -213,7 +213,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'physics',
     source: 'NASA',
     updateFrequency: 'static',
-    records: 7_200,
+    records: 7_195,
   },
   {
     name: 'cosmic-rays',
@@ -223,7 +223,7 @@ export const FEATURED_DATASETS: Dataset[] = [
     domain: 'physics',
     source: 'NMDB',
     updateFrequency: 'daily',
-    records: 200_000,
+    records: 472_280,
   },
 ];
 
