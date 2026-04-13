@@ -15,17 +15,20 @@ BASE_DIR = Path(__file__).parent.parent
 PUBLIC_DIR = BASE_DIR / 'next-site' / 'public'
 
 def redirect_html(target_url: str, canonical_url: str) -> str:
+    # Normalize: strip /index.html from the target so the <a href> fallback
+    # doesn't lead crawlers (especially Bing/Copilot) to the non-canonical form.
+    clean = target_url[:-len('/index.html')] + '/' if target_url.endswith('/index.html') else target_url
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex, follow">
-<meta http-equiv="refresh" content="0;url={target_url}">
+<meta http-equiv="refresh" content="0;url={clean}">
 <link rel="canonical" href="{canonical_url}">
 <title>Redirecting...</title>
 </head>
 <body>
-<p>Redirecting to <a href="{target_url}">{target_url}</a></p>
+<p>Redirecting to <a href="{clean}">{clean}</a></p>
 </body>
 </html>"""
 

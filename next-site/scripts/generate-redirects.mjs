@@ -16,6 +16,10 @@ function isValidRedirectUrl(url) {
 }
 
 function redirectHtml(to) {
+  // Normalize: every URL reference in a redirect shim must point to the
+  // canonical (trailing-slash) form. Crawlers that follow <a href> fallbacks
+  // (notably Bing and AI-indexing bots) will otherwise discover both variants
+  // and split citations between them.
   const cleanPath = to.endsWith('/index.html') ? to.slice(0, -'index.html'.length) : to;
   const canonical = `https://www.julien.org${cleanPath === '/' ? '' : cleanPath}`;
   return `<!DOCTYPE html>
@@ -23,13 +27,13 @@ function redirectHtml(to) {
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex, follow">
-<meta http-equiv="refresh" content="0;url=${to}">
+<meta http-equiv="refresh" content="0;url=${cleanPath}">
 <link rel="canonical" href="${canonical}">
 <title>Redirecting...</title>
 </head>
 <body>
-<script>window.location.replace('${to}')</script>
-<p>Redirecting to <a href="${to}">${to}</a></p>
+<script>window.location.replace('${cleanPath}')</script>
+<p>Redirecting to <a href="${cleanPath}">${cleanPath}</a></p>
 </body>
 </html>`;
 }

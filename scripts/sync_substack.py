@@ -515,7 +515,7 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     </style>
 </head>
 <body>
-    <p style="margin-bottom: 1.5em;"><a href="../index.html" style="color: #6366f1; text-decoration: none;">&larr; Back to Industry Perspectives</a></p>
+    <p style="margin-bottom: 1.5em;"><a href="../" style="color: #6366f1; text-decoration: none;">&larr; Back to Industry Perspectives</a></p>
     <article>
         <h1>{html.escape(item.title)}</h1>
         <div class="meta">
@@ -775,7 +775,7 @@ def update_blog_index(items: list[PostItem], dry_run: bool) -> int:
     <div class="blog-post">
       <div class="blog-post-title">
         <a href="{item.link}" target="_blank" rel="noopener noreferrer">{html.escape(item.title)}</a>
-        <div class="local-copy-link"><a href="{folder_name}/index.html">local copy</a></div>
+        <div class="local-copy-link"><a href="{folder_name}/">local copy</a></div>
       </div>
       <div class="date">{display_date}</div>
     </div>'''
