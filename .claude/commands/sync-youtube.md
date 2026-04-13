@@ -13,6 +13,7 @@ Fetch the YouTube channel feed and detect new videos not yet on the website.
 - **Auto-updates**: Updates year index files (sorted by date, newest first), `youtube.ts` counts, and LATEST_UPDATES on the homepage
 - **Deduplication**: Checks existing HTML files for YouTube video IDs to avoid duplicates
 - **Backfill**: Can add transcripts to existing videos that are missing them
+- **Subscriber refresh**: Scrapes the channel page and updates `<N>K subscribers` references across the site
 
 ## Steps
 
@@ -28,14 +29,25 @@ Fetch the YouTube channel feed and detect new videos not yet on the website.
    python3 scripts/sync_youtube.py
    ```
 
-4. Build and verify:
+4. Refresh the subscriber count across all pages (scrapes @juliensimonfr, no API key):
+   ```bash
+   python3 scripts/refresh_youtube_subscribers.py --dry-run  # preview
+   python3 scripts/refresh_youtube_subscribers.py            # apply
+   ```
+   Updates `YOUTUBE_STATS.subscriberCount` in `youtube.ts` and all literal
+   `<N>K subscribers` references in `constants.ts`, `structured-data.ts`,
+   `experience.ts`, the home page, and the section hub cards. Refuses to
+   downgrade if the fetched value is lower than the current one (YouTube's
+   rounded counts can briefly dip near a threshold).
+
+5. Build and verify:
    ```bash
    cd next-site && npm run build
    ```
 
-5. Commit and push changes
+6. Commit and push changes
 
-6. Monitor the GitHub Actions deployment:
+7. Monitor the GitHub Actions deployment:
    ```bash
    gh run list --repo juliensimon/juliensimon.github.io --limit 1
    ```

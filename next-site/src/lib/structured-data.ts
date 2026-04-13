@@ -593,7 +593,7 @@ export const PUBLICATIONS_FAQS = [
 export const YOUTUBE_FAQS = [
   {
     question: 'How many YouTube subscribers does Julien Simon have?',
-    answer: 'Julien Simon\'s YouTube channel has 494K+ subscribers with 450+ educational videos spanning 15 years of content on AI, machine learning, and cloud computing.',
+    answer: 'Julien Simon\'s YouTube channel has 508K+ subscribers with 450+ educational videos spanning 15 years of content on AI, machine learning, and cloud computing.',
   },
   {
     question: 'What kind of videos does Julien Simon create?',
@@ -620,7 +620,7 @@ export const HOMEPAGE_FAQS = [
   },
   {
     question: 'What is Julien Simon known for?',
-    answer: 'Julien Simon is known for his expertise in Small Language Models (SLMs), enterprise AI implementation, and bridging the gap between AI research and practical business applications. He authored "Learn Amazon SageMaker", has 494K+ YouTube subscribers for his AI/ML educational content, and writes The AI Realist newsletter offering structural analysis of AI industry trends. He has published 454+ technical articles and delivered 685+ speaking engagements worldwide.',
+    answer: 'Julien Simon is known for his expertise in Small Language Models (SLMs), enterprise AI implementation, and bridging the gap between AI research and practical business applications. He authored "Learn Amazon SageMaker", has 508K+ YouTube subscribers for his AI/ML educational content, and writes The AI Realist newsletter offering structural analysis of AI industry trends. He has published 454+ technical articles and delivered 685+ speaking engagements worldwide.',
   },
   {
     question: 'What does an AI Operating Partner do?',

@@ -55,7 +55,7 @@ export default function PublicationsContent() {
 
       <RelatedContent items={[
         { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '685+ engagements' },
-        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '494K subscribers' },
+        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '508K subscribers' },
         { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos' },
       ]} />
     </>

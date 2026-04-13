@@ -85,7 +85,7 @@ export default function SpeakingContent() {
 
       <RelatedContent items={[
         { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '454+ articles' },
-        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '494K subscribers' },
+        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '508K subscribers' },
         { href: '/books', title: 'Books', subtitle: 'Published works on ML and cloud', metric: '4 books' },
       ]} />
     </>

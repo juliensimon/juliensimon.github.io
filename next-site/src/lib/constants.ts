@@ -2,7 +2,7 @@ export const SITE = {
   name: 'Julien Simon',
   title: 'Julien Simon - AI Operating Partner at Fortino Capital',
   description:
-    'Julien Simon is an AI expert and Operating Partner at Fortino Capital. 685+ talks, 454+ articles, 494K YouTube subscribers. Author of The AI Realist newsletter.',
+    'Julien Simon is an AI expert and Operating Partner at Fortino Capital. 685+ talks, 454+ articles, 508K YouTube subscribers. Author of The AI Realist newsletter.',
   url: 'https://www.julien.org',
   image: 'https://www.julien.org/assets/julien.webp',
   ogImage: 'https://www.julien.org/assets/og-image.png',
@@ -43,6 +43,6 @@ export const NAV_ITEMS = [
 export const METRICS = [
   { value: 457, suffix: '', label: 'Technical Posts' },
   { value: 685, suffix: '', label: 'Speaking Engagements' },
-  { value: 494, suffix: 'K', label: 'YouTube Subscribers' },
+  { value: 508, suffix: 'K', label: 'YouTube Subscribers' },
   { value: 30, suffix: '', label: 'Years Experience' },
 ] as const;

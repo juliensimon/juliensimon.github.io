@@ -102,7 +102,7 @@ export default function DatasetsContent() {
 
       <RelatedContent items={[
         { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos', metric: '6 repositories' },
-        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '494K subscribers' },
+        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '508K subscribers' },
         { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '454+ articles' },
       ]} />
     </>
