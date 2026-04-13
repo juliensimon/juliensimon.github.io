@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2</title>
+    <meta name="description" content="Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2 - YouTube video by Julien Simon">
+    <meta property="og:title" content="Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2">
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://www.julien.org/youtube/2026/20260413_Deep_Dive_How_Three_MoE_Reasoning_Models_Actually_Work_Trinity_DeepSeek_R1_Kimi_K2.html">
+    <link rel="canonical" href="https://www.julien.org/youtube/2026/20260413_Deep_Dive_How_Three_MoE_Reasoning_Models_Actually_Work_Trinity_DeepSeek_R1_Kimi_K2.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2">
+    <meta name="twitter:creator" content="@julsimon">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2",
+        "description": "Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2 - YouTube video by Julien Simon",
+        "uploadDate": "2026-04-13T16:09:28+00:00",
+        "embedUrl": "https://www.youtube.com/embed/2uQQ8nKNq1U",
+        "thumbnailUrl": "https://img.youtube.com/vi/2uQQ8nKNq1U/maxresdefault.jpg",
+        "author": { "@id": "https://www.julien.org/#person" }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2</h1>
+        <div class="date">April 13, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/2uQQ8nKNq1U" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">Three frontier open-weight MoE reasoning models — Trinity Large Thinking (~400B), DeepSeek R1 (671B), and Kimi K2 Thinking (1T) — are compared side by side. Architecture, training, and post-training, explained from first principles.
+
+⭐️⭐️⭐️ More content on Substack at https://www.airealist.ai ⭐️⭐️⭐️
+
+In Part 1, I break down how these three models are actually built — not benchmarks, not vibes, but the engineering decisions and why they matter. One thing that surprised me: despite coming from three different teams on two continents, they converged on a remarkable amount of shared design.
+
+*** What&#x27;s covered:
+
+→ Why total parameter count is misleading — active parameters are what determine your inference cost 
+→ Sigmoid vs softmax routing: why all three models abandoned the classic approach 
+→ The auxiliary loss trap, and how each model avoids it (DeepSeek bias, SMEBU, free routing) 
+→ Shared experts and dense layers: the &quot;common sense&quot; foundation under MoE sparsity 
+→ Three different attention designs: MLA (93% KV cache reduction), GQA + gated attention, and why Trinity needs the gate for 512K context 
+→ FP8 training (DeepSeek), Muon optimizer (Trinity &amp; Kimi), QK-Clip stability (Kimi) — three paths to zero-loss-spike training 
+→ Post-training: GRPO (reasoning from RL), Kimi&#x27;s dual reward system for 200+ tool calls, Trinity&#x27;s agentic RL pipeline 
+→ Quantization-Aware Training: why Kimi&#x27;s INT4 benchmarks are actually deployment numbers
+
+In Part 2 (coming soon): benchmarks, inference costs, self-hosting hardware, quantization ecosystem, licenses, and the thinking-in-context gotcha that will break your Trinity agent pipeline if you don&#x27;t know about it. 
+
+*** Models
+
+Trinity Large Thinking: ~400B total, ~13B active, 256 experts, 512K context, Apache 2.0 https://huggingface.co/arcee-ai/Trinity-Large-Thinking NVFP4: https://huggingface.co/arcee-ai/Trinity-Large-Thinking-NVFP4
+
+DeepSeek R1: 671B total, ~37B active, 256 experts, 128K context, MIT https://huggingface.co/deeps...</div>
+
+        <div class="transcript">
+<h2>Transcript</h2>
+            . Hi, Julien here. Every large-W. M-W. M-E-Rearro-M-E-E-E-R-2 model has come from China so far.
+
+DipsyCar 1, Quent3 thinking, Kimi K-2 thinking. All Chinese labs. The West has shipped open models, Llama 4, Mr. Large 3, but none with a thinking mode. Well, this has just changed.
+
+RCAI has released Trinity Large Thinking, a 400 billion parameter MOE model, chain of thought reasoning. Apache 2-0 license trained in the US. So the obvious question is, how does it actually compare to the Chinese models it&#x27;s now competing with? Let&#x27;s find out. First, let&#x27;s set the scene.
+
+On the western side so far, Llama 4 Maverick from Mehta, 400 billion parameters total, 1717, be active, 128 experts, 1 million context sling. Released in April 2025, under the a model, a multi-model support and widely deployed, but no thinking mode. Also, Mistral Large 3 from Mistral AI, 675 billion parameters total, about 41 billions active, and an Apache 200 license. On the Chinese side, Deep-Ccar 1 released at the beginning of 2025, 671 billion parameters, and this one started the wave of frontier Chinese models. Quain3-235 billion parameters thinking in mid-2025 from Alibaba and Kimi K2 thinking in January, 26, 1 trillion parameters from Moonshot AI.
+
+Again, on April 1, April 1, 2026, not an April&#x27;s fool, this changed when RCAI released Trinity Large Thinking. Frontier, OpenMOE model with reasoning support. In this video, we&#x27;re going to compare three models. We&#x27;re not just going to look at benchmarks. We will actually do this in part two of this video, which will come later this month.
+
+In this video, we&#x27;re going to dive extremely deep in the architecture and look at what makes those models different. So let&#x27;s look at this new section on architecture comparison. Here, we&#x27;re going to introduce the architecture deep dive. We&#x27;re going to cover four areas, the specs, the sparsity and what it means, the routing mechanisms, shared experts and the dance layers, and the attention designs. So the key inside here is that the total parameter count is really misleading.
+
+What is actually important for inference cost, latency, and your GPU bill is the and we&#x27;ll see the three models make really different choices there. First, let&#x27;s look at how mixer of experts or MOE works. In a standard MOE model, each token passes through a gating network, a smaller network whose weights are learned during training, just like the rest of the model. The purpose of the gaining network is to score every expert and then it will pick the top K. The router learns which experts are best for a particular type of input.
+
+Math tokens are routed to math specialized experts, code tokens go to code experts, etc. The key insight is that the router&#x27;s weights are learned through back propagation, typical deep learning training, but the top K selection itself is a fixed function. It just picks the K and highest scores among the experts. After selection, the chosen experts process the token in parallel and their outputs are combined using a weighted sum based on the router scores. The weighted combination is also a fixed operation.
+
+The weights come from the router, but the summation function doesn&#x27;t change. Before we dive into the architecture, let&#x27;s look at the high level specs for the three models. So you can see they look really different on paper. Trinity is the smallest model by far, 400 billion parameters. Deepseek is mid-range and Kimi is massive.
+
+But again, those numbers are misleading. What actually matters is how much of the model is actually working on each token that you send it. So you shouldn&#x27;t compare the models by total size. You should compare them by how much compute they actually earn per token. This is what determines inference cost and inference speed.
+
+And we&#x27;re going to start breaking this down now. Let&#x27;s talk about sparsity. You can think of it as a company with 256 specialists on staff. When a question comes in, you don&#x27;t ask all the 256 people. You send the question to the top four or top eight experts.
+
+So Trinity sends each token to just four specialists. Out of 256. And this means that only 13-13 billion parameters are actually working for each token. That&#x27;s about a third of what DeepSik uses, 37 billion or Kimi 32 billion. So the trade-off is fewer active experts mean cheaper and faster inference.
+
+Also, each token gets fewer if you will. If you have more active experts, you have higher compute cost. Potentially you may have smarter per token decisions. So the lesson here is that Trinity is the cheapest to run by a wide margin. The question is whether four experts are enough to match eight as visible in the other models.
+
+This will show up in the benchmarks later. Here&#x27;s the intuition of Total parameters are how much the model knows, the knowledge library. Active parameters are how hard the model thinks on each token, the processing power per token. So Trinity has a smaller library, if you will, but is very fast for each token. DeepSeek and Kimi have bigger libraries, and they think harder per word, but obviously they cost more to run.
+
+The image is obviously better. It&#x27;s a design choice. Trinity is betting that a great routing system can compensate for using fewer experts per word. We&#x27;ll see this. So this is why you can&#x27;t just look at model size to compare their performance.
+
+A 400 billion parameter that activates 13 billion parameters may outperform a 671 billion parameters that activates 37 billion on specific tasks while costing a third of the cost to run. Now let&#x27;s talk about how the model decides which experts to use for each word. This is the routing mechanism. And honestly, it matters more than the experts themselves. Think of it as an hospital triage system.
+
+You can have the world&#x27;s best surgeons, cardiologists, neurologists, but if the triage room sends a heart attack patient to the neurologist, It doesn&#x27;t really matter how good the specialists are. So the routing network is the triage system. It&#x27;s a small neural network that scores every expert for every incoming token and picks the best ones. All three models have over 256 experts, so getting this routing right is absolutely critical. The routing mechanism is the single most important design decision in a mixture of experts model.
+
+If you get it wrong, you&#x27;re wasting your best experts on the wrong tokens. There are two ways to score experts, and the difference matters more than you think. The old way is using the Softmax function, which I&#x27;m sure you&#x27;re familiar with. It&#x27;s been around in a long, long time in deep learning models. So Softmax takes a vector of arbitrary numerical values and turns them into So, a vector of scores, that must add up to one.
+
+So if expert A gets a higher score, every other expert score has to drop. It&#x27;s a zero sum game. The router counts say, oh, those four experts are all great for this word. If one goes up, the rest go down. The other way to score experts is to use the sigmoid function, which is the one that all three models that we&#x27;re looking at today use.
+
+Each expert gets an independent score from 0 to 1. It&#x27;s the well-known sigmoid function. So now the router can actually say experts 5, 42 and 62 are all super relevant. And there is no forced trade-off. And then of course it will pick the top K highest scores.
+
+So top K simply means after scoring, we just take the K experts with a highest score. So for Trinity, K equals 4 and for DeepSeek and k equals 8 plus for each one of those models we always have a shared expert that can handle common words like the is etc so what&#x27;s interesting here is that all three model architectures actually converge on sigmoid it gives better routing quality because experts aren&#x27;t forced to compete again each other you can get the best of your experts. And this is one of the clearest points of agreement in MOE design right now. So now let&#x27;s talk about another routing problem. If you let the router freely choose experts, all the tokens may pile into the same few popular experts.
+
+And your unpopular experts sit idle doing nothing, well, I guess except wasting GPU memory. The old fix to this problem is called auxiliary losses. Basically a penalty that punishes the model during training if expert usage is uneven. But here&#x27;s the catch, and that took me a while to understand. The penalty actually fights the routing quality, because you may end up forcing a math question to go to a poetry expert just because the poetry expert is reduced.
+
+Yes, I would agree sometimes math is poetry. But generally, you want to send every token to the best possible expert. And if you&#x27;re forcing it just to rebalance, then you&#x27;re literally making the model dumber in the sake of balancing the experts. So I think of it as a restaurant where the manager forces customers to sit at empty tables, even when the best chef has open spots. So balance seating, okay, but worse food.
+
+So all the three models abandoned auxiliary losses. They all found better ways to balance expert usage without hurting routing quality. Another point of agreement. And we&#x27;re going to cover that on the next few slides. DeepSseek solution is quite elegant.
+
+They add a small bias number to each expert score. So if an expert is over loaded, you nudge its bias down and it will get fewer tokens. If it&#x27;s underloaded, you nudge it up a little bit and it will automatically get more tokens. So the key thing here is that the bias only affects which experts get chosen. It doesn&#x27;t change the training objective at all.
+
+The model will still learn the best possible expert token matches. But the bias just gently redistributes the traffic. Think of it as a person adjusting highway toll prices. Higher tolls on congested routes will push some drivers to alternate routes, but drivers still pick the best route given the tolls. The road network itself doesn&#x27;t change.
+
+The adjustment speed is controlled by a hyper parameter called gamma, very small value like 0.001, small enough for a gentle nudge, not a hard push. So by separating which expert is best from which expert has capacity, DeepSig is actually getting quality routing and utilization balance. And Kimi inherited the same approach. Trinity uses the same ID to introduce bias or low balancing but it has a few extra safety features and they&#x27;re implemented in an algorithm called SME-B-U. Not sure if I should pronounce that S-M-B-U or something, it&#x27;s a horrible acronym.
+
+Let&#x27;s break it down. So the momentum element means that the bias adjustments are smoothed over time instead of just jumping around. So without them smoothing, an expert could actually flip between being overloaded and underloaded every few training steps and of course that could cause training instability. So we&#x27;re just trying to make very small gradual changes, avoid the jittery behavior. Soft clamp means that the bias values live between a ceiling and a floor.
+
+So no expert can be permanently locked out or permanently favored and there are no extreme values. So why does Trinity need All those safeguards because it only uses four experts per token. Remember, the other models use eight. So when you&#x27;re only using four, if you make one bad routing decision, you just weighted 25% of your compute. With eight, you only waste about 12%.
+
+So with fewer experts, the stakes are higher and you need to be really, really careful about your balancing strategy. This also explains why Trinity has added six dense layers versus three for DeepSeek and one for Kimi. Those layers are used to stabilize the model when routing is quite aggressive. So this algorithm is Trinity&#x27;s answer to the extra risk that comes with extreme sparsity for experts instead of eight. It&#x27;s the same principle as DeepSeek&#x27;s bias, but with training stability guard rates.
+
+So we can see that all three models arrive precedes. They agree on using sigmoid routing instead of softmax. They agree on using bias to balance experts instead of auxiliary losses. And in fact, according to the technical papers, all three models completely training without any crashes. So you could argue that those routing and stability techniques did what they were supposed to do.
+
+Where the models differ, so DeepSik is using a simple bias that is tuned manually through a hyperparameter. Trinity is using bias plus momentum plus clamping. Kimi uses minimal balancing and instead relies on infrastructure level load management. And I&#x27;ll refer you to their technical paper if you want to know more. That the models agree on.
+
+Trinity and Kimi use the same optimizer during the training process, and it&#x27;s called Muon. Deepseek uses the more traditional A&amp;W, and we&#x27;ll talk about that as well. So interestingly, three teams on different continents have converged during their research and training on the same core design principles. So that&#x27;s a strong signal that those choices are right or at least the right ones for now and not just one researcher&#x27;s preference so let&#x27;s quickly cover two concepts I just mentioned so shared experts and dance layers a shared expert is an expert that always processes every single token doesn&#x27;t go through routing it&#x27;s used for common universal language words like the is maybe etc so without it this basic knowledge is fragmented and across the 256 specialists and no single expert would be really good at it. Dance layers are layers where there&#x27;s no routing at all.
+
+Every parameter works on every token. They sit at the bottom of the model and they build a shared foundation before the specialized writing kicks in. As mentioned on the previous slide, Trinity has the most dance layers, six, because it needs a stronger foundation. There&#x27;s only four experts out of 256, so of course you need a little more shared knowledge to compensate. Deepseek only has three layers and Kimi has just one.
+
+You could think of the shared experts and the dance layers has the common sense foundation. The routed experts are the specialized knowledge on top. So when you use more aggressive sparsity, you need a slightly larger foundation. So now we can put everything together and show So the actual journey of a token through an M-O-E model. So first, it goes through the dense layers, no routing.
+
+Every token goes through that, and this will build the common sense, the shared understanding. Then it hits the M-O-E layers. The router scores all experts, top-case selection picks the best ones, and the shared expert always participates. Will proceed, the chosen experts will process the word in parallel and their outputs are combined using weighted scores from the router. And then the result goes to the output.
+
+So to make sure we&#x27;re clear here, the purple elements are learned through training. The router weights, the expert networks, and the of course all the attention parameters, and the gray elements are fixed functions, design choices. So top case selection, the weight at sun etc so looking at this pipeline you can see why routing quality is so important it&#x27;s really the gateway that decides which specialized knowledge each token gets sent to okay now with that we understand the moe architecture let&#x27;s talk about attention which is a completely different part of the model that we just covered I covered this in great great detail in previous videos I&#x27;ll just go through, I guess, the basics here, and I will put the links in the video description. So, as a reminder, attention is how the model looks at all previous words when generating the next one. So when a model is writing word 5,000 in a conversation, it can go back and look at every single word that came before to decide what to say next.
+
+So there is a problem to that. For every word, every token, in the conversation, The model has to store, let&#x27;s call it a memory note. And of course, I mean the KV cache. As conversations get longer, 128K, 256K, we have huge context sizes now, that memory tends to eat up enormous amounts of GPU memory. Most of the time, it gets even bigger than the model weights itself in the GPU memory.
+
+And that&#x27;s a limiting factor. Each of our three models solves that memory problem differently. So attention design is a key factor in model design. It determines how well the model will handle long conversations and how much memory will be needed on the accelerator, on the GPU to do this. And of course, this has a direct impact.
+
+On deployment costs for long multi-turn agentic workflows. So here&#x27;s a quick reminder on MLA versus MHA. So MLA multi-addellated attention again is what deep-seek and chemi use. Okay, so let&#x27;s stay at a high level. So the analogy is you&#x27;re taking notes in a meeting and standard attention writes every single word that the speaker says.
+
+It&#x27;s a full transcription and of course, as the meeting gets longer and the conversation dragged on, you&#x27;re drowning in notes. So MLA says, well, most of that stuff is redundant. Okay, so why don&#x27;t we compress the notes into a short summary? And when you need to recall what someone said, you can reconstruct the detail from the summary on the fly and you save 93% of the space. So the compression and the reconstruction are both learned during train.
+
+The model figures out how to best summarize and reconstruct. It&#x27;s like learning your personal short-hand writing that loses almost nothing. Mine is terrible. Kimi goes further than this. They actually divide the number of note takers, the attention heads, by 2 from 128 to 64, which saves even more memory.
+
+And the tests show that adding more experts, more than compensated for having fewer attention heads. So as always, everything is a trade-off. So MLA is what DeepSeek and Kimi use to serve extremely long contexts without the need for insane amounts of GPU memory. And it&#x27;s clearly one of DeepSeek&#x27;s most important architectural contributions. So let&#x27;s look at what Trinity does.
+
+And Trinity uses GQA, grouped query attention. So instead of MLAs, compress and reconstruct approach GQA simply shares memory notes across groups of attention heads. So if you have 32 query heads and eight key value heads, then every four query heads share the same memory notes. It&#x27;s quite simpler than MLA. It doesn&#x27;t compress as much, but it&#x27;s well proven and it&#x27;s fast.
+
+The real innovation in Trinity&#x27;s comes from the gating mechanism that we&#x27;ll discuss on the next slide. So yes, GQA is a more conservative choice than MLA, less memory savings, but simpler implementation. And as we&#x27;ll see, in a second, Trinity makes up for it with gated attention. So, gated attention, that&#x27;s Trinity&#x27;s secret weapon for long context management. Normal attention asks, how much should I look at each previous word?
+
+And then it can&#x27;t say, actually, the overall attention signal here is mostly noise. Let&#x27;s ignore it. Well, this is exactly what the gate does here. The gate adds that control. After computing attention, the output passes through a learned gate, a value between 0 and 1, for each position.
+
+If the gate value is close to 1, the attention signal is useful, let it pass, right? If the gate is close to zero, it says, well, that&#x27;s noise, ignore it. So why does this matter for a long context? Like 512K? In a conversation with half a million words, imagine that.
+
+Again, the typical novel is probably 20 to 30K words. Most of the positions that the attention layers are looking at are irrelevant for the current word. Think hundreds of pages of code or a never-ending conversation. You know, what you said 50 or 100,000 tokens ago probably doesn&#x27;t mean anything. So without gaining, the model has to figure that out.
+
+It has to look at every single token and hopefully downstream layers will clean things up. With gating, this noise gets suppressed right there at the attention layer. So the formula is quite simple. The output is a function of the attention result and sigmoid applied to the gate. So this is the key reason why Trinity can handle 512K context effectively, because the gate is basically Is the relevance filter.
+
+It will only keep the attention signals that matter and drop the rest. This is extremely valuable for long agency conversations where most of the history in the conversation is old tool calls or thinking traces that probably mean very little to the next tool decision you&#x27;re about to make. All right, let&#x27;s keep digging. Here are two more attention details that help Trinity work with long context. The first one is called QK norm.
+
+Before computing the attention, we normalize the query and the key vectors. And this prevents numerical explosions during training. It&#x27;s a stability fix, not a quality improvement. The other one is interleaving local and global attention. So some layers only look at nearby words, the local context, and other layers look at the full conversation, the global context.
+
+So this saves a lot of compute because not every layer needs to scan all 512k tokens if the conversation is that long. So think of it as reading a book. Sometimes you need to check a detail on the previous page or the previous paragraph, just the local knowledge. Sometimes you need to go back a few chapters to remember who that character was and that&#x27;s the global knowledge. So in Trinity we have different layers that specialize in different ranges.
+
+So these are not glamorous fantastic features but they&#x27;re the small practical engineering choices that make a 500 that make a 512k model actually work in practice rather than just be a large number in the spec that actually does nothing for you in terms of quality. Okay, so now let&#x27;s move on from how those models are designed to how they were actually trained. So for DeepSeek, the key training innovation is using 8-bit math instead of 16-bit. Normally model training uses 16 or even 32-bit training for maximum precision. Deep-Sik decided to cut immediately to 8-bit 8-bit, which of course will have, which of course divides the memory by 2 compared to 16-bit and roughly doubles the training speed.
+
+Well, the trade-off, of course, is that 8-bit numbers cannot represent very large or very small values as accurately 16-bit. So the fix was to scale automatically and adjust on the fly to keep numbers in a range where 8-bits would be accurate enough. So it&#x27;s not a setting you can It&#x27;s computed from the actual data at each step. They also predict two words at once during training, aka multi-token prediction, which gives the model more learning signal per step. So FP8 training is how DeepSeek trained a 671 billion parameter model on hardware that was theoretically less powerful than what Trinity used.
+
+Genuine efficiency and well I guess that let them punch above their hardware class. So now let&#x27;s talk about how the model weights get updated during training. Of course, that&#x27;s the optimizer choice. AtomW is what DeepSeek has used. That&#x27;s the industry standard.
+
+I&#x27;m sure you&#x27;ve used it for years in your own training jobs. It&#x27;s reliable, it&#x27;s well understood, it works everywhere. ADMW will update each weight independently based on its own gradient history. So think of it as every employee getting its individual performance reviews. Trinity and Kimi have made a different choice.
+
+They&#x27;ve gone for Muon, which is a newer optimizer that updates weights as groups. Rather than independently. So think of it as evaluating team performance, not just individual performance. Of course, the updates can be coordinated and the model can learn more from each batch of training data. Another difference is that Mouan is also more token efficient.
+
+The model can improve faster per trillion tokens. When you&#x27;re spending millions and millions of dollars on compute, learning per token does matter a lot. So Moulon is actually emerging as the next generation optimizer for large models. Two out of three Frontier M-OE models have chosen it. And DeepSeek are compensated by combining EMW with FP8 precision.
+
+But nothing is ever simple and MOULN can create problems at scale. So let&#x27;s look at how Kimi actually fixed it. The problem is this. Attention scores can spike to extremely high values. Kimi reported spikes above 1,000 when normal values are 10 to 50.
+
+So the spikes can cause training crashes and that wastes days, maybe more of compute. So the fix is very simple. You just cap the maximum attention score at 100. . If anything exceeds, clamp it down to 100.
+
+That&#x27;s it. The interesting behavior is that the cap tends to kicking a lot at the start of training because the model is wild and unstable and it&#x27;s going for really large updates to accelerate its training. About 30% through the training job, the model is in a more quiet range, learn to keep the scores more reasonable and it&#x27;s pretty rare that the capping mechanism activates after that it&#x27;s just you know the model is more on autopilot so to speak okay so that&#x27;s what they used 50.5 trillion tokens 1 trillion parameters zero crashes if you believe the paper okay so QK clip is a simple elegant solution to to a real problem with Buhon at frontier scale. It&#x27;s one of those fixes that sounds too simple to work. But the results speak for themselves.
+
+So once again, we see the three models converging. All three achieved zero training crashes on massive runs. DeepSeek used Adam W plus FP8 plus careful scaling and trained on 14.8 trillion tokens on limited 100 hardware Trinity went for Muon and Smi-boo and six dance layers and 17 trillion tokens in 33 days that&#x27;s an insane number that&#x27;s probably the most insane thing about Trinity they were able to train this thing in 33 days okay on 2k b-300 and Kimi used mu-on plus k kukk clip and 15.5 trillion We don&#x27;t know. So there&#x27;s a bit of a geopolitical angle here. Deepseek had to train on the H-100s, which are deliberately lower performance because of US export controls, but still, on limited hardware, they were able to achieve frontier results, which is probably why DeepSeek captured so much attention.
+
+Whether that means that US export controls are useless, or not, is left as an exercise to the viewer. Okay? Our Trinity and Arcee being American and of course unrestrated training to the latest Blackwell GPUs from Nvidia. So the fact that all three were able to train those massive runs with no crashes using different techniques shows that the field has solved or at least is making progress in solving training stability at frontier scale. The techniques are different, but the good outcome is the same.
+
+So now let&#x27;s go into the last few slides of the presentation. Let&#x27;s talk about post-training, where the base model, which can just generate text, turns into a reasoning model that can think through problems and use tools. So this is where the three models really, really diverge. Are fairly similar, but how they teach the model to reason is where each team has made unique choices. So the general pipeline is always the same.
+
+First, we do supervised fine tuning, SFT. We show the models examples of good reasoning. Then we apply RL, reinforcement learning, to let the model practice on its own and figure out successes and failures. Applying the right changes to succeed more and fail less. So post-training is really the key most important step.
+
+It&#x27;s what separates the autocomplete model from models that can actually think and solve complex multi-step problems. Also, the approach that you use here will have a very strong influence on what each model is So in a way, this is where you decide what you want your model to shine at. And it&#x27;s a deliberate choice. So the breakthrough for deep sequence to teach the model how to reason using reinforcement learning, but without the need for a separate model. The standard reinforcement learning approach is called PPO.
+
+You generate an answer. Then you ask another model called critical model to grade it. But of course, you need to train and run the critic as well. And generally that means your compute costs, your infrastructure requirements are going to double. DeepSeek used another technique, which is, I guess, familiar these days called GRPO.
+
+With GRPO, you generate a group of answers for each question. You score them with simple rules. If it&#x27;s a math question, is it right or wrong? If it&#x27;s a piece of code, does it compile? Yes or no?
+
+Does it give the expected answer? Yes or no? And then you reinforce your above-average answers and suppress or penalize the below-average answers. You don&#x27;t need a critic model. So it&#x27;s like a writing class where students grade each other&#x27;s work relative to the average instead of hiring a TA to grade everything.
+
+I roughly this will divide by two the compute cost of RL training. And what is remarkable is that if you run GRPO enough, reasoning behavior will emerge on its own. The model starts to learn to think step by step without being shown examples. So GRPO is why DPCR1 exists. It showed that RL-based reasoning training was practical at scale and that reasoning can emerge from RL.
+
+And this has influenced all subsequent reasoning models. So Kimi is specifically post-trained for tool use, not just reasoning, but also calling tools and using their results and generate more steps. They built a system that automatically generates tool use training scenarios, for example, creating fake APIs, having the model call them, check if the results are correct, et cetera, et cetera. Of course, having high quality training data is important. And while there aren&#x27;t so many large-scale agentic systems running right now, so you need to be able to synthesize that in a way.
+
+So with that process, then they use two types of feedback during RL. Number one is, did you get the right answer? And that was checked by a piece of code. Yes or no, no ambiguity. And the second thing they looked for is, was the reasoning process good?
+
+And the model has to judge the quality of its own thinking. So it&#x27;s not just right or wrong. It&#x27;s did you come up with the right method? It&#x27;s a little bit like math teachers, right? They don&#x27;t want just the number.
+
+They want to see your reasoning. Same thing here. So that&#x27;s exactly what&#x27;s going on here. And Kimi, thanks to this, Chained 200 or 300 sequential tool calls without losing coherence. A lot of models tend to break after maybe 30 or 50 calls.
+
+So that&#x27;s where Kimi is pretty good. So last with not least, Trinity Large Thinking was built from Trinity Large Bays through two stages of post-training, SFT and Agentic RL. So RSI was very, very deliberate about the focus. They optimized the model specifically for complex long, multi-turn agentic interactions. Tool calling, multi-step agent tasks, long reasoning chains.
+
+So this is what we&#x27;re going to see when we start looking at the benchmarks in the second video. The blog is very clear about this. They released a preview model a few weeks ago, which was an instruct-type checkpoint, which was an interesting model for conversation, but of course it had gaps. In tool usage. So they took the preview model and then they applied another two months of post-training, SFT and RL, which they ran over 1,000 H-100 GPUs.
+
+So interestingly, we see we don&#x27;t need the monster last-generation GPUs for RL. We need them for pre-training. But for post-training, we can actually put those or generation GPUs to work. One interesting detail, the inference stack runs on Nvidia Dynamo with Blackwell and VLM. So one can think that there is very tight co-optimization between training and serving.
+
+And it&#x27;s reasonable to think that the model was designed with the deployment and hardware in mind, a trend that we see in other teams and models. So the story with the Trinity Post training is really about getting exactly to where they wanted. Preview was a step on the way. It was never designed to be good at a genetic task. That was the role of the thinking model.
+
+And so they spent those two months getting the best possible results for this objective. And again, different teams can go for different goals. And here in the case of R.C, we see exactly what they were optimizing for. All right, of course, we have to talk a little bit about quantization. And Kimi had actually an interesting trick.
+
+They started training the model at low precision from the start instead of compressing it afterward. So usually we train a model in high precision, let&#x27;s say 16-bit, and then we quantize it to 4-bit, and we&#x27;ve discussed this at length. So, Kimi&#x27;s approach was different. It&#x27;s called quantization-aware training or Q-A-T, which means you train the model knowing that it will be run at lower precision, okay? Let&#x27;s say 4-bit.
+
+So during every step in a training process, you simulate 4-bit precision and you let the model adapt to it, okay? Instead of training it at full precision and then quantizing it after the fact. That&#x27;s how they did it and the model will learn how to place its weights where 4-bit quantization causes the least damage. The result is 2x faster inference with zero measured quality loss. And all chemi benchmarks are reported in 4-bit precision.
+
+So this is pretty interesting and this is an interesting example of quantization aware training and in reporting the numbers is pretty honest I think all right well we got to the end of this long and deep video and we see the convergent story three teams with remarkably similar design choices sigmoid routing shared experts bias based load balancing two of the teams use the same optimizer the key The differences are in how aggressively each team has pushed sparsity, Trinity going for extreme sparsity and lower cost. Deepseek and Kimi going a lot different. You can go and review every single detail, but keep in mind architecture is just half the story. In the second part of this video, which will come in the next couple of weeks, going to cover what matters when you&#x27;re choosing a model. We&#x27;ll talk about benchmarks, who wins where, and how the benchmarks reflect the design choices we&#x27;ve discussed.
+
+We&#x27;ll talk about inference costs, and we&#x27;ll see why Trinity is a very strong contender here. We&#x27;ll talk about self-hosting, what hardware you need, and a few more things, licenses, etc., etc. Conclusion for now is that these models are more similar that you may have thought initially. The real difference comes from post-training and the design decisions and the trade-offs that each team made. But this is part two and it&#x27;s coming soon.
+
+Thank you so much for watching. I hope this was useful and maybe a little bit fun. And until next time, you know what to do, my friends. Keep rocking.</div>
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            <a href="index.html">&larr; Back to 2026 Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
+        </div>
+    </div>
+
+
+</body></html>

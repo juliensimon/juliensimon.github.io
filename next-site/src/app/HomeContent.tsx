@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2',
+    href: '/youtube/2026/20260413_Deep_Dive_How_Three_MoE_Reasoning_Models_Actually_Work_Trinity_DeepSeek_R1_Kimi_K2.html',
+    date: 'April 13, 2026',
+    icon: 'video',
+  },
+  {
     title: 'The Verification Tax',
     href: '/blog/industry-perspectives/2026-04-10_the-verification-tax/',
     date: 'April 10, 2026',
@@ -28,12 +34,6 @@ const LATEST_UPDATES = [
   {
     title: 'What to Buy for Local LLMs (April 2026)',
     href: '/blog/industry-perspectives/2026-04-03_what-to-buy-for-local-llms-april-2026/',
-    date: 'April 3, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Your Parents Paid',
-    href: '/blog/industry-perspectives/2026-04-03_your-parents-paid/',
     date: 'April 3, 2026',
     icon: 'article',
   },
