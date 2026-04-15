@@ -46,7 +46,7 @@ export const PINNED_REPOSITORIES: Repository[] = [
   },
   {
     name: 'sagemaker-inference-container-cpu',
-    description: 'An Amazon SageMaker Container for Hugging Face Inference on Graviton and Intel CPUs.',
+    description: 'An Amazon SageMaker Container for Hugging Face Inference on Graviton and Intel CPUs',
     url: 'https://github.com/juliensimon/sagemaker-inference-container-cpu',
     language: 'Python',
     stars: 11,
@@ -55,7 +55,7 @@ export const PINNED_REPOSITORIES: Repository[] = [
   },
   {
     name: 'my-aws-talks-2015-2021',
-    description: 'My collection of 300+ AWS presentations and talks from my time as a Technical Evangelist at Amazon Web Services (2015-2021).',
+    description: 'My collection of 300+ AWS presentations and talks from my time as a Technical Evangelist at Amazon Web Services (2015-2021)',
     url: 'https://github.com/juliensimon/my-aws-talks-2015-2021',
     stars: 13,
     forks: 1,
