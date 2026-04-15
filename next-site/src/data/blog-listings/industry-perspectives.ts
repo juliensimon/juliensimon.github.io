@@ -11,6 +11,20 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The HAI Numbers Moved — What It Means',
+    slug: '2026-04-15_the-hai-numbers-moved-what-it-means',
+    date: '2026-04-15',
+    description: 'Five shifts in Stanford\'s 2026 AI Index. Here are the forces behind them.',
+    originalUrl: 'https://www.airealist.ai/p/the-hai-numbers-moved-what-it-means',
+  },
+  {
+    title: 'The Quiet Tax on Parallel AI Coding Work — and Why I Built Canopy',
+    slug: '2026-04-14_the-quiet-tax-on-parallel-ai-coding-work-and-why-i-built-canopy',
+    date: '2026-04-14',
+    description: 'Claude Code wants you to do one thing at a time. Real engineering doesn\'t work that way.',
+    originalUrl: 'https://www.airealist.ai/p/the-quiet-tax-on-parallel-ai-coding',
+  },
+  {
     title: 'The Verification Tax',
     slug: '2026-04-10_the-verification-tax',
     date: '2026-04-10',

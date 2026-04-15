@@ -8,6 +8,24 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'The HAI Numbers Moved — What It Means',
+    href: '/blog/industry-perspectives/2026-04-15_the-hai-numbers-moved-what-it-means/',
+    date: 'April 15, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Canopy: A native macOS app for parallel Claude Code sessions with git worktrees',
+    href: '/youtube/2026/20260414_Canopy_A_native_macOS_app_for_parallel_Claude_Code_sessions_with_git_worktrees.html',
+    date: 'April 14, 2026',
+    icon: 'video',
+  },
+  {
+    title: 'The Quiet Tax on Parallel AI Coding Work — and Why I Built Canopy',
+    href: '/blog/industry-perspectives/2026-04-14_the-quiet-tax-on-parallel-ai-coding-work-and-why-i-built-canopy/',
+    date: 'April 14, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2',
     href: '/youtube/2026/20260413_Deep_Dive_How_Three_MoE_Reasoning_Models_Actually_Work_Trinity_DeepSeek_R1_Kimi_K2.html',
     date: 'April 13, 2026',
@@ -17,24 +35,6 @@ const LATEST_UPDATES = [
     title: 'The Verification Tax',
     href: '/blog/industry-perspectives/2026-04-10_the-verification-tax/',
     date: 'April 10, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Open From Both Sides',
-    href: '/blog/industry-perspectives/2026-04-09_open-from-both-sides/',
-    date: 'April 9, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Train, Deploy, Write Down',
-    href: '/blog/industry-perspectives/2026-04-07_train-deploy-write-down/',
-    date: 'April 7, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'What to Buy for Local LLMs (April 2026)',
-    href: '/blog/industry-perspectives/2026-04-03_what-to-buy-for-local-llms-april-2026/',
-    date: 'April 3, 2026',
     icon: 'article',
   },
 ];
