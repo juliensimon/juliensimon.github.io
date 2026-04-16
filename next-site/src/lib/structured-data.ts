@@ -414,15 +414,7 @@ export function dataCatalogSchema(datasets: Array<{
     name: 'Space Datasets by Julien Simon',
     description: '177 open datasets for orbital mechanics, space weather, astronomy, and physics on Hugging Face',
     url: `${SITE.url}/datasets`,
-    publisher: {
-      '@type': 'Person',
-      name: 'Julien Simon',
-      url: SITE.url,
-      sameAs: [
-        'https://huggingface.co/juliensimon',
-        'https://github.com/juliensimon',
-      ],
-    },
+    publisher: { '@id': `${SITE.url}/#person` },
     dataset: datasets.map(d => ({
       '@type': 'Dataset',
       name: d.prettyName,
@@ -430,11 +422,7 @@ export function dataCatalogSchema(datasets: Array<{
       url: d.hfUrl,
       license: 'https://creativecommons.org/licenses/by/4.0/',
       isAccessibleForFree: true,
-      creator: {
-        '@type': 'Person',
-        name: 'Julien Simon',
-        url: SITE.url,
-      },
+      creator: { '@id': `${SITE.url}/#person` },
       distribution: {
         '@type': 'DataDownload',
         encodingFormat: 'application/x-parquet',
