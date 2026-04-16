@@ -210,14 +210,10 @@ export function faqSchema(faqs: { question: string; answer: string }[], pageUrl?
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     '@id': `${baseUrl}/#faq`,
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: faqs.map((_, i) => `#faq-${i}-answer`),
-    },
-    mainEntity: faqs.map((faq, i) => ({
+    mainEntity: faqs.map((faq) => ({
       '@type': 'Question',
       name: faq.question,
-      acceptedAnswer: { '@type': 'Answer', text: faq.answer, '@id': `#faq-${i}-answer` },
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
   };
 }
