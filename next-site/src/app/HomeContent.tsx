@@ -51,8 +51,8 @@ const EXPERTISE_CARDS = [
     title: 'AI & Machine Learning Leadership',
     description:
       '30+ years of technology leadership including roles at AWS, Hugging Face, and Arcee AI. Proven track record scaling AI/ML teams and helping Fortune 500 companies implement cost-effective AI solutions.',
-    link: '/experience',
-    linkText: 'View Executive Experience',
+    link: '/publications',
+    linkText: 'View Publications',
   },
   {
     title: 'Cloud & Enterprise Strategy',
