@@ -226,6 +226,8 @@ export function bookSchema(book: {
   coverImage?: string;
   amazonUrl?: string;
 }) {
+  // Amazon URLs contain ISBN-10 in the /dp/XXXXXXXXXX/ path segment
+  const isbn = book.amazonUrl?.match(/\/dp\/([0-9X]{10})/)?.[1];
   return {
     '@context': 'https://schema.org',
     '@type': 'Book',
@@ -236,6 +238,7 @@ export function bookSchema(book: {
     ...(book.pages && { numberOfPages: book.pages }),
     ...(book.coverImage && { image: book.coverImage }),
     ...(book.amazonUrl && { url: book.amazonUrl }),
+    ...(isbn && { isbn }),
     inLanguage: 'en',
   };
 }
