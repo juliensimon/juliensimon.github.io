@@ -1,5 +1,6 @@
 import { SITE } from '@/lib/constants';
 import { INDUSTRY_PERSPECTIVES_ARTICLES } from '@/data/blog-listings/industry-perspectives';
+import { BLOG_CATEGORIES } from '@/data/blog-categories';
 import fs from 'fs';
 import path from 'path';
 
@@ -11,6 +12,13 @@ interface FeedItem {
   date: string;
   description?: string;
   category: 'article' | 'video';
+}
+
+function parseMonthDate(dateStr: string): string | null {
+  // Parse "Month YYYY" format (e.g. "September 2025") to ISO date
+  const d = new Date(`${dateStr} 1`);
+  if (isNaN(d.getTime())) return null;
+  return d.toISOString().slice(0, 10);
 }
 
 function getVideoItems(): FeedItem[] {
@@ -42,6 +50,31 @@ function getVideoItems(): FeedItem[] {
   return items;
 }
 
+function getBlogItems(): FeedItem[] {
+  const items: FeedItem[] = [];
+  for (const cat of Object.values(BLOG_CATEGORIES)) {
+    for (const post of cat.posts) {
+      // Use localHref if available, otherwise external href
+      const url = post.localHref
+        ? `${SITE.url}${post.localHref}`
+        : post.href.startsWith('/')
+          ? `${SITE.url}${post.href}`
+          : post.href;
+      if (!post.date) continue;
+      const date = parseMonthDate(post.date);
+      if (!date) continue;
+      items.push({
+        title: post.title,
+        url,
+        date,
+        description: post.description || undefined,
+        category: 'article',
+      });
+    }
+  }
+  return items;
+}
+
 export function GET() {
   const articleItems: FeedItem[] = INDUSTRY_PERSPECTIVES_ARTICLES.map((a) => ({
     title: a.title,
@@ -51,9 +84,10 @@ export function GET() {
     category: 'article',
   }));
 
+  const blogItems = getBlogItems();
   const videoItems = getVideoItems();
 
-  const allItems = [...articleItems, ...videoItems].sort(
+  const allItems = [...articleItems, ...blogItems, ...videoItems].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 
