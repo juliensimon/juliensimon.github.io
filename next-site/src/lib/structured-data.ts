@@ -293,7 +293,7 @@ export function videoObjectListSchema(
       item: {
         '@type': 'VideoObject',
         name: video.title,
-        description: video.title,
+        description: `${video.title} — video by Julien Simon on ${channelName}`,
         uploadDate: new Date(video.date).toISOString(),
         thumbnailUrl: `https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`,
         embedUrl: `https://www.youtube-nocookie.com/embed/${video.id}`,
