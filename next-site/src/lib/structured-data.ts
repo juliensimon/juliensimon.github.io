@@ -478,7 +478,7 @@ export function eventSchema(event: {
   location?: string;
   description?: string;
   links?: { url: string; label: string }[];
-}, yearFallback?: string) {
+}) {
   const parsed = event.date ? parseToISODate(event.date) : null;
   // Only use dates with at least YYYY-MM-DD precision; year-only values fail Google validation
   const isoDate = parsed && /^\d{4}-\d{2}-\d{2}/.test(parsed) ? parsed : null;
@@ -533,7 +533,6 @@ export function eventListSchema(
   pageUrl: string,
   listName: string,
   maxItems?: number,
-  yearFallback?: string,
 ) {
   const items = maxItems ? events.slice(0, maxItems) : events;
   return {
@@ -546,7 +545,7 @@ export function eventListSchema(
     itemListElement: items.map((event, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      item: eventSchema(event, yearFallback),
+      item: eventSchema(event),
     })),
   };
 }
