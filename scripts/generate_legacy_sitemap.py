@@ -3,7 +3,8 @@
 Generate sitemaps for static HTML content not covered by Next.js sitemap.xml.
 
 Produces:
-  - sitemap-blog.xml    — all blog posts (Arcee, HF, AWS, Medium, Industry Perspectives, Legacy)
+  - sitemap-blog.xml    — blog posts (Arcee, HF, AWS, Medium, Legacy).
+                          Industry Perspectives URLs are owned by next-site/src/app/sitemap.ts.
   - sitemap-videos.xml  — all YouTube transcript pages
 
 Run as part of the postbuild step.

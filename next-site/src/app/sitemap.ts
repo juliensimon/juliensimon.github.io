@@ -86,7 +86,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  // Individual industry-perspectives articles (static HTML, outside Next.js)
+  // Industry Perspectives index + individual articles (static HTML, outside Next.js).
+  // The Python sitemap script no longer emits these; this file owns them.
+  const industryIndex: MetadataRoute.Sitemap = [{
+    url: `${SITE.url}/blog/industry-perspectives/`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  }];
   const articlePages: MetadataRoute.Sitemap = INDUSTRY_PERSPECTIVES_ARTICLES.map((a) => ({
     url: `${SITE.url}/blog/industry-perspectives/${encodeURIComponent(a.slug)}/`,
     lastModified: a.date,
@@ -94,5 +101,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...speakingPages, ...blogPages, ...articlePages];
+  return [...staticPages, ...speakingPages, ...blogPages, ...industryIndex, ...articlePages];
 }
