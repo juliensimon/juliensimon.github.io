@@ -3,7 +3,8 @@
 Generate sitemaps for static HTML content not covered by Next.js sitemap.xml.
 
 Produces:
-  - sitemap-blog.xml    — all blog posts (Arcee, HF, AWS, Medium, Industry Perspectives, Legacy)
+  - sitemap-blog.xml    — blog posts (Arcee, HF, AWS, Medium, Legacy).
+                          Industry Perspectives URLs are owned by next-site/src/app/sitemap.ts.
   - sitemap-videos.xml  — all YouTube transcript pages
 
 Run as part of the postbuild step.
@@ -20,7 +21,8 @@ SITE_URL = "https://www.julien.org"
 
 # Blog directories to scan
 BLOG_DIRS = [
-    "blog/industry-perspectives",
+    # Note: industry-perspectives is excluded here because sitemap.ts
+    # already generates those URLs dynamically from the data file
     "blog/arcee-posts",
     "blog/huggingface-posts-and-images",
     "blog/aws-posts-and-images",
@@ -77,8 +79,6 @@ def scan_dirs(dirs, priority_fn=None):
 
 
 def blog_priority(rel_path):
-    if "industry-perspectives" in rel_path:
-        return "0.7"
     if "arcee-posts" in rel_path:
         return "0.6"
     if "huggingface-posts" in rel_path:
@@ -119,7 +119,7 @@ def write_sitemap(filename, urls):
 
 def generate_speaking_sitemap():
     """Generate sitemap-speaking.xml from known speaking year pages."""
-    years = [2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016]
+    years = [2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016]
     urls = []
     for year in years:
         url = f"{SITE_URL}/speaking/{year}"

@@ -37,11 +37,13 @@ export default function SpeakingPage() {
     url: `${SITE.url}/speaking`,
     numberOfItems: top50.length,
     itemListElement: top50.map((event, i) => {
+      // _year is an internal field not part of the schema
       const { _year, ...eventData } = event;
+      void _year;
       return {
         '@type': 'ListItem' as const,
         position: i + 1,
-        item: eventSchema(eventData, _year),
+        item: eventSchema(eventData),
       };
     }),
   };

@@ -210,14 +210,10 @@ export function faqSchema(faqs: { question: string; answer: string }[], pageUrl?
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     '@id': `${baseUrl}/#faq`,
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: faqs.map((_, i) => `#faq-${i}-answer`),
-    },
-    mainEntity: faqs.map((faq, i) => ({
+    mainEntity: faqs.map((faq) => ({
       '@type': 'Question',
       name: faq.question,
-      acceptedAnswer: { '@type': 'Answer', text: faq.answer, '@id': `#faq-${i}-answer` },
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
   };
 }
@@ -230,6 +226,8 @@ export function bookSchema(book: {
   coverImage?: string;
   amazonUrl?: string;
 }) {
+  // Amazon URLs contain ISBN-10 in the /dp/XXXXXXXXXX/ path segment
+  const isbn = book.amazonUrl?.match(/\/dp\/([0-9X]{10})/)?.[1];
   return {
     '@context': 'https://schema.org',
     '@type': 'Book',
@@ -240,6 +238,7 @@ export function bookSchema(book: {
     ...(book.pages && { numberOfPages: book.pages }),
     ...(book.coverImage && { image: book.coverImage }),
     ...(book.amazonUrl && { url: book.amazonUrl }),
+    ...(isbn && { isbn }),
     inLanguage: 'en',
   };
 }
@@ -294,7 +293,7 @@ export function videoObjectListSchema(
       item: {
         '@type': 'VideoObject',
         name: video.title,
-        description: video.title,
+        description: `${video.title} — video by Julien Simon on ${channelName}`,
         uploadDate: new Date(video.date).toISOString(),
         thumbnailUrl: `https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`,
         embedUrl: `https://www.youtube-nocookie.com/embed/${video.id}`,
@@ -415,15 +414,7 @@ export function dataCatalogSchema(datasets: Array<{
     name: 'Space Datasets by Julien Simon',
     description: '177 open datasets for orbital mechanics, space weather, astronomy, and physics on Hugging Face',
     url: `${SITE.url}/datasets`,
-    publisher: {
-      '@type': 'Person',
-      name: 'Julien Simon',
-      url: SITE.url,
-      sameAs: [
-        'https://huggingface.co/juliensimon',
-        'https://github.com/juliensimon',
-      ],
-    },
+    publisher: { '@id': `${SITE.url}/#person` },
     dataset: datasets.map(d => ({
       '@type': 'Dataset',
       name: d.prettyName,
@@ -431,11 +422,7 @@ export function dataCatalogSchema(datasets: Array<{
       url: d.hfUrl,
       license: 'https://creativecommons.org/licenses/by/4.0/',
       isAccessibleForFree: true,
-      creator: {
-        '@type': 'Person',
-        name: 'Julien Simon',
-        url: SITE.url,
-      },
+      creator: { '@id': `${SITE.url}/#person` },
       distribution: {
         '@type': 'DataDownload',
         encodingFormat: 'application/x-parquet',
@@ -491,7 +478,7 @@ export function eventSchema(event: {
   location?: string;
   description?: string;
   links?: { url: string; label: string }[];
-}, yearFallback?: string) {
+}) {
   const parsed = event.date ? parseToISODate(event.date) : null;
   // Only use dates with at least YYYY-MM-DD precision; year-only values fail Google validation
   const isoDate = parsed && /^\d{4}-\d{2}-\d{2}/.test(parsed) ? parsed : null;
@@ -546,7 +533,6 @@ export function eventListSchema(
   pageUrl: string,
   listName: string,
   maxItems?: number,
-  yearFallback?: string,
 ) {
   const items = maxItems ? events.slice(0, maxItems) : events;
   return {
@@ -559,7 +545,7 @@ export function eventListSchema(
     itemListElement: items.map((event, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      item: eventSchema(event, yearFallback),
+      item: eventSchema(event),
     })),
   };
 }
