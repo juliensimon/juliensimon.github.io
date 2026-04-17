@@ -14,11 +14,35 @@ interface FeedItem {
   category: 'article' | 'video';
 }
 
+const MONTH_INDEX: Record<string, number> = {
+  january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
+  july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
+};
+
 function parseMonthDate(dateStr: string): string | null {
-  // Parse "Month YYYY" format (e.g. "September 2025") to ISO date
-  const d = new Date(`${dateStr} 1`);
-  if (isNaN(d.getTime())) return null;
-  return d.toISOString().slice(0, 10);
+  // Parse "Month YYYY" or "Month DD, YYYY" to ISO date.
+  // Construct via Date.UTC to avoid local-TZ off-by-one when toISOString runs on non-UTC hosts.
+  const normalized = dateStr.trim();
+  const monthDayYear = normalized.match(/^([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})$/);
+  const monthYear = normalized.match(/^([A-Za-z]+)\s+(\d{4})$/);
+
+  let monthIdx: number | undefined;
+  let day = 1;
+  let year: number;
+
+  if (monthDayYear) {
+    monthIdx = MONTH_INDEX[monthDayYear[1].toLowerCase()];
+    day = Number(monthDayYear[2]);
+    year = Number(monthDayYear[3]);
+  } else if (monthYear) {
+    monthIdx = MONTH_INDEX[monthYear[1].toLowerCase()];
+    year = Number(monthYear[2]);
+  } else {
+    return null;
+  }
+
+  if (monthIdx === undefined || day < 1 || day > 31) return null;
+  return new Date(Date.UTC(year, monthIdx, day)).toISOString().slice(0, 10);
 }
 
 function getVideoItems(): FeedItem[] {
