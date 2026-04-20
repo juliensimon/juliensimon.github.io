@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Anthropic Is Not a Trend',
+    href: '/blog/industry-perspectives/2026-04-20_anthropic-is-not-a-trend/',
+    date: 'April 20, 2026',
+    icon: 'article',
+  },
+  {
     title: 'The HAI Numbers Moved — What It Means',
     href: '/blog/industry-perspectives/2026-04-15_the-hai-numbers-moved-what-it-means/',
     date: 'April 15, 2026',
@@ -30,12 +36,6 @@ const LATEST_UPDATES = [
     href: '/youtube/2026/20260413_Deep_Dive_How_Three_MoE_Reasoning_Models_Actually_Work_Trinity_DeepSeek_R1_Kimi_K2.html',
     date: 'April 13, 2026',
     icon: 'video',
-  },
-  {
-    title: 'The Verification Tax',
-    href: '/blog/industry-perspectives/2026-04-10_the-verification-tax/',
-    date: 'April 10, 2026',
-    icon: 'article',
   },
 ];
 

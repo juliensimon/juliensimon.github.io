@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Anthropic Is Not a Trend',
+    slug: '2026-04-20_anthropic-is-not-a-trend',
+    date: '2026-04-20',
+    description: 'Jensen Huang said the quiet part out loud. The market is misreading what he said.',
+    originalUrl: 'https://www.airealist.ai/p/anthropic-is-not-a-trend',
+  },
+  {
     title: 'The HAI Numbers Moved — What It Means',
     slug: '2026-04-15_the-hai-numbers-moved-what-it-means',
     date: '2026-04-15',
