@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'The Price of “Primary”',
+    href: '/blog/industry-perspectives/2026-04-21_the-price-of-primary/',
+    date: 'April 21, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Anthropic Is Not a Trend',
     href: '/blog/industry-perspectives/2026-04-20_anthropic-is-not-a-trend/',
     date: 'April 20, 2026',
@@ -30,12 +36,6 @@ const LATEST_UPDATES = [
     href: '/blog/industry-perspectives/2026-04-14_the-quiet-tax-on-parallel-ai-coding-work-and-why-i-built-canopy/',
     date: 'April 14, 2026',
     icon: 'article',
-  },
-  {
-    title: 'Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2',
-    href: '/youtube/2026/20260413_Deep_Dive_How_Three_MoE_Reasoning_Models_Actually_Work_Trinity_DeepSeek_R1_Kimi_K2.html',
-    date: 'April 13, 2026',
-    icon: 'video',
   },
 ];
 

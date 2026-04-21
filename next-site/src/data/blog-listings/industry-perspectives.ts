@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The Price of “Primary”',
+    slug: '2026-04-21_the-price-of-primary',
+    date: '2026-04-21',
+    description: 'Jensen Huang said the quiet part out loud on April 15. Amazon just priced it.',
+    originalUrl: 'https://www.airealist.ai/p/the-price-of-primary',
+  },
+  {
     title: 'Anthropic Is Not a Trend',
     slug: '2026-04-20_anthropic-is-not-a-trend',
     date: '2026-04-20',
