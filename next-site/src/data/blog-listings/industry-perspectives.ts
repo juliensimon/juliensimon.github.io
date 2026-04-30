@@ -11,6 +11,27 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Simplify Up, Enforce Down',
+    slug: '2026-04-30_simplify-up-enforce-down',
+    date: '2026-04-30',
+    description: 'The EU spent five months simplifying the AI Act for the companies it can reach. Last night, after twelve hours, those negotiations failed.',
+    originalUrl: 'https://www.airealist.ai/p/simplify-up-enforce-down',
+  },
+  {
+    title: 'More Sovereign, Different Stack: The Builder Tax',
+    slug: '2026-04-29_more-sovereign-different-stack-the-builder-tax',
+    date: '2026-04-29',
+    description: 'Sovereignty forces a different stack. The Commission\'s framework prices neither the cost nor the exit it delivers.',
+    originalUrl: 'https://www.airealist.ai/p/more-sovereign-different-stack-the',
+  },
+  {
+    title: 'Ten Percent Sovereign',
+    slug: '2026-04-22_ten-percent-sovereign',
+    date: '2026-04-22',
+    description: 'The European Commission awarded €180 million under a framework that scores legal sovereignty at ten percent — and didn\'t see what an Ontario court had just done.',
+    originalUrl: 'https://www.airealist.ai/p/ten-percent-sovereign',
+  },
+  {
     title: 'The Price of “Primary”',
     slug: '2026-04-21_the-price-of-primary',
     date: '2026-04-21',

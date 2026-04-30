@@ -8,6 +8,24 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Simplify Up, Enforce Down',
+    href: '/blog/industry-perspectives/2026-04-30_simplify-up-enforce-down/',
+    date: 'April 30, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'More Sovereign, Different Stack: The Builder Tax',
+    href: '/blog/industry-perspectives/2026-04-29_more-sovereign-different-stack-the-builder-tax/',
+    date: 'April 29, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Ten Percent Sovereign',
+    href: '/blog/industry-perspectives/2026-04-22_ten-percent-sovereign/',
+    date: 'April 22, 2026',
+    icon: 'article',
+  },
+  {
     title: 'The Price of “Primary”',
     href: '/blog/industry-perspectives/2026-04-21_the-price-of-primary/',
     date: 'April 21, 2026',
@@ -17,24 +35,6 @@ const LATEST_UPDATES = [
     title: 'Anthropic Is Not a Trend',
     href: '/blog/industry-perspectives/2026-04-20_anthropic-is-not-a-trend/',
     date: 'April 20, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'The HAI Numbers Moved — What It Means',
-    href: '/blog/industry-perspectives/2026-04-15_the-hai-numbers-moved-what-it-means/',
-    date: 'April 15, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Canopy: A native macOS app for parallel Claude Code sessions with git worktrees',
-    href: '/youtube/2026/20260414_Canopy_A_native_macOS_app_for_parallel_Claude_Code_sessions_with_git_worktrees.html',
-    date: 'April 14, 2026',
-    icon: 'video',
-  },
-  {
-    title: 'The Quiet Tax on Parallel AI Coding Work — and Why I Built Canopy',
-    href: '/blog/industry-perspectives/2026-04-14_the-quiet-tax-on-parallel-ai-coding-work-and-why-i-built-canopy/',
-    date: 'April 14, 2026',
     icon: 'article',
   },
 ];
