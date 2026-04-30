@@ -30,7 +30,7 @@ export const BOOKS: Book[] = [
     pages: 450,
     description:
       'A comprehensive guide to implementing NLP solutions using AWS AI services (Amazon Comprehend, Translate, Polly, etc.).',
-    coverImage: 'https://m.media-amazon.com/images/I/71s-sMqDi1L._SY385_.jpg',
+    coverImage: '/assets/nlp-book.webp',
     amazonUrl: 'https://www.amazon.com/Natural-Language-Processing-AWS-Services/dp/1801812934',
   },
 ];
