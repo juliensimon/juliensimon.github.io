@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The Round Trip',
+    slug: '2026-05-04_the-round-trip',
+    date: '2026-05-04',
+    description: 'Four hyperscalers reported $700 billion in combined AI infrastructure spending. The number that matters is how much of their reported AI revenue is their own investment coming home.',
+    originalUrl: 'https://www.airealist.ai/p/the-round-trip',
+  },
+  {
     title: 'Simplify Up, Enforce Down',
     slug: '2026-04-30_simplify-up-enforce-down',
     date: '2026-04-30',

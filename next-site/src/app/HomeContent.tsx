@@ -8,6 +8,18 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2 - Part 2',
+    href: '/youtube/2026/20260504_Deep_Dive_How_Three_MoE_Reasoning_Models_Actually_Work_Trinity_DeepSeek_R1_Kimi_K2_-_Part_2.html',
+    date: 'May 4, 2026',
+    icon: 'video',
+  },
+  {
+    title: 'The Round Trip',
+    href: '/blog/industry-perspectives/2026-05-04_the-round-trip/',
+    date: 'May 4, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Simplify Up, Enforce Down',
     href: '/blog/industry-perspectives/2026-04-30_simplify-up-enforce-down/',
     date: 'April 30, 2026',
@@ -23,18 +35,6 @@ const LATEST_UPDATES = [
     title: 'Ten Percent Sovereign',
     href: '/blog/industry-perspectives/2026-04-22_ten-percent-sovereign/',
     date: 'April 22, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'The Price of “Primary”',
-    href: '/blog/industry-perspectives/2026-04-21_the-price-of-primary/',
-    date: 'April 21, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Anthropic Is Not a Trend',
-    href: '/blog/industry-perspectives/2026-04-20_anthropic-is-not-a-trend/',
-    date: 'April 20, 2026',
     icon: 'article',
   },
 ];
