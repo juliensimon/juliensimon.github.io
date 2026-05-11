@@ -53,6 +53,61 @@ class VideoItem(NamedTuple):
     description: str
 
 
+# Target window for SEO meta descriptions. Bing and Google start truncating
+# around 155-160; below ~70 they often flag the description as too short.
+META_DESC_MAX = 155
+META_DESC_MIN = 70
+
+
+def build_meta_description(
+    title: str,
+    description: str,
+    fallback_suffix: str = 'a video by Julien Simon on AI, ML, and small language models.',
+) -> str:
+    """Derive a unique, SEO-friendly meta description from a page's data.
+
+    Why this exists: previously every YouTube page used a templated
+    "<title> - YouTube video by Julien Simon" string, which Bing Webmaster
+    flagged as both too short and duplicate across pages.
+
+    `fallback_suffix` lets callers tailor the synthesized description when the
+    body is empty or too short (e.g. blog posts shouldn't say "a video").
+    """
+    # Collapse whitespace, drop URL-only lines, and pick prose lines.
+    prose_lines: list[str] = []
+    for raw in (description or '').splitlines():
+        line = raw.strip()
+        if not line:
+            continue
+        # Skip lines that are essentially just a URL or a hashtag-only call-out.
+        if re.fullmatch(r'(https?://\S+\s*)+', line):
+            continue
+        if line.startswith('#') and ' ' not in line:
+            continue
+        prose_lines.append(line)
+
+    text = ' '.join(prose_lines)
+    text = re.sub(r'\s+', ' ', text).strip()
+
+    if len(text) >= META_DESC_MIN:
+        if len(text) <= META_DESC_MAX:
+            return text
+        # Truncate at the last sentence/word boundary before the limit.
+        cut = text[: META_DESC_MAX - 1]
+        boundary = max(cut.rfind('. '), cut.rfind('! '), cut.rfind('? '))
+        if boundary >= META_DESC_MIN:
+            return cut[: boundary + 1]
+        space = cut.rfind(' ')
+        if space >= META_DESC_MIN:
+            return cut[:space].rstrip(' ,;:-') + '…'
+        return cut.rstrip() + '…'
+
+    # Fallback: synthesize from the title so each page still has a distinct,
+    # non-trivial description.
+    title = title.strip().rstrip('.!?')
+    return f"{title} — {fallback_suffix}"
+
+
 def resolve_channel_id(handle: str) -> str:
     """Resolve a YouTube @handle to a channel ID by fetching the channel page."""
     url = f"https://www.youtube.com/@{handle}"
@@ -763,6 +818,11 @@ def create_video_page(
     if len(description) > 2000:
         description = description[:2000] + '...'
 
+    # Build a meta description for SEO from the real video description.
+    # Pull the first non-trivial line, collapse whitespace, cap at ~155 chars.
+    # Falls back to a title-derived sentence if the description is empty/too short.
+    meta_description = build_meta_description(video.title, video.description)
+
     # Build transcript HTML section
     transcript_html = ''
     if transcript:
@@ -782,7 +842,7 @@ def create_video_page(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{html.escape(video.title)}</title>
-    <meta name="description" content="{html.escape(video.title)} - YouTube video by Julien Simon">
+    <meta name="description" content="{html.escape(meta_description)}">
     <meta property="og:title" content="{html.escape(video.title)}">
     <meta property="og:type" content="video.other">
     <meta property="og:url" content="https://www.julien.org/youtube/{year}/{date_str}_{title_to_filename(video.title)}.html">
@@ -801,7 +861,7 @@ def create_video_page(
         "@context": "https://schema.org",
         "@type": "VideoObject",
         "name": "{html.escape(video.title).replace(chr(34), '&quot;')}",
-        "description": "{html.escape(video.title)} - YouTube video by Julien Simon",
+        "description": {json.dumps(meta_description).replace('</', '<\\/')},
         "uploadDate": "{video.published.strftime('%Y-%m-%dT%H:%M:%S+00:00')}",
         "embedUrl": "https://www.youtube.com/embed/{video.video_id}",
         "thumbnailUrl": "https://img.youtube.com/vi/{video.video_id}/maxresdefault.jpg",

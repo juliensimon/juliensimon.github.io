@@ -49,6 +49,73 @@ class PostItem(NamedTuple):
     youtube_id: str | None
 
 
+# SEO target window for the article meta description. Bing flags below ~70.
+EXCERPT_MIN = 80
+EXCERPT_MAX = 160
+
+
+def _truncate_at_word(text: str, limit: int) -> str:
+    """Truncate `text` to `limit` chars at a sentence or word boundary."""
+    if len(text) <= limit:
+        return text
+    cut = text[: limit - 1]
+    boundary = max(cut.rfind('. '), cut.rfind('! '), cut.rfind('? '))
+    if boundary >= EXCERPT_MIN:
+        return cut[: boundary + 1].rstrip()
+    space = cut.rfind(' ')
+    if space >= EXCERPT_MIN:
+        return cut[:space].rstrip(' ,;:-') + '…'
+    return cut.rstrip() + '…'
+
+
+def _build_excerpt(subtitle: str, soup) -> str:
+    """Build an SEO-friendly meta description from the Substack subtitle and
+    the cleaned article body. Falls back to body when the subtitle is missing.
+    Extends with the first body paragraph(s) when the subtitle is too short.
+    """
+    subtitle = (subtitle or '').strip()
+    # Drop the subtitle-ending period for clean concatenation.
+    subtitle_trimmed = subtitle.rstrip('. ').strip()
+
+    # If the subtitle alone is in the SEO window, keep it.
+    if EXCERPT_MIN <= len(subtitle) <= EXCERPT_MAX:
+        return subtitle
+    if len(subtitle) > EXCERPT_MAX:
+        return _truncate_at_word(subtitle, EXCERPT_MAX)
+
+    # Otherwise, walk paragraphs of the body for prose to extend (or replace).
+    body_paragraphs = []
+    if soup is not None:
+        for p in soup.find_all('p'):
+            text = p.get_text(separator=' ', strip=True)
+            if text:
+                body_paragraphs.append(text)
+            if len(body_paragraphs) >= 3:
+                break
+
+    if subtitle_trimmed and body_paragraphs:
+        # When the body's first paragraph already says what the subtitle says,
+        # don't duplicate it — fall through to use the body alone.
+        sig = lambda s: re.sub(r'[^a-z0-9]+', '', s.lower())
+        first_para = body_paragraphs[0]
+        if sig(subtitle_trimmed) and sig(subtitle_trimmed) in sig(first_para):
+            pass
+        else:
+            candidate = f"{subtitle_trimmed}. {first_para}"
+            candidate = re.sub(r'\s+', ' ', candidate).strip()
+            if len(candidate) >= EXCERPT_MIN:
+                return _truncate_at_word(candidate, EXCERPT_MAX)
+
+    if body_paragraphs:
+        joined = ' '.join(body_paragraphs)
+        joined = re.sub(r'\s+', ' ', joined).strip()
+        if len(joined) >= EXCERPT_MIN:
+            return _truncate_at_word(joined, EXCERPT_MAX)
+
+    # Last-resort: return whatever non-empty string we have.
+    return subtitle or (body_paragraphs[0] if body_paragraphs else '')
+
+
 def fetch_feed() -> list[PostItem]:
     """Fetch and parse the Substack RSS feed."""
     print(f"Fetching {RSS_URL}...")
@@ -419,21 +486,11 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     plain_text = soup.get_text(separator=' ', strip=True)
     read_time = calculate_read_time(plain_text)
 
-    # Get excerpt for metadata: prefer RSS description (Substack subtitle) over first paragraph
-    # Substack subtitles are hand-crafted teasers that make better meta descriptions
-    excerpt = ''
-    if item.description and len(item.description.strip()) >= 40:
-        excerpt = item.description.strip()
-        if len(excerpt) > 200:
-            excerpt = excerpt[:197] + '...'
-    else:
-        first_p = soup.find('p')
-        if first_p:
-            excerpt = first_p.get_text(strip=True)
-            if len(excerpt) > 200:
-                excerpt = excerpt[:197] + '...'
-        elif item.description:
-            excerpt = item.description.strip()
+    # Build meta description: prefer Substack subtitle, but extend with the
+    # first body paragraph when the subtitle alone is too short for SEO.
+    # Bing flags descriptions below ~70 chars as too short and ranks long-tail
+    # results poorly for them.
+    excerpt = _build_excerpt(item.description, soup)
 
     # Create HTML with full cleaned content
     html_content = f'''<!DOCTYPE html>
