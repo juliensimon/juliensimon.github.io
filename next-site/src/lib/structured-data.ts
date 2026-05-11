@@ -1,4 +1,8 @@
 import { SITE, SOCIAL_LINKS } from './constants';
+import { TOTAL_ARTICLES } from '@/data/publications';
+import { TOTAL_DATASETS } from '@/data/datasets';
+import { YOUTUBE_STATS } from '@/data/youtube';
+import { SPEAKING_STATS } from '@/data/speaking';
 
 export function personSchema() {
   return {
@@ -412,7 +416,7 @@ export function dataCatalogSchema(datasets: Array<{
     '@context': 'https://schema.org',
     '@type': 'DataCatalog',
     name: 'Space Datasets by Julien Simon',
-    description: '177 open datasets for orbital mechanics, space weather, astronomy, and physics on Hugging Face',
+    description: `${TOTAL_DATASETS} open datasets for orbital mechanics, space weather, astronomy, and physics on Hugging Face`,
     url: `${SITE.url}/datasets`,
     publisher: { '@id': `${SITE.url}/#person` },
     dataset: datasets.map(d => ({
@@ -553,7 +557,7 @@ export function eventListSchema(
 export const SPEAKING_FAQS = [
   {
     question: 'How many speaking engagements has Julien Simon delivered?',
-    answer: 'Julien Simon has delivered 685+ speaking engagements across 37 countries and 95 cities, including keynotes at AWS re:Invent, ODSC, KubeCon, and talks at institutions like UNESCO, World Bank, New York Federal Reserve, and Bank of Italy.',
+    answer: `Julien Simon has delivered ${SPEAKING_STATS.totalEvents}+ speaking engagements across ${SPEAKING_STATS.countries} countries and ${SPEAKING_STATS.cities} cities, including keynotes at AWS re:Invent, ODSC, KubeCon, and talks at institutions like UNESCO, World Bank, New York Federal Reserve, and Bank of Italy.`,
   },
   {
     question: 'What topics does Julien Simon speak about?',
@@ -568,7 +572,7 @@ export const SPEAKING_FAQS = [
 export const PUBLICATIONS_FAQS = [
   {
     question: 'How many articles has Julien Simon published?',
-    answer: 'Julien Simon has published 454+ technical articles across multiple platforms including the AWS Blog, Hugging Face Blog, Arcee AI Blog, Medium, and his Substack newsletter The AI Realist (airealist.ai).',
+    answer: `Julien Simon has published ${TOTAL_ARTICLES}+ technical articles across multiple platforms including the AWS Blog, Hugging Face Blog, Arcee AI Blog, Medium, and his Substack newsletter The AI Realist (airealist.ai).`,
   },
   {
     question: 'What is The AI Realist newsletter?',
@@ -579,11 +583,52 @@ export const PUBLICATIONS_FAQS = [
 export const YOUTUBE_FAQS = [
   {
     question: 'How many YouTube subscribers does Julien Simon have?',
-    answer: 'Julien Simon\'s YouTube channel has 508K+ subscribers with 450+ educational videos spanning 15 years of content on AI, machine learning, and cloud computing.',
+    answer: `Julien Simon's YouTube channel has ${YOUTUBE_STATS.subscriberCount}K+ subscribers with ${YOUTUBE_STATS.totalVideos}+ educational videos spanning ${YOUTUBE_STATS.yearsOfContent} years of content on AI, machine learning, and cloud computing.`,
   },
   {
     question: 'What kind of videos does Julien Simon create?',
     answer: 'Julien Simon creates deep technical tutorials, live coding demos, model benchmarks, hardware comparisons, and educational content covering AI/ML topics from beginner to advanced levels. His channel is at youtube.com/@juliensimonfr.',
+  },
+];
+
+export const BOOKS_FAQS = [
+  {
+    question: 'What books has Julien Simon written?',
+    answer: 'Julien Simon authored "Learn Amazon SageMaker" (Packt Publishing, 2 editions in 2020 and 2021) — the first book ever published on Amazon SageMaker. He also co-authored "Natural Language Processing with AWS AI Services" and has contributed to additional technical works on machine learning and cloud computing.',
+  },
+  {
+    question: 'What is "Learn Amazon SageMaker" about?',
+    answer: '"Learn Amazon SageMaker" is a hands-on guide to building, training, and deploying machine learning models on AWS SageMaker. It covers data preparation, model training, hyperparameter tuning, deployment, monitoring, and MLOps best practices — used by data scientists and ML engineers worldwide as a definitive SageMaker reference.',
+  },
+  {
+    question: 'Where can I buy Julien Simon\'s books?',
+    answer: 'Julien Simon\'s books are available on Amazon (https://www.amazon.com/stores/Julien-Simon/author/B089RFQTQG), Packt Publishing (https://www.packtpub.com/authors/julien-simon), and most major online bookstores. Code samples and supplementary materials are typically open-sourced on GitHub.',
+  },
+];
+
+export const DATASETS_FAQS = [
+  {
+    question: 'What datasets has Julien Simon published?',
+    answer: `Julien Simon publishes ${TOTAL_DATASETS}+ open datasets on Hugging Face covering orbital mechanics, space weather, astronomy, and physics. Sources include NASA, ESA, NOAA, and other public scientific repositories, packaged in efficient Parquet format with CC-BY-4.0 licensing.`,
+  },
+  {
+    question: 'Are Julien Simon\'s datasets free to use?',
+    answer: 'Yes, all datasets are released under CC-BY-4.0 (free for any use, including commercial, with attribution). They are distributed in Apache Parquet format on Hugging Face at https://huggingface.co/juliensimon, optimized for efficient analytics and ML workflows.',
+  },
+  {
+    question: 'What can I do with these datasets?',
+    answer: 'The datasets support a wide range of use cases: training ML models on satellite-tracking data, analyzing solar activity and space weather, exploring asteroid and exoplanet catalogs, benchmarking time-series models, and powering educational content. They are used by researchers, students, and AI practitioners worldwide.',
+  },
+];
+
+export const CODE_FAQS = [
+  {
+    question: 'What open-source projects has Julien Simon built?',
+    answer: 'Julien Simon maintains open-source projects including Canopy (a macOS app for parallel AI coding sessions), space-datasets (pipelines for building open scientific datasets), cache-explorer (a CLI tool for analyzing AI provider cache behavior), and additional repositories spanning AI tooling, ML demos, and developer utilities. See github.com/juliensimon for the full list.',
+  },
+  {
+    question: 'Where can I find Julien Simon\'s code?',
+    answer: 'All open-source code is on GitHub at https://github.com/juliensimon. Repositories include macOS applications, CLI tools, data pipelines, and ML demos. Most projects are MIT-licensed and accept community contributions.',
   },
 ];
 
@@ -602,11 +647,11 @@ export const EXPERIENCE_FAQS = [
 export const HOMEPAGE_FAQS = [
   {
     question: 'Who is Julien Simon?',
-    answer: 'Julien Simon is an AI Operating Partner at Fortino Capital with over 30 years of technology leadership experience. He previously held executive roles at AWS, Hugging Face, and Arcee AI. He is recognized as the #1 AI Evangelist globally by AI Magazine (2021), has delivered 685+ speaking engagements across 37 countries, and publishes The AI Realist newsletter (airealist.ai).',
+    answer: `Julien Simon is an AI Operating Partner at Fortino Capital with over 30 years of technology leadership experience. He previously held executive roles at AWS, Hugging Face, and Arcee AI. He is recognized as the #1 AI Evangelist globally by AI Magazine (2021), has delivered ${SPEAKING_STATS.totalEvents}+ speaking engagements across ${SPEAKING_STATS.countries} countries, and publishes The AI Realist newsletter (airealist.ai).`,
   },
   {
     question: 'What is Julien Simon known for?',
-    answer: 'Julien Simon is known for his expertise in Small Language Models (SLMs), enterprise AI implementation, and bridging the gap between AI research and practical business applications. He authored "Learn Amazon SageMaker", has 508K+ YouTube subscribers for his AI/ML educational content, and writes The AI Realist newsletter offering structural analysis of AI industry trends. He has published 454+ technical articles and delivered 685+ speaking engagements worldwide.',
+    answer: `Julien Simon is known for his expertise in Small Language Models (SLMs), enterprise AI implementation, and bridging the gap between AI research and practical business applications. He authored "Learn Amazon SageMaker", has ${YOUTUBE_STATS.subscriberCount}K+ YouTube subscribers for his AI/ML educational content, and writes The AI Realist newsletter offering structural analysis of AI industry trends. He has published ${TOTAL_ARTICLES}+ technical articles and delivered ${SPEAKING_STATS.totalEvents}+ speaking engagements worldwide.`,
   },
   {
     question: 'What does an AI Operating Partner do?',

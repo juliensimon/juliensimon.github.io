@@ -1,14 +1,14 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, faqSchema, CODE_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import CodeContent from './CodeContent';
 
 export const metadata = buildMetadata({
-  title: 'Code & Open Source — AI & ML Projects',
+  title: 'Code & Open Source — AI, ML, and Developer Tools',
   description:
-    'Open source projects, GitHub repositories, and code examples for machine learning, AI, and cloud computing.',
+    'Open-source projects by Julien Simon: macOS apps, CLI tools, data pipelines, and ML demos on GitHub. Canopy for parallel AI coding, space-datasets pipelines, and more.',
   path: '/code',
   keywords: [
     'open source',
@@ -28,9 +28,10 @@ export default function CodePage() {
       ])} />
       <StructuredData data={webPageSchema(
         'Code & Projects',
-        'Open source projects and code examples for machine learning, AI, and cloud computing.',
+        'Open source projects by Julien Simon: macOS apps, CLI tools, data pipelines, and ML demos on GitHub.',
         `${SITE.url}/code`,
       )} />
+      <StructuredData data={faqSchema(CODE_FAQS, `${SITE.url}/code`)} />
       <Breadcrumbs items={[
         { name: 'Home', href: '/' },
         { name: 'Code & Projects', href: '/code' },

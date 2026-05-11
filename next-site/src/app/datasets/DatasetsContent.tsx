@@ -5,6 +5,8 @@ import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import RelatedContent from '@/components/ui/RelatedContent';
 import { FEATURED_DATASETS, DOMAINS, HF_PROFILE, TOTAL_DATASETS } from '@/data/datasets';
+import { TOTAL_ARTICLES } from '@/data/publications';
+import { YOUTUBE_STATS } from '@/data/youtube';
 
 function formatRecords(n?: number): string {
   if (!n) return '';
@@ -102,8 +104,8 @@ export default function DatasetsContent() {
 
       <RelatedContent items={[
         { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos', metric: '6 repositories' },
-        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '508K subscribers' },
-        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '454+ articles' },
+        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: `${YOUTUBE_STATS.subscriberCount}K subscribers` },
+        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: `${TOTAL_ARTICLES}+ articles` },
       ]} />
     </>
   );

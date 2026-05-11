@@ -4,6 +4,9 @@ import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import RelatedContent from '@/components/ui/RelatedContent';
 import { PINNED_REPOSITORIES, GITHUB_PROFILE } from '@/data/code';
+import { TOTAL_ARTICLES } from '@/data/publications';
+import { TOTAL_DATASETS } from '@/data/datasets';
+import { YOUTUBE_STATS } from '@/data/youtube';
 
 export default function CodeContent() {
   return (
@@ -87,9 +90,9 @@ export default function CodeContent() {
       </section>
 
       <RelatedContent items={[
-        { href: '/datasets', title: 'Datasets', subtitle: '177 space & astronomy datasets', metric: '177 datasets' },
-        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '508K subscribers' },
-        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '454+ articles' },
+        { href: '/datasets', title: 'Datasets', subtitle: `${TOTAL_DATASETS} space & astronomy datasets`, metric: `${TOTAL_DATASETS} datasets` },
+        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: `${YOUTUBE_STATS.subscriberCount}K subscribers` },
+        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: `${TOTAL_ARTICLES}+ articles` },
       ]} />
     </>
   );

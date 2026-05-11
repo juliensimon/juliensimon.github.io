@@ -6,9 +6,9 @@ import { SITE } from '@/lib/constants';
 import ExperienceContent from './ExperienceContent';
 
 export const metadata = buildMetadata({
-  title: 'Experience',
+  title: 'Experience — 30+ Years from Apple to Enterprise AI',
   description:
-    'Julien Simon\'s career: AI Operating Partner at Fortino Capital, former VP at Hugging Face, Principal Evangelist at AWS. 30+ years from Apple to enterprise AI.',
+    'Julien Simon\'s career: AI Operating Partner at Fortino Capital, former VP at Arcee AI, Chief Evangelist at Hugging Face, Global Evangelist at AWS. 30+ years from Apple to enterprise AI.',
   path: '/experience',
   keywords: [
     'career',

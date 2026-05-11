@@ -12,6 +12,8 @@ const SpeakingMap = dynamic(() => import('@/components/ui/SpeakingMap'), {
 });
 import RelatedContent from '@/components/ui/RelatedContent';
 import { SPEAKING_STATS, SPEAKING_YEARS } from '@/data/speaking';
+import { TOTAL_ARTICLES } from '@/data/publications';
+import { YOUTUBE_STATS } from '@/data/youtube';
 
 export default function SpeakingContent() {
   return (
@@ -84,8 +86,8 @@ export default function SpeakingContent() {
       </section>
 
       <RelatedContent items={[
-        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '454+ articles' },
-        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '508K subscribers' },
+        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: `${TOTAL_ARTICLES}+ articles` },
+        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: `${YOUTUBE_STATS.subscriberCount}K subscribers` },
         { href: '/books', title: 'Books', subtitle: 'Published works on ML and cloud', metric: '4 books' },
       ]} />
     </>

@@ -6,8 +6,13 @@ Produces:
   - sitemap-blog.xml    — blog posts (Arcee, HF, AWS, Medium, Legacy).
                           Industry Perspectives URLs are owned by next-site/src/app/sitemap.ts.
   - sitemap-videos.xml  — all YouTube transcript pages
+  - sitemap-index.xml   — index referencing all individual sitemaps.
 
 Run as part of the postbuild step.
+
+Speaking-year URLs are owned by next-site/src/app/sitemap.ts and are NOT
+duplicated here. A legacy combined sitemap-legacy.xml used to exist but was
+removed because it was a pure union of sitemap-blog + sitemap-videos.
 """
 
 import re
@@ -117,21 +122,6 @@ def write_sitemap(filename, urls):
     return len(urls)
 
 
-def generate_speaking_sitemap():
-    """Generate sitemap-speaking.xml from known speaking year pages."""
-    years = [2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016]
-    urls = []
-    for year in years:
-        url = f"{SITE_URL}/speaking/{year}"
-        lastmod = f"{year}-12-31" if year < 2025 else datetime.now().strftime("%Y-%m-%d")
-        changefreq = "weekly" if year >= 2025 else "yearly"
-        priority = "0.7" if year >= 2025 else "0.5"
-        urls.append((url, lastmod, changefreq, priority))
-    # Also include the main speaking page
-    urls.insert(0, (f"{SITE_URL}/speaking", datetime.now().strftime("%Y-%m-%d"), "weekly", "0.9"))
-    return urls
-
-
 def write_sitemap_index(filename, sitemaps):
     """Generate a sitemap index file referencing all individual sitemaps."""
     now = datetime.now().strftime("%Y-%m-%d")
@@ -153,32 +143,38 @@ def write_sitemap_index(filename, sitemaps):
         print(f"  Written sitemap index to {target}")
 
 
+def remove_obsolete_sitemaps():
+    """Remove obsolete sitemap files that were previously generated.
+
+    sitemap-speaking.xml: speaking URLs are owned by next-site/src/app/sitemap.ts.
+    sitemap-legacy.xml:   was a pure union of sitemap-blog + sitemap-videos.
+    """
+    for filename in ("sitemap-speaking.xml", "sitemap-legacy.xml"):
+        for target_dir in (PUBLIC, OUT):
+            target = target_dir / filename
+            if target.exists():
+                target.unlink()
+                print(f"  Removed obsolete {target}")
+
+
 def main():
     blog_urls = scan_dirs(BLOG_DIRS, blog_priority)
     video_urls = scan_dirs(VIDEO_DIRS, video_priority)
-    speaking_urls = generate_speaking_sitemap()
 
     n_blog = write_sitemap("sitemap-blog.xml", blog_urls)
     n_video = write_sitemap("sitemap-videos.xml", video_urls)
-    n_speaking = write_sitemap("sitemap-speaking.xml", speaking_urls)
 
-    # Also generate combined sitemap-legacy.xml for backwards compat
-    all_urls = blog_urls + video_urls
-    n_all = write_sitemap("sitemap-legacy.xml", all_urls)
+    remove_obsolete_sitemaps()
 
     # Generate sitemap index referencing all individual sitemaps
     write_sitemap_index("sitemap-index.xml", [
         f"{SITE_URL}/sitemap.xml",
         f"{SITE_URL}/sitemap-blog.xml",
         f"{SITE_URL}/sitemap-videos.xml",
-        f"{SITE_URL}/sitemap-speaking.xml",
-        f"{SITE_URL}/sitemap-legacy.xml",
     ])
 
     print(f"\nGenerated sitemap-blog.xml with {n_blog} URLs")
     print(f"Generated sitemap-videos.xml with {n_video} URLs")
-    print(f"Generated sitemap-speaking.xml with {n_speaking} URLs")
-    print(f"Generated sitemap-legacy.xml with {n_all} URLs (combined)")
     print(f"Generated sitemap-index.xml (sitemap index)")
 
 

@@ -4,6 +4,8 @@ import MetricCard from '@/components/ui/MetricCard';
 import YearCard from '@/components/ui/YearCard';
 import RelatedContent from '@/components/ui/RelatedContent';
 import { YOUTUBE_STATS, VIDEO_YEARS, LATEST_VIDEOS } from '@/data/youtube';
+import { TOTAL_ARTICLES } from '@/data/publications';
+import { SPEAKING_STATS } from '@/data/speaking';
 
 export default function YouTubeContent() {
   return (
@@ -77,8 +79,8 @@ export default function YouTubeContent() {
       </section>
 
       <RelatedContent items={[
-        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: '454+ articles' },
-        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '685+ engagements' },
+        { href: '/publications', title: 'Publications', subtitle: 'Technical articles on AI and ML', metric: `${TOTAL_ARTICLES}+ articles` },
+        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: `${SPEAKING_STATS.totalEvents}+ engagements` },
         { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos' },
       ]} />
     </>

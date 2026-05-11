@@ -3,12 +3,12 @@ import { breadcrumbSchema, webPageSchema, faqSchema, PUBLICATIONS_FAQS } from '@
 import StructuredData from '@/components/seo/StructuredData';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
+import { TOTAL_ARTICLES } from '@/data/publications';
 import PublicationsContent from './PublicationsContent';
 
 export const metadata = buildMetadata({
-  title: 'Publications — 454+ Articles on AI & ML',
-  description:
-    '454+ articles on AI, machine learning, and cloud computing. Published on AWS Blog, Hugging Face, Medium, and The AI Realist newsletter by Julien Simon.',
+  title: `Publications — ${TOTAL_ARTICLES}+ Articles on AI & ML`,
+  description: `${TOTAL_ARTICLES}+ articles on AI, machine learning, and cloud computing. Published on AWS Blog, Hugging Face, Medium, and The AI Realist newsletter by Julien Simon.`,
   path: '/publications',
   keywords: [
     'technical writing',
@@ -30,7 +30,7 @@ export default function PublicationsPage() {
       ])} />
       <StructuredData data={webPageSchema(
         'Publications',
-        '454+ articles on AI, machine learning, and cloud computing by Julien Simon.',
+        `${TOTAL_ARTICLES}+ articles on AI, machine learning, and cloud computing by Julien Simon.`,
         `${SITE.url}/publications`,
       )} />
       <StructuredData data={faqSchema(PUBLICATIONS_FAQS, `${SITE.url}/publications`)} />

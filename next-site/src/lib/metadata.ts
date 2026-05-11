@@ -6,11 +6,15 @@ interface PageMetaOptions {
   description: string;
   path?: string;
   keywords?: string[];
+  ogImage?: string;
+  ogImageAlt?: string;
 }
 
-export function buildMetadata({ title, description, path = '', keywords = [] }: PageMetaOptions): Metadata {
+export function buildMetadata({ title, description, path = '', keywords = [], ogImage, ogImageAlt }: PageMetaOptions): Metadata {
   const url = `${SITE.url}${path}`;
   const displayTitle = `${title} | ${SITE.name}`;
+  const image = ogImage ?? SITE.ogImage;
+  const imageAlt = ogImageAlt ?? `${SITE.name} - AI Operating Partner at Fortino Capital`;
 
   return {
     // Homepage: use absolute title to bypass the layout template.
@@ -37,13 +41,13 @@ export function buildMetadata({ title, description, path = '', keywords = [] }: 
       description,
       siteName: `${SITE.name} - AI Operating Partner`,
       locale: SITE.locale,
-      images: [{ url: SITE.ogImage, width: 1200, height: 630, alt: `${SITE.name} - AI Operating Partner at Fortino Capital` }],
+      images: [{ url: image, width: 1200, height: 630, alt: imageAlt }],
     },
     twitter: {
       card: 'summary_large_image',
       title: displayTitle,
       description,
-      images: [SITE.ogImage],
+      images: [image],
       creator: SITE.twitterHandle,
       site: SITE.twitterHandle,
     },

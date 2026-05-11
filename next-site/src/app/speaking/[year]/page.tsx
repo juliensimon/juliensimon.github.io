@@ -16,9 +16,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { year } = await params;
   const yearData = SPEAKING_YEARS.find((y) => y.year.toString() === year);
   const count = yearData?.count ?? 0;
+  const noun = count === 1 ? 'talk' : 'talks';
   return buildMetadata({
     title: `Speaking ${year}`,
-    description: `${count} talks and workshops delivered in ${year} at conferences worldwide on AI, machine learning, and cloud computing.`,
+    description: `${count} ${noun} and workshops delivered in ${year} at conferences worldwide on AI, machine learning, and cloud computing.`,
     path: `/speaking/${year}`,
     keywords: [`speaking ${year}`, 'conference talks', 'AI presentations'],
   });
@@ -46,7 +47,7 @@ export default async function SpeakingYearPage({ params }: Props) {
       ])} />
       <StructuredData data={webPageSchema(
         `Speaking ${year}`,
-        `${totalCount} talks and workshops delivered in ${year} at conferences worldwide on AI, machine learning, and cloud computing.`,
+        `${totalCount} ${totalCount === 1 ? 'talk' : 'talks'} and workshops delivered in ${year} at conferences worldwide on AI, machine learning, and cloud computing.`,
         `${SITE.url}/speaking/${year}`,
       )} />
       {events.length > 0 && (

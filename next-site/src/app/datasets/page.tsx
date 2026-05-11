@@ -1,15 +1,14 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema, dataCatalogSchema } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, dataCatalogSchema, faqSchema, DATASETS_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
-import { FEATURED_DATASETS } from '@/data/datasets';
+import { FEATURED_DATASETS, TOTAL_DATASETS } from '@/data/datasets';
 import DatasetsContent from './DatasetsContent';
 
 export const metadata = buildMetadata({
-  title: 'Space Datasets — Open Data for Astronomy & Physics',
-  description:
-    '177 open datasets for orbital mechanics, space weather, astronomy, and physics. Parquet format on Hugging Face, sourced from NASA, ESA, NOAA, and more.',
+  title: `${TOTAL_DATASETS} Space Datasets — Astronomy & Physics`,
+  description: `${TOTAL_DATASETS} open datasets for orbital mechanics, space weather, astronomy, and physics. Parquet format on Hugging Face, sourced from NASA, ESA, NOAA, and more.`,
   path: '/datasets',
   keywords: [
     'space datasets',
@@ -31,10 +30,11 @@ export default function DatasetsPage() {
       ])} />
       <StructuredData data={webPageSchema(
         'Space Datasets',
-        '177 open datasets for orbital mechanics, space weather, astronomy, and physics on Hugging Face.',
+        `${TOTAL_DATASETS} open datasets for orbital mechanics, space weather, astronomy, and physics on Hugging Face.`,
         `${SITE.url}/datasets`,
       )} />
       <StructuredData data={dataCatalogSchema(FEATURED_DATASETS)} />
+      <StructuredData data={faqSchema(DATASETS_FAQS, `${SITE.url}/datasets`)} />
       <Breadcrumbs items={[
         { name: 'Home', href: '/' },
         { name: 'Datasets', href: '/datasets' },
