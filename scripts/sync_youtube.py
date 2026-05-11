@@ -74,6 +74,172 @@ def resolve_channel_id(handle: str) -> str:
     raise ValueError(f"Could not resolve channel ID for @{handle}")
 
 
+def _parse_subscriber_text_to_thousands(text: str) -> int | None:
+    """Convert YouTube subscriber-count text to integer thousands.
+
+    Examples: '508K' -> 508, '1.2M' -> 1200, '508,000' -> 508, '5K' -> 5.
+    YouTube rounds the displayed count down (e.g. 508K means 508,000-508,999),
+    so the rounded thousands value matches what the site displays anyway.
+    """
+    text = text.strip().replace('\xa0', ' ')
+    if ',' in text and not re.search(r'[KMB]', text):
+        # Full digit string like "508,000"
+        digits = text.replace(',', '')
+        if digits.isdigit():
+            return int(digits) // 1000
+        return None
+    match = re.match(r'([\d.]+)\s*([KMB])?', text)
+    if not match:
+        return None
+    n = float(match.group(1))
+    suffix = match.group(2)
+    if suffix == 'M':
+        n *= 1000
+    elif suffix == 'B':
+        n *= 1_000_000
+    # 'K' or no suffix: already in thousands (raw count <1000 rounds to 0)
+    return int(n)
+
+
+def fetch_subscriber_count(channel_id: str) -> int | None:
+    """Fetch the live subscriber count from the YouTube channel page.
+
+    Returns the count in thousands (matching YOUTUBE_STATS.subscriberCount
+    in next-site/src/data/youtube.ts), or None if extraction fails.
+
+    YouTube serves a heavily-stripped page (without subscriber data) when the
+    GDPR consent cookie is absent. Setting CONSENT=YES bypasses the consent
+    interstitial and returns the full server-rendered page.
+    """
+    url = f"https://www.youtube.com/channel/{channel_id}"
+    print(f"Fetching subscriber count from {url}...")
+    try:
+        response = requests.get(url, timeout=15, headers={
+            'User-Agent': (
+                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
+                'AppleWebKit/537.36 (KHTML, like Gecko) '
+                'Chrome/120.0.0.0 Safari/537.36'
+            ),
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept': (
+                'text/html,application/xhtml+xml,application/xml;q=0.9,'
+                'image/webp,*/*;q=0.8'
+            ),
+            'Cookie': 'CONSENT=YES+cb.20210328-17-p0.en+FX+222; SOCS=CAI',
+        })
+        response.raise_for_status()
+    except requests.RequestException as e:
+        print(f"  Warning: failed to fetch channel page: {e}")
+        return None
+
+    # YouTube renders the subscriber count inside ytInitialData JSON. The exact
+    # key has churned between releases (subscriberCountText, metadataParts,
+    # contentMetadataViewModel...), so match the displayed text directly
+    # — both the JSON form ("content":"521K subscribers") and the raw form.
+    match = re.search(r'([\d.,]+\s*[KMB]?)\s*subscribers', response.text)
+    if not match:
+        print("  Warning: could not extract subscriber count from channel page")
+        return None
+    count_k = _parse_subscriber_text_to_thousands(match.group(1))
+    if count_k is None:
+        print(f"  Warning: could not parse subscriber text: {match.group(1)!r}")
+    return count_k
+
+
+def update_subscriber_count(new_count_k: int, dry_run: bool) -> None:
+    """Sync YOUTUBE_STATS.subscriberCount and propagate to text surfaces.
+
+    The numeric value in youtube.ts feeds JSON-LD FAQs and TSX components via
+    template literals (auto-updated). Free-form prose in llms.txt, llms-full.txt,
+    constants.ts (SITE.description), and experience.ts (Arcee narrative) still
+    embeds the literal "<N>K" string, so we replace those occurrences here.
+    """
+    ts_path = SRC / "data" / "youtube.ts"
+    if not ts_path.exists():
+        print(f"  Warning: youtube.ts not found: {ts_path}")
+        return
+
+    content = ts_path.read_text(encoding='utf-8')
+    pattern = r'(subscriberCount:\s*)(\d+)'
+    match = re.search(pattern, content)
+    if not match:
+        print("  Warning: could not find subscriberCount in youtube.ts")
+        return
+
+    old = int(match.group(2))
+    if old == new_count_k:
+        print(f"  Subscriber count unchanged at {old}K")
+        return
+
+    # Update the source-of-truth data file first.
+    new_content = re.sub(pattern, f'\\g<1>{new_count_k}', content)
+    print(f"  Updated subscriberCount: {old}K -> {new_count_k}K")
+    if not dry_run:
+        ts_path.write_text(new_content, encoding='utf-8')
+
+    # Propagate "<old>K" -> "<new>K" in surfaces that embed the literal value.
+    # Word boundaries prevent matching numbers that happen to end in <old>K (e.g.
+    # "1508K"); the K after the digits is anchored by a non-digit/non-letter.
+    old_literal = f"{old}K"
+    new_literal = f"{new_count_k}K"
+    replace_pattern = re.compile(rf'\b{old}K(?![\dKMB])')
+    targets = [
+        BASE / "public" / "llms.txt",
+        BASE / "public" / "llms-full.txt",
+        SRC / "lib" / "constants.ts",
+        SRC / "data" / "experience.ts",
+    ]
+    for target in targets:
+        if not target.exists():
+            continue
+        text = target.read_text(encoding='utf-8')
+        if old_literal not in text:
+            continue
+        updated = replace_pattern.sub(new_literal, text)
+        if updated == text:
+            continue
+        rel = target.relative_to(REPO_ROOT)
+        hits = len(replace_pattern.findall(text))
+        print(f"  Propagated {old_literal} -> {new_literal} in {rel} ({hits} occurrences)")
+        if not dry_run:
+            target.write_text(updated, encoding='utf-8')
+
+    # Update the METRICS array entry in constants.ts; validate-counts.mjs
+    # regex-parses the literal value and fails CI if it drifts from
+    # YOUTUBE_STATS.subscriberCount.
+    constants_path = SRC / "lib" / "constants.ts"
+    if constants_path.exists():
+        text = constants_path.read_text(encoding='utf-8')
+        metrics_pattern = re.compile(
+            r"(\{\s*value:\s*)\d+(,\s*suffix:\s*'K',\s*label:\s*'YouTube Subscribers'\s*\})"
+        )
+        if metrics_pattern.search(text):
+            updated = metrics_pattern.sub(
+                lambda m: f"{m.group(1)}{new_count_k}{m.group(2)}",
+                text,
+            )
+            if updated != text:
+                rel = constants_path.relative_to(REPO_ROOT)
+                print(f"  Updated METRICS[YouTube Subscribers] in {rel}: {old} -> {new_count_k}")
+                if not dry_run:
+                    constants_path.write_text(updated, encoding='utf-8')
+
+    # Refresh the "Last updated" stamp in llms.txt / llms-full.txt so LLMs see
+    # that the file is fresh whenever the subscriber count changes.
+    today = datetime.now().strftime('%Y-%m-%d')
+    for target in (BASE / "public" / "llms.txt", BASE / "public" / "llms-full.txt"):
+        if not target.exists():
+            continue
+        text = target.read_text(encoding='utf-8')
+        stamped = re.sub(
+            r'(Last updated:\s*)\d{4}-\d{2}-\d{2}',
+            f'\\g<1>{today}',
+            text,
+        )
+        if stamped != text and not dry_run:
+            target.write_text(stamped, encoding='utf-8')
+
+
 def fetch_feed_rss(channel_id: str) -> list[VideoItem]:
     """Fetch and parse the YouTube Atom feed (returns ~15 most recent videos)."""
     url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
@@ -1016,6 +1182,12 @@ def run(
     if not channel_id:
         channel_id = CHANNEL_ID
     print(f"Channel ID: {channel_id}")
+
+    # Sync subscriber count (runs even when there are no new videos — the count
+    # drifts independently of new uploads and is consumed by JSON-LD + llms.txt).
+    new_subs = fetch_subscriber_count(channel_id)
+    if new_subs is not None:
+        update_subscriber_count(new_subs, dry_run)
 
     # Fetch feed
     videos = fetch_feed(channel_id)

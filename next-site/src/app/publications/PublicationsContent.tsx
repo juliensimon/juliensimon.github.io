@@ -7,6 +7,8 @@ import ScrollReveal from '@/components/ui/ScrollReveal';
 import MetricCard from '@/components/ui/MetricCard';
 import RelatedContent from '@/components/ui/RelatedContent';
 import { PUBLICATION_CATEGORIES, TOTAL_ARTICLES } from '@/data/publications';
+import { YOUTUBE_STATS } from '@/data/youtube';
+import { SPEAKING_STATS } from '@/data/speaking';
 
 export default function PublicationsContent() {
   return (
@@ -54,8 +56,8 @@ export default function PublicationsContent() {
       </section>
 
       <RelatedContent items={[
-        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '685+ engagements' },
-        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: '508K subscribers' },
+        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: `${SPEAKING_STATS.totalEvents}+ engagements` },
+        { href: '/youtube-videos', title: 'Videos', subtitle: 'Tutorials, demos, and deep dives', metric: `${YOUTUBE_STATS.subscriberCount}K subscribers` },
         { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos' },
       ]} />
     </>
