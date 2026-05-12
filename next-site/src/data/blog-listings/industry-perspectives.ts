@@ -11,6 +11,20 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Below the Silicon',
+    slug: '2026-05-12_below-the-silicon',
+    date: '2026-05-12',
+    description: 'Trump flies to Beijing on Wednesday. Here\'s the recipe his hosts control, element by element.',
+    originalUrl: 'https://www.airealist.ai/p/below-the-silicon',
+  },
+  {
+    title: 'The $500 Billion Umbrella',
+    slug: '2026-05-06_the-500-billion-umbrella',
+    date: '2026-05-06',
+    description: 'OpenAI called it the largest infrastructure project in history. Now they call it an umbrella.',
+    originalUrl: 'https://www.airealist.ai/p/the-500-billion-umbrella',
+  },
+  {
     title: 'The Round Trip',
     slug: '2026-05-04_the-round-trip',
     date: '2026-05-04',

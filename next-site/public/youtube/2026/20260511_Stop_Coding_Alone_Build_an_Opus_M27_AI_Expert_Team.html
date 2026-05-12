@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Coding Alone! Build an &#x27;Opus + M2.7&#x27; AI Expert Team</title>
+    <meta name="description" content="🚨 Get 12% off any Token Plan tier: https://platform.minimax.io/subscribe/coding-plan?code=9PuYDYrfpN&amp;source=link Resources: - M2.7 model card…">
+    <meta property="og:title" content="Stop Coding Alone! Build an &#x27;Opus + M2.7&#x27; AI Expert Team">
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://www.julien.org/youtube/2026/20260511_Stop_Coding_Alone_Build_an_Opus_M27_AI_Expert_Team.html">
+    <link rel="canonical" href="https://www.julien.org/youtube/2026/20260511_Stop_Coding_Alone_Build_an_Opus_M27_AI_Expert_Team.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Stop Coding Alone! Build an &#x27;Opus + M2.7&#x27; AI Expert Team">
+    <meta name="twitter:creator" content="@julsimon">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "Stop Coding Alone! Build an &#x27;Opus + M2.7&#x27; AI Expert Team",
+        "description": "\ud83d\udea8 Get 12% off any Token Plan tier: https://platform.minimax.io/subscribe/coding-plan?code=9PuYDYrfpN&source=link Resources: - M2.7 model card\u2026",
+        "uploadDate": "2026-05-11T12:35:52+00:00",
+        "embedUrl": "https://www.youtube.com/embed/us6e30yIB3I",
+        "thumbnailUrl": "https://img.youtube.com/vi/us6e30yIB3I/maxresdefault.jpg",
+        "author": { "@id": "https://www.julien.org/#person" }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Stop Coding Alone! Build an &#x27;Opus + M2.7&#x27; AI Expert Team</h1>
+        <div class="date">May 11, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/us6e30yIB3I" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">🚨 Get 12% off any Token Plan tier: https://platform.minimax.io/subscribe/coding-plan?code=9PuYDYrfpN&amp;source=link
+
+Resources:
+- M2.7 model card: https://hf.co/MiniMaxAI/MiniMax-M2.7
+- M2.7 blog post: https://www.minimax.io/news/minimax-m27-en
+- MiniMax Token Plan: https://platform.minimax.io/subscribe/token-plan
+- Cache Commander (the repo I demo): https://github.com/juliensimon/cache-commander
+
+In this video, I run MiniMax M2.7 — an open-weight ~228B-parameter MoE model — as my coding model inside Claude Code. I show the Anthropic-Messages-compatible setup, demo MiniMax&#x27;s recommended Opus → M2.7 hybrid workflow on a real Rust project (my cache-commander project), running a full code and test review, and sending a PR.
+
+⭐️⭐️⭐️ More content on Substack at https://www.airealist.ai ⭐️⭐️⭐️</div>
+
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, Julien here. Today I&#x27;m trying out Minimax M27, an open-weight model from China, as my coding model inside Cloud Code. I&#x27;ll show you the setup, I&#x27;ll run a full code review on one of my open-source projects, and I guess we&#x27;ll send a pull request in the end. Let&#x27;s get started. If you want to know more about Minimax m27, I recommend reading the blog post from Minimax, links in the video description.
+
+But because the model is open weight, we can also find a lot of good information on the Hugging Face page. Let&#x27;s take a look. M27 is open weight and it&#x27;s a mixture of experts model with 256 experts and 8 active experts per token. That&#x27;s about 228 billion parameters and about 10 billion active parameters per token. Weights are natively FP8.
+
+So we see the model is definitely up there with the best closed models. And well, we&#x27;ll see how it performs on my code base. In this demo, I&#x27;m using the Plus High Speed plan. Plus High Speed is a paper token plan that costs $40 a month or $400 a year. So here&#x27;s what you actually get on Plus High Speed.
+
+Route it through M27 high speed, which is a faster variant of the model, faster than the standard tier. And on top of that, you get 9,000 characters a day for speech and 100 images a day for image generation. So if you want to play with the multi-model stack in Minimax, you don&#x27;t have to pay extra for it. It&#x27;s included in the plan. So the good news is, because you&#x27;re watching this video, and then we have the Anthropic Messages compatible endpoint, which is a drop-in replacement for the Anthropic endpoint.
+
+So we basically just point Cloud Code to a different URL and with a different key. So when you sign up for your plan, you can generate an API key, and all you have to do is edit your Cloud Code settings, the settings.json file, and use those exact lines here, and of course just replay, the key with your exact key. And that&#x27;s all there is to it. I have to say during my session, it worked flawlessly. I didn&#x27;t see a single error using the Minimax API with Cloud Code and my plugins, et cetera, et cetera.
+
+So yeah, very simple and as simple as that. In this demo, I&#x27;m actually going to run everything in a Docker sandbox using the SBX command. Code and my plugins etc etc so yeah very simple and as simple as that in this demo I&#x27;m actually going to run everything in a docker sandbox using the sbx command and that lets me give the agent full permissions without having to worry for my local machine all right let&#x27;s get some work done the repo I&#x27;m running this on is an open source project that I built called cache commander and it&#x27;s a rust terminal UI that scans developer cache directories, pip, npm, homebrew, Hugging Face caches, and it looks for known CDEs in your packages, and of course it helps you find and easily delete all those unneeded packages and reclaim gigabytes or tens of gigabytes of disk space. I use Cloud to build this, Opus 4.6, Opus I&#x27;m gonna run cloud setup with Opus, and on the right, I&#x27;m gonna Run Cloud Code setup with Minimax, and that&#x27;s why I&#x27;m passing a different cloud directory here, because I have those settings,.json lines that you saw just a second ago. Okay, so we&#x27;ll just make sure here we&#x27;re using Opus 4.7, and What about this one?
+
+OK, so this one we see Minimax is selected. So let&#x27;s use the two models here. Let&#x27;s maybe plan the code review with Opus, and let&#x27;s execute it with Minimax, which is actually one of the recommended ways to use this model. OK, so I&#x27;m going to go to plan mode and say run a full code and test review. .
+
+This repository. So Opus is going to do its thing. It&#x27;s going to plan the code review, maybe launch some agents, and then we&#x27;ll get a plan in the end, and we&#x27;ll use the plan with Minimax. All right, so Opus is done. It did a fairly extensive review.
+
+I have 22 cache providers in the tool, so there&#x27;s quite a lot to look at. I asked for findings only, no remediation techniques. We&#x27;ll let Minimax figure it out. Okay, so we have the path to that plan, and now we&#x27;re just going to pass it to Minimax and let it actually fix. Okay, so now we can just take the plan that Opus wrote and say, based on the findings, fix issues in the repo, and dispatch agents to parallelize work.
+
+So it&#x27;s going to read the plan. It&#x27;s going to go through all the findings, and I&#x27;m pretty sure it&#x27;s going A-Gents to fix all the issues that it found. So it&#x27;s actually launching a lot of different agents to fix those different problems. ON2-3 performance, so that&#x27;s bad. Fix URL encoding, etc.
+
+So now we&#x27;re doing all those things in parallel. And my code base is getting better. All right, we&#x27;re done. 30 minutes later, we have fixed all the issues of the plan. We&#x27;ve run all the tests.
+
+Everything is clean. So why don&#x27;t we create a pull request and send it to the repo. The pull request is ready. Number 33. Let&#x27;s take a quick look here.
+
+Yep, see it here. And it&#x27;s got all the right details. The bug fixes, the tests. Now we have Github.ci running. Yeah, looks good.
+
+And well I guess I&#x27;ll merge it and maybe release a new version based on this. And maybe to close things here, let&#x27;s get the usage generated. So I started at zero and well I did consume 298 queries out of 4,500 for five hours. So I should be perfectly okay. And yeah, it&#x27;s unlikely during this kind of work you will ever hit usage limits.
+
+And remember, that&#x27;s only $40 a month. So this looks like a very good deal. So there you go, Minimax M27 in Cloud Code. I really like the fact that the compatibility looks excellent. It was very easy to configure Cloud to use Minimax.
+
+I didn&#x27;t see any tool error or any kind of error.</div>
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            <a href="index.html">&larr; Back to 2026 Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
+        </div>
+    </div>
+
+
+</body></html>

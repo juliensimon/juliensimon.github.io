@@ -228,4 +228,4 @@ export const FEATURED_DATASETS: Dataset[] = [
 ];
 
 export const HF_PROFILE = 'https://huggingface.co/juliensimon';
-export const TOTAL_DATASETS = 213;
+export const TOTAL_DATASETS = 216;

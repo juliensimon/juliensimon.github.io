@@ -37,6 +37,10 @@ SRC = BASE / "src"
 # Repo-root youtube/ is the canonical copy checked by the validator
 REPO_YOUTUBE = REPO_ROOT / "youtube"
 
+# The AI Realist now has multiple authors. Only sync Julien's own posts.
+AUTHOR_NAME = "Julien Simon"
+DC_NS = "http://purl.org/dc/elements/1.1/"
+
 
 class PostItem(NamedTuple):
     """Parsed RSS item."""
@@ -125,11 +129,18 @@ def fetch_feed() -> list[PostItem]:
     root = ET.fromstring(response.content)
     items = []
 
+    skipped_other_authors: list[str] = []
     for item in root.findall('.//item'):
         title = item.findtext('title', '').strip()
         link = item.findtext('link', '').strip()
         pub_date_str = item.findtext('pubDate', '')
         description = item.findtext('description', '').strip()
+
+        # Skip posts written by other authors on the same Substack.
+        creator = (item.findtext(f'{{{DC_NS}}}creator') or '').strip()
+        if creator and creator != AUTHOR_NAME:
+            skipped_other_authors.append(f"{title} (by {creator})")
+            continue
 
         # Get content:encoded if available
         content = ''
@@ -159,6 +170,11 @@ def fetch_feed() -> list[PostItem]:
             post_type=post_type,
             youtube_id=youtube_id,
         ))
+
+    if skipped_other_authors:
+        print(f"Skipped {len(skipped_other_authors)} posts by other authors:")
+        for entry in skipped_other_authors:
+            print(f"  - {entry}")
 
     return items
 

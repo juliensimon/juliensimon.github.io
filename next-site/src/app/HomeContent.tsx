@@ -8,6 +8,24 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Below the Silicon',
+    href: '/blog/industry-perspectives/2026-05-12_below-the-silicon/',
+    date: 'May 12, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Stop Coding Alone! Build an \'Opus + M2.7\' AI Expert Team',
+    href: '/youtube/2026/20260511_Stop_Coding_Alone_Build_an_Opus_M27_AI_Expert_Team.html',
+    date: 'May 11, 2026',
+    icon: 'video',
+  },
+  {
+    title: 'The $500 Billion Umbrella',
+    href: '/blog/industry-perspectives/2026-05-06_the-500-billion-umbrella/',
+    date: 'May 6, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2 - Part 2',
     href: '/youtube/2026/20260504_Deep_Dive_How_Three_MoE_Reasoning_Models_Actually_Work_Trinity_DeepSeek_R1_Kimi_K2_-_Part_2.html',
     date: 'May 4, 2026',
@@ -17,24 +35,6 @@ const LATEST_UPDATES = [
     title: 'The Round Trip',
     href: '/blog/industry-perspectives/2026-05-04_the-round-trip/',
     date: 'May 4, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Simplify Up, Enforce Down',
-    href: '/blog/industry-perspectives/2026-04-30_simplify-up-enforce-down/',
-    date: 'April 30, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'More Sovereign, Different Stack: The Builder Tax',
-    href: '/blog/industry-perspectives/2026-04-29_more-sovereign-different-stack-the-builder-tax/',
-    date: 'April 29, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Ten Percent Sovereign',
-    href: '/blog/industry-perspectives/2026-04-22_ten-percent-sovereign/',
-    date: 'April 22, 2026',
     icon: 'article',
   },
 ];
