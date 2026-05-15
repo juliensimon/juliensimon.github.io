@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'From issue to PR in 15 minutes with Cursor & Composer',
+    href: '/youtube/2026/20260515_From_issue_to_PR_in_15_minutes_with_Cursor_Composer.html',
+    date: 'May 15, 2026',
+    icon: 'video',
+  },
+  {
     title: 'Below the Silicon',
     href: '/blog/industry-perspectives/2026-05-12_below-the-silicon/',
     date: 'May 12, 2026',
@@ -30,12 +36,6 @@ const LATEST_UPDATES = [
     href: '/youtube/2026/20260504_Deep_Dive_How_Three_MoE_Reasoning_Models_Actually_Work_Trinity_DeepSeek_R1_Kimi_K2_-_Part_2.html',
     date: 'May 4, 2026',
     icon: 'video',
-  },
-  {
-    title: 'The Round Trip',
-    href: '/blog/industry-perspectives/2026-05-04_the-round-trip/',
-    date: 'May 4, 2026',
-    icon: 'article',
   },
 ];
 

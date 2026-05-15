@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From issue to PR in 15 minutes with Cursor &amp; Composer</title>
+    <meta name="description" content="In this video, I close a real open issue in cache-commander, my open-source Rust project, in one session — using the new Cursor and Composer 2.">
+    <meta property="og:title" content="From issue to PR in 15 minutes with Cursor &amp; Composer">
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://www.julien.org/youtube/2026/20260515_From_issue_to_PR_in_15_minutes_with_Cursor_Composer.html">
+    <link rel="canonical" href="https://www.julien.org/youtube/2026/20260515_From_issue_to_PR_in_15_minutes_with_Cursor_Composer.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="From issue to PR in 15 minutes with Cursor &amp; Composer">
+    <meta name="twitter:creator" content="@julsimon">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "From issue to PR in 15 minutes with Cursor &amp; Composer",
+        "description": "In this video, I close a real open issue in cache-commander, my open-source Rust project, in one session \u2014 using the new Cursor and Composer 2.",
+        "uploadDate": "2026-05-15T09:48:05+00:00",
+        "embedUrl": "https://www.youtube.com/embed/9QG_XNu9hCM",
+        "thumbnailUrl": "https://img.youtube.com/vi/9QG_XNu9hCM/maxresdefault.jpg",
+        "author": { "@id": "https://www.julien.org/#person" }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>From issue to PR in 15 minutes with Cursor &amp; Composer</h1>
+        <div class="date">May 15, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/9QG_XNu9hCM" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">In this video, I close a real open issue in cache-commander, my open-source Rust project, in one session — using the new Cursor and Composer 2. Pick the issue, run Plan mode, write the tests first, implement, ship the pull request, and run the feature live. End to end, on my laptop.
+
+⭐️⭐️⭐️ More content on Substack at https://www.airealist.ai ⭐️⭐️⭐️
+
+The new Cursor and Composer 2: https://cursor.com. 
+Cloud Agents: https://cursor.com/agents.
+Project: https://github.com/juliensimon/cache-commander
+
+#cursor #CursorCreator #Rust #OpenSource #AI</div>
+
+        <div class="transcript">
+<h2>Transcript</h2>
+            Everybody julian here today I&#x27;m going to use the new cursor and its composer 2 model to implement a new feature end-to-end on one of my open source projects we&#x27;ll start from the github issue we&#x27;ll use plan mode to write the spec and the test plan and then we&#x27;ll go into build mode using tdd to generate the test first then the code and then once we have a working app we&#x27;ll send a pull request back to the repo Let&#x27;s get started. The project we&#x27;re going to work on today is Cache Commander. This is an open source tool written in Rust that I built to manage developer caches on my machine. Things like pip, npm, Hugging Face, etc. We can scan for vulnerabilities.
+
+We can delete unused packages, etc. So it covers about 20 cache providers, but it&#x27;s missing an important one, which is poetry. We can scan for vulnerabilities we can delete unused packages etc etc so it covers about 20 cache providers but it&#x27;s missing an important one which is poetry and this is the one we&#x27;re going to implement today I already created the github issue to define that feature it&#x27;s number 21 you see it on screen and well this is the at the Composer model, and we&#x27;ll take it from there. But first things first, let&#x27;s open Cursor. So here&#x27;s Cursor on my local machine.
+
+We&#x27;re all familiar with this. And this is the old view. So let&#x27;s take a look at the new cursor. The only thing you need to do is Command-Shift-P and say New Agents Window. And now we see the new cursor, which is fully agent-based, and this is the one I&#x27;m going to work with today.
+
+21 and plan for implementation using a strict TDD approach. And of course, we have plenty of existing providers. So follow the same structure as other providers because we don&#x27;t want some kind of weird implementation. It should be consistent with what we already have. Okay, well, that should be enough, so why don&#x27;t we just go and run this.
+
+The cursor is just grabbing all the information that it needs. It got, of course, the issue itself. It&#x27;s using the GitHub MCP to explore the code and so on. And this is just working out of the box, which is nice. I didn&#x27;t have to set up anything.
+
+Just, of course connect cursor, Cursor is apparently done exploring. It&#x27;s got everything it needs. It says confirming issue 21, add a poetry cache provider, and now it&#x27;s writing the plan. And of course, you could look at everything that happened here, exploring all the files, and look at the thinking code from the model. And we&#x27;ll just wait for the plan to be ready, and we&#x27;ll take a quick look, of course.
+
+Well, here it is. That was good. That was fast. Okay, so here&#x27;s the plan. Issue 21.
+
+Okay, lots of technical details here. And, of course, we already have existing Python packages providers. So it&#x27;s followed my lead on, hey, you need to stay consistent. We&#x27;ve got pip, we&#x27;ve got uv, so you probably don&#x27;t need to reinvent all the wheel. We&#x27;ll follow the strict TDD workflow which is really good so red green tasks okay nice so we&#x27;ll see how that works the files how to verify everything run cargo test okay and to do&#x27;s so this is a good plan apparently why don&#x27;t we just go and build it okay so we&#x27;ll just click on build here all right so it looks like the implementation is complete we can see the full test suite here is passing right it says okay all the way which is great all the to-dos are done and I guess I get a summary of what it did okay so a new provider module I&#x27;d wired it into how it&#x27;s plugged into the my MCP server and verification cargo test complete successfully for the whole workspace so that&#x27;s pretty nice right so we should be able to build the app and give it a go let&#x27;s do that okay so let&#x27;s just maybe run the tests yeah just to be sure I think should be okay and green Lots of tests, but that&#x27;s what you need, right?
+
+Okay, and now let&#x27;s just run the app. Okay, so we see all our providers. Let&#x27;s go into... The library caches on this Mac. This is where Poetry should live.
+
+Okay, so Poetry&#x27;s in here. I installed some packages for the demo. And yeah, we can see it&#x27;s decoding everything. And it&#x27;s telling us, you can see on the right, it says, you know, safe to delete or sometimes, you know unsafe. So the provider was definitely added here.
+
+Okay, that seems to work. How about the virtual environments? I have one here. So it was detected, and I see all the packages here, right, which are probably, which are correctly detected. So that&#x27;s good.
+
+So it looks like this is working, which is pretty cool. It was really the first attempt. I didn&#x27;t have to do this. Okay, well, it looks like there are a few more. I&#x27;ll just merge it and build a the same workflow that has used here, except instead of running it on your own machine, you run it in the cloud on Cursor&#x27;s machine, and the agent is running on its own DevBox.
+
+And it works while I&#x27;m doing something else. And I can just dispatch it from my laptop and come back later. So how would you do this? Well, just select cloud here. Instead of local and that&#x27;s all there is to it and you&#x27;ll fire up that spec or test or development job on cursor servers in the cloud okay but maybe that&#x27;s for another video this is the end of this one I hope you enjoyed it I hope you learned a few things and feel free of course to give cursor a shot and maybe take a look at cache commander and send me your own That&#x27;s it for today, thank you so much for watching, until next time my friend, as always you know what to do, keep rocking!</div>
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            <a href="index.html">&larr; Back to 2026 Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
+        </div>
+    </div>
+
+
+</body></html>
