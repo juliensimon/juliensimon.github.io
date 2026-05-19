@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Zero for Three',
+    slug: '2026-05-19_zero-for-three',
+    date: '2026-05-19',
+    description: 'Strikeout. Three rare earth tests for Beijing. The summit answered no to each. November 10 is on the calendar.',
+    originalUrl: 'https://www.airealist.ai/p/zero-for-three',
+  },
+  {
     title: 'Below the Silicon',
     slug: '2026-05-12_below-the-silicon',
     date: '2026-05-12',

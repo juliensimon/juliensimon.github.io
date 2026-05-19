@@ -8,6 +8,18 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Web app + Mobile + Stripe + Pitch Deck: one Replit project!',
+    href: '/youtube/2026/20260519_Web_app_Mobile_Stripe_Pitch_Deck_one_Replit_project.html',
+    date: 'May 19, 2026',
+    icon: 'video',
+  },
+  {
+    title: 'Zero for Three',
+    href: '/blog/industry-perspectives/2026-05-19_zero-for-three/',
+    date: 'May 19, 2026',
+    icon: 'article',
+  },
+  {
     title: 'From issue to PR in 15 minutes with Cursor & Composer',
     href: '/youtube/2026/20260515_From_issue_to_PR_in_15_minutes_with_Cursor_Composer.html',
     date: 'May 15, 2026',
@@ -23,18 +35,6 @@ const LATEST_UPDATES = [
     title: 'Stop Coding Alone! Build an \'Opus + M2.7\' AI Expert Team',
     href: '/youtube/2026/20260511_Stop_Coding_Alone_Build_an_Opus_M27_AI_Expert_Team.html',
     date: 'May 11, 2026',
-    icon: 'video',
-  },
-  {
-    title: 'The $500 Billion Umbrella',
-    href: '/blog/industry-perspectives/2026-05-06_the-500-billion-umbrella/',
-    date: 'May 6, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Deep Dive: How Three MoE Reasoning Models Actually Work — Trinity, DeepSeek R1, Kimi K2 - Part 2',
-    href: '/youtube/2026/20260504_Deep_Dive_How_Three_MoE_Reasoning_Models_Actually_Work_Trinity_DeepSeek_R1_Kimi_K2_-_Part_2.html',
-    date: 'May 4, 2026',
     icon: 'video',
   },
 ];
