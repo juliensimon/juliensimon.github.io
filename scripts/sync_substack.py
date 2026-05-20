@@ -588,7 +588,7 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     </style>
 </head>
 <body>
-    <p style="margin-bottom: 1.5em;"><a href="../" style="color: #6366f1; text-decoration: none;">&larr; Back to Industry Perspectives</a></p>
+    <p style="margin-bottom: 1.5em;"><a href="../" style="color: #6366f1; text-decoration: none;">&larr; Industry Perspectives</a> &nbsp;|&nbsp; <a href="/" style="color: #6366f1; text-decoration: none;">Home</a></p>
     <article>
         <h1>{html.escape(item.title)}</h1>
         <div class="meta">

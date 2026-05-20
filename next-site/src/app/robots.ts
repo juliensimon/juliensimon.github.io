@@ -36,11 +36,8 @@ export default function robots(): MetadataRoute.Robots {
       // Yandex
       { userAgent: 'YandexBot', allow: '/' },
     ],
-    sitemap: [
-      `${SITE.url}/sitemap-index.xml`,
-      `${SITE.url}/sitemap.xml`,
-      `${SITE.url}/sitemap-blog.xml`,
-      `${SITE.url}/sitemap-videos.xml`,
-    ],
+    // Single canonical entry point; sitemap-index.xml nests the core,
+    // blog, and videos sitemaps. Listing children flat too double-counts.
+    sitemap: [`${SITE.url}/sitemap-index.xml`],
   };
 }

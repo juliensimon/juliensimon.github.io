@@ -101,6 +101,9 @@ class SubstackHTMLCleaner:
         # Step 2: Remove elements with Substack-specific classes
         self._remove_substack_elements(soup)
 
+        # Step 2b: Demote body headings so the page keeps a single <h1>
+        self._demote_body_headings(soup)
+
         # Step 3: Extract images before further cleaning
         images = self._extract_images(soup)
 
@@ -154,6 +157,17 @@ class SubstackHTMLCleaner:
                 if pattern.search(class_str):
                     element.decompose()
                     break
+
+    def _demote_body_headings(self, soup: BeautifulSoup) -> None:
+        """Demote <h1> tags in the body to <h2>.
+
+        The article page template already emits the single page <h1>
+        (the post title). Substack/Medium source content frequently uses
+        <h1> for in-body section headings, which would produce an invalid
+        multi-<h1> document and break heading hierarchy for crawlers.
+        """
+        for h1 in soup.find_all('h1'):
+            h1.name = 'h2'
 
     def _extract_images(self, soup: BeautifulSoup) -> list[dict]:
         """Extract image information from the content."""
