@@ -1,7 +1,7 @@
 # Design — Medium copyright-image removal
 
 - **Date:** 2026-05-22
-- **Status:** Approved design — pending implementation plan
+- **Status:** Approved design (revised) — pending implementation plan
 - **Author:** Julien Simon (with Claude)
 - **Related:** `IMAGE_COPYRIGHT_AUDIT.md`, repo commit `06e86a91` (images hidden in repo HTML)
 
@@ -15,24 +15,34 @@ The same images also appear in the original posts published on Medium
 (`julsimon.medium.com`). On Medium, hiding via HTML comments is not possible — the images
 must be **removed** from the live posts. This document specifies that removal.
 
-## 2. Key constraint
+## 2. Key constraints and what the repo already gives us
 
 Medium has **no API for editing published posts** (the Medium API only ever supported
 *creating* posts and was deprecated years ago). The only way to remove an image from a
-published Medium post is through the **Medium web editor**. This work is therefore done
-by **browser automation** driving a logged-in Medium session.
+published Medium post is the **Medium web editor**, so this work is done by **browser
+automation** driving a logged-in Medium session.
 
-There is **no shared identifier** between the repo image files (`imageNN.webp`) and the
-Medium-hosted copies (`miro.medium.com` hashed URLs). Images can only be matched by
-**document position** ("the Nth image in the post"), cross-checked against the audit's
-**visual description**.
+The repo directory `next-site/public/blog/aws-medium-posts-and-images/` is a **synced copy**
+of these Medium posts. This is decisive and simplifies the job:
+
+- **No archiving is needed.** The repo already contains every flagged image file. Reversal
+  means re-inserting the image from its existing repo file — there is nothing extra to
+  capture, screenshot, or back up.
+- **Medium URLs are recoverable from the repo.** The synced post HTML carries Medium post
+  URLs of the form `https://medium.com/@julsimon/<slug>-<hash>` (in cross-reference and
+  social-share links). A logged-in Stories-dashboard lookup is only a **fallback** for the
+  minority of posts whose own URL is not present in their synced HTML.
+- On the **live** Medium post, images are served from `miro.medium.com` with hashed URLs —
+  no identifier shared with the repo files. So the specific image to delete is located by
+  **document position** (the repo numbers images `imageNN.webp` sequentially, so `image04`
+  is the 4th image) cross-checked against the audit's **visual description**.
 
 ## 3. Scope
 
 ### In scope
 - The **46 HIGH-risk images** listed in `IMAGE_COPYRIGHT_AUDIT.md` under the section
   `## HIGH risk`, whose paths begin with
-  `next-site/public/blog/aws-medium-posts-and-images/` (~30 posts, 2016–2021).
+  `next-site/public/blog/aws-medium-posts-and-images/` (~36 posts, 2016–2021).
 
 ### Out of scope
 - The 7 HIGH-risk **legacy** images (2008–2016) — that was a personal blog, never on Medium.
@@ -47,6 +57,7 @@ Medium-hosted copies (`miro.medium.com` hashed URLs). Images can only be matched
 | Removal style | Clean removal — delete the image **and** its caption, no placeholder |
 | Failure handling | Skip the problem post, continue, report all skips at the end |
 | Approach | Two-phase (Discovery → Execution) with a manual checkpoint after Phase 1 |
+| Archiving | None — the repo is the archive (see Section 2) |
 
 ## 5. Tooling
 
@@ -64,18 +75,17 @@ by loading the Stories dashboard (`medium.com/me/stories`).
 
 ### Phase 1 — Discovery (read-only, zero edits)
 For each audited post:
-1. Resolve the live Medium URL by matching the audit post title against the Stories
-   dashboard. (Audit folder slug, e.g. `2017-04-05_Fascinating-Tales-of-a-Strange-Tomorrow`,
-   maps to the post title "Fascinating Tales of a Strange Tomorrow".)
+1. **Resolve the Medium URL** by extracting it from the synced repo `index.html`
+   (cross-reference / social-share links). If the post's own URL is not present, fall back
+   to a Stories-dashboard lookup by title.
 2. Open the published post; enumerate all images in document order.
-3. The repo numbers images `imageNN.webp` sequentially in document order, so `image04`
-   is the **4th image**. For each flagged ordinal, screenshot that image and **visually
-   confirm** it matches the audit description (e.g. "Robby the Robot", "HAL 9000").
+3. For each flagged ordinal (`imageNN` → N), **visually confirm** the Nth image matches the
+   audit description (e.g. "Robby the Robot", "HAL 9000").
 4. Record a verdict per flagged image: `confirmed`, `mismatch`, or `not-found`.
 
-**Output:** the manifest (Section 7.1), the reversal-log skeleton (Section 7.2), and
-before-screenshots. Posts not found under the account, already-removed images, and visual
-mismatches are recorded and **excluded from deletion**.
+**Output:** the manifest (Section 7.1). Posts whose URL cannot be resolved, already-removed
+images, and visual mismatches are recorded and **excluded from deletion**. No screenshots or
+image copies are committed; any screenshots taken are transient verification aids only.
 
 **Checkpoint:** the manifest summary is presented to the user. Phase 2 does not start
 until the user approves.
@@ -83,8 +93,8 @@ until the user approves.
 ### Phase 2 — Execution (destructive, per post)
 For each post with at least one `confirmed` target:
 1. Open the post in Medium's editor.
-2. Re-enumerate images in the editor; assert count and order match Phase 1. On mismatch,
-   skip the post and log it (guards against drift since discovery).
+2. Re-enumerate images in the editor; assert count and order match Phase 1 (guards against
+   drift). On mismatch, skip the post and log it.
 3. Delete the `confirmed` flagged images **highest-ordinal-first**, so deleting one image
    does not shift the indices of images not yet processed. Deleting an image block removes
    the image together with its caption (clean removal).
@@ -98,50 +108,47 @@ Any anomaly ⇒ skip the post, continue, collect for the final report.
 
 ## 7. Data models
 
+Both files live in `medium-removal-log/` and are committed to git. They contain only text
+(URLs, ordinals, captions, descriptions) — no images.
+
 ### 7.1 Manifest (`medium-removal-log/manifest.md`)
 Phase 1 output. One row per flagged image:
 
 | Field | Description |
 |---|---|
-| post_title | Title as shown on Medium |
-| post_url | Live Medium URL |
+| post_folder | Repo folder name of the synced post |
+| medium_url | Live Medium URL (resolved in Phase 1) |
 | ordinal | 1-based image position in the post (`imageNN` → N) |
 | audit_description | Expected content, from `IMAGE_COPYRIGHT_AUDIT.md` |
 | medium_caption | Caption text on the Medium post, if any |
 | repo_source | Path to the image file in the repo |
-| before_screenshot | Path to the Phase-1 screenshot |
-| verdict | `confirmed` / `mismatch` / `not-found` |
+| verdict | `confirmed` / `mismatch` / `not-found` / `url-unresolved` |
 
 ### 7.2 Reversal log (`medium-removal-log/reversal-log.md`)
-Operational artifact, committed to git. Built in Phase 1, finalized in Phase 2. One row
-per image targeted for removal:
+Built in Phase 1 from the `confirmed` manifest rows, finalized in Phase 2. One row per
+image targeted for removal:
 
 | Field | Description |
 |---|---|
 | post_title | Title as shown on Medium |
-| post_url | Live Medium URL |
+| medium_url | Live Medium URL |
 | ordinal | 1-based image position before removal |
 | neighbour_context | Brief note on the preceding/following block, to locate the slot on re-insertion |
 | caption | Caption text removed with the image |
 | repo_source | Repo path to the image file — the bytes needed to restore it |
-| before_screenshot | Path to the before-state screenshot |
 | status | `pending` / `removed` / `skipped` (with reason) |
 | timestamp | When the removal was applied |
 
 The log file header documents the **reversal procedure**: open the post editor → navigate
 to the recorded position → insert the image from `repo_source` → re-add the `caption` →
-save. Reversal is manual but fully specified; it is only possible because the repo retains
-every image file.
-
-### 7.3 Screenshots (`medium-removal-log/screenshots/`)
-Before-state captures from Phase 1 (full post and the specific image), referenced by the
-manifest and reversal log.
+save. Reversal needs no extra archiving because the repo permanently retains every image
+file (Section 2).
 
 ## 8. Error handling
 
 | Situation | Handling |
 |---|---|
-| Post not found under the account | Skip, log, report |
+| Medium URL cannot be resolved (not in repo HTML, not in dashboard) | Mark `url-unresolved`, skip, report |
 | Image already removed / count mismatch | Skip the whole post, log, report |
 | Phase-1 visual mismatch | Exclude from deletion, flag for manual review |
 | Session expires mid-run | Detected on next action failure; log, report; manual re-login needed |
@@ -159,8 +166,7 @@ manifest and reversal log.
 
 1. `medium-removal-log/manifest.md` — Phase 1 verified manifest.
 2. `medium-removal-log/reversal-log.md` — committed reversal log.
-3. `medium-removal-log/screenshots/` — before-state screenshots.
-4. A final summary report of removals and skips.
+3. A final summary report of removals and skips.
 
 ## 11. Risks
 
@@ -173,9 +179,10 @@ manifest and reversal log.
 
 ## 12. Assumptions
 
+- The repo `aws-medium-posts-and-images/` is a faithful synced copy of the Medium posts —
+  same images in the same order — so it serves as both the image archive and the source of
+  Medium URLs.
 - The repo numbers `imageNN.webp` in the same order images appear in the published post.
   If false for a given post, Phase 1's visual check catches it as a `mismatch`.
-- All ~30 target posts are editable under the `julsimon.medium.com` account. Posts
-  published under a Medium publication are still author-editable; posts not found are
-  skipped and reported.
-- The repo retains every flagged image file, making reversal possible.
+- All target posts are editable under the `julsimon.medium.com` account. Posts published
+  under a Medium publication are still author-editable; posts not found are skipped.
