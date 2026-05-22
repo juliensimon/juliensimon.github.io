@@ -59,10 +59,10 @@
 | next-site/public/blog/aws-medium-posts-and-images/2018/2018-03-17_Tumbling-down-the-SGD-rabbit-hole---part-2/image04.webp | The Ramones — live concert photo |
 | next-site/public/blog/aws-medium-posts-and-images/2018/2018-03-17_Tumbling-down-the-SGD-rabbit-hole---part-2/image07.webp | Monty Python sketch still |
 | next-site/public/blog/aws-medium-posts-and-images/2018/2018-04-26_Using-Chalice-to-serve-SageMaker-predictions/image01.webp | "Monty Python and the Holy Grail" still |
-| next-site/public/blog/aws-medium-posts-and-images/2018/2018-05-08_Apache-Spark-and-Amazon-SageMaker-the-best-of-both-worlds---part-1/image02.webp | "Avengers: Infinity War" — Thanos / Infinity Gauntlet |
+| next-site/public/blog/aws-medium-posts-and-images/2018/2018-05-08_Apache-Spark-and-Amazon-SageMaker--the-Infinity-Gems-of-analytics/image02.webp | "Avengers: Infinity War" — Thanos / Infinity Gauntlet |
 | next-site/public/blog/aws-medium-posts-and-images/2018/2018-05-14_Retraining-SageMaker-models-with-Chalice-and-Serverless/image01.webp | Dwayne "The Rock" Johnson (captioned "Sorry, Rock") |
 | next-site/public/blog/aws-medium-posts-and-images/2018/2018-06-01_Apache-MXNet-as-a-backend-for-Keras-2/image01.webp | "Ghost Rider" film still |
-| next-site/public/blog/aws-medium-posts-and-images/2018/2018-06-01_Gluon-CV--add-image-classification-and-object-detection-to-your-applications/image02.webp | "The Terminator" — vision overlay |
+| next-site/public/blog/aws-medium-posts-and-images/2018/2018-06-01_Gluon-CV--add-image-classification--detection-and-segmentation-to-your-application-in-minutes/image02.webp | "The Terminator" — vision overlay |
 | next-site/public/blog/aws-medium-posts-and-images/2018/2018-06-04_Training-with-PyTorch-on-Amazon-SageMaker/image02.webp | "The Lord of the Rings" — orc with torch |
 | next-site/public/blog/aws-medium-posts-and-images/2018/2018-07-28_Mastering-the-mystical-art-of-model-deployment/image03.webp | "Doctor Strange" animated GIF (Marvel) |
 | next-site/public/blog/aws-medium-posts-and-images/2018/2018-07-28_Mastering-the-mystical-art-of-model-deployment/image07.webp | "The Lord of the Rings" — Gandalf reading |
@@ -71,7 +71,7 @@
 | next-site/public/blog/aws-medium-posts-and-images/2019/2019-01-29_Scaling-Machine-Learning-from-0-to-millions-of-users--part-1/image01.webp | Movie still — close-up of a young girl |
 | next-site/public/blog/aws-medium-posts-and-images/2019/2019-01-29_Scaling-Machine-Learning-from-0-to-millions-of-users--part-1/image02.webp | Arnold Schwarzenegger — "Conan the Barbarian" (yourprops watermark) |
 | next-site/public/blog/aws-medium-posts-and-images/2019/2019-01-29_Scaling-Machine-Learning-from-0-to-millions-of-users--part-1/image03.webp | "Conan the Barbarian" — wheel-of-pain scene |
-| next-site/public/blog/aws-medium-posts-and-images/2019/2019-05-20_Mastering-the-mystical-art-of-model-deployment-with-Amazon-SageMaker/image02.webp | "Doctor Strange" animated GIF (shrlockspeare tumblr watermark) |
+| next-site/public/blog/aws-medium-posts-and-images/2019/2019-05-20_Mastering-the-mystical-art-of-model-deployment--part-2--deploying-Amazon-SageMaker-endpoints-with-/image02.webp | "Doctor Strange" animated GIF (shrlockspeare tumblr watermark) |
 | next-site/public/blog/aws-medium-posts-and-images/2019/2019-07-20_Doctor-Alice-and-Cloud-Native-Bob--my-favorite-Machine-Learning-users/image01.webp | Movie/TV still — actor in a study |
 | next-site/public/blog/aws-medium-posts-and-images/2019/2019-11-26_Pre-Invent-2019---Time-to-catch-up-/image01.webp | "Game of Thrones" — Samwell Tarly carrying books |
 
@@ -82,7 +82,7 @@
 | next-site/public/blog/aws-medium-posts-and-images/2017/2017-04-05_Fascinating-Tales-of-a-Strange-Tomorrow/image04.webp | Photo of Marvin Minsky (public figure) |
 | next-site/public/blog/aws-medium-posts-and-images/2017/2017-04-05_Fascinating-Tales-of-a-Strange-Tomorrow/image06.webp | "I, Robot" (Asimov) — Signet paperback cover |
 | next-site/public/blog/aws-medium-posts-and-images/2017/2017-04-05_Fascinating-Tales-of-a-Strange-Tomorrow/image07.webp | Photo of Arthur C. Clarke (public figure) |
-| next-site/public/blog/aws-medium-posts-and-images/2017/2017-05-19_Create-your-own-Basquiat-with-Apache-MXNet-and-Generative-Adversarial-Networks/image07.webp | An actual Jean-Michel Basquiat painting |
+| next-site/public/blog/aws-medium-posts-and-images/2017/2017-05-19_Create-your-own-Basquiat-with-Deep-Learning-for-much-less-than--110-million/image07.webp | An actual Jean-Michel Basquiat painting |
 | next-site/public/blog/aws-medium-posts-and-images/2017/2017-07-02_10-Deep-Learning-projects-based-on-Apache-MXNet/image02.webp | Djokovic, Federer, Nadal, Murray — press photos |
 | next-site/public/blog/aws-medium-posts-and-images/2017/2017-07-02_10-Deep-Learning-projects-based-on-Apache-MXNet/image04.webp | Group of Chinese celebrities at an event — press photo |
 
@@ -152,9 +152,9 @@
 | next-site/public/blog/aws-medium-posts-and-images/2018/2018-03-17_Tumbling-down-the-SGD-rabbit-hole---part-2/image06.webp | Optimizer accuracy plot — academic paper figure |
 | next-site/public/blog/aws-medium-posts-and-images/2018/2018-03-17_Tumbling-down-the-SGD-rabbit-hole---part-2/image08.webp | Optimizer training-loss plot — FTML paper figure |
 | next-site/public/blog/aws-medium-posts-and-images/2018/2018-04-06_AWS-Summit-San-Francisco--AI-ML-recap/image01.webp | San Francisco fireworks — stock-style photography |
-| next-site/public/blog/aws-medium-posts-and-images/2018/2018-06-01_Gluon-CV--add-image-classification-and-object-detection-to-your-applications/image03.webp | Live concert photo of a metal guitarist (identifiable person) |
-| next-site/public/blog/aws-medium-posts-and-images/2018/2018-06-01_Gluon-CV--add-image-classification-and-object-detection-to-your-applications/image04.webp | Lamborghini Huracán at an auto show (prominent logos) |
-| next-site/public/blog/aws-medium-posts-and-images/2018/2018-06-01_Gluon-CV--add-image-classification-and-object-detection-to-your-applications/image05.webp | Object detection on a White House interior — 3rd-party press/stock photo |
+| next-site/public/blog/aws-medium-posts-and-images/2018/2018-06-01_Gluon-CV--add-image-classification--detection-and-segmentation-to-your-application-in-minutes/image03.webp | Live concert photo of a metal guitarist (identifiable person) |
+| next-site/public/blog/aws-medium-posts-and-images/2018/2018-06-01_Gluon-CV--add-image-classification--detection-and-segmentation-to-your-application-in-minutes/image04.webp | Lamborghini Huracán at an auto show (prominent logos) |
+| next-site/public/blog/aws-medium-posts-and-images/2018/2018-06-01_Gluon-CV--add-image-classification--detection-and-segmentation-to-your-application-in-minutes/image05.webp | Object detection on a White House interior — 3rd-party press/stock photo |
 | next-site/public/blog/aws-medium-posts-and-images/2018/2018-06-07_Johnny-Pi--I-am-your-father---part-7/image05.webp | Carrie Fisher (celebrity) on a printed book page — verify exact folder/file |
 | next-site/public/blog/aws-medium-posts-and-images/2019/2019-12-19_Annotating-Image-Datasets-with-Amazon-SageMaker-Ground-Truth/image01.webp | Concert photo of a band (looks like Slayer) — identifiable musicians |
 

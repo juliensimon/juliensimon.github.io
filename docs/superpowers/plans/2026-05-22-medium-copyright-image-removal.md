@@ -1,5 +1,15 @@
 # Medium Copyright-Image Removal Implementation Plan
 
+> **STATUS (2026-05-22): SUPERSEDED after Task 2.** Medium sits behind Cloudflare
+> bot protection that rejects any CDP-automated browser — the MCP's own Chrome
+> and an attached dedicated-profile Chrome alike, and the Turnstile challenge
+> does not pass even when a human clicks it. The full-automation approach
+> (Tasks 3–8) is not viable. Replaced by the **checklist approach**: Phase 1 is
+> done entirely from the repo (no browser) by `medium-removal-log/build_checklist.py`,
+> producing `medium-removal-log/checklist.md` (executed by hand in a normal
+> browser) and `medium-removal-log/reversal-log.md`. Tasks 1 and 2 below were
+> executed; Tasks 3–8 were not.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking. This plan drives a **single persistent authenticated browser session** — execute it inline, not via fresh subagents (a new subagent would lose the Medium login).
 
 **Goal:** Remove the 46 HIGH-risk copyright images from the live Medium posts on `julsimon.medium.com`, with a committed reversal log.
