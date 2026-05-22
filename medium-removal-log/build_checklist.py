@@ -59,7 +59,7 @@ for folder in sorted(posts):
     imgs_desc = sorted(p["images"], key=lambda x: -x[0])  # highest first
 
     checklist.append(f"## {title}")
-    checklist.append(f"- Date: {date} | Post: {url}")
+    checklist.append(f"- Date: {date} | Post: [{url}]({url})")
     checklist.append(f"- Remove {len(imgs_desc)} image(s), highest # first:")
     for ordn, desc, _src in imgs_desc:
         checklist.append(f"  - [ ] Image #{ordn} — {desc}")
