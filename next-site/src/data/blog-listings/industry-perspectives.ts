@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Lobby, Levy, Legislate',
+    slug: '2026-05-22_lobby-levy-legislate',
+    date: '2026-05-22',
+    description: 'How Mistral is trying to convert a perishable contact list into permanent law. On May 12, in a near-empty hearing room of the French National Assembly, Arthur…',
+    originalUrl: 'https://www.airealist.ai/p/lobby-levy-legislate',
+  },
+  {
     title: 'Zero for Three',
     slug: '2026-05-19_zero-for-three',
     date: '2026-05-19',

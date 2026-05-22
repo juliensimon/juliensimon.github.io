@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Lobby, Levy, Legislate',
+    href: '/blog/industry-perspectives/2026-05-22_lobby-levy-legislate/',
+    date: 'May 22, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Web app + Mobile + Stripe + Pitch Deck: one Replit project!',
     href: '/youtube/2026/20260519_Web_app_Mobile_Stripe_Pitch_Deck_one_Replit_project.html',
     date: 'May 19, 2026',
@@ -30,12 +36,6 @@ const LATEST_UPDATES = [
     href: '/blog/industry-perspectives/2026-05-12_below-the-silicon/',
     date: 'May 12, 2026',
     icon: 'article',
-  },
-  {
-    title: 'Stop Coding Alone! Build an \'Opus + M2.7\' AI Expert Team',
-    href: '/youtube/2026/20260511_Stop_Coding_Alone_Build_an_Opus_M27_AI_Expert_Team.html',
-    date: 'May 11, 2026',
-    icon: 'video',
   },
 ];
 
