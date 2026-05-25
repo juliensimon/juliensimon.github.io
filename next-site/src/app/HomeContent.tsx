@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Huawei Can’t Buy EUV. It Says It Doesn’t Need To.',
+    href: '/blog/industry-perspectives/2026-05-25_huawei-cant-buy-euv-it-says-it-doesnt-need-to/',
+    date: 'May 25, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Lobby, Levy, Legislate',
     href: '/blog/industry-perspectives/2026-05-22_lobby-levy-legislate/',
     date: 'May 22, 2026',
@@ -30,12 +36,6 @@ const LATEST_UPDATES = [
     href: '/youtube/2026/20260515_From_issue_to_PR_in_15_minutes_with_Cursor_Composer.html',
     date: 'May 15, 2026',
     icon: 'video',
-  },
-  {
-    title: 'Below the Silicon',
-    href: '/blog/industry-perspectives/2026-05-12_below-the-silicon/',
-    date: 'May 12, 2026',
-    icon: 'article',
   },
 ];
 

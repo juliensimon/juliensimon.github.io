@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Huawei Can\'t Buy EUV. It Says It Doesn\'t Need To.',
+    slug: '2026-05-25_huawei-cant-buy-euv-it-says-it-doesnt-need-to',
+    date: '2026-05-25',
+    description: 'A new “scaling law” reframes the chip race from space to time. The export-control wall was built to deny the first. It has no answer for the second.',
+    originalUrl: 'https://www.airealist.ai/p/huawei-cant-buy-euv-it-says-it-doesnt',
+  },
+  {
     title: 'Lobby, Levy, Legislate',
     slug: '2026-05-22_lobby-levy-legislate',
     date: '2026-05-22',

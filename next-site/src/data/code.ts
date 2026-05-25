@@ -32,7 +32,7 @@ export const PINNED_REPOSITORIES: Repository[] = [
     description: 'Real-time 3D Starlink satellite tracker with Space view, Sky view, live dish telemetry, SGP4 propagation, and ISL routing. Track ~10,000 satellites, ground stations, handoffs, and network performance — built with Next.js and Three.js.',
     url: 'https://github.com/juliensimon/starlink-viz',
     language: 'TypeScript',
-    stars: 13,
+    stars: 14,
     forks: 3,
     tags: ['Three.js', 'Next.js', 'Satellite Tracking', '3D Visualization'],
   },
