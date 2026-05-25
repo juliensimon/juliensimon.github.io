@@ -32,6 +32,7 @@ export const NAV_ITEMS = [
   { label: 'Code', href: '/code' },
   { label: 'Datasets', href: '/datasets' },
   { label: 'Videos', href: '/youtube-videos' },
+  { label: 'Media', href: '/media' },
   { label: 'Books', href: '/books' },
   { label: 'Computers, UNIX, and Me', href: '/computers' },
 ] as const;
