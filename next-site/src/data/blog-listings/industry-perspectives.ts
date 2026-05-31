@@ -263,6 +263,13 @@ export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
     originalUrl: 'https://www.airealist.ai/p/mistral-succeeded-frances-ai-strategy',
   },
   {
+    title: 'Welcome to Hotel Abilene',
+    slug: '2026-03-08_welcome-to-hotel-abilene',
+    date: '2026-03-08',
+    description: 'You can check in. But can you ever leave? OpenAI\'s $110 billion round and the lock-in dynamics binding OpenAI, Amazon, Nvidia, Oracle, Microsoft, and Meta into a self-recycling AI infrastructure boom.',
+    originalUrl: 'https://www.airealist.ai/p/welcome-to-hotel-abilene',
+  },
+  {
     title: 'Access, Disable, Destroy',
     slug: '2026-03-07_access-disable-destroy',
     date: '2026-03-07',
@@ -480,6 +487,20 @@ export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
     originalUrl: 'https://www.airealist.ai/p/a-not-so-silent-revolution-is-happening',
   },
   {
+    title: 'CSLMs have arrived',
+    slug: '2025-08-16_cslms-have-arrived',
+    date: '2025-08-16',
+    description: 'Crazy Small Language Models are here: a 70-million-parameter Llama-like model matches Llama-3.1 70B for drug interaction prediction, trained in 2.5 hours on a single A100.',
+    originalUrl: 'https://julsimon.medium.com/cslms-have-arrived-36ef90789cfb',
+  },
+  {
+    title: 'Why MCP\'s Disregard for 40 Years of RPC Best Practices Will Burn Enterprises',
+    slug: '2025-07-30-why-mcp-disregard-for-40-years-of-rpc-best-practices-will-burn-enterprises',
+    date: '2025-07-30',
+    description: 'A technical critique arguing the Model Context Protocol ignores four decades of distributed-systems lessons (RPC, CORBA, REST, gRPC), with critical gaps in type safety, tracing, security, and versioning that will burn enterprise deployments.',
+    originalUrl: 'https://www.airealist.ai/p/why-mcps-disregard-for-40-years-of',
+  },
+  {
     title: 'AI Regulation or AI Requiem?',
     slug: '2025-01-20_ai-regulation-or-ai-requiem',
     date: '2025-01-20',
@@ -497,14 +518,14 @@ export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
     title: 'Large Language Models: A New Moore\'s Law?',
     slug: '2021-10-26_large-language-models-a-new-moores-law',
     date: '2021-10-26',
-    description: '',
-    originalUrl: 'https://www.airealist.ai/p/large-language-models-a-new-moores-law',
+    description: 'Challenges the race toward ever-larger language models, arguing the ~10x annual growth in model size mirrors Moore\'s Law and leads to diminishing returns; advocates pretrained models, smaller models, fine-tuning, and optimization.',
+    originalUrl: 'https://huggingface.co/blog/large-language-models',
   },
   {
     title: 'The Age of Machine Learning As Code Has Arrived',
     slug: '2021-10-20_the-age-of-machine-learning-as-code-has-arrived',
     date: '2021-10-20',
-    description: '',
-    originalUrl: 'https://www.airealist.ai/p/the-age-of-machine-learning-as-code',
+    description: 'Argues that pretrained Transformers, transfer learning, and platforms like Hugging Face make ML as accessible as software development, and that decade-old software engineering best practices should apply to ML workflows.',
+    originalUrl: 'https://huggingface.co/blog/the-age-of-ml-as-code',
   },
 ];

@@ -12,7 +12,7 @@ interface PageMetaOptions {
 
 export function buildMetadata({ title, description, path = '', keywords = [], ogImage, ogImageAlt }: PageMetaOptions): Metadata {
   const url = `${SITE.url}${path}`;
-  const displayTitle = `${title} | ${SITE.name}`;
+  const displayTitle = path === '/' ? SITE.title : `${title} | ${SITE.name}`;
   const image = ogImage ?? SITE.ogImage;
   const imageAlt = ogImageAlt ?? `${SITE.name} - AI Operating Partner at Fortino Capital`;
 

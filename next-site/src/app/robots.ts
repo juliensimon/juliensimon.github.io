@@ -36,6 +36,8 @@ export default function robots(): MetadataRoute.Robots {
       // Yandex
       { userAgent: 'YandexBot', allow: '/' },
     ],
+    // Reinforce the canonical www host for crawlers that honor it (e.g. Yandex)
+    host: SITE.url,
     // Single canonical entry point; sitemap-index.xml nests the core,
     // blog, and videos sitemaps. Listing children flat too double-counts.
     sitemap: [`${SITE.url}/sitemap-index.xml`],
