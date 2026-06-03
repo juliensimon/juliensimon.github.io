@@ -5,8 +5,8 @@ export interface VideoYear {
 }
 
 export const YOUTUBE_STATS = {
-  totalVideos: 458,
-  subscriberCount: 536, // numeric value in thousands for MetricCard
+  totalVideos: 459,
+  subscriberCount: 540, // numeric value in thousands for MetricCard
   channelUrl: 'https://youtube.com/@juliensimonfr',
   yearsOfContent: 15,
 } as const;
@@ -20,7 +20,7 @@ export const LATEST_VIDEOS = [
 ];
 
 export const VIDEO_YEARS: VideoYear[] = [
-  { year: 2026, count: 16, href: '/youtube/2026/' },
+  { year: 2026, count: 17, href: '/youtube/2026/' },
   { year: 2025, count: 44, href: '/youtube/2025/' },
   { year: 2024, count: 54, href: '/youtube/2024/' },
   { year: 2023, count: 27, href: '/youtube/2023/' },

@@ -11,6 +11,27 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The Amendments Were Whispered',
+    slug: '2026-06-03_the-amendments-were-whispered',
+    date: '2026-06-03',
+    description: 'A deputy in the president\'s own party admitted who wrote his amendments. The moat just confessed.',
+    originalUrl: 'https://www.airealist.ai/p/the-amendments-were-whispered',
+  },
+  {
+    title: 'The Overbuild Put',
+    slug: '2026-06-01_the-overbuild-put',
+    date: '2026-06-01',
+    description: 'Meta is the only hyperscaler without a cloud business. It just told shareholders it might need one — and that is the most revealing thing it has said about a…',
+    originalUrl: 'https://www.airealist.ai/p/the-overbuild-put',
+  },
+  {
+    title: 'Two Chips, One Decade, One Winner',
+    slug: '2026-05-27_two-chips-one-decade-one-winner',
+    date: '2026-05-27',
+    description: 'Two hyperscalers bet on custom AI silicon a decade ago. One built a chip that its own models run on.',
+    originalUrl: 'https://www.airealist.ai/p/two-chips-one-decade-one-winner',
+  },
+  {
     title: 'Huawei Can\'t Buy EUV. It Says It Doesn\'t Need To.',
     slug: '2026-05-25_huawei-cant-buy-euv-it-says-it-doesnt-need-to',
     date: '2026-05-25',

@@ -8,34 +8,34 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'The Amendments Were Whispered',
+    href: '/blog/industry-perspectives/2026-06-03_the-amendments-were-whispered/',
+    date: 'June 3, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'The Overbuild Put',
+    href: '/blog/industry-perspectives/2026-06-01_the-overbuild-put/',
+    date: 'June 1, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Benchmarking TurboQuant with MLX on Apple Silicon',
+    href: '/youtube/2026/20260531_Benchmarking_TurboQuant_with_MLX_on_Apple_Silicon.html',
+    date: 'May 31, 2026',
+    icon: 'video',
+  },
+  {
+    title: 'Two Chips, One Decade, One Winner',
+    href: '/blog/industry-perspectives/2026-05-27_two-chips-one-decade-one-winner/',
+    date: 'May 27, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Huawei Can’t Buy EUV. It Says It Doesn’t Need To.',
     href: '/blog/industry-perspectives/2026-05-25_huawei-cant-buy-euv-it-says-it-doesnt-need-to/',
     date: 'May 25, 2026',
     icon: 'article',
-  },
-  {
-    title: 'Lobby, Levy, Legislate',
-    href: '/blog/industry-perspectives/2026-05-22_lobby-levy-legislate/',
-    date: 'May 22, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Web app + Mobile + Stripe + Pitch Deck: one Replit project!',
-    href: '/youtube/2026/20260519_Web_app_Mobile_Stripe_Pitch_Deck_one_Replit_project.html',
-    date: 'May 19, 2026',
-    icon: 'video',
-  },
-  {
-    title: 'Zero for Three',
-    href: '/blog/industry-perspectives/2026-05-19_zero-for-three/',
-    date: 'May 19, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'From issue to PR in 15 minutes with Cursor & Composer',
-    href: '/youtube/2026/20260515_From_issue_to_PR_in_15_minutes_with_Cursor_Composer.html',
-    date: 'May 15, 2026',
-    icon: 'video',
   },
 ];
 
