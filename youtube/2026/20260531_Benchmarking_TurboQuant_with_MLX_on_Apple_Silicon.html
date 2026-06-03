@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarking TurboQuant with MLX on Apple Silicon</title>
+    <meta name="description" content="KV-cache quantization in MLX: I benchmarked TurboQuant on Apple Silicon to find out how much memory does it really save, and where it breaks.">
+    <meta property="og:title" content="Benchmarking TurboQuant with MLX on Apple Silicon">
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://www.julien.org/youtube/2026/20260531_Benchmarking_TurboQuant_with_MLX_on_Apple_Silicon.html">
+    <link rel="canonical" href="https://www.julien.org/youtube/2026/20260531_Benchmarking_TurboQuant_with_MLX_on_Apple_Silicon.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Benchmarking TurboQuant with MLX on Apple Silicon">
+    <meta name="twitter:creator" content="@julsimon">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "Benchmarking TurboQuant with MLX on Apple Silicon",
+        "description": "KV-cache quantization in MLX: I benchmarked TurboQuant on Apple Silicon to find out how much memory does it really save, and where it breaks.",
+        "uploadDate": "2026-05-31T00:00:00+00:00",
+        "embedUrl": "https://www.youtube.com/embed/pRsAr51iTnI",
+        "thumbnailUrl": "https://img.youtube.com/vi/pRsAr51iTnI/maxresdefault.jpg",
+        "author": { "@id": "https://www.julien.org/#person" }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Benchmarking TurboQuant with MLX on Apple Silicon</h1>
+        <div class="date">May 31, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/pRsAr51iTnI" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">KV-cache quantization in MLX: I benchmarked TurboQuant on Apple Silicon to find out how much memory does it really save, and where it breaks.
+
+⭐️⭐️⭐️ Thanks to VEED for sponsoring. Try the VEED Subtitles API on Fal: https://bit.ly/4fCVp4g ⭐️⭐️⭐️
+
+The KV cache grows linearly with context and quickly becomes the memory wall on a Mac.  8-bit quantization is the easy fix, but 4-bit breaks greedy decode — because the two halves of the cache, K and V, behave completely differently: K feeds softmax (fragile), V gets averaged (forgiving). TurboQuant (Hadamard rotation + a Lloyd-Max codebook) is built to exploit that. I measured it across three architectures and four cache backends.
+
+Measured (resident KV cache, Qwen 2.5 32B @ 32K):
+  • baseline fp16 — 7.85 GB
+  • scalar K8V4   — 3.17 GB (−60%)
+  • TurboQuant K4V4 — 2.07 GB (−74%)
+  • TurboQuant K3V3 — 1.71 GB (−78%)
+
+  …and the honest part: on Gemma 4 (hybrid sliding-window) every TurboQuant config tested
+  produces garbage in Python MLX, while scalar K8V4 stays coherent. The gain is real, but
+  it depends on your architecture and context length — you have to know which regime you&#x27;re in.
+
+Code and slides: https://github.com/juliensimon/turboquant-apple-metal
+
+More content on Substack at https://www.airealist.ai</div>
+
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, Julien here. For the past few weeks, I&#x27;ve been trying to make sense of a KVCache quantization on Apple Silicon. There&#x27;s a Google paper called TurboQuant, several great MLX ports, and people online saying this cuts your KVCash in half, which sounds amazing. But every time I try to reproduce that on my own Mac, the numbers don&#x27;t quite match the story. In this video, I run the actual experiments, You make content for a living, you really want to use the API.
+
+One API call in your favorite language is all you need. Pass the video URL, get the finished video out. This handles transcription, line breaks, styling, and burn in rendering. 125 languages are supported and the captions are 98% accurate. Pricing starts at 10 cents per minute.
+
+For a content pipeline, this is the difference between a lot of manual work and that&#x27;s infeasible. So we cache K and V once per token and reuse them again and again. A generation becomes linear cost per token. But the cache lives in memory and it grows linearly with context forever. I measured this on QAN 2.5, 32B.
+
+With 4K context, the KV cache is 1 gig. At 16K, 4 gigs. At 32K, almost 8. And the V cache at 8-bit precision and you&#x27;re done. VLLM has it, TensorRTLM has, MLX exposes it as a one-line flag, KV bits equal 8.
+
+So you quantize the KV cache from 16-bit precision down to 8-bit and memory halves. Quality loss at 8- bit precision is pretty much zero. Solve problem. So why are we even talking about this? K and V behave very differently under quantization.
+
+So here&#x27;s the picture K on the left, V on the right. Let&#x27;s look at K first. So K is what attention uses to pick the winner token through a function called softmax. So softmax takes the dot product scores between the current query and every past key, runs exponentiation and normalizes so that all tokens So now let&#x27;s look at V. V gets averaged after the winner is picked.
+
+So every cache token&#x27;s V vector is multiplied by its attention weight and summed. So it&#x27;s a linear weight average. And of course, averaging is more forgiving. Green dots are the true V values and the red crosses are heavily quantized V values. And if we look at the dashed lines, , if we do naive 3-bit, evenly spacing the levels across the value range, well, we&#x27;re going to miss out on some information.
+
+And that&#x27;s exactly where TurboQuant comes in. Here&#x27;s the TurboQuant trick in one slide. So we have two distributions here. On the left in red, we have a realistic KB cache value distribution. Most numbers are grouped around zero, We&#x27;re throwing away a lot of precision exactly where it would matter most.
+
+Looking at the right panel, we see the Torbocquant trick, which is to reshape the data before compressing it. And that happens in two steps that are both reversible. This is very heavy math, so I&#x27;ll just try to give you the overview and I&#x27;ll share links to more precise resources at the end. Step 2, and that&#x27;s a mouthful, is called the Walsh-Adama transform. So think of it as a recursive shuffle.
+
+So we take the 128 numbers, the one we flipped, and we replace each pair with the sum and the difference of the two numbers. Then we take those results, we pair them again, and we do that again and again and again. We do it seven times. At Bell Labs, Joel Max at MIT, and so it&#x27;s called the Lloyd Max quantizer. And if we look at the blue lines on the right panel, the vertical lines, you can see they&#x27;re packed close together where the Bell curve is really dense and they&#x27;re sparser out there on the tails.
+
+So every bit is doing useful work, and I would say more useful work than with the naive codebook. When we read the cache back, we can A. Great, but how do we run this on a Mac? There are several serious implementations of this on Apple Metal already, and let&#x27;s take a quick look. So we have an MLX LM fork by Arazonoff.
+
+That&#x27;s the drop-in version. It has the Easy Scalar K8 V4 path, which uses a native quantized metrics multiplication available on Apple hardware, so no custom kernels. Then we have another MLX fork, Landon Maltz. This one has native metal codebook attention built inside the MLX fork. And it&#x27;s tracked currently by MLX issue 3404 if you want to follow integration.
+
+And last but not least, we have the Tom&#x27;s TurboQuent Plus, which is probably the most production-grade effort. This one is not based on MLX. It&#x27;s based on Llama CPP. Then TurboQuant K4v4. And then TurboQuant k3v3, trying to push things a little more.
+
+So if we look at Qwent 2.5 32b, which is a dense model, we see that the baseline Kv cache usage is 7.85 gigs at 32k. Apple Scaler Kv4 cuts that to 60%. TurboQuant, K4v 4 cuts it at 74%. And the Adamar rotation in TurboQuant actually makes 4-bit K survivable on dense models. The rotation that we discussed smooths out the outliers that would otherwise break the process.
+
+And that&#x27;s where the extra savings come from. The keyword here is dense. And if we look at an MOE model like QUEN3.5 Active 3B, same story, 67% with TurboQuant, 54% with Apple Scalar. And the bottom row gigabytes back is the one that decides what you can actually run. On QUEN2.5, 32B at 32K, real TurboQuant K3v3 gives you over 6%.
+
+The yellow line, the Apple Scalar tracks much lower, but the green and blue lines, the TurboQuant lines, stay reasonably flat. And the gap between yellow and green widens as context grows. That&#x27;s the visual proof that real TurboQuant beats Scalar mode by a large margin. The middle panel is Gemma 4, the hybrid model. We see the quantized lines are closer to one another because really saving half a gig.
+
+So percent saved tells you how well TurboQuant is doing the job. Gigabyte saved tells you whether this is changes that really mean anything to you. So what can we do with the savings? Let me translate the bytes into something concrete. On my 48 gig Mac running Quantu 5 32B with 4-bit weights, model weights require 7, I can fit about 270K tokens, so about 2.5 more.
+
+K4v4 turbo quant, I can get 410K context. And with K3v3, I can go all the way up to 480K context. So huge differences, but these are a bit theoretical. You will save 50% of a bounded thing. So you&#x27;re not going to double the context.
+
+You&#x27;re going to double on a fraction of the layers. So sure, you get extra headroom for other things, but you don&#x27;t get the same bank for your buck. So memory savings are real, but they&#x27;re half the story. So it is a smoke test. Just run a few prompts and try to detect issues.
+
+So your mileage may vary. This is really designed to catch catastrophic failures, not subtle, weird problems. So for production, you would want to run more extensive tests and measure perplexity and cosine similarity, et cetera. Still, I did find catastrophic failure. That&#x27;s a big surprise, TurboQuant breaks every single time.
+
+So K4V4, K3V3, and even V-only 4-bit and V-only 3-bit, they generate garbage. I tried it again and again, and it just doesn&#x27;t work. So that&#x27;s expected. It is a problem. And the reason is that basically the reconstruction error, retention mechanism doesn&#x27;t tolerate that error.
+
+The mix of global layers plus quantized sliding window layers just doesn&#x27;t click. The error compounds and decoding breaks. So this isn&#x27;t something that can be fixed with a kernel patch. It needs a bunch of tricks, and those are actually implemented in one of the projects we&#x27;ve discussed. If your model is a classic dance model, Llama, Quintu5, et cetera, all attention layers being global attention, then TurboQuant K4v4 works perfectly well, and you get about 70% cash savings.
+
+If your model or anything with a mix of sliding window plus global attention, you cannot use TurboQuant on Python MLX today. At 54%. And you can try TurboCon K4v4 with extra testing on top if you really need the extra savings. So if you want the full optimization, again, this will be covered in the follow-up video where I will try out the TOMS LAMA CPP fork. And the set of commands, et cetera, will be in the repo shared in the video description.
+
+So in the next video, I will dive into the LAMA CPP side of the story. And we&#x27;ll see we can actually do a little more. OK, well, that&#x27;s it for today. I hope you enjoy the video. Share your numbers in the comments.
+
+Really curious to see what you&#x27;re getting on your own models. Until next time, my friend, you know what to do.</div>
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            <a href="index.html">&larr; Back to 2026 Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
+        </div>
+    </div>
+
+
+</body></html>
