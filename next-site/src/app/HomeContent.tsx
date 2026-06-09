@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Macron Said Confirmed. SoftBank Said Up To.',
+    href: '/blog/industry-perspectives/2026-06-09_macron-said-confirmed-softbank-said-up-to/',
+    date: 'June 9, 2026',
+    icon: 'article',
+  },
+  {
     title: 'The Amendments Were Whispered',
     href: '/blog/industry-perspectives/2026-06-03_the-amendments-were-whispered/',
     date: 'June 3, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'Two Chips, One Decade, One Winner',
     href: '/blog/industry-perspectives/2026-05-27_two-chips-one-decade-one-winner/',
     date: 'May 27, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Huawei Can’t Buy EUV. It Says It Doesn’t Need To.',
-    href: '/blog/industry-perspectives/2026-05-25_huawei-cant-buy-euv-it-says-it-doesnt-need-to/',
-    date: 'May 25, 2026',
     icon: 'article',
   },
 ];

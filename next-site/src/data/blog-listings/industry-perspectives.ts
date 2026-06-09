@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Macron Said Confirmed. SoftBank Said Up To.',
+    slug: '2026-06-09_macron-said-confirmed-softbank-said-up-to',
+    date: '2026-06-09',
+    description: 'The €93 billion headline is mostly one company\'s pledge. The pledge is mostly a ceiling. The balance sheet beneath it is the most concentrated in AI.',
+    originalUrl: 'https://www.airealist.ai/p/macron-said-confirmed-softbank-said',
+  },
+  {
     title: 'The Amendments Were Whispered',
     slug: '2026-06-03_the-amendments-were-whispered',
     date: '2026-06-03',
