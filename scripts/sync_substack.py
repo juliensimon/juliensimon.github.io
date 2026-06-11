@@ -26,6 +26,7 @@ import requests
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
 
+from refresh_llms_txt import refresh_llms_files
 from substack_html_cleaner import SubstackHTMLCleaner
 from substack_image_handler import process_images_for_post, update_html_image_refs
 
@@ -1106,6 +1107,9 @@ def run(dry_run: bool = False, force: bool = False):
     # Update LATEST_UPDATES
     if new_posts:
         update_latest_updates(new_posts, dry_run)
+
+    # Keep AI-facing llms files aligned with the updated data files.
+    refresh_llms_files(dry_run=dry_run)
 
     print(f"\nSync complete!")
     print(f"  Videos added: {len(videos_added)}")

@@ -56,18 +56,25 @@ Run a full content sync: fetch new Substack posts, YouTube videos, GitHub repo s
 
 12. Report what changed (or "dataset count up to date").
 
-### Phase 5: Build & Verify
+### Phase 5: Refresh llms.txt, Build & Verify
 
-13. Build the site to catch any errors:
+13. Refresh the AI-facing llms files so counts match the data files (the Substack
+    and YouTube sync scripts already run this automatically, but this also picks
+    up repo-stat and dataset-count changes from Phases 3-4):
+    ```bash
+    python3 scripts/refresh_llms_txt.py
+    ```
+
+14. Build the site to catch any errors:
     ```bash
     cd next-site && npm run build
     ```
 
-14. If the build fails, fix the issue before proceeding.
+15. If the build fails, fix the issue before proceeding.
 
 ### Phase 6: Ship
 
-15. If anything was synced in Phase 1, 2, 3, or 4:
+16. If anything was synced in Phase 1, 2, 3, or 4:
     - Stage all sync-related files (new HTML pages, updated data files, updated index pages)
     - Commit with a message like: `Sync N Substack posts, M YouTube videos, repo stats, and dataset count`
    - Push to origin master
@@ -79,7 +86,7 @@ Run a full content sync: fetch new Substack posts, YouTube videos, GitHub repo s
      gh run watch <run-id> --repo juliensimon/juliensimon.github.io --exit-status
      ```
 
-16. If nothing new was found in any source, report: "Everything is up to date. No new content to sync."
+17. If nothing new was found in any source, report: "Everything is up to date. No new content to sync."
 
 ## Important
 

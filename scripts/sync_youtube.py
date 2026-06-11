@@ -26,6 +26,8 @@ import json
 import requests
 import xml.etree.ElementTree as ET
 
+from refresh_llms_txt import refresh_llms_files
+
 # YouTube channel
 CHANNEL_HANDLE = "juliensimonfr"
 CHANNEL_ID = "UCVonoXm3SI_Q0ZNHd5JPawA"
@@ -1264,6 +1266,8 @@ def run(
 
     if not new_videos:
         print("\nNo new videos detected. Site is up to date!")
+        # Subscriber count may still have changed above; keep llms files aligned.
+        refresh_llms_files(dry_run=dry_run)
         return
 
     print_summary(new_videos)
@@ -1298,6 +1302,9 @@ def run(
 
     # Update LATEST_UPDATES
     update_latest_updates(new_videos, dry_run)
+
+    # Keep AI-facing llms files aligned with the updated data files.
+    refresh_llms_files(dry_run=dry_run)
 
     print(f"\nSync complete! {len(new_videos)} videos added.")
     print("\nNext steps:")
