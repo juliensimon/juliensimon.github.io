@@ -7,7 +7,7 @@ import { SPEAKING_STATS } from '@/data/speaking';
 import { YOUTUBE_STATS } from '@/data/youtube';
 import HomeContent from './HomeContent';
 
-const HOME_DESCRIPTION = `Julien Simon — AI expert, Operating Partner at Fortino Capital. ${SPEAKING_STATS.totalEvents}+ talks, ${TOTAL_ARTICLES}+ articles, ${YOUTUBE_STATS.subscriberCount}K YouTube subscribers. Former AWS & Hugging Face. Author of The AI Realist.`;
+const HOME_DESCRIPTION = `Julien Simon — AI expert, Operating Partner at Fortino Capital. ${SPEAKING_STATS.totalEvents}+ talks, ${TOTAL_ARTICLES}+ articles, ${YOUTUBE_STATS.subscriberCount}K YouTube subscribers. Author of The AI Realist.`;
 
 export const metadata = buildMetadata({
   title: 'AI Operating Partner & Expert in Small Language Models',

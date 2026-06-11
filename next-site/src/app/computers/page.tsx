@@ -8,7 +8,7 @@ import ComputersContent from './ComputersContent';
 export const metadata = buildMetadata({
   title: 'Vintage Computers, UNIX, and Me — Personal Collection',
   description:
-    'Julien Simon\'s personal collection of vintage and retro computers spanning 40+ years — from Apple II and Amiga to SGI workstations, Sun SPARC, NeXT, and DEC systems. UNIX, BSD, and the machines that shaped computing.',
+    'Julien Simon\'s personal collection of vintage computers spanning 40+ years — Apple II, Amiga, SGI workstations, Sun SPARC, NeXT, and DEC systems.',
   path: '/computers',
   keywords: [
     'vintage computers',
