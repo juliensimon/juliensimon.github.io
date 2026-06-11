@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import 'leaflet/dist/leaflet.css';
 
 interface City {
   name: string;
@@ -180,12 +181,6 @@ export default function SpeakingMap() {
 
   return (
     <div className="glass-card rounded-xl overflow-hidden">
-      <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-        crossOrigin="anonymous"
-      />
       <div
         ref={mapRef}
         role="img"
