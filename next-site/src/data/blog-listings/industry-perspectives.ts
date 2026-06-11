@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Nvidia Won the Cloud. Now It Wants the Laptop.',
+    slug: '2026-06-11_nvidia-won-the-cloud-now-it-wants-the-laptop',
+    date: '2026-06-11',
+    description: 'Nvidia\'s new laptop chip trails Apple where it counts and it was built to win anyway.',
+    originalUrl: 'https://www.airealist.ai/p/nvidia-won-the-cloud-now-it-wants',
+  },
+  {
     title: 'Macron Said Confirmed. SoftBank Said Up To.',
     slug: '2026-06-09_macron-said-confirmed-softbank-said-up-to',
     date: '2026-06-09',

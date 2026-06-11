@@ -1,8 +1,11 @@
+import { TOTAL_ARTICLES } from '@/data/publications';
+import { SPEAKING_STATS } from '@/data/speaking';
+import { YOUTUBE_STATS } from '@/data/youtube';
+
 export const SITE = {
   name: 'Julien Simon',
   title: 'Julien Simon - AI Operating Partner at Fortino Capital',
-  description:
-    'Julien Simon is an AI expert and Operating Partner at Fortino Capital. 685+ talks, 473+ articles, 545K YouTube subscribers. Author of The AI Realist newsletter.',
+  description: `Julien Simon is an AI expert and Operating Partner at Fortino Capital. ${SPEAKING_STATS.totalEvents}+ talks, ${TOTAL_ARTICLES}+ articles, ${YOUTUBE_STATS.subscriberCount}K YouTube subscribers. Author of The AI Realist newsletter.`,
   url: 'https://www.julien.org',
   image: 'https://www.julien.org/assets/julien.webp',
   ogImage: 'https://www.julien.org/assets/og-image.png',
@@ -43,8 +46,8 @@ export const NAV_ITEMS = [
 // - YOUTUBE_STATS.subscriberCount in youtube.ts (YouTube Subscribers)
 // Run `npm run validate` to check for mismatches
 export const METRICS = [
-  { value: 473, suffix: '', label: 'Technical Posts' },
+  { value: 474, suffix: '', label: 'Technical Posts' },
   { value: 685, suffix: '', label: 'Speaking Engagements' },
-  { value: 545, suffix: 'K', label: 'YouTube Subscribers' },
+  { value: 546, suffix: 'K', label: 'YouTube Subscribers' },
   { value: 30, suffix: '', label: 'Years Experience' },
 ] as const;

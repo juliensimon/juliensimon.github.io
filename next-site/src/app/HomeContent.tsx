@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Nvidia Won the Cloud. Now It Wants the Laptop.',
+    href: '/blog/industry-perspectives/2026-06-11_nvidia-won-the-cloud-now-it-wants-the-laptop/',
+    date: 'June 11, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Macron Said Confirmed. SoftBank Said Up To.',
     href: '/blog/industry-perspectives/2026-06-09_macron-said-confirmed-softbank-said-up-to/',
     date: 'June 9, 2026',
@@ -30,12 +36,6 @@ const LATEST_UPDATES = [
     href: '/youtube/2026/20260531_Benchmarking_TurboQuant_with_MLX_on_Apple_Silicon.html',
     date: 'May 31, 2026',
     icon: 'video',
-  },
-  {
-    title: 'Two Chips, One Decade, One Winner',
-    href: '/blog/industry-perspectives/2026-05-27_two-chips-one-decade-one-winner/',
-    date: 'May 27, 2026',
-    icon: 'article',
   },
 ];
 
