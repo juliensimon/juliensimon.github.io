@@ -50,7 +50,59 @@ The chatbot + mem0 integration &amp; launch scripts: https://github.com/juliensi
 
 ⭐️⭐️⭐️ More content on Substack at https://www.airealist.ai ⭐️⭐️⭐️</div>
 
-        <div class="tags">
+        
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, Julien here. In this video, we&#x27;re going to start from one of my existing projects, RAG Chatbot, working with a local small language model, and we&#x27;re going upgrade it in different ways. First, we&#x27;re gonna move to a QN MOE model. It will still be deployed on LAMA CPP, but I&#x27;m going to use a fork of LAMA Cpp that implements TurboQuant. We&#x27;re going to see what kind of savings we get there.
+
+Memory to the chatbot so that it can store our personal preferences and give us better answers. Okay, so there&#x27;s quite a lot to cover. Why don&#x27;t we get started? As usual, you will find all the links and all the resources in the video description. Okay, Okay, so this is the chatbot we&#x27;ve worked with before.
+
+It&#x27;s implemented in Python. I&#x27;m using a small language model with Llama CPP. More on this in a second. And I&#x27;m using ChromaDB to store embeddings, which are also computed with a small language like, okay, what do those reports say about battery manufacturing? Let&#x27;s just enable RAG mode and go.
+
+Okay, and we see that model is processing, our APIs are processing. Okay, so it&#x27;s a RAG chatbot. We get a list of source documents, and this is pretty much where we left the project last time we discussed it. Okay, I&#x27;m using everything on the same machine, which is my 48 gig M3 Max Mac. Okay.
+
+And the thing that is quite interesting and quite different this time around is that I am using Llama CPP, but I&#x27;m using a fork of Llama Cpp coming from the Toms. Okay. Well, that&#x27;s the owner&#x27;s name. So let me show you the whole stack bit by bit and we&#x27;ll dive deeper. Original model I&#x27;m working with.
+
+So I&#x27;m using QN35, 35 billion, active 3 billion. So MOE model. The 3B active ROI, the model is quite fast. So I am using a 4-bit QNTIZE model, Q4KM. And as you can see, this little baby is 21 gigabytes.
+
+So not huge. It will load on my Okay, so I&#x27;m using a 4-bit quantized model, Q4KM. Okay, and as you can see, this little baby is 21 gigabytes. Okay, so not huge. It will load on my machine, obviously, but that&#x27;s just for the model.
+
+And of course, on top of that, we&#x27;re going to need memory for the KV cache. Okay, as we run prompts, we&#x27;re gonna keep using memory. To cache the K and V values so that, of course, inference runs faster. And, well, the more we use the model, the longer, and of course, the longer the context, and here again, I&#x27;m using 32K, the more memory I&#x27;m going to need for the KV cache. The KV cache grows linearly with the context.
+
+And, of course. The context ties that you can actually work with. So there&#x27;s a competition between the model and its cache for the host memory. So in previous videos, I covered TurboQuant, a new algorithm that helps compress the KV cache without degrading accuracy. And well, on this particular model, I&#x27;m getting 60% KV cache reduction with perplexity barely, barely increasing.
+
+And that&#x27;s the difference between a model that fits comfortably on your machine with the context size that you need and a model that doesn&#x27;t. So let&#x27;s look at that. Let&#x27;s look at how we launch the model with Llama CPP. You can see the launch script here, bottom right. And you can see we are running Llama server with the model file.
+
+CtK and CtV which are basically which format, which quantization do we want for the K values and the V values in the cache. And again, these are only available in the TOMS fork, which is what I&#x27;m using here. I&#x27;m using also a context size of 32K. So if I run this thing now, we&#x27;re going to get a lot of information. So we can see my machine, M3Mac.
+
+48 gigs. Okay, the model is loaded. And okay, now we see, okay, we are using the 32K context. And this is really cool, right? This piece here.
+
+It tells us I&#x27;m actually upgrading K from Turbo 4, which would be 4-bit Turbo Quant, to Q8 to prevent quality degradation. No, I am not going to run K with 4-bit because for a mixture of expert model, moving K to 4-bit is actually risky and fragile. And so the fork will automatically keep K at 8-bit precision and it will only compress V with the Turbo 4 format. So that&#x27;s the asymmetric recipe that we discussed. In a previous video.
+
+And it&#x27;s pretty cool that the fork will actually save us from running bad configurations. Okay, so back to the chatbot. So once again, I ingested 94 energy reports from the International Energy Agency. So, you know, thousands, tens of thousands of document chunks in a local ChromaDB index embedded with a BGE embedded. Okay, so the front end is using fast API in the back end and well the back end queries the Llama server that we just started okay and rag is on so let&#x27;s run another query and we can enjoy the speed of the quen model here so give me an overview of the most important energy blockments in those documents okay and there you go blazing fast okay and We&#x27;re only predicting with 3 billion parameters.
+
+So again, we get retreat context and data sources, et cetera, et cetera. We get a really good answer. So that&#x27;s already better than what we had before. The model is faster. And well, it is a very good model, I have to say.
+
+So the upgrade works. Now let&#x27;s go one level up and see what memory brings. Here works great but of course it has one problem it never remembers anything and it forgets everything when I reuse it again and again so every restart I guess I&#x27;m a stranger so let&#x27;s check that if we have rag mode on and if we say you know based on what you remember about me what topics am I interested in and it says well I don&#x27;t have memory of past conversations okay So that&#x27;s a problem because, of course, as I use the chatbot again and again, I would like the chatbot to understand my personal preferences, my personal interests, without me having to be crystal clear every single time. And that&#x27;s where memory comes in. So now let&#x27;s enable memory, and I&#x27;ll tell you more about that in a second.
+
+And let&#x27;s ask the same question. What do you remember? M-Zero is an open source memory layer for AI apps and all it needs is just a few lines of code to pull up what it already knows. Coming from so the memory that you&#x27;re seeing here is memzero memzero is an open source memory layer for ai apps and all it needs is just a few lines of code to pull up what it already knows about me before answering and it saves what it learns afterwards and the code is quite simple the cool thing about memzero is that it works very nicely with the open source ecosystem and , and then when you want to retrieve knowledge, all you have to do is do something like this, mem.search, the query, and whatever filter you&#x27;re interested in. And it will return in the context data that it knows about you.
+
+So it&#x27;s going to work with your existing stack. Here I&#x27;m using local, but of course there&#x27;s a hosted version in the cloud that you can use for production. I can run everything here on my local machine. I&#x27;m actually using the same embeddings models and the same data store that I was using for the chatbot. And if you want to ship to production, then you can easily switch to the cloud hosted version for, I guess, better persistence and scaling and, of course, multi-user memory, et cetera, et cetera.
+
+So this is pretty cool, right? So let&#x27;s try and add more facts the memory. Okay, so let&#x27;s try this one. I only care about EVs and batteries, not interested about anyone else. Okay.
+
+All right, so it tells me, got it, we&#x27;ll strictly focus on EVs and battery and skip call, etc., etc. Okay, this should be in memory now. So let&#x27;s kill the chatbot, start it again, and check that it has memory. Okay. So I killed it.
+
+You can see it here. Right? Started it again. The API is reconnected. Okay, and let&#x27;s just ask, okay, what do you remember?
+
+Now, it is telling me, based on past discussions, well, I am interested in EVs and batteries, and then it still remembers, of course, the previous stuff. And it says, yeah, you want to skip anything focused on coal, oil, and natural gas. Okay, that&#x27;s pretty nice. And so now, if I ask something new, like maybe, and then it still remembers of course the previous stuff and it says yeah you want to skip anything focused on coal oil and natural gas okay that&#x27;s pretty nice and so now if I ask something new like maybe how fast is clean energy progressing in china why not it&#x27;s going to use the memory and inject the memory into the prompt okay and so okay it&#x27;s moving very fast and I can see that It tells me the country holds roughly 80% of global jobs in solar, PV, and EV battery manufacturing, which is one of my main topics. And it&#x27;s not saying anything about coal and oil and gas, etc.
+
+So the memory is working here and helping me get better answers. So this is very nice. Okay, let&#x27;s do maybe one more. I work as a battery supply chain analyst. I focus on the European market.
+
+And the differences here are completely factored in. And this is persistent. Again, this is persisting locally, but it could also persist in the cloud. And of course, it just makes for better answers and more predictable answers because they will be driven by whatever memories I stored in the system. So that&#x27;s the full stack, a 32B MOE with a 32K context running on my laptop, perspective, thanks to the TOMS TurboQuant Llama CPP fork, we see K is quantized to 8 bits, V is quantized turboquant 4 bits, and this gives us a 60% memory saving compared to FP16 kV cache.
+
+You saw how fast the model was, and of course the reduced kV cache is also helping with the speed. So again, all the links, I hope this was interesting and fun. And until next time, my friends, you know what to do. Keep rocking.</div>
+<div class="tags">
             <h2>Tags</h2>
             <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
         </div>
