@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Cash Flow Lends. Valuation Doesn’t.',
+    href: '/blog/industry-perspectives/2026-06-12_cash-flow-lends-valuation-doesnt/',
+    date: 'June 12, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Nvidia Won the Cloud. Now It Wants the Laptop.',
     href: '/blog/industry-perspectives/2026-06-11_nvidia-won-the-cloud-now-it-wants-the-laptop/',
     date: 'June 11, 2026',
@@ -30,12 +36,6 @@ const LATEST_UPDATES = [
     href: '/blog/industry-perspectives/2026-06-01_the-overbuild-put/',
     date: 'June 1, 2026',
     icon: 'article',
-  },
-  {
-    title: 'Benchmarking TurboQuant with MLX on Apple Silicon',
-    href: '/youtube/2026/20260531_Benchmarking_TurboQuant_with_MLX_on_Apple_Silicon.html',
-    date: 'May 31, 2026',
-    icon: 'video',
   },
 ];
 

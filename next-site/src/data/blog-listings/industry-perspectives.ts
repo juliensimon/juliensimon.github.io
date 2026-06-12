@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Cash Flow Lends. Valuation Doesn\'t.',
+    slug: '2026-06-12_cash-flow-lends-valuation-doesnt',
+    date: '2026-06-12',
+    description: 'Three borrowers, three answers, seventy-two hours. The AI debt boom did not slow down last week. It got priced.',
+    originalUrl: 'https://www.airealist.ai/p/cash-flow-lends-valuation-doesnt',
+  },
+  {
     title: 'Nvidia Won the Cloud. Now It Wants the Laptop.',
     slug: '2026-06-11_nvidia-won-the-cloud-now-it-wants-the-laptop',
     date: '2026-06-11',
