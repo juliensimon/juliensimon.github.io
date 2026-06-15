@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Anthropic\'s Model Got Pulled. The Dangerous Ones Didn\'t.',
+    slug: '2026-06-15_anthropics-model-got-pulled-the-dangerous-ones-didnt',
+    date: '2026-06-15',
+    description: 'A US export order pulled Anthropic\'s best model from every customer on earth in one evening. The thousands of models built to refuse nothing stayed online.',
+    originalUrl: 'https://www.airealist.ai/p/anthropics-model-got-pulled-the-dangerous',
+  },
+  {
     title: 'Cash Flow Lends. Valuation Doesn\'t.',
     slug: '2026-06-12_cash-flow-lends-valuation-doesnt',
     date: '2026-06-12',

@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Anthropic’s Model Got Pulled. The Dangerous Ones Didn’t.',
+    href: '/blog/industry-perspectives/2026-06-15_anthropics-model-got-pulled-the-dangerous-ones-didnt/',
+    date: 'June 15, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Qwen 3.5 MoE + TurboQuant + mem0: A Local RAG Chatbot That Remembers',
     href: '/youtube/2026/20260612_Qwen_35_MoE_TurboQuant_mem0_A_Local_RAG_Chatbot_That_Remembers.html',
     date: 'June 12, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'Macron Said Confirmed. SoftBank Said Up To.',
     href: '/blog/industry-perspectives/2026-06-09_macron-said-confirmed-softbank-said-up-to/',
     date: 'June 9, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'The Amendments Were Whispered',
-    href: '/blog/industry-perspectives/2026-06-03_the-amendments-were-whispered/',
-    date: 'June 3, 2026',
     icon: 'article',
   },
 ];
