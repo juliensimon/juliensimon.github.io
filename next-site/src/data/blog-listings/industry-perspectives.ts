@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Independent or Current',
+    slug: '2026-06-18_independent-or-current',
+    date: '2026-06-18',
+    description: 'Europe built the most ambitious AI enforcer in the world. It still has to ask the labs how to grade them.',
+    originalUrl: 'https://www.airealist.ai/p/independent-or-current',
+  },
+  {
     title: 'Anthropic\'s Model Got Pulled. The Dangerous Ones Didn\'t.',
     slug: '2026-06-15_anthropics-model-got-pulled-the-dangerous-ones-didnt',
     date: '2026-06-15',

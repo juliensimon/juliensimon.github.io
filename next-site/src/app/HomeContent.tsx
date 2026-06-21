@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Independent or Current',
+    href: '/blog/industry-perspectives/2026-06-18_independent-or-current/',
+    date: 'June 18, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Anthropic’s Model Got Pulled. The Dangerous Ones Didn’t.',
     href: '/blog/industry-perspectives/2026-06-15_anthropics-model-got-pulled-the-dangerous-ones-didnt/',
     date: 'June 15, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'Nvidia Won the Cloud. Now It Wants the Laptop.',
     href: '/blog/industry-perspectives/2026-06-11_nvidia-won-the-cloud-now-it-wants-the-laptop/',
     date: 'June 11, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Macron Said Confirmed. SoftBank Said Up To.',
-    href: '/blog/industry-perspectives/2026-06-09_macron-said-confirmed-softbank-said-up-to/',
-    date: 'June 9, 2026',
     icon: 'article',
   },
 ];

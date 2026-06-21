@@ -23,8 +23,8 @@ export const PINNED_REPOSITORIES: Repository[] = [
     description: 'Ship faster with parallel Claude Code sessions — one native macOS window, git worktrees, sandboxes, auto-resume, merge & finish, token dashboard.',
     url: 'https://github.com/juliensimon/canopy',
     language: 'Swift',
-    stars: 86,
-    forks: 2,
+    stars: 96,
+    forks: 3,
     tags: ['Claude Code', 'macOS', 'Git Worktrees', 'Developer Tools'],
   },
   {
