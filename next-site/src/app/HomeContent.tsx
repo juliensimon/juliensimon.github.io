@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Two Laws, One Dependence',
+    href: '/blog/industry-perspectives/2026-06-22_two-laws-one-dependence/',
+    date: 'June 22, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Independent or Current',
     href: '/blog/industry-perspectives/2026-06-18_independent-or-current/',
     date: 'June 18, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'Cash Flow Lends. Valuation Doesn’t.',
     href: '/blog/industry-perspectives/2026-06-12_cash-flow-lends-valuation-doesnt/',
     date: 'June 12, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Nvidia Won the Cloud. Now It Wants the Laptop.',
-    href: '/blog/industry-perspectives/2026-06-11_nvidia-won-the-cloud-now-it-wants-the-laptop/',
-    date: 'June 11, 2026',
     icon: 'article',
   },
 ];

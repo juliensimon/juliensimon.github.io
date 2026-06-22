@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Two Laws, One Dependence',
+    slug: '2026-06-22_two-laws-one-dependence',
+    date: '2026-06-22',
+    description: 'Europe moved twice on cloud sovereignty this month. One proposal makes the American duopoly easier to move within.',
+    originalUrl: 'https://www.airealist.ai/p/two-laws-one-dependence',
+  },
+  {
     title: 'Independent or Current',
     slug: '2026-06-18_independent-or-current',
     date: '2026-06-18',
