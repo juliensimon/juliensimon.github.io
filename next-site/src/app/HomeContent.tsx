@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'SynthMedia — Cloud souverain : Bruxelles ouvre la porte au « sovereignty-washing »',
+    href: 'https://synthmedia.fr/international/ia-act-regulations-internationales/cloud-souverain-bruxelles-sovereignty-washing/',
+    date: 'June 22, 2026',
+    icon: 'press',
+  },
+  {
     title: 'Two Laws, One Dependence',
     href: '/blog/industry-perspectives/2026-06-22_two-laws-one-dependence/',
     date: 'June 22, 2026',
@@ -30,12 +36,6 @@ const LATEST_UPDATES = [
     href: '/youtube/2026/20260612_Qwen_35_MoE_TurboQuant_mem0_A_Local_RAG_Chatbot_That_Remembers.html',
     date: 'June 12, 2026',
     icon: 'video',
-  },
-  {
-    title: 'Cash Flow Lends. Valuation Doesn’t.',
-    href: '/blog/industry-perspectives/2026-06-12_cash-flow-lends-valuation-doesnt/',
-    date: 'June 12, 2026',
-    icon: 'article',
   },
 ];
 
@@ -220,6 +220,11 @@ export default function HomeContent() {
                       <>
                         <span aria-hidden="true">🎤</span>
                         <span className="sr-only">Event: </span>
+                      </>
+                    ) : item.icon === 'press' ? (
+                      <>
+                        <span aria-hidden="true">📰</span>
+                        <span className="sr-only">Press: </span>
                       </>
                     ) : (
                       <>
