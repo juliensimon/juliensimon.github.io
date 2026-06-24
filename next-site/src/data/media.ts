@@ -17,6 +17,17 @@ export interface MediaItem {
 
 export const MEDIA_ITEMS: MediaItem[] = [
   {
+    title: "Cloud souverain : Bruxelles ouvre la porte au « sovereignty-washing »",
+    outlet: "SynthMedia",
+    type: "Press",
+    date: "June 22, 2026",
+    year: 2026,
+    url: "https://synthmedia.fr/international/ia-act-regulations-internationales/cloud-souverain-bruxelles-sovereignty-washing/",
+    linkLabel: "Article",
+    description: "Quoted in SynthMedia's analysis of the European Commission's Cloud and AI Development Act, which the article argues opens the door to \"sovereignty-washing\" by letting American hyperscalers keep serving European public sectors under certification criteria. Julien Simon frames the issue as fundamentally regulatory and political: member states preach sovereignty in Brussels while signing bilateral agreements with hyperscalers, and dependence on NVIDIA GPUs and TSMC manufacturing means American control persists regardless of where data is stored.",
+    tags: ["Press", "SynthMedia", "Sovereign Cloud", "EU AI Act", "Digital Sovereignty", "French"],
+  },
+  {
     title: "Amazon’s Nvidia Alternative Starts Winning Over AI Developers",
     outlet: "The Information",
     type: "Press",
@@ -1242,12 +1253,12 @@ export const MEDIA_ITEMS: MediaItem[] = [
 ];
 
 export const MEDIA_STATS = {
-  total: 127,
+  total: 128,
   yearSpan: '2014–2026',
   earliestYear: 2014,
   latestYear: 2026,
   byType: {
-    "Press": 97,
+    "Press": 98,
     "Podcast": 22,
     "Analyst": 7,
     "Video": 1,
