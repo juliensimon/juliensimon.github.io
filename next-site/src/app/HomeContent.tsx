@@ -8,6 +8,18 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'The Models That Learned Physics',
+    href: '/blog/industry-perspectives/2026-06-30_the-models-that-learned-physics/',
+    date: 'June 30, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'Too Dangerous for You, Free for Everyone',
+    href: '/blog/industry-perspectives/2026-06-28_too-dangerous-for-you-free-for-everyone/',
+    date: 'June 28, 2026',
+    icon: 'article',
+  },
+  {
     title: 'SynthMedia — Cloud souverain : Bruxelles ouvre la porte au « sovereignty-washing »',
     href: 'https://synthmedia.fr/international/ia-act-regulations-internationales/cloud-souverain-bruxelles-sovereignty-washing/',
     date: 'June 22, 2026',
@@ -24,18 +36,6 @@ const LATEST_UPDATES = [
     href: '/blog/industry-perspectives/2026-06-18_independent-or-current/',
     date: 'June 18, 2026',
     icon: 'article',
-  },
-  {
-    title: 'Anthropic’s Model Got Pulled. The Dangerous Ones Didn’t.',
-    href: '/blog/industry-perspectives/2026-06-15_anthropics-model-got-pulled-the-dangerous-ones-didnt/',
-    date: 'June 15, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Qwen 3.5 MoE + TurboQuant + mem0: A Local RAG Chatbot That Remembers',
-    href: '/youtube/2026/20260612_Qwen_35_MoE_TurboQuant_mem0_A_Local_RAG_Chatbot_That_Remembers.html',
-    date: 'June 12, 2026',
-    icon: 'video',
   },
 ];
 

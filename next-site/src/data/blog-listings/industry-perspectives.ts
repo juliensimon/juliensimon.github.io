@@ -11,6 +11,20 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The Models That Learned Physics',
+    slug: '2026-06-30_the-models-that-learned-physics',
+    date: '2026-06-30',
+    description: 'Generative AI isn\'t just chatbots and code. The transformer architecture has quietly generalized far past language, and the next domain it\'s reaching is the…',
+    originalUrl: 'https://www.airealist.ai/p/the-models-that-learned-physics',
+  },
+  {
+    title: 'Too Dangerous for You, Free for Everyone',
+    slug: '2026-06-28_too-dangerous-for-you-free-for-everyone',
+    date: '2026-06-28',
+    description: 'America locked up its best models. Europe regulates a frontier it can\'t build. China gives its best to the world and is winning.',
+    originalUrl: 'https://www.airealist.ai/p/too-dangerous-for-you-free-for-everyone',
+  },
+  {
     title: 'Two Laws, One Dependence',
     slug: '2026-06-22_two-laws-one-dependence',
     date: '2026-06-22',
