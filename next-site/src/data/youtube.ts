@@ -14,9 +14,9 @@ export const YOUTUBE_STATS = {
 export const POPULAR_VIDEO_IDS = ['Zdu5UyA46io', '_hNRG3E4Ny4', 'cf8z3Q8PFQQ', 'hMs8VNRy5Ys'];
 
 export const LATEST_VIDEOS = [
-  { id: 'zP7s_IdrVRs', title: 'Deep Dive: Teaching Arcee Trinity Mini to Read Medical Research with RLVR and GRPO', date: 'March 3, 2026' },
-  { id: 'LPYYrQsUuWQ', title: 'Open-source Coding with Cline and Arcee Trinity Large', date: 'February 14, 2026' },
-  { id: 'lOi6mxY7QP4', title: 'Building a Kanban Task Management Web App from Scratch with Replit', date: 'February 8, 2026' },
+  { id: 'w98bne-jdZM', title: 'Qwen 3.5 MoE + TurboQuant + mem0: A Local RAG Chatbot That Remembers', date: 'June 12, 2026' },
+  { id: 'pRsAr51iTnI', title: 'Benchmarking TurboQuant with MLX on Apple Silicon', date: 'May 31, 2026' },
+  { id: 'PAvM7mvsD30', title: 'Web app + Mobile + Stripe + Pitch Deck: one Replit project!', date: 'May 19, 2026' },
 ];
 
 export const VIDEO_YEARS: VideoYear[] = [

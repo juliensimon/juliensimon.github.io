@@ -10,7 +10,7 @@ Fetch the YouTube channel feed and detect new videos not yet on the website.
 - **Shorts excluded**: Automatically detects and skips YouTube Shorts (use `--include-shorts` to override)
 - **Automatic transcripts**: Downloads audio via yt-dlp, transcribes with distil-whisper, and cleans up AI terminology
 - **Dual-write**: Creates pages in both `youtube/YYYY/` and `next-site/public/youtube/YYYY/`
-- **Auto-updates**: Updates year index files (sorted by date, newest first), `youtube.ts` counts, and LATEST_UPDATES on the homepage
+- **Auto-updates**: Updates year index files (sorted by date, newest first), `youtube.ts` counts, LATEST_UPDATES on the homepage, and the LATEST_VIDEOS list on the Videos page (rebuilt from the feed's newest 3 videos every run, so it self-heals even with no new videos)
 - **Deduplication**: Checks existing HTML files for YouTube video IDs to avoid duplicates
 - **Backfill**: Can add transcripts to existing videos that are missing them
 - **Subscriber refresh**: Scrapes the channel page and updates `<N>K subscribers` references across the site
@@ -109,5 +109,5 @@ python3 scripts/sync_youtube.py --backfill-transcripts
 | `next-site/public/youtube/YYYY/*.html` | New video HTML page with transcript (Next.js public) |
 | `youtube/YYYY/index.html` | Year index updated with new entry |
 | `next-site/public/youtube/YYYY/index.html` | Year index updated with new entry |
-| `next-site/src/data/youtube.ts` | VIDEO_YEARS count and totalVideos incremented |
+| `next-site/src/data/youtube.ts` | VIDEO_YEARS count and totalVideos incremented; LATEST_VIDEOS rebuilt from the feed's newest 3 videos |
 | `next-site/src/app/HomeContent.tsx` | LATEST_UPDATES prepended with new videos |

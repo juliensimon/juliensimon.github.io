@@ -1126,6 +1126,53 @@ def update_latest_updates(videos: list[VideoItem], dry_run: bool):
     print(f"  Updated LATEST_UPDATES with {len(new_entries)} new videos")
 
 
+def update_latest_videos(feed_videos: list[VideoItem], dry_run: bool):
+    """Rebuild LATEST_VIDEOS in youtube.ts from the feed's newest videos.
+
+    Unlike update_latest_updates (which merges only newly-synced videos into the
+    homepage list), this always rebuilds the array from the current feed, so the
+    "Latest Videos" section on /youtube-videos self-heals even on runs with no
+    new videos. Entries are pure YouTube embeds (id/title/date), so they don't
+    depend on a local page existing.
+    """
+    ts_path = SRC / "data" / "youtube.ts"
+    if not ts_path.exists():
+        print(f"  Warning: youtube.ts not found: {ts_path}")
+        return
+
+    top = sorted(feed_videos, key=lambda v: v.published, reverse=True)[:3]
+    if not top:
+        return
+
+    entries = []
+    for video in top:
+        title = video.title.replace('\\', '\\\\').replace("'", "\\'")
+        date = video.published.strftime('%B %-d, %Y')
+        entries.append(
+            f"  {{ id: '{video.video_id}', title: '{title}', date: '{date}' }},"
+        )
+    new_array = "export const LATEST_VIDEOS = [\n" + "\n".join(entries) + "\n];"
+
+    content = ts_path.read_text(encoding='utf-8')
+    new_content, n = re.subn(
+        r'export const LATEST_VIDEOS = \[[\s\S]*?\];',
+        lambda _m: new_array,
+        content,
+        count=1,
+    )
+    if n == 0:
+        print("  Warning: Could not find LATEST_VIDEOS array")
+        return
+    if new_content == content:
+        print("  LATEST_VIDEOS already up to date")
+        return
+
+    if not dry_run:
+        ts_path.write_text(new_content, encoding='utf-8')
+    action = "Would update" if dry_run else "Updated"
+    print(f"  {action} LATEST_VIDEOS: {', '.join(v.video_id for v in top)}")
+
+
 def backfill_transcripts(
     dry_run: bool,
     model_id: str = DEFAULT_WHISPER_MODEL,
@@ -1260,6 +1307,11 @@ def run(
         print("Checking for Shorts...")
         videos = filter_shorts(videos)
         print(f"{len(videos)} regular videos after filtering Shorts")
+
+    # Refresh the "Latest Videos" section on /youtube-videos from the feed's
+    # newest entries. Runs every sync (even with no new videos) so it self-heals
+    # if the array drifts out of date.
+    update_latest_videos(videos, dry_run)
 
     # Find new videos
     new_videos = get_new_videos(videos, force=force)
