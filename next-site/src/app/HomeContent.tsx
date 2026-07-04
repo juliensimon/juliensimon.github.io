@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'The Backstop Has a Name Now - part 1',
+    href: '/blog/industry-perspectives/2026-07-04_the-backstop-has-a-name-now-part-1/',
+    date: 'July 4, 2026',
+    icon: 'article',
+  },
+  {
     title: 'The Models That Learned Physics',
     href: '/blog/industry-perspectives/2026-06-30_the-models-that-learned-physics/',
     date: 'June 30, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'Two Laws, One Dependence',
     href: '/blog/industry-perspectives/2026-06-22_two-laws-one-dependence/',
     date: 'June 22, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Independent or Current',
-    href: '/blog/industry-perspectives/2026-06-18_independent-or-current/',
-    date: 'June 18, 2026',
     icon: 'article',
   },
 ];

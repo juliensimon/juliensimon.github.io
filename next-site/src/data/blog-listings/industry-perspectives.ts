@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The Backstop Has a Name Now - part 1',
+    slug: '2026-07-04_the-backstop-has-a-name-now-part-1',
+    date: '2026-07-04',
+    description: 'Nvidia is handing back tens of billions to shareholders. Now it\'s offering to finance the customers who can\'t afford its chips.',
+    originalUrl: 'https://www.airealist.ai/p/the-backstop-has-a-name-now-part',
+  },
+  {
     title: 'The Models That Learned Physics',
     slug: '2026-06-30_the-models-that-learned-physics',
     date: '2026-06-30',
