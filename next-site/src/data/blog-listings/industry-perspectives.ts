@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Qwen 3.8: Soon Is Not a Date',
+    slug: '2026-07-19_qwen-38-soon-is-not-a-date',
+    date: '2026-07-19',
+    description: 'Alibaba answers Moonshot\'s dated gap with an undated one. On Sunday morning, three days after Kimi K3 launched and eight days before its weights are due…',
+    originalUrl: 'https://www.airealist.ai/p/qwen-38-soon-is-not-a-date',
+  },
+  {
     title: 'Kimi K3 and the Checkpoint Gap',
     slug: '2026-07-17_kimi-k3-and-the-checkpoint-gap',
     date: '2026-07-17',

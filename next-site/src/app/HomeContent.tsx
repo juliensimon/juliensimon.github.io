@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Qwen 3.8: Soon Is Not a Date',
+    href: '/blog/industry-perspectives/2026-07-19_qwen-38-soon-is-not-a-date/',
+    date: 'July 19, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Kimi K3 and the Checkpoint Gap',
     href: '/blog/industry-perspectives/2026-07-17_kimi-k3-and-the-checkpoint-gap/',
     date: 'July 17, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'The Backstop Has a Name Now - part 1',
     href: '/blog/industry-perspectives/2026-07-04_the-backstop-has-a-name-now-part-1/',
     date: 'July 4, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'The Models That Learned Physics',
-    href: '/blog/industry-perspectives/2026-06-30_the-models-that-learned-physics/',
-    date: 'June 30, 2026',
     icon: 'article',
   },
 ];
