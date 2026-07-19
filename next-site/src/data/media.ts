@@ -17,6 +17,17 @@ export interface MediaItem {
 
 export const MEDIA_ITEMS: MediaItem[] = [
   {
+    title: "More Startups Try New Cloud Companies as AWS Faces Heavy Demand",
+    outlet: "The Information",
+    type: "Press",
+    date: "July 14, 2026",
+    year: 2026,
+    url: "https://www.theinformation.com/articles/startups-try-new-cloud-companies-aws-faces-heavy-demand",
+    linkLabel: "Article",
+    description: "Quoted in Catherine Perloff's report on startups turning to neoclouds like Runpod, Together AI, and Nebius as AWS and the other hyperscalers struggle with overwhelming GPU demand. Julien Simon explains that Fortino Capital's portfolio companies want more flexibility in the number of GPUs they rent than AWS typically offers: while around half of the portfolio uses AWS, none of them run GPUs there. \"If you're small or midsize, and you need GPU capacity to fine-tune a model or host a model, what AWS is offering is not a good fit.\"",
+    tags: ["Press", "The Information", "AWS", "Neoclouds", "GPUs", "Cloud Computing", "Fortino Capital"],
+  },
+  {
     title: "Cloud souverain : Bruxelles ouvre la porte au « sovereignty-washing »",
     outlet: "SynthMedia",
     type: "Press",
@@ -1253,12 +1264,12 @@ export const MEDIA_ITEMS: MediaItem[] = [
 ];
 
 export const MEDIA_STATS = {
-  total: 128,
+  total: 129,
   yearSpan: '2014–2026',
   earliestYear: 2014,
   latestYear: 2026,
   byType: {
-    "Press": 98,
+    "Press": 99,
     "Podcast": 22,
     "Analyst": 7,
     "Video": 1,

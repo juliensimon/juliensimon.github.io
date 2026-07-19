@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'The Information — More Startups Try New Cloud Companies as AWS Faces Heavy Demand',
+    href: 'https://www.theinformation.com/articles/startups-try-new-cloud-companies-aws-faces-heavy-demand',
+    date: 'July 14, 2026',
+    icon: 'press',
+  },
+  {
     title: 'The Backstop Has a Name Now - part 1',
     href: '/blog/industry-perspectives/2026-07-04_the-backstop-has-a-name-now-part-1/',
     date: 'July 4, 2026',
@@ -30,12 +36,6 @@ const LATEST_UPDATES = [
     href: 'https://synthmedia.fr/international/ia-act-regulations-internationales/cloud-souverain-bruxelles-sovereignty-washing/',
     date: 'June 22, 2026',
     icon: 'press',
-  },
-  {
-    title: 'Two Laws, One Dependence',
-    href: '/blog/industry-perspectives/2026-06-22_two-laws-one-dependence/',
-    date: 'June 22, 2026',
-    icon: 'article',
   },
 ];
 
