@@ -8,10 +8,22 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Kimi K3 and the Checkpoint Gap',
+    href: '/blog/industry-perspectives/2026-07-17_kimi-k3-and-the-checkpoint-gap/',
+    date: 'July 17, 2026',
+    icon: 'article',
+  },
+  {
     title: 'The Information — More Startups Try New Cloud Companies as AWS Faces Heavy Demand',
     href: 'https://www.theinformation.com/articles/startups-try-new-cloud-companies-aws-faces-heavy-demand',
     date: 'July 14, 2026',
     icon: 'press',
+  },
+  {
+    title: 'The Backstop Has a Name Now - part 2',
+    href: '/blog/industry-perspectives/2026-07-06_the-backstop-has-a-name-now-part-2/',
+    date: 'July 6, 2026',
+    icon: 'article',
   },
   {
     title: 'The Backstop Has a Name Now - part 1',
@@ -24,18 +36,6 @@ const LATEST_UPDATES = [
     href: '/blog/industry-perspectives/2026-06-30_the-models-that-learned-physics/',
     date: 'June 30, 2026',
     icon: 'article',
-  },
-  {
-    title: 'Too Dangerous for You, Free for Everyone',
-    href: '/blog/industry-perspectives/2026-06-28_too-dangerous-for-you-free-for-everyone/',
-    date: 'June 28, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'SynthMedia — Cloud souverain : Bruxelles ouvre la porte au « sovereignty-washing »',
-    href: 'https://synthmedia.fr/international/ia-act-regulations-internationales/cloud-souverain-bruxelles-sovereignty-washing/',
-    date: 'June 22, 2026',
-    icon: 'press',
   },
 ];
 

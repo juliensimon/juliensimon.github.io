@@ -11,6 +11,20 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Kimi K3 and the Checkpoint Gap',
+    slug: '2026-07-17_kimi-k3-and-the-checkpoint-gap',
+    date: '2026-07-17',
+    description: 'How to read a Chinese frontier launch in the eleven days before the weights ship',
+    originalUrl: 'https://www.airealist.ai/p/kimi-k3-and-the-checkpoint-gap',
+  },
+  {
+    title: 'The Backstop Has a Name Now - part 2',
+    slug: '2026-07-06_the-backstop-has-a-name-now-part-2',
+    date: '2026-07-06',
+    description: 'How Nvidia finances a cloud tells you what it thinks the cloud is worth. CoreWeave and Nebius got equity. Sharon AI got a revenue-share.',
+    originalUrl: 'https://www.airealist.ai/p/the-backstop-has-a-name-now-part-11d',
+  },
+  {
     title: 'The Backstop Has a Name Now - part 1',
     slug: '2026-07-04_the-backstop-has-a-name-now-part-1',
     date: '2026-07-04',
