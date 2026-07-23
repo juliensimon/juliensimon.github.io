@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The Model Is a Checkpoint',
+    slug: '2026-07-23_the-model-is-a-checkpoint',
+    date: '2026-07-23',
+    description: 'Washington spent last week letting it be known it might ban Chinese AI models, so this week, everyone is an open-models expert.',
+    originalUrl: 'https://www.airealist.ai/p/the-model-is-a-checkpoint',
+  },
+  {
     title: 'Qwen 3.8: Soon Is Not a Date',
     slug: '2026-07-19_qwen-38-soon-is-not-a-date',
     date: '2026-07-19',

@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'The Model Is a Checkpoint',
+    href: '/blog/industry-perspectives/2026-07-23_the-model-is-a-checkpoint/',
+    date: 'July 23, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Qwen 3.8: Soon Is Not a Date',
     href: '/blog/industry-perspectives/2026-07-19_qwen-38-soon-is-not-a-date/',
     date: 'July 19, 2026',
@@ -29,12 +35,6 @@ const LATEST_UPDATES = [
     title: 'The Backstop Has a Name Now - part 2',
     href: '/blog/industry-perspectives/2026-07-06_the-backstop-has-a-name-now-part-2/',
     date: 'July 6, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'The Backstop Has a Name Now - part 1',
-    href: '/blog/industry-perspectives/2026-07-04_the-backstop-has-a-name-now-part-1/',
-    date: 'July 4, 2026',
     icon: 'article',
   },
 ];
