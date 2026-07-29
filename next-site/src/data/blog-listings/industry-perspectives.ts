@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Amazon Priced the Frontier and Declined It',
+    slug: '2026-07-29_amazon-priced-the-frontier-and-declined-it',
+    date: '2026-07-29',
+    description: 'On 30 June, AWS published two announcements pointing in opposite directions. In July, it closed its AGI Lab. All three were the same decision.',
+    originalUrl: 'https://www.airealist.ai/p/amazon-priced-the-frontier-and-declined',
+  },
+  {
     title: 'The Model Is a Checkpoint',
     slug: '2026-07-23_the-model-is-a-checkpoint',
     date: '2026-07-23',

@@ -8,6 +8,12 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'Amazon Priced the Frontier and Declined It',
+    href: '/blog/industry-perspectives/2026-07-29_amazon-priced-the-frontier-and-declined-it/',
+    date: 'July 29, 2026',
+    icon: 'article',
+  },
+  {
     title: 'The Model Is a Checkpoint',
     href: '/blog/industry-perspectives/2026-07-23_the-model-is-a-checkpoint/',
     date: 'July 23, 2026',
@@ -30,12 +36,6 @@ const LATEST_UPDATES = [
     href: 'https://www.theinformation.com/articles/startups-try-new-cloud-companies-aws-faces-heavy-demand',
     date: 'July 14, 2026',
     icon: 'press',
-  },
-  {
-    title: 'The Backstop Has a Name Now - part 2',
-    href: '/blog/industry-perspectives/2026-07-06_the-backstop-has-a-name-now-part-2/',
-    date: 'July 6, 2026',
-    icon: 'article',
   },
 ];
 
