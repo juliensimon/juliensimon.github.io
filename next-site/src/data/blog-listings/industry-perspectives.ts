@@ -11,6 +11,20 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'From Google Brain to Google Drain',
+    slug: '2026-08-05_from-google-brain-to-google-drain',
+    date: '2026-08-05',
+    description: 'What six weeks of exits say about the model Google hasn\'t shipped. Nine months ago, Google\'s redemption arc looked complete.',
+    originalUrl: 'https://www.airealist.ai/p/from-google-brain-to-google-drain',
+  },
+  {
+    title: 'You Have To Ask Me Nicely',
+    slug: '2026-08-04_you-have-to-ask-me-nicely',
+    date: '2026-08-04',
+    description: 'OVH told Canada how to get the data it refused to hand over. On August 18, the European Union stops making the argument OVH is making in court.',
+    originalUrl: 'https://www.airealist.ai/p/you-have-to-ask-me-nicely',
+  },
+  {
     title: 'Amazon Priced the Frontier and Declined It',
     slug: '2026-07-29_amazon-priced-the-frontier-and-declined-it',
     date: '2026-07-29',

@@ -8,6 +8,18 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'From Google Brain to Google Drain',
+    href: '/blog/industry-perspectives/2026-08-05_from-google-brain-to-google-drain/',
+    date: 'August 5, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'You Have To Ask Me Nicely',
+    href: '/blog/industry-perspectives/2026-08-04_you-have-to-ask-me-nicely/',
+    date: 'August 4, 2026',
+    icon: 'article',
+  },
+  {
     title: 'Amazon Priced the Frontier and Declined It',
     href: '/blog/industry-perspectives/2026-07-29_amazon-priced-the-frontier-and-declined-it/',
     date: 'July 29, 2026',
@@ -24,18 +36,6 @@ const LATEST_UPDATES = [
     href: '/blog/industry-perspectives/2026-07-19_qwen-38-soon-is-not-a-date/',
     date: 'July 19, 2026',
     icon: 'article',
-  },
-  {
-    title: 'Kimi K3 and the Checkpoint Gap',
-    href: '/blog/industry-perspectives/2026-07-17_kimi-k3-and-the-checkpoint-gap/',
-    date: 'July 17, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'The Information — More Startups Try New Cloud Companies as AWS Faces Heavy Demand',
-    href: 'https://www.theinformation.com/articles/startups-try-new-cloud-companies-aws-faces-heavy-demand',
-    date: 'July 14, 2026',
-    icon: 'press',
   },
 ];
 
