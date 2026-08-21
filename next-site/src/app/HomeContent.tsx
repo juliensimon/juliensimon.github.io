@@ -6,35 +6,49 @@ import SocialButton from '@/components/ui/SocialButton';
 import TypingEffect from '@/components/ui/TypingEffect';
 import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
-const LATEST_UPDATES = [
+type LatestUpdate = {
+  title: string;
+  href: string;
+  date: string;
+  icon: 'article' | 'video' | 'event' | 'press';
+  /** One-line teaser: the Substack subtitle for articles. */
+  summary?: string;
+};
+
+const LATEST_UPDATES: LatestUpdate[] = [
   {
     title: 'The Watcher Is the Product',
     href: '/blog/industry-perspectives/2026-08-20_the-watcher-is-the-product/',
     date: 'August 20, 2026',
+    summary: 'DeepSeek gave the agent harness away. OpenAI is taxing itself to watch its own. SpaceX paid $60 billion for one. All three just told you where the value went.',
     icon: 'article',
   },
   {
     title: 'The Model Is the Machine',
     href: '/blog/industry-perspectives/2026-08-09_the-model-is-the-machine/',
     date: 'August 9, 2026',
+    summary: 'AMD just bought a chip company whose product runs exactly one model. That is the point.',
     icon: 'article',
   },
   {
     title: 'From Google Brain to Google Drain',
     href: '/blog/industry-perspectives/2026-08-05_from-google-brain-to-google-drain/',
     date: 'August 5, 2026',
+    summary: 'What six weeks of exits say about the model Google hasn’t shipped.',
     icon: 'article',
   },
   {
     title: 'You Have To Ask Me Nicely',
     href: '/blog/industry-perspectives/2026-08-04_you-have-to-ask-me-nicely/',
     date: 'August 4, 2026',
+    summary: 'OVH told Canada how to get the data it refused to hand over. On August 18, the European Union stops making the argument OVH is making in court.',
     icon: 'article',
   },
   {
     title: 'Amazon Priced the Frontier and Declined It',
     href: '/blog/industry-perspectives/2026-07-29_amazon-priced-the-frontier-and-declined-it/',
     date: 'July 29, 2026',
+    summary: 'On 30 June, AWS published two announcements pointing in opposite directions. In July, it closed its AGI Lab. All three were the same decision.',
     icon: 'article',
   },
 ];
@@ -237,6 +251,9 @@ export default function HomeContent() {
                   <h3 className="text-sm font-semibold text-text group-hover:text-primary transition-colors">
                     {item.title}
                   </h3>
+                  {item.summary && (
+                    <p className="text-xs text-text-muted mt-1 line-clamp-2">{item.summary}</p>
+                  )}
                 </ScrollReveal>
               ))}
             </div>

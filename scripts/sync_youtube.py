@@ -1053,6 +1053,42 @@ def update_youtube_ts(year: int, videos_to_add: int, dry_run: bool):
         ts_path.write_text(content, encoding='utf-8')
 
 
+# A single-quoted JS string literal, capturing its raw (still-escaped) body.
+JS_STRING = r"'((?:[^'\\]|\\.)*)'"
+
+
+def parse_latest_update_entries(array_body: str) -> list[dict]:
+    """Parse LATEST_UPDATES entries field-by-field.
+
+    Reading each key by name (rather than by position) keeps optional fields
+    such as the article `summary` written by sync_substack.py from being
+    dropped when this script rewrites the array. Values stay in their raw
+    escaped form so they round-trip verbatim.
+    """
+    entries = []
+    for block in re.finditer(r'\{[^{}]*\}', array_body):
+        entry = {}
+        for key in ('title', 'href', 'date', 'icon', 'summary'):
+            match = re.search(rf"\b{key}:\s*{JS_STRING}", block.group(0))
+            if match:
+                entry[key] = match.group(1)
+        if {'title', 'href', 'date', 'icon'} <= entry.keys():
+            entries.append(entry)
+    return entries
+
+
+def render_latest_updates(entries: list[dict]) -> str:
+    """Render the LATEST_UPDATES array literal from parsed entries."""
+    entries_str = ',\n  '.join(
+        f"{{\n    title: '{e['title']}',\n    href: '{e['href']}',"
+        f"\n    date: '{e['date']}',\n"
+        + (f"    summary: '{e['summary']}',\n" if e.get('summary') else '')
+        + f"    icon: '{e['icon']}',\n  }}"
+        for e in entries
+    )
+    return f"const LATEST_UPDATES: LatestUpdate[] = [\n  {entries_str},\n];"
+
+
 def update_latest_updates(videos: list[VideoItem], dry_run: bool):
     """Update LATEST_UPDATES in HomeContent.tsx."""
     home_path = SRC / "app" / "HomeContent.tsx"
@@ -1063,7 +1099,7 @@ def update_latest_updates(videos: list[VideoItem], dry_run: bool):
     content = home_path.read_text(encoding='utf-8')
 
     updates_match = re.search(
-        r'const LATEST_UPDATES = \[(.*?)\];',
+        r'const LATEST_UPDATES(?:\s*:\s*\w+\[\])? = \[(.*?)\];',
         content,
         re.DOTALL,
     )
@@ -1071,19 +1107,7 @@ def update_latest_updates(videos: list[VideoItem], dry_run: bool):
         print("  Warning: Could not find LATEST_UPDATES array")
         return
 
-    # Parse existing entries
-    existing_entries = []
-    entry_pattern = (
-        r"\{\s*title:\s*['\"](.+?)['\"],\s*href:\s*['\"](.+?)['\"],"
-        r"\s*date:\s*['\"](.+?)['\"],\s*icon:\s*['\"](.+?)['\"],?\s*\}"
-    )
-    for match in re.finditer(entry_pattern, updates_match.group(1)):
-        existing_entries.append({
-            'title': match.group(1),
-            'href': match.group(2),
-            'date': match.group(3),
-            'icon': match.group(4),
-        })
+    existing_entries = parse_latest_update_entries(updates_match.group(1))
 
     # Build new entries (newest first)
     new_entries = []
@@ -1107,16 +1131,11 @@ def update_latest_updates(videos: list[VideoItem], dry_run: bool):
     all_entries.sort(key=lambda e: datetime.strptime(e['date'], '%B %d, %Y'), reverse=True)
     all_entries = all_entries[:5]
 
-    entries_str = ',\n  '.join([
-        f"{{\n    title: '{e['title']}',\n    href: '{e['href']}',"
-        f"\n    date: '{e['date']}',\n    icon: '{e['icon']}',\n  }}"
-        for e in all_entries
-    ])
-    new_array = f"const LATEST_UPDATES = [\n  {entries_str},\n];"
+    new_array = render_latest_updates(all_entries)
 
     content = re.sub(
-        r'const LATEST_UPDATES = \[[\s\S]*?\];(?=\s*\nconst )',
-        new_array,
+        r'const LATEST_UPDATES(?:\s*:\s*\w+\[\])? = \[[\s\S]*?\];(?=\s*\nconst )',
+        lambda _: new_array,
         content,
     )
 
