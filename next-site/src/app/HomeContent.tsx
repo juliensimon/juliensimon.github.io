@@ -8,6 +8,18 @@ import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 
 const LATEST_UPDATES = [
   {
+    title: 'The Watcher Is the Product',
+    href: '/blog/industry-perspectives/2026-08-20_the-watcher-is-the-product/',
+    date: 'August 20, 2026',
+    icon: 'article',
+  },
+  {
+    title: 'The Model Is the Machine',
+    href: '/blog/industry-perspectives/2026-08-09_the-model-is-the-machine/',
+    date: 'August 9, 2026',
+    icon: 'article',
+  },
+  {
     title: 'From Google Brain to Google Drain',
     href: '/blog/industry-perspectives/2026-08-05_from-google-brain-to-google-drain/',
     date: 'August 5, 2026',
@@ -23,18 +35,6 @@ const LATEST_UPDATES = [
     title: 'Amazon Priced the Frontier and Declined It',
     href: '/blog/industry-perspectives/2026-07-29_amazon-priced-the-frontier-and-declined-it/',
     date: 'July 29, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'The Model Is a Checkpoint',
-    href: '/blog/industry-perspectives/2026-07-23_the-model-is-a-checkpoint/',
-    date: 'July 23, 2026',
-    icon: 'article',
-  },
-  {
-    title: 'Qwen 3.8: Soon Is Not a Date',
-    href: '/blog/industry-perspectives/2026-07-19_qwen-38-soon-is-not-a-date/',
-    date: 'July 19, 2026',
     icon: 'article',
   },
 ];

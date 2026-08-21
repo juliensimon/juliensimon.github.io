@@ -11,6 +11,20 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The Watcher Is the Product',
+    slug: '2026-08-20_the-watcher-is-the-product',
+    date: '2026-08-20',
+    description: 'DeepSeek gave the agent harness away. OpenAI is taxing itself to watch its own. SpaceX paid $60 billion for one. All three just told you where the value went.',
+    originalUrl: 'https://www.airealist.ai/p/the-watcher-is-the-product',
+  },
+  {
+    title: 'The Model Is the Machine',
+    slug: '2026-08-09_the-model-is-the-machine',
+    date: '2026-08-09',
+    description: 'AMD just bought a chip company whose product runs exactly one model. That is the point.',
+    originalUrl: 'https://www.airealist.ai/p/the-model-is-the-machine',
+  },
+  {
     title: 'From Google Brain to Google Drain',
     slug: '2026-08-05_from-google-brain-to-google-drain',
     date: '2026-08-05',
