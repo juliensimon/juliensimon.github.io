@@ -128,6 +128,19 @@ console.log(`Special redirects: ${created} created, ${skipped} skipped`);
 // actually reports as 404. The /blog/slug/ (no date) and /posts/slug
 // patterns were speculative and risk slug collisions.
 
+// The listing files are scraped as raw text, so a JS escape in a string
+// literal ('...s\u00e3o-paulo...') arrives here as six literal characters
+// instead of 'ã' — which then names a redirect folder that points at a 404.
+// Decode escapes the way the TypeScript compiler would.
+function decodeJsString(raw) {
+  if (!raw.includes('\\')) return raw;
+  try {
+    return JSON.parse(`"${raw.replace(/"/g, '\\"')}"`);
+  } catch {
+    return raw;
+  }
+}
+
 function parseLocalHrefs(filePath) {
   if (!existsSync(filePath)) return [];
   const content = readFileSync(filePath, 'utf-8');
@@ -135,11 +148,12 @@ function parseLocalHrefs(filePath) {
 
   const re1 = /localHref:\s*'([^']+)'/g;
   let m;
-  while ((m = re1.exec(content)) !== null) hrefs.push(m[1]);
+  while ((m = re1.exec(content)) !== null) hrefs.push(decodeJsString(m[1]));
 
   const re2 = /(?<![a-zA-Z])href:\s*'(\/blog\/[^']+)'/g;
   while ((m = re2.exec(content)) !== null) {
-    if (!hrefs.includes(m[1])) hrefs.push(m[1]);
+    const href = decodeJsString(m[1]);
+    if (!hrefs.includes(href)) hrefs.push(href);
   }
 
   return hrefs;

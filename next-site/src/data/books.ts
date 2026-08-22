@@ -19,7 +19,7 @@ export const BOOKS: Book[] = [
     pages: 490,
     description:
       'The first book ever published on Amazon SageMaker, AWS\' flagship machine learning service. Covers the full ML lifecycle from data preparation to model deployment at scale.',
-    coverImage: 'https://m.media-amazon.com/images/I/61nbUcX6nCL._SY385_.jpg',
+    coverImage: '/assets/sagemaker-book.jpg',
     amazonUrl: 'https://www.amazon.com/Learn-Amazon-SageMaker-developers-scientists/dp/180020891X',
     githubUrl: 'https://github.com/PacktPublishing/Learn-Amazon-SageMaker',
   },
@@ -30,7 +30,7 @@ export const BOOKS: Book[] = [
     pages: 450,
     description:
       'A comprehensive guide to implementing NLP solutions using AWS AI services (Amazon Comprehend, Translate, Polly, etc.).',
-    coverImage: 'https://www.julien.org/assets/nlp-book.webp',
+    coverImage: '/assets/nlp-book.webp',
     amazonUrl: 'https://www.amazon.com/Natural-Language-Processing-AWS-Services/dp/1801812934',
   },
 ];

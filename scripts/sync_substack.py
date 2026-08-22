@@ -27,7 +27,7 @@ import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
 
 from refresh_llms_txt import refresh_llms_files
-from substack_html_cleaner import SubstackHTMLCleaner
+from substack_html_cleaner import SubstackHTMLCleaner, ensure_image_alt
 from substack_image_handler import process_images_for_post, update_html_image_refs
 
 RSS_URL = "https://www.airealist.ai/feed"
@@ -490,6 +490,7 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     # Clean the HTML using our cleaner
     cleaner = SubstackHTMLCleaner()
     cleaned_content, images = cleaner.clean(raw_content)
+    cleaned_content = ensure_image_alt(cleaned_content, item.title)
 
     # Download and process images (unless dry run)
     image_count = 0

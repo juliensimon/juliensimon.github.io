@@ -16,6 +16,8 @@ Usage:
 import re
 from bs4 import BeautifulSoup, NavigableString
 
+from image_alt import ensure_image_alt
+
 
 class SubstackHTMLCleaner:
     """Cleans Substack HTML content for local hosting."""
@@ -208,8 +210,12 @@ class SubstackHTMLCleaner:
                 # Create a clean img tag
                 new_img = soup.new_tag('img')
                 new_img['src'] = img.get('src', '')
-                if img.get('alt'):
-                    new_img['alt'] = img['alt']
+                # Substack images rarely carry alt text, but the figure's
+                # caption describes them - keep it before the container goes.
+                caption = container.find('figcaption')
+                alt = img.get('alt') or (caption.get_text(strip=True) if caption else '')
+                if alt:
+                    new_img['alt'] = alt
                 # Replace the container with just the img
                 container.replace_with(new_img)
 
@@ -315,6 +321,8 @@ class SubstackHTMLCleaner:
         html = re.sub(r'>\s+<', '>\n<', html)
 
         return html.strip()
+
+
 
 
 def clean_substack_html(html: str) -> tuple[str, list[dict]]:
