@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let an AI Agent Loose on Postgres, Safely: Claude Code + Ghost</title>
+    <meta name="description" content="Giving an AI agent database access has an obvious problem: experimenting means DDL.">
+    <meta property="og:title" content="Let an AI Agent Loose on Postgres, Safely: Claude Code + Ghost">
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://www.julien.org/youtube/2026/20260821_Let_an_AI_Agent_Loose_on_Postgres_Safely_Claude_Code_Ghost.html">
+    <link rel="canonical" href="https://www.julien.org/youtube/2026/20260821_Let_an_AI_Agent_Loose_on_Postgres_Safely_Claude_Code_Ghost.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Let an AI Agent Loose on Postgres, Safely: Claude Code + Ghost">
+    <meta name="twitter:creator" content="@julsimon">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "Let an AI Agent Loose on Postgres, Safely: Claude Code + Ghost",
+        "description": "Giving an AI agent database access has an obvious problem: experimenting means DDL.",
+        "uploadDate": "2026-08-21T17:59:06+00:00",
+        "embedUrl": "https://www.youtube.com/embed/Dzkl6mAYP8s",
+        "thumbnailUrl": "https://img.youtube.com/vi/Dzkl6mAYP8s/maxresdefault.jpg",
+        "author": { "@id": "https://www.julien.org/#person" }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Let an AI Agent Loose on Postgres, Safely: Claude Code + Ghost</h1>
+        <div class="date">August 21, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/Dzkl6mAYP8s" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">Giving an AI agent database access has an obvious problem: experimenting means DDL. Creating indexes, dropping them, testing migrations — all destructive, all irreversible. So the usual answer is to not let the agent touch anything real, and you lose most of the value.
+
+Forking fixes it. In this video, Claude Code spins up five copy-on-write forks of a 389,561-row. applies a different index strategy for each, races them, keeps the winner and deletes the rest. 
+
+No psql, no dashboard, , nothing at risk. The whole thing takes minutes.
+
+00:00  Intro
+00:55  Reading the schema straight from the CLI
+03:50  Forking the database
+05:35  Stories vs comments across June
+06:50  Charting it in the browser
+08:20  Forking five ways in parallel
+09:45  Five index strategies
+10:10  The race: EXPLAIN ANALYZE BUFFERS
+12:00  The results
+13:00  Keeping the winner, deleting the rest
+15:45  Wrap-up
+
+➡️ Ghost — managed Postgres forking: https://ghost.build
+➡️ Claude Code — https://claude.com
+➡️ Data: Hacker News items, June 2026 (389,561 rows)</div>
+
+        
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, Julien here. Today we&#x27;re going to discuss how to safely use databases with AI coding agents. And usually when I let an agent near a database, I get quite nervous because the database is the one thing in the stack that is not allowed to break. It&#x27;s got customer data, it needs to stay up, there&#x27;s only one copy of it. I don&#x27;t want to mess it up.
+
+A relaxed way not a nervous way and to do this I&#x27;m going to use a new product called ghost which is really postgres built for ai agents thanks to ghost I&#x27;m going give cloud code its own database and I&#x27;ll just take my hands off the keyboard and at the end of the demo we&#x27;ll have several copies of a real database and I guess we&#x27;ll end up throwing a lot of them away and there&#x27;s not going to be any drama okay so let&#x27;s see if this is a good idea and let&#x27;s get to work Okay, let me give you a sneak peek at what we&#x27;re going to build. I&#x27;m just going to list the existing databases that I&#x27;ve created so far. So that&#x27;s where we&#x27;re starting. It&#x27;s worth knowing the names because we&#x27;ll be using all three. So the demo database is a slice of Hacker News, about 400,000 posts and comments.
+
+That&#x27;s the one we&#x27;ll mostly work with and the one we will eventually make several copies of. HN is the same thing, it&#x27;s the entire archive, 40 plus gigabytes. We&#x27;ll come back to that. And VEC is, as you would expect, embeddings. And we&#x27;ll use that at the end of the demo.
+
+So GHOST is a CLI and an MCP server. Make sure it&#x27;s installed. I&#x27;ve got the latest version here. And while a lot of commands are available and they&#x27;re very straightforward. So this is how you would create new db here called scratch and you get a connection string so within a few seconds this should be this should be available and we should be able to query it there you go okay so again fast no nonsense commands and excellent consistency between the cli and the mcp the syntax is is really identical for everything so sometimes you&#x27;ll get a message saying database not ready yet it&#x27;s still provisioning you can actually wait if you want to script it you can pass this wait flag and it&#x27;ll block until the database is fully ready but yeah we didn&#x27;t get that problem here so that&#x27;s easy creating a db now let&#x27;s look at the schema for our demo database because there&#x27;s a cool feature I want to I want to introduce okay so that&#x27;s the schema okay pretty much what you would expect the title the url the score time of creation.
+
+But also this schema is optimized for language models. It&#x27;s actually less verbose. And well, let&#x27;s prove this. We can dump the schema, and then we can actually dump the SQL schema from Postgres. And then we can compare the size.
+
+And we can see the Go schema is about a third of the size of the SQL schema, which we could actually look at here. So that matters because obviously you&#x27;re setting context. It&#x27;s going to make things a little bit faster and hopefully a little clearer. There&#x27;s less clutter for the agent to work with. So Cloud is wired to the ghost MCP, and it can create databases, run SQL, schemas, et cetera.
+
+Again, excellent consistency between the CLI commands and the MCP commands. So let&#x27;s just ask Claude to do this. Fork the demo database into a scratch copy called build and wait until it&#x27;s actually ready before you touch it. So the DB has been forked and confirmed live. We queried the tables, et cetera, et cetera Look at the schema and don&#x27;t assume which type code means a story.
+
+Check it. The data has a type column, but that&#x27;s just a number. And obviously, we don&#x27;t want to guess what the numbers mean. So it&#x27;s actually going to check. And type ones means stories.
+
+It should be over 40,000 of them. And type two is user comments. So here&#x27;s our result. In the database declares what the types are. And Claude figured it out.
+
+So type 1 is stories, type 2 comments, and 3, 4, 5 are additional things. So that&#x27;s good. We&#x27;re going to already see how we can combine the power of the language model, can figure things out, and the deterministic behavior of running SQL queries. On a database, right? So no SQL errors, just giving the data, and then Claude making sense of it, which is, I think, exactly the combination we want to have.
+
+OK, let&#x27;s try this one. How does daily activity break down between stories and comments in June? All right, so what do we get here? So the whole data set is June 2026. Perfect.
+
+Live items only, and we get the breakdown stories, comments, comments per story. Et cetera, et cetera. And we get averages, which is a good idea. Didn&#x27;t ask for that, but that&#x27;s pretty cool. Nice.
+
+So again, we can see natural language to SQL, to Insights. No drama. Still not getting nervous. And actually, here I&#x27;m using the free tier. And the free tier is fairly generous.
+
+It gives you a terabyte of storage. So I&#x27;m still very far from that. Compute hours now let me show you a cool feature that I discovered uh almost a little bit by accident so there is a tool that only exists in the mcp server and there is no command line equivalent for it so let me show that um let&#x27;s just ask okay put stories versus comments per day on screen as a stacked bar chart in the ghost ui okay and yeah there it is So we see the agent writing the query and retrieving results and then generating the JavaScript. And this is very, very nice because, of course, a lot of database work, SQL exploration is usually targeted at reporting and dashboarding, et cetera. And you can actually do it all in one step here.
+
+All right, now let&#x27;s run parallel operations. So here&#x27;s a question I want to answer here with this data set. What are the top 10 highest scoring stories for a particular user in the first half of June? It&#x27;s a reasonably complex query. And of course, I want to make it fast.
+
+And as we know, that means finding the right indexing strategy. So what do we usually do? Indexes, maybe one at a time. We would run benchmarking, try to understand why things are slow, what to fix, move on to the next indexing strategy, et cetera, et cetera. So we&#x27;d work sequentially through different IDs, hoping to find the best solution.
+
+But here, because we can so easily fork databases, we can try everything in parallel. So that&#x27;s exactly what I&#x27;m going to do. I&#x27;m going and we&#x27;re going to measure everything in parallel and find which one works best. So let&#x27;s go and do this. So I&#x27;m going to ask Claude to fork demo five times in parallel, and we&#x27;ll call them our raceBaseline, raceBtree, raceBrain, raceGin, and raceCovering.
+
+These will be our strategies, and we will wait until the five databases are ready. So we have our five DBs. And let me make it clear, these are not snapshots. They&#x27;re not read replicas. They are five independent writable Postgres database that we just provisioned.
+
+So we have five strategies. One is basically the baseline, so no index. The second one gets a normal composite index on Auth0. And time. Okay, that&#x27;s the B tree.
+
+The third one gets a brain index, which is a small index for data that is roughly sorted by time. One gets a full index on the title, and that&#x27;s the gene. And the last one gets a covering index, which Nice. So here&#x27;s the summary. That&#x27;s what we wanted.
+
+Okay. The Btree, Rin, Jin, and the covering index with additional insights. Okay. So now we&#x27;re going to run the benchmarks. I&#x27;m not going to use wall clock time because this is always timing in Claude and CLI calls.
+
+So what I&#x27;m going to actually measure is how many database buffers, how many blocks are actually running. Read per query okay and that&#x27;s more deterministic so we&#x27;re going to use a sql command code explain analyze buffers and we&#x27;re going show the buffer count and instead of milliseconds okay feel free to try different techniques so this is it run the same query on all five with explain analyze buffered so we want tosh&#x27;s that&#x27;s the username top 10 stories by score all right so we get our summary we get the same number of matching rows for all five, which is reassuring. So the baseline is obviously the most intensive. We see some very fast ones. But hey, one index actually ran a sequential scan.
+
+So is this thing broken? Did we mess things up? Let&#x27;s try and figure it out. So let&#x27;s run this on the side. Okay and try to understand what&#x27;s going on here long story short this is actually very fast right so the index is not broken it&#x27;s actually excellent but it&#x27;s excellent at answering a different question okay our query or is filtering on author and date and the index covers the title text so it never gets used so b3 which I guess would be everybody&#x27;s first choice is a huge huge improvement right so that&#x27;s a good default Bryn it&#x27;s well saving us 50% or something well it&#x27;s okay but it&#x27;s really not great Bryn will prune ranges of time and then go sequentially pretty much through what&#x27;s left okay so it helps a little bit here because of course the stories are sorted in per time but generally not a good option here and the last one is of course the covering index which is blazing fast okay and it only reads 10 blocks and that&#x27;s because the index contains every column that the query is asking for so postgres doesn&#x27;t even read the table all the data is in the index and if you look at the plan it&#x27;s says actually zero fetches.
+
+So well, the answer is purely in the index. So well that&#x27;s the one we&#x27;re going to keep. And we&#x27;re just going to say keep the covering one, rename it to winner, and delete the other ones. So this again illustrates how easily you can fork your DBs and run parallel exploration, parallel indexing, parallel benchmarking in silos. Damaging the original databases and without even creating side effects across the different forks.
+
+All right, so we deleted everything. We have the winner here, and that&#x27;s the one we keep working with. OK, let&#x27;s move on to the next thing, which is semantic search. So I mentioned this VEC database here. And as the name implies, it contains embeddings.
+
+So the PG vector extension is available. And I&#x27;ve loaded a couple hundred thousand Hacker News comments and embedded them. So let me be clear. Ghost itself cannot generate embeddings. There&#x27;s no model inside the database.
+
+So you can&#x27;t just type a sentence and embed it directly. You have to do this on your own, which is what I did. And I use an open source model to embed the Hacker News data. To find all the comments that mention kubernetes okay so one way to do this is to find every mention of kubernetes in all the hacker news comments average them out okay so I get uh one embedding and then I&#x27;m going to find comments that are nearby okay that are at a short distance from this average vector okay so let&#x27;s run this query I&#x27;ll just limit to 10 answers we have over 200 000 comments, and then, okay, and here it comes. Bam.
+
+So it&#x27;s just honestly milliseconds, and we get the top 10 Kubernetes comments here. So let&#x27;s talk about billing. I mentioned I was using the free tier. We can actually look at the usage here, right? So I got nowhere near my one terabytes.
+
+And since I started working on this demo and there was a bit of an experimentation uh I I only consume you know 25 uh compute hours um but I did try plenty of things okay so this single run that you saw here um is again nowhere near the 25 hours it would just be uh maybe you know maybe one or two computer hours at most okay so um so the one thing you need to know is this is counted per database per 15 minute blocks okay so a block is basically running query and it&#x27;s going to cost you the 15 minutes as a conclusion you know I guess I&#x27;ve been spending most of my career trying not to break databases uh and and worrying quite a lot about what would happen if we did and I have to say ghost is making it you know safe and easy and efficient to not only not break database but also work with multiple copies using plain english and an ai agent not having to write uh extremely fancy sequel yourself so this is uh this is pretty cool um I would absolutely recommend that you try it I will include all the links in in the video description and uh and of course you can go to a ghost.build to set it up learn more read the docs etc etc that&#x27;s it for today thanks a lot for watching I hope this was interesting and fun and until next time keep rocking</div>
+<div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            <a href="index.html">&larr; Back to 2026 Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
+        </div>
+    </div>
+
+
+</body></html>

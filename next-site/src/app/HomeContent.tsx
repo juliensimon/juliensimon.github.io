@@ -17,6 +17,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Let an AI Agent Loose on Postgres, Safely: Claude Code + Ghost',
+    href: '/youtube/2026/20260821_Let_an_AI_Agent_Loose_on_Postgres_Safely_Claude_Code_Ghost.html',
+    date: 'August 21, 2026',
+    summary: 'Giving Claude Code its own Postgres: forking a 400,000-row Hacker News database with Ghost so an agent can experiment and throw the copies away.',
+    icon: 'video',
+  },
+  {
     title: 'The Watcher Is the Product',
     href: '/blog/industry-perspectives/2026-08-20_the-watcher-is-the-product/',
     date: 'August 20, 2026',
@@ -42,13 +49,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     href: '/blog/industry-perspectives/2026-08-04_you-have-to-ask-me-nicely/',
     date: 'August 4, 2026',
     summary: 'OVH told Canada how to get the data it refused to hand over. On August 18, the European Union stops making the argument OVH is making in court.',
-    icon: 'article',
-  },
-  {
-    title: 'Amazon Priced the Frontier and Declined It',
-    href: '/blog/industry-perspectives/2026-07-29_amazon-priced-the-frontier-and-declined-it/',
-    date: 'July 29, 2026',
-    summary: 'On 30 June, AWS published two announcements pointing in opposite directions. In July, it closed its AGI Lab. All three were the same decision.',
     icon: 'article',
   },
 ];
