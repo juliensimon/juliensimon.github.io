@@ -36,10 +36,13 @@ function warn(msg) {
 }
 
 // Helper to count HTML files in a directory (excluding index.html)
-function countHtmlFiles(dir) {
+// A rename can leave the old page behind as a redirect stub. It is a URL that
+// still resolves, not a video, so it must not be counted as one.
+function countVideoPages(dir) {
   if (!fs.existsSync(dir)) return 0;
   return fs.readdirSync(dir)
     .filter(f => f.endsWith('.html') && f !== 'index.html')
+    .filter(f => !fs.readFileSync(path.join(dir, f), 'utf-8').includes('http-equiv=\"refresh\"'))
     .length;
 }
 
@@ -58,7 +61,8 @@ console.log('\n🔍 Validating data consistency...\n');
 // ============================================
 console.log('📺 YouTube Videos:');
 
-const youtubeDir = path.join(repoRoot, 'youtube');
+// Validate what actually ships, not the stale repo-root copy.
+const youtubeDir = path.join(rootDir, 'public/youtube');
 const youtubeYears = fs.readdirSync(youtubeDir, { withFileTypes: true })
   .filter(d => d.isDirectory() && /^\d{4}$/.test(d.name))
   .map(d => d.name);
@@ -68,7 +72,7 @@ const videoCounts = {};
 
 for (const year of youtubeYears) {
   const yearDir = path.join(youtubeDir, year);
-  const count = countHtmlFiles(yearDir);
+  const count = countVideoPages(yearDir);
   videoCounts[year] = count;
   totalVideos += count;
 }
