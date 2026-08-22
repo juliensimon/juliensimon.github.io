@@ -950,6 +950,9 @@ def update_year_index(year: int, video: VideoItem, dry_run: bool) -> bool:
     date_str = video.published.strftime('%Y%m%d')
     filename = f"{date_str}_{title_to_filename(video.title)}"
     display_date = video.published.strftime('%B %-d, %Y')
+    # Same description the video page puts in its meta tag, so the index card
+    # and the page it links to never disagree.
+    description = build_meta_description(video.title, video.description)
 
     added = False
     for base_dir in [PUBLIC / "youtube", REPO_YOUTUBE]:
@@ -982,6 +985,7 @@ def update_year_index(year: int, video: VideoItem, dry_run: bool) -> bool:
             f'<a class="video-title" href="{filename}.html">'
             f'{html.escape(video.title)}</a>\n'
             f'<div class="video-date">{display_date}</div>'
+            f'<div class="video-description">{html.escape(description)}</div>'
             f'<div class="video-tags">'
             f'<span class="video-tag">AI</span>'
             f'<span class="video-tag">Tutorial</span>'
@@ -1053,6 +1057,90 @@ def update_youtube_ts(year: int, videos_to_add: int, dry_run: bool):
         ts_path.write_text(content, encoding='utf-8')
 
 
+# Model used to write the one-line LATEST_UPDATES teaser from a video transcript.
+SUMMARY_MODEL = "claude-opus-5"
+
+# How much transcript to send. The opening minutes carry the thesis; sending the
+# whole thing costs tokens without improving a single sentence.
+SUMMARY_TRANSCRIPT_CHARS = 16000
+
+SUMMARY_SYSTEM = (
+    "You write one-line teasers for a video listing on an AI engineer's personal "
+    "site. Given a talk transcript, write a single sentence describing what the "
+    "video covers, in the site owner's plain, concrete, non-promotional voice. "
+    "No hype, no marketing adjectives, no 'in this video'. Under 160 characters."
+)
+
+
+def build_video_summary(
+    title: str,
+    transcript: str | None,
+    model: str = SUMMARY_MODEL,
+) -> str:
+    """One-line teaser for LATEST_UPDATES, written from the video transcript.
+
+    Returns '' when unavailable for any reason (no transcript, SDK missing, no
+    credentials, API error) — the card simply renders without a summary rather
+    than failing the sync.
+    """
+    if not transcript or not transcript.strip():
+        return ''
+
+    try:
+        import anthropic
+    except ImportError:
+        print("  Summary skipped: `anthropic` not installed "
+              "(add --with anthropic, or pass --no-summary)")
+        return ''
+
+    excerpt = transcript.strip()[:SUMMARY_TRANSCRIPT_CHARS]
+    schema = {
+        "type": "object",
+        "properties": {"summary": {"type": "string"}},
+        "required": ["summary"],
+        "additionalProperties": False,
+    }
+
+    try:
+        client = anthropic.Anthropic()
+        response = client.messages.create(
+            model=model,
+            max_tokens=4096,
+            system=SUMMARY_SYSTEM,
+            output_config={
+                "effort": "low",
+                "format": {"type": "json_schema", "schema": schema},
+            },
+            messages=[{
+                "role": "user",
+                "content": f"Video title: {title}\n\nTranscript excerpt:\n{excerpt}",
+            }],
+        )
+    except Exception as e:  # noqa: BLE001 - a summary is never worth failing a sync
+        print(f"  Summary skipped ({type(e).__name__}): {e}")
+        return ''
+
+    if response.stop_reason == "refusal":
+        print("  Summary skipped: model declined")
+        return ''
+
+    text = next((b.text for b in response.content if b.type == "text"), "")
+    try:
+        summary = json.loads(text)["summary"]
+    except (ValueError, KeyError, TypeError):
+        print("  Summary skipped: unparseable response")
+        return ''
+
+    summary = re.sub(r'\s+', ' ', summary).strip()
+    print(f"  Summary: {summary}")
+    return summary
+
+
+def js_escape(text: str) -> str:
+    """Escape text for embedding inside a single-quoted JS string literal."""
+    return text.replace('\\', '\\\\').replace("'", "\\'")
+
+
 # A single-quoted JS string literal, capturing its raw (still-escaped) body.
 JS_STRING = r"'((?:[^'\\]|\\.)*)'"
 
@@ -1089,7 +1177,12 @@ def render_latest_updates(entries: list[dict]) -> str:
     return f"const LATEST_UPDATES: LatestUpdate[] = [\n  {entries_str},\n];"
 
 
-def update_latest_updates(videos: list[VideoItem], dry_run: bool):
+def update_latest_updates(
+    videos: list[VideoItem],
+    dry_run: bool,
+    transcripts: dict[str, str] | None = None,
+    summary_model: str | None = None,
+):
     """Update LATEST_UPDATES in HomeContent.tsx."""
     home_path = SRC / "app" / "HomeContent.tsx"
     if not home_path.exists():
@@ -1117,12 +1210,21 @@ def update_latest_updates(videos: list[VideoItem], dry_run: bool):
         href = f"/youtube/{video.published.year}/{filename}.html"
         display_date = video.published.strftime('%B %-d, %Y')
 
-        new_entries.append({
+        entry = {
             'title': video.title.replace("'", "\\'"),
             'href': href,
             'date': display_date,
             'icon': 'video',
-        })
+        }
+        if summary_model:
+            summary = build_video_summary(
+                video.title,
+                (transcripts or {}).get(video.video_id),
+                summary_model,
+            )
+            if summary:
+                entry['summary'] = js_escape(summary)
+        new_entries.append(entry)
 
     # Merge: new first, then existing (no duplicates), sort by date, keep top 5
     seen_hrefs = {e['href'] for e in new_entries}
@@ -1145,14 +1247,53 @@ def update_latest_updates(videos: list[VideoItem], dry_run: bool):
     print(f"  Updated LATEST_UPDATES with {len(new_entries)} new videos")
 
 
-def update_latest_videos(feed_videos: list[VideoItem], dry_run: bool):
+# The LATEST_VIDEOS array literal, with or without a type annotation.
+LATEST_VIDEOS_ARRAY = r'export const LATEST_VIDEOS(?:\s*:\s*\w+\[\])? = \[[\s\S]*?\];'
+
+
+def read_page_transcript(video_id: str, year: int) -> str | None:
+    """Pull the transcript text back out of a video's generated page.
+
+    update_latest_videos runs on every sync, including runs that synced no new
+    videos, so a summary has to be sourced from the pages already on disk
+    rather than from a transcript produced earlier in the same run.
+    """
+    for base_dir in (PUBLIC / "youtube", REPO_YOUTUBE):
+        year_dir = base_dir / str(year)
+        if not year_dir.exists():
+            continue
+        for html_file in year_dir.glob("*.html"):
+            if html_file.name == "index.html":
+                continue
+            content = html_file.read_text(encoding='utf-8', errors='replace')
+            if video_id not in content:
+                continue
+            m = re.search(
+                r'<div class="transcript">(.*?)</div>', content, re.DOTALL
+            )
+            if not m:
+                return None
+            text = html.unescape(re.sub(r'<[^>]+>', ' ', m.group(1)))
+            return re.sub(r'^Transcript\s*', '', re.sub(r'\s+', ' ', text).strip())
+    return None
+
+
+def update_latest_videos(
+    feed_videos: list[VideoItem],
+    dry_run: bool,
+    summary_model: str | None = None,
+):
     """Rebuild LATEST_VIDEOS in youtube.ts from the feed's newest videos.
 
     Unlike update_latest_updates (which merges only newly-synced videos into the
     homepage list), this always rebuilds the array from the current feed, so the
     "Latest Videos" section on /youtube-videos self-heals even on runs with no
-    new videos. Entries are pure YouTube embeds (id/title/date), so they don't
-    depend on a local page existing.
+    new videos.
+
+    Because it rebuilds rather than merges, summaries already in the array are
+    carried over by video id — otherwise every sync would wipe them. A video
+    still missing one gets a summary written from its page transcript, so the
+    section backfills itself over time.
     """
     ts_path = SRC / "data" / "youtube.ts"
     if not ts_path.exists():
@@ -1163,18 +1304,46 @@ def update_latest_videos(feed_videos: list[VideoItem], dry_run: bool):
     if not top:
         return
 
+    content = ts_path.read_text(encoding='utf-8')
+    array_match = re.search(LATEST_VIDEOS_ARRAY, content)
+    if not array_match:
+        print("  Warning: Could not find LATEST_VIDEOS array")
+        return
+
+    existing_summaries = {
+        m.group(1): m.group(2)
+        for m in re.finditer(
+            rf"id:\s*{JS_STRING}[^}}]*?summary:\s*{JS_STRING}",
+            array_match.group(0),
+        )
+    }
+
     entries = []
     for video in top:
-        title = video.title.replace('\\', '\\\\').replace("'", "\\'")
+        title = js_escape(video.title)
         date = video.published.strftime('%B %-d, %Y')
+        summary = existing_summaries.get(video.video_id, '')
+        if not summary and summary_model:
+            generated = build_video_summary(
+                video.title,
+                read_page_transcript(video.video_id, video.published.year),
+                summary_model,
+            )
+            if generated:
+                summary = js_escape(generated)
+        summary_field = f", summary: '{summary}'" if summary else ''
         entries.append(
-            f"  {{ id: '{video.video_id}', title: '{title}', date: '{date}' }},"
+            f"  {{ id: '{video.video_id}', title: '{title}', "
+            f"date: '{date}'{summary_field} }},"
         )
-    new_array = "export const LATEST_VIDEOS = [\n" + "\n".join(entries) + "\n];"
+    new_array = (
+        "export const LATEST_VIDEOS: LatestVideo[] = [\n"
+        + "\n".join(entries)
+        + "\n];"
+    )
 
-    content = ts_path.read_text(encoding='utf-8')
     new_content, n = re.subn(
-        r'export const LATEST_VIDEOS = \[[\s\S]*?\];',
+        LATEST_VIDEOS_ARRAY,
         lambda _m: new_array,
         content,
         count=1,
@@ -1299,6 +1468,8 @@ def run(
     no_transcript: bool = False,
     backfill: bool = False,
     whisper_model: str = DEFAULT_WHISPER_MODEL,
+    no_summary: bool = False,
+    summary_model: str = SUMMARY_MODEL,
 ):
     """Main execution."""
     # Handle backfill mode
@@ -1327,16 +1498,16 @@ def run(
         videos = filter_shorts(videos)
         print(f"{len(videos)} regular videos after filtering Shorts")
 
-    # Refresh the "Latest Videos" section on /youtube-videos from the feed's
-    # newest entries. Runs every sync (even with no new videos) so it self-heals
-    # if the array drifts out of date.
-    update_latest_videos(videos, dry_run)
-
     # Find new videos
     new_videos = get_new_videos(videos, force=force)
 
+    summary_model_or_none = None if (no_summary or dry_run) else summary_model
+
     if not new_videos:
         print("\nNo new videos detected. Site is up to date!")
+        # Still refresh /youtube-videos: the array can drift out of date, and a
+        # video whose summary failed on an earlier run backfills here.
+        update_latest_videos(videos, dry_run, summary_model_or_none)
         # Subscriber count may still have changed above; keep llms files aligned.
         refresh_llms_files(dry_run=dry_run)
         return
@@ -1344,11 +1515,13 @@ def run(
     print_summary(new_videos)
 
     if dry_run:
+        update_latest_videos(videos, dry_run, summary_model_or_none)
         print("DRY RUN - No files were modified")
         print("\nRun without --dry-run to apply changes")
         return
 
     # Create video pages (with transcripts unless --no-transcript)
+    transcripts: dict[str, str] = {}
     for video in new_videos:
         transcript = None
         if not no_transcript:
@@ -1356,6 +1529,9 @@ def run(
             transcript = generate_transcript(video.video_id, whisper_model)
             if not transcript:
                 print(f"  Warning: proceeding without transcript")
+
+        if transcript:
+            transcripts[video.video_id] = transcript
 
         filepath = create_video_page(video, dry_run, transcript=transcript)
         print(f"Created: {filepath}")
@@ -1371,8 +1547,18 @@ def run(
     for year, count in year_video_counts.items():
         update_youtube_ts(year, count, dry_run)
 
+    # Refresh the "Latest Videos" section on /youtube-videos. Runs after the
+    # pages are written so a brand-new video's transcript is available to
+    # summarize.
+    update_latest_videos(videos, dry_run, summary_model_or_none)
+
     # Update LATEST_UPDATES
-    update_latest_updates(new_videos, dry_run)
+    update_latest_updates(
+        new_videos,
+        dry_run,
+        transcripts=transcripts,
+        summary_model=summary_model_or_none,
+    )
 
     # Keep AI-facing llms files aligned with the updated data files.
     refresh_llms_files(dry_run=dry_run)
@@ -1425,6 +1611,17 @@ def main():
         default=DEFAULT_WHISPER_MODEL,
         help=f'Whisper model for transcription (default: {DEFAULT_WHISPER_MODEL})',
     )
+    parser.add_argument(
+        '--no-summary',
+        action='store_true',
+        help='Skip the LLM-written one-line summary for new videos',
+    )
+    parser.add_argument(
+        '--summary-model',
+        type=str,
+        default=SUMMARY_MODEL,
+        help=f'Claude model for video summaries (default: {SUMMARY_MODEL})',
+    )
     args = parser.parse_args()
 
     try:
@@ -1436,6 +1633,8 @@ def main():
             no_transcript=args.no_transcript,
             backfill=args.backfill_transcripts,
             whisper_model=args.whisper_model,
+            no_summary=args.no_summary,
+            summary_model=args.summary_model,
         )
     except requests.RequestException as e:
         print(f"Error fetching data: {e}", file=sys.stderr)

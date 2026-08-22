@@ -55,6 +55,9 @@ export default function YouTubeContent() {
               <div className="p-4">
                 <h3 className="text-sm font-semibold text-text line-clamp-2">{video.title}</h3>
                 <p className="text-xs text-text-muted mt-1">{video.date}</p>
+                {video.summary && (
+                  <p className="text-xs text-text-muted mt-2 line-clamp-3">{video.summary}</p>
+                )}
               </div>
             </ScrollReveal>
           ))}
