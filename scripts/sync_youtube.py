@@ -908,6 +908,97 @@ def create_video_page(
     return PUBLIC / "youtube" / str(year) / f"{filename}.html"
 
 
+# Year index pages carry an ItemList of VideoObjects for search engines. It is
+# rebuilt wholesale from the page's own video-item blocks rather than merged
+# entry-by-entry, so it self-heals if it ever drifts from the visible list.
+SITE_URL = "https://www.julien.org"
+
+MONTHS = {
+    'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6,
+    'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11,
+    'December': 12,
+}
+
+VIDEO_ITEM_RE = re.compile(r'<div class="video-item">.*?</div>\s*</div>', re.DOTALL)
+JSONLD_RE = re.compile(
+    r'<script type="application/ld\+json">.*?</script>\n?', re.DOTALL
+)
+
+
+def _html_unescape(text: str) -> str:
+    """Undo the escaping used in the index markup, for JSON string values."""
+    for entity, char in (
+        ('&#x27;', "'"), ('&#39;', "'"), ('&quot;', '"'), ('&lt;', '<'),
+        ('&gt;', '>'), ('&nbsp;', ' '), ('&amp;', '&'),
+    ):
+        text = text.replace(entity, char)
+    return text
+
+
+def rebuild_index_jsonld(content: str, year: int, year_dir: Path) -> str:
+    """Regenerate the ItemList/VideoObject block from the page's video items.
+
+    A VideoObject is invalid without a thumbnail, and the thumbnail comes from
+    the YouTube embed id, so an entry whose page has no embed (a stub linking
+    to another video) is left out rather than emitted as broken markup.
+    """
+    elements = []
+    for block in VIDEO_ITEM_RE.findall(content):
+        href = re.search(r'<a class="video-title" href="([^"]+)"', block)
+        name = re.search(r'<a class="video-title"[^>]*>(.*?)</a>', block, re.DOTALL)
+        date = re.search(r'<div class="video-date">([^<]*)</div>', block)
+        desc = re.search(r'<div class="video-description">(.*?)</div>', block, re.DOTALL)
+        if not (href and name and date and desc):
+            continue
+
+        page = year_dir / href.group(1).replace('&amp;', '&')
+        if not page.exists():
+            continue
+        embed = re.search(
+            r'youtube(?:-nocookie)?\.com/embed/([A-Za-z0-9_-]{6,})',
+            page.read_text(encoding='utf-8', errors='replace'),
+        )
+        if not embed:
+            continue
+
+        parts = re.match(r'^([A-Z][a-z]+) (\d{1,2}), (\d{4})$', date.group(1))
+        if not parts or parts.group(1) not in MONTHS:
+            continue
+        iso = (
+            f"{parts.group(3)}-{MONTHS[parts.group(1)]:02d}-{int(parts.group(2)):02d}"
+        )
+
+        elements.append({
+            "@type": "ListItem",
+            "position": len(elements) + 1,
+            "item": {
+                "@type": "VideoObject",
+                "name": _html_unescape(name.group(1)),
+                "description": _html_unescape(desc.group(1)),
+                "uploadDate": iso,
+                "thumbnailUrl": f"https://i.ytimg.com/vi/{embed.group(1)}/hqdefault.jpg",
+                "embedUrl": f"https://www.youtube.com/embed/{embed.group(1)}",
+                "url": f"{SITE_URL}/youtube/{year}/{href.group(1)}",
+            },
+        })
+
+    payload = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": f"YouTube Videos {year} - Julien Simon",
+        "itemListElement": elements,
+    }
+    # Compact separators keep the block small; escaping "<" means a description
+    # can never terminate the script element early.
+    body = json.dumps(payload, ensure_ascii=False, separators=(',', ':'))
+    body = body.replace('<', '\\u003c')
+    tag = f'<script type="application/ld+json">{body}</script>\n'
+
+    if JSONLD_RE.search(content):
+        return JSONLD_RE.sub(lambda _m: tag, content, count=1)
+    return content.replace('</head>', f'{tag}</head>', 1)
+
+
 def _sort_video_entries(content: str) -> str:
     """Sort video-item entries in an index page by date (newest first).
 
@@ -1002,6 +1093,10 @@ def update_year_index(year: int, video: VideoItem, dry_run: bool) -> bool:
 
         # Re-sort all entries by date (newest first)
         content = _sort_video_entries(content)
+
+        # Structured data lives only on the deployed tree.
+        if base_dir == PUBLIC / "youtube":
+            content = rebuild_index_jsonld(content, year, base_dir / str(year))
 
         if not dry_run:
             index_path.write_text(content, encoding='utf-8')
