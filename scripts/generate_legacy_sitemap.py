@@ -59,6 +59,20 @@ def extract_date_from_path(path_str: str) -> str:
     return datetime.now().strftime("%Y-%m-%d")
 
 
+def _is_redirect_stub(path: Path) -> bool:
+    """True for a page that only bounces to another URL.
+
+    Renames leave these behind so old links keep working, but they are not
+    pages to index — Search Console reports a sitemap-listed redirect as an
+    error, and they would inflate the counts the site publishes.
+    """
+    try:
+        head = path.read_text(encoding='utf-8', errors='replace')[:2000]
+    except OSError:
+        return False
+    return 'http-equiv="refresh"' in head.lower()
+
+
 def scan_dirs(dirs, priority_fn=None):
     urls = []
     for scan_dir in dirs:
@@ -68,6 +82,8 @@ def scan_dirs(dirs, priority_fn=None):
         for html_file in sorted(dir_path.rglob("*.html")):
             rel_path = str(html_file.relative_to(PUBLIC))
             if rel_path in SKIP_FILES:
+                continue
+            if _is_redirect_stub(html_file):
                 continue
             # Use directory URL for index.html files (e.g. blog/slug/ instead of blog/slug/index.html)
             if rel_path.endswith("/index.html"):
