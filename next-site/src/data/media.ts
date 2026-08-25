@@ -651,15 +651,6 @@ export const MEDIA_ITEMS: MediaItem[] = [
     tags: ["Press", "Media Interview", "Press Engagement", "Thought Leadership"],
   },
   {
-    title: "Interview Oslo",
-    outlet: "Oslo, Norway",
-    type: "Press",
-    date: "2019",
-    year: 2019,
-    description: "Press interview in Oslo covering technology trends and industry insights.",
-    tags: ["Press", "Technology"],
-  },
-  {
     title: "ITWatch - AWS advarer: AI-projekter skal ikke forandre hele virksomheden",
     outlet: "ITWatch Denmark",
     type: "Press",
@@ -669,24 +660,6 @@ export const MEDIA_ITEMS: MediaItem[] = [
     linkLabel: "Article",
     description: "Press interview as AWS tech evangelist discussing AI project implementation strategies for businesses. Covers Amazon's reliance on algorithms, machine learning, and AI, while advising customers to focus on many small initiatives rather than large-scale \"Star Wars projects.\" Features discussion of making AI technologies more mainstream and practical business applications.",
     tags: ["Press", "ITWatch Denmark", "AI Projects", "Machine Learning", "Business Strategy"],
-  },
-  {
-    title: "Interview with IT Watch",
-    outlet: "Online",
-    type: "Press",
-    date: "2019",
-    year: 2019,
-    description: "Press interview with IT Watch covering technology trends and industry developments.",
-    tags: ["Press", "Technology"],
-  },
-  {
-    title: "Interview with Henrik Malgreen",
-    outlet: "Online",
-    type: "Press",
-    date: "2019",
-    year: 2019,
-    description: "Press interview with Henrik Malgreen covering technology trends and industry insights.",
-    tags: ["Press", "Technology"],
   },
   {
     title: "BBC Radio 5",
@@ -1101,15 +1074,6 @@ export const MEDIA_ITEMS: MediaItem[] = [
     tags: ["Press", "Computerworld", "re:Invent"],
   },
   {
-    title: "Press Interview - L'Informaticien",
-    outlet: "France",
-    type: "Press",
-    date: "2017",
-    year: 2017,
-    description: "Press interview with L'Informaticien covering media and interviews.",
-    tags: ["Press", "Media"],
-  },
-  {
     title: "Radio France Interview",
     outlet: "Paris, France",
     type: "Press",
@@ -1117,15 +1081,6 @@ export const MEDIA_ITEMS: MediaItem[] = [
     year: 2017,
     description: "Press interview with Radio France covering media services, broadcasting, and content delivery.",
     tags: ["Press", "Radio", "Broadcasting"],
-  },
-  {
-    title: "Interview D2SI",
-    outlet: "Online",
-    type: "Press",
-    date: "2017",
-    year: 2017,
-    description: "Press interview with D2SI covering technology trends and industry insights.",
-    tags: ["Press", "Technology"],
   },
   {
     title: "Press Version2",
@@ -1146,15 +1101,6 @@ export const MEDIA_ITEMS: MediaItem[] = [
     tags: ["Press", "Media"],
   },
   {
-    title: "Press Interview - People&Computers",
-    outlet: "Israel",
-    type: "Press",
-    date: "2017",
-    year: 2017,
-    description: "Press interview with People&Computers (Yossi Hatvani) covering technology trends and industry insights.",
-    tags: ["Press", "Technology"],
-  },
-  {
     title: "Press Interview - Smart Business",
     outlet: "Online",
     type: "Press",
@@ -1171,15 +1117,6 @@ export const MEDIA_ITEMS: MediaItem[] = [
     year: 2017,
     description: "Press interview with Alt Om Data covering data science and analytics.",
     tags: ["Press", "Data Science"],
-  },
-  {
-    title: "Press Interview - Version2",
-    outlet: "Denmark",
-    type: "Press",
-    date: "2017",
-    year: 2017,
-    description: "Press interview with Version2 covering media and interviews.",
-    tags: ["Press", "Media"],
   },
   {
     title: "Press Interview - Cloud Magazine",
@@ -1318,12 +1255,12 @@ export const MEDIA_ITEMS: MediaItem[] = [
 ];
 
 export const MEDIA_STATS = {
-  total: 134,
+  total: 127,
   yearSpan: '2014–2026',
   earliestYear: 2014,
   latestYear: 2026,
   byType: {
-    "Press": 99,
+    "Press": 92,
     "Podcast": 24,
     "Analyst": 7,
     "Video": 4,
