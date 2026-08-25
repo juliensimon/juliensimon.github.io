@@ -61,6 +61,12 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       tags: ["Conference","AI Engineering","SaaS","Amsterdam"],
       links: [{"url":"https://welovesaas.io/events/ai-leadership-day-2026/","label":"Event"},{"url":"https://fr.slideshare.net/slideshow/ai-powered-engineering-transforming-software-development-in-2026/286587342","label":"Slides"}],
     },
+    {
+      title: "Keynote: How Transformers Reinvent Machine Learning – for Both Generative AI and Predictive AI",
+      venue: "Machine Learning Week USA 2026",
+      description: "Keynote on how the transformer architecture reshapes both generative and predictive machine learning.",
+      tags: ["Conference","Keynote","Transformers","Generative AI","Predictive AI"],
+    },
   ],
   '2025': [
     {
@@ -456,8 +462,9 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       tags: ["Conference","AWS","Cloud"],
     },
     {
-      title: "MLConf",
-      venue: "NYC, USA",
+      title: "Hyperproductive Machine Learning with Transformers and Hugging Face",
+      venue: "MLConf",
+      location: "New York City, USA",
       description: "Conference presentation on machine learning topics and developments.",
       tags: ["Conference","Machine Learning","MLConf"],
     },
@@ -3122,8 +3129,10 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       tags: ["Conference"],
     },
     {
-      title: "Infoshare Poland",
-      venue: "Poland",
+      title: "Deep Learning on AWS with MXNet",
+      venue: "Infoshare",
+      date: "May 18, 2017",
+      location: "Gdańsk, Poland",
       description: "Infoshare Poland conference presentation covering developer tools, programming languages, software development best practices, and developer education for the Polish developer community.",
       tags: ["Conference","Infoshare Poland","Polish Tech Community","Developer Conference"],
     },
