@@ -1690,11 +1690,13 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Deeplens PR BBC",
+      location: "London, UK",
       description: "Deeplens PR BBC event covering technology topics.",
       tags: ["Unknown"],
     },
     {
       title: "Deeplens PR The Register",
+      location: "London, UK",
       description: "Deeplens PR The Register event covering technology topics.",
       tags: ["Unknown","Press"],
     },
@@ -1772,6 +1774,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Cloudreach deep racer",
+      location: "Paris, France",
       description: "Cloudreach deep racer event covering cloud.",
       tags: ["Unknown","Cloud"],
     },
@@ -1849,6 +1852,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Xilinx Dev Conf",
+      location: "The Hague, Netherlands",
       description: "Conference presentation at Xilinx Dev Conf discussing  and industry trends.",
       tags: ["Conference"],
     },
@@ -2787,7 +2791,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "AWS Webinar - DL for Non-Tech Decision Makers",
-      venue: "Online, Germany",
+      location: "Online",
       description: "Executive-level webinar for non-technical decision makers covering Amazon AI services for business transformation, including ROI analysis, implementation strategies, and competitive advantages for enterprise AI adoption.",
       tags: ["Webinar","Deep Learning","Business Strategy","Enterprise AI"],
     },
@@ -2805,7 +2809,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Webinaires AWS - Big Data + Big Data Demo",
-      venue: "Online, Germany",
+      location: "Online",
       description: "German webinar series covering big data analytics, data science applications, and practical demonstrations of AWS big data services for enterprise use cases.",
       tags: ["Webinar","Big Data","Data Science","German Market"],
     },
@@ -2817,7 +2821,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "AWS Webinar - DL for Tech Decision Makers",
-      venue: "Online, Germany",
+      location: "Online",
       description: "Technical webinar for tech decision makers covering deep learning architecture, implementation planning, technical roadmap, and AI infrastructure for technology adoption and innovation management.",
       tags: ["Webinar","Deep Learning","Technical Strategy","AI Architecture"],
     },
@@ -3071,6 +3075,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Airbus Workshop  - Session #3: Devops",
+      location: "Toulouse, France",
       description: "Customer presentation with Airbus Workshop  - Session #3: Devops covering artificial intelligence, devops and partnership opportunities.",
       tags: ["Customer","Artificial Intelligence","Devops"],
     },
@@ -4104,7 +4109,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Webinar Fireside Chat",
-      venue: "Online, Germany",
+      location: "Online",
       description: "Executive fireside chat discussing cloud transformation strategies, industry trends, and leadership insights for German enterprise digital transformation initiatives.",
       tags: ["Webinar","Executive","Leadership","Strategy"],
     },
