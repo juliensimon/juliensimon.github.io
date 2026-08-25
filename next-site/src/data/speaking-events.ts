@@ -11,6 +11,15 @@ export interface SpeakingEvent {
 export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
   '2026': [
     {
+      title: "AI Assurance & Governance Summit 2026",
+      venue: "Stanford Faculty Club",
+      date: "October 1, 2026",
+      location: "Palo Alto, CA",
+      description: "Featured speaker at the AI Assurance & Governance Summit 2026, hosted by TrustModel.ai. A single-track, invited-audience day bringing together frontier labs, venture capital, regulated industry, academia, and insurers around how AI systems are evaluated, governed, and assured. Talk title to be announced.",
+      tags: ["Conference","AI Governance","AI Assurance","Palo Alto"],
+      links: [{"url":"https://trustmodel.ai/summit2026","label":"Event"}],
+    },
+    {
       title: "AI-powered engineering: the new way of building software",
       venue: "We Love SaaS AI Leadership Day 2026",
       date: "March 18, 2026",
