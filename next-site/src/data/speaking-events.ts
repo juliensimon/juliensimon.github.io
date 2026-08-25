@@ -11,6 +11,14 @@ export interface SpeakingEvent {
 export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
   '2026': [
     {
+      title: "Bizzmine",
+      venue: "Bizzmine",
+      date: "October 29, 2026",
+      location: "Online",
+      description: "Online session for Fortino Capital portfolio company Bizzmine. Talk title to be announced.",
+      tags: ["Webinar","Portfolio Company","Enterprise AI","Online"],
+    },
+    {
       title: "AI Assurance & Governance Summit 2026",
       venue: "Stanford Faculty Club",
       date: "October 1, 2026",
@@ -18,6 +26,23 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       description: "Featured speaker at the AI Assurance & Governance Summit 2026, hosted by TrustModel.ai. A single-track, invited-audience day bringing together frontier labs, venture capital, regulated industry, academia, and insurers around how AI systems are evaluated, governed, and assured. Talk title to be announced.",
       tags: ["Conference","AI Governance","AI Assurance","Palo Alto"],
       links: [{"url":"https://trustmodel.ai/summit2026","label":"Event"}],
+    },
+    {
+      title: "La plupart des investissements IA ne montrent jamais de ROI mesurable, sauf si…",
+      venue: "Sommet de la Transformation Agentique (Ofelia)",
+      date: "September 22, 2026",
+      location: "Paris, France",
+      description: "Plenary talk on AI ROI at the first Sommet de la Transformation Agentique, hosted by Fortino Capital portfolio company Ofelia at La Galerie Bourbon. An invitation-only morning for 40 executives, held under Chatham House Rule, on moving AI from a cost line to a revenue line.",
+      tags: ["Conference","AI ROI","Agentic AI","Portfolio Company","Paris"],
+      links: [{"url":"https://ofeliaevent.space/","label":"Event"}],
+    },
+    {
+      title: "Efficy CRM Day",
+      venue: "Efficy",
+      date: "September 10, 2026",
+      location: "Brussels, Belgium",
+      description: "Speaking at the Efficy CRM Day in Brussels, an event run by Fortino Capital portfolio company Efficy. Talk title to be announced.",
+      tags: ["Conference","CRM","Portfolio Company","Enterprise AI","Brussels"],
     },
     {
       title: "AI-powered engineering: the new way of building software",
