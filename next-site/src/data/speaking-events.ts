@@ -718,24 +718,6 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       tags: ["Webinar","SageMaker Fridays","Machine Learning","Paris"],
     },
     {
-      title: "SageMaker Friday",
-      venue: "Paris, France",
-      description: "SageMaker Friday webinar covering machine learning, Amazon SageMaker, and ML development for the Paris tech community.",
-      tags: ["Webinar","SageMaker Fridays","Machine Learning","Paris"],
-    },
-    {
-      title: "SageMaker Friday",
-      venue: "Paris, France",
-      description: "SageMaker Friday webinar covering machine learning, Amazon SageMaker, and ML development for the Paris tech community.",
-      tags: ["Webinar","SageMaker Fridays","Machine Learning","Paris"],
-    },
-    {
-      title: "SageMaker Friday",
-      venue: "Paris, France",
-      description: "SageMaker Friday webinar covering machine learning, Amazon SageMaker, and ML development for the Paris tech community.",
-      tags: ["Webinar","SageMaker Fridays","Machine Learning","Paris"],
-    },
-    {
       title: "AWS Meetup Ireland",
       venue: "Dublin, Ireland",
       description: "AWS Meetup Ireland covering cloud computing and AWS services for the Irish tech community.",
@@ -1250,24 +1232,6 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       venue: "Dublin, Ireland",
       description: "AWS Meetup Ireland covering cloud computing and AWS services for the Irish tech community.",
       tags: ["Meetup","AWS Meetup","Cloud Computing","Dublin"],
-    },
-    {
-      title: "SageMaker Friday",
-      venue: "Paris, France",
-      description: "SageMaker Friday webinar covering machine learning, Amazon SageMaker, and ML development for the Paris tech community.",
-      tags: ["Webinar","SageMaker Fridays","Machine Learning","Paris"],
-    },
-    {
-      title: "SageMaker Friday",
-      venue: "Paris, France",
-      description: "SageMaker Friday webinar covering machine learning, Amazon SageMaker, and ML development for the Paris tech community.",
-      tags: ["Webinar","SageMaker Fridays","Machine Learning","Paris"],
-    },
-    {
-      title: "SageMaker Friday",
-      venue: "Paris, France",
-      description: "SageMaker Friday webinar covering machine learning, Amazon SageMaker, and ML development for the Paris tech community.",
-      tags: ["Webinar","SageMaker Fridays","Machine Learning","Paris"],
     },
     {
       title: "ML Zero to Hero Interview",
@@ -3313,24 +3277,6 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       tags: ["Webinar","Summer Learning Series","Technical Education","Cloud Architecture"],
     },
     {
-      title: "Webinar AWS #2",
-      venue: "Online",
-      description: "Webinar presentation on advanced topics, technical deep dive, enterprise architecture.",
-      tags: ["Webinar","Advanced Topics","Technical Deep Dive","Enterprise Architecture"],
-    },
-    {
-      title: "Webinar AWS #1",
-      venue: "Online",
-      description: "Webinar presentation with Webinar AWS #1 covering technology trends.",
-      tags: ["Webinar"],
-    },
-    {
-      title: "Webinar AWS #1",
-      venue: "Online",
-      description: "Webinar presentation with Webinar AWS #1 covering technology trends.",
-      tags: ["Webinar"],
-    },
-    {
       title: "Les Affaires (Montreal)",
       venue: "Montreal, Canada",
       description: "Les Affaires Montreal conference presentation covering IoT and big data applications for business, artificial intelligence, and data science for the Canadian business and tech community.",
@@ -3509,18 +3455,6 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       location: "France",
       description: "Customer presentation with Customer: Caisse des Depots covering artificial intelligence and partnership opportunities.",
       tags: ["Customer","Artificial Intelligence"],
-    },
-    {
-      title: "Webinar AWS #1",
-      venue: "Online",
-      description: "Webinar presentation on getting started, aws fundamentals, cloud basics.",
-      tags: ["Webinar","Getting Started","Aws Fundamentals","Cloud Basics"],
-    },
-    {
-      title: "Webinar AWS #2",
-      venue: "Online",
-      description: "Webinar presentation on advanced topics, technical deep dive, enterprise architecture.",
-      tags: ["Webinar","Advanced Topics","Technical Deep Dive","Enterprise Architecture"],
     },
     {
       title: "ML Office Hours (Chime)",
