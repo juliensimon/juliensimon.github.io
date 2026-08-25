@@ -606,7 +606,6 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "SageMaker Workshop for Community Builders",
-      venue: "Germany",
       description: "Special SageMaker workshop designed for community builders, covering machine learning fundamentals and practical applications.",
       tags: ["Meetup","Workshop","SageMaker","Community"],
     },
@@ -1691,13 +1690,11 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Deeplens PR BBC",
-      venue: "Germany",
       description: "Deeplens PR BBC event covering technology topics.",
       tags: ["Unknown"],
     },
     {
       title: "Deeplens PR The Register",
-      venue: "Germany",
       description: "Deeplens PR The Register event covering technology topics.",
       tags: ["Unknown","Press"],
     },
@@ -1775,7 +1772,6 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Cloudreach deep racer",
-      venue: "Germany",
       description: "Cloudreach deep racer event covering cloud.",
       tags: ["Unknown","Cloud"],
     },
@@ -1853,7 +1849,6 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Xilinx Dev Conf",
-      venue: "Germany",
       description: "Conference presentation at Xilinx Dev Conf discussing  and industry trends.",
       tags: ["Conference"],
     },
@@ -2071,7 +2066,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "AWS Webinar - DL for non-tech decision makers",
-      venue: "Germany",
+      location: "Online",
       description: "Executive-level webinar for non-technical decision makers covering Amazon AI services for business transformation, including ROI analysis, implementation strategies, competitive advantages, change management, and practical use cases for enterprise AI adoption across industries.",
       tags: ["Webinar","Artificial Intelligence","Deep Learning","Business Strategy"],
     },
@@ -2089,7 +2084,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Webinaires AWS - #1 Big Data + #2 Big Data demo",
-      venue: "Germany",
+      location: "Online",
       description: "Webinaires AWS - #1 Big Data + #2 Big Data demo event covering artificial intelligence, data science.",
       tags: ["Unknown","Artificial Intelligence","Data Science"],
     },
@@ -2101,7 +2096,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "AWS Webinar - DL for tech decision makers",
-      venue: "Germany",
+      location: "Online",
       description: "Technical webinar for decision makers covering AI architecture planning, implementation strategies, technical roadmap development, and infrastructure considerations for enterprise AI adoption.",
       tags: ["Webinar","Artificial Intelligence","Deep Learning","Technical Strategy"],
     },
@@ -2144,13 +2139,13 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "AI Days India http://aidevdays.com/ - session",
-      venue: "Germany",
+      location: "India",
       description: "AI Days India http://aidevdays.com/ - session event covering artificial intelligence.",
       tags: ["Unknown","Artificial Intelligence"],
     },
     {
       title: "AI Days India http://aidevdays.com/ - workshop",
-      venue: "Germany",
+      location: "India",
       description: "Customer presentation with AI Days India http://aidevdays.com/ - workshop covering artificial intelligence and partnership opportunities.",
       tags: ["Customer","Artificial Intelligence"],
     },
@@ -2162,7 +2157,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Orange devs",
-      venue: "Germany",
+      location: "France",
       description: "Orange devs event covering aws engagement, technical discussion, cloud innovation.",
       tags: ["Unknown","Aws Engagement","Technical Discussion","Cloud Innovation","Press","Aws Engagement","Technical Discussion","Cloud Innovation","Press","Machine Learning"],
     },
@@ -2180,7 +2175,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "AWS Webinar - Enabling Deep Learning in IoT applications with Apache MXNet",
-      venue: "Germany",
+      location: "Online",
       description: "Technical webinar covering deep learning deployment in IoT environments using Apache MXNet framework, including neural network architectures for edge computing, real-time inference optimization, computer vision for IoT devices, and practical implementation strategies for embedded AI applications.",
       tags: ["Webinar","Artificial Intelligence","Iot","Deep Learning"],
     },
@@ -2408,13 +2403,13 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "DevIt  - full day workshop",
-      venue: "Germany",
+      location: "Thessaloniki, Greece",
       description: "Conference presentation at DevIt  - full day workshop discussing  and industry trends.",
       tags: ["Conference"],
     },
     {
       title: "DevIt  - session",
-      venue: "Germany",
+      location: "Thessaloniki, Greece",
       description: "Conference presentation at DevIt  - session discussing  and industry trends.",
       tags: ["Conference"],
     },
@@ -2456,9 +2451,9 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Devoxx PL",
-      venue: "Germany",
+      location: "Kraków, Poland",
       description: "Devoxx PL conference presentation covering developer tools, programming languages, software development best practices, and developer education for the European developer community.",
-      tags: ["Conference","Devoxx Conference","German Developers","Developer Conference"],
+      tags: ["Conference","Devoxx Conference","Developer Conference"],
     },
     {
       title: "Meetup Lille",
@@ -2480,7 +2475,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Idemia (customer meeting, on-site) - Sagemaker",
-      venue: "Germany",
+      location: "France",
       description: "Customer presentation with Idemia (customer meeting, on-site) - Sagemaker covering machine learning and partnership opportunities.",
       tags: ["Customer","Machine Learning"],
     },
@@ -2672,13 +2667,13 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "AIM401R breakout - Deep Learning with Tensorflow - CSAT 4.47/4.58",
-      venue: "Germany",
+      location: "Las Vegas, USA",
       description: "AIM401R breakout - Deep Learning with Tensorflow - CSAT 4.47/4.58 event covering artificial intelligence.",
       tags: ["Unknown","Artificial Intelligence"],
     },
     {
       title: "2 Twitch sessions (Deep Learning, Deep Racer)",
-      venue: "Germany",
+      location: "Online",
       description: "2 Twitch sessions (Deep Learning, Deep Racer) event covering artificial intelligence.",
       tags: ["Unknown","Artificial Intelligence"],
     },
@@ -2696,7 +2691,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "AIM401R2 breakout - Deep Learning with Tensorflow w/ Advanced Microgrid Systems\"-  CSAT 4.74/4.72",
-      venue: "Germany",
+      location: "Las Vegas, USA",
       description: "AIM401R2 breakout - Deep Learning with Tensorflow w/ Advanced Microgrid Systems\"-  CSAT 4.74/4.72 event covering artificial intelligence.",
       tags: ["Unknown","Artificial Intelligence"],
     },
@@ -3046,7 +3041,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Webinar AWS #1: Deep Dive RDS",
-      venue: "Germany",
+      location: "Online",
       description: "Webinar presentation with Webinar AWS #1: Deep Dive RDS covering databases.",
       tags: ["Webinar","Databases"],
     },
@@ -3076,7 +3071,6 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Airbus Workshop  - Session #3: Devops",
-      venue: "Germany",
       description: "Customer presentation with Airbus Workshop  - Session #3: Devops covering artificial intelligence, devops and partnership opportunities.",
       tags: ["Customer","Artificial Intelligence","Devops"],
     },
@@ -3130,13 +3124,13 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "DevIt  - Talk",
-      venue: "Germany",
+      location: "Thessaloniki, Greece",
       description: "DevIt conference presentation covering MXNet deep learning framework, neural network development, and machine learning applications for the German developer community.",
-      tags: ["Conference","German Tech Community","Devit Conference","Mxnet Deep Learning"],
+      tags: ["Conference","Devit Conference","Mxnet Deep Learning"],
     },
     {
       title: "DevIt - Workshop",
-      venue: "Germany",
+      location: "Thessaloniki, Greece",
       description: "Conference presentation at DevIt - Workshop discussing  and industry trends.",
       tags: ["Conference","Analyst","Analyst Relations","Market Strategy","Competitive Analysis"],
     },
@@ -3280,13 +3274,13 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "JDEV keynote",
-      venue: "Germany",
+      location: "France",
       description: "JDEV keynote event covering technology topics.",
       tags: ["Unknown"],
     },
     {
       title: "JDEV devops workshop",
-      venue: "Germany",
+      location: "France",
       description: "Customer presentation with JDEV devops workshop covering devops and partnership opportunities.",
       tags: ["Customer","Devops"],
     },
@@ -3394,13 +3388,13 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Webinar AWS #1",
-      venue: "Germany",
+      location: "Online",
       description: "Webinar presentation with Webinar AWS #1 covering technology trends.",
       tags: ["Webinar"],
     },
     {
       title: "Webinar AWS #2",
-      venue: "Germany",
+      location: "Online",
       description: "Webinar presentation with Webinar AWS #2 covering technology trends.",
       tags: ["Webinar"],
     },
@@ -3442,7 +3436,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Customer: La Poste",
-      venue: "Germany",
+      location: "France",
       description: "Customer presentation with Customer: La Poste covering devops and partnership opportunities.",
       tags: ["Customer","Devops"],
     },
@@ -3490,13 +3484,13 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Lindholmen Software Development Day",
-      venue: "Germany",
+      location: "Gothenburg, Sweden",
       description: "Lindholmen Software Development Day event covering technology topics.",
       tags: ["Unknown"],
     },
     {
       title: "Customer: Caisse des Depots",
-      venue: "Germany",
+      location: "France",
       description: "Customer presentation with Customer: Caisse des Depots covering artificial intelligence and partnership opportunities.",
       tags: ["Customer","Artificial Intelligence"],
     },
@@ -3610,7 +3604,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
     {
       title: "Customer: Schneider Electric",
-      venue: "Germany",
+      location: "France",
       description: "Customer presentation with Customer: Schneider Electric covering artificial intelligence and partnership opportunities.",
       tags: ["Customer","Artificial Intelligence"],
     },
