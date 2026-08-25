@@ -53,6 +53,14 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       tags: ["Conference","CRM","Portfolio Company","Enterprise AI","Paris"],
     },
     {
+      title: "Keynote: How Transformers Reinvent Machine Learning – for Both Generative AI and Predictive AI",
+      venue: "Machine Learning Week USA 2026",
+      date: "June 4–7, 2026",
+      location: "Phoenix, USA",
+      description: "Keynote on how the transformer architecture reshapes both generative and predictive machine learning.",
+      tags: ["Conference","Keynote","Transformers","Generative AI","Predictive AI","Phoenix"],
+    },
+    {
       title: "AI-powered engineering: the new way of building software",
       venue: "We Love SaaS AI Leadership Day 2026",
       date: "March 18, 2026",
@@ -60,12 +68,6 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       description: "Presentation on how AI is changing the way software teams build products. Part of a practical afternoon for SaaS founders and CxOs focused on the real impact of AI on product strategy and engineering workflows.",
       tags: ["Conference","AI Engineering","SaaS","Amsterdam"],
       links: [{"url":"https://welovesaas.io/events/ai-leadership-day-2026/","label":"Event"},{"url":"https://fr.slideshare.net/slideshow/ai-powered-engineering-transforming-software-development-in-2026/286587342","label":"Slides"}],
-    },
-    {
-      title: "Keynote: How Transformers Reinvent Machine Learning – for Both Generative AI and Predictive AI",
-      venue: "Machine Learning Week USA 2026",
-      description: "Keynote on how the transformer architecture reshapes both generative and predictive machine learning.",
-      tags: ["Conference","Keynote","Transformers","Generative AI","Predictive AI"],
     },
   ],
   '2025': [
