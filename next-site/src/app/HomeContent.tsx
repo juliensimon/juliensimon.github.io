@@ -17,6 +17,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'The Host Pays the Empire',
+    href: '/blog/industry-perspectives/2026-08-25_the-host-pays-the-empire/',
+    date: 'August 25, 2026',
+    summary: 'AI data centers are the foreign bases of the US–China tech rivalry, except that the host now pays the rent.',
+    icon: 'article',
+  },
+  {
     title: 'Let an AI Agent Loose on Postgres, Safely: Claude Code + Ghost',
     href: '/youtube/2026/20260821_Let_an_AI_Agent_Loose_on_Postgres_Safely_Claude_Code_Ghost.html',
     date: 'August 21, 2026',
@@ -42,13 +49,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     href: '/blog/industry-perspectives/2026-08-05_from-google-brain-to-google-drain/',
     date: 'August 5, 2026',
     summary: 'What six weeks of exits say about the model Google hasn’t shipped.',
-    icon: 'article',
-  },
-  {
-    title: 'You Have To Ask Me Nicely',
-    href: '/blog/industry-perspectives/2026-08-04_you-have-to-ask-me-nicely/',
-    date: 'August 4, 2026',
-    summary: 'OVH told Canada how to get the data it refused to hand over. On August 18, the European Union stops making the argument OVH is making in court.',
     icon: 'article',
   },
 ];

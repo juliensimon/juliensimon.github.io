@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The Host Pays the Empire',
+    slug: '2026-08-25_the-host-pays-the-empire',
+    date: '2026-08-25',
+    description: 'AI data centers are the foreign bases of the US–China tech rivalry, except that the host now pays the rent.',
+    originalUrl: 'https://www.airealist.ai/p/the-host-pays-the-empire',
+  },
+  {
     title: 'The Watcher Is the Product',
     slug: '2026-08-20_the-watcher-is-the-product',
     date: '2026-08-20',
