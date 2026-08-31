@@ -1,0 +1,9 @@
+# Dependencies for the content sync scripts (sync_substack.py, sync_youtube.py).
+#   python3 -m venv venv && venv/bin/pip install -r scripts/requirements.txt
+#   venv/bin/python scripts/sync_substack.py --dry-run
+requests>=2.32
+beautifulsoup4>=4.13
+Pillow>=11.0
+
+# Not covered here: transcription (sync_youtube.py --backfill-transcripts) imports
+# torch/transformers/librosa lazily, and shells out to the yt-dlp CLI.

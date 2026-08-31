@@ -16,11 +16,18 @@ npm run dev        # Start dev server at http://localhost:3000
 npm run build      # Build for production (outputs to next-site/out/)
 npm run lint       # Run ESLint
 
+# Python scripts - one-time setup
+python3 -m venv venv && venv/bin/pip install -r scripts/requirements.txt
+
+# Content sync (run from repo root)
+venv/bin/python scripts/sync_substack.py --dry-run
+venv/bin/python scripts/sync_youtube.py --dry-run
+
 # Legacy static content (for blog processing scripts)
 cd scripts
-python extract_blog_posts.py    # Extract posts from Atom feed
-python download_images.py       # Download/convert images to WebP
-python organize_by_year.py      # Organize into year folders
+../venv/bin/python extract_blog_posts.py    # Extract posts from Atom feed
+../venv/bin/python download_images.py       # Download/convert images to WebP
+../venv/bin/python organize_by_year.py      # Organize into year folders
 ```
 
 ## Architecture
