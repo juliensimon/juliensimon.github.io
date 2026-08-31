@@ -17,6 +17,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Event Horizon',
+    href: '/blog/industry-perspectives/2026-08-31_event-horizon/',
+    date: 'August 31, 2026',
+    summary: 'Nobody could pay to keep Hugging Face neutral. Nvidia is paying to own it.',
+    icon: 'article',
+  },
+  {
     title: 'The Host Pays the Empire',
     href: '/blog/industry-perspectives/2026-08-25_the-host-pays-the-empire/',
     date: 'August 25, 2026',
@@ -42,13 +49,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     href: '/blog/industry-perspectives/2026-08-09_the-model-is-the-machine/',
     date: 'August 9, 2026',
     summary: 'AMD just bought a chip company whose product runs exactly one model. That is the point.',
-    icon: 'article',
-  },
-  {
-    title: 'From Google Brain to Google Drain',
-    href: '/blog/industry-perspectives/2026-08-05_from-google-brain-to-google-drain/',
-    date: 'August 5, 2026',
-    summary: 'What six weeks of exits say about the model Google hasn’t shipped.',
     icon: 'article',
   },
 ];

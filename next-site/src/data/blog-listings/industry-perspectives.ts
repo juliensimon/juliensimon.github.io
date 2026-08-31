@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Event Horizon',
+    slug: '2026-08-31_event-horizon',
+    date: '2026-08-31',
+    description: 'Nobody could pay to keep Hugging Face neutral. Nvidia is paying to own it. Nvidia is reportedly buying Hugging Face for $12.9bn.',
+    originalUrl: 'https://www.airealist.ai/p/event-horizon',
+  },
+  {
     title: 'The Host Pays the Empire',
     slug: '2026-08-25_the-host-pays-the-empire',
     date: '2026-08-25',
