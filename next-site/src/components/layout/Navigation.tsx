@@ -102,6 +102,7 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
+                      prefetch={item.href.startsWith('/blog/') ? false : undefined}
                   aria-current={active ? 'page' : undefined}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                     active
@@ -205,6 +206,7 @@ export default function Navigation() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
+                      prefetch={item.href.startsWith('/blog/') ? false : undefined}
                       aria-current={active ? 'page' : undefined}
                       className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                         active

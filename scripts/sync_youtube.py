@@ -849,6 +849,8 @@ def create_video_page(
     <meta property="og:type" content="video.other">
     <meta property="og:url" content="https://www.julien.org/youtube/{year}/{date_str}_{title_to_filename(video.title)}.html">
     <link rel="canonical" href="https://www.julien.org/youtube/{year}/{date_str}_{title_to_filename(video.title)}.html">
+    <meta property="og:image" content="https://img.youtube.com/vi/{video.video_id}/maxresdefault.jpg">
+    <meta name="twitter:image" content="https://img.youtube.com/vi/{video.video_id}/maxresdefault.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
