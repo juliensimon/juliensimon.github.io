@@ -130,10 +130,9 @@ def write_sitemap(filename, urls):
     xml_parts.append("</urlset>")
     xml_content = "\n".join(xml_parts) + "\n"
 
-    for target_dir in [PUBLIC, OUT]:
-        target = target_dir / filename
-        target.write_text(xml_content, encoding="utf-8")
-        print(f"  Written {len(urls)} URLs to {target}")
+    target = OUT / filename
+    target.write_text(xml_content, encoding="utf-8")
+    print(f"  Written {len(urls)} URLs to {target}")
 
     return len(urls)
 
@@ -153,10 +152,9 @@ def write_sitemap_index(filename, sitemaps):
     xml_parts.append("</sitemapindex>")
     xml_content = "\n".join(xml_parts) + "\n"
 
-    for target_dir in [PUBLIC, OUT]:
-        target = target_dir / filename
-        target.write_text(xml_content, encoding="utf-8")
-        print(f"  Written sitemap index to {target}")
+    target = OUT / filename
+    target.write_text(xml_content, encoding="utf-8")
+    print(f"  Written sitemap index to {target}")
 
 
 def remove_obsolete_sitemaps():

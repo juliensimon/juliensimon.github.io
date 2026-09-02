@@ -7,15 +7,11 @@ import { INDUSTRY_PERSPECTIVES_ARTICLES } from '@/data/blog-listings/industry-pe
 export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date().toISOString();
-
-  // Frequently updated pages get the build timestamp.
-  // Rarely-changed pages get a fixed date so search engines
-  // can distinguish fresh content from stable content.
+  // ponytail: lastModified is omitted where no real content date exists;
+  // a build timestamp on every deploy is noise, not a freshness signal.
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: SITE.url,
-      lastModified: now,
       changeFrequency: 'daily',
       priority: 1.0,
     },
@@ -27,31 +23,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${SITE.url}/speaking`,
-      lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
       url: `${SITE.url}/publications`,
-      lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: `${SITE.url}/youtube-videos`,
-      lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.7,
     },
     {
       url: `${SITE.url}/media`,
-      lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${SITE.url}/datasets`,
-      lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.7,
     },
@@ -79,7 +70,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const currentYear = new Date().getFullYear();
   const speakingPages: MetadataRoute.Sitemap = SPEAKING_YEARS.map((y) => ({
     url: `${SITE.url}/speaking/${y.year}`,
-    lastModified: y.year >= currentYear ? now : `${y.year}-12-31`,
+    ...(y.year < currentYear && { lastModified: `${y.year}-12-31` }),
     changeFrequency: y.year >= currentYear ? 'weekly' as const : 'yearly' as const,
     priority: y.year >= currentYear ? 0.7 : 0.5,
   }));
@@ -87,7 +78,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Dynamic blog category pages
   const blogPages: MetadataRoute.Sitemap = BLOG_CATEGORY_SLUGS.map((slug) => ({
     url: `${SITE.url}/blog-posts/${slug}`,
-    lastModified: now,
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   }));
@@ -96,7 +86,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // The Python sitemap script no longer emits these; this file owns them.
   const industryIndex: MetadataRoute.Sitemap = [{
     url: `${SITE.url}/blog/industry-perspectives/`,
-    lastModified: now,
     changeFrequency: 'weekly',
     priority: 0.7,
   }];

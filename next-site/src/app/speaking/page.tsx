@@ -4,12 +4,13 @@ import StructuredData from '@/components/seo/StructuredData';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import { SPEAKING_EVENTS } from '@/data/speaking-events';
+import { SPEAKING_STATS } from '@/data/speaking';
 import SpeakingContent from './SpeakingContent';
 
 export const metadata = buildMetadata({
-  title: 'Speaking — 685+ Talks on AI & Machine Learning',
+  title: `Speaking — ${SPEAKING_STATS.totalEvents}+ Talks on AI & Machine Learning`,
   description:
-    '685+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing. Keynotes at AWS re:Invent, ODSC, and more.',
+    `${SPEAKING_STATS.totalEvents}+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing. Keynotes at AWS re:Invent, ODSC, and more.`,
   path: '/speaking',
   keywords: [
     'conference speaker',
@@ -56,7 +57,7 @@ export default function SpeakingPage() {
       ])} />
       <StructuredData data={webPageSchema(
         'Speaking Engagements',
-        '685+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing.',
+        `${SPEAKING_STATS.totalEvents}+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing.`,
         `${SITE.url}/speaking`,
       )} />
       <StructuredData data={faqSchema(SPEAKING_FAQS, `${SITE.url}/speaking`)} />
