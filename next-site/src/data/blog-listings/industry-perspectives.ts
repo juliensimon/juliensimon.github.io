@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'The Cache Is the Price',
+    slug: '2026-09-08_the-cache-is-the-price',
+    date: '2026-09-08',
+    description: 'Routing a job to a cheaper model looks like free money. Whether it is depends on how the frontier bills the handover.',
+    originalUrl: 'https://www.airealist.ai/p/the-cache-is-the-price',
+  },
+  {
     title: 'Event Horizon',
     slug: '2026-08-31_event-horizon',
     date: '2026-08-31',

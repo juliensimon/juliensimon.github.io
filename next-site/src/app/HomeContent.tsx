@@ -17,6 +17,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'The Cache Is the Price',
+    href: '/blog/industry-perspectives/2026-09-08_the-cache-is-the-price/',
+    date: 'September 8, 2026',
+    summary: 'Routing a job to a cheaper model looks like free money. Whether it is depends on how the frontier bills the handover.',
+    icon: 'article',
+  },
+  {
     title: 'Event Horizon',
     href: '/blog/industry-perspectives/2026-08-31_event-horizon/',
     date: 'August 31, 2026',
@@ -42,13 +49,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     href: '/blog/industry-perspectives/2026-08-20_the-watcher-is-the-product/',
     date: 'August 20, 2026',
     summary: 'DeepSeek gave the agent harness away. OpenAI is taxing itself to watch its own. SpaceX paid $60 billion for one. All three just told you where the value went.',
-    icon: 'article',
-  },
-  {
-    title: 'The Model Is the Machine',
-    href: '/blog/industry-perspectives/2026-08-09_the-model-is-the-machine/',
-    date: 'August 9, 2026',
-    summary: 'AMD just bought a chip company whose product runs exactly one model. That is the point.',
     icon: 'article',
   },
 ];
