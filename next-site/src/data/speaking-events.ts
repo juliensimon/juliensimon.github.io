@@ -19,6 +19,15 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       tags: ["Webinar","Portfolio Company","Enterprise AI","Online"],
     },
     {
+      title: "Panel: How Big SaaS and AI Converge",
+      venue: "SaaS & AI Kitchen (OMR Reviews & Carlsquare)",
+      date: "October 6, 2026",
+      location: "Berlin, Germany",
+      description: "Panelist at SaaS & AI Kitchen, a curated SaaS and AI learning format for founders and investors by OMR Reviews and Carlsquare. Moderated by Mark Miller (Carlsquare), with Deepa Gautam-Nigge (SAP), Franz Faerber (Lensing.ai), and Kerstin Stier (engomo), the panel explores how Big SaaS and AI-first companies compete and collaborate, and how each can build a sustainable business.",
+      tags: ["Conference","Panel","SaaS","Enterprise AI","Berlin"],
+      links: [{"url":"https://saas-kitchen.com/","label":"Event"}],
+    },
+    {
       title: "AI Assurance & Governance Summit 2026",
       venue: "Stanford Faculty Club",
       date: "October 1, 2026",
@@ -35,14 +44,6 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       description: "Plenary talk on AI ROI at the first Sommet de la Transformation Agentique, hosted by Fortino Capital portfolio company Ofelia at La Galerie Bourbon. An invitation-only morning for 40 executives, held under Chatham House Rule, on moving AI from a cost line to a revenue line.",
       tags: ["Conference","AI ROI","Agentic AI","Portfolio Company","Paris"],
       links: [{"url":"https://ofeliaevent.space/","label":"Event"}],
-    },
-    {
-      title: "Efficy CRM Day",
-      venue: "Efficy",
-      date: "September 10, 2026",
-      location: "Brussels, Belgium",
-      description: "Speaking at the Efficy CRM Day in Brussels, an event run by Fortino Capital portfolio company Efficy. Talk title to be announced.",
-      tags: ["Conference","CRM","Portfolio Company","Enterprise AI","Brussels"],
     },
     {
       title: "Efficy CRM Day",
