@@ -11,14 +11,6 @@ export interface SpeakingEvent {
 export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
   '2026': [
     {
-      title: "Bizzmine",
-      venue: "Bizzmine",
-      date: "October 29, 2026",
-      location: "Online",
-      description: "Online session for Fortino Capital portfolio company Bizzmine. Talk title to be announced.",
-      tags: ["Webinar","Portfolio Company","Enterprise AI","Online"],
-    },
-    {
       title: "Panel: How Big SaaS and AI Converge",
       venue: "SaaS & AI Kitchen (OMR Reviews & Carlsquare)",
       date: "October 6, 2026",
@@ -37,7 +29,16 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       links: [{"url":"https://trustmodel.ai/summit2026","label":"Event"}],
     },
     {
-      title: "La plupart des investissements IA ne montrent jamais de ROI mesurable, sauf si…",
+      title: "Beyond the Hype: AI That Actually Works for Enterprise",
+      venue: "Bizzmine Digital Summit 2026",
+      date: "September 29, 2026",
+      location: "Online",
+      description: "AI keynote at the Bizzmine Digital Summit 2026, a live-streamed event hosted by Fortino Capital portfolio company Bizzmine for CXOs, Quality and EHS leaders, on orchestrating the future of QHSE management.",
+      tags: ["Keynote","Portfolio Company","Enterprise AI","QHSE","Online"],
+      links: [{"url":"https://www.bizzmine.com/resources/webinars/bizzmine-digital-summit-2026/","label":"Event"}],
+    },
+    {
+      title: "Vous avez investi dans l'IA. Pourquoi les résultats ne suivent-ils pas ?",
       venue: "Sommet de la Transformation Agentique (Ofelia)",
       date: "September 22, 2026",
       location: "Paris, France",
