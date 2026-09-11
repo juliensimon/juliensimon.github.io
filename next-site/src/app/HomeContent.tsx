@@ -17,6 +17,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Selective Availability',
+    href: '/blog/industry-perspectives/2026-09-11_selective-availability/',
+    date: 'September 11, 2026',
+    summary: 'Three agencies advised American AI providers to degrade answers for accounts they suspect of malicious distillation, subtly enough to “avoid triggering obvious alerts”.',
+    icon: 'article',
+  },
+  {
     title: 'The Cache Is the Price',
     href: '/blog/industry-perspectives/2026-09-08_the-cache-is-the-price/',
     date: 'September 8, 2026',
@@ -43,13 +50,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     date: 'August 21, 2026',
     summary: 'Giving Claude Code its own Postgres: forking a 400,000-row Hacker News database with Ghost so an agent can experiment and throw the copies away.',
     icon: 'video',
-  },
-  {
-    title: 'The Watcher Is the Product',
-    href: '/blog/industry-perspectives/2026-08-20_the-watcher-is-the-product/',
-    date: 'August 20, 2026',
-    summary: 'DeepSeek gave the agent harness away. OpenAI is taxing itself to watch its own. SpaceX paid $60 billion for one. All three just told you where the value went.',
-    icon: 'article',
   },
 ];
 

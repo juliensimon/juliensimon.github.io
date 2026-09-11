@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Selective Availability',
+    slug: '2026-09-11_selective-availability',
+    date: '2026-09-11',
+    description: 'Three agencies advised American AI providers to degrade answers for accounts they suspect of malicious distillation, subtly enough to “avoid triggering…',
+    originalUrl: 'https://www.airealist.ai/p/selective-availability',
+  },
+  {
     title: 'The Cache Is the Price',
     slug: '2026-09-08_the-cache-is-the-price',
     date: '2026-09-08',
