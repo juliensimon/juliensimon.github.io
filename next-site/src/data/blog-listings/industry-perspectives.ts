@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'At Least 45 Days',
+    slug: '2026-09-20_at-least-45-days',
+    date: '2026-09-20',
+    description: 'Almost every model on Bedrock gets six months\' notice before it can be pulled. The one Washington just accused gets 45 days, and no stated reason.',
+    originalUrl: 'https://www.airealist.ai/p/at-least-45-days',
+  },
+  {
     title: 'Selective Availability',
     slug: '2026-09-11_selective-availability',
     date: '2026-09-11',

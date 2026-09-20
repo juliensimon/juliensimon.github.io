@@ -14,7 +14,7 @@ export const PINNED_REPOSITORIES: Repository[] = [
     description: 'Cache Commander — a TUI and MCP server to explore, audit, and clean developer cache directories. Scan for CVEs, find outdated packages, reclaim disk space. Supports pip, npm, Cargo, HuggingFace, Homebrew, and more.',
     url: 'https://github.com/juliensimon/cache-commander',
     language: 'Rust',
-    stars: 68,
+    stars: 69,
     forks: 6,
     tags: ['TUI', 'Cache Management', 'CVE Scanning', 'Developer Tools'],
   },
@@ -33,7 +33,7 @@ export const PINNED_REPOSITORIES: Repository[] = [
     url: 'https://github.com/juliensimon/starlink-viz',
     language: 'TypeScript',
     stars: 29,
-    forks: 7,
+    forks: 8,
     tags: ['Three.js', 'Next.js', 'Satellite Tracking', '3D Visualization'],
   },
   {

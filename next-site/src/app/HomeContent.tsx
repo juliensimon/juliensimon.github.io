@@ -17,6 +17,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'At Least 45 Days',
+    href: '/blog/industry-perspectives/2026-09-20_at-least-45-days/',
+    date: 'September 20, 2026',
+    summary: 'Almost every model on Bedrock gets six months\' notice before it can be pulled. The one Washington just accused gets 45 days, and no stated reason.',
+    icon: 'article',
+  },
+  {
     title: 'Selective Availability',
     href: '/blog/industry-perspectives/2026-09-11_selective-availability/',
     date: 'September 11, 2026',
@@ -43,13 +50,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     date: 'August 25, 2026',
     summary: 'AI data centers are the foreign bases of the US–China tech rivalry, except that the host now pays the rent.',
     icon: 'article',
-  },
-  {
-    title: 'Let an AI Agent Loose on Postgres, Safely: Claude Code + Ghost',
-    href: '/youtube/2026/20260821_Let_an_AI_Agent_Loose_on_Postgres_Safely_Claude_Code_Ghost.html',
-    date: 'August 21, 2026',
-    summary: 'Giving Claude Code its own Postgres: forking a 400,000-row Hacker News database with Ghost so an agent can experiment and throw the copies away.',
-    icon: 'video',
   },
 ];
 
