@@ -1,4 +1,5 @@
 ---
+name: sync-substack
 description: Sync new posts from www.airealist.ai to julien.org
 ---
 

@@ -1,4 +1,5 @@
 ---
+name: sync-all
 description: Sync Substack + YouTube + GitHub repo stats + HF dataset count, build, commit, push, and deploy in one go
 ---
 

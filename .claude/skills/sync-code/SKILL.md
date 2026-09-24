@@ -1,4 +1,5 @@
 ---
+name: sync-code
 description: Sync GitHub stars, forks, and descriptions for repos listed in the code section
 ---
 

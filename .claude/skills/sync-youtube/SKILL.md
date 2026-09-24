@@ -1,4 +1,5 @@
 ---
+name: sync-youtube
 description: Sync new YouTube videos from @juliensimonfr to julien.org
 ---
 
