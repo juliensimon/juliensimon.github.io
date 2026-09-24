@@ -17,6 +17,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Vent Mauvais',
+    href: '/blog/industry-perspectives/2026-09-24_vent-mauvais/',
+    date: 'September 24, 2026',
+    summary: 'Verlaine’s ill wind carries the leaf where it will. States bought Mistral without a tender; where free choice can be measured, it goes elsewhere.',
+    icon: 'article',
+  },
+  {
     title: 'At Least 45 Days',
     href: '/blog/industry-perspectives/2026-09-20_at-least-45-days/',
     date: 'September 20, 2026',
@@ -42,13 +49,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     href: '/blog/industry-perspectives/2026-08-31_event-horizon/',
     date: 'August 31, 2026',
     summary: 'Nobody could pay to keep Hugging Face neutral. Nvidia is paying to own it.',
-    icon: 'article',
-  },
-  {
-    title: 'The Host Pays the Empire',
-    href: '/blog/industry-perspectives/2026-08-25_the-host-pays-the-empire/',
-    date: 'August 25, 2026',
-    summary: 'AI data centers are the foreign bases of the US–China tech rivalry, except that the host now pays the rent.',
     icon: 'article',
   },
 ];

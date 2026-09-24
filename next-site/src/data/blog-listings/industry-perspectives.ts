@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Vent Mauvais',
+    slug: '2026-09-24_vent-mauvais',
+    date: '2026-09-24',
+    description: 'Verlaine\'s ill wind carries the leaf where it will. States bought Mistral without a tender; where free choice can be measured, it goes elsewhere.',
+    originalUrl: 'https://www.airealist.ai/p/vent-mauvais',
+  },
+  {
     title: 'At Least 45 Days',
     slug: '2026-09-20_at-least-45-days',
     date: '2026-09-20',
