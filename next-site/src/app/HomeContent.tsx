@@ -17,6 +17,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'An Act of God, With Letterhead',
+    href: '/blog/industry-perspectives/2026-09-28_an-act-of-god-with-letterhead/',
+    date: 'September 28, 2026',
+    summary: 'Oracle reportedly called its power problem an act of God. Its annual report had already listed it.',
+    icon: 'article',
+  },
+  {
     title: 'Vent Mauvais',
     href: '/blog/industry-perspectives/2026-09-24_vent-mauvais/',
     date: 'September 24, 2026',
@@ -42,13 +49,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     href: '/blog/industry-perspectives/2026-09-08_the-cache-is-the-price/',
     date: 'September 8, 2026',
     summary: 'Routing a job to a cheaper model looks like free money. Whether it is depends on how the frontier bills the handover.',
-    icon: 'article',
-  },
-  {
-    title: 'Event Horizon',
-    href: '/blog/industry-perspectives/2026-08-31_event-horizon/',
-    date: 'August 31, 2026',
-    summary: 'Nobody could pay to keep Hugging Face neutral. Nvidia is paying to own it.',
     icon: 'article',
   },
 ];

@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'An Act of God, With Letterhead',
+    slug: '2026-09-28_an-act-of-god-with-letterhead',
+    date: '2026-09-28',
+    description: 'Oracle reportedly called its power problem an act of God. Its annual report had already listed it.',
+    originalUrl: 'https://www.airealist.ai/p/an-act-of-god-with-letterhead',
+  },
+  {
     title: 'Vent Mauvais',
     slug: '2026-09-24_vent-mauvais',
     date: '2026-09-24',
