@@ -1,6 +1,7 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema, faqSchema, CODE_FAQS } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, CODE_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import FaqSection from '@/components/ui/FaqSection';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import CodeContent from './CodeContent';
@@ -31,12 +32,12 @@ export default function CodePage() {
         'Open source projects by Julien Simon: macOS apps, CLI tools, data pipelines, and ML demos on GitHub.',
         `${SITE.url}/code`,
       )} />
-      <StructuredData data={faqSchema(CODE_FAQS, `${SITE.url}/code`)} />
       <Breadcrumbs items={[
         { name: 'Home', href: '/' },
         { name: 'Code & Projects', href: '/code' },
       ]} />
       <CodeContent />
+      <FaqSection faqs={CODE_FAQS} pageUrl={`${SITE.url}/code`} />
     </>
   );
 }

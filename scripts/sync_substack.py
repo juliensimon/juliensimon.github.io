@@ -499,6 +499,16 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
         cleaned_content = update_html_image_refs(cleaned_content, url_mapping)
         image_count = len(url_mapping)
 
+    # Social cards and JSON-LD use the article's own first image when it has
+    # one; the site-wide card is only the fallback.
+    og_image = "https://www.julien.org/assets/og-image-1200x630.webp"
+    first_img = re.search(r'<img[^>]*\bsrc="([^"]+)"', cleaned_content)
+    if first_img and (folder_path / first_img.group(1)).is_file():
+        og_image = (
+            "https://www.julien.org/blog/industry-perspectives/"
+            f"{folder_name}/{first_img.group(1)}"
+        )
+
     # Calculate read time from actual content
     soup = BeautifulSoup(cleaned_content, 'html.parser')
     plain_text = soup.get_text(separator=' ', strip=True)
@@ -526,12 +536,13 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     <meta property="og:title" content="{html.escape(item.title)} - Julien Simon">
     <meta property="og:description" content="{html.escape(excerpt)}">
     <meta property="og:url" content="https://www.julien.org/blog/industry-perspectives/{folder_name}/">
-    <meta property="og:image" content="https://www.julien.org/assets/og-image-1200x630.webp">
+    <meta property="og:image" content="{og_image}">
     <meta property="article:author" content="Julien Simon">
     <meta property="article:published_time" content="{date_str}T00:00:00Z">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{html.escape(item.title)} - Julien Simon">
     <meta name="twitter:description" content="{html.escape(excerpt)}">
+    <meta name="twitter:image" content="{og_image}">
     <meta name="twitter:creator" content="@julsimon">
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="../../style.css">
@@ -543,10 +554,11 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
     {{
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": "{html.escape(item.title).replace(chr(34), '&quot;')}",
-        "description": "{html.escape(excerpt).replace(chr(34), '&quot;')}",
+        "headline": {json.dumps(item.title).replace('</', '<\\/')},
+        "description": {json.dumps(excerpt).replace('</', '<\\/')},
         "url": "https://www.julien.org/blog/industry-perspectives/{folder_name}/",
-        "image": "https://www.julien.org/assets/og-image-1200x630.webp",
+        "image": "{og_image}",
+        "isBasedOn": "{item.link}",
         "datePublished": "{date_str}T00:00:00Z",
         "dateModified": "{date_str}T00:00:00Z",
         "author": {{ "@id": "https://www.julien.org/#person" }},

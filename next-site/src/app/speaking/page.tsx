@@ -1,6 +1,7 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema, faqSchema, eventSchema, SPEAKING_FAQS } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, eventSchema, SPEAKING_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import FaqSection from '@/components/ui/FaqSection';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import { SPEAKING_EVENTS } from '@/data/speaking-events';
@@ -60,13 +61,13 @@ export default function SpeakingPage() {
         `${SPEAKING_STATS.totalEvents}+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing.`,
         `${SITE.url}/speaking`,
       )} />
-      <StructuredData data={faqSchema(SPEAKING_FAQS, `${SITE.url}/speaking`)} />
       <StructuredData data={eventListData} />
       <Breadcrumbs items={[
         { name: 'Home', href: '/' },
         { name: 'Speaking', href: '/speaking' },
       ]} />
       <SpeakingContent />
+      <FaqSection faqs={SPEAKING_FAQS} pageUrl={`${SITE.url}/speaking`} />
     </>
   );
 }

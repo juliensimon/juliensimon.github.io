@@ -1,6 +1,7 @@
 import { buildMetadata } from '@/lib/metadata';
-import { webSiteSchema, webPageSchema, profilePageSchema, faqSchema, HOMEPAGE_FAQS } from '@/lib/structured-data';
+import { webSiteSchema, webPageSchema, profilePageSchema, HOMEPAGE_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import FaqSection from '@/components/ui/FaqSection';
 import { SITE } from '@/lib/constants';
 import { TOTAL_ARTICLES } from '@/data/publications';
 import { SPEAKING_STATS } from '@/data/speaking';
@@ -37,8 +38,8 @@ export default function HomePage() {
         HOME_DESCRIPTION,
         SITE.url,
       )} />
-      <StructuredData data={faqSchema(HOMEPAGE_FAQS, SITE.url)} />
       <HomeContent />
+      <FaqSection faqs={HOMEPAGE_FAQS} pageUrl={SITE.url} />
     </>
   );
 }

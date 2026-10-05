@@ -46,7 +46,7 @@ function parseMonthDate(dateStr: string): string | null {
 }
 
 function getVideoItems(): FeedItem[] {
-  const youtubeDir = path.join(process.cwd(), '..', 'youtube');
+  const youtubeDir = path.join(process.cwd(), 'public', 'youtube');
   const items: FeedItem[] = [];
 
   if (!fs.existsSync(youtubeDir)) return items;
@@ -64,7 +64,11 @@ function getVideoItems(): FeedItem[] {
 
       const [, y, m, d, rawTitle] = match;
       const date = `${y}-${m}-${d}`;
-      const title = rawTitle.replace(/_/g, ' ').replace(/\+/g, ' ');
+      // The filename strips punctuation and accents; the page's <h1> has the real title.
+      const h1 = fs.readFileSync(path.join(yearPath, file), 'utf8').match(/<h1[^>]*>([^<]+)<\/h1>/);
+      const title = h1
+        ? h1[1].trim().replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#x27;/g, "'")
+        : rawTitle.replace(/_/g, ' ').replace(/\+/g, ' ');
       const url = `${SITE.url}/youtube/${yearDir}/${file}`;
 
       items.push({ title, url, date, category: 'video' });
@@ -99,6 +103,9 @@ function getBlogItems(): FeedItem[] {
   return items;
 }
 
+// Feed readers only need the recent tail; the full back catalogue is in the sitemaps.
+const MAX_FEED_ITEMS = 100;
+
 export function GET() {
   const articleItems: FeedItem[] = INDUSTRY_PERSPECTIVES_ARTICLES.map((a) => ({
     title: a.title,
@@ -117,7 +124,7 @@ export function GET() {
 
   const lastBuildDate = new Date().toUTCString();
 
-  const items = allItems.map((item) => {
+  const items = allItems.slice(0, MAX_FEED_ITEMS).map((item) => {
     const pubDate = new Date(item.date).toUTCString();
     const categoryTag = `\n      <category>${item.category === 'video' ? 'Video' : 'Article'}</category>`;
     const descTag = item.description ? `\n      <description><![CDATA[${item.description}]]></description>` : '';
@@ -138,7 +145,7 @@ export function GET() {
     <description>AI industry analysis, technical deep dives, and video content by ${SITE.name}, AI Operating Partner at Fortino Capital.</description>
     <language>en</language>
     <lastBuildDate>${lastBuildDate}</lastBuildDate>
-    <atom:link href="${SITE.url}/feed" rel="self" type="application/rss+xml" />
+    <atom:link href="${SITE.url}/feed.xml" rel="self" type="application/rss+xml" />
     <image>
       <url>${SITE.image}</url>
       <title>${SITE.name}</title>

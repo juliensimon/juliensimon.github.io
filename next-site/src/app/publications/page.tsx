@@ -1,6 +1,7 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema, faqSchema, PUBLICATIONS_FAQS } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, PUBLICATIONS_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import FaqSection from '@/components/ui/FaqSection';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import { TOTAL_ARTICLES } from '@/data/publications';
@@ -33,12 +34,12 @@ export default function PublicationsPage() {
         `${TOTAL_ARTICLES}+ articles on AI, machine learning, and cloud computing by Julien Simon.`,
         `${SITE.url}/publications`,
       )} />
-      <StructuredData data={faqSchema(PUBLICATIONS_FAQS, `${SITE.url}/publications`)} />
       <Breadcrumbs items={[
         { name: 'Home', href: '/' },
         { name: 'Publications', href: '/publications' },
       ]} />
       <PublicationsContent />
+      <FaqSection faqs={PUBLICATIONS_FAQS} pageUrl={`${SITE.url}/publications`} />
     </>
   );
 }

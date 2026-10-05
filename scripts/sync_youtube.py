@@ -86,6 +86,15 @@ def build_meta_description(
             continue
         if line.startswith('#') and ' ' not in line:
             continue
+        # Inline links read as noise in a search snippet: drop "(https://…)"
+        # asides whole, and any sentence whose only point is a bare URL.
+        line = re.sub(r'\s*\(\s*https?://[^\s)]+\s*\)', '', line)
+        line = ' '.join(
+            s for s in re.split(r'(?<=[.!?])\s+', re.sub(r'https?://\S+', '\x00', line))
+            if '\x00' not in s
+        ).strip()
+        if not line:
+            continue
         prose_lines.append(line)
 
     text = ' '.join(prose_lines)

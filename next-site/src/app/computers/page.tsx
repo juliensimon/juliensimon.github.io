@@ -6,7 +6,7 @@ import { SITE } from '@/lib/constants';
 import ComputersContent from './ComputersContent';
 
 export const metadata = buildMetadata({
-  title: 'Vintage Computers, UNIX, and Me — Personal Collection',
+  title: 'Vintage Computers, UNIX, and Me',
   description:
     'Julien Simon\'s personal collection of vintage computers spanning 40+ years — Apple II, Amiga, SGI workstations, Sun SPARC, NeXT, and DEC systems.',
   path: '/computers',

@@ -1,5 +1,5 @@
 // Industry Perspectives articles (Substack/Medium thought leadership)
-// Used by sitemap.ts for Google discovery and /feed for RSS
+// Used by /feed for RSS and by scripts/refresh_llms_txt.py for the llms.txt article lists
 
 export interface IndustryArticle {
   title: string;

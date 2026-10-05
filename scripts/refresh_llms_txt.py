@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Refresh count claims and the Last-updated stamp in llms.txt / llms-full.txt.
+"""Refresh count claims, article lists and the Last-updated stamp in llms.txt / llms-full.txt.
 
 Source of truth is next-site/src/data/*.ts (publications, youtube, speaking,
 datasets). The sync scripts keep those data files current but historically
@@ -136,10 +136,79 @@ def build_rules(stats: dict) -> list[tuple[str, str, str]]:
     return rules
 
 
+ARTICLES_TS = DATA / "blog-listings" / "industry-perspectives.ts"
+ARCHIVE_URL = "https://www.julien.org/blog/industry-perspectives"
+RECENT_COUNT = 5
+KEY_ARTICLES_HEADING = "## Industry Perspectives — Key Articles"
+
+
+def load_articles() -> list[dict]:
+    """Industry Perspectives entries from the TypeScript listing, newest first."""
+    text = ARTICLES_TS.read_text(encoding='utf-8')
+    string = r"'((?:[^'\\]|\\.)*)'"
+    entry = re.compile(
+        rf"title: {string},\s*slug: {string},\s*date: {string},\s*"
+        rf"description: {string},\s*originalUrl: {string}"
+    )
+
+    def unescape(value: str) -> str:
+        value = re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m.group(1), 16)), value)
+        return re.sub(r"\\(.)", r"\1", value)
+
+    articles = [
+        dict(zip(('title', 'slug', 'date', 'description', 'original'), map(unescape, m.groups())))
+        for m in entry.finditer(text)
+    ]
+    if not articles:
+        sys.exit(f"ERROR: no articles parsed from {ARTICLES_TS}")
+    return sorted(articles, key=lambda a: a['date'], reverse=True)
+
+
+def _month_year(iso_date: str) -> str:
+    return datetime.strptime(iso_date, '%Y-%m-%d').strftime('%B %Y')
+
+
+def refresh_recent_articles(text: str, articles: list[dict]) -> str:
+    """llms.txt: rebuild the "Recent Articles" list from the newest entries."""
+    section = re.search(r"(## Recent Articles\n\n)(.*?)(\n\n## )", text, re.DOTALL)
+    if not section:
+        return text
+    lines = [
+        f"- **{a['title']}** ({_month_year(a['date'])}) — {a['description']}"
+        for a in articles[:RECENT_COUNT]
+    ]
+    return text[:section.start(2)] + '\n'.join(lines) + text[section.end(2):]
+
+
+def add_missing_key_articles(text: str, articles: list[dict]) -> str:
+    """llms-full.txt: add an entry for every article the file does not list yet.
+
+    Existing entries carry hand-written summaries and are left alone; new ones
+    start from the listing description and go in above them, newest first.
+    """
+    start = text.find(KEY_ARTICLES_HEADING)
+    if start == -1:
+        return text
+    first_entry = text.find('\n### ', start)
+    if first_entry == -1:
+        return text
+    missing = [a for a in articles if f"{ARCHIVE_URL}/{a['slug']}/" not in text]
+    if not missing:
+        return text
+    blocks = ''.join(
+        f"\n### {a['title']} ({_month_year(a['date'])})\n{a['description']}\n"
+        f"- URL: {ARCHIVE_URL}/{a['slug']}/\n- Original: {a['original']}\n"
+        for a in missing
+    )
+    return text[:first_entry] + blocks + text[first_entry:]
+
+
+
 def refresh_llms_files(dry_run: bool = False) -> bool:
     """Rewrite stale counts in the llms files. Returns True if drift was found."""
     stats = load_stats()
     rules = build_rules(stats)
+    articles = load_articles()
     today = datetime.now().strftime('%Y-%m-%d')
     drift_found = False
 
@@ -153,6 +222,15 @@ def refresh_llms_files(dry_run: bool = False) -> bool:
         changed_labels = []
         for pattern, replacement, label in rules:
             updated = re.sub(pattern, replacement, text)
+            if updated != text:
+                changed_labels.append(label)
+                text = updated
+
+        for refresh, label in (
+            (refresh_recent_articles, "recent articles"),
+            (add_missing_key_articles, "key articles"),
+        ):
+            updated = refresh(text, articles)
             if updated != text:
                 changed_labels.append(label)
                 text = updated

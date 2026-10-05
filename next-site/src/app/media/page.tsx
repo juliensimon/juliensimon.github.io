@@ -8,7 +8,7 @@ import MediaContent from './MediaContent';
 
 export const metadata = buildMetadata({
   title: `Media, Analysts & Podcasts — ${MEDIA_STATS.total} Appearances`,
-  description: `${MEDIA_STATS.total} press interviews, analyst briefings, and podcast appearances by Julien Simon, ${MEDIA_STATS.yearSpan}. Covering AI, machine learning, small language models, and cloud computing.`,
+  description: `${MEDIA_STATS.total} press interviews, analyst briefings, and podcast appearances by Julien Simon, ${MEDIA_STATS.yearSpan}. Covering AI, small language models, and cloud computing.`,
   path: '/media',
   keywords: [
     'press',

@@ -1,6 +1,7 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema, dataCatalogSchema, faqSchema, DATASETS_FAQS } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, dataCatalogSchema, DATASETS_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
+import FaqSection from '@/components/ui/FaqSection';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import { FEATURED_DATASETS, TOTAL_DATASETS } from '@/data/datasets';
@@ -34,12 +35,12 @@ export default function DatasetsPage() {
         `${SITE.url}/datasets`,
       )} />
       <StructuredData data={dataCatalogSchema(FEATURED_DATASETS)} />
-      <StructuredData data={faqSchema(DATASETS_FAQS, `${SITE.url}/datasets`)} />
       <Breadcrumbs items={[
         { name: 'Home', href: '/' },
         { name: 'Datasets', href: '/datasets' },
       ]} />
       <DatasetsContent />
+      <FaqSection faqs={DATASETS_FAQS} pageUrl={`${SITE.url}/datasets`} />
     </>
   );
 }
