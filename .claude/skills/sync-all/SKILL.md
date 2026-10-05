@@ -57,6 +57,17 @@ Run a full content sync: fetch new Substack posts, YouTube videos, GitHub repo s
 
 12. Report what changed (or "dataset count up to date").
 
+### Phase 4b: Code Catalogue Refresh
+
+12b. Rebuild the second brain's repo catalogue, which also re-matches repos against the transcripts
+     and posts just synced:
+     ```bash
+     python3 ../code/scripts/sync_repos.py
+     ```
+     It writes `../code/REPOS.md` and `../code/repos/` **outside this repository**: never stage
+     them. Report the one-line summary it prints. If it fails (e.g. `gh` not authenticated), report
+     it and carry on; it does not block the site deploy.
+
 ### Phase 5: Refresh llms.txt, Build & Verify
 
 13. Refresh the AI-facing llms files so counts match the data files (the Substack

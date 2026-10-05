@@ -15,6 +15,7 @@ npm install        # Install dependencies
 npm run dev        # Start dev server at http://localhost:3000
 npm run build      # Build for production (outputs to next-site/out/)
 npm run lint       # Run ESLint
+npm run validate   # Data-consistency checks — also runs automatically as `prebuild`
 
 # Python scripts - one-time setup
 python3 -m venv venv && venv/bin/pip install -r scripts/requirements.txt
@@ -64,18 +65,35 @@ The main site is a Next.js 15 app with static export (`output: 'export'`).
 - Layout components in `src/components/layout/` (Navigation, Footer)
 - SEO via `src/components/seo/StructuredData.tsx` and `src/lib/metadata.ts`
 
-### Legacy Content (`/blog/`, `/youtube/`)
-Archived blog posts and video transcripts as self-contained HTML files:
-- `blog/legacy-posts-and-images/` - Personal blog (2008-2016) organized by year
-- `blog/aws-posts-and-images/`, `blog/huggingface-posts-and-images/` - Platform posts
-- `youtube/YYYY/` - Video transcripts by year
+### The archive (`next-site/public/blog/`, `next-site/public/youtube/`)
+The back catalogue: ~647 archived blog posts and ~477 video transcripts, as self-contained HTML
+served straight from `public/`. This is the copy that ships.
+
+- `next-site/public/blog/YYYY-MM-DD-slug/` - posts, one folder each
+- `next-site/public/blog/industry-perspectives/` - the Substack pieces; the sibling `research/`
+  workspace reads this exact directory as its `PUBLISHED_ARCHIVE`, so do not move or rename it
+- `next-site/public/youtube/YYYY/` - transcripts by year
+
+**`youtube/` at the repo root is a second, older copy** left from the pre-Next.js layout. Nothing
+builds from it. Read either, hand-edit neither.
+
+Listing metadata lives separately, in `next-site/src/data/blog-listings/*.ts` (one file per
+platform: aws, aws-medium, huggingface, arcee, medium, legacy, industry-perspectives).
 
 ### Python Scripts (`/scripts/`)
-Content processing utilities for legacy blog posts:
-- `extract_blog_posts.py` - Parse Atom feeds to HTML
-- `download_images.py` - Download and convert to WebP
-- `organize_by_year.py` - Structure posts by year
-- `fix_image_references.py` - Clean up image references
+**83 scripts, with their own `scripts/README.md` — read that rather than guessing.** Most are
+one-shot migrations that have already run; re-running one is rarely what you want. The two in
+routine use are the content syncs:
+
+```bash
+venv/bin/python scripts/sync_substack.py --dry-run
+venv/bin/python scripts/sync_youtube.py --dry-run
+```
+
+`next-site/cleanup.py` is **not** one of these. It rewrites every HTML file under `public/blog/`
+and `public/youtube/` in place, with no dry-run and no confirmation, and its `BASE_DIR` currently
+points at a directory that no longer exists — so today it is inert. Repointing it arms a bulk
+mutation over ~1,124 live files. Do not fix that path casually.
 
 ## Deployment
 
@@ -83,6 +101,17 @@ GitHub Actions (`.github/workflows/deploy.yml`) automatically builds and deploys
 1. Runs `npm ci` and `npm run build` in `next-site/`
 2. Uploads `next-site/out/` as artifact
 3. Deploys to GitHub Pages
+
+`npm run build` is wrapped by two hooks in `next-site/package.json`, and both can fail a deploy:
+
+- **`prebuild`** runs `scripts/validate-counts.mjs`, which checks the claimed counts against the
+  filesystem — YouTube videos, blog-post array lengths, speaking-year totals against `totalEvents`.
+  **A metric edited in `src/lib/constants.ts` without the matching content fails the build here.**
+  That is the repository's one real gate; run `npm run validate` before pushing.
+- **`postbuild`** runs image optimization, `scripts/generate-redirects.mjs`, then
+  `python3 ../scripts/generate_legacy_sitemap.py`. That last step couples the Node build to a
+  working Python 3 at the repo root, so a broken venv breaks the deploy in a step that looks like
+  a JavaScript failure.
 
 ## Key Patterns
 

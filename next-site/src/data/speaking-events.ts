@@ -29,7 +29,7 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       links: [{"url":"https://trustmodel.ai/summit2026","label":"Event"}],
     },
     {
-      title: "Beyond the Hype: AI That Actually Works for Enterprise",
+      title: "We reduce risk thanks to AI",
       venue: "Bizzmine Digital Summit 2026",
       date: "September 29, 2026",
       location: "Online",
