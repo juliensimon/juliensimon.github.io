@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Eight Changes to Transformer Attention, and What Each Costs',
+    slug: '2026-10-04_eight-changes-to-transformer-attention-and-what-each-costs',
+    date: '2026-10-04',
+    description: 'The newest open models from Alibaba, Moonshot, DeepSeek and Z.AI no longer read every earlier token. Eight designs, what each costs, and what to test.',
+    originalUrl: 'https://www.airealist.ai/p/eight-changes-to-transformer-attention',
+  },
+  {
     title: 'An Act of God, With Letterhead',
     slug: '2026-09-28_an-act-of-god-with-letterhead',
     date: '2026-09-28',

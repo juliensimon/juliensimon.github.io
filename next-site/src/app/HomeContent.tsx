@@ -17,6 +17,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Eight Changes to Transformer Attention, and What Each Costs',
+    href: '/blog/industry-perspectives/2026-10-04_eight-changes-to-transformer-attention-and-what-each-costs/',
+    date: 'October 4, 2026',
+    summary: 'The newest open models from Alibaba, Moonshot, DeepSeek and Z.AI no longer read every earlier token. Eight designs, what each costs, and what to test.',
+    icon: 'article',
+  },
+  {
     title: 'An Act of God, With Letterhead',
     href: '/blog/industry-perspectives/2026-09-28_an-act-of-god-with-letterhead/',
     date: 'September 28, 2026',
@@ -42,13 +49,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     href: '/blog/industry-perspectives/2026-09-11_selective-availability/',
     date: 'September 11, 2026',
     summary: 'Three agencies advised American AI providers to degrade answers for accounts they suspect of malicious distillation, subtly enough to “avoid triggering obvious alerts”.',
-    icon: 'article',
-  },
-  {
-    title: 'The Cache Is the Price',
-    href: '/blog/industry-perspectives/2026-09-08_the-cache-is-the-price/',
-    date: 'September 8, 2026',
-    summary: 'Routing a job to a cheaper model looks like free money. Whether it is depends on how the frontier bills the handover.',
     icon: 'article',
   },
 ];
