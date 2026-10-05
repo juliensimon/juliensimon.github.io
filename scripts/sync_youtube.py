@@ -492,6 +492,21 @@ def is_substack_content(video: VideoItem) -> bool:
     return any(signal in desc_lower for signal in substack_signals)
 
 
+def is_podcast_episode(video: VideoItem) -> bool:
+    """Check if a video is an audio episode of The AI Realist podcast.
+
+    YouTube builds these from the podcast RSS feed (podcast.julien.org) and
+    lists them among the channel's videos. Each is an AI narration of a piece
+    that already has its own page under blog/industry-perspectives, so a video
+    page and a Whisper transcript of it would duplicate that article.
+
+    The marker is the line the podcast pipeline writes into every episode
+    description (research/podcast/feed.py, description()). If that wording
+    changes there, change it here.
+    """
+    return 'ai-generated narration of "' in video.description.lower()
+
+
 # ---------------------------------------------------------------------------
 # Transcript generation
 # ---------------------------------------------------------------------------
@@ -811,6 +826,9 @@ def get_new_videos(
     for video in videos:
         if is_substack_content(video):
             print(f"  Skipping Substack content: {video.title}")
+            continue
+        if is_podcast_episode(video):
+            print(f"  Skipping podcast episode: {video.title}")
             continue
         year = video.published.year
         if not is_video_existing(year, video.video_id):
@@ -1414,6 +1432,9 @@ def update_latest_videos(
         print(f"  Warning: youtube.ts not found: {ts_path}")
         return
 
+    # Podcast episodes are in the channel's video list too. They are narrations of
+    # articles, not videos: left in, a week of episodes would fill this section.
+    feed_videos = [v for v in feed_videos if not is_podcast_episode(v)]
     top = sorted(feed_videos, key=lambda v: v.published, reverse=True)[:3]
     if not top:
         return

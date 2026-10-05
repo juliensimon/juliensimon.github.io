@@ -90,6 +90,15 @@ venv/bin/python scripts/sync_substack.py --dry-run
 venv/bin/python scripts/sync_youtube.py --dry-run
 ```
 
+A third, `scripts/sync_podcast.py` (stdlib only, any `python3`), adds a "Listen" audio player to
+the Industry Perspectives articles that have an episode of The AI Realist podcast. The podcast is
+produced by a separate pipeline in `../research/podcast/`; this script shares no code with it and
+reads only its public feed, `https://podcast.julien.org/feed.xml`. The player sits between
+`<!-- podcast:start -->` and `<!-- podcast:end -->`, before `<div class="article-content">` and never
+inside it, because `research/` reads everything inside that div as the text of the piece.
+`sync_youtube.py` skips podcast episodes (`is_podcast_episode`): they show up in the channel's
+video list, and each is the audio of an article that already has its page.
+
 `next-site/cleanup.py` is **not** one of these. It rewrites every HTML file under `public/blog/`
 and `public/youtube/` in place, with no dry-run and no confirmation, and its `BASE_DIR` currently
 points at a directory that no longer exists — so today it is inert. Repointing it arms a bulk

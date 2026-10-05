@@ -1,6 +1,6 @@
 ---
 name: sync-all
-description: Sync Substack + YouTube + GitHub repo stats + HF dataset count, build, commit, push, and deploy in one go
+description: Sync Substack + YouTube + podcast players + GitHub repo stats + HF dataset count, build, commit, push, and deploy in one go
 ---
 
 Run a full content sync: fetch new Substack posts, YouTube videos, GitHub repo stats, and Hugging Face dataset count, build the site, commit, push, and monitor deployment.
@@ -34,6 +34,34 @@ Run a full content sync: fetch new Substack posts, YouTube videos, GitHub repo s
    ```
 
 6. Report what was synced (video titles, dates).
+
+### Phase 2b: Podcast
+
+The AI Realist podcast (AI-narrated audio of each Substack piece) is produced by a separate,
+unattended pipeline in `../research/podcast/`. This sync shares no code with it: it only reads the
+public feed, `https://podcast.julien.org/feed.xml`. Run this phase after Phase 1, so an article
+synced a moment ago gets its player if its episode is already out.
+
+6a. Add or refresh the "Listen" player on the Industry Perspectives articles that have an episode
+    (stdlib only, any `python3`):
+    ```bash
+    python3 scripts/sync_podcast.py --dry-run
+    python3 scripts/sync_podcast.py
+    ```
+    Report the pages it changed. A changed audio address (a re-rendered episode) updates the page
+    in place. If the feed cannot be read, the script says so and changes nothing: carry on.
+
+6b. Report where the podcast stands (read-only, answers at once even while the hourly job runs):
+    ```bash
+    python3 ../research/podcast/podcast.py status
+    ```
+    Relay its first line, and name every episode marked `NEEDS APPROVAL` or `STOPPED`: those wait
+    for Julien. Never run `approve`, `release`, `hold` or `drop` from this skill; only he decides.
+    If the command fails, report it and carry on; it does not block the site deploy.
+
+6c. Podcast episodes also appear in the channel's video list. `sync_youtube.py` skips them
+    (`is_podcast_episode`): each is the audio of an article that already has its page here. If
+    Phase 2 printed "Skipping podcast episode", that is expected.
 
 ### Phase 3: GitHub Repo Stats Sync
 
@@ -86,8 +114,9 @@ Run a full content sync: fetch new Substack posts, YouTube videos, GitHub repo s
 
 ### Phase 6: Ship
 
-16. If anything was synced in Phase 1, 2, 3, or 4:
+16. If anything was synced in Phase 1, 2, 2b, 3, or 4:
     - Stage all sync-related files (new HTML pages, updated data files, updated index pages)
+    - That includes article pages changed by `scripts/sync_podcast.py` in Phase 2b
     - Commit with a message like: `Sync N Substack posts, M YouTube videos, repo stats, and dataset count`
    - Push to origin master
    - Monitor the deployment:
