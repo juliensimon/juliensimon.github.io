@@ -557,6 +557,7 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
         "headline": {json.dumps(item.title).replace('</', '<\\/')},
         "description": {json.dumps(excerpt).replace('</', '<\\/')},
         "url": "https://www.julien.org/blog/industry-perspectives/{folder_name}/",
+        "mainEntityOfPage": {{ "@type": "WebPage", "@id": "https://www.julien.org/blog/industry-perspectives/{folder_name}/" }},
         "image": "{og_image}",
         "isBasedOn": "{item.link}",
         "datePublished": "{date_str}T00:00:00Z",

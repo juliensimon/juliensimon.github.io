@@ -496,4 +496,13 @@
   
   <!-- '` -->
 
+    <section class="faq" aria-labelledby="faq-heading">
+        <h2 id="faq-heading">Frequently Asked Questions</h2>
+        <h3>Can language models run on CPU instead of GPU?</h3>
+        <p>Yes. Small language models like AFM-4.5B can run efficiently on modern CPUs including Intel Xeon Sapphire Rapids, AWS Graviton4, and Qualcomm processors. With 4-bit quantization via llama.cpp, AFM-4.5B achieves 136 tokens/second on Intel Xeon and 280 tokens/second on Graviton4 at batch size 4.</p>
+        <h3>What throughput can you expect from CPU inference with small language models?</h3>
+        <p>Benchmarks with AFM-4.5B show 136 total tokens/second on Intel Xeon Sapphire Rapids (Q4_0, batch 4), 280+ tokens/second on AWS Graviton4 (Q4_0, batch 4), and viable throughput even on a Qualcomm laptop processor. Time-to-first-token stays under 2 seconds for quantized variants.</p>
+        <h3>When should you use CPU inference instead of GPU for language models?</h3>
+        <p>CPU inference is ideal when you need cost efficiency, data privacy (on-premise deployment), edge/on-device deployment, or when GPU procurement is difficult. Keep batch sizes at 4 or below, context lengths relatively short, and use quantized models for best results.</p>
+    </section>
 </body></html>

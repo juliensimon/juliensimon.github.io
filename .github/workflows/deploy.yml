@@ -58,6 +58,8 @@ jobs:
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: next-site/out
+          # .well-known/ is a dot-directory; without this the action drops it and ai.json 404s
+          include-hidden-files: true
 
     outputs:
       changed_urls: ${{ steps.urls.outputs.json }}
