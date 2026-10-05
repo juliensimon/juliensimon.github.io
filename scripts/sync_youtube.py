@@ -444,6 +444,12 @@ def filter_shorts(videos: list[VideoItem]) -> list[VideoItem]:
     return filtered
 
 
+def page_title(title: str) -> str:
+    """<title> for a video page: the site suffix when it fits in 65 characters."""
+    suffix = " - Julien Simon"
+    return title + suffix if len(title) + len(suffix) <= 65 else title
+
+
 def title_to_filename(title: str) -> str:
     """Convert title to filename format (Title_Words_Here)."""
     clean = re.sub(r'[^\w\s-]', '', title)
@@ -852,7 +858,7 @@ def create_video_page(
     html_content = f'''<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{html.escape(video.title)}</title>
+    <title>{html.escape(page_title(video.title))}</title>
     <meta name="description" content="{html.escape(meta_description)}">
     <meta property="og:title" content="{html.escape(video.title)}">
     <meta property="og:description" content="{html.escape(meta_description)}">

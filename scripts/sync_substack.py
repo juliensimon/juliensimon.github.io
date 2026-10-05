@@ -526,7 +526,7 @@ def create_article_page(item: PostItem, dry_run: bool) -> Path:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{html.escape(item.title)} - Julien Simon</title>
+    <title>{html.escape(item.title + ' - Julien Simon' if len(item.title) <= 50 else item.title)}</title>
     <meta name="author" content="Julien Simon">
     <meta name="date" content="{date_str}">
     <meta name="description" content="{html.escape(excerpt)}">

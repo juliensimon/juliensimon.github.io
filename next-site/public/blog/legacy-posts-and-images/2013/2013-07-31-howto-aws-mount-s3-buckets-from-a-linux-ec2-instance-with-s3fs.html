@@ -17,6 +17,7 @@
     <meta property="og:description" content="As we all know, the preferred way to access AWS S3 is to use the S3 API .">
     <meta property="og:url" content="https://www.julien.org/blog/legacy-posts-and-images/2013/2013-07-31-howto-aws-mount-s3-buckets-from-a-linux-ec2-instance-with-s3fs.html">
     <meta property="og:image" content="https://www.julien.org/assets/og-image.webp">
+    <meta name="twitter:image" content="https://www.julien.org/assets/og-image.webp">
     <meta property="article:author" content="Julien Simon">
     <meta property="article:published_time" content="2013-07-31T00:00:00Z">
     <meta name="twitter:card" content="summary_large_image">
@@ -31,11 +32,11 @@
     <h1>HOWTO AWS: mount S3 buckets from a Linux EC2 instance with s3fs</h1>
     <div class="date">Published: 2013-07-31</div>
     <div class="content">
-        As we all know, the preferred way to access AWS S3 is to use the&nbsp;<a class="vt-p" href="http://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html">S3 API</a>. However, you should know that it's also possible to mount an S3 bucket and access it like a normal filesystem.<br>
+        As we all know, the preferred way to access AWS S3 is to use the&nbsp;<a class="vt-p" href="https://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html">S3 API</a>. However, you should know that it's also possible to mount an S3 bucket and access it like a normal filesystem.<br>
 <br>
 As always with Open Source, you have a number of different options: the one I'll show you today is a user-land filesystem (aka FUSE) called&nbsp;<i><a class="vt-p" href="https://code.google.com/p/s3fs/">s3fs</a>. </i>The project is quite active and provides actual support to its users :)<br>
 <br>
-This how-to assumes that you already have an AWS account with EC2 instances and S3 buckets. If not, go to the AWS website and <a href="http://docs.aws.amazon.com/gettingstarted/latest/awsgsg-intro/intro.html">get started</a>&nbsp;:)<br>
+This how-to assumes that you already have an AWS account with EC2 instances and S3 buckets. If not, go to the AWS website and <a href="https://docs.aws.amazon.com/gettingstarted/latest/awsgsg-intro/intro.html">get started</a>&nbsp;:)<br>
 <br>
 As usual, I'll be using a vanilla Ubuntu 12.04 instance, let's '<i>ssh</i>' into it and install what we need.<br>
 <br>

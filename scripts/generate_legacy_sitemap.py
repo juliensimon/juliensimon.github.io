@@ -15,10 +15,12 @@ duplicated here. A legacy combined sitemap-legacy.xml used to exist but was
 removed because it was a pure union of sitemap-blog + sitemap-videos.
 """
 
+import json
 import re
 from datetime import datetime
 from pathlib import Path
 from urllib.parse import quote
+from xml.sax.saxutils import escape
 
 PUBLIC = Path(__file__).resolve().parent.parent / "next-site" / "public"
 OUT = Path(__file__).resolve().parent.parent / "next-site" / "out"
@@ -73,6 +75,37 @@ def _is_redirect_stub(path: Path) -> bool:
     return 'http-equiv="refresh"' in head.lower()
 
 
+VIDEO_ENTRIES = {}
+
+
+def video_entry(path: Path):
+    """<video:video> block for a page carrying a VideoObject, else None."""
+    if "youtube" not in path.parts or path.name == "index.html":
+        return None
+    text = path.read_text(encoding="utf-8", errors="replace")
+    for block in re.findall(r'<script[^>]*type="application/ld\+json"[^>]*>(.*?)</script>', text, re.S):
+        try:
+            data = json.loads(block)
+        except ValueError:
+            continue
+        if not isinstance(data, dict) or data.get("@type") != "VideoObject":
+            continue
+        if not all(data.get(k) for k in ("name", "description", "thumbnailUrl", "embedUrl")):
+            return None
+        lines = [
+            "    <video:video>",
+            f"      <video:thumbnail_loc>{escape(data['thumbnailUrl'])}</video:thumbnail_loc>",
+            f"      <video:title>{escape(data['name'][:100])}</video:title>",
+            f"      <video:description>{escape(data['description'][:2048])}</video:description>",
+            f"      <video:player_loc>{escape(data['embedUrl'])}</video:player_loc>",
+        ]
+        if data.get("uploadDate"):
+            lines.append(f"      <video:publication_date>{escape(data['uploadDate'])}</video:publication_date>")
+        lines.append("    </video:video>")
+        return "\n".join(lines)
+    return None
+
+
 def scan_dirs(dirs, priority_fn=None):
     urls = []
     for scan_dir in dirs:
@@ -96,6 +129,9 @@ def scan_dirs(dirs, priority_fn=None):
             lastmod = extract_date_from_path(rel_path)
             priority = priority_fn(rel_path) if priority_fn else "0.5"
             changefreq = "monthly" if "/index.html" in rel_path else "yearly"
+            video = video_entry(html_file)
+            if video:
+                VIDEO_ENTRIES[url] = video
             urls.append((url, lastmod, changefreq, priority))
     return urls
 
@@ -119,7 +155,8 @@ def video_priority(rel_path):
 def write_sitemap(filename, urls):
     xml_parts = [
         '<?xml version="1.0" encoding="UTF-8"?>',
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"'
+        ' xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">',
     ]
     for url, lastmod, changefreq, priority in urls:
         xml_parts.append(f"  <url>")
@@ -127,6 +164,8 @@ def write_sitemap(filename, urls):
         xml_parts.append(f"    <lastmod>{lastmod}</lastmod>")
         xml_parts.append(f"    <changefreq>{changefreq}</changefreq>")
         xml_parts.append(f"    <priority>{priority}</priority>")
+        if url in VIDEO_ENTRIES:
+            xml_parts.append(VIDEO_ENTRIES[url])
         xml_parts.append(f"  </url>")
     xml_parts.append("</urlset>")
     xml_content = "\n".join(xml_parts) + "\n"

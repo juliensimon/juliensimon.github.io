@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Under the hood of Real-Time Bidding</title>
+    <title>Under the hood of Real-Time Bidding - Julien Simon</title>
 
 <!-- Umami Analytics -->
 <script defer="" src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
@@ -17,6 +17,7 @@
     <meta property="og:description" content="Originally written for boom , the latest in performance display advertising.">
     <meta property="og:url" content="https://www.julien.org/blog/legacy-posts-and-images/2012/2012-07-27-under-the-hood-of-real-time-bidding.html">
     <meta property="og:image" content="https://www.julien.org/assets/og-image.webp">
+    <meta name="twitter:image" content="https://www.julien.org/assets/og-image.webp">
     <meta property="article:author" content="Julien Simon">
     <meta property="article:published_time" content="2012-07-27T00:00:00Z">
     <meta name="twitter:card" content="summary_large_image">
@@ -31,14 +32,14 @@
     <h1>Under the hood of Real-Time Bidding</h1>
     <div class="date">Published: 2012-07-27</div>
     <div class="content">
-        <span style="font-family: inherit;"><i><b>Originally written for <a href="http://digitalboom.tumblr.com/" target="_blank">boom</a>, the latest in performance display advertising.</b></i></span><br>
+        <span style="font-family: inherit;"><i><b>Originally written for <a href="https://digitalboom.tumblr.com/" target="_blank">boom</a>, the latest in performance display advertising.</b></i></span><br>
 <span style="background-color: white; color: #334455; font-family: inherit;"><br></span>
 <span style="background-color: white; color: #334455; font-family: inherit;">Within the display advertising environment, Real-Time Bidding has evolved from curiosity to mainstay in the last 18 months.&nbsp;&nbsp;Though real-time bidding can appear to be a pretty simple value proposition – advertisers bid, win and display on an impression-by-impression basis –don’t make the mistake of thinking it’s unsophisticated.&nbsp;&nbsp;&nbsp;The technology behind RTB is extraordinary.&nbsp;&nbsp;&nbsp;At Criteo, we’ve built out our real-time capabilities from scratch in the last two years, to handle 7 billion daily RTB requests on 16 exchanges covering more than 30 countries.</span><br>
 <div class="MsoNormal" style="color: #334455; margin-bottom: 0.75em; padding: 0px;">
 <span style="font-family: inherit;"><br></span>
 <span style="font-family: inherit;">Big challenge, big solution.&nbsp;&nbsp;Let’s take a look under the hood, shall we?&nbsp;&nbsp;<em></em></span></div>
 <div class="MsoNormal" style="color: #334455; margin-bottom: 0.75em; padding: 0px;">
-<span style="font-family: inherit;">In order to participate on a RTB exchange, media buyers first need to implement proper bidding protocols.&nbsp;Apart from the nascent&nbsp;<a href="http://code.google.com/p/openrtb/" style="-webkit-transition: all 0.2s linear; border-bottom-color: rgb(208, 220, 223); border-bottom-style: solid; border-bottom-width: 1px; color: #556677; outline: 0px !important; text-decoration: none;">OpenRTB initiative</a>, there is not yet an industry-wide standard, so development work is required in each case.&nbsp;&nbsp;Getting everything set is usually quite straightforward, especially with the right software architecture (and the right team … another story in itself).&nbsp;&nbsp;However, since the ecosystem is made up of many companies figuring this out on the fly – no names – things can occasionally get tricky and surprises can happen.</span></div>
+<span style="font-family: inherit;">In order to participate on a RTB exchange, media buyers first need to implement proper bidding protocols.&nbsp;Apart from the nascent&nbsp;<a href="https://code.google.com/p/openrtb/" style="-webkit-transition: all 0.2s linear; border-bottom-color: rgb(208, 220, 223); border-bottom-style: solid; border-bottom-width: 1px; color: #556677; outline: 0px !important; text-decoration: none;">OpenRTB initiative</a>, there is not yet an industry-wide standard, so development work is required in each case.&nbsp;&nbsp;Getting everything set is usually quite straightforward, especially with the right software architecture (and the right team … another story in itself).&nbsp;&nbsp;However, since the ecosystem is made up of many companies figuring this out on the fly – no names – things can occasionally get tricky and surprises can happen.</span></div>
 <div class="MsoNormal" style="color: #334455; margin-bottom: 0.75em; padding: 0px;">
 <span style="font-family: inherit;">Now, what about the bidding process?&nbsp;&nbsp;In a trivial case, where an advertiser might simply enter a bid ten cents across the board, the process is not a big deal.&nbsp;&nbsp;But in the non-trivial case, a bid should be the end result of the system applying sophisticated algorithms to a combination of data sent in the request as well as the media buyer’s own data.&nbsp;&nbsp;This data can include things like:</span></div>
 <ul style="color: #334455; line-height: 24px; margin: 0px; padding: 0px 0px 0px 3em;">
