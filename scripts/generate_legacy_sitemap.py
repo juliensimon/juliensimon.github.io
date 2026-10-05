@@ -90,7 +90,8 @@ def scan_dirs(dirs, priority_fn=None):
                 url_path = rel_path[:-len("index.html")]
             else:
                 url_path = rel_path
-            encoded_path = "/".join(quote(part, safe="") for part in url_path.split("/"))
+            # "@" and "+" are valid in a path segment; leaving them raw keeps <loc> identical to the page canonical
+            encoded_path = "/".join(quote(part, safe="@+") for part in url_path.split("/"))
             url = f"{SITE_URL}/{encoded_path}"
             lastmod = extract_date_from_path(rel_path)
             priority = priority_fn(rel_path) if priority_fn else "0.5"

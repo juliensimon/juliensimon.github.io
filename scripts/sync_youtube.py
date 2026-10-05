@@ -855,6 +855,7 @@ def create_video_page(
     <title>{html.escape(video.title)}</title>
     <meta name="description" content="{html.escape(meta_description)}">
     <meta property="og:title" content="{html.escape(video.title)}">
+    <meta property="og:description" content="{html.escape(meta_description)}">
     <meta property="og:type" content="video.other">
     <meta property="og:url" content="https://www.julien.org/youtube/{year}/{date_str}_{title_to_filename(video.title)}.html">
     <link rel="canonical" href="https://www.julien.org/youtube/{year}/{date_str}_{title_to_filename(video.title)}.html">
@@ -867,6 +868,7 @@ def create_video_page(
     <link rel="stylesheet" href="../style.css">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{html.escape(video.title)}">
+    <meta name="twitter:description" content="{html.escape(meta_description)}">
     <meta name="twitter:creator" content="@julsimon">
     <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
     <script type="application/ld+json">
