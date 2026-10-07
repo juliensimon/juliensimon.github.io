@@ -3,6 +3,7 @@ import { TOTAL_ARTICLES } from '@/data/publications';
 import { TOTAL_DATASETS } from '@/data/datasets';
 import { YOUTUBE_STATS } from '@/data/youtube';
 import { SPEAKING_STATS } from '@/data/speaking';
+import { PODCAST, type PodcastEpisode } from '@/data/podcast';
 
 export function personSchema() {
   return {
@@ -400,6 +401,60 @@ export function newsletterSchema() {
       '@type': 'Audience',
       audienceType: 'AI practitioners, enterprise architects, CTOs, investors, policy makers',
     },
+  };
+}
+
+export function podcastSeriesSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'PodcastSeries',
+    '@id': `${SITE.url}/podcast/#series`,
+    name: PODCAST.name,
+    description: PODCAST.description,
+    url: `${SITE.url}/podcast`,
+    webFeed: PODCAST.feed,
+    image: PODCAST.coverFull,
+    inLanguage: 'en',
+    author: { '@id': `${SITE.url}/#person` },
+    publisher: { '@id': `${SITE.url}/#person` },
+    isBasedOn: { '@id': 'https://www.airealist.ai/#newsletter' },
+    sameAs: [PODCAST.apple, PODCAST.spotify],
+    genre: ['Technology', 'Business'],
+  };
+}
+
+export function podcastEpisodeListSchema(episodes: PodcastEpisode[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${SITE.url}/podcast/#episodes`,
+    name: `${PODCAST.name} podcast episodes`,
+    url: `${SITE.url}/podcast`,
+    numberOfItems: episodes.length,
+    itemListElement: episodes.map((episode, i) => {
+      const duration = `PT${Math.floor(episode.seconds / 60)}M${episode.seconds % 60}S`;
+      return {
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'PodcastEpisode',
+          name: episode.title,
+          description: episode.summary,
+          datePublished: episode.date,
+          timeRequired: duration,
+          url: episode.page ? `${SITE.url}${episode.page}` : episode.article,
+          isBasedOn: episode.article,
+          ...(episode.image && { image: episode.image }),
+          associatedMedia: {
+            '@type': 'AudioObject',
+            contentUrl: episode.audio,
+            encodingFormat: 'audio/mpeg',
+            duration,
+          },
+          partOfSeries: { '@id': `${SITE.url}/podcast/#series` },
+        },
+      };
+    }),
   };
 }
 

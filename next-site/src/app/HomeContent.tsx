@@ -149,6 +149,8 @@ export default function HomeContent() {
             {SOCIAL_LINKS.map((link) => (
               <SocialButton key={link.name} name={link.name} href={link.href} />
             ))}
+            {/* Not in SOCIAL_LINKS: that list is also the "same person as" of the structured data, and a show is not a profile. */}
+            <SocialButton name="Podcast" href="/podcast" />
           </div>
         </div>
       </section>

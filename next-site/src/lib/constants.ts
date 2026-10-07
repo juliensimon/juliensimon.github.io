@@ -32,6 +32,7 @@ export const NAV_ITEMS = [
   { label: 'Speaking', href: '/speaking' },
   { label: 'Publications', href: '/publications' },
   { label: 'AI Realist', href: '/blog/industry-perspectives/' },
+  { label: 'Podcast', href: '/podcast' },
   { label: 'Code', href: '/code' },
   { label: 'Datasets', href: '/datasets' },
   { label: 'Videos', href: '/youtube-videos' },

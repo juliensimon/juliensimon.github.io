@@ -63,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta name="theme-color" content="#6366f1" />
         <link rel="alternate" type="application/rss+xml" title="Julien Simon - Industry Perspectives" href="/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="The AI Realist podcast" href="https://podcast.julien.org/feed.xml" />
         <link rel="preconnect" href="https://cloud.umami.is" />
         <link rel="dns-prefetch" href="https://cloud.umami.is" />
         {/* Leaflet preconnects removed — loaded by SpeakingMap component on /speaking only */}

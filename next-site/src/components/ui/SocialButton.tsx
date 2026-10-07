@@ -39,6 +39,12 @@ const ICONS: Record<string, React.ReactNode> = {
       <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-.5 5.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm5 0a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm-7.5 8c0-2.5 2-4.5 5-4.5s5 2 5 4.5c0 1.5-.8 2.8-2 3.5-.4.2-.8.3-1.3.4-.5.1-1.1.1-1.7.1s-1.2 0-1.7-.1c-.5-.1-.9-.2-1.3-.4-1.2-.7-2-2-2-3.5z" />
     </svg>
   ),
+  Podcast: (
+    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="9" y="2" width="6" height="12" rx="3" />
+      <path d="M5 11a7 7 0 0 0 14 0M12 18v4M8 22h8" />
+    </svg>
+  ),
   Slideshare: (
     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1 16.5c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5 3.5 1.567 3.5 3.5-1.567 3.5-3.5 3.5zm5-7c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5z" />
@@ -48,19 +54,19 @@ const ICONS: Record<string, React.ReactNode> = {
 
 export default function SocialButton({ name, href }: SocialButtonProps) {
   const icon = ICONS[name];
+  const external = !href.startsWith('/');   // a page of this site opens in place
 
   return (
     <a
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
       className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
         bg-primary/10 text-primary hover:bg-primary/20
         transition-all duration-200 hover:scale-[1.03]"
     >
       {icon}
       {name}
-      <span className="sr-only"> (opens in new tab)</span>
+      {external && <span className="sr-only"> (opens in new tab)</span>}
     </a>
   );
 }

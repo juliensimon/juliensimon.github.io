@@ -99,6 +99,29 @@ inside it, because `research/` reads everything inside that div as the text of t
 `sync_youtube.py` skips podcast episodes (`is_podcast_episode`): they show up in the channel's
 video list, and each is the audio of an article that already has its page.
 
+Since 2026-10-07 the same run puts the podcast on the site in three more places, all from the feed
+and none edited by hand:
+- a schema.org `PodcastEpisode` block inside each player, so a search engine knows the article has
+  an audio version;
+- `next-site/src/data/podcast-episodes.json`, the episode list behind the `/podcast` page
+  (`src/app/podcast/`, show constants in `src/data/podcast.ts`, `PodcastSeries` schema in
+  `src/lib/structured-data.ts`). The page is the show's home on the web: `podcast.julien.org/`
+  itself serves only the feed and the files;
+- the "## Podcast: The AI Realist" section of `llms.txt` (five latest episodes) and `llms-full.txt`
+  (all), replaced in place on each run.
+
+The `/podcast` page carries the two platform badges, in `next-site/public/assets/badges/`. Apple's
+is its own artwork from `toolbox.marketingtools.apple.com`, unmodified: at least 30 pixels high,
+clear space of a tenth of its height, below or beside the copy, never next to the Apple Podcasts
+icon (Apple Podcasts Identity Guidelines, read 2026-10-07). Spotify publishes no badge file: the
+button is its official green icon on black with "Listen on Spotify", which its design guidelines
+allow (developer.spotify.com/documentation/design, read 2026-10-07). Do not redraw either. The
+homepage row has a "Podcast" button to `/podcast`; it is not in `SOCIAL_LINKS`, because that list is
+also the person's `sameAs` in the structured data and a show is not a profile.
+
+Only an https address on `podcast.julien.org` is ever written (`.mp3` for audio, `.jpg` for an
+image), and feed text goes into the structured data with `<` escaped. `--selftest` covers all of it.
+
 `next-site/cleanup.py` is **not** one of these. It rewrites every HTML file under `public/blog/`
 and `public/youtube/` in place, with no dry-run and no confirmation, and its `BASE_DIR` currently
 points at a directory that no longer exists — so today it is inert. Repointing it arms a bulk
