@@ -190,10 +190,10 @@ export default function HomeContent() {
                 <a href="https://www.airealist.ai/" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-hover font-medium">
                   The AI Realist
                 </a>
-                , a long-form investigative newsletter sourced from SEC filings, government surveys,
-                legislative text, court rulings, and regulatory documents — not conference
-                presentations or vendor materials. Topics include national AI ecosystems, cloud
-                and digital sovereignty, AI capital expenditure sustainability, and the geopolitics
+                , a long-form investigative newsletter sourced from SEC filings, model cards, government surveys,
+                legislative text, court rulings, and regulatory documents, not conference
+                presentations or vendor materials. Topics include major new models and
+                architecture evolutions, national AI ecosystems, cloud and digital sovereignty, AI capital expenditure sustainability, and the geopolitics
                 of compute access.
               </p>
               <p>

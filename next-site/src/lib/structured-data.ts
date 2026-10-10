@@ -631,7 +631,7 @@ export const PUBLICATIONS_FAQS = [
   },
   {
     question: 'What is The AI Realist newsletter?',
-    answer: 'The AI Realist (www.airealist.ai) is Julien Simon\'s Substack newsletter offering practical AI analysis for builders, operators, and investors. It delivers long-form structural analysis rooted in SEC filings, government surveys, legislative text, and regulatory documents.',
+    answer: 'The AI Realist (www.airealist.ai) is Julien Simon\'s Substack newsletter offering practical AI analysis for builders, operators, and investors. It delivers long-form structural analysis rooted in SEC filings, model cards, government surveys, legislative text, and regulatory documents, and covers major new models and architecture evolutions.',
   },
 ];
 
@@ -718,6 +718,6 @@ export const HOMEPAGE_FAQS = [
   },
   {
     question: 'What is The AI Realist newsletter?',
-    answer: 'The AI Realist (www.airealist.ai) is Julien Simon\'s Substack newsletter offering practical AI analysis for builders, operators, and investors. It delivers long-form structural analysis rooted in SEC filings, government surveys, legislative text, and regulatory documents, covering AI ecosystems, infrastructure, digital sovereignty, and investment architecture.',
+    answer: 'The AI Realist (www.airealist.ai) is Julien Simon\'s Substack newsletter offering practical AI analysis for builders, operators, and investors. It delivers long-form structural analysis rooted in SEC filings, model cards, government surveys, legislative text, and regulatory documents, covering major new models and architecture evolutions, AI ecosystems, infrastructure, digital sovereignty, and investment architecture.',
   },
 ];
