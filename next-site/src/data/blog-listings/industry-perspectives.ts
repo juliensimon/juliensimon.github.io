@@ -11,6 +11,20 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Skill Issue',
+    slug: '2026-10-09_skill-issue',
+    date: '2026-10-09',
+    description: 'Mistral can build the model. Does it know how to launch one?. On October 6th, 2026, Mistral opened a public preview of Mistral Large 4, “very officially: le…',
+    originalUrl: 'https://www.airealist.ai/p/skill-issue',
+  },
+  {
+    title: 'Kolibri Is Large Enough',
+    slug: '2026-10-06_kolibri-is-large-enough',
+    date: '2026-10-06',
+    description: 'American chips, Chinese teachers, about $3 million for the training run. What Germany\'s new open model adds is eligibility.',
+    originalUrl: 'https://www.airealist.ai/p/kolibri-is-large-enough',
+  },
+  {
     title: 'Eight Changes to Transformer Attention, and What Each Costs',
     slug: '2026-10-04_eight-changes-to-transformer-attention-and-what-each-costs',
     date: '2026-10-04',

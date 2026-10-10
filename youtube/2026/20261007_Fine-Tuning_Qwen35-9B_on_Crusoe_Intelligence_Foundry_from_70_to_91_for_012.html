@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fine-Tuning Qwen3.5-9B on Crusoe Intelligence Foundry: from 70% to 91% for $0.12</title>
+    <meta name="description" content="This video is sponsored by Crusoe. If you have used the OpenAI fine-tuning API, you already know this one.">
+    <meta property="og:title" content="Fine-Tuning Qwen3.5-9B on Crusoe Intelligence Foundry: from 70% to 91% for $0.12">
+    <meta property="og:description" content="This video is sponsored by Crusoe. If you have used the OpenAI fine-tuning API, you already know this one.">
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://www.julien.org/youtube/2026/20261007_Fine-Tuning_Qwen35-9B_on_Crusoe_Intelligence_Foundry_from_70_to_91_for_012.html">
+    <link rel="canonical" href="https://www.julien.org/youtube/2026/20261007_Fine-Tuning_Qwen35-9B_on_Crusoe_Intelligence_Foundry_from_70_to_91_for_012.html">
+    <meta property="og:image" content="https://img.youtube.com/vi/9d2xYP1WlRo/maxresdefault.jpg">
+    <meta name="twitter:image" content="https://img.youtube.com/vi/9d2xYP1WlRo/maxresdefault.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fine-Tuning Qwen3.5-9B on Crusoe Intelligence Foundry: from 70% to 91% for $0.12">
+    <meta name="twitter:description" content="This video is sponsored by Crusoe. If you have used the OpenAI fine-tuning API, you already know this one.">
+    <meta name="twitter:creator" content="@julsimon">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "Fine-Tuning Qwen3.5-9B on Crusoe Intelligence Foundry: from 70% to 91% for $0.12",
+        "description": "This video is sponsored by Crusoe. If you have used the OpenAI fine-tuning API, you already know this one.",
+        "uploadDate": "2026-10-07T14:55:43+00:00",
+        "embedUrl": "https://www.youtube.com/embed/9d2xYP1WlRo",
+        "thumbnailUrl": "https://img.youtube.com/vi/9d2xYP1WlRo/maxresdefault.jpg",
+        "author": { "@id": "https://www.julien.org/#person" }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Fine-Tuning Qwen3.5-9B on Crusoe Intelligence Foundry: from 70% to 91% for $0.12</h1>
+        <div class="date">October 7, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/9d2xYP1WlRo" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">This video is sponsored by Crusoe.
+
+Request access to Crusoe Intelligence Foundry: https://fandf.co/3U6LAmu
+Serverless Fine-Tuning docs: https://fandf.co/4yCnJu8
+Self-Serve Deployments quickstart: https://fandf.co/477Narz
+
+#sponsored
+
+If you have used the OpenAI fine-tuning API, you already know this one. In one terminal and one Python script, I fine-tune Qwen3.5-9B on real banking support messages with Crusoe Intelligence Foundry. I serve the result two ways: serverless, and on a dedicated NVIDIA H100. Then I score it against the base model and Gemma 4 31B.
+
+What you&#x27;ll see:
+- The price quote before the job runs: $0.12 for 600 examples over 3 epochs
+- A serverless LoRA fine-tuning job that finished in about 6 minutes, with checkpoints and validation loss for each one
+- The fine-tuned adapter served two ways: serverless inference billed per token, or a self-serve deployment on one NVIDIA H100 ready in under 5 minutes ($5.50/h, billed until you delete it)
+- A scoreboard on 180 held-out messages across 15 intents
+
+Results (180 held-out messages):
+- Qwen3.5-9B, base: 70.0%
+- Gemma 4 31B, zero-shot: 77.8%
+- Qwen3.5-9B fine-tuned, serverless: 91.1%
+- Qwen3.5-9B fine-tuned, dedicated NVIDIA H100: 88.9%
+
+We measured every number in this video live against the service on 2026-09-27.
+
+Chapters:
+0:00 Intro
+1:15 How the code works
+3:37 Probe and dataset
+5:53 Upload, price, train
+9:15 Two ways to serve it
+10:59 The scoreboard
+14:23 Cleanup
+14:39 Cost and wrap
+
+Links:
+- Code for this video: https://github.com/juliensimon/crusoe-demo
+
+Dataset: Banking77 by PolyAI (Casanueva et al., 2020), CC-BY-4.0.
+https://huggingface.co/datasets/PolyAI/banking77
+
+#finetuning #LLM #LoRA #Qwen #MLOps</div>
+
+        
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi, everybody. Julien here. Today, we&#x27;re going to fine-tune a small language model on the real customer support messages from a bank. We&#x27;re going to deploy the model, and we&#x27;re going find out if the fine-tuned model actually outperforms the base model we started from. We&#x27;re doing all of this on Cruso Intelligence Foundry, and this video is sponsored by them.
+
+However, the code, the measurements, and the opinions are strictly mine. Here&#x27;s the plan. 600 labeled messages, 15 intents, and a 9 billion parameter model. We&#x27;ll fine tune it, serve it in two different ways, and score it on messages it has never seen. And we&#x27;ll compare it to the base model and to a model three times its size.
+
+One terminal, one Python script, one JSON lines file to a production endpoint, and I&#x27;ll tell you what it all costs at the end. Fine tuning API. You already know how to use this. The fine tuning API is OpenAI compatible. And I&#x27;m using the official OpenAI Python SDK, just changing the base URL.
+
+Okay, let&#x27;s get started. Before we run anything, let me show you how the code is put together because you can take it and reuse it. It&#x27;s one Python file demo dot by about 700 lines. The only dependencies are the open and Python.n for credentials. Everything is on GitHub and the link is in the video description.
+
+Every step of the workflow is a stage you can run on its own. Probe, prepare, upload, estimate, train, and so on, all the way to clean up. Every stage writes what it did to a state file. So if something breaks halfway, you can run the same command again and it will pick up where it stopped. And a stage that&#x27;s already done is skipped.
+
+That&#x27;s how I&#x27;ll run it today, one stage at a time, so we can look at everything in detail. Cruzo Intelligence Foundry gives you three endpoints, and the script uses all of them. The intelligence host is the fine-tuning API, and again, it&#x27;s OpenAI-compatible. Files, fine-tune jobs, checkpoints. You can drive it with the OpenAI SDK and use plain HTTP for the calls that the SDK doesn&#x27;t cover, price estimate and getting the training metrics.
+
+The inference host, again, is OpenAI compatible, check completion. And that&#x27;s where you call serverless models and your own deployments. And the Cruzo Cloud API, scope to your project, is where you create and delete dedicated deployments. It is an OpenAI compatible. So that&#x27;s plain HTTP tool.
+
+Quick work on credentials. All you need is one API key and your project ID in a .env environment file that stays on your machine. Now the same key works on all inputs. Okay, here&#x27;s an example file. You can create a new API key in just a few seconds.
+
+Just go to the API keys page, click on create API key, give it a name, select your project, set an expiration date, which is always a good idea, and then just create the key, right? And once you have the key here, just put it in your .amf file and keep it safe. That&#x27;s all there is to it. Okay, now let&#x27;s get started with the demo. Obviously, the first question is what models can I find you on this platform?
+
+So we can just run the probe command to get the model catalog from the API. We see 20 base models with a flag for fine tuning and a flag for inference. So here I&#x27;m going to use QAN 3.5. Nine billion parameters. Note the column on the right, the opaque ID is what the API wants, not the Hugging Face name.
+
+However, my script will resolve one to the other. The second table is the deployment price list and it&#x27;s per GPU hour. Every flavor has a profile, throughput, balance or responsiveness. Same model, different trade-off and sometimes a different of GPUs. For example, QIN3 8B comes as one GPU tuned for throughput or two GPUs tuned for responsiveness at twice the price.
+
+For my model, it&#x27;s one NVIDIA H100, throughput profile $5.50 an hour. Keep that number in mind for later. Training is priced separately per token. On the Cruzo price list, fine tuning for QIN3 5 9 billion costs 40 cents per million training tokens. The dataset I&#x27;m going to use is called Banking77 from PolyEA.
+
+Real questions people ask their bank, labeled with 77 intents. I&#x27;m keeping 15 of them. For each one, I have 40 examples for training and 6 for validation, all from the training split, and 12 for the test, taken from the official test split. 90 and 180. Of course, the model never sees the test set.
+
+And here&#x27;s the format, one JSON object per line, a messages array with a system prompt, the customer&#x27;s message, and the label as the assistance answer. This is the OpenAI chat format. If your data is ready for OpenAI fine tuning, it&#x27;s ready for this. So now let&#x27;s upload our dataset with the upload command. And this is really using the client&#x27;s dot files dot create API from OpenAI with the purpose fine tune.
+
+Okay, so that&#x27;s really the same goal you would make against OpenAI, two files, training and validation. The upload took about 30 seconds. So before we launch the actual fine tuning job, we can estimate its cost. So I can send the exact same request body I&#x27;m about to use for the job and it tells me what the job will cost before it exists. So let&#x27;s go and try this.
+
+So you can see it tells me it&#x27;s going to cost about 12 cents. 600 messages for three epochs at 40 cents per million tokens. So this is really practical because you can avoid really big mistakes. Here&#x27;s the job itself. The base model, the two files, and the hyperparameters.
+
+So I&#x27;m going to run for three epoch. I&#x27;m going with a rank of 16 and I&#x27;m leaving the batch size and the learning rate on auto, which is always a good thing if you&#x27;re not sure what you&#x27;re doing. So I&#x27;ve covered LoRa a lot in previous videos. In five seconds, what it means is we&#x27;re only going to train a small set of extra weights on top of the frozen base model, which is why this is going to be fast and cheap. We are not fine tuning the full model.
+
+Now we&#x27;re ready to launch our job and that&#x27;s fine tuning dot jobs dot create again straight from the openai SDK. Now I&#x27;m pulling the jobs events, it&#x27;s validating files, queuing them, scheduling them and pretty soon running the training job. Okay. In my test, this takes about two minutes from job submission to a GPU activity training. Okay.
+
+As you can see, I do not have to pick a GPU or reserve one or wait for a cluster. That&#x27;s the beauty of serverless fine-tuning right there. And we can now see the metrics streaming, step count, training loss, validation loss. So let&#x27;s look at that job in the console now. So this is my job, and we can see in real time the training and validation loss, right?
+
+Which step we&#x27;re on, how far along we&#x27;re on. We are, how many tokens we&#x27;ve processed so far. And hopefully those two curves are going down, which is what we want. So let&#x27;s give it a few minutes to complete. So we&#x27;re done.
+
+And only took was about six minutes right after we submitted the job. So we can see the job saved four checkpoints. And we see the last one is the best one. It has the lowest validation loss. So that&#x27;s the one we want to use.
+
+And we see, the same numbers being reported by my script. OK, so now let&#x27;s go and deploy the model. OK, now let&#x27;s take that best checkpoint and deploy it. And the first way we&#x27;re going to deploy it is through the shared serverless pool running on the Cruzo Intelligence Foundry. OK, let&#x27;s just run this.
+
+So all it took is just a few seconds, as we can see, that was super fast. And we could call that endpoint with this URL and this model ID. We&#x27;re not going to do this. Instead, we&#x27;re going to deploy the model in another way. We&#x27;re going to employ it in the dedicated way.
+
+And this is called a self-serve deployment. So with this self-served deployment, we are provisioning a GPU dedicated for us. Use one NVIDIA H100 at $5.50 an hour. Okay. And the clock starts now.
+
+I&#x27;m also deploying the base model. Okay. The untuned model on an identical GPU because I want the before and after models on the same hardware to allow for comparison. If I switch to the Cruiser Intelligence Foundry, UI, I can see those two deployments taking place, the base model and the banking intent one I fine-tuned. Okay, so let&#x27;s give it a few more minutes, and then we&#x27;ll run evaluation on those models.
+
+Okay, we can see in our script that deployment is complete. And if we look at the UI, we see that the two deployments are ready. Okay, to evaluate four models the base model on a self-service deployment the fine tool model on the self-serve deployment the final model on the serverless deployment just to confirm it&#x27;s the same and we&#x27;re going to use uh gemma for 31b as a much bigger model okay so let&#x27;s run this okay this should be fast so first the base model when base 70 percent accuracy. So that&#x27;s the baseline. Next, we&#x27;re going to try Gemma 4 31B, so arguably a larger model.
+
+And yes, indeed, it does better at 77.8. As you can see, it&#x27;s also quite slower because it is a bigger model. Then we see our LoRa fine-tune model giving us 91.8. And finally, we see the self-service deployment at 88.9. There&#x27;s always a bit of variability here.
+
+And funny enough, the LoRa model is actually a little bit more accurate than the self-serve deployment. But this is arguably a small test set, and it&#x27;s not too surprising to see differences like that. The insight here is that with just a few minutes of fine tuning, we jump from 70% to, let&#x27;s say, about 90%. That&#x27;s a huge, huge improvement. 20% is a world of difference.
+
+And also, we still get way better performance than the baseline performance of Gemma 431B. That goes to show if you want to increase the quality of and the performance of your AI application, it&#x27;s very often a better idea to go and fine tune a small model on good data than just try to reach for larger, slower, and probably more expensive models. We also see some examples where the Bayes model was wrong and the fine tune was right. So in a real-world application, of course, we would look at those very carefully. And of course, you would also look at the mistakes that the fine-tube model has made.
+
+For example, we see the 91.1% model has still made 16 errors. So we would look to those 16 errors and try to understand how to fix them. Do we need more examples for specific intents? Incorrect intents evenly distributed or is it just one or two intents that are mispredicted, et cetera, et cetera. But okay, I guess that&#x27;s the topic of another video.
+
+Here we can see five or six minutes of fine tuning. We go from 70 to 90 plus, which is a really, really strong performance. And of course, don&#x27;t forget to clean up, right? Because we have those deployments running. Charging.
+
+So let&#x27;s make sure you clean up everything and don&#x27;t leave any unnecessary charges behind. Okay. So there you go. The total cost of this demo was 12 cents for model fine tuning, which is really crazy when you think about it. Just a few dollars of GPU time for the self-serve deployments.
+
+And I guess just a few pennies for serverless tokens. And that&#x27;s really the point. You can see in real time with just a simple Python script how we can go from pretty average performance to really strong performance for very, very little spend. And again, just a few minutes of work. So that&#x27;s really what I wanted to show you today.
+
+So please go and visit the Cruzo Intelligence Foundry page. Sign up, give it a shot, and build strong models. And when you&#x27;re done, of course, don&#x27;t forget to share them on Hugging Face. That&#x27;s it for today, my friends. I hope you enjoyed the video.
+
+I sure did. And until next time, keep rocking.</div>
+<div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            <a href="index.html">&larr; Back to 2026 Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
+        </div>
+    </div>
+
+
+</body></html>

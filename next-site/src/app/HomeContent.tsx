@@ -17,6 +17,26 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Skill Issue',
+    href: '/blog/industry-perspectives/2026-10-09_skill-issue/',
+    date: 'October 9, 2026',
+    summary: 'Mistral can build the model. Does it know how to launch one?',
+    icon: 'article',
+  },
+  {
+    title: 'Fine-Tuning Qwen3.5-9B on Crusoe Intelligence Foundry: from 70% to 91% for $0.12',
+    href: '/youtube/2026/20261007_Fine-Tuning_Qwen35-9B_on_Crusoe_Intelligence_Foundry_from_70_to_91_for_012.html',
+    date: 'October 7, 2026',
+    icon: 'video',
+  },
+  {
+    title: 'Kolibri Is Large Enough',
+    href: '/blog/industry-perspectives/2026-10-06_kolibri-is-large-enough/',
+    date: 'October 6, 2026',
+    summary: 'American chips, Chinese teachers, about $3 million for the training run. What Germany\'s new open model adds is eligibility.',
+    icon: 'article',
+  },
+  {
     title: 'Eight Changes to Transformer Attention, and What Each Costs',
     href: '/blog/industry-perspectives/2026-10-04_eight-changes-to-transformer-attention-and-what-each-costs/',
     date: 'October 4, 2026',
@@ -28,27 +48,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     href: '/blog/industry-perspectives/2026-09-28_an-act-of-god-with-letterhead/',
     date: 'September 28, 2026',
     summary: 'Oracle reportedly called its power problem an act of God. Its annual report had already listed it.',
-    icon: 'article',
-  },
-  {
-    title: 'Vent Mauvais',
-    href: '/blog/industry-perspectives/2026-09-24_vent-mauvais/',
-    date: 'September 24, 2026',
-    summary: 'Verlaine’s ill wind carries the leaf where it will. States bought Mistral without a tender; where free choice can be measured, it goes elsewhere.',
-    icon: 'article',
-  },
-  {
-    title: 'At Least 45 Days',
-    href: '/blog/industry-perspectives/2026-09-20_at-least-45-days/',
-    date: 'September 20, 2026',
-    summary: 'Almost every model on Bedrock gets six months\' notice before it can be pulled. The one Washington just accused gets 45 days, and no stated reason.',
-    icon: 'article',
-  },
-  {
-    title: 'Selective Availability',
-    href: '/blog/industry-perspectives/2026-09-11_selective-availability/',
-    date: 'September 11, 2026',
-    summary: 'Three agencies advised American AI providers to degrade answers for accounts they suspect of malicious distillation, subtly enough to “avoid triggering obvious alerts”.',
     icon: 'article',
   },
 ];
