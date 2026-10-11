@@ -51,22 +51,6 @@ export default function SpeakingContent() {
           </p>
         </ScrollReveal>
 
-        {/* Book Julien CTA */}
-        <ScrollReveal direction="up" className="mb-12">
-          <div className="glass-card rounded-2xl p-8 text-center">
-            <h2 className="text-2xl font-heading font-bold text-text mb-3">Book Julien to Speak</h2>
-            <p className="text-text-muted mb-6 max-w-2xl mx-auto">
-              Available for keynotes, panels, and workshops on AI strategy, small language models, and enterprise AI adoption.
-            </p>
-            <a
-              href="mailto:julien@julien.org?subject=Speaking%20Inquiry"
-              className="inline-flex items-center px-6 py-3 text-sm font-medium text-white rounded-lg gradient-brand hover:opacity-90 transition-opacity"
-            >
-              Get in Touch
-            </a>
-          </div>
-        </ScrollReveal>
-
         {/* Year grid */}
         <h2 className="text-2xl font-bold font-heading gradient-brand-text mb-6 text-center">
           Browse by Year

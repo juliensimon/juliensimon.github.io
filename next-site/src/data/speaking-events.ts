@@ -55,14 +55,6 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
       tags: ["Conference","CRM","Portfolio Company","Enterprise AI","Paris"],
     },
     {
-      title: "Keynote: How Transformers Reinvent Machine Learning – for Both Generative AI and Predictive AI",
-      venue: "Machine Learning Week USA 2026",
-      date: "June 4–7, 2026",
-      location: "Phoenix, USA",
-      description: "Keynote on how the transformer architecture reshapes both generative and predictive machine learning.",
-      tags: ["Conference","Keynote","Transformers","Generative AI","Predictive AI","Phoenix"],
-    },
-    {
       title: "AI-powered engineering: the new way of building software",
       venue: "We Love SaaS AI Leadership Day 2026",
       date: "March 18, 2026",
@@ -237,6 +229,15 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
     },
   ],
   '2024': [
+    {
+      title: "Keynote: How Transformers Reinvent Machine Learning – for Both Generative AI and Predictive AI",
+      venue: "Machine Learning Week USA 2024",
+      date: "June 6, 2024",
+      location: "Phoenix, USA",
+      description: "Keynote on how the transformer architecture reshapes both generative and predictive machine learning.",
+      tags: ["Conference","Keynote","Transformers","Generative AI","Predictive AI","Phoenix"],
+      links: [{"url":"https://machinelearningweek.com/session/keynote-how-transformers-reinvent-machine-learning-for-both-generative-ai-and-predictive-ai/","label":"Session Details"}],
+    },
     {
       title: "AI Dev TLV",
       venue: "Tel Aviv, Israel",

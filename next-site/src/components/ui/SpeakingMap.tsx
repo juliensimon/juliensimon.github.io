@@ -142,11 +142,11 @@ export default function SpeakingMap() {
         attributionControl: true,
       });
 
-      // CartoDB dark_all tile layer - free, no API key, dark aesthetic
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 19,
+      // Esri World Dark Gray Base: dark aesthetic, no API key. CARTO dark_all began
+      // returning an "API KEY REQUIRED" placeholder tile for every request (checked 2026-10-11).
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+        maxZoom: 16,
       }).addTo(map);
 
       // Add circle markers for each city
