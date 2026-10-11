@@ -17,6 +17,12 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Your LLM No Longer Reads Every Token: 8 Attention Designs Explained',
+    href: '/youtube/2026/20261011_Your_LLM_No_Longer_Reads_Every_Token_8_Attention_Designs_Explained.html',
+    date: 'October 11, 2026',
+    icon: 'video',
+  },
+  {
     title: 'Skill Issue',
     href: '/blog/industry-perspectives/2026-10-09_skill-issue/',
     date: 'October 9, 2026',
@@ -41,13 +47,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     href: '/blog/industry-perspectives/2026-10-04_eight-changes-to-transformer-attention-and-what-each-costs/',
     date: 'October 4, 2026',
     summary: 'The newest open models from Alibaba, Moonshot, DeepSeek and Z.AI no longer read every earlier token. Eight designs, what each costs, and what to test.',
-    icon: 'article',
-  },
-  {
-    title: 'An Act of God, With Letterhead',
-    href: '/blog/industry-perspectives/2026-09-28_an-act-of-god-with-letterhead/',
-    date: 'September 28, 2026',
-    summary: 'Oracle reportedly called its power problem an act of God. Its annual report had already listed it.',
     icon: 'article',
   },
 ];

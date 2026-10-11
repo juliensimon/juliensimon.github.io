@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your LLM No Longer Reads Every Token: 8 Attention Designs Explained</title>
+    <meta name="description" content="Your LLM no longer reads every token. The newest open models from Alibaba, Moonshot, DeepSeek, and Z.AI have replaced full attention in most or all of…">
+    <meta property="og:title" content="Your LLM No Longer Reads Every Token: 8 Attention Designs Explained">
+    <meta property="og:description" content="Your LLM no longer reads every token. The newest open models from Alibaba, Moonshot, DeepSeek, and Z.AI have replaced full attention in most or all of…">
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://www.julien.org/youtube/2026/20261011_Your_LLM_No_Longer_Reads_Every_Token_8_Attention_Designs_Explained.html">
+    <link rel="canonical" href="https://www.julien.org/youtube/2026/20261011_Your_LLM_No_Longer_Reads_Every_Token_8_Attention_Designs_Explained.html">
+    <meta property="og:image" content="https://img.youtube.com/vi/IbBecjA93ks/maxresdefault.jpg">
+    <meta name="twitter:image" content="https://img.youtube.com/vi/IbBecjA93ks/maxresdefault.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Your LLM No Longer Reads Every Token: 8 Attention Designs Explained">
+    <meta name="twitter:description" content="Your LLM no longer reads every token. The newest open models from Alibaba, Moonshot, DeepSeek, and Z.AI have replaced full attention in most or all of…">
+    <meta name="twitter:creator" content="@julsimon">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "Your LLM No Longer Reads Every Token: 8 Attention Designs Explained",
+        "description": "Your LLM no longer reads every token. The newest open models from Alibaba, Moonshot, DeepSeek, and Z.AI have replaced full attention in most or all of\u2026",
+        "uploadDate": "2026-10-11T13:12:57+00:00",
+        "embedUrl": "https://www.youtube.com/embed/IbBecjA93ks",
+        "thumbnailUrl": "https://img.youtube.com/vi/IbBecjA93ks/maxresdefault.jpg",
+        "author": { "@id": "https://www.julien.org/#person" }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Your LLM No Longer Reads Every Token: 8 Attention Designs Explained</h1>
+        <div class="date">October 11, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/IbBecjA93ks" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">Your LLM no longer reads every token. The newest open models from Alibaba, Moonshot, DeepSeek, and Z.AI have replaced full attention in most or all of their layers. In this video, I open their config files, walk through the eight attention designs that got us here, look at who actually tested them against full attention, and measure three of them on my Mac.
+
+📝 The full piece, with every source: &quot;Eight Changes to Transformer Attention, and What Each Costs&quot; on The AI Realist: https://www.airealist.ai/p/eight-changes-to-transformer-attention
+
+🎞️ Slides and animations (CC BY 4.0): https://github.com/juliensimon/attention-eight-changes
+
+⏱️ Chapters
+00:00 Intro
+00:46 Zero layers out of 48
+01:43 Why: the KV cache and two bills
+02:45 How to read the diagrams
+03:28 Grouped-query and latent attention
+04:31 Sliding windows
+05:10 Mamba-2 and linear attention
+06:54 Sparse attention with an indexer
+07:42 Pooled cache: DeepSeek V4
+08:43 Linear plus sparse: Qwen3.8-Flash-Next, GLM-5.3-Flash
+09:42 Who tested it against full attention?
+10:52 What is missing: size, task, depth
+11:49 Demo: three ~30B models, cache and speed
+15:54 Where the cost reaches you
+16:42 Six checks before you build on one
+
+🎥 My earlier videos
+- Decoder-only inference, step by step (KV cache): https://www.youtube.com/watch?v=cl3MAhAr9-M
+- Better attention layers for Transformer models (MQA, GQA, sliding windows): https://www.youtube.com/watch?v=2TT384U4vQg
+
+🔧 Config files shown
+- Qwen3.8-Flash-Next: https://huggingface.co/Qwen/Qwen3.8-Flash-Next/blob/main/config.json
+- Kimi K3: https://huggingface.co/moonshotai/Kimi-K3/blob/main/config.json
+- DeepSeek V4-Flash: https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash/blob/main/config.json
+- GLM-5.3-Flash: https://huggingface.co/zai-org/GLM-5.3-Flash/blob/main/config.json
+
+🤗 Models mentioned
+- Qwen3.8-2.4T-A95B: https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B
+- Nemotron 3 Ultra: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16
+- gpt-oss-120b: https:...</div>
+
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi everyone, Julien here. Attention is the mechanism at the heart of every large language model. In the original transformer in 2017, it worked in a simple way. To write the next token, every layer reads every token that came before. That&#x27;s still the picture most of us have in mind, but it&#x27;s no longer what the newest open models do.
+
+Alibaba, Moonshot, DeepSeek, and ZAI have replaced full attention in most of their layers. Or in all of them, to save memory and compute on long contexts. If you build on these models, that changes what they can find in a long prompt and what they cost to run. But don&#x27;t take my word for it. Let&#x27;s get started and open the config files.
+
+Here&#x27;s the config file for QN38 Flash Next, a model released by Alibaba in August. This file is what the inference engine actually loads, so it&#x27;s not marketing. Let&#x27;s count the layers. There are 48 and 36 are labeled linear attention. The other 12 are labeled full attention.
+
+But if you look a few lines up, you will see an indexer with a budget of 2k tokens. So those 12 layers don&#x27;t read everything either. They only read 2k tokens that a small network is picked by them. Zero layers out of 48 read every earlier token in full. In this video, we&#x27;re going to look at the eight designs that got us here.
+
+What each one saves, what it gives up, who ships it, and what you should test before you build on it. And I&#x27;ll measure three of them on my Mac. Why bother? Because a full attention layer keeps a key and a value for every token it has seen. That&#x27;s the KVCache.
+
+If you want the details, I&#x27;ve covered it step by step in the decoder-only inference video. Is in the description and two bills grow with that cache memory because the cache grows with every token for every user at once and compute the work for each new token grows with the lengths of the context and the work to read a whole prompt grows with its square and then the agents came along an agent resends its whole history at every step tool output files earlier turns so both bills became urgent DeepSeq estimates that its V4 Pro model needs a tenth of the cash of its previous model at a million tokens and 27% of the compute per token. That&#x27;s the lab&#x27;s case, reducing cost. There&#x27;s going to be one picture for everything. The squares are the earlier tokens, oldest on the left.
+
+The black square on the right is the token the model is writing right now. Every blue line is an earlier token. It reads directly. A black box is a fixed size state, the same size whatever the length. And the gray cells under the tokens are the cache it keeps for each one.
+
+On the right, a little chart, the cache this design holds as tokens arrive, in blue, against full attention in gray. And here&#x27;s 2017 attention, a line to every token in every layer, and a cache entry for every token. Designs. Step one, grouped query attention. The heads in a layer share keys and values in groups instead of keeping their own.
+
+Every token is still red and it saves memory and costs a little accuracy. In DeepSeq&#x27;s 7 billion parameter tests, 41.2 with eight groups against 45.2 without. I covered this one in 2024. Link in the video description. Step 2.
+
+Latent attention or MLA. The key and value for each token are compressed into one vector of 576 numbers per layer. Still read every token. When DeepSeq ran the same model both ways in May 2024, the compressed version won 7 comparisons out of 8, with a cache between 4 and 14% of the original. Step 3, sliding windows.
+
+Some layers keep only the most recent tokens, say 128 to 2k depending on the model. The other layers keep everything. GPT-OSS alternates one and one. Gemma 4 runs five window layers for each full one. Minimax tested this on its M2 model, on a task that asks which words come up most often, no difference at 30k tokens, and a fall from 90 to 72 at 128k tokens.
+
+Step 4. State space layers, Mamba 2. We don&#x27;t have any per token cache at all. Each layer keeps a fixed size state, a running summary, and rewrites it for every token. So nothing grows.
+
+But there&#x27;s nothing to go back to either. The more the state has absorbed, the less of it comes back exactly. NVIDIA&#x27;s NemoTron 3 Ultra ships 48 of these layers for 12 attention layers. Step 5, linear attention, gated delta net and moonshot&#x27;s version called KDA. The state is still fixed in size, but each new token can weaken what was stored under a similar key.
+
+So the layer can revise a fact. Of blurring it. On its own, it struggles. In the paper that introduced it, it averaged 30.6 against 37 for full attention across six retrieval tasks on only 2K tokens. So none of these models ship it alone.
+
+They ship a hybrid, about three linear layers for each full attention layer. Kimi K3 has 69 linear layers to 24 full attention layers. And Alibaba Largest QAN 3.8 has 69 to 23. Here&#x27;s the config for Kimi K3. We can see we have one full attention layer or every three linear layer.
+
+And Moonshots own up to six times faster decoding. In their own words, it&#x27;s theoretical. Measured one request at a time, it&#x27;s 2.3 times faster. Step six, sparse attention with an indexer. Keep every key value, but put a small indexer in front of the layer.
+
+It scores every token cheaply and hands over the best 2K tokens. That saves compute, but less than it sounds, because the indexer still scores every token for every new one, so its work still grows with the square of the context. And it keeps keys on its own on top of the cache. ZAI calls it lossless by construction. GLM407 flash came out 0.35 point behind at 108k tokens and 172 point ahead at 64k tokens.
+
+Let&#x27;s keep going. Step seven, pooled cash, DeepSync v4. All tokens get pooled into summaries. About half the layers pool overlapping groups of tokens and let an indexer pick among them. The other half pool every 128 tokens Here&#x27;s the v4 flash config with its compression ratios per layer.
+
+DeepSeq prints an honest curve. 0.92 at 128k tokens on an 8 needle test. 0.59 at a million. And the word ablation doesn&#x27;t appear in their 58 page report. Step 8, linear plus sparse.
+
+Take the hybrid of step 5 and replace its full attention layer with a sparse one. That&#x27;s QN38 Flash Next, the model we opened at the start. GLM 5.3 flash released the same day. Here&#x27;s the config file for GLM 5 3 flash and it has a little trap. It lists the 11 sparse layers under a key called full attention layers.
+
+But the giveaway is layer taps a few line down where we read DeepSeek sparse attention. So make sure to take a look at the full file. For reference, here are the eight designs on a single slide. And here&#x27;s who ships what. From the config files.
+
+Not everyone moved. Mistral Medium 3.5, IBM&#x27;s Granite 4.2, and K2 Horizon still use full attention in every layer. Now the important question. Did anyone compare these designs with full attention? Yes, more than I expected.
+
+I counted 10 published comparisons from six labs, and I judged all 10 with one rule on every result each paper reports. Than a point ahead somewhere and never more than a point behind. Mixed means more than a part in both directions. The result? One win, seven mixed, two losses.
+
+The one win is ZAI&#x27;s sparse conversion of GLM47 flash. The two losses are both conversions of an existing model to linear or sliding window layers. Here&#x27;s the best control test from Moonshot. Three 48 billion parameter models, same data, same recipe. And the KDA hybrid beat full attention on RULER at 128k tokens.
+
+84.3 to 81.3. But full attention stays ahead by more than a point on three other benchmarks in the same paper. So mixed. So what&#x27;s missing? Three things.
+
+Science. None of the four flagships has been compared to full attention potential model of its own size. Task, needle tests are where sparse attention does very well. And agent work looks more like re-ranking and tracking. And depth, here&#x27;s Alibaba own table as a chart.
+
+On ruler, it holds near a million tokens, but on the eight needle test, telling eight similar things apart, 96 at 128K, 93 256k and then 41k at 512k. And with full attention put back in place on the sparse layers, it&#x27;s no better. The window is real as capacity. Telling similar things apart breaks between 256k and 512k tokens. Let&#x27;s measure this.
+
+Three models from August 2026, all around 30 billion parameters, one per design family. Granite For QN, I used the dynamic quant by Unsloth because QN published no official GGUF file. Llama CPP tells us exactly how much memory it allocates for the cache and for the state when it starts at a given context length. Two lines, the KV cache, 2048 megabytes, and look at the layer count, 16 layers, not 64. Only the full attention layers keep a cache.
+
+The other 48 share the second line, the recurrent state. 649.62 MB. Ignore the 64 on that line. Llama CPP counts every layer there, but only the 48 linear ones hold state. That number, 149.62MB, is the same at 8K tokens and at 128K.
+
+It does not grow with the context. Now all three. At 8K tokens, Granite allocates 2GB of cash. When? About 660.
+
+Max and Muse Glimmer about 200 max at 32k granite 8 gigs quen 2.1 gigs Muse Glimmmer about 500 max at 128k granite 32 gigs quen 8.1 gigs muse 1.7 gig here are the three side by side granite is a straight line 60 times the text, 16 times the cache. Qued&#x27;s KV cache is a quarter of granite at every length, because 16 layers out of 64 keep one. On top of that comes its fixed 150 MB of state. Muse Glimmer is the flattest. Its 39 window layers hold 97.5 MB at any context length, and only its 13 full layers grow.
+
+At 128k tokens, Granite&#x27;s cache is 4x Quenze and almost 19x Muse Glimmers. One detail on the window. The config says 2k tokens. Llama CPP allocates 2,560 cells for it. The window plus room for the batch it is processing.
+
+The engine&#x27;s number is the one you pay for. Memory is one bill. Speed is the other. Three models generating with nothing in the context, then with 32k tokens already in it. Granite goes from 19 or 20 tokens per second down to 13.
+
+Quan goes from 18 to 1415. And Muse Glimmer goes from 21 to 18. Processing new prompt tokens slows down the same way. At 32k tokens deep, Granite processes them at just over half the empty context feed with about 100 tokens per second against 190. Quen loses 32%, Muse Glimmer about 20%.
+
+On an empty context, the three generate within a few tokens per second of each other, but the gap opens as the context fills because the full attention model reads all of it at every layer. So where does the cost hit you? Well, the cash you pay for, cache prefix needs a safe state and the kv cache lined up at the same position and the state is big about 49 megabytes on a 4 billion parameter quen determinism on vlm today a cache answer from a gated delta net model isn&#x27;t guaranteed to match a fresh one bit for bit so you should compare scores not outputs and hardware here&#x27;s DeepSeek&#x27;s flash mla readme we removed support for the Hopper architecture. That&#x27;s the H100, the H200, and the H20. So if you hone that, the current release isn&#x27;t written for you.
+
+So before you build on one of these models, open the config file, count the layer types, run the same retrieval test at 32K tokens, and at the real length your application is going to use. Cash hit rate on your engine, size concurrency against state memory, not just cash, and check which GPU generation has the fastest path for the model you&#x27;re using, and price the workload in all those scenarios. Here&#x27;s my conclusion. These models are offered at a million tokens, but they&#x27;ve been compared with a full attention model at 128k tokens at most. So the stretch in between is yours to measure.
+
+The full block piece with every source and every number is on my sub stack, the AI Realist. The link is in the video description. Thank you for watching. I hope this was informative. Until next time, keep rocking.</div>
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            <a href="index.html">&larr; Back to 2026 Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
+        </div>
+    </div>
+
+
+</body></html>
