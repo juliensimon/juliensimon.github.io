@@ -17,6 +17,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Ticking Boxes, Shipping Models',
+    href: '/blog/industry-perspectives/2026-10-15_ticking-boxes-shipping-models/',
+    date: 'October 15, 2026',
+    summary: 'Doctolib ticks the health-data compliance boxes with US clouds and models. For now, its public promises say more than its documents show.',
+    icon: 'article',
+  },
+  {
     title: 'Your LLM No Longer Reads Every Token: 8 Attention Designs Explained',
     href: '/youtube/2026/20261011_Your_LLM_No_Longer_Reads_Every_Token_8_Attention_Designs_Explained.html',
     date: 'October 11, 2026',
@@ -40,13 +47,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     href: '/blog/industry-perspectives/2026-10-06_kolibri-is-large-enough/',
     date: 'October 6, 2026',
     summary: 'American chips, Chinese teachers, about $3 million for the training run. What Germany\'s new open model adds is eligibility.',
-    icon: 'article',
-  },
-  {
-    title: 'Eight Changes to Transformer Attention, and What Each Costs',
-    href: '/blog/industry-perspectives/2026-10-04_eight-changes-to-transformer-attention-and-what-each-costs/',
-    date: 'October 4, 2026',
-    summary: 'The newest open models from Alibaba, Moonshot, DeepSeek and Z.AI no longer read every earlier token. Eight designs, what each costs, and what to test.',
     icon: 'article',
   },
 ];

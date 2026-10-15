@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Ticking Boxes, Shipping Models',
+    slug: '2026-10-15_ticking-boxes-shipping-models',
+    date: '2026-10-15',
+    description: 'Doctolib ticks the health-data compliance boxes with US clouds and models. For now, its public promises say more than its documents show.',
+    originalUrl: 'https://www.airealist.ai/p/ticking-boxes-shipping-models',
+  },
+  {
     title: 'Skill Issue',
     slug: '2026-10-09_skill-issue',
     date: '2026-10-09',
