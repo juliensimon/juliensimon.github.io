@@ -5,6 +5,7 @@ import ScrollReveal from '@/components/ui/ScrollReveal';
 import SocialButton from '@/components/ui/SocialButton';
 import TypingEffect from '@/components/ui/TypingEffect';
 import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
+import { SPEAKING_STATS } from '@/data/speaking';
 
 type LatestUpdate = {
   title: string;
@@ -76,7 +77,7 @@ const EXPERTISE_CARDS = [
   {
     title: 'Global Thought Leadership',
     description:
-      '685+ speaking engagements worldwide, including major industry events, Fortune 500 companies, and institutions like UNESCO, World Bank, New York Federal Reserve, and sovereign funds.',
+      `${SPEAKING_STATS.totalEvents}+ speaking engagements worldwide, including major industry events, Fortune 500 companies, and institutions like UNESCO, World Bank, New York Federal Reserve, and sovereign funds.`,
     link: '/speaking',
     linkText: 'View Speaking History',
   },

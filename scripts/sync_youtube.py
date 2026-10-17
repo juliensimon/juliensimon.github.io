@@ -26,6 +26,7 @@ import json
 import requests
 import xml.etree.ElementTree as ET
 
+from meta_description import cut_description
 from refresh_llms_txt import refresh_llms_files
 
 # YouTube channel
@@ -103,15 +104,7 @@ def build_meta_description(
     if len(text) >= META_DESC_MIN:
         if len(text) <= META_DESC_MAX:
             return text
-        # Truncate at the last sentence/word boundary before the limit.
-        cut = text[: META_DESC_MAX - 1]
-        boundary = max(cut.rfind('. '), cut.rfind('! '), cut.rfind('? '))
-        if boundary >= META_DESC_MIN:
-            return cut[: boundary + 1]
-        space = cut.rfind(' ')
-        if space >= META_DESC_MIN:
-            return cut[:space].rstrip(' ,;:-') + '…'
-        return cut.rstrip() + '…'
+        return cut_description(text, META_DESC_MAX, META_DESC_MIN)
 
     # Fallback: synthesize from the title so each page still has a distinct,
     # non-trivial description.

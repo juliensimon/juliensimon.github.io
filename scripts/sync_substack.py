@@ -26,6 +26,7 @@ import requests
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
 
+from meta_description import cut_description
 from refresh_llms_txt import refresh_llms_files
 from substack_html_cleaner import SubstackHTMLCleaner, ensure_image_alt
 from substack_image_handler import process_images_for_post, update_html_image_refs
@@ -63,14 +64,7 @@ def _truncate_at_word(text: str, limit: int) -> str:
     """Truncate `text` to `limit` chars at a sentence or word boundary."""
     if len(text) <= limit:
         return text
-    cut = text[: limit - 1]
-    boundary = max(cut.rfind('. '), cut.rfind('! '), cut.rfind('? '))
-    if boundary >= EXCERPT_MIN:
-        return cut[: boundary + 1].rstrip()
-    space = cut.rfind(' ')
-    if space >= EXCERPT_MIN:
-        return cut[:space].rstrip(' ,;:-') + '…'
-    return cut.rstrip() + '…'
+    return cut_description(text, limit, EXCERPT_MIN)
 
 
 def _build_excerpt(subtitle: str, soup) -> str:

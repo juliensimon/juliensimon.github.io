@@ -4,6 +4,7 @@ import GradientHero from '@/components/ui/GradientHero';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import RelatedContent from '@/components/ui/RelatedContent';
 import { BOOKS } from '@/data/books';
+import { SPEAKING_STATS } from '@/data/speaking';
 
 export default function BooksContent() {
   return (
@@ -68,7 +69,7 @@ export default function BooksContent() {
 
       <RelatedContent items={[
         { href: '/experience', title: 'Experience', subtitle: '30+ years of technology leadership' },
-        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: '685+ engagements' },
+        { href: '/speaking', title: 'Speaking', subtitle: 'Conferences, workshops, and keynotes', metric: `${SPEAKING_STATS.totalEvents}+ engagements` },
         { href: '/code', title: 'Code', subtitle: 'Open-source projects and demos' },
       ]} />
     </>
