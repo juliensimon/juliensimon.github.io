@@ -16,6 +16,8 @@ export interface PodcastEpisode {
 
 export const PODCAST = {
   name: 'The AI Realist',
+  fullTitle: 'The AI Realist: AI Economics, Chips and Regulation',   // the title in the feed, which Apple and Spotify search
+  topics: ['AI economics', 'GPU and cloud costs', 'AI inference costs', 'open-weight models', 'AI chips and export controls', 'AI regulation', 'EU AI Act', '10-K filings', 'business models of the AI labs'],
   tagline: 'AI without the hype: what it costs, who profits, and what the filings say.',
   description:
     'The audio edition of The AI Realist, Julien Simon\'s newsletter on the AI industry. Each episode is one written piece, narrated by an AI voice: GPU and cloud economics, inference costs, open-weight models, chips and export rules, AI regulation, and the business models of the AI labs.',

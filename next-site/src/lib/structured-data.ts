@@ -410,16 +410,19 @@ export function podcastSeriesSchema() {
     '@type': 'PodcastSeries',
     '@id': `${SITE.url}/podcast/#series`,
     name: PODCAST.name,
+    alternateName: PODCAST.fullTitle,
     description: PODCAST.description,
     url: `${SITE.url}/podcast`,
     webFeed: PODCAST.feed,
+    keywords: PODCAST.topics.join(', '),
+    about: PODCAST.topics.map((name) => ({ '@type': 'Thing', name })),
     image: PODCAST.coverFull,
     inLanguage: 'en',
     author: { '@id': `${SITE.url}/#person` },
     publisher: { '@id': `${SITE.url}/#person` },
     isBasedOn: { '@id': 'https://www.airealist.ai/#newsletter' },
     sameAs: [PODCAST.apple, PODCAST.spotify],
-    genre: ['Technology', 'Business'],
+    genre: ['Technology', 'News', 'Business'],
   };
 }
 

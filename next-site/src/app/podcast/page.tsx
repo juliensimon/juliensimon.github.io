@@ -7,11 +7,11 @@ import { PODCAST_EPISODES } from '@/data/podcast';
 import PodcastContent from './PodcastContent';
 
 export const metadata = buildMetadata({
-  title: 'The AI Realist Podcast: AI Without the Hype',
+  title: 'The AI Realist Podcast: AI Economics, Chips and Regulation',
   description:
     'The AI Realist podcast by Julien Simon: each piece of the newsletter on the AI industry, narrated. GPU and cloud economics, inference costs, open models, chips, regulation. On Apple Podcasts and Spotify.',
   path: '/podcast',
-  keywords: ['AI podcast', 'The AI Realist', 'AI industry analysis', 'AI economics', 'open-weight models'],
+  keywords: ['AI podcast', 'The AI Realist', 'AI industry analysis', 'AI economics', 'open-weight models', 'AI chips', 'AI regulation', '10-K filings'],
 });
 
 export default function PodcastPage() {
