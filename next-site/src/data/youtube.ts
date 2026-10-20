@@ -13,8 +13,8 @@ export interface LatestVideo {
 }
 
 export const YOUTUBE_STATS = {
-  totalVideos: 460,
-  subscriberCount: 566, // numeric value in thousands for MetricCard
+  totalVideos: 461,
+  subscriberCount: 573, // numeric value in thousands for MetricCard
   channelUrl: 'https://youtube.com/@juliensimonfr',
   yearsOfContent: 15,
 } as const;
@@ -22,13 +22,13 @@ export const YOUTUBE_STATS = {
 export const POPULAR_VIDEO_IDS = ['Zdu5UyA46io', '_hNRG3E4Ny4', 'cf8z3Q8PFQQ', 'hMs8VNRy5Ys'];
 
 export const LATEST_VIDEOS: LatestVideo[] = [
+  { id: 'Hd3ZreKZefE', title: 'Reviewing AI-Written Code with CodeRabbit', date: 'October 19, 2026' },
   { id: 'IbBecjA93ks', title: 'Your LLM No Longer Reads Every Token: 8 Attention Designs Explained', date: 'October 11, 2026' },
   { id: '9d2xYP1WlRo', title: 'Fine-Tuning Qwen3.5-9B on Crusoe Intelligence Foundry: from 70% to 91% for $0.12', date: 'October 7, 2026' },
-  { id: 'Dzkl6mAYP8s', title: 'Let an AI Agent Loose on Postgres, Safely: Claude Code + Ghost', date: 'August 21, 2026', summary: 'Giving Claude Code its own Postgres: forking a 400,000-row Hacker News database with Ghost so an agent can experiment and throw the copies away.' },
 ];
 
 export const VIDEO_YEARS: VideoYear[] = [
-  { year: 2026, count: 21, href: '/youtube/2026/' },
+  { year: 2026, count: 22, href: '/youtube/2026/' },
   { year: 2025, count: 41, href: '/youtube/2025/' },
   { year: 2024, count: 54, href: '/youtube/2024/' },
   { year: 2023, count: 27, href: '/youtube/2023/' },

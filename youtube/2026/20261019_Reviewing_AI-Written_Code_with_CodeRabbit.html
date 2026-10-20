@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviewing AI-Written Code with CodeRabbit - Julien Simon</title>
+    <meta name="description" content="Sponsored by CodeRabbit. I asked a coding agent for one feature in my local RAG chatbot: per-user document collections.">
+    <meta property="og:title" content="Reviewing AI-Written Code with CodeRabbit">
+    <meta property="og:description" content="Sponsored by CodeRabbit. I asked a coding agent for one feature in my local RAG chatbot: per-user document collections.">
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://www.julien.org/youtube/2026/20261019_Reviewing_AI-Written_Code_with_CodeRabbit.html">
+    <link rel="canonical" href="https://www.julien.org/youtube/2026/20261019_Reviewing_AI-Written_Code_with_CodeRabbit.html">
+    <meta property="og:image" content="https://img.youtube.com/vi/Hd3ZreKZefE/maxresdefault.jpg">
+    <meta name="twitter:image" content="https://img.youtube.com/vi/Hd3ZreKZefE/maxresdefault.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Reviewing AI-Written Code with CodeRabbit">
+    <meta name="twitter:description" content="Sponsored by CodeRabbit. I asked a coding agent for one feature in my local RAG chatbot: per-user document collections.">
+    <meta name="twitter:creator" content="@julsimon">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "Reviewing AI-Written Code with CodeRabbit",
+        "description": "Sponsored by CodeRabbit. I asked a coding agent for one feature in my local RAG chatbot: per-user document collections.",
+        "uploadDate": "2026-10-19T15:19:29+00:00",
+        "embedUrl": "https://www.youtube.com/embed/Hd3ZreKZefE",
+        "thumbnailUrl": "https://img.youtube.com/vi/Hd3ZreKZefE/maxresdefault.jpg",
+        "author": { "@id": "https://www.julien.org/#person" }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Reviewing AI-Written Code with CodeRabbit</h1>
+        <div class="date">October 19, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/Hd3ZreKZefE" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">Sponsored by CodeRabbit. Start a free 14-day trial - no credit card, 2-click setup: https://coderabbit.link/julien-simon-001
+
+
+#sponsored
+
+I asked a coding agent for one feature in my local RAG chatbot: per-user document collections. When I recorded this, the pull request had 998 added lines across 24 files, and I am still on the hook for what ships. This video shows what happens next: reviewing AI-generated code I didn&#x27;t write with @CodeRabbitAI.
+
+What you&#x27;ll see:
+- The review CodeRabbit posted on the pull request, and the one finding I would have missed on a skim
+- Change Stack turning a flat, alphabetical diff into layers in dependency order
+- The agent fixing CodeRabbit&#x27;s comments, and CodeRabbit checking the fix
+- CodeRabbit Triage ranking my open pull requests, and where I disagree with it
+- CodeRabbit Security (open beta): the security review on the pull request, and an AI Deep Scan that traced a prompt-injection risk from a PDF to my React code
+- Three things I&#x27;d tell a colleague before they start
+
+Everything is public, so you can read it yourself:
+- The pull request, with CodeRabbit&#x27;s full review: https://github.com/juliensimon/local-rag-chatbot/pull/2
+- The exact prompts I gave the agent: https://github.com/juliensimon/local-rag-chatbot/tree/feature/per-user-collections/docs/coderabbit-demo
+- The repository: https://github.com/juliensimon/local-rag-chatbot
+
+I measured every number in this video in my own repository against the live product on 2026-09-30 and 2026-10-18.
+
+Chapters:
+0:00 The code I didn&#x27;t write
+0:43 The four jobs, and two-click setup
+2:10 The agent builds
+3:29 The review
+6:29 Change Stack
+8:30 The loop
+9:51 Triage
+10:56 Security
+12:22 What I&#x27;d tell a colleague
+13:33 Wrap
+
+Links:
+- Try CodeRabbit: https://coderabbit.link/julien-simon-001
+- CodeRabbit channel: https://www.youtube.com/@CodeRabbitAI/video
+- Change Stack docs: https://docs.coderabbit.ai/change-stack
+
+#CodeReview #AICoding #ClaudeCode #DevTools</div>
+
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, Julien here. Today we&#x27;re going to review a pull request that I didn&#x27;t write. I asked a coding agent for one thing in my Rack chatbot, per user document collections, and the pull request now stands at 998 new lines across 24 files. Backend, frontend, tests, all of it. This video is sponsored by CodeRabbit.
+
+They paid for it and gave me access to the product. But as usual, The review, the findings, and the opinions are strictly mine. Writing the code got cheap, reviewing it did not. So the future isn&#x27;t about writing code, it&#x27;s about reviewing it. Let&#x27;s get started.
+
+This is my local ragchatbot. It&#x27;s a real project. 12 Python modules, about 1600 lines, a React front-end test files, and about 80% test coverage that runs in CI and fails the build. If I mess things up. So this is small enough to hold in your head, but it&#x27;s big enough that a large change is pretty hard to read.
+
+So when an agent hands me a pull request this size, I really have four jobs. Review it. Is it correct? Prioritize it. Is this the thing I should look at first?
+
+Understand it. What did I actually change and in what order? And secure it. Did it open anything? Up so that&#x27;s the structure of this video one job at a time code rabbit is going to help me through this first you have to set it up and it is the easiest thing all you have to do is connect it to your github account and allow repositories so here I&#x27;ve got my chatbot already authorized and if I wanted to authorize another one like maybe why not my commander project all have to do is just add it to the list and save okay and that&#x27;s all you need to do and that only takes a few seconds in the interest of time obviously I built the feature before the video and that&#x27;s the prompt I used add per user to command collections each user gets their own pdf corpus and chroma collection chroma is the vector db that I use here selected per request okay so I built it with cloud code My session has already run.
+
+We have the code. And this is what we want to review. And although my prompt is fairly simple, this pull request actually touches a little bit of everything in the application, the configuration, the vector store, the API, the front end, and the tests. And of course, it adds a notion of a user to an app which never had one. Authorization and security problems will live.
+
+It took the agent about six or seven minutes to build everything. I didn&#x27;t touch the output, not one line. So now we&#x27;re ready to review it. As we can see here, we&#x27;ve added 998 lines, removed 89, and touched 24 files. That includes the review fixes that the agent made later, which we&#x27;ll see in a few minutes.
+
+I&#x27;ve read none of it so far. Let&#x27;s see what CodeRabbit can do with this. CodeRabbit posted its review automatically about eight minutes after I opened the pull request. So we get a summary and we get a very detailed walkthrough layer by layer and we get change so ai found things is a low bar what I really care about is whether it found something I would have missed on a tired friday afternoon so here&#x27;s a major problem that code rabbit found the agent guards first time indexing with a global lock so if one user&#x27;s pdfs take minute to index every other user has to wait behind them but the tests pass and it works on my laptop but obviously it fails the minute a few people try to use it at the same time and then there&#x27;s the security review two things first the user id is not giving me access control anyone who can reach the api can read anyone&#x27;s documents by typing their name not great uh to be fair you know I&#x27;m glad the agent found it the second problem is the one I really like the per user pdf folder must never sit inside the shared pdf folder because the shared loader reads that folder recursively and every user&#x27;s files would end up in everyone&#x27;s index not great the agent found it it wrote a comment and a test about it code rabbit noticed that nothing in the code actually enforces it it&#x27;s one environment variable away and that can really be overlooked fairly easily. When the fix is small, it&#x27;s right there.
+
+User IDs can be 64 characters, the prefix adds five, and Chroma&#x27;s collection name stops at 63. So let&#x27;s just click this and commit it to the branch. Of course, I can also ask. Before recording, I asked CodeRabbit to walk every code path from a request user ID to a Chroma collection and to tell me where the color gets checked the answer took about 14 minutes and it starts like this the caller is not checked against the requested collection anywhere in the api path and then it walks all three endpoints the registry and the vector store with line numbers ci stays green so no need to fix the build today there&#x27;s still a one click finishing touch on offer doc strings because the agent documented about a third of the functions it touched Here&#x27;s my real problem though. This is how GitHub wants me to read the change, alphabetical file order.
+
+So the API next to config file, next to test with nothing telling me what depends on what. So that order has nothing to do with how the change was built or how it should be read. This is the change stack in CodeRabbit, the same pull request, but reorganized. 24 files, one stack, five layers, in dependency order. The foundation first, then what builds on it.
+
+Here&#x27;s layer one, user-specific path and vector stores. And here&#x27;s layer two, the collection registry and startup, and it says so, depends on the user-specific paths and vector stores, then the user-scoped API request, then the front end, and last, my review and CI settings, off to the side where they belong. Order I would explain this change to a colleague in it&#x27;s now the order files are sorted in and that&#x27;s the difference between reading a diff and reading a change the overview tell me what changed why it matters and what needs attention before I open a single file five layers 24 files several findings high risk and the security blast radius draws what this reaches five change components two downstream and two potentially impacted. Here&#x27;s another feature called CodePeak. I can click on any function and see where it&#x27;s used without leaving the review.
+
+Jumping to a definition did not resolve on this repository, so let&#x27;s just see the references. And we can see the findings sit in the layer they belong to with a severity on each. Critical, major, minor, trivial. When this has to ship today, that&#x27;s where I go. Start I didn&#x27;t fix the rest by hand either I just gave a review back to the agent minus the one click fix you just saw and it took about a minute it fixed the lock it made the server refuse to start if the folders overlap and it improved my ci file and it also declined the access control one in writing that needs real authentication and that&#x27;s out of scope fair enough then CodeRabbit reviewed the new commit.
+
+The locked thread resolved. The overlap and CI concern, gone. And one thread was still open when I ran that review, the one-click fix, which I&#x27;ve since deployed. And a new major problem popped up. The agent&#x27;s fix keeps a lock for every user ID anyone ever asks for, including ones that don&#x27;t exist.
+
+So if you ask for a million made-up names, the server will keep a million locks. So we need to fix that too. And because the agent explicitly left access control alone, the security rating went up, not down, moderate to high. So that&#x27;s the loop. The agent writes, CodeRabbit reviews, the agent fixes, CodeRabbbit checks the fix, and I guess I&#x27;m the one who decides when it&#x27;s done.
+
+My second job is what do I look at first? So this is my open pull request list on GitHub. Across four repositories sorted by date which is to say not sorted by anything that matters this is code rabbit triage same pull request for this repo ranked by risk review effort and what blocks what so we see we have one p1 and one p3 so the top one is the one I would have open first and the card says why it matters we have a security risk The other one is markp3 and starts with defer this change. So we can read this ranking as input and still make our own decisions. Fair warning, triage will only see the repositories where CodeRabbit is installed, so that&#x27;s why you only see two PRs for this repo.
+
+This is obviously built for teams with hundreds of PRs, so this is definitely easy mode you&#x27;re seeing here. My last job is what security risk Did this open up? Well, you&#x27;ve already seen half of it. CodeRabbit security reviews every pull request, and on this one, it rated the change high risk once the agent was done. CodeRabbbit has another security feature called AI Deep Scan.
+
+This will look at the whole code base, not just the diff. So before the agent touched anything, I run a deep scan on my main branch, on the backend request, and storage, and prompt code. Took about 20 minutes and it mapped 53 security relevant points and verified 39. And it found one thing in the code I wrote, and that&#x27;s this orange box here. Let&#x27;s click on it.
+
+My chat window renders the model&#x27;s answer as markdown, images included, with no restriction on where an image can load from. So if you put a prompt injection inside one of the PDFs, that carries your private question to someone else&#x27;s server and your browser fetches it the moment the answer renders. It starts at PDF ingestion and ends in my React component. So no diff would ever show you that. The PR scanner will see the diff, but this is looking at the whole code base.
+
+So what is this like on a real project? I guess three things I would tell anybody before they start. Number one, At the time of recording, the security features are open beta, as mentioned in CodeRabbit&#x27;s docs. Also, AI DeepScan is built on usage outside the plan, so make sure you understand the pricing model. Number two, time.
+
+The first review that I ran took about eight minutes, and a chat answer took 14. That&#x27;s fine for a pull request, but it&#x27;s not an interactive loop. On a personal account, the queue here is tiny. I just had a bunch of PRs. So if you have a team project with more PRs, of course, you want to run some more tests to make sure this does work for you.
+
+But this is exactly what it was built for. So none of these changed my main point. I think the hard part of working with coding agents isn&#x27;t getting code out of them anymore. That&#x27;s fairly fast and simple. It&#x27;s really knowing, what you&#x27;re about to merge and ship to production.
+
+So that&#x27;s what I wanted to tell you today. Thank you to CodeRabbit for sponsoring this video. All the links are in the video description and the pinned comment. You can start your free two-week trial with no credit card and just a couple of clicks. The pull requests and the prompts and all the CodeRabit reviews are public in the GitHub repo.
+
+The link will also be in the description. That you can read everything yourself. Thank you so much for watching. I hope this was fun and interesting. And until next time, my friends, you know what to do.
+
+Keep rocking.</div>
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            <a href="index.html">&larr; Back to 2026 Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
+        </div>
+    </div>
+
+
+</body></html>

@@ -18,6 +18,12 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Reviewing AI-Written Code with CodeRabbit',
+    href: '/youtube/2026/20261019_Reviewing_AI-Written_Code_with_CodeRabbit.html',
+    date: 'October 19, 2026',
+    icon: 'video',
+  },
+  {
     title: 'Ticking Boxes, Shipping Models',
     href: '/blog/industry-perspectives/2026-10-15_ticking-boxes-shipping-models/',
     date: 'October 15, 2026',
@@ -42,13 +48,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     href: '/youtube/2026/20261007_Fine-Tuning_Qwen35-9B_on_Crusoe_Intelligence_Foundry_from_70_to_91_for_012.html',
     date: 'October 7, 2026',
     icon: 'video',
-  },
-  {
-    title: 'Kolibri Is Large Enough',
-    href: '/blog/industry-perspectives/2026-10-06_kolibri-is-large-enough/',
-    date: 'October 6, 2026',
-    summary: 'American chips, Chinese teachers, about $3 million for the training run. What Germany\'s new open model adds is eligibility.',
-    icon: 'article',
   },
 ];
 
