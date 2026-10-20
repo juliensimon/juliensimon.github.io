@@ -21,6 +21,7 @@ const LATEST_UPDATES: LatestUpdate[] = [
     title: 'Reviewing AI-Written Code with CodeRabbit',
     href: '/youtube/2026/20261019_Reviewing_AI-Written_Code_with_CodeRabbit.html',
     date: 'October 19, 2026',
+    summary: 'A coding agent\'s 998-line pull request, reviewed with CodeRabbit: a global lock that makes users wait on each other, and a user ID that is not access control.',
     icon: 'video',
   },
   {

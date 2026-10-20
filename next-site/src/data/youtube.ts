@@ -22,7 +22,7 @@ export const YOUTUBE_STATS = {
 export const POPULAR_VIDEO_IDS = ['Zdu5UyA46io', '_hNRG3E4Ny4', 'cf8z3Q8PFQQ', 'hMs8VNRy5Ys'];
 
 export const LATEST_VIDEOS: LatestVideo[] = [
-  { id: 'Hd3ZreKZefE', title: 'Reviewing AI-Written Code with CodeRabbit', date: 'October 19, 2026' },
+  { id: 'Hd3ZreKZefE', title: 'Reviewing AI-Written Code with CodeRabbit', date: 'October 19, 2026', summary: 'A coding agent\'s 998-line pull request, reviewed with CodeRabbit: a global lock that makes users wait on each other, and a user ID that is not access control.' },
   { id: 'IbBecjA93ks', title: 'Your LLM No Longer Reads Every Token: 8 Attention Designs Explained', date: 'October 11, 2026' },
   { id: '9d2xYP1WlRo', title: 'Fine-Tuning Qwen3.5-9B on Crusoe Intelligence Foundry: from 70% to 91% for $0.12', date: 'October 7, 2026' },
 ];
