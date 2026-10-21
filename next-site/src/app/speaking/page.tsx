@@ -1,26 +1,30 @@
 import { buildMetadata } from '@/lib/metadata';
-import { breadcrumbSchema, webPageSchema, eventSchema, SPEAKING_FAQS } from '@/lib/structured-data';
+import { breadcrumbSchema, webPageSchema, eventSchema, speakingServiceSchema, SPEAKING_FAQS } from '@/lib/structured-data';
 import StructuredData from '@/components/seo/StructuredData';
 import FaqSection from '@/components/ui/FaqSection';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { SITE } from '@/lib/constants';
 import { SPEAKING_EVENTS } from '@/data/speaking-events';
 import { SPEAKING_STATS } from '@/data/speaking';
+import { SPEAKING_FORMATS, SPEAKING_LANGUAGES } from '@/data/speaking-booking';
 import SpeakingContent from './SpeakingContent';
 
 export const metadata = buildMetadata({
-  title: `Speaking — ${SPEAKING_STATS.totalEvents}+ Talks on AI & Machine Learning`,
+  title: `AI Keynote Speaker: ${SPEAKING_STATS.totalEvents}+ Talks, ${SPEAKING_STATS.countries} Countries`,
   description:
-    `${SPEAKING_STATS.totalEvents}+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing. Keynotes at AWS re:Invent, ODSC, and more.`,
+    `Book Julien Simon for an AI keynote, executive workshop or panel. Enterprise AI in production, small language models, open models and hardware. English and French. ${SPEAKING_STATS.totalEvents}+ talks in ${SPEAKING_STATS.countries} countries.`,
   path: '/speaking',
   keywords: [
-    'conference speaker',
-    'AI talks',
-    'machine learning workshops',
-    'keynote speaker',
-    'tech conferences',
+    'AI keynote speaker',
+    'book a keynote speaker',
+    'enterprise AI speaker',
+    'AI executive workshop',
+    'small language models talk',
+    'conférencier IA',
     'The AI Realist',
   ],
+  ogImage: `${SITE.url}/assets/speaking/og-speaking.jpg`,
+  ogImageAlt: 'Julien Simon giving a keynote on enterprise AI to executives in Paris',
 });
 
 export default function SpeakingPage() {
@@ -58,9 +62,10 @@ export default function SpeakingPage() {
       ])} />
       <StructuredData data={webPageSchema(
         'Speaking Engagements',
-        `${SPEAKING_STATS.totalEvents}+ talks and workshops at conferences worldwide on AI, machine learning, and cloud computing.`,
+        `Keynotes, executive workshops and panels on enterprise AI, small language models and the AI industry. ${SPEAKING_STATS.totalEvents}+ talks in ${SPEAKING_STATS.countries} countries.`,
         `${SITE.url}/speaking`,
       )} />
+      <StructuredData data={speakingServiceSchema(SPEAKING_FORMATS, SPEAKING_LANGUAGES)} />
       <StructuredData data={eventListData} />
       <Breadcrumbs items={[
         { name: 'Home', href: '/' },

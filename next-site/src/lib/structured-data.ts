@@ -615,17 +615,52 @@ export function eventListSchema(
 export const SPEAKING_FAQS = [
   {
     question: 'How many speaking engagements has Julien Simon delivered?',
-    answer: `Julien Simon has delivered ${SPEAKING_STATS.totalEvents}+ speaking engagements across ${SPEAKING_STATS.countries} countries and ${SPEAKING_STATS.cities} cities, including keynotes at AWS re:Invent, ODSC, KubeCon, and talks at institutions like UNESCO, World Bank, New York Federal Reserve, and Bank of Italy.`,
+    answer: `Julien Simon has delivered ${SPEAKING_STATS.totalEvents}+ speaking engagements across ${SPEAKING_STATS.countries} countries and ${SPEAKING_STATS.cities} cities, including keynotes at AWS re:Invent, ODSC, KubeCon, and talks at institutions like UNESCO in Paris, the World Bank in Washington, DC, the Bank of Italy in Rome, and the New York Federal Reserve.`,
   },
   {
     question: 'What topics does Julien Simon speak about?',
-    answer: 'Julien Simon speaks about Small Language Models, enterprise AI implementation, open-source AI, cloud computing, AI hardware optimization, and practical strategies for deploying AI in production. His talks range from deep technical demos to strategic keynotes for executive audiences.',
+    answer: 'Julien Simon covers enterprise AI strategy and deployment, small language models, open-source and open-weight AI, AI hardware, cloud computing, and the AI industry. Typical talks include why enterprise AI pilots stall and what production teams do differently, small language models that run free, private and local, and how to choose open models and hardware for sovereignty and cost. Every talk is customized to the audience and sector.',
   },
   {
-    question: 'Can I book Julien Simon for a speaking engagement?',
-    answer: 'Yes, Julien Simon is available for keynotes, workshops, and technical talks. Contact him at julien@julien.org or via LinkedIn at linkedin.com/in/juliensimon.',
+    question: 'What formats does Julien Simon offer?',
+    answer: 'Keynotes of 30 to 45 minutes, half-day executive workshops, fireside chats and panels, and 60 to 90 minute technical deep dives for engineering teams. He speaks in English and French.',
+  },
+  {
+    question: 'Who is Julien Simon as a speaker?',
+    answer: 'Julien Simon is Operating Partner and Head of the AI Studio at Fortino Capital. He previously led evangelism at Arcee AI, Hugging Face and AWS, and writes The AI Realist newsletter. Audiences include CEOs and boards, CTOs and engineering teams, investors, and public-sector decision makers.',
+  },
+  {
+    question: 'How do I book Julien Simon for a keynote or workshop?',
+    answer: 'Email julien@julien.org with the event name and organizer, date and city, audience and size, format and length, language, budget, and recording plans. He replies within two business days. Keynotes and workshops for companies are paid engagements, quoted on format, travel and rights.',
   },
 ];
+
+export function speakingServiceSchema(
+  formats: { name: string; description: string }[],
+  languages: readonly string[],
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${SITE.url}/speaking/#service`,
+    name: 'AI keynote speaking and executive workshops',
+    serviceType: 'Keynote speaking',
+    description:
+      'Keynotes, executive workshops, panels and technical deep dives on enterprise AI in production, small language models, and the AI industry.',
+    provider: { '@id': `${SITE.url}/#person` },
+    areaServed: 'Worldwide',
+    availableLanguage: [...languages],
+    url: `${SITE.url}/speaking`,
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Speaking formats',
+      itemListElement: formats.map((f) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: f.name, description: f.description },
+      })),
+    },
+  };
+}
 
 export const PUBLICATIONS_FAQS = [
   {
