@@ -4,7 +4,7 @@ export interface SpeakingYear {
 }
 
 export const SPEAKING_STATS = {
-  totalEvents: 691,
+  totalEvents: 692,
   countries: 37,
   cities: 95,
 } as const;
@@ -13,7 +13,7 @@ export const SPEAKING_YEARS: SpeakingYear[] = [
   { year: 2026, count: 6 },
   { year: 2025, count: 19 },
   { year: 2024, count: 45 },
-  { year: 2023, count: 87 },
+  { year: 2023, count: 88 },
   { year: 2022, count: 65 },
   { year: 2021, count: 73 },
   { year: 2020, count: 90 },

@@ -347,6 +347,13 @@ export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
   ],
   '2023': [
     {
+      title: "Open Source AI Models",
+      venue: "Federal Reserve Bank of New York",
+      date: "March 29, 2023",
+      description: "Talk on open-source AI models and Hugging Face for the Federal Reserve Bank of New York Speaker Series, followed by questions on bias, copyright, and the security of open models.",
+      tags: ["Talk","Hugging Face","Open Source AI","Central Banking","Federal Reserve"],
+    },
+    {
       title: "Computer Vision Summit",
       venue: "Boston, USA",
       description: "Summit presentation on computer vision technologies and applications.",

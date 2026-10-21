@@ -48,7 +48,7 @@ export const NAV_ITEMS = [
 // Run `npm run validate` to check for mismatches
 export const METRICS = [
   { value: 501, suffix: '', label: 'Technical Posts' },
-  { value: 691, suffix: '', label: 'Speaking Engagements' },
+  { value: 692, suffix: '', label: 'Speaking Engagements' },
   { value: 573, suffix: 'K', label: 'YouTube Subscribers' },
   { value: 30, suffix: '', label: 'Years Experience' },
 ] as const;
