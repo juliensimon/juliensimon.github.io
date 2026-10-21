@@ -180,7 +180,7 @@ export function breadcrumbSchema(items: { name: string; url: string }[]) {
   };
 }
 
-export function webPageSchema(name: string, description: string, url: string, dateModified?: string) {
+export function webPageSchema(name: string, description: string, url: string, dateModified?: string, inLanguage = 'en') {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -190,7 +190,7 @@ export function webPageSchema(name: string, description: string, url: string, da
     url,
     isPartOf: { '@id': `${SITE.url}/#website` },
     about: { '@id': `${SITE.url}/#person` },
-    inLanguage: 'en',
+    inLanguage,
     ...(dateModified && { dateModified }),
   };
 }
@@ -635,25 +635,56 @@ export const SPEAKING_FAQS = [
   },
 ];
 
+export const SPEAKING_FAQS_FR = [
+  {
+    question: 'Combien d\'interventions Julien Simon a-t-il données ?',
+    answer: `Julien Simon a donné ${SPEAKING_STATS.totalEvents}+ interventions dans ${SPEAKING_STATS.countries} pays et ${SPEAKING_STATS.cities} villes, dont AWS re:Invent et ODSC, ainsi que dans des institutions comme l\'UNESCO à Paris, la Banque mondiale à Washington, la Banque d\'Italie à Rome et la Réserve fédérale de New York.`,
+  },
+  {
+    question: 'Sur quels sujets Julien Simon intervient-il ?',
+    answer: 'Julien Simon couvre la stratégie et le déploiement de l\'IA en entreprise, les petits modèles de langage, l\'IA open source et à poids ouverts, le matériel pour l\'IA, le cloud et l\'industrie de l\'IA. Parmi ses interventions types : pourquoi les pilotes d\'IA s\'enlisent et ce que font les équipes qui passent en production, les petits modèles de langage gratuits, privés et locaux, et comment choisir modèles ouverts et matériel selon la souveraineté et le coût. Chaque intervention est adaptée au public et au secteur.',
+  },
+  {
+    question: 'Quels formats Julien Simon propose-t-il ?',
+    answer: 'Des keynotes de 30 à 45 minutes, des ateliers de direction d\'une demi-journée, des tables rondes et échanges de 30 à 60 minutes, et des approfondissements techniques de 60 à 90 minutes pour les équipes d\'ingénierie. Il intervient en français et en anglais.',
+  },
+  {
+    question: 'Qui est Julien Simon en tant que conférencier ?',
+    answer: 'Julien Simon est Operating Partner et responsable de l\'AI Studio chez Fortino Capital. Il a dirigé l\'évangélisation chez Arcee AI, Hugging Face et AWS, et écrit la newsletter The AI Realist. Ses publics : dirigeants et conseils d\'administration, directeurs techniques et équipes d\'ingénierie, investisseurs et décideurs du secteur public.',
+  },
+  {
+    question: 'Comment réserver Julien Simon pour une keynote ou un atelier ?',
+    answer: 'Écrivez à julien@julien.org en indiquant l\'événement et l\'organisateur, la date et la ville, le public et sa taille, le format et la durée, la langue, le budget et les plans d\'enregistrement. Il répond sous deux jours ouvrés. Les keynotes et ateliers pour entreprises sont des prestations payantes, chiffrées selon le format, les déplacements et les droits.',
+  },
+];
+
 export function speakingServiceSchema(
   formats: { name: string; description: string }[],
   languages: readonly string[],
+  page: { path: string; name: string; description: string; catalogName: string; inLanguage: string } = {
+    path: '/speaking',
+    name: 'AI keynote speaking and executive workshops',
+    description:
+      'Keynotes, executive workshops, panels and technical deep dives on enterprise AI in production, small language models, and the AI industry.',
+    catalogName: 'Speaking formats',
+    inLanguage: 'en',
+  },
 ) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    '@id': `${SITE.url}/speaking/#service`,
-    name: 'AI keynote speaking and executive workshops',
+    '@id': `${SITE.url}${page.path}/#service`,
+    name: page.name,
     serviceType: 'Keynote speaking',
-    description:
-      'Keynotes, executive workshops, panels and technical deep dives on enterprise AI in production, small language models, and the AI industry.',
+    description: page.description,
+    inLanguage: page.inLanguage,
     provider: { '@id': `${SITE.url}/#person` },
     areaServed: 'Worldwide',
     availableLanguage: [...languages],
-    url: `${SITE.url}/speaking`,
+    url: `${SITE.url}${page.path}`,
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Speaking formats',
+      name: page.catalogName,
       itemListElement: formats.map((f) => ({
         '@type': 'Offer',
         itemOffered: { '@type': 'Service', name: f.name, description: f.description },

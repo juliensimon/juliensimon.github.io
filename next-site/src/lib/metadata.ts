@@ -8,9 +8,11 @@ interface PageMetaOptions {
   keywords?: string[];
   ogImage?: string;
   ogImageAlt?: string;
+  locale?: string;
+  languages?: Record<string, string>;
 }
 
-export function buildMetadata({ title, description, path = '', keywords = [], ogImage, ogImageAlt }: PageMetaOptions): Metadata {
+export function buildMetadata({ title, description, path = '', keywords = [], ogImage, ogImageAlt, locale, languages }: PageMetaOptions): Metadata {
   const url = `${SITE.url}${path}`;
   const displayTitle = path === '/' ? SITE.title : `${title} | ${SITE.name}`;
   const image = ogImage ?? SITE.ogImage;
@@ -33,14 +35,14 @@ export function buildMetadata({ title, description, path = '', keywords = [], og
     authors: [{ name: SITE.name }],
     creator: SITE.name,
     metadataBase: new URL(SITE.url),
-    alternates: { canonical: url },
+    alternates: { canonical: url, ...(languages && { languages }) },
     openGraph: {
       type: 'website',
       url,
       title: displayTitle,
       description,
       siteName: `${SITE.name} - AI Operating Partner`,
-      locale: SITE.locale,
+      locale: locale ?? SITE.locale,
       images: [{ url: image, width: 1200, height: 630, alt: imageAlt }],
     },
     twitter: {

@@ -24,6 +24,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE.url}/speaking`,
       changeFrequency: 'weekly',
       priority: 0.9,
+      alternates: {
+        languages: {
+          en: `${SITE.url}/speaking`,
+          fr: `${SITE.url}/fr/conferencier-ia`,
+        },
+      },
+    },
+    {
+      url: `${SITE.url}/fr/conferencier-ia`,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+      alternates: {
+        languages: {
+          en: `${SITE.url}/speaking`,
+          fr: `${SITE.url}/fr/conferencier-ia`,
+        },
+      },
     },
     {
       url: `${SITE.url}/publications`,

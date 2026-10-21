@@ -25,6 +25,11 @@ export const metadata = buildMetadata({
   ],
   ogImage: `${SITE.url}/assets/speaking/og-speaking.jpg`,
   ogImageAlt: 'Julien Simon giving a keynote on enterprise AI to executives in Paris',
+  languages: {
+    en: `${SITE.url}/speaking`,
+    fr: `${SITE.url}/fr/conferencier-ia`,
+    'x-default': `${SITE.url}/speaking`,
+  },
 });
 
 export default function SpeakingPage() {

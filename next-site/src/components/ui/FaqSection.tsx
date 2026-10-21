@@ -4,18 +4,19 @@ import { faqSchema } from '@/lib/structured-data';
 interface FaqSectionProps {
   faqs: readonly { question: string; answer: string }[];
   pageUrl: string;
+  heading?: string;
 }
 
 /**
  * Renders a page's FAQs as visible text together with the matching FAQPage
  * JSON-LD, so the markup never describes content a reader cannot see.
  */
-export default function FaqSection({ faqs, pageUrl }: FaqSectionProps) {
+export default function FaqSection({ faqs, pageUrl, heading = 'Frequently Asked Questions' }: FaqSectionProps) {
   return (
     <section aria-labelledby="faq-heading" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
       <StructuredData data={faqSchema([...faqs], pageUrl)} />
       <h2 id="faq-heading" className="text-2xl font-bold font-heading gradient-brand-text mb-6 text-center">
-        Frequently Asked Questions
+        {heading}
       </h2>
       <dl className="space-y-4">
         {faqs.map((faq) => (
