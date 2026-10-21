@@ -615,7 +615,7 @@ export function eventListSchema(
 export const SPEAKING_FAQS = [
   {
     question: 'How many speaking engagements has Julien Simon delivered?',
-    answer: `Julien Simon has delivered ${SPEAKING_STATS.totalEvents}+ speaking engagements across ${SPEAKING_STATS.countries} countries and ${SPEAKING_STATS.cities} cities, including keynotes at AWS re:Invent, ODSC, KubeCon, and talks at institutions like UNESCO in Paris, the World Bank in Washington, DC, the Bank of Italy in Rome, and the New York Federal Reserve.`,
+    answer: `Julien Simon has delivered ${SPEAKING_STATS.totalEvents}+ speaking engagements across ${SPEAKING_STATS.countries} countries and ${SPEAKING_STATS.cities} cities, including keynotes at AWS re:Invent, ODSC, and talks at institutions like UNESCO in Paris, the World Bank in Washington, DC, the Bank of Italy in Rome, and the New York Federal Reserve.`,
   },
   {
     question: 'What topics does Julien Simon speak about?',
