@@ -21,6 +21,7 @@ const LATEST_UPDATES: LatestUpdate[] = [
     title: 'Is OpenAI\'s Embedding Model Worth Paying For? A Test on Stripe\'s Docs in 4 Languages',
     href: '/youtube/2026/20261023_Is_OpenAIs_Embedding_Model_Worth_Paying_For_A_Test_on_Stripes_Docs_in_4_Languages.html',
     date: 'October 23, 2026',
+    summary: 'Five embedding models scored on Stripe\'s docs in four languages: in English OpenAI\'s paid model returns the right passage 65% of the time, a free local model 66%.',
     icon: 'video',
   },
   {
@@ -41,6 +42,7 @@ const LATEST_UPDATES: LatestUpdate[] = [
     title: 'Your LLM No Longer Reads Every Token: 8 Attention Designs Explained',
     href: '/youtube/2026/20261011_Your_LLM_No_Longer_Reads_Every_Token_8_Attention_Designs_Explained.html',
     date: 'October 11, 2026',
+    summary: 'Alibaba, Moonshot, DeepSeek and ZAI replaced full attention in most or all layers. Eight designs, what each saves and gives up, and three measured on a Mac.',
     icon: 'video',
   },
   {

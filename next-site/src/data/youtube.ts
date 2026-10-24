@@ -24,7 +24,7 @@ export const POPULAR_VIDEO_IDS = ['Zdu5UyA46io', '_hNRG3E4Ny4', 'cf8z3Q8PFQQ', '
 export const LATEST_VIDEOS: LatestVideo[] = [
   { id: 'mYgYUDHaJWA', title: 'Is OpenAI\'s Embedding Model Worth Paying For? A Test on Stripe\'s Docs in 4 Languages', date: 'October 23, 2026', summary: 'Five embedding models scored on Stripe\'s docs in four languages: in English OpenAI\'s paid model returns the right passage 65% of the time, a free local model 66%.' },
   { id: 'Hd3ZreKZefE', title: 'Reviewing AI-Written Code with CodeRabbit', date: 'October 19, 2026', summary: 'A coding agent\'s 998-line pull request, reviewed with CodeRabbit: a global lock that makes users wait on each other, and a user ID that is not access control.' },
-  { id: 'IbBecjA93ks', title: 'Your LLM No Longer Reads Every Token: 8 Attention Designs Explained', date: 'October 11, 2026' },
+  { id: 'IbBecjA93ks', title: 'Your LLM No Longer Reads Every Token: 8 Attention Designs Explained', date: 'October 11, 2026', summary: 'Alibaba, Moonshot, DeepSeek and ZAI replaced full attention in most or all layers. Eight designs, what each saves and gives up, and three measured on a Mac.' },
 ];
 
 export const VIDEO_YEARS: VideoYear[] = [
