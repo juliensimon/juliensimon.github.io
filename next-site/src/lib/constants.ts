@@ -49,6 +49,6 @@ export const NAV_ITEMS = [
 export const METRICS = [
   { value: 501, suffix: '', label: 'Technical Posts' },
   { value: 692, suffix: '', label: 'Speaking Engagements' },
-  { value: 573, suffix: 'K', label: 'YouTube Subscribers' },
+  { value: 577, suffix: 'K', label: 'YouTube Subscribers' },
   { value: 30, suffix: '', label: 'Years Experience' },
 ] as const;

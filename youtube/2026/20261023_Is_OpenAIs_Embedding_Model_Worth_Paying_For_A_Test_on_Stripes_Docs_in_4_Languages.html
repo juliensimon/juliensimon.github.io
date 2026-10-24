@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is OpenAI&#x27;s Embedding Model Worth Paying For? A Test on Stripe&#x27;s Docs in 4 Languages</title>
+    <meta name="description" content="Is OpenAI&#x27;s paid embedding model better than a free 0.6B model you run on your laptop?">
+    <meta property="og:title" content="Is OpenAI&#x27;s Embedding Model Worth Paying For? A Test on Stripe&#x27;s Docs in 4 Languages">
+    <meta property="og:description" content="Is OpenAI&#x27;s paid embedding model better than a free 0.6B model you run on your laptop?">
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://www.julien.org/youtube/2026/20261023_Is_OpenAIs_Embedding_Model_Worth_Paying_For_A_Test_on_Stripes_Docs_in_4_Languages.html">
+    <link rel="canonical" href="https://www.julien.org/youtube/2026/20261023_Is_OpenAIs_Embedding_Model_Worth_Paying_For_A_Test_on_Stripes_Docs_in_4_Languages.html">
+    <meta property="og:image" content="https://img.youtube.com/vi/mYgYUDHaJWA/maxresdefault.jpg">
+    <meta name="twitter:image" content="https://img.youtube.com/vi/mYgYUDHaJWA/maxresdefault.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Is OpenAI&#x27;s Embedding Model Worth Paying For? A Test on Stripe&#x27;s Docs in 4 Languages">
+    <meta name="twitter:description" content="Is OpenAI&#x27;s paid embedding model better than a free 0.6B model you run on your laptop?">
+    <meta name="twitter:creator" content="@julsimon">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "Is OpenAI&#x27;s Embedding Model Worth Paying For? A Test on Stripe&#x27;s Docs in 4 Languages",
+        "description": "Is OpenAI's paid embedding model better than a free 0.6B model you run on your laptop?",
+        "uploadDate": "2026-10-23T16:41:18+00:00",
+        "embedUrl": "https://www.youtube.com/embed/mYgYUDHaJWA",
+        "thumbnailUrl": "https://img.youtube.com/vi/mYgYUDHaJWA/maxresdefault.jpg",
+        "author": { "@id": "https://www.julien.org/#person" }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Is OpenAI&#x27;s Embedding Model Worth Paying For? A Test on Stripe&#x27;s Docs in 4 Languages</h1>
+        <div class="date">October 23, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/mYgYUDHaJWA" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">Is OpenAI&#x27;s paid embedding model better than a free 0.6B model you run on your laptop? I tested it on Stripe&#x27;s public documentation in English, French, German and Spanish, with 1,626 questions written by Claude, five models, and a 95% interval on every gap. On this test, OpenAI shows no lead over the best free models in any of the four languages.
+
+📦 Code, questions and results (Apache 2.0, questions CC BY 4.0): https://github.com/juliensimon/stripe-embedding-benchmark
+
+⏱️ Chapters
+00:00 Intro
+01:05 The documents: Stripe&#x27;s docs in four languages
+03:00 The questions
+04:18 The five models
+05:34 Octen: open weights and my MLX conversions
+06:06 The scores
+06:54 Are the gaps real?
+07:43 Each free model against OpenAI
+08:54 Does context length explain it?
+09:43 Live demo: three questions, two models
+11:03 OpenAI at 1,024 dimensions
+12:13 French, German and Spanish
+13:27 A warning about instructions
+13:56 What to take away, and what it costs
+
+🎥 My earlier videos
+- Comparing SLMs and LLMs with similarity metrics: https://www.youtube.com/watch?v=79iuy2uKLpc
+- Advanced RAG techniques with Arcee Trinity Mini, 100% local: https://www.youtube.com/watch?v=P-3VkgI6ZSQ
+
+🤗 Models tested
+- OpenAI text-embedding-3-large: https://developers.openai.com/api/docs/guides/embeddings (price read on 2026-10-23: $0.13 per million tokens, https://developers.openai.com/api/docs/pricing)
+- Octen-Embedding-0.6B (Apache 2.0): https://huggingface.co/Octen/Octen-Embedding-0.6B
+- multilingual-e5-large: https://huggingface.co/intfloat/multilingual-e5-large
+- multilingual-e5-large-instruct: https://huggingface.co/intfloat/multilingual-e5-large-instruct
+- Qwen3-Embedding-0.6B: https://huggingface.co/Qwen/Qwen3-Embedding-0.6B
+- MTEB and RTEB leaderboards: https://huggingface.co/spaces/mteb/leaderboard
+
+🍎 My MLX conversions of Octen (Apache 2.0, nine repos). The test uses the 0.6B 8-bit one.
+- 0.6B: https://huggingface.co/juliensimon/Octen-Embedding-0.6B-mlx-bf16 · https://huggingface.co/juliensimon/Octen-E...</div>
+
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi everybody, Julien here. Today we&#x27;re going to discuss embeddings. Embeddings are the part of a search or a rag system that most teams pay for without ever testing. You pick whatever default model is available, like the OpenAI embeddings model, because it&#x27;s the easy and safe choice and you move on. So I tested it.
+
+I took the Stripe documentation, built a test set from it, and scored five models. OpenAI&#x27;s best embedding model, the one you pay for. Two open models from the E5 family, Qwenn3 embedding, a newer base model, and Octon, a fine tune of that base model that runs on your Mac for free. In English, the right passage comes back 65% of the time with OpenAI and 66% with Octon, The test cannot tell them apart. And against the best free models, in no language I tried could I measure a lead for the paid model.
+
+Let&#x27;s get started. The test needs documents, and I want something you can check for yourself. So I&#x27;m using Stripe documentation. Stripe publishes an index of its docs for language models, and every page in it is available as Markdown. Stripe run the test in four, English, French, German, and Spanish.
+
+I fetched every page in that index, cut each one at its second level headings, and dropped the pieces that are too small, mostly code or duplicates. Dropping the code means this test says nothing about searching code. What&#x27;s left in English is 2,329 passages from 372 pages. Each is a few hundred words, which is roughly what a rag system would retrieve. The other languages follow the same recipe.
+
+French has 2,375 passages. German has 1,991. Spanish has only 522, because tribe translated far fewer pages into Spanish. Size matters for this test, so here it is. The median English passage is about 380 tokens, about 500 in French, German, and Spanish.
+
+One in 10 is longer than 800 tokens in English and 1,000 in German. The longest is about 6,400. None goes past 1,000. Remember that because the models do not all read the same amount. To test retrieval, I need questions with a known good answer.
+
+So I used Claude sub-agents per passage the way a developer would phrase it in a search box without copying the passage&#x27;s wording. The model that writes the questions must not be one of the models being tested or it gets an advantage. So Claude wrote this and Claude is not in the race. Here are five of the 863 English questions. I ran three checks by script.
+
+First, a long section is cut into several pieces. And only one piece counts as the right answer. So when a model misses about one time in seven, it picks the next piece of the same section. But that hurts every model the same way. Second, the question writers lean on the start of a passage.
+
+Nine in ten of the words a question borrows from its passage come from the first thousand characters. And third, 38% of the questions repeat four words in a row from their passage, which makes them easier. So the script also scores the 535 questions that do not, and the ranking holds. Octon 64.9, OpenAI 63.9, the E5 Instruct model 59.4. We work with five models.
+
+All of them turn text into a list of numbers, and the right passage should be the one whose numbers sit closest questions one paid model and four you can run yourself on your local machine two from the e5 family quen3 embedding and octon please look at the context column the e5 models stop at 512 tokens and 47 of the english messages are longer than that a few notes on how I run those models the instruct e5 is the one that the rteb leaderboard lists So it&#x27;s the one I test with the instruction its card is asking for. I also test the plain E5 large model, the one that most teams deploy with its prefixes. QN3 runs twice, without and with the instruction on the model card. OpenAI runs at two vector sizes. And Octon is QN3 fine-tuned for retrieval.
+
+Octon&#x27;s weights are on Hugging Face. Under Apache 2.0. The training data is not published so it is open weight not open source. It costs nothing to run and I use an 8-bit conversion for Apple&#x27;s MLX, a community conversion I made so it runs on your laptop. I also scored the original model and the conversion changes nothing I can measure.
+
+My conversions are on HuggingFest as well under my name, three sizes, 0.6 billion, 4 billion, 8 billion, each in VF16, 8-bit, and 4-bit variants. All links in the video description. Here are all the scores. That&#x27;s a lot to unpack, but don&#x27;t worry. The code to run all of this and display the scores is in a GitHub repo, and again, you&#x27;ll find the link in the video passages returned by the model.
+
+And that&#x27;s the number that matters if you give five chunks to the language model for story writing. The best score in each column is in green. Here are all four languages. In English, E5 Large, Octon, and OpenAI are within two points of each other at top one. But the table shows you differences.
+
+It doesn&#x27;t really tell you whether they are real. The questions at random with repeats a thousand times and look at how much each gap moves. That gives me an interval. If it contains zero, the test cannot tell the two apart. I compare every model against Octon and against OpenAI.
+
+With this many numbers, a few will clear zero by luck. So I trust a gap by how far its interval sits from zero, not by whether it just In the terminal, green is the largest gain in a column and red is a model clearly behind. Only the star says a gap is real. In English, no green row against OpenAI has a star. Here is each free model against OpenAI for English.
+
+The dot is the gap and the bar is the interval. Octane, the plane E5 large and the instructed Quint3 straddle zero. Cannot tell them apart from OpenAI. The E5 instruct model and QAN3 without the instruction sit entirely left of zero, so OpenAI is ahead of those two. Octon against OpenAI runs from minus 2.3 to plus 4.5.
+
+With 863 questions, the test sees gaps of about three to four points, so if OpenAI is The construct model is also behind octan by 2 to 10 points. Now the QUENT 3 base. Without the instruction, it sits 6 to 11 points under octan. With the instruction recommended on the model card, it scores 64.3 and the gap to octan is between minus 4.4 and plus 1. So most of what looks like the fine-tunes gain in English is really the instruction.
+
+Octan needs none. Now that column I asked you to remember, about half of the passages are longer than 512 tokens. So the E5 models read only the start of about half of them. Is that why the Instruct model trails? I tested it.
+
+I made Octon read only the 512 first tokens and it scored 67.8, higher than at a thousand. So on this test, the limit does not explain the gap. Reading longer doesn&#x27;t help either. So for your own documents, look at the chunk length first anyway. Numbers are one thing, but let me show you what a real search looks like.
+
+This script embeds the question locally on my machine, compares it to the stored vectors, and prints the top three answers. No API call, nothing sent to the external world. This will only take a few milliseconds. Loading. Okay so same question two models Octen puts the right section first and the E5 instruct model finds the right page but the wrong sections.
+
+So that&#x27;s what a two to ten point gap looks like on one question in practice. Now let&#x27;s take a look at German. Here it flips Octen finds the right topic but the wrong passage and the E 5 model finds the one passage the question was written from. So in German, the two models are not separable on this test. And this is just an example on a single question.
+
+So let&#x27;s try another one with Octon in English. Let&#x27;s ask about a Croatian IBAN. So this one is a near miss. It&#x27;s the right page and the right section, but the chunk with the British IBAN comes first instead of the Croatian one. And the right chunk actually comes So this is why you probably want to look at top five accuracy and not top one.
+
+Let&#x27;s go back to the results table. One thing here is not quite fair to Octon because the OpenAI model returns 3K dimensions. Embeddings have 3072 dimensions when Octon only gives you 1K. So OpenAI documents a parameter that will shorten the vectors. Ran the same test again with that 1024 dimension so at the same size openai scores 64.2 at top one and octon 65.9 which is the same thing at top five octon is ahead 91.5 against 88.9 the interval runs from 0.6 to 4.9 points it only just clears zero and it is one of the many comparisons So I wouldn&#x27;t make too much of it.
+
+But what I do take from this row is the shorter vector loses nothing at top one against the full one, a little at top five, and it still takes a third of the storage. And now if we look at the other languages, the same test in French, German, and Spanish. For French, Octon is first at 57.8. The Plain E5 large model at 53. 3.4, OpenAI 51 to 54.
+
+So among Octen, OpenAI and E5, only one gap clear zero and only barely. Octen over OpenAI at the smaller size. For German, the plain E5 large model leads 67.5, then Octen at 62.4, openAI 57 to 59. Funny enough, the old default model beats OpenAI at its full size, Spanish is a smaller test. Stripe only translated about 120 pages into Spanish, so we have fewer passages to search from.
+
+And every model scores higher. The Plain E5 Large model is at 72.6, Octen at 70.5, OpenAI 66. Again, the old default model beats OpenAI at full size by 1 to 32. A quick warning about instructions. QEN3&#x27;s instruction lifted it by 6.5 points in English.
+
+In French and Spanish, it lowered it by about 4. And Octon beats the instructed QEN3 by 2 to 13 points in both. These three languages have about 250 questions each, so the test only rules out gaps larger than about 10 points. Within that, the paid model shows no lead over Octon or the plain E5 large. So here&#x27;s what I take from this.
+
+First, cost. This English corpus is about 1 million tokens. At the OpenAI list price, it&#x27;s 13 cents per million tokens. So embedding it is going to cost you about 13 cents. It&#x27;s not about the money.
+
+The reasons to switch are the others. Your documents never leave your machine. You pay nothing per request. And you depend on no vendor. What it costs you if you&#x27;re going to switch is, of course, you need to re-embed every document, rebuild the index, and you need to host a 600 million parameter model, which shouldn&#x27;t be too expensive.
+
+Remember that your vectors also shrink from 3K to 1K, so you may save on storage and probably a bit on latency. The real learning here is that on this test, against the best free models, the paid model gets you nothing I can measure. No language does it lead them, and in German and Spanish, the old default, the plain E5 large model, is ahead of it. If you run that model, this test gives you no accuracy reason to move. It does beat pre-models when they&#x27;re set up badly, the English E5 instruct or the QEN3 without the instruction.
+
+So setup matters as much as the model. The same instruction helped QEN3 in English and hurt it. In French and Spanish. So please test the instruction in your language. So here&#x27;s an idea for Monday.
+
+Why don&#x27;t you take 200 passages from your own documents, have a model that is not in the race, write one question per passage, run the script, and check the interval. The whole test, 10 rows in four languages, ran in under one hour on my laptop, and the code is in the description. That&#x27;s what I wanted to tell you today. I hope this was fun and interesting. Until next time, my friend, keep rocking.</div>
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            <a href="index.html">&larr; Back to 2026 Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
+        </div>
+    </div>
+
+
+</body></html>

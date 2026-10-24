@@ -18,6 +18,12 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Is OpenAI\'s Embedding Model Worth Paying For? A Test on Stripe\'s Docs in 4 Languages',
+    href: '/youtube/2026/20261023_Is_OpenAIs_Embedding_Model_Worth_Paying_For_A_Test_on_Stripes_Docs_in_4_Languages.html',
+    date: 'October 23, 2026',
+    icon: 'video',
+  },
+  {
     title: 'Reviewing AI-Written Code with CodeRabbit',
     href: '/youtube/2026/20261019_Reviewing_AI-Written_Code_with_CodeRabbit.html',
     date: 'October 19, 2026',
@@ -43,12 +49,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     date: 'October 9, 2026',
     summary: 'Mistral can build the model. Does it know how to launch one?',
     icon: 'article',
-  },
-  {
-    title: 'Fine-Tuning Qwen3.5-9B on Crusoe Intelligence Foundry: from 70% to 91% for $0.12',
-    href: '/youtube/2026/20261007_Fine-Tuning_Qwen35-9B_on_Crusoe_Intelligence_Foundry_from_70_to_91_for_012.html',
-    date: 'October 7, 2026',
-    icon: 'video',
   },
 ];
 
