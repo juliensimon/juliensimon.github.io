@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Exploring Apple\'s On-Device Model: Twenty Billion Parameters in Flash',
+    slug: '2026-10-25_exploring-apples-on-device-model-twenty-billion-parameters-in-flash',
+    date: '2026-10-25',
+    description: 'Apple Intelligence\'s 20-billion-parameter model lives in flash and wakes a few experts per prompt. Your Mac gains memory and battery, not math.',
+    originalUrl: 'https://www.airealist.ai/p/exploring-apple-on-device-model',
+  },
+  {
     title: 'Ticking Boxes, Shipping Models',
     slug: '2026-10-15_ticking-boxes-shipping-models',
     date: '2026-10-15',

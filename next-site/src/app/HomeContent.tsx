@@ -18,6 +18,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Exploring Apple’s On-Device Model: Twenty Billion Parameters in Flash',
+    href: '/blog/industry-perspectives/2026-10-25_exploring-apples-on-device-model-twenty-billion-parameters-in-flash/',
+    date: 'October 25, 2026',
+    summary: 'Apple Intelligence\'s 20-billion-parameter model lives in flash and wakes a few experts per prompt. Your Mac gains memory and battery, not math.',
+    icon: 'article',
+  },
+  {
     title: 'Is OpenAI\'s Embedding Model Worth Paying For? A Test on Stripe\'s Docs in 4 Languages',
     href: '/youtube/2026/20261023_Is_OpenAIs_Embedding_Model_Worth_Paying_For_A_Test_on_Stripes_Docs_in_4_Languages.html',
     date: 'October 23, 2026',
@@ -44,13 +51,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     date: 'October 11, 2026',
     summary: 'Alibaba, Moonshot, DeepSeek and ZAI replaced full attention in most or all layers. Eight designs, what each saves and gives up, and three measured on a Mac.',
     icon: 'video',
-  },
-  {
-    title: 'Skill Issue',
-    href: '/blog/industry-perspectives/2026-10-09_skill-issue/',
-    date: 'October 9, 2026',
-    summary: 'Mistral can build the model. Does it know how to launch one?',
-    icon: 'article',
   },
 ];
 
