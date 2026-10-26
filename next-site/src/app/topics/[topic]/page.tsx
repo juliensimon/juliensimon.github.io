@@ -10,6 +10,8 @@ import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import GradientHero from '@/components/ui/GradientHero';
 import { SITE } from '@/lib/constants';
 import { TOPICS, TOPIC_BY_SLUG } from '@/data/topics';
+import { SPEAKING_STATS } from '@/data/speaking';
+import { TOTAL_ARTICLES } from '@/data/publications';
 
 interface Props {
   params: Promise<{ topic: string }>;
@@ -120,6 +122,8 @@ export default async function TopicPage({ params }: Props) {
         ...collectionPageSchema(topic.title, topic.description, url),
         dateModified: newest?.date,
         about: topic.keywords.map((name) => ({ '@type': 'Thing', name })),
+        publisher: { '@id': `${SITE.url}/#person` },
+        mainEntity: { '@id': `${url}/#itemlist` },
       }} />
       <StructuredData data={listData} />
       <Breadcrumbs items={[
@@ -136,6 +140,20 @@ export default async function TopicPage({ params }: Props) {
         )}
         <ItemList heading={`${topic.name}: articles`} items={articles} />
         <ItemList heading={`${topic.name}: videos`} items={videos} />
+        <section aria-labelledby="author-heading" className="glass-card rounded-xl p-6 mb-14">
+          <h2 id="author-heading" className="text-xl font-bold font-heading text-text mb-3">About the author</h2>
+          <p className="text-sm text-text-muted leading-relaxed">
+            <Link href="/" className="font-semibold text-text hover:text-primary">Julien Simon</Link> is an AI Operating Partner at
+            Fortino Capital. He was VP and Chief Evangelist at Arcee AI, Chief Evangelist at Hugging Face and Global Evangelist
+            for AI and machine learning at AWS, and wrote &ldquo;Learn Amazon SageMaker&rdquo; (Packt). He has given{' '}
+            {SPEAKING_STATS.totalEvents}+ talks in {SPEAKING_STATS.countries} countries and published {TOTAL_ARTICLES}+ technical articles.
+            See his <Link href="/experience" className="underline hover:text-primary">experience</Link> and{' '}
+            <a href="https://www.wikidata.org/wiki/Q138589324" className="underline hover:text-primary">Wikidata entry</a>.
+          </p>
+          <p className="text-sm text-text-muted leading-relaxed mt-3">
+            Method: figures come from filings, court documents, vendor documentation and measurements I ran, and each piece dates its numbers.
+          </p>
+        </section>
         <section className="mb-14">
           <h2 className="text-xl font-bold font-heading text-text mb-3">Go further</h2>
           <ul className="space-y-1 text-sm text-text-muted">
