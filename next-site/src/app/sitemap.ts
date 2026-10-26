@@ -1,13 +1,32 @@
 import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/constants';
 import { SPEAKING_YEARS } from '@/data/speaking';
+import { SPEAKING_EVENTS } from '@/data/speaking-events';
+import { LATEST_VIDEOS } from '@/data/youtube';
+import { INDUSTRY_PERSPECTIVES_ARTICLES } from '@/data/blog-listings/industry-perspectives';
 import { BLOG_CATEGORY_SLUGS } from '@/data/blog-categories';
 
 export const dynamic = 'force-static';
 
+const isoDay = (d: Date) => d.toISOString().slice(0, 10);
+
+// Newest content date among past items; future-dated talks are not yet content.
+// Dates read as UTC so the ISO day matches the day written in the data.
+function newest(dates: (string | undefined)[]): string | undefined {
+  const now = Date.now();
+  const times = dates
+    .map((d) => (d ? Date.parse(`${d} UTC`) : NaN))
+    .filter((t) => !Number.isNaN(t) && t <= now);
+  return times.length ? isoDay(new Date(Math.max(...times))) : undefined;
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   // ponytail: lastModified is omitted where no real content date exists;
   // a build timestamp on every deploy is noise, not a freshness signal.
+  // The dates below come from the newest item on the page, never from the build.
+  const speakingDate = newest(Object.values(SPEAKING_EVENTS).flat().map((e) => e.date));
+  const videoDate = newest(LATEST_VIDEOS.map((v) => v.date));
+  const articleDate = newest(INDUSTRY_PERSPECTIVES_ARTICLES.map((a) => a.date));
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: SITE.url,
@@ -22,6 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${SITE.url}/speaking`,
+      lastModified: speakingDate,
       changeFrequency: 'weekly',
       priority: 0.9,
       alternates: {
@@ -33,6 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${SITE.url}/fr/conferencier-ia`,
+      lastModified: speakingDate,
       changeFrequency: 'weekly',
       priority: 0.8,
       alternates: {
@@ -44,16 +65,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${SITE.url}/publications`,
+      lastModified: articleDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: `${SITE.url}/youtube-videos`,
+      lastModified: videoDate,
       changeFrequency: 'weekly',
       priority: 0.7,
     },
     {
       url: `${SITE.url}/podcast`,
+      lastModified: articleDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
@@ -108,6 +132,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // contradict that canonical.
   const industryIndex: MetadataRoute.Sitemap = [{
     url: `${SITE.url}/blog/industry-perspectives/`,
+    lastModified: articleDate,
     changeFrequency: 'weekly',
     priority: 0.7,
   }];

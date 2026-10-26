@@ -9,7 +9,7 @@ import PodcastContent from './PodcastContent';
 export const metadata = buildMetadata({
   title: 'The AI Realist Podcast: AI Economics, Chips and Regulation',
   description:
-    'The AI Realist podcast by Julien Simon: each piece of the newsletter on the AI industry, narrated. GPU and cloud economics, inference costs, open models, chips, regulation. On Apple Podcasts and Spotify.',
+    'The AI Realist podcast by Julien Simon: each newsletter piece on the AI industry, narrated. GPU economics, inference costs, open models, chips, regulation.',
   path: '/podcast',
   keywords: ['AI podcast', 'The AI Realist', 'AI industry analysis', 'AI economics', 'open-weight models', 'AI chips', 'AI regulation', '10-K filings'],
 });

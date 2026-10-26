@@ -10,7 +10,7 @@ import BooksContent from './BooksContent';
 export const metadata = buildMetadata({
   title: 'Books on AI and Machine Learning',
   description:
-    'Books by Julien Simon on machine learning and cloud, including "Learn Amazon SageMaker" (Packt, 2 editions) — the first book ever published on Amazon SageMaker.',
+    'Books by Julien Simon on machine learning and cloud, including "Learn Amazon SageMaker" (Packt, 2 editions), the first book published on Amazon SageMaker.',
   path: '/books',
   keywords: [
     'AI books',

@@ -7,7 +7,7 @@ import { SITE } from '@/lib/constants';
 import CodeContent from './CodeContent';
 
 export const metadata = buildMetadata({
-  title: 'Code & Open Source — AI, ML, and Developer Tools',
+  title: 'Code & Open Source: AI, ML and Developer Tools',
   description:
     'Open-source projects by Julien Simon: macOS apps, CLI tools, data pipelines, and ML demos on GitHub. Canopy, space-datasets, and more.',
   path: '/code',

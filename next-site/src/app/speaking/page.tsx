@@ -12,7 +12,7 @@ import SpeakingContent from './SpeakingContent';
 export const metadata = buildMetadata({
   title: `AI Keynote Speaker: ${SPEAKING_STATS.totalEvents}+ Talks, ${SPEAKING_STATS.countries} Countries`,
   description:
-    `Book Julien Simon for an AI keynote, executive workshop or panel. Enterprise AI in production, small language models, open models and hardware. English and French. ${SPEAKING_STATS.totalEvents}+ talks in ${SPEAKING_STATS.countries} countries.`,
+    `Book Julien Simon for an AI keynote, executive workshop or panel on enterprise AI and small language models. English and French. ${SPEAKING_STATS.totalEvents}+ talks in ${SPEAKING_STATS.countries} countries.`,
   path: '/speaking',
   keywords: [
     'AI keynote speaker',
