@@ -20,7 +20,7 @@ const clip = (s: string, n: number) => (s.length <= n ? s : s.slice(0, n).replac
 
 /** Plain-prose summary: no em dashes, and nothing when the text only repeats the title or is boilerplate. */
 function cleanSummary(summary: string, title: string): string {
-  const text = summary.replace(/\s+\u2014\s+/g, ', ').trim();
+  const text = summary.replace(/\s*\u2014\s*/g, ', ').trim();
   const head = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().slice(0, 40);
   if (/a video by Julien Simon/i.test(text) || head(text) === head(title)) return '';
   return text;
