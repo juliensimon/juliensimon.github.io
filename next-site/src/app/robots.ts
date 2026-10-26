@@ -23,14 +23,28 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'ClaudeBot', allow: '/' },
       { userAgent: 'Claude-SearchBot', allow: '/' },
       { userAgent: 'Claude-User', allow: '/' },
+      { userAgent: 'anthropic-ai', allow: '/' },
       // Google AI
       { userAgent: 'Google-Extended', allow: '/' },
+      { userAgent: 'GoogleOther', allow: '/' },
       // Perplexity
       { userAgent: 'PerplexityBot', allow: '/' },
       // Apple Intelligence
+      { userAgent: 'Applebot', allow: '/' },
       { userAgent: 'Applebot-Extended', allow: '/' },
       // Meta AI
       { userAgent: 'meta-externalagent', allow: '/' },
+      { userAgent: 'FacebookBot', allow: '/' },
+      // Common Crawl, the open corpus most models train on
+      { userAgent: 'CCBot', allow: '/' },
+      // Amazon, ByteDance, Cohere, Diffbot, DuckDuckGo, Mistral, You.com
+      { userAgent: 'Amazonbot', allow: '/' },
+      { userAgent: 'Bytespider', allow: '/' },
+      { userAgent: 'cohere-ai', allow: '/' },
+      { userAgent: 'Diffbot', allow: '/' },
+      { userAgent: 'DuckAssistBot', allow: '/' },
+      { userAgent: 'MistralAI-User', allow: '/' },
+      { userAgent: 'YouBot', allow: '/' },
       // Bing
       { userAgent: 'bingbot', allow: '/' },
       // Yandex
