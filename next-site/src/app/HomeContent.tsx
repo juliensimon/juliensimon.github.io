@@ -6,6 +6,7 @@ import SocialButton from '@/components/ui/SocialButton';
 import TypingEffect from '@/components/ui/TypingEffect';
 import { SOCIAL_LINKS, METRICS } from '@/lib/constants';
 import { SPEAKING_STATS } from '@/data/speaking';
+import { TOPICS } from '@/data/topics';
 
 type LatestUpdate = {
   title: string;
@@ -373,6 +374,22 @@ export default function HomeContent() {
             </a>
           </p>
         </ScrollReveal>
+      </section>
+
+      {/* ── Topics ─────────────────────────────────────────── */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 text-center">
+        <h2 className="text-xl font-bold font-heading text-text mb-4">
+          <Link href="/topics" className="hover:text-primary transition-colors">Topics I cover</Link>
+        </h2>
+        <ul className="flex flex-wrap justify-center gap-2">
+          {TOPICS.map((t) => (
+            <li key={t.slug}>
+              <Link href={`/topics/${t.slug}`} className="glass-card rounded-full px-4 py-1 text-sm text-text hover:text-primary transition-colors">
+                {t.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
     </>
   );

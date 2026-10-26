@@ -4,6 +4,8 @@ import { SPEAKING_YEARS } from '@/data/speaking';
 import { SPEAKING_EVENTS } from '@/data/speaking-events';
 import { LATEST_VIDEOS } from '@/data/youtube';
 import { INDUSTRY_PERSPECTIVES_ARTICLES } from '@/data/blog-listings/industry-perspectives';
+import { TOPICS } from '@/data/topics';
+import { topicItems } from '@/lib/topic-items';
 import { BLOG_CATEGORY_SLUGS } from '@/data/blog-categories';
 
 export const dynamic = 'force-static';
@@ -136,5 +138,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'weekly',
     priority: 0.7,
   }];
-  return [...staticPages, ...speakingPages, ...blogPages, ...industryIndex];
+  // Topic hubs: lastmod is the newest piece listed on the hub.
+  const topicPages: MetadataRoute.Sitemap = TOPICS.map((t) => {
+    const { articles, videos } = topicItems(t);
+    return {
+      url: `${SITE.url}/topics/${t.slug}`,
+      lastModified: newest([...articles, ...videos].map((i) => i.date)),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    };
+  });
+  const topicsIndex: MetadataRoute.Sitemap = [{ url: `${SITE.url}/topics`, lastModified: articleDate, changeFrequency: 'weekly', priority: 0.8 }];
+
+  return [...staticPages, ...topicsIndex, ...topicPages, ...speakingPages, ...blogPages, ...industryIndex];
 }

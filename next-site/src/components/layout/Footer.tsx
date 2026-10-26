@@ -6,9 +6,12 @@ const FOOTER_LABEL_OVERRIDES: Record<string, string> = {
   '/computers': 'Computers',
 };
 
-const FOOTER_NAV = NAV_ITEMS
+const FOOTER_NAV: { label: string; href: string }[] = NAV_ITEMS
   .filter((item) => item.href !== '/')
   .map((item) => ({ label: FOOTER_LABEL_OVERRIDES[item.href] ?? item.label, href: item.href }));
+
+// Topic hubs are linked from the footer, not the header, which is already full.
+FOOTER_NAV.push({ label: 'Topics', href: '/topics' });
 
 const FOOTER_SOCIAL_HREFS = new Set([
   'https://linkedin.com/in/juliensimon',
