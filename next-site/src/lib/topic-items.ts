@@ -18,6 +18,14 @@ const decode = (s: string) =>
   s.replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 const clip = (s: string, n: number) => (s.length <= n ? s : s.slice(0, n).replace(/\s+\S*$/, '').replace(/[,.;:]$/, ''));
 
+/** Plain-prose summary: no em dashes, and nothing when the text only repeats the title or is boilerplate. */
+function cleanSummary(summary: string, title: string): string {
+  const text = summary.replace(/\s+\u2014\s+/g, ', ').trim();
+  const head = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().slice(0, 40);
+  if (/a video by Julien Simon/i.test(text) || head(text) === head(title)) return '';
+  return text;
+}
+
 let videoCache: TopicItem[] | null = null;
 
 /** Every transcript page that is a real video (not a redirect stub), read from the shipped archive. */
@@ -38,7 +46,7 @@ function allVideos(): TopicItem[] {
         title: decode(title).replace(/\s+-\s+Julien Simon$/, '').trim(),
         href: `/youtube/${year}/${file}`,
         date: `${m[1]}-${m[2]}-${m[3]}`,
-        summary: clip(decode(desc), 200),
+        summary: cleanSummary(clip(decode(desc), 200), decode(title)),
       });
     }
   }
@@ -52,7 +60,7 @@ function allArticles(): TopicItem[] {
     title: a.title,
     href: `/blog/industry-perspectives/${a.slug}/`,
     date: a.date,
-    summary: a.description,
+    summary: cleanSummary(a.description, a.title),
   }));
 }
 

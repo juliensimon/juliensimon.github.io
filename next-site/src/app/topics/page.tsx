@@ -27,6 +27,19 @@ export default function TopicsPage() {
         { name: 'Topics', url },
       ])} />
       <StructuredData data={collectionPageSchema('AI Topics', DESCRIPTION, url)} />
+      <StructuredData data={{
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        '@id': `${url}/#itemlist`,
+        name: 'AI topics',
+        numberOfItems: TOPICS.length,
+        itemListElement: TOPICS.map((t, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          url: absolute(`/topics/${t.slug}`),
+          name: t.name,
+        })),
+      }} />
       <Breadcrumbs items={[
         { name: 'Home', href: '/' },
         { name: 'Topics', href: '/topics' },

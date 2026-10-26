@@ -84,6 +84,15 @@ export default async function TopicPage({ params }: Props) {
       answer:
         'Articles appear first in The AI Realist newsletter (airealist.ai) and are archived on julien.org. Videos are on the YouTube channel @juliensimonfr, each with a full transcript on julien.org.',
     },
+    ...(videos.length > 0
+      ? [{
+          question: `Which videos does Julien Simon have on ${topic.name.toLowerCase()}?`,
+          answer: `${videos.length} videos on the YouTube channel @juliensimonfr, each with a transcript on julien.org. The newest are ${videos
+            .slice(0, 3)
+            .map((v) => `"${v.title}" (${dateLabel(v.date)})`)
+            .join('; ')}.`,
+        }]
+      : []),
   ];
 
   const listData = {
@@ -107,7 +116,11 @@ export default async function TopicPage({ params }: Props) {
         { name: 'Topics', url: absolute('/topics') },
         { name: topic.name, url },
       ])} />
-      <StructuredData data={{ ...collectionPageSchema(topic.title, topic.description, url), dateModified: newest?.date }} />
+      <StructuredData data={{
+        ...collectionPageSchema(topic.title, topic.description, url),
+        dateModified: newest?.date,
+        about: topic.keywords.map((name) => ({ '@type': 'Thing', name })),
+      }} />
       <StructuredData data={listData} />
       <Breadcrumbs items={[
         { name: 'Home', href: '/' },
@@ -121,8 +134,22 @@ export default async function TopicPage({ params }: Props) {
             {counts}. Last updated {dateLabel(newest.date)}.
           </p>
         )}
-        <ItemList heading="Articles" items={articles} />
-        <ItemList heading="Videos" items={videos} />
+        <ItemList heading={`${topic.name}: articles`} items={articles} />
+        <ItemList heading={`${topic.name}: videos`} items={videos} />
+        <section className="mb-14">
+          <h2 className="text-xl font-bold font-heading text-text mb-3">Go further</h2>
+          <ul className="space-y-1 text-sm text-text-muted">
+            <li>
+              <Link href="/speaking" className="underline hover:text-primary">Book a keynote or workshop on {topic.name.toLowerCase()}</Link>
+            </li>
+            <li>
+              <Link href="/podcast" className="underline hover:text-primary">Listen to The AI Realist podcast</Link>
+            </li>
+            <li>
+              <a href="https://www.airealist.ai/subscribe" className="underline hover:text-primary">Subscribe to The AI Realist newsletter</a>
+            </li>
+          </ul>
+        </section>
         <section className="mb-14">
           <h2 className="text-xl font-bold font-heading text-text mb-3">More topics</h2>
           <ul className="flex flex-wrap gap-2">
