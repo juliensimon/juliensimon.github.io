@@ -11,6 +11,15 @@ export interface SpeakingEvent {
 export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
   '2026': [
     {
+      title: "Stop the POCs: how to choose, orchestrate and transform with AI",
+      venue: "IAKA 2026",
+      date: "November 10, 2026",
+      location: "Namur, Belgium",
+      description: "Opening keynote at IAKA, the Walloon trade show for AI and digital tools in business, at the Business Village d'Ecolys. Most enterprise AI projects stop after the demo: the POC is built to succeed and never meets real users, customers or IT constraints. The talk replaces it with an MVP in production on a narrow scope, measured from day one, around the 2026 theme: choose, orchestrate, transform.",
+      tags: ["Keynote","Conference","Enterprise AI","Namur"],
+      links: [{"url":"https://www.iaka.io/","label":"Event"}],
+    },
+    {
       title: "Panel: How Big SaaS and AI Converge",
       venue: "SaaS & AI Kitchen (OMR Reviews & Carlsquare)",
       date: "October 6, 2026",

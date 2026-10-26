@@ -90,6 +90,7 @@ const REGIONS: Region[] = [
       { name: 'Kilkenny', lat: 52.6541, lng: -7.2448, country: 'Ireland' },
       { name: 'Amsterdam', lat: 52.3676, lng: 4.9041, country: 'Netherlands' },
       { name: 'Brussels', lat: 50.8503, lng: 4.3517, country: 'Belgium' },
+      { name: 'Namur', lat: 50.4674, lng: 4.8720, country: 'Belgium' },
       { name: 'Berlin', lat: 52.5200, lng: 13.4050, country: 'Germany' },
       { name: 'Frankfurt', lat: 50.1109, lng: 8.6821, country: 'Germany' },
       { name: 'Hamburg', lat: 53.5511, lng: 9.9937, country: 'Germany' },
