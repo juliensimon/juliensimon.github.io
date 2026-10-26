@@ -12,7 +12,7 @@ export const EXPERIENCES: Experience[] = [
   {
     title: 'AI Operating Partner',
     company: 'Fortino Capital',
-    companyUrl: 'https://www.fortinocapital.com',
+    companyUrl: 'https://www.fortino.capital',
     period: 'November 2025 – Present',
     description:
       'Supporting both the Private Equity arm and the Venture Capital arm, working across current and future portfolio companies to accelerate and scale cloud and AI initiatives.',

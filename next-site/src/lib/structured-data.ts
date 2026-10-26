@@ -15,7 +15,7 @@ export function personSchema() {
     worksFor: {
       '@type': 'Organization',
       name: 'Fortino Capital',
-      url: 'https://www.fortinocapital.com',
+      url: 'https://www.fortino.capital',
       description: 'Private Equity and Venture Capital firm',
     },
     description:
