@@ -206,6 +206,13 @@ export default function SpeakingContent({ lang = 'en' }: { lang?: SpeakingLang }
               </a>
               {t.linkedinTrail}
             </p>
+            <p className="text-xs text-text-muted mt-1">
+              {t.sessionizeLead}{' '}
+              <a href="https://sessionize.com/julien-simon-ai" className="underline">
+                Sessionize
+              </a>
+              {t.linkedinTrail}
+            </p>
           </div>
         </section>
       </section>

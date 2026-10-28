@@ -40,6 +40,7 @@ export interface SpeakingCopy {
   requestSubject: string;
   linkedinLead: string;
   linkedinTrail: string;
+  sessionizeLead: string;
   breadcrumbHome: string;
   breadcrumbPage: string;
   faqHeading: string;
@@ -80,6 +81,7 @@ const EN: SpeakingCopy = {
   requestSubject: 'Speaking request',
   linkedinLead: 'Or message Julien on',
   linkedinTrail: '.',
+  sessionizeLead: 'Event organizers can also find Julien on',
   breadcrumbHome: 'Home',
   breadcrumbPage: 'Speaking',
   faqHeading: 'Frequently Asked Questions',
@@ -122,6 +124,7 @@ const FR: SpeakingCopy = {
   requestSubject: 'Demande d\'intervention',
   linkedinLead: 'Ou écrivez à Julien sur',
   linkedinTrail: '.',
+  sessionizeLead: 'Les organisateurs d\'événements trouvent aussi Julien sur',
   breadcrumbHome: 'Accueil',
   breadcrumbPage: 'Conférencier IA',
   faqHeading: 'Questions fréquentes',
