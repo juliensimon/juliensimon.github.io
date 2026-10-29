@@ -19,6 +19,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'GeForce vs Workstation GPUs: NVIDIA’s Half Rate, Priced',
+    href: '/blog/industry-perspectives/2026-10-28_geforce-vs-workstation-gpus-nvidias-half-rate-priced/',
+    date: 'October 28, 2026',
+    summary: 'NVIDIA sells one chip at two training speeds, and the unlocks prove it\'s a setting. Even capped, GeForce wins per dollar to buy.',
+    icon: 'article',
+  },
+  {
     title: 'Exploring Apple’s On-Device Model: Twenty Billion Parameters in Flash',
     href: '/blog/industry-perspectives/2026-10-25_exploring-apples-on-device-model-twenty-billion-parameters-in-flash/',
     date: 'October 25, 2026',
@@ -45,13 +52,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     date: 'October 15, 2026',
     summary: 'Doctolib ticks the health-data compliance boxes with US clouds and models. For now, its public promises say more than its documents show.',
     icon: 'article',
-  },
-  {
-    title: 'Your LLM No Longer Reads Every Token: 8 Attention Designs Explained',
-    href: '/youtube/2026/20261011_Your_LLM_No_Longer_Reads_Every_Token_8_Attention_Designs_Explained.html',
-    date: 'October 11, 2026',
-    summary: 'Alibaba, Moonshot, DeepSeek and ZAI replaced full attention in most or all layers. Eight designs, what each saves and gives up, and three measured on a Mac.',
-    icon: 'video',
   },
 ];
 

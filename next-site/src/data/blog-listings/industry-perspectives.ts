@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'GeForce vs Workstation GPUs: NVIDIA\'s Half Rate, Priced',
+    slug: '2026-10-28_geforce-vs-workstation-gpus-nvidias-half-rate-priced',
+    date: '2026-10-28',
+    description: 'NVIDIA sells one chip at two training speeds, and the unlocks prove it\'s a setting. Even capped, GeForce wins per dollar to buy.',
+    originalUrl: 'https://www.airealist.ai/p/nvidia-geforce-half-rate',
+  },
+  {
     title: 'Exploring Apple\'s On-Device Model: Twenty Billion Parameters in Flash',
     slug: '2026-10-25_exploring-apples-on-device-model-twenty-billion-parameters-in-flash',
     date: '2026-10-25',
