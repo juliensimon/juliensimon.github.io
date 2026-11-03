@@ -19,6 +19,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Mistral Large 4 Weights: The Score Comes With the Harness',
+    href: '/blog/industry-perspectives/2026-11-01_mistral-large-4-weights-the-score-comes-with-the-harness/',
+    date: 'November 1, 2026',
+    summary: 'Mistral Large 4\'s weights landed October 29th, 2026. Its Terminal-Bench 41 comes from Mistral\'s own coding agent; in a generic agent it scores 25.',
+    icon: 'article',
+  },
+  {
     title: 'GeForce vs Workstation GPUs: NVIDIA’s Half Rate, Priced',
     href: '/blog/industry-perspectives/2026-10-28_geforce-vs-workstation-gpus-nvidias-half-rate-priced/',
     date: 'October 28, 2026',
@@ -45,13 +52,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     date: 'October 19, 2026',
     summary: 'A coding agent\'s 998-line pull request, reviewed with CodeRabbit: a global lock that makes users wait on each other, and a user ID that is not access control.',
     icon: 'video',
-  },
-  {
-    title: 'Ticking Boxes, Shipping Models',
-    href: '/blog/industry-perspectives/2026-10-15_ticking-boxes-shipping-models/',
-    date: 'October 15, 2026',
-    summary: 'Doctolib ticks the health-data compliance boxes with US clouds and models. For now, its public promises say more than its documents show.',
-    icon: 'article',
   },
 ];
 

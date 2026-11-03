@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Mistral Large 4 Weights: The Score Comes With the Harness',
+    slug: '2026-11-01_mistral-large-4-weights-the-score-comes-with-the-harness',
+    date: '2026-11-01',
+    description: 'Mistral Large 4\'s weights landed October 29th, 2026. Its Terminal-Bench 41 comes from Mistral\'s own coding agent; in a generic agent it scores 25.',
+    originalUrl: 'https://www.airealist.ai/p/mistral-large-4-weights-score-comes-with-harness',
+  },
+  {
     title: 'GeForce vs Workstation GPUs: NVIDIA\'s Half Rate, Priced',
     slug: '2026-10-28_geforce-vs-workstation-gpus-nvidias-half-rate-priced',
     date: '2026-10-28',
