@@ -19,6 +19,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Mistral Large 4: Where Did the 41 Go?',
+    href: '/blog/industry-perspectives/2026-11-11_mistral-large-4-where-did-the-41-go/',
+    date: 'November 11, 2026',
+    summary: 'Artificial Analysis removed the run behind Mistral\'s headline coding score. Mistral\'s release page, model card, and technical report still cite it.',
+    icon: 'article',
+  },
+  {
     title: 'Mistral Large 4 Weights: The Score Comes With the Harness',
     href: '/blog/industry-perspectives/2026-11-01_mistral-large-4-weights-the-score-comes-with-the-harness/',
     date: 'November 1, 2026',
@@ -44,13 +51,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     href: '/youtube/2026/20261023_Is_OpenAIs_Embedding_Model_Worth_Paying_For_A_Test_on_Stripes_Docs_in_4_Languages.html',
     date: 'October 23, 2026',
     summary: 'Five embedding models scored on Stripe\'s docs in four languages: in English OpenAI\'s paid model returns the right passage 65% of the time, a free local model 66%.',
-    icon: 'video',
-  },
-  {
-    title: 'Reviewing AI-Written Code with CodeRabbit',
-    href: '/youtube/2026/20261019_Reviewing_AI-Written_Code_with_CodeRabbit.html',
-    date: 'October 19, 2026',
-    summary: 'A coding agent\'s 998-line pull request, reviewed with CodeRabbit: a global lock that makes users wait on each other, and a user ID that is not access control.',
     icon: 'video',
   },
 ];

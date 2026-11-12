@@ -9,7 +9,7 @@ export interface PublicationCategory {
 export const PUBLICATION_CATEGORIES: PublicationCategory[] = [
   {
     name: 'The AI Realist (Industry Perspectives)',
-    count: 106,
+    count: 107,
     description: 'Practical AI analysis for builders, operators, and investors. Published on The AI Realist newsletter.',
     href: '/blog/industry-perspectives/',
     dateRange: '2021 - Present',
@@ -58,4 +58,4 @@ export const PUBLICATION_CATEGORIES: PublicationCategory[] = [
   },
 ];
 
-export const TOTAL_ARTICLES = 504;
+export const TOTAL_ARTICLES = 505;

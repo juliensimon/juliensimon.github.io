@@ -11,6 +11,13 @@ export interface IndustryArticle {
 
 export const INDUSTRY_PERSPECTIVES_ARTICLES: IndustryArticle[] = [
   {
+    title: 'Mistral Large 4: Where Did the 41 Go?',
+    slug: '2026-11-11_mistral-large-4-where-did-the-41-go',
+    date: '2026-11-11',
+    description: 'Artificial Analysis removed the run behind Mistral\'s headline coding score. Mistral\'s release page, model card, and technical report still cite it.',
+    originalUrl: 'https://www.airealist.ai/p/mistral-large-4-terminal-bench-41-removed',
+  },
+  {
     title: 'Mistral Large 4 Weights: The Score Comes With the Harness',
     slug: '2026-11-01_mistral-large-4-weights-the-score-comes-with-the-harness',
     date: '2026-11-01',
