@@ -120,7 +120,7 @@ export default function HomeContent() {
           <div className="animate-page-fade-scale">
             <ExportedImage
               src="/assets/julien.webp"
-              alt="Julien Simon - AI Operating Partner at Fortino Capital"
+              alt="Julien Simon"
               width={160}
               height={160}
               priority
@@ -128,14 +128,11 @@ export default function HomeContent() {
             />
           </div>
 
-          <h1 className="mb-1 animate-page-fade-up" style={{ animationDelay: '0.1s' }}>
+          <h1 className="mb-4 animate-page-fade-up" style={{ animationDelay: '0.1s' }}>
             <span className="block text-5xl sm:text-6xl lg:text-7xl font-bold font-heading gradient-brand-text">
               Julien Simon
             </span>
           </h1>
-          <p className="mb-3 animate-page-fade-up text-xl sm:text-2xl font-semibold text-text mt-3" style={{ animationDelay: '0.1s' }}>
-            AI Operating Partner @ Fortino Capital
-          </p>
 
           <div
             className="text-lg text-text-muted h-8 mb-8 animate-page-fade-in"
