@@ -41,7 +41,7 @@ export const PINNED_REPOSITORIES: Repository[] = [
     description: 'AI-generated technical walkthrough of the Apollo 11 Guidance Computer flight software (Luminary099)',
     url: 'https://github.com/juliensimon/apollo11-ai-walkthrough',
     language: 'Python',
-    stars: 47,
+    stars: 48,
     forks: 9,
     tags: ['Apollo 11', 'AI Analysis', 'Flight Software', 'Historical'],
   },

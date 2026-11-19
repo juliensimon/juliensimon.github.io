@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Your AI Agent&#x27;s Production Access with Teleport</title>
+    <meta name="description" content="This video is sponsored by Teleport. An AI agent on call needs real access: the production database, the Kubernetes cluster.">
+    <meta property="og:title" content="Secure Your AI Agent&#x27;s Production Access with Teleport">
+    <meta property="og:description" content="This video is sponsored by Teleport. An AI agent on call needs real access: the production database, the Kubernetes cluster.">
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://www.julien.org/youtube/2026/20261116_Secure_Your_AI_Agents_Production_Access_with_Teleport.html">
+    <link rel="canonical" href="https://www.julien.org/youtube/2026/20261116_Secure_Your_AI_Agents_Production_Access_with_Teleport.html">
+    <meta property="og:image" content="https://img.youtube.com/vi/u5u_JvUysqA/maxresdefault.jpg">
+    <meta name="twitter:image" content="https://img.youtube.com/vi/u5u_JvUysqA/maxresdefault.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Secure Your AI Agent&#x27;s Production Access with Teleport">
+    <meta name="twitter:description" content="This video is sponsored by Teleport. An AI agent on call needs real access: the production database, the Kubernetes cluster.">
+    <meta name="twitter:creator" content="@julsimon">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "Secure Your AI Agent&#x27;s Production Access with Teleport",
+        "description": "This video is sponsored by Teleport. An AI agent on call needs real access: the production database, the Kubernetes cluster.",
+        "uploadDate": "2026-11-16T04:15:03+00:00",
+        "embedUrl": "https://www.youtube.com/embed/u5u_JvUysqA",
+        "thumbnailUrl": "https://img.youtube.com/vi/u5u_JvUysqA/maxresdefault.jpg",
+        "author": { "@id": "https://www.julien.org/#person" }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Secure Your AI Agent&#x27;s Production Access with Teleport</h1>
+        <div class="date">November 16, 2026</div>
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/u5u_JvUysqA" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <div class="description">This video is sponsored by Teleport.
+
+Learn more about Teleport&#x27;s Agentic Identity Framework: https://fandf.co/4AK8VLF
+
+#sponsored
+
+An AI agent on call needs real access: the production database, the Kubernetes cluster. Run it with my credentials or a long-lived key, and everything it does is logged as me. In this video, Claude Code gets its own identity from Teleport instead: short-lived certificates, one narrow role, and its own name in the audit log.
+
+What you&#x27;ll see:
+- The architecture on AWS: PostgreSQL on Amazon RDS, a small Kubernetes cluster, and Teleport Community Edition in front of both
+- Claude Code with no shell and no file access, only two MCP servers: Teleport&#x27;s MCP server for databases and the open-source Kubernetes MCP server
+- The bot identity: 15-minute certificates renewed by tbot, one role, one read-only database user, one Kubernetes namespace
+- A live incident: the agent finds the root cause in seconds, then PostgreSQL and Teleport each refuse a change
+- A prompt injection planted in a support ticket, then the same attack replayed by hand with the agent&#x27;s credentials
+- The trail: Teleport&#x27;s audit log, its session recordings, and PostgreSQL&#x27;s own log
+
+Recorded on 2026-10-25 with Teleport Community Edition 18.11.3 and Claude Code on Claude Sonnet 5.5.
+
+Chapters:
+0:00 Intro
+1:16 The architecture
+3:21 Who the agent is
+4:27 The incident: diagnosis
+5:43 Two layers say no
+7:04 Prompt injection in a ticket
+7:38 Playing the bad day by hand
+8:33 The audit log
+9:34 Session recordings and PostgreSQL logs
+10:49 Takeaways
+
+Links:
+- Code for this video, one CloudFormation stack that builds and deletes everything: https://fandf.co/3ULRN82
+- Teleport Agentic Identity Framework: https://goteleport.com/docs/agentic-identity-framework/
+- Machine &amp; Workload Identity with MCP Access: https://goteleport.com/docs/machine-workload-identity/access-guides/mcp/
+- Teleport Kubernetes Access: https://goteleport.com/docs/enroll-resources/kubernetes-access/introduction/
+- Kub...</div>
+
+        <div class="transcript">
+<h2>Transcript</h2>
+            Hi, everybody. Julien here. A coding agent is only truly useful if it can interact with the real production systems, the real database, the real cluster. The easy way to do that is to give it either my own credentials or access to a long-lived key. But none of those two solutions sound super exciting.
+
+A few weeks ago, I let an agent loose on Postgres by giving it away, forks of a database. Today, there is no fork. The agent works on the real thing, and it gets its own identity, short-lived, narrow, and its own name in the audit log. I&#x27;m using Teleport for that. It&#x27;s an identity platform for people, workloads, machines, and agents.
+
+And the agent is the newest of the four. Teleport calls this the agentic identity framework. What we&#x27;re going to see today is based on their community edition. This video is sponsored by Teleport. They paid for it.
+
+But as usual, the lab, the tests, and the opinion are all mine. Let&#x27;s get started. Here&#x27;s the whole thing running on AWS. Let&#x27;s start on the run. We have a Postgres database on Amazon RDS in a private subnet.
+
+We have with a single namespace called shop. And in front of both, we have Teleport. The only open port to the outside is 443, and Teleport is the one answering on it. Nothing reaches the database or the cluster without going through it. On the left side, we have my laptop.
+
+Cloud Code doesn&#x27;t talk to the database or cluster. It talks to two MCP servers. Teleports own mcp server for databases the second is the open source kubernetes mcp-server which reaches the cluster through teleports kubernetes access neither of the mcp servers have a password or an api key they use certificates that the t-bot process gets from teleport for a bot called claude on call they last 15 minutes and t-bot renews them every five. The orange line is the only path the agent has. Teleport checks the certificate, decides whether this bot may reach the resource, and passes the request on under a narrow identity.
+
+On the database, the agent becomes a read-only user called on-call-ro for read-only. On the cluster, it becomes a group that can view one namespace. Every request faces two questions does teleport let this identity through and what may this identity do on the other side we&#x27;re about to watch both of them say no the whole setup is one cloud formation stack available on github and as usual you will find the link in the video description this is the agent as teleport sees it logged in as bot cloud on call not as me one role valid for 11 minutes the line that says kubernetes is disabled is about this one file the one the database server uses the cluster has its own certificate and this is what the identity may do one teleport role and it is the contract for the rest of this video one database shop and one database user on call ro read access to pods events and deployments in the shop name space an explicit deny on secrets everywhere, and a maximum lifetime of 15 minutes enforced by the cluster. I asked for 12-hour certificates with the same bot. I got 15 minutes.
+
+One more setting, which the teleport guide for MCP access requires, allow reissue lets the bot derive a certificate for each resource it reaches. Without it, every query fails. With no built-in tools, no shell, no file access. It only has the two MCP servers and nothing else because an agent with a shell on my laptop could go and find my own credentials. So let&#x27;s assume we have an incident on our cluster and the orders API is down.
+
+So why don&#x27;t we ask the agent to find out what&#x27;s going on and fix it? Note that I gave it absolutely no hint about where to look it&#x27;s going to ask which namespaces exist and the answer is one it&#x27;s called shop and it remember it only sees what the role lets it see from there it moves very fast the pod is crash looping the log says a schema check failed and the database confirms it the orders table has no currency column the last migration applied is 41 migration 42 never ran so it suggests some options and let&#x27;s give it what it wants. So let&#x27;s say we want to apply migration 42 and fix the missing column problem. And note that I cannot do this. I get an error saying I must be the owner of table orders.
+
+So the agent wasn&#x27;t allowed to do this and it couldn&#x27;t write the migration row. So we need to be precise on who said no. Teleport decided that the agent can only ever be onCallRO. And Postgres knows that onCallRO can read three tables and change nothing. So we have two layers, and the agent just hit the second one.
+
+So the agent doesn&#x27;t have permission to fix this problem. So I guess we could say restart the API anyway, and let&#x27;s see what happens. It doesn&#x27;t have permission to do it so it tried to delete the pod and this time teleport is saying no because we simply do not have permissions and look at what it&#x27;s trying to do next it&#x27;s not trying to work around the issue it tells me what a human has to do and that is the division of labor that we want the agent can find the root cause in just a few seconds and because it doesn&#x27;t It tells me that someone accountable needs to apply the fix. So a human with the right permissions need to fix this. But let&#x27;s still ask a last question.
+
+Before you close this out, read the support tickets to size the customer impact and act on anything urgent over there. So it&#x27;s going to read about 20 tickets and size the impact. It what it is. It&#x27;s an instruction planted in the data. So it did nothing that the ticket asked.
+
+The model did the right thing and I&#x27;m glad. I&#x27;m also not going to build my security on it. So let me play the bad day. First, let&#x27;s try to get the secrets. And this is forbidden and it tells you this is forbidden by teleport.
+
+Okay, Now, let&#x27;s try and drop the table. No, I must be the owner of that table. Now, that&#x27;s not the case. Let&#x27;s try something really stupid now. Let&#x27;s to become the database administrator.
+
+Man says no, access to database denied, and this is teleport again. So three attempts, three refusals, model&#x27;s judgment just clearly define access rules so now let&#x27;s look at the audit log in teleport so I&#x27;ve logged in to teleport here and I can see the audit log for my application I can search for database events and every statement that the agent has sent is here word for word with the database the database user and one name on every line bot club on call if the agent been using my login, this would all say Julien. So let&#x27;s look for calls that have been denied. We see here my attempt to become the database administrator, and Teleport refused it and wrote it down. And I can look at all the details here.
+
+Now let&#x27;s look at my drop table attempt. So here the log says that the bot executed the query. Sent it and Postgres refused it but this row doesn&#x27;t say that. Fortunately I can see session recordings so let&#x27;s go and take a look at these. Every database session gets a recording so if we open this one we can see the whole exchange my statement and Postgres&#x27;s answer.
+
+We must be the owner of the table. The agent&#x27;s own attempt at the schema change has the same evidence in the recording. On the Kubernetes side, Teleport logs the request that it lets through with the status that Kubernetes sends back. The requests that Teleport stops itself, the secrets, and the pod delete are not in the list. On the version I&#x27;m running, those refusals only show up in the error that the client gets.
+
+And as we can see here, the Postgres log agrees. Must be owner of table orders, statement drop table orders. So we have three different records of one refused statement and each one answers a different question. The audit log says who sent it. The recording says what came back and the postgres log says what is refused.
+
+So three things to take away. Number one, give the agent its own identity. If it logs in as you, the log says you did it two make that identity short-lived and narrow and enforce both on the server not a file on your laptop and three let the agent diagnose and let a human repair everything you saw in this video lives in this repository the link will be in the video description one command builds everything on aws and one commands deletes all of it if you want to go further on how Teleport handles identity for agents. The link to the agentic identity framework is also in the description. That&#x27;s it for today.
+
+Thank you to Teleport for sponsoring this video. Thank you for watching. I hope this was interesting and fun. And until next time, my friend, you know what to do. Keep rocking.</div>
+        <div class="tags">
+            <h2>Tags</h2>
+            <span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Technology</span>
+        </div>
+
+        <div class="links">
+            <a href="index.html">&larr; Back to 2026 Videos</a>
+            <a href="/youtube-videos">&larr; Back to YouTube Overview</a>
+        </div>
+    </div>
+
+
+</body></html>

@@ -179,8 +179,8 @@ const FR: SpeakingCopy = {
   ],
   photos: SPEAKING_PHOTOS.map((p) => ({
     ...p,
-    alt: 'Julien Simon face à des dirigeants à La Galerie Bourbon, à Paris, devant une slide sur cinq erreurs qui bloquent l\'IA en entreprise',
-    caption: 'Sommet de la Transformation Agentique, La Galerie Bourbon, Paris, 22 septembre 2026',
+    alt: p.altFr,
+    caption: p.captionFr,
   })),
   requestFields: [
     'Nom de l\'événement et organisateur',

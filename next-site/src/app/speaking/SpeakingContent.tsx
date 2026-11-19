@@ -62,25 +62,32 @@ export default function SpeakingContent({ lang = 'en' }: { lang?: SpeakingLang }
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {/* Proof */}
-        {t.photos.map((photo) => (
-          <ScrollReveal key={photo.src} direction="up" className="mb-12">
-            <figure className="glass-card rounded-xl overflow-hidden max-w-4xl mx-auto">
-              <ExportedImage
-                src={photo.src}
-                alt={photo.alt}
-                width={photo.width}
-                height={photo.height}
-                className="w-full h-auto"
-                sizes="(max-width: 1024px) 100vw, 896px"
-                priority
-              />
-              <figcaption className="px-5 py-3 text-xs text-text-muted flex flex-wrap justify-between gap-2">
-                <span>{photo.caption}</span>
-                <span>{t.photoCredit} {photo.credit}</span>
-              </figcaption>
-            </figure>
-          </ScrollReveal>
-        ))}
+        {/* Columns share the row in proportion to each image's aspect ratio, so every
+            photo is the same height at any width and none is cropped. */}
+        <div
+          className={t.photos.length > 1 ? 'grid gap-6 md:[grid-template-columns:var(--photo-cols)] mb-12' : 'mb-12'}
+          style={{ '--photo-cols': t.photos.map((p) => `${(p.width / p.height).toFixed(4)}fr`).join(' ') } as React.CSSProperties}
+        >
+          {t.photos.map((photo) => (
+            <ScrollReveal key={photo.src} direction="up" className="h-full">
+              <figure className="glass-card rounded-xl overflow-hidden max-w-4xl mx-auto h-full flex flex-col">
+                <ExportedImage
+                  src={photo.src}
+                  alt={photo.alt}
+                  width={photo.width}
+                  height={photo.height}
+                  className="w-full h-auto"
+                  sizes={t.photos.length > 1 ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 1024px) 100vw, 896px'}
+                  priority
+                />
+                <figcaption className="mt-auto px-5 py-3 text-xs text-text-muted flex flex-wrap justify-between gap-x-4 gap-y-1">
+                  <span>{photo.caption}</span>
+                  <span>{t.photoCredit} {photo.credit}</span>
+                </figcaption>
+              </figure>
+            </ScrollReveal>
+          ))}
+        </div>
 
         <div className="grid grid-cols-3 gap-4 mb-16">
           <MetricCard value={SPEAKING_STATS.totalEvents} suffix="+" label={t.metrics.events} index={0} />

@@ -19,6 +19,13 @@ type LatestUpdate = {
 
 const LATEST_UPDATES: LatestUpdate[] = [
   {
+    title: 'Secure Your AI Agent\'s Production Access with Teleport',
+    href: '/youtube/2026/20261116_Secure_Your_AI_Agents_Production_Access_with_Teleport.html',
+    date: 'November 16, 2026',
+    summary: 'Claude Code gets its own Teleport identity: 15-minute certificates, one narrow role, its name in the audit log. PostgreSQL and Teleport each refuse a change.',
+    icon: 'video',
+  },
+  {
     title: 'Mistral Large 4: Where Did the 41 Go?',
     href: '/blog/industry-perspectives/2026-11-11_mistral-large-4-where-did-the-41-go/',
     date: 'November 11, 2026',
@@ -45,13 +52,6 @@ const LATEST_UPDATES: LatestUpdate[] = [
     date: 'October 25, 2026',
     summary: 'Apple Intelligence\'s 20-billion-parameter model lives in flash and wakes a few experts per prompt. Your Mac gains memory and battery, not math.',
     icon: 'article',
-  },
-  {
-    title: 'Is OpenAI\'s Embedding Model Worth Paying For? A Test on Stripe\'s Docs in 4 Languages',
-    href: '/youtube/2026/20261023_Is_OpenAIs_Embedding_Model_Worth_Paying_For_A_Test_on_Stripes_Docs_in_4_Languages.html',
-    date: 'October 23, 2026',
-    summary: 'Five embedding models scored on Stripe\'s docs in four languages: in English OpenAI\'s paid model returns the right passage 65% of the time, a free local model 66%.',
-    icon: 'video',
   },
 ];
 

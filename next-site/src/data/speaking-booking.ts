@@ -15,6 +15,8 @@ export interface SpeakingPhoto {
   src: string;
   alt: string;
   caption: string;
+  altFr: string;
+  captionFr: string;
   credit: string;
   width: number;
   height: number;
@@ -76,9 +78,21 @@ export const SPEAKING_PHOTOS: SpeakingPhoto[] = [
     src: '/assets/speaking/ofelia-keynote-paris-2026.webp',
     alt: 'Julien Simon speaking to executives at La Galerie Bourbon in Paris, with a slide on five mistakes that block enterprise AI',
     caption: 'Sommet de la Transformation Agentique, La Galerie Bourbon, Paris, September 22, 2026',
+    altFr: 'Julien Simon face à des dirigeants à La Galerie Bourbon, à Paris, devant une slide sur cinq erreurs qui bloquent l\'IA en entreprise',
+    captionFr: 'Sommet de la Transformation Agentique, La Galerie Bourbon, Paris, 22 septembre 2026',
     credit: 'Ofelia',
     width: 1600,
     height: 1067,
+  },
+  {
+    src: '/assets/speaking/hcl-keynote-milan-2026.webp',
+    alt: 'Julien Simon opening the HCLSoftware AI builders event in Milan, in front of a slide titled A coding model is nothing without its harness',
+    caption: 'HCLSoftware AI builders event, Milan, November 17, 2026',
+    altFr: 'Julien Simon ouvre l\'événement HCLSoftware pour les développeurs d\'IA à Milan, devant une slide intitulée A coding model is nothing without its harness',
+    captionFr: 'Événement HCLSoftware pour les développeurs d\'IA, Milan, 17 novembre 2026',
+    credit: 'HCLSoftware',
+    width: 1089,
+    height: 955,
   },
 ];
 

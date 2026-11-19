@@ -11,6 +11,14 @@ export interface SpeakingEvent {
 export const SPEAKING_EVENTS: Record<string, SpeakingEvent[]> = {
   '2026': [
     {
+      title: "The State of AI, November 2026: What Do You Own?",
+      venue: "HCLSoftware AI builders event",
+      date: "November 17, 2026",
+      location: "Milan, Italy",
+      description: "Opening keynote at the HCLSoftware AI builders event, three days of mentoring, hackathon and certifications for developers. One question runs through the talk: what do you own? It covers open AI models and where they run, the contract terms and export rules that decide who can use what, the harness that makes a coding model useful, and how to design for places with no cloud.",
+      tags: ["Keynote","Conference","Open Models","Sovereign AI","Milan"],
+    },
+    {
       title: "Stop the POCs: how to choose, orchestrate and transform with AI",
       venue: "IAKA 2026",
       date: "November 10, 2026",
