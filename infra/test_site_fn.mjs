@@ -125,3 +125,35 @@ test('the apex still redirects first for an extensionless video URL', () => {
   assert.equal(r.statusCode, 301);
   assert.equal(r.headers.location.value, 'https://www.julien.org/youtube/2018/x');
 });
+
+// S3 reads a raw "+" in a path as a space, so /x_+_y.html was a 404 (GitHub Pages served it). The sitemap
+// lists the raw form for four videos, so the function sends S3 the encoded form, which works.
+test('a plus sign in the path is sent to S3 as %2B', () => {
+  const r = call('www.julien.org', '/youtube/2017/20170413_Object_detection_-_MXNet_+_Raspberry_Pi_+_Amazon_Polly.html');
+  assert.equal(r.uri, '/youtube/2017/20170413_Object_detection_-_MXNet_%2B_Raspberry_Pi_%2B_Amazon_Polly.html');
+});
+
+test('an already encoded %2B and a literal percent sequence are left as they are', () => {
+  assert.equal(call('www.julien.org', '/youtube/2017/a_%2B_b.html').uri, '/youtube/2017/a_%2B_b.html');
+  assert.equal(call('www.julien.org', '/youtube/2015/100%25_cloud.html').uri, '/youtube/2015/100%25_cloud.html');
+});
+
+test('a plus sign works together with the extensionless .html rewrite', () => {
+  assert.equal(call('www.julien.org', '/youtube/2022/SageMaker_+_VS_Code').uri, '/youtube/2022/SageMaker_%2B_VS_Code.html');
+});
+
+test('a plus sign in a redirected path keeps the redirect and the encoded form', () => {
+  const r = call('www.julien.org', '/blog/aws-posts-and-images/a+b');
+  assert.equal(r.statusCode, 301);
+  assert.equal(r.headers.location.value, '/blog/aws-posts-and-images/a%2Bb/');
+});
+
+test('the apex redirect keeps a plus sign exactly as the visitor sent it', () => {
+  const r = call('julien.org', '/youtube/2017/a_+_b.html');
+  assert.equal(r.headers.location.value, 'https://www.julien.org/youtube/2017/a_+_b.html');
+});
+
+test('a plus sign in the query string is not touched by the path rewrite', () => {
+  const r = call('www.julien.org', '/youtube/2017/a_+_b.html', { q: { value: 'x+y' } });
+  assert.deepEqual(r.querystring, { q: { value: 'x+y' } });
+});

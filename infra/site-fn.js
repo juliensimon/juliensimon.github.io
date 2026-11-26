@@ -6,6 +6,7 @@
 //   /dir/                 -> /dir/index.html
 //   /dir                  -> 301 /dir/            (so relative links in archived posts keep working)
 //   /page                 -> /page.html           (Next.js pages: only those listed in PAGES)
+//   a "+" in the path     -> %2B                  (S3 would read it as a space)
 //   /youtube/y/name       -> /youtube/y/name.html (and the same under /blog/legacy-posts-and-images/:
 //                            GitHub Pages served the extensionless form, the canonical URL has .html)
 //   /feed                 -> served as is         (the extensionless RSS file)
@@ -56,6 +57,13 @@ function handler(event) {
 
   if (host === 'julien.org') {
     return redirect('https://www.julien.org' + uri + qs(request.querystring));
+  }
+
+  // S3 reads a raw "+" in a path as a space; the encoded form finds the object. Four video pages have a
+  // "+" in their name and the sitemap lists it raw.
+  if (uri.indexOf('+') !== -1) {
+    uri = uri.replace(/\+/g, '%2B');
+    request.uri = uri;
   }
 
   if (uri.charAt(uri.length - 1) === '/') {
