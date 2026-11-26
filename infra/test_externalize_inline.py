@@ -201,6 +201,33 @@ class StyleAttributes(unittest.TestCase):
         self.assertIn(f'<youtube enabled="yes" <span="" class="{cls("font-weight: bold;")}">', html)
         self.assertEqual(len(files), 1)
 
+    def test_quote_characters_inside_attribute_names_are_handled(self):
+        # seen in an archived post: a bad export left style="font-family: " courier="" new",courier,monospace;"="">
+        src = self.page('<span style="font-family: " courier="" new",courier,monospace;"="">$ x</span>')
+        html, files = e.transform(src)
+        self.assertNotIn("style=", html)
+        self.assertIn('courier="" new",courier,monospace;"=""', html)
+        self.assertIn(f'class="{cls("font-family:")}"', html)
+        self.assertEqual(len(files), 1)
+
+    def test_check_flags_a_style_attribute_in_a_tag_the_converter_cannot_parse(self):
+        # unterminated quote: the converter leaves the tag alone, the independent check must still see it
+        root = Tree().make({"a.html": '<p style="a:b>text</p>', "b.html": "<p>style=\"a:b\" in text</p>"})
+        self.assertEqual(e.check(root), ["a.html"])
+
+    def test_check_does_not_flag_style_text_that_is_not_an_attribute(self):
+        root = Tree().make({"a.html": '<p>use style="a:b" or onclick=x in HTML</p><pre>&lt;p style="a:b"&gt;</pre>'})
+        self.assertEqual(e.check(root), [])
+
+    def test_check_ignores_tag_like_text_inside_script_data_and_comments(self):
+        root = Tree().make({"a.html": '<script type="application/ld+json">{"h":"<p style=x>"}</script><!-- <b onclick=y> --><p>ok</p>'})
+        self.assertEqual(e.check(root), [])
+
+    def test_run_refuses_a_page_whose_style_attribute_it_cannot_convert(self):
+        root = Tree().make({"a.html": '<p style="a:b>text</p>'})
+        with self.assertRaises(ValueError):
+            e.run(root)
+
     def test_second_run_changes_nothing(self):
         once, _ = e.transform(self.page('<p style="a:b">x</p>'))
         self.assertEqual(e.transform(once), (once, {}))

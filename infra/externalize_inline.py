@@ -26,6 +26,8 @@ Rules:
   site's own `.js-reveal-ready [data-reveal]{transition:...}` and reset transition-delay. It stays a
   plain rule, not !important, so a script that sets the style later (React, Next image blur-up) still
   wins. The build test compares computed styles before and after;
+- a second, looser scan fails the build for any style= or on*= attribute still in a tag after the
+  rewrite, so markup the converter cannot parse cannot slip through unseen;
 - anything this script cannot move without changing behavior (module or import-map scripts, async or
   nomodule attributes, a <style> with a nonce) raises, so a new kind of inline code stops the build.
 """
@@ -41,10 +43,14 @@ BLOCK = re.compile(
     r"|<script\b(?P<sattrs>[^>]*)>(?P<sbody>.*?)</script\s*>"
     r"|<style\b(?P<tattrs>[^>]*)>(?P<tbody>.*?)</style\s*>"
     r"|<(?P<htag>[a-zA-Z][a-zA-Z0-9]*)"
-    r"(?P<hattrs>(?:\s+[^\s\"'>=/]+(?:\s*=\s*(?:\"[^\"]*\"|'[^']*'|[^\s\"'<>=`]+))?)+)\s*/?>",
+    r"(?P<hattrs>(?:\s+[^\s>=/]+(?:\s*=\s*(?:\"[^\"]*\"|'[^']*'|[^\s\"'<>=`]+))?)+)\s*/?>",
     re.S | re.I,
 )
-ATTR = re.compile(r"""\s+(?P<name>[^\s"'>=/]+)(?:\s*=\s*(?P<val>"[^"]*"|'[^']*'|[^\s"'<>=`]+))?""")
+ATTR = re.compile(r"""\s+(?P<name>[^\s>=/]+)(?:\s*=\s*(?P<val>"[^"]*"|'[^']*'|[^\s"'<>=`]+))?""")
+# A looser, independent test: any tag that still carries style= or on*= after the rewrite. It does not
+# share the strict tag pattern, so markup the converter cannot parse is still seen.
+PROTECTED = re.compile(r"<!--.*?-->|<script\b.*?</script\s*>|<style\b.*?</style\s*>", re.S | re.I)
+LOOSE = re.compile(r"<[a-zA-Z][^>]*?\s(?:style|on[a-z]+)\s*=", re.I)
 DEAD_ONBLUR = "try {parent.deselectBloggerImageGracefully();} catch(e) {}"
 ASYNC_CSS = "this.media='all'"
 UNSAFE_CSS_VALUE = re.compile(r"[{}]|/\*")
@@ -181,6 +187,10 @@ def transform(html: str) -> tuple[str, dict[str, str]]:
     return out, files
 
 
+def _leftover(page_text: str) -> bool:
+    return bool(LOOSE.search(PROTECTED.sub("", page_text)))
+
+
 def _read(p: Path) -> str:
     return p.read_bytes().decode("utf-8", "surrogateescape")
 
@@ -196,6 +206,8 @@ def run(root: Path) -> int:
             new, files = transform(text)
         except ValueError as err:
             raise ValueError(f"{page.relative_to(root)}: {err}") from None
+        if _leftover(new):
+            raise ValueError(f"{page.relative_to(root)}: a style or event-handler attribute is left that the converter cannot parse")
         if new == text:
             continue
         target.mkdir(parents=True, exist_ok=True)
@@ -217,7 +229,7 @@ def check(root: Path) -> list[str]:
         except ValueError:
             bad.append(str(page.relative_to(root)))
             continue
-        if new != text:
+        if new != text or _leftover(new):
             bad.append(str(page.relative_to(root)))
     return bad
 

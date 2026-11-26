@@ -14,13 +14,14 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 POLICY = Path(__file__).resolve().with_name("headers-policy.json")
-TAG = re.compile(r"<(script|link|img|iframe|audio|video|source|embed|object)\b([^>]*)>", re.I)
+TAG = re.compile(r"<(script|link|img|image|iframe|audio|video|source|embed|object)\b([^>]*)>", re.I)
 URL = re.compile(r"\b(?:src|href|data)=[\"'](https?://[^\"']+)", re.I)
 REL = re.compile(r"rel=[\"']?stylesheet", re.I)
 ICON = re.compile(r"rel=[\"']?[a-z -]*icon", re.I)
 DIRECTIVE = {
     "script": "script-src",
     "img": "img-src",
+    "image": "img-src",  # browsers treat <image> as <img>
     "iframe": "frame-src",
     "link": "style-src",
     "audio": "media-src",
