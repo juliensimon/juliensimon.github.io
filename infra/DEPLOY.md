@@ -62,3 +62,16 @@ breaks resolution for validating resolvers, so the order is fixed:
 5. Attach `julien.org` and `www.julien.org` plus the certificate to the distribution; in Route 53 replace the apex A records and the `www` CNAME with alias records to the distribution.
 6. Check headers on both hosts, mail (`dig MX`, send a test mail) and the other subdomains.
 7. Enable DNSSEC signing in Route 53 (KMS key in us-east-1, key-signing key) and publish the new DS at Squarespace, as for solfird.ai.
+
+### Done 2026-11-26 (log)
+
+- 11:46Z DNSSEC off at Squarespace; DS gone from `.org` by 13:57Z; nameservers switched to Route 53 at 15:02Z.
+- The first ACM certificate FAILED with `CAA_ERROR`: `www` was a CNAME to `juliensimon.github.io`, so the CA read GitHub's CAA list (no Amazon). Fix: `www` became A records to GitHub Pages for a few minutes, then a new certificate (`8ecea507-...`) was issued and attached.
+- 15:33Z apex and `www` became alias A and AAAA records to the distribution. `teleport` was removed (Julien).
+- Resolvers keep the old answers for their TTL (old zone: `www` CNAME 1 h, apex A 4 h). Until then those visitors still reach GitHub Pages, which keeps serving; do not shut Pages down yet.
+- Check with `dig +short` or a real answer count, never `grep ' DS '` on a plain dig (it matches dig's own header line).
+
+### Still open
+
+- Enable DNSSEC in Route 53 and publish the new DS at Squarespace only after the old nameservers have left every cache (wait at least 24 h after 15:02Z), otherwise resolvers that still ask Google get an unsigned answer and fail validation.
+- After that: set the alias TTL, remove the GitHub Pages deploy job, and rescan in Aikido.
