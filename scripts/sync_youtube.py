@@ -887,7 +887,7 @@ def create_video_page(
     <meta name="twitter:title" content="{html.escape(video.title)}">
     <meta name="twitter:description" content="{html.escape(meta_description)}">
     <meta name="twitter:creator" content="@julsimon">
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{{"token": "abccd4dd49b24480ba0151938f7b0fee"}}'></script>
     <script type="application/ld+json">
     {{
         "@context": "https://schema.org",

@@ -29,6 +29,7 @@ A high-performance, SEO-optimized personal website for Julien Simon, Chief Evang
 ## 🔒 Security Enhancements
 
 ### Security Headers
+Sent by CloudFront (see `infra/DEPLOY.md`; GitHub Pages cannot set headers): HSTS, CSP, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy.
 - **Content Security Policy (CSP)**: Comprehensive policy blocking XSS
 - **X-Content-Type-Options**: Prevents MIME type sniffing
 - **X-Frame-Options**: Prevents clickjacking
@@ -131,7 +132,7 @@ A high-performance, SEO-optimized personal website for Julien Simon, Chief Evang
 - **Critical CSS**: Above-the-fold optimization
 
 ### Analytics & Monitoring
-- **Umami Analytics**: Privacy-focused analytics
+- **Cloudflare Web Analytics**: Cookieless, privacy-focused analytics
 - **Core Web Vitals**: Performance monitoring
 - **Error Tracking**: JavaScript error monitoring
 - **User Behavior**: Interaction tracking
@@ -153,7 +154,7 @@ A high-performance, SEO-optimized personal website for Julien Simon, Chief Evang
 ## 📊 Analytics & Performance
 
 ### Current Analytics
-- **Umami Analytics**: Privacy-focused analytics tracking
+- **Cloudflare Web Analytics**: Cookieless, privacy-focused analytics
 - **GitHub Pages Traffic**: Basic insights available in repository
 - **AI Crawler Detection**: Enhanced bot tracking implemented
 

@@ -51,7 +51,7 @@ HF_DIR = PUBLIC / "blog" / "huggingface-posts-and-images"
 ARCEE_DIR = PUBLIC / "blog" / "arcee-posts"
 
 FAVICON_TAG = '<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">'
-UMAMI_SCRIPT = '<script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>'
+CF_ANALYTICS_SCRIPT = '''<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "abccd4dd49b24480ba0151938f7b0fee"}'></script>'''
 OG_IMAGE = "https://www.julien.org/assets/og-image-1200x630.webp"
 SITE_URL = "https://www.julien.org"
 
@@ -173,7 +173,7 @@ def add_favicon_to_youtube(dry_run: bool):
 
 
 def add_analytics_to_industry_perspectives(dry_run: bool):
-    """4d: Add Umami analytics to industry-perspectives post pages if missing."""
+    """4d: Add Cloudflare Web Analytics to industry-perspectives post pages if missing."""
     count = 0
     for post_dir in sorted(INDUSTRY_DIR.iterdir()):
         if not post_dir.is_dir():
@@ -183,11 +183,11 @@ def add_analytics_to_industry_perspectives(dry_run: bool):
             continue
         stats["checked"] += 1
         content = index_file.read_text(encoding="utf-8")
-        if "umami" in content:
+        if "cloudflareinsights" in content:
             stats["skipped"] += 1
             continue
         if "</head>" in content:
-            content = content.replace("</head>", f"    {UMAMI_SCRIPT}\n</head>")
+            content = content.replace("</head>", f"    {CF_ANALYTICS_SCRIPT}\n</head>")
             stats["modified"] += 1
             count += 1
             if dry_run:
@@ -485,8 +485,8 @@ def fix_arcee_pages(dry_run: bool):
         if "favicon" not in content:
             additions.append(f"    {FAVICON_TAG}")
 
-        if "umami" not in content:
-            additions.append(f"    {UMAMI_SCRIPT}")
+        if "cloudflareinsights" not in content:
+            additions.append(f"    {CF_ANALYTICS_SCRIPT}")
 
         if 'rel="canonical"' not in content:
             additions.append(f'    <link rel="canonical" href="{url}">')

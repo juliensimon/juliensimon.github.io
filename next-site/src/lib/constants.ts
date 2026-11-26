@@ -12,7 +12,7 @@ export const SITE = {
   locale: 'en_US',
   email: 'julien@julien.org',
   twitterHandle: '@julsimon',
-  umamiId: '27550dad-d418-4f5d-ad1b-dab573da1020',
+  cfAnalyticsToken: 'abccd4dd49b24480ba0151938f7b0fee',
 } as const;
 
 export const SOCIAL_LINKS = [

@@ -8,14 +8,14 @@ import glob
 import re
 
 def add_umami_to_file(file_path):
-    """Add Umami analytics to a single HTML file."""
+    """Add Cloudflare Web Analytics to a single HTML file."""
     
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
         # Check if Umami is already present
-        if 'umami' in content.lower():
+        if 'cloudflareinsights' in content.lower():
             return False  # Already has Umami
         
         # Find the head section
@@ -47,9 +47,8 @@ def add_umami_to_file(file_path):
         title_close_end = title_close_match.end()
         umami_script = '''
 
-<!-- Umami Analytics -->
-<script defer src="https://cloud.umami.is/script.js" data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>
-<link rel="dns-prefetch" href="//cloud.umami.is">'''
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "abccd4dd49b24480ba0151938f7b0fee"}'></script>'''
         
         # Insert Umami after closing title tag with proper spacing
         new_head_content = head_content[:title_close_end] + umami_script + head_content[title_close_end:]

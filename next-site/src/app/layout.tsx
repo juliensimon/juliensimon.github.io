@@ -64,11 +64,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#6366f1" />
         <link rel="alternate" type="application/rss+xml" title="Julien Simon - Industry Perspectives" href="/feed.xml" />
         <link rel="alternate" type="application/rss+xml" title="The AI Realist podcast" href="https://podcast.julien.org/feed.xml" />
-        <link rel="preconnect" href="https://cloud.umami.is" />
-        <link rel="dns-prefetch" href="https://cloud.umami.is" />
         {/* Leaflet preconnects removed — loaded by SpeakingMap component on /speaking only */}
-        {/* Umami Analytics */}
-        <script defer src="https://cloud.umami.is/script.js" data-website-id={SITE.umamiId} />
+        {/* Cloudflare Web Analytics */}
+        <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: SITE.cfAnalyticsToken })} />
         <StructuredData data={personSchema()} />
         <StructuredData data={newsletterSchema()} />
       </head>

@@ -4,7 +4,7 @@
 Processes both youtube/ and next-site/public/youtube/ trees.
 - Replaces <style>...</style> with <link rel="stylesheet" href="../style.css">
 - Adds Google Fonts <link> if missing
-- Adds Umami analytics if missing
+- Adds Cloudflare Web Analytics if missing
 - Wraps bare inline back-links in <div class="back-link">
 """
 
@@ -27,9 +27,9 @@ GOOGLE_FONTS = (
 
 STYLESHEET = '<link rel="stylesheet" href="../style.css">'
 
-UMAMI = (
-    '<script defer src="https://cloud.umami.is/script.js" '
-    'data-website-id="27550dad-d418-4f5d-ad1b-dab573da1020"></script>'
+CF_ANALYTICS = (
+    '<script defer src="https://static.cloudflareinsights.com/beacon.min.js" '
+    '''data-cf-beacon='{"token": "abccd4dd49b24480ba0151938f7b0fee"}'></script>'''
 )
 
 
@@ -54,11 +54,11 @@ def migrate_file(filepath: Path, dry_run: bool = False) -> bool:
         else:
             content = content.replace('</head>', f'    {GOOGLE_FONTS}\n</head>')
 
-    # 3. Add Umami analytics if missing
-    if 'umami.is/script.js' not in content:
+    # 3. Add Cloudflare Web Analytics if missing
+    if 'cloudflareinsights.com/beacon' not in content:
         content = content.replace(
             STYLESHEET,
-            f'{STYLESHEET}\n    {UMAMI}',
+            f'{STYLESHEET}\n    {CF_ANALYTICS}',
         )
 
     # 4. Wrap bare inline-styled back links in <div class="back-link">
