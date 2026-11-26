@@ -75,3 +75,7 @@ breaks resolution for validating resolvers, so the order is fixed:
 
 - Enable DNSSEC in Route 53 and publish the new DS at Squarespace only after the old nameservers have left every cache (wait at least 24 h after 15:02Z), otherwise resolvers that still ask Google get an unsigned answer and fail validation.
 - After that: set the alias TTL, remove the GitHub Pages deploy job, and rescan in Aikido.
+
+### Verified 2026-11-26 16:41Z
+
+Both hosts served by CloudFront with HSTS, CSP, nosniff and X-Frame-Options. Mail checked by a real send and receive test (SPF, DKIM, DMARC pass). The Cloudflare beacon posts to `cloudflareinsights.com/cdn-cgi/rum` and gets 204; no CSP violations in the browser console. The old zone gave `www` a 1 h cache lifetime and the apex 4 h, so a resolver may serve GitHub Pages until about 19:35Z.
