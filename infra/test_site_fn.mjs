@@ -75,3 +75,53 @@ test('a page route is not treated as a directory', () => {
   const r = call('www.julien.org', '/speaking');
   assert.equal(r.statusCode, undefined);
 });
+
+// GitHub Pages served /youtube/x and /blog/legacy-posts-and-images/x from x.html. The canonical URLs
+// carry .html, but old links do not, so the function does the same rewrite (no redirect, status 200).
+test('an extensionless video URL is served from its .html file', () => {
+  const r = call('www.julien.org', '/youtube/2018/20180410_Building_Your_Smart_Applications');
+  assert.equal(r.uri, '/youtube/2018/20180410_Building_Your_Smart_Applications.html');
+  assert.equal(r.statusCode, undefined);
+});
+
+test('an extensionless legacy blog URL is served from its .html file', () => {
+  const r = call('www.julien.org', '/blog/legacy-posts-and-images/2013/2013-08-21-arduino-lcd-thermometer');
+  assert.equal(r.uri, '/blog/legacy-posts-and-images/2013/2013-08-21-arduino-lcd-thermometer.html');
+});
+
+test('a video title with a dot in it still gets .html (the dot is not an extension)', () => {
+  for (const name of ['20170727_Utiliser_le_client_MQTT.fx_et_l_AWS_IoT_button', '20220621_Machine_Learning_2.0_with_Hugging_Face_Conf42']) {
+    const r = call('www.julien.org', `/youtube/2017/${name}`);
+    assert.equal(r.uri, `/youtube/2017/${name}.html`, name);
+  }
+});
+
+test('real files under those prefixes are passed through untouched', () => {
+  for (const p of ['/youtube/2018/x.html', '/blog/legacy-posts-and-images/2013/pic.webp', '/blog/legacy-posts-and-images/style.css', '/youtube/CLAUDE.md']) {
+    assert.equal(call('www.julien.org', p).uri, p, p);
+  }
+});
+
+test('year folders, the prefix folders and every other archive folder keep the slash redirect', () => {
+  for (const p of ['/youtube/2013', '/blog/legacy-posts-and-images', '/blog/aws-posts-and-images/2018-01-22_speeding-up', '/blog/industry-perspectives/2026-11-11_x']) {
+    const r = call('www.julien.org', p);
+    assert.equal(r.statusCode, 301, p);
+    assert.equal(r.headers.location.value, p + '/', p);
+  }
+});
+
+test('the .html rewrite keeps the query string', () => {
+  const r = call('www.julien.org', '/youtube/2018/x', { a: { value: '1' } });
+  assert.equal(r.uri, '/youtube/2018/x.html');
+  assert.deepEqual(r.querystring, { a: { value: '1' } });
+});
+
+test('a slash URL under the prefixes still serves the folder index', () => {
+  assert.equal(call('www.julien.org', '/youtube/2018/').uri, '/youtube/2018/index.html');
+});
+
+test('the apex still redirects first for an extensionless video URL', () => {
+  const r = call('julien.org', '/youtube/2018/x');
+  assert.equal(r.statusCode, 301);
+  assert.equal(r.headers.location.value, 'https://www.julien.org/youtube/2018/x');
+});

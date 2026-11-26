@@ -48,6 +48,7 @@ and the generators. `infra/migrate_analytics.py` swaps the tag in static pages.
 - HSTS is `max-age=31536000` with no `includeSubDomains`: `erebor` and `teleport` may not be HTTPS only.
 - The CSP has no `'unsafe-inline'` anywhere (Aikido flagged scripts, then styles, 2026-11-26). `externalize_inline.py`, the last step of `npm run build`, moves inline scripts and `<style>` blocks into content-hashed files under `/_next/static/inline/` and turns every `style="..."` attribute into a class. `deploy.sh` refuses to run if any inline code is left or the policy allows `unsafe-inline`.
 - An unknown path such as `/nope` is a 301 to `/nope/` and then a 404 (GitHub Pages gave a 404 at once).
+- Extensionless URLs under `/youtube/` and `/blog/legacy-posts-and-images/` (558 pages, files named `x.html`) are served from `x.html`, as GitHub Pages did. Pages have `.html` in their canonical URL and sitemap, so only old inbound links use the short form. Missing at first, found by a status check on the live crawl 2026-11-26. `test_site_fn.mjs` covers it; a name counts as a real file only with a known extension, because video titles contain dots (`MQTT.fx`, `2.0`).
 - `archive/` is not deployed and still mentions Umami.
 
 ## DNS (zone moved from Squarespace to Route 53)

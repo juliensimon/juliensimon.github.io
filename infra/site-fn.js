@@ -6,6 +6,8 @@
 //   /dir/                 -> /dir/index.html
 //   /dir                  -> 301 /dir/            (so relative links in archived posts keep working)
 //   /page                 -> /page.html           (Next.js pages: only those listed in PAGES)
+//   /youtube/y/name       -> /youtube/y/name.html (and the same under /blog/legacy-posts-and-images/:
+//                            GitHub Pages served the extensionless form, the canonical URL has .html)
 //   /feed                 -> served as is         (the extensionless RSS file)
 // Responses built by a function skip the headers policy, so the redirect carries HSTS itself.
 
@@ -14,6 +16,11 @@ var PAGES = {"/404":1,"/arcee-blog-posts":1,"/aws-blog-posts":1,"/aws-medium-pos
 // END PAGES
 
 var PASS = { '/feed': 1 };
+
+// Folders whose pages are files named x.html. Extensionless URLs there are served from x.html.
+// A name is a real file only when it ends in one of these (video titles contain dots: "MQTT.fx", "2.0").
+var HTML_FILE_PREFIXES = ['/youtube/', '/blog/legacy-posts-and-images/'];
+var FILE_EXT = /\.(html|css|js|json|xml|txt|md|png|jpe?g|gif|webp|svg|ico|pdf|mp3|mp4|woff2?)$/i;
 
 function qs(q) {
   var parts = [];
@@ -57,6 +64,14 @@ function handler(event) {
   }
 
   var last = uri.substring(uri.lastIndexOf('/') + 1);
+  for (var i = 0; i < HTML_FILE_PREFIXES.length; i++) {
+    // a four-digit name is a year folder (it has an index.html): it keeps the slash redirect below
+    if (uri.indexOf(HTML_FILE_PREFIXES[i]) === 0 && !FILE_EXT.test(last) && !/^\d{4}$/.test(last)) {
+      request.uri = uri + '.html';
+      return request;
+    }
+  }
+
   if (last.indexOf('.') !== -1 || PASS[uri]) {
     return request;
   }
