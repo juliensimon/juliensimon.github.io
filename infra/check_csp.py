@@ -3,9 +3,9 @@
 
 Usage: python3 -I infra/check_csp.py next-site/out
 
-Static scan of <script>, <link rel=stylesheet>, <iframe>, <audio>, <video>, <source>: it cannot see
-what a script fetches at run time (check those in a browser: console shows CSP violations).
-Images are allowed from any https host by design: the archive hot-links hundreds of old images.
+Static scan of <script>, <link rel=stylesheet|icon>, <img>, <iframe>, <audio>, <video>, <source>: it cannot
+see what a script fetches at run time (check those in a browser: console shows CSP violations).
+img-src is an explicit host list, so a new image host in a page fails here.
 """
 import json
 import re
@@ -14,11 +14,13 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 POLICY = Path(__file__).resolve().with_name("headers-policy.json")
-TAG = re.compile(r"<(script|link|iframe|audio|video|source|embed|object)\b([^>]*)>", re.I)
+TAG = re.compile(r"<(script|link|img|iframe|audio|video|source|embed|object)\b([^>]*)>", re.I)
 URL = re.compile(r"\b(?:src|href|data)=[\"'](https?://[^\"']+)", re.I)
 REL = re.compile(r"rel=[\"']?stylesheet", re.I)
+ICON = re.compile(r"rel=[\"']?[a-z -]*icon", re.I)
 DIRECTIVE = {
     "script": "script-src",
+    "img": "img-src",
     "iframe": "frame-src",
     "link": "style-src",
     "audio": "media-src",
@@ -65,15 +67,20 @@ def main() -> int:
         text = p.read_text(errors="ignore")
         for m in TAG.finditer(text):
             tag, attrs = m.group(1).lower(), m.group(2)
-            if tag == "link" and not REL.search(attrs):
-                continue
+            directive = DIRECTIVE[tag]
+            if tag == "link":
+                if REL.search(attrs):
+                    directive = "style-src"
+                elif ICON.search(attrs):
+                    directive = "img-src"
+                else:
+                    continue
             u = URL.search(attrs)
             if not u:
                 continue
             host = urlsplit(u.group(1)).hostname or ""
-            directive = DIRECTIVE[tag]
             sources = csp.get(directive, csp.get("default-src", []))
-            if host == "www.julien.org" or host == "julien.org":
+            if host == "www.julien.org":  # 'self'; the apex julien.org is another origin and must be listed
                 continue
             if not allowed(host, sources):
                 bad.setdefault((directive, host), str(p.relative_to(out)))

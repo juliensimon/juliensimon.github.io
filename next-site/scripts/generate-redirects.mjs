@@ -15,6 +15,7 @@ function isValidRedirectUrl(url) {
   return true;
 }
 
+// No inline <script>: the CSP forbids inline scripts, and the meta refresh below does the redirect.
 function redirectHtml(to) {
   // Normalize: every URL reference in a redirect shim must point to the
   // canonical (trailing-slash) form. Crawlers that follow <a href> fallbacks
@@ -32,7 +33,6 @@ function redirectHtml(to) {
 <title>Redirecting...</title>
 </head>
 <body>
-<script>window.location.replace('${cleanPath}')</script>
 <p>Redirecting to <a href="${cleanPath}">${cleanPath}</a></p>
 </body>
 </html>`;

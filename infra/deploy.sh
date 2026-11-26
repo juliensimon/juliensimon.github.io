@@ -18,6 +18,8 @@ if grep -rIli umami "$OUT" >/dev/null 2>&1; then echo "Umami is still in the bui
 python3 -I infra/gen_pages.py "$OUT"
 node --test infra/test_site_fn.mjs >/dev/null
 python3 -I infra/check_csp.py "$OUT"
+python3 -I infra/externalize_inline.py --check "$OUT"
+if grep -q "unsafe-inline" infra/headers-policy.json; then echo "headers-policy.json allows unsafe-inline: Aikido flags it" >&2; exit 1; fi
 
 CC_SHORT="public, max-age=600"
 CC_LONG="public, max-age=31536000, immutable"

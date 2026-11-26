@@ -46,7 +46,7 @@ and the generators. `infra/migrate_analytics.py` swaps the tag in static pages.
 ## Choices
 
 - HSTS is `max-age=31536000` with no `includeSubDomains`: `erebor` and `teleport` may not be HTTPS only.
-- `script-src` keeps `'unsafe-inline'`: the Next.js export puts its data in inline scripts.
+- The CSP has no `'unsafe-inline'` anywhere (Aikido flagged scripts, then styles, 2026-11-26). `externalize_inline.py`, the last step of `npm run build`, moves inline scripts and `<style>` blocks into content-hashed files under `/_next/static/inline/` and turns every `style="..."` attribute into a class. `deploy.sh` refuses to run if any inline code is left or the policy allows `unsafe-inline`.
 - An unknown path such as `/nope` is a 301 to `/nope/` and then a 404 (GitHub Pages gave a 404 at once).
 - `archive/` is not deployed and still mentions Umami.
 
@@ -79,3 +79,16 @@ breaks resolution for validating resolvers, so the order is fixed:
 ### Verified 2026-11-26 16:41Z
 
 Both hosts served by CloudFront with HSTS, CSP, nosniff and X-Frame-Options. Mail checked by a real send and receive test (SPF, DKIM, DMARC pass). The Cloudflare beacon posts to `cloudflareinsights.com/cdn-cgi/rum` and gets 204; no CSP violations in the browser console. The old zone gave `www` a 1 h cache lifetime and the apex 4 h, so a resolver may serve GitHub Pages until about 19:35Z.
+
+### Inline code and the CSP (2026-11-26)
+
+- The moved script is **synchronous**, not `defer`: Next.js closes its data stream when the page stops
+  loading, and a deferred script arrives too late (every Next page then fails to hydrate, "Connection
+  closed"). `test_externalize_inline.py` pins this.
+- Tests: `python3 -I infra/test_externalize_inline.py`. Mutation-check any change to the module.
+- Before changing the policy or the module, load the 35 Next pages in a browser and check that each one
+  hydrates (React properties on the DOM) and that `securitypolicyviolation` events stay empty. A local
+  server must decode `%5B` in paths (S3 does), or dynamic-route chunks 404 and hydration fails.
+- Style classes weigh less than an inline style. The conversion was checked by comparing the computed
+  value of every inline property, and the position of every element, before and after, on 154 pages.
+- `img-src` is an explicit list of hosts; `check_csp.py` fails the deploy when a page uses another one.
