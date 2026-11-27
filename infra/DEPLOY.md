@@ -98,3 +98,7 @@ Both hosts served by CloudFront with HSTS, CSP, nosniff and X-Frame-Options. Mai
 - Style classes weigh less than an inline style. The conversion was checked by comparing the computed
   value of every inline property, and the position of every element, before and after, on 154 pages.
 - `img-src` is an explicit list of hosts; `check_csp.py` fails the deploy when a page uses another one.
+
+### CI cannot publish the routing function (2026-11-27)
+
+The CI role `julien-org-site-deploy` may only read the CloudFront function (`GetFunction`, `DescribeFunction`); `UpdateFunction` and `PublishFunction` were removed (Aikido: a compromised workflow could replace edge code for both hostnames). `deploy.sh` checks this in CI before it uploads anything: if `infra/site-fn.js` differs from the live function (a new page route), the job stops with a message. Then run `sh infra/deploy.sh` from a laptop with admin credentials and re-run the job. Local runs still update and publish the function. To undo, add the two actions back to the inline policy `deploy`.
