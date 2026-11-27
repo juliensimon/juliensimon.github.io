@@ -106,7 +106,9 @@ and none edited by hand:
 - `next-site/src/data/podcast-episodes.json`, the episode list behind the `/podcast` page
   (`src/app/podcast/`, show constants in `src/data/podcast.ts`, `PodcastSeries` schema in
   `src/lib/structured-data.ts`). The page is the show's home on the web: `podcast.julien.org/`
-  itself serves only the feed and the files;
+  and `/index.html` answer a 301 to it (CloudFront Function `airealist-podcast-root-redirect`,
+  attached 2026-10-10; source in `../research/podcast/root_redirect.js`), and every other path
+  there is the feed or a file;
 - the "## Podcast: The AI Realist" section of `llms.txt` (five latest episodes) and `llms-full.txt`
   (all), replaced in place on each run.
 
