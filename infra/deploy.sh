@@ -21,6 +21,19 @@ python3 -I infra/check_csp.py "$OUT"
 python3 -I infra/externalize_inline.py --check "$OUT"
 if grep -q "unsafe-inline" infra/headers-policy.json; then echo "headers-policy.json allows unsafe-inline: Aikido flags it" >&2; exit 1; fi
 
+# CI must not publish edge code (Aikido: the OIDC role could replace the CloudFront function). In CI the
+# role may only READ the function. If the page routes changed, stop here, before anything is uploaded,
+# so the site is never half-deployed; then run this script from a laptop with admin credentials.
+if [ -z "$DRY" ] && [ -n "${GITHUB_ACTIONS:-}" ]; then
+  aws cloudfront get-function --name "$FN" --stage LIVE /tmp/julien-org-fn-ci.js >/dev/null
+  if ! cmp -s /tmp/julien-org-fn-ci.js infra/site-fn.js; then
+    echo "infra/site-fn.js differs from the live CloudFront function (a page route changed)." >&2
+    echo "CI cannot publish it. Run 'sh infra/deploy.sh' locally with admin AWS credentials, then re-run this job." >&2
+    exit 1
+  fi
+  rm -f /tmp/julien-org-fn-ci.js
+fi
+
 CC_SHORT="public, max-age=600"
 CC_LONG="public, max-age=31536000, immutable"
 EXCL="--exclude .DS_Store --exclude */.DS_Store --exclude CNAME --exclude CLAUDE.md --exclude */CLAUDE.md"
