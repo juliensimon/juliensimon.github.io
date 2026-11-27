@@ -36,33 +36,12 @@ jobs:
         working-directory: next-site
         run: npm run build
 
-      - name: Detect changed URLs for IndexNow
-        id: urls
-        run: |
-          BASE="https://www.julien.org"
-          URLS=""
-
-          # Changed HTML files in public/ from this commit
-          for f in $(git diff --name-only HEAD~1 HEAD -- 'next-site/public/' 2>/dev/null | grep '\.html$' | sed 's|next-site/public/||'); do
-            URLS="${URLS}\"${BASE}/${f}\","
-          done
-
-          # Always include homepage and sitemaps
-          URLS="${URLS}\"${BASE}/\",\"${BASE}/sitemap-index.xml\",\"${BASE}/sitemap-blog.xml\""
-
-          # Deduplicate and format as JSON array
-          URL_JSON=$(echo "[${URLS}]" | python3 -c "import json,sys; print(json.dumps(list(dict.fromkeys(json.load(sys.stdin)))))")
-          echo "json=${URL_JSON}" >> "$GITHUB_OUTPUT"
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: next-site/out
           # .well-known/ is a dot-directory; without this the action drops it and ai.json 404s
           include-hidden-files: true
-
-    outputs:
-      changed_urls: ${{ steps.urls.outputs.json }}
 
   deploy:
     environment:
@@ -74,22 +53,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
-
-      - name: Ping IndexNow (Bing + Yandex)
-        if: success()
-        env:
-          URL_JSON: ${{ needs.build.outputs.changed_urls }}
-        run: |
-          echo "Pinging IndexNow with changed URLs..."
-          echo "${URL_JSON}" | python3 -c "import json,sys; [print(f'  {u}') for u in json.load(sys.stdin)]"
-          curl -s -w "\nHTTP %{http_code}" -X POST "https://api.indexnow.org/indexnow" \
-            -H "Content-Type: application/json" \
-            -d "{
-              \"host\": \"www.julien.org\",
-              \"key\": \"24d30db2b0514b1780b427dde1b02d0d\",
-              \"keyLocation\": \"https://www.julien.org/24d30db2b0514b1780b427dde1b02d0d.txt\",
-              \"urlList\": ${URL_JSON}
-            }"
 
   # S3 + CloudFront deploy (HSTS/CSP headers). Pages stays above until DNS points at CloudFront.
   deploy-s3:
@@ -105,6 +68,8 @@ jobs:
       AWS_WEB_IDENTITY_TOKEN_FILE: /tmp/gh-oidc-token
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 2  # IndexNow step diffs HEAD~1..HEAD
 
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
@@ -128,3 +93,32 @@ jobs:
 
       - name: Publish to S3 and invalidate CloudFront
         run: sh infra/deploy.sh
+
+      # IndexNow lives here (not in the Pages job) so it survives removing the Pages job.
+      # It runs only after the site is live on S3, so Bing never fetches a page that is not there yet.
+      - name: Ping IndexNow (Bing + Yandex)
+        run: |
+          BASE="https://www.julien.org"
+          URLS=""
+
+          # Changed HTML files in public/ from this commit
+          for f in $(git diff --name-only HEAD~1 HEAD -- 'next-site/public/' 2>/dev/null | grep '\.html$' | sed 's|next-site/public/||'); do
+            URLS="${URLS}\"${BASE}/${f}\","
+          done
+
+          # Always include homepage and sitemaps
+          URLS="${URLS}\"${BASE}/\",\"${BASE}/sitemap-index.xml\",\"${BASE}/sitemap-blog.xml\""
+
+          # Deduplicate and format as JSON array
+          URL_JSON=$(echo "[${URLS}]" | python3 -c "import json,sys; print(json.dumps(list(dict.fromkeys(json.load(sys.stdin)))))")
+
+          echo "Pinging IndexNow with changed URLs..."
+          echo "${URL_JSON}" | python3 -c "import json,sys; [print(f'  {u}') for u in json.load(sys.stdin)]"
+          curl -s -w "\nHTTP %{http_code}" -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"host\": \"www.julien.org\",
+              \"key\": \"24d30db2b0514b1780b427dde1b02d0d\",
+              \"keyLocation\": \"https://www.julien.org/24d30db2b0514b1780b427dde1b02d0d.txt\",
+              \"urlList\": ${URL_JSON}
+            }"
