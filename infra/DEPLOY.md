@@ -75,7 +75,12 @@ breaks resolution for validating resolvers, so the order is fixed:
 ### Still open
 
 - Enable DNSSEC in Route 53 and publish the new DS at Squarespace only after the old nameservers have left every cache (wait at least 24 h after 15:02Z), otherwise resolvers that still ask Google get an unsigned answer and fail validation.
-- After that: set the alias TTL, remove the GitHub Pages deploy job, and rescan in Aikido.
+- After that: remove the GitHub Pages deploy job, drop the Pages custom domain, and rescan in Aikido. Route 53 alias records have no TTL setting (fixed 60 s), so there is nothing to raise.
+
+### Done 2026-11-27
+
+- DS (key tag 9063, algorithm 13, digest type 2) published at Squarespace; at `.org` from 15:36Z; 1.1.1.1, 8.8.8.8 and 9.9.9.9 return `ad` with no SERVFAIL.
+- The workflow now has one job (`deploy-s3`); the GitHub Pages jobs are gone. Pushes to master publish to S3 only.
 
 ### Verified 2026-11-26 16:41Z
 
