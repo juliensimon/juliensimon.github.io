@@ -33,7 +33,7 @@ script fetches at run time (it missed the Umami and Hugging Face redirect hosts 
 ## Checks
 
 - `node --test infra/test_site_fn.mjs` (routing function)
-- `python3 -I infra/test_migrate_analytics.py`
+- `uvx --with requests pytest infra/test_sync_youtube_feed.py -q` (feed guard in `sync_youtube.py`)
 - `python3 -I infra/check_csp.py next-site/out`
 - `python3 -I infra/gen_pages.py next-site/out` (rewrites the page list in `site-fn.js`)
 
@@ -41,7 +41,8 @@ script fetches at run time (it missed the Umami and Hugging Face redirect hosts 
 
 Cloudflare Web Analytics, site `www.julien.org` (created 2026-11-26). The token is public and sits
 in `next-site/src/lib/constants.ts` and in every page. Umami was removed from the pages, the layout
-and the generators. `infra/migrate_analytics.py` swaps the tag in static pages.
+and the generators. The one-time migration script and the Apache `.htaccess` were deleted on
+2026-11-28; both are in git history.
 
 ## Choices
 

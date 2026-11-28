@@ -161,19 +161,13 @@ Sent by CloudFront (see `infra/DEPLOY.md`; GitHub Pages cannot set headers): HST
 ### Potential Badge Options
 While GitHub Pages doesn't provide public badges, you could implement:
 
-#### Option 1: Umami Analytics Badge
-```markdown
-![Page Views](https://img.shields.io/badge/Page%20Views-{umami_count}-blue)
-```
-*Requires: Umami API integration or custom endpoint*
-
-#### Option 2: Custom Analytics Badge
+#### Option 1: Custom Analytics Badge
 ```markdown
 ![Site Analytics](https://img.shields.io/badge/Analytics-{custom_metric}-green)
 ```
 *Requires: Custom analytics API endpoint*
 
-#### Option 3: GitHub Stars Badge
+#### Option 2: GitHub Stars Badge
 ```markdown
 ![GitHub Stars](https://img.shields.io/github/stars/juliensimon/juliensimon.github.io)
 ```
@@ -181,7 +175,6 @@ While GitHub Pages doesn't provide public badges, you could implement:
 ### Implementation Notes
 - GitHub Pages doesn't expose traffic data via API
 - Custom badges require external analytics service
-- Umami doesn't currently provide badge endpoints
 - Consider using Shields.io for custom badge creation
 
 ## 🚀 Getting Started

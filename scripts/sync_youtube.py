@@ -47,6 +47,8 @@ NS = {
     'media': 'http://search.yahoo.com/mrss/',
 }
 
+MAX_FEED_BYTES = 5 * 1024 * 1024
+
 
 class VideoItem(NamedTuple):
     """Parsed YouTube video entry."""
@@ -299,6 +301,17 @@ def update_subscriber_count(new_count_k: int, dry_run: bool) -> None:
             target.write_text(stamped, encoding='utf-8')
 
 
+def parse_feed(content: bytes) -> ET.Element:
+    """Parse a feed that arrived over the network.
+
+    Stdlib XML parsing expands entities: refuse anything that declares a DTD or an entity,
+    and anything far larger than a feed should be.
+    """
+    if len(content) > MAX_FEED_BYTES or b"<!DOCTYPE" in content or b"<!ENTITY" in content:
+        raise ValueError("not a feed this script reads: too large, or it carries a DTD")
+    return ET.fromstring(content)
+
+
 def fetch_feed_rss(channel_id: str) -> list[VideoItem]:
     """Fetch and parse the YouTube Atom feed (returns ~15 most recent videos)."""
     url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
@@ -306,7 +319,7 @@ def fetch_feed_rss(channel_id: str) -> list[VideoItem]:
     response = requests.get(url, timeout=30)
     response.raise_for_status()
 
-    root = ET.fromstring(response.content)
+    root = parse_feed(response.content)
     videos = []
 
     for entry in root.findall('atom:entry', NS):
